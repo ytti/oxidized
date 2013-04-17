@@ -1,0 +1,10 @@
+#!/usr/bin/env ruby20
+
+$: << '.'
+require 'pry'
+#require 'pp'
+#require 'rubygems'
+require 'oxidized'
+
+k = Oxidized.new
+
