@@ -1,6 +1,7 @@
 # Pitch
  * automatically adds/removes threads to meet configured retrieval interval
- * can move node immediately to head-of-queue (maybe trigger from snmp trap or syslog), to be serviced by next spawned thread
+ * restful API to move node immediately to head-of-queue (maybe trigger from snmp trap or syslog), to be serviced by next spawned thread (GET /nodes/next/$node)
+ * restful API to reload list of nodes (GET /nodes/reload)
 
 # Install
  early days, but try to run it and edit ~/.config/oxidized/config

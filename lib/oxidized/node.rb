@@ -28,6 +28,25 @@ module Oxidized
       [status, config]
     end
 
+    def serialize
+      h = {
+        :name  => @name,
+        :ip    => @ip,
+        :group => @group,
+        :model => @model.class.to_s,
+        :last  => nil,
+      }
+      if @last
+        h[:last] = {
+          :start  => @last.start,
+          :end    => @last.end,
+          :status => @last.status,
+          :time   => @last.time,
+        }
+      end
+      h
+    end
+
     private
 
     def resolve_prompt opt

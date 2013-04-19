@@ -37,6 +37,7 @@ module Oxidized
       @model.merge! _model 
     end
     def source= _source
+      return nil if @source.key? _source
       _source = Manager.load Config::SourceDir, _source
       return false if _source.empty?
       @source.merge! _source

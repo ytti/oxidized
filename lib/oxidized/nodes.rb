@@ -2,7 +2,7 @@ module Oxidized
   require 'oxidized/node'
   class Nodes < Array
     attr_accessor :source
-    alias :del :delete
+    alias :put :unshift
     def initialize *args
       super
       load if args.empty?
@@ -17,17 +17,25 @@ module Oxidized
       replace new
     end
     def list
-      self
+      map { |e| e.name }
     end
-    # @param node [String] name of the node inserted into nodes array
-    def put node
-      unshift node
+    def find_index node
+      index { |e| e.name == node }
+    end
+    def show node
+      i = find_index node
+      self[i].serialize if i
+    end
+    def del node
+      i = find_index node
+      delete_at i if i
     end
     # @param node [String] name of the node moved into the head of array
-    def top node
+    def next node
       n = del node
       put n if n
     end
+    alias :top :next
     # @return [String] node from the head of the array
     def get
       (self << shift).last

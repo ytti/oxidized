@@ -5,6 +5,7 @@ module Oxidized
     OutputDir = File.join Directory, %w(lib oxidized output)
     ModelDir  = File.join Directory, %w(lib oxidized model)
     SourceDir = File.join Directory, %w(lib oxidized source) 
+    Sleep     = 1
   end
   class << self
     attr_accessor :mgr

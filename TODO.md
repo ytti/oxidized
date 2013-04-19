@@ -15,11 +15,6 @@ I don't really need it myself, since I don't have platforms where it would be ne
   * should we try to avoid max threads from being hit? (like maybe non-success thread is pulling average?)
 
 
-# restful API (puma+sinatra):
-  * ask to reload node list
-  * move node to head of queue
-
-
 # config
    * save keys as strings, load as symbols?
 

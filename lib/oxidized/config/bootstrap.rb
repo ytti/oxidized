@@ -10,6 +10,7 @@ module Oxidized
   CFG.threads  = 10
   CFG.timeout  = 5
   CFG.prompt   = /^([\w\.\-@]{3,30}[#>]\s?)$/ 
+  CFG.rest     = 8888
   CFG.input    = {
     :default => 'ssh',
   }
@@ -17,7 +18,7 @@ module Oxidized
     :default => 'git',
   }
   CFG.source   = {
-    :default => 'ascii',
+    :default => 'csv',
   }
   CFG.model_map = {
     'cisco'   => 'ios',

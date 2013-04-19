@@ -28,7 +28,6 @@ class Git < Output
       repo = File.join File.dirname(repo), opt[:group] + '.git'
     end
     begin
-
       repo = Repo.new repo
       actor = Actor.new user, email
       update_repo repo, file, data, msg, actor
