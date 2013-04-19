@@ -31,9 +31,15 @@ module Oxidized
       delete_at i if i
     end
     # @param node [String] name of the node moved into the head of array
-    def next node
+    def next node, opt={}
+      require 'pp'
       n = del node
-      put n if n
+      if n
+        n.user = opt['user']
+        n.msg  = opt['msg']
+        n.from = opt['from']
+        put n
+      end
     end
     alias :top :next
     # @return [String] node from the head of the array

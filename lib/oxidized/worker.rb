@@ -23,8 +23,12 @@ module Oxidized
       node.last = job
       @jobs.duration job.time
       if job.status == :success
+        msg = "update #{node.name}"
+        msg += " from #{node.from}" if node.from
+        msg += " with message '#{node.msg}'" if node.msg
         node.output.new.update node.name, job.config, 
-                               :msg => "update #{node.name}", :group => node.group
+                               :msg => msg, :user => node.user, :group => node.group
+        node.reset
       else
         Log.warn "#{node.name} status #{job.status}"
       end

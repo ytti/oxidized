@@ -4,7 +4,7 @@ module Oxidized
   class ModelNotFound < StandardError; end
   class Node
     attr_reader :name, :ip, :model, :input, :output, :group, :auth, :prompt
-    attr_accessor :last, :running
+    attr_accessor :last, :running, :user, :msg, :from
     alias :running? :running
     def initialize opt
       @name           = opt[:name]
@@ -45,6 +45,10 @@ module Oxidized
         }
       end
       h
+    end
+
+    def reset
+      @user = @msg = @from = nil
     end
 
     private

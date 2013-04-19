@@ -16,7 +16,10 @@ I don't really need it myself, since I don't have platforms where it would be ne
 
 
 # config
-   * save keys as strings, load as symbols?
+  * save keys as strings, load as symbols?
+
+# REST API
+  * figure out if is somehow possible to run rack/puma/sinatra stack with oxidized select()
 
 # other 
 should it offer cli mass config-pusher? (I think not, I have ideas for such
@@ -31,5 +34,5 @@ use sidekiq? Any benefits?
   * rspec tests
 
 
-# multiple input methods
+# input method fallback
   * ssh, with telnet fallback

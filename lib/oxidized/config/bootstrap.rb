@@ -4,10 +4,10 @@ module Oxidized
   CFG.username = 'username'
   CFG.password = 'password'
   CFG.model    = 'junos'
-  CFG.interval = 30
+  CFG.interval = 60
   CFG.log      = File.join Config::Root, 'log'
   CFG.debug    = false
-  CFG.threads  = 10
+  CFG.threads  = 30
   CFG.timeout  = 5
   CFG.prompt   = /^([\w\.\-@]{3,30}[#>]\s?)$/ 
   CFG.rest     = 8888
