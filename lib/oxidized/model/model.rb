@@ -2,7 +2,7 @@ module Oxidized
   class Model
     class << self
       def inherited klass
-        klass.instance_variable_set '@cmd', []
+        klass.instance_variable_set '@cmd', Hash.new { |h,k| h[k] = [] }
         klass.instance_variable_set '@cfg', Hash.new { |h,k| h[k] = [] }
         Oxidized.mgr.loader = { :class => klass }
       end
@@ -22,7 +22,11 @@ module Oxidized
         @cfg
       end
       def cmd _cmd=nil, &block
-        @cmd << [_cmd, block]
+        if _cmd.class == Symbol
+          @cmd[_cmd] << block
+        else
+          @cmd[:cmd] << [_cmd, block]
+        end
       end
       def cmds
         @cmd
@@ -50,9 +54,12 @@ module Oxidized
 
     def cmds
       data = ''
-      self.class.cmds.each do |cmd, cb|
+      self.class.cmds[:cmd].each do |cmd, cmd_block|
         out = @input.cmd cmd
-        out = instance_exec out, &cb if cb
+        self.class.cmds[:all].each do |all_block|
+          out = instance_exec out, &all_block
+        end
+        out = instance_exec out, &cmd_block if cmd_block
         data << out.to_s
       end
       data

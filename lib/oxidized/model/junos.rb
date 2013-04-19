@@ -6,12 +6,13 @@ class JunOS < Oxidized::Model
     @input.class.to_s.match /Telnet/
   end
 
-  cmd 'show configuration' do |cfg|
-    # example how to handle different output from different methods. Other option would be to
-    # pass string to helper method, which checks if top/bottom has prompts and removes
+  cmd :all do |cfg|
+    # we don't need screen-scraping in ssh due to exec
     cfg = cfg.lines[1..-2].join if telnet
     cfg
   end
+
+  cmd 'show configuration'
 
   cmd 'show version' do |cfg|
     chassis = model $1 if cfg.match /^Model: (\S+)/

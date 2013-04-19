@@ -2,14 +2,18 @@ class IOS < Oxidized::Model
 
   comment  '! '
 
+  cmd :all do |cfg|
+    cfg.each_line.to_a[1..-3].join
+  end
+
   cmd 'show running-config' do |cfg|
-    cfg = cfg.each_line.to_a[3..-2].join
+    cfg = cfg.each_line.to_a[3..-1].join
     cfg.sub! /^(ntp clock-period).*/, '! \1'
     cfg
   end
 
   cmd 'show inventory' do |cfg|
-    comment cfg.each_line.to_a[1..-2].join
+    comment cfg
   end
 
   cfg :telnet do
