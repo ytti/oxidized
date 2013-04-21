@@ -17,7 +17,7 @@
 
 ## Output
  * stores config
- * must implement 'update'
+ * must implement 'store'
  * 'git' and 'file' (store as flat ascii) implemented
 
 ## Source

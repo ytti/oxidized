@@ -26,8 +26,8 @@ module Oxidized
         msg = "update #{node.name}"
         msg += " from #{node.from}" if node.from
         msg += " with message '#{node.msg}'" if node.msg
-        node.output.new.update node.name, job.config, 
-                               :msg => msg, :user => node.user, :group => node.group
+        node.output.new.store node.name, job.config, 
+                              :msg => msg, :user => node.user, :group => node.group
         node.reset
       else
         Log.warn "#{node.name} status #{job.status}"

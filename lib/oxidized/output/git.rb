@@ -19,7 +19,7 @@ class Git < Output
     end
   end
 
-  def update file, data, opt={}
+  def store file, data, opt={}
     msg   = opt[:msg]
     user  = (opt[:user]  or @cfg[:user])
     email = (opt[:email] or @cfg[:email])

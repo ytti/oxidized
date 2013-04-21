@@ -15,7 +15,7 @@ class OxFile < Output
     end
   end
 
-  def update node, data, opt={}
+  def store node, data, opt={}
     file = @cfg[:directory]
     if opt[:group]
       file = File.join File.dirname(file), opt[:group]
