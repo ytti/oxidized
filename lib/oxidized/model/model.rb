@@ -40,6 +40,7 @@ module Oxidized
 
     def cmd string
       out = @input.cmd string
+      out = cmd_all out
       out = yield out if block_given?
       out
     end
@@ -56,9 +57,7 @@ module Oxidized
       data = ''
       self.class.cmds[:cmd].each do |cmd, cmd_block|
         out = @input.cmd cmd
-        self.class.cmds[:all].each do |all_block|
-          out = instance_exec out, &all_block
-        end
+        out = cmd_all out
         out = instance_exec out, &cmd_block if cmd_block
         data << out.to_s
       end
@@ -74,5 +73,13 @@ module Oxidized
       data
     end
 
+    private
+
+    def cmd_all string
+      self.class.cmds[:all].each do |block|
+        string = instance_exec string, &block
+      end
+      string
+    end
   end
 end
