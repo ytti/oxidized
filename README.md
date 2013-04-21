@@ -12,7 +12,7 @@
 # API
 ## Input
  * gets config from nodes
- * must implement 'connect', 'get'
+ * must implement 'connect', 'get', 'cmd'
  * 'ssh' and 'telnet' implemented
 
 ## Output

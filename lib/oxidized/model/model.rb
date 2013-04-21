@@ -38,10 +38,12 @@ module Oxidized
 
     attr_accessor :input
 
-    def cmd string
+    def cmd string, &block
       out = @input.cmd string
-      out = cmd_all out
-      out = yield out if block_given?
+      self.class.cmds[:all].each do |all_block|
+        out = instance_exec out, &all_block
+      end
+      out = instance_exec out, &block if block
       out
     end
 
@@ -53,13 +55,10 @@ module Oxidized
       self.class.prompt
     end
 
-    def cmds
+    def get
       data = ''
-      self.class.cmds[:cmd].each do |cmd, cmd_block|
-        out = @input.cmd cmd
-        out = cmd_all out
-        out = instance_exec out, &cmd_block if cmd_block
-        data << out.to_s
+      self.class.cmds[:cmd].each do |command, block|
+        data << (cmd command, &block).to_s
       end
       data << main.to_s if respond_to? :main
       data
@@ -73,13 +72,5 @@ module Oxidized
       data
     end
 
-    private
-
-    def cmd_all string
-      self.class.cmds[:all].each do |block|
-        string = instance_exec string, &block
-      end
-      string
-    end
   end
 end

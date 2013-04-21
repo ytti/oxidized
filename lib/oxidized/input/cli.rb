@@ -9,7 +9,7 @@ module Oxidized
 
       def get
         @post_login.each { |command| cmd command }
-        d = @node.model.cmds
+        d = @node.model.get
         disconnect
         d
       end
