@@ -10,7 +10,8 @@ module Oxidized
       @name           = opt[:name]
       @ip             = Resolv.getaddress @name
       @group          = opt[:group]
-      @input, @output = resolve_io opt
+      @input          = resolve_input opt
+      @output         = resolve_output opt
       @model          = resolve_model opt
       @auth           = resolve_auth opt
       @prompt         = resolve_prompt opt
@@ -18,12 +19,15 @@ module Oxidized
 
     def run
       status, config = :fail, nil
-      @model.input = input = @input.new
-      if input.connect self
-        config = input.get
-        status = :success if config
-      else
-        status = :no_cconnection
+      @input.each do |input|
+        @model.input = input = input.new
+        if input.connect self
+          config = input.get
+          status = :success if config
+          break
+        else
+          status = :no_cconnection
+        end
       end
       [status, config]
     end
@@ -66,17 +70,22 @@ module Oxidized
       auth
     end
 
-    def resolve_io opt
-      input  = (opt[:input]  or CFG.input[:default])
+    def resolve_input opt
+      inputs = (opt[:input]  or CFG.input[:default])
+      inputs.split(/\s*,\s*/).map do |input|
+        if not Oxidized.mgr.input[input]
+          Oxidized.mgr.input = input or raise MethodNotFound, "#{input} not found"
+        end
+        Oxidized.mgr.input[input]
+      end
+    end
+
+    def resolve_output opt
       output = (opt[:output] or CFG.output[:default])
-      mgr = Oxidized.mgr
-      if not mgr.input[input]
-        mgr.input = input or raise MethodNotFound, "#{input} not found"
+      if not Oxidized.mgr.output[output]
+        Oxidized.mgr.output = output or raise MethodNotFound, "#{output} not found"
       end
-      if not mgr.output[output]
-        mgr.output = output or raise MethodNotFound, "#{output} not found"
-      end
-      [ mgr.input[input], mgr.output[output] ]
+      Oxidized.mgr.output[output]
     end
 
     def resolve_model opt

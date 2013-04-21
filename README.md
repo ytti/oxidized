@@ -1,10 +1,13 @@
 # Pitch
  * automatically adds/removes threads to meet configured retrieval interval
- * restful API to move node immediately to head-of-queue (maybe trigger from snmp trap or syslog), to be serviced by next spawned thread (GET /nodes/next/$node)
+ * restful API to move node immediately to head-of-queue 
+   * syslog udp+file example to catch config changg event (ios/junos) and trigger config fetch
+   * will signal ios/junos user who made change, which output module can (git does) use
+   * 'git blame' will show for each line who and when the change was made
  * restful API to reload list of nodes (GET /nodes/reload)
 
 # Install
- early days, but try to run it and edit ~/.config/oxidized/config
+ * early days, but try to lib/tst and edit ~/.config/oxidized/config
 
 # API
 ## Input

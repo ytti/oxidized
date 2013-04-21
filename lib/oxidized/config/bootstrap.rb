@@ -12,7 +12,7 @@ module Oxidized
   CFG.prompt   = /^([\w\.\-@]{3,30}[#>]\s?)$/ 
   CFG.rest     = 8888
   CFG.input    = {
-    :default => 'ssh',
+    :default => 'ssh, telnet',
   }
   CFG.output    = {
     :default => 'git',
