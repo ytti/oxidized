@@ -15,12 +15,12 @@ class JunOS < Oxidized::Model
   cmd 'show configuration'
 
   cmd 'show version' do |cfg|
-    chassis = model $1 if cfg.match /^Model: (\S+)/
-    comment cfg << chassis.to_s
+    @model = $1 if cfg.match /^Model: (\S+)/
+    comment cfg
   end
 
-  def model chassis
-    case chassis
+  def main
+    case @model
     when 'mx960'
       cmd('show chassis fabric reachability')  { |cfg| comment cfg }
     end

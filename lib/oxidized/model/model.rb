@@ -62,6 +62,7 @@ module Oxidized
         out = instance_exec out, &cmd_block if cmd_block
         data << out.to_s
       end
+      data << main.to_s if respond_to? :main
       data
     end
 
