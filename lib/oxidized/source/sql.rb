@@ -32,10 +32,9 @@ class SQL < Source
     klass = Class.new(Sequel::Model @cfg[:table].to_sym)
     SQL.send :remove_const, :Nodes if SQL.const_defined? :Nodes
     SQL.const_set :Nodes, klass
-    @cfg[:map].each { |new,old| Nodes.class_eval "alias #{new.to_sym} #{old.to_sym}" }
     Nodes.each do |node|
       keys = {}
-      @cfg[:map].each { |key, _| keys[key] = node.send(key.to_sym) }
+      @cfg[:map].each { |key, sql_column| keys[key] = node.send(sql_column.to_sym) }
       keys[:model] = map_model keys[:model] if keys.key? :model
       nodes << keys
     end
