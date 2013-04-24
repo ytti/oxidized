@@ -24,17 +24,14 @@ class SQL < Source
 
   def load
     nodes = []
-    case @cfg[:adapter]
+    db = case @cfg[:adapter]
     when 'sqlite'
       require 'sqlite3'
       Sequel.sqlite @cfg[:file]
     end
-    klass = Class.new(Sequel::Model @cfg[:table].to_sym)
-    SQL.send :remove_const, :Nodes if SQL.const_defined? :Nodes
-    SQL.const_set :Nodes, klass
-    Nodes.each do |node|
+    db[@cfg[:table].to_sym].each do |node|
       keys = {}
-      @cfg[:map].each { |key, sql_column| keys[key] = node.send(sql_column.to_sym) }
+      @cfg[:map].each { |key, sql_column| keys[key] = node[sql_column.to_sym] }
       keys[:model] = map_model keys[:model] if keys.key? :model
       nodes << keys
     end
