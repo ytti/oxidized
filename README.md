@@ -7,7 +7,13 @@
  * restful API to reload list of nodes (GET /nodes/reload)
 
 # Install
- * early days, but try to lib/tst and edit ~/.config/oxidized/config
+ * early days, but try:
+    1 rake build
+    1 gem install gem/oxidized*
+    1 oxidized
+    1 vi ~/.config/oxidized
+    1 (maybe point to your rancid/router.db or copy it there)
+    1 oxidized
 
 # API
 ## Input
