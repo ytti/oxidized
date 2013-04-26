@@ -50,8 +50,7 @@ module Oxidized
     end
 
     def rest opt
-      Oxidized::RestClient.next opt[:name], :user => opt[:user], :msg => opt[:msg],
-                                            :from => opt[:from]
+      Oxidized::RestClient.next opt
     end
 
     def ios ip, log, i

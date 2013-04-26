@@ -16,9 +16,9 @@ module Oxidized
       @web = Net::HTTP.new host, port
     end
 
-    def next node, opt={}
-      data = JSON.dump :node => node, :user => opt[:user], :msg => opt[:msg],  :from => opt[:from]
-      @web.put '/nodes/next/' + node.to_s, data
+    def next opt
+      data = JSON.dump opt
+      @web.put '/nodes/next/' + opt[:name].to_s, data
     end
 
   end
