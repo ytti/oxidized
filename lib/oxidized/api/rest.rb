@@ -5,6 +5,7 @@ module Oxidized
     class Rest
       module Helpers
         def send res, msg='OK', status=200
+          msg = {:result => msg}
           res['Content-Type'] = 'application/json'
           res.status = status
           res.body = JSON.dump msg
@@ -15,7 +16,7 @@ module Oxidized
         @nodes = nodes
         addr, port = listen.to_s.split ':'
         port, addr = addr, nil if not port
-        @web = WEBrick::HTTPServer.new :BindAddress=>addr, :Port=>port, :Logger=>Log
+        @web = WEBrick::HTTPServer.new :BindAddress=>addr, :Port=>port, :Logger=>Log, :AccessLog=>[]
         maps
       end
       def work

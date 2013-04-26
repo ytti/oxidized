@@ -26,7 +26,7 @@ module Oxidized
           status = :success if config
           break
         else
-          status = :no_cconnection
+          status = :no_connection
         end
       end
       [status, config]
