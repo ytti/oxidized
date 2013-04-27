@@ -40,6 +40,7 @@ module Oxidized
 
     def cmd string, &block
       out = @input.cmd string
+      return false unless out
       self.class.cmds[:all].each do |all_block|
         out = instance_exec out, &all_block
       end
@@ -58,7 +59,9 @@ module Oxidized
     def get
       data = ''
       self.class.cmds[:cmd].each do |command, block|
-        data << (cmd command, &block).to_s
+        out = cmd command, &block
+        return false unless out
+        data << out.to_s
       end
       data << main.to_s if respond_to? :main
       data

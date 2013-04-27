@@ -25,7 +25,11 @@ module Oxidized
       Log.debug "Telnet: #{cmd} @#{@node.name}"
       args = { 'String' => cmd }
       args.merge!({ 'Match' => expect, 'Timeout' => @timeout }) if expect
-      @telnet.cmd args
+      begin
+        @telnet.cmd args
+      rescue Timeout::Error
+        return false
+      end
     end
 
     private

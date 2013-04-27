@@ -8,7 +8,7 @@ rescue => e
   open Oxidized::Config::Crash, 'w' do |file|
     file.puts '-' * 50
     file.puts Time.now.utc
-    file.puts e.message
+    file.puts e.message + ' [' + e.class.to_s + ']'
     file.puts '-' * 50
     file.puts e.backtrace
     file.puts '-' * 50
