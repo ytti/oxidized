@@ -8,12 +8,12 @@
 
 # Install
  * early days, but try:
-    1 rake build
-    1 gem install gem/oxidized*
-    1 oxidized
-    1 vi ~/.config/oxidized
-    1 (maybe point to your rancid/router.db or copy it there)
-    1 oxidized
+   1. apt-get install libsqlite3-dev
+   2. gem install oxidized
+   3. oxidized
+   4. vi ~/.config/oxidized
+   5. (maybe point to your rancid/router.db or copy it there)
+   6. oxidized
 
 # API
 ## Input
@@ -42,4 +42,4 @@
  * can use 'cmd', 'prompt', 'comment', 'cfg'
  * cfg is executed in input/output/source context
  * cmd is executed in instance of model
- * 'junos' and 'ios' implemented
+ * 'junos', 'ios', 'ironware' and 'powerconnect'
