@@ -39,8 +39,11 @@ module Oxidized
     end
 
     def disconnect
-      @pre_logout.each { |command| cmd(command, nil) }
-      @telnet.close
+      begin
+        @pre_logout.each { |command| cmd(command, nil) }
+        @telnet.close
+      rescue Errno::ECONNRESET
+      end
     end
 
     def username re=/^(Username|login)/
