@@ -8,8 +8,8 @@
 
 # Install
  * early days, but try:
-   1. rake build
-   2. gem install gem/oxidized*
+   1. apt-get install libsqlite3-dev
+   2. gem install oxidized
    3. oxidized
    4. vi ~/.config/oxidized
    5. (maybe point to your rancid/router.db or copy it there)
