@@ -8,12 +8,12 @@
 
 # Install
  * early days, but try:
-   * rake build
-   * gem install gem/oxidized*
-   * oxidized
-   * vi ~/.config/oxidized
-   * (maybe point to your rancid/router.db or copy it there)
-   * oxidized
+   1. rake build
+   2. gem install gem/oxidized*
+   3. oxidized
+   4. vi ~/.config/oxidized
+   5. (maybe point to your rancid/router.db or copy it there)
+   6. oxidized
 
 # API
 ## Input
