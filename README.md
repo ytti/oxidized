@@ -8,12 +8,12 @@
 
 # Install
  * early days, but try:
-    1 rake build
-    1 gem install gem/oxidized*
-    1 oxidized
-    1 vi ~/.config/oxidized
-    1 (maybe point to your rancid/router.db or copy it there)
-    1 oxidized
+   * rake build
+   * gem install gem/oxidized*
+   * oxidized
+   * vi ~/.config/oxidized
+   * (maybe point to your rancid/router.db or copy it there)
+   * oxidized
 
 # API
 ## Input
@@ -42,4 +42,4 @@
  * can use 'cmd', 'prompt', 'comment', 'cfg'
  * cfg is executed in input/output/source context
  * cmd is executed in instance of model
- * 'junos' and 'ios' implemented
+ * 'junos', 'ios', 'ironware' and 'powerconnect'
