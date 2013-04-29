@@ -42,4 +42,4 @@
  * can use 'cmd', 'prompt', 'comment', 'cfg'
  * cfg is executed in input/output/source context
  * cmd is executed in instance of model
- * 'junos', 'ios', 'ironware' and 'powerconnect'
+ * 'junos', 'ios', 'ironware' and 'powerconnect' implemented
