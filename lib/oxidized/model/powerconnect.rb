@@ -11,6 +11,14 @@ class PowerConnect < Oxidized::Model
     cfg
   end
 
+  cmd 'show version' do |cfg|
+    comment cfg
+  end
+
+  cmd 'show system' do |cfg|
+    comment cfg
+  end
+
   cfg :telnet do
     username /^User Name:/
     password /^\r?Password:/
