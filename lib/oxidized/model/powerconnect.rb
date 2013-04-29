@@ -8,9 +8,7 @@ class PowerConnect < Oxidized::Model
     cfg.each_line.to_a[1..-3].join
   end
 
-  cmd 'show running-config' do |cfg|
-    cfg
-  end
+  cmd 'show running-config'
 
   cmd 'show version' do |cfg|
     comment cfg
