@@ -27,7 +27,7 @@ module Oxidized
       args.merge!({ 'Match' => expect, 'Timeout' => @timeout }) if expect
       begin
         @telnet.cmd args
-      rescue Timeout::Error
+      rescue Timeout::Error, Errno::ECONNRESET
         return false
       end
     end
