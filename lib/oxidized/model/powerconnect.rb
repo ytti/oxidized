@@ -19,7 +19,7 @@ class PowerConnect < Oxidized::Model
   end
 
   cfg :telnet do
-    username /^User Name:/
+    username /^User( Name)?:/
     password /^\r?Password:/
   end
 
