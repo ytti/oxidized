@@ -16,7 +16,7 @@ module Oxidized
         expect password
         @telnet.puts @node.auth[:password]
         expect @node.prompt
-      rescue  Errno::ECONNREFUSED, Timeout::Error
+      rescue  Timeout::Error, Errno::ECONNREFUSED, Errno::ECONNRESET, Errno::EHOSTUNREACH
         return false
       end
     end
@@ -27,7 +27,7 @@ module Oxidized
       args.merge!({ 'Match' => expect, 'Timeout' => @timeout }) if expect
       begin
         @telnet.cmd args
-      rescue Timeout::Error, Errno::ECONNRESET
+      rescue Timeout::Error, Errno::ECONNRESET, Errno::EPIPE
         return false
       end
     end

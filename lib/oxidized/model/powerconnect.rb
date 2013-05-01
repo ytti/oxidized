@@ -1,15 +1,14 @@
 class PowerConnect < Oxidized::Model
 
+  prompt /^([\w\s.@-]+[#>]\s?)$/ # allow spaces in hostname..dell does not limit it.. #
+ 
   comment  '! '
 
   cmd :all do |cfg|
     cfg.each_line.to_a[1..-3].join
   end
 
-  cmd 'show running-config' do |cfg|
-    cfg = cfg.each_line.to_a[3..-1].join
-    cfg
-  end
+  cmd 'show running-config'
 
   cmd 'show version' do |cfg|
     comment cfg
@@ -20,7 +19,7 @@ class PowerConnect < Oxidized::Model
   end
 
   cfg :telnet do
-    username /^User Name:/
+    username /^User( Name)?:/
     password /^\r?Password:/
   end
 
