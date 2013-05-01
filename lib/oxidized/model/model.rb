@@ -2,21 +2,23 @@ module Oxidized
   class Model
     class << self
       def inherited klass
-        klass.instance_variable_set '@cmd', Hash.new { |h,k| h[k] = [] }
-        klass.instance_variable_set '@cfg', Hash.new { |h,k| h[k] = [] }
+        klass.instance_variable_set '@cmd',    Hash.new { |h,k| h[k] = [] }
+        klass.instance_variable_set '@cfg',    Hash.new { |h,k| h[k] = [] }
+        klass.instance_variable_set '@expect', []
+        klass.const_set :CFG, CFG
         Oxidized.mgr.loader = { :class => klass }
       end
       def comment _comment='# '
         return @comment if @comment
         @comment = block_given? ? yield : _comment
       end
+      def prompt _prompt=nil
+        @prompt or @prompt = _prompt
+      end
       def cfg *methods, &block
         [methods].flatten.each do |method|
           @cfg[method.to_s] << block
         end
-      end
-      def prompt _prompt=nil
-        @prompt or @prompt = _prompt
       end
       def cfgs
         @cfg
@@ -31,8 +33,11 @@ module Oxidized
       def cmds
         @cmd
       end
-      def post_login &block
-        @post_login or @post_login = block
+      def expect re, &block
+        @expect << [re, block]
+      end
+      def expects
+        @expect
       end
     end
 
@@ -48,12 +53,33 @@ module Oxidized
       out
     end
 
-    def  cfg
+    def send data
+      @input.send data
+    end
+
+    def expect re, &block
+      self.class.expect re, &block
+    end
+
+    def cfg
       self.class.cfgs
     end
 
     def prompt
       self.class.prompt
+    end
+
+    def expects data
+      self.class.expects.each do |re, cb|
+        if data.match re
+          if cb.arity == 2
+            data = instance_exec [data, re], &cb
+          else
+            data = instance_exec data, &cb
+          end
+        end
+      end
+      data
     end
 
     def get

@@ -15,7 +15,7 @@ module Oxidized
       rescue Timeout::Error, Net::SSH::Disconnect, Errno::ECONNREFUSED
         return false
       end
-      @ses = open_shell @ssh unless @exec
+      open_shell @ssh unless @exec
       not @ssh.closed?
     end
 
@@ -28,11 +28,15 @@ module Oxidized
       end
     end
 
+    def send data
+      @ses.send_data data
+    end
+
     private
 
     def disconnect
       begin
-        @pre_logout.each { |command| cmd command }
+        disconnect_cli
         @ssh.loop
         @ssh.close if not @ssh.closed?
       rescue Net::SSH::Disconnect
@@ -40,9 +44,10 @@ module Oxidized
     end
 
     def open_shell ssh
-      ses = ssh.open_channel do |ch|
+      @ses = ssh.open_channel do |ch|
         ch.on_data do |ch, data|
           @output << data
+          @output = @node.model.expects @output
         end
         ch.request_pty do |ch, success|
           raise NoShell, "Can't get PTY" unless success
@@ -52,7 +57,6 @@ module Oxidized
         end
       end
       expect @node.prompt
-      ses
     end
 
     def exec state=nil

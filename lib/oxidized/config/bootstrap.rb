@@ -4,13 +4,16 @@ module Oxidized
   CFG.username = 'username'
   CFG.password = 'password'
   CFG.model    = 'junos'
-  CFG.interval = 60
+  CFG.interval = 3600
   CFG.log      = File.join Config::Root, 'log'
   CFG.debug    = false
   CFG.threads  = 30
   CFG.timeout  = 5
-  CFG.prompt   = /^([\w\.\-@]{3,30}[#>]\s?)$/ 
+  CFG.prompt   = /^([\w.@-]+[#>]\s?)$/
   CFG.rest     = 8888
+  CFG.vars     = {
+    :enable  => 'enablePW',
+  }
   CFG.input    = {
     :default => 'ssh, telnet',
   }
