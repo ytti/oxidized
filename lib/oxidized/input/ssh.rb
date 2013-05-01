@@ -12,7 +12,7 @@ module Oxidized
       begin
         @ssh = Net::SSH.start @node.ip, @node.auth[:username],
                               :password => @node.auth[:password], :timeout => CFG.timeout
-      rescue Timeout::Error, Net::SSH::Disconnect, Errno::ECONNREFUSED
+      rescue Timeout::Error, Errno::ECONNREFUSED, Errno::ECONNRESET, Net::SSH::Disconnect
         return false
       end
       @ses = open_shell @ssh unless @exec
