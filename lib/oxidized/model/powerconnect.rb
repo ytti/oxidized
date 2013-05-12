@@ -4,6 +4,11 @@ class PowerConnect < Oxidized::Model
 
   comment  '! '
 
+  expect /^\s--More--\s+.*$/ do |data, re|
+     send ' '
+     data.sub re, ''
+  end
+
   cmd :all do |cfg|
     cfg.each_line.to_a[1..-3].join
   end
@@ -25,6 +30,7 @@ class PowerConnect < Oxidized::Model
 
   cfg :telnet, :ssh do
     post_login 'terminal datadump'
+    post_login 'enable'
     pre_logout 'exit'
   end
 
