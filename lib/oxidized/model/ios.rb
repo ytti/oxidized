@@ -23,7 +23,11 @@ class IOS < Oxidized::Model
 
   cmd 'show running-config' do |cfg|
     cfg = cfg.each_line.to_a[3..-1].join
+    cfg.gsub! /^Current configuration : [^\n]*\n/, ''
     cfg.sub! /^(ntp clock-period).*/, '! \1'
+    cfg.gsub! /^\ tunnel\ mpls\ traffic-eng\ bandwidth[^\n]*\n*(
+                  (?:\ [^\n]*\n*)*
+                  tunnel\ mpls\ traffic-eng\ auto-bw)/mx, '\1'
     cfg
   end
 
@@ -40,10 +44,12 @@ class IOS < Oxidized::Model
     post_login 'terminal length 0'
     post_login 'terminal width 0'
     # preferred way to handle additional passwords
-    #post_login do
-    #  send "enable\n"
-    #  send CFG.vars[:enable] + "\n"
-    #end
+    if CFG.vars[:enable] and CFG.vars[:enable] != ''
+      post_login do
+        send "enable\n"
+        send CFG.vars[:enable] + "\n"
+      end
+    end
     pre_logout 'exit'
   end
 
