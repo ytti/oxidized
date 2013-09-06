@@ -17,7 +17,7 @@ module Oxidized
         expect password
         @telnet.puts @node.auth[:password]
         expect @node.prompt
-      rescue  Timeout::Error, Errno::ECONNREFUSED, Errno::ECONNRESET, Errno::EHOSTUNREACH
+      rescue  Timeout::Error, Errno::ECONNREFUSED, Errno::ECONNRESET, Errno::EPIPE, Errno::EHOSTUNREACH
         return false
       end
     end
