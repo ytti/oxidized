@@ -41,6 +41,19 @@ module Oxidized
           # /nodes/show/node - returns data about node
           when /show\/(.*)/
             send res, @nodes.show($1)
+          when /fetch\/(.*)/ # primitive node fetch implementation for file config - /nodes/fetch/$ip_address
+            if CFG.output[:default] == "file" # ugly hack to disable configuration fetch for non ascii configurations
+              @cfg_root = CFG.output[:file]
+              File.open("#{@cfg_root[:directory]}/#{$1}", "r") do |pipe|
+                @res_config = []
+                while ( line = pipe.gets ) do
+                  @res_config << line # store configuration into an array to format and send
+                end
+              end
+              send res, @res_config
+            else
+              send res, "oxidized 0.0.14 support fetch for ascii configuration files only." # return error to end user 
+            end
           end
         end
       end
