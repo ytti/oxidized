@@ -42,7 +42,7 @@ module Oxidized
           when /show\/(.*)/
             send res, @nodes.show($1)
           when /fetch\/(.*)/ # primitive node fetch implementation for file config - /nodes/fetch/$ip_address
-            if CFG.output[:default] == "file" # ugly hack to disable configuration fetch for non ascii configurations
+            if CFG.output[:default] == "file" and $1 != '' # ugly hack to disable configuration fetch for non ascii configurations and ensure that argument is received
               @cfg_root = CFG.output[:file]
               File.open("#{@cfg_root[:directory]}/#{$1}", "r") do |pipe|
                 @res_config = []
@@ -51,8 +51,10 @@ module Oxidized
                 end
               end
               send res, @res_config
-            else
+            elsif CFG.output[:default] != "file" and $1 != '' 
               send res, "oxidized 0.0.14 support fetch for ascii configuration files only." # return error to end user 
+            else # return error if no argument is received
+              send res, "missing argument - example: /nodes/fetch/192.0.2.1"
             end
           end
         end
