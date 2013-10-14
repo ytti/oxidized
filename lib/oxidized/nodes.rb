@@ -1,5 +1,6 @@
 module Oxidized
   require 'oxidized/node'
+ class Oxidized::NotSupported < StandardError; end
   class Nodes < Array
     attr_accessor :source
     alias :put :unshift
@@ -25,6 +26,11 @@ module Oxidized
     def show node
       i = find_index node
       self[i].serialize if i
+    end
+    def fetch node
+      i = find_index node
+      raise Oxidized::NotSupported unless Oxidized.mgr.output.respond_to? :fetch
+      self[i].output.new.fetch node
     end
     def del node
       i = find_index node

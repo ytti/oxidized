@@ -41,6 +41,12 @@ module Oxidized
           # /nodes/show/node - returns data about node
           when /show\/(.*)/
             send res, @nodes.show($1)
+          when /fetch\/(.*)/
+            begin
+              send res, @nodes.fetch($1)
+            rescue Oxidized::NotSupported => e
+              send res, e
+            end
           end
         end
       end

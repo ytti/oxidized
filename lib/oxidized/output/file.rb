@@ -25,5 +25,9 @@ class OxFile < Output
     open(file, 'w') { |fh| fh.write data }
   end
 
+  def fetch node
+    IO.readlines File.join(@cfg[:directory], node)
+  end
+
 end
 end
