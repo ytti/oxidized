@@ -27,10 +27,10 @@ module Oxidized
       i = find_index node
       self[i].serialize if i
     end
-    def fetch node
-      i = find_index node
+    def fetch node, group
       raise Oxidized::NotSupported unless Oxidized.mgr.output.respond_to? :fetch
-      self[i].output.new.fetch node
+      i = find_index node
+      self[i].output.new.fetch node, group
     end
     def del node
       i = find_index node

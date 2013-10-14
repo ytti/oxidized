@@ -41,9 +41,15 @@ module Oxidized
           # /nodes/show/node - returns data about node
           when /show\/(.*)/
             send res, @nodes.show($1)
+          # /nodes/fetch/<node> or /nodes/fetch/group/<group>/<node> - returns json formatted configuration file for <node>
           when /fetch\/(.*)/
             begin
-              send res, @nodes.fetch($1)
+              if $1.include? '/'
+                group, node = $1.split("/")[1..2]
+              else
+                group, node = 0, $1
+              end
+              send res, @nodes.fetch(node, group)
             rescue Oxidized::NotSupported => e
               send res, e
             end
