@@ -34,7 +34,7 @@ class OxFile < Output
       if File.exists?("#{cfg_dir}/#{node}") # node configuration file is stored on base directory
         IO.readlines File.join(cfg_dir, node)
       else
-        file = Find.find('.').lazy.find{|e|e.match /#{node}/}
+        file = 
         if file
           open(file, 'r').readlines
         else
