@@ -31,15 +31,11 @@ class OxFile < Output
     if group != 0 # group is explicitly defined by user
       IO.readlines File.join(cfg_dir, group, node)
     else
-      if File.exists?("#{cfg_dir}/#{node}") # node configuration file is stored on base directory
+      if File.exists? File.join(cfg_dir, node) # node configuration file is stored on base directory
         IO.readlines File.join(cfg_dir, node)
       else
-        file = 
-        if file
-          open(file, 'r').readlines
-        else
-          "not found."
-        end
+        path = Dir.glob File.join(cfg_dir, '**', node) # fetch node in all groups
+        open(path[0], 'r').readlines
       end
     end
   end
