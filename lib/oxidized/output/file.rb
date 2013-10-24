@@ -25,9 +25,20 @@ class OxFile < Output
     open(file, 'w') { |fh| fh.write data }
   end
 
-  def fetch node
-    IO.readlines File.join(@cfg[:directory], node)
+  
+  def fetch node, group
+    cfg_dir = @cfg[:directory]
+    if group != 0 # group is explicitly defined by user
+      IO.readlines File.join(cfg_dir, group, node)
+    else
+      if File.exists? File.join(cfg_dir, node) # node configuration file is stored on base directory
+        IO.readlines File.join(cfg_dir, node)
+      else
+        path = Dir.glob File.join(cfg_dir, '**', node) # fetch node in all groups
+        open(path[0], 'r').readlines
+      end
+    end
   end
-
+  
 end
 end
