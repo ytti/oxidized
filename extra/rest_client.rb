@@ -6,9 +6,9 @@ module Oxidized
     PORT = 8888
 
     class << self
-      def next node, opt={}, host=HOST, port=PORT
+      def next opt={}, host=HOST, port=PORT
         web = new host, port
-        web.next node, opt
+        web.next opt
       end
     end
 
