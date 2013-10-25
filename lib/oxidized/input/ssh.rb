@@ -39,7 +39,7 @@ module Oxidized
         disconnect_cli
         @ssh.loop
         @ssh.close if not @ssh.closed?
-      rescue Net::SSH::Disconnect
+      rescue Errno::ECONNRESET, Net::SSH::Disconnect
       end
     end
 

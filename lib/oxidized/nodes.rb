@@ -1,6 +1,7 @@
 module Oxidized
   require 'oxidized/node'
  class Oxidized::NotSupported < StandardError; end
+ class Oxidized::NodeNotFound < StandardError; end
   class Nodes < Array
     attr_accessor :source
     alias :put :unshift
@@ -20,21 +21,18 @@ module Oxidized
     def list
       map { |e| e.name }
     end
-    def find_index node
-      index { |e| e.name == node }
-    end
     def show node
-      i = find_index node
-      self[i].serialize if i
+      i = find_node_index node
+      self[i].serialize
     end
     def fetch node, group
-      raise Oxidized::NotSupported unless Oxidized.mgr.output.respond_to? :fetch
-      i = find_index node
-      self[i].output.new.fetch node, group
+      i = find_node_index node
+      output = self[i].output.new
+      raise Oxidized::NotSupported unless output.respond_to? :fetch
+      output.fetch node, group
     end
     def del node
-      i = find_index node
-      delete_at i if i
+      delete_at find_node_index
     end
     # @param node [String] name of the node moved into the head of array
     def next node, opt={}
@@ -51,6 +49,16 @@ module Oxidized
     # @return [String] node from the head of the array
     def get
       (self << shift).last
+    end
+
+    private
+
+    def find_index node
+      index { |e| e.name == node }
+    end
+
+    def find_node_index node
+      find_index node or raise Oxidized::NodeNotFound
     end
   end
 end
