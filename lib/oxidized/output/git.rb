@@ -37,6 +37,15 @@ class Git < Output
     end
   end
 
+  def fetch node, group
+    begin
+      repo = Repo.new(@cfg[:repo])
+      (repo.tree / node).data
+    rescue
+      'node not found'
+    end
+  end
+
   private
 
   def update_repo repo, file, data, msg, actor

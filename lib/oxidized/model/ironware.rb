@@ -16,6 +16,7 @@ class IronWare < Oxidized::Model
   end
 
   cmd 'show chassis' do |cfg|
+    cfg.gsub! "\xFF", '' # ugly hack - avoids JSON.dump utf-8 breakage on 1.9..
     comment cfg
   end
 

@@ -4,11 +4,14 @@ module Oxidized
   module API
     class Rest
       module Helpers
-        def send res, msg='OK', status=200
-          msg = {:result => msg}
-          res['Content-Type'] = 'application/json'
-          res.status = status
-          res.body = JSON.dump msg
+        def send res, msg='OK', ascii=false, status=200
+          res.body = msg
+          if not ascii
+            msg = {:result => msg}
+            res['Content-Type'] = 'application/json'
+            res.status = status
+            res.body = JSON.dump msg
+          end
         end
       end
       include Oxidized::API::Rest::Helpers
@@ -47,9 +50,12 @@ module Oxidized
               if $1.include? '/'
                 group, node = $1.split("/")[1..2]
               else
-                group, node = 0, $1
+                group, node = nil, $1
               end
-              send res, @nodes.fetch(node, group)
+              ascii = if node[-4..-1] == '.txt'
+                node = node[0..-5]
+              end
+              send res, @nodes.fetch(node, group), ascii
             rescue Oxidized::NotSupported => e
               send res, e
             end
