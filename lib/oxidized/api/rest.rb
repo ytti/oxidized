@@ -4,9 +4,9 @@ module Oxidized
   module API
     class Rest
       module Helpers
-        def send res, json, msg='OK', status=200
+        def send res, msg='OK', ascii=false, status=200
           res.body = msg
-          if not json
+          if ascii
             msg = {:result => msg}
             res['Content-Type'] = 'application/json'
             res.status = status
@@ -52,10 +52,10 @@ module Oxidized
               else
                 group, node = 0, $1
               end
-              json = if node[-4..-1] == '.txt'
+              ascii = if node[-4..-1] == '.txt'
                 node = node[0..-5]
               end
-              send res, json, @nodes.fetch(node, group)
+              send res, @nodes.fetch(node, group), ascii
             rescue Oxidized::NotSupported => e
               send res, e
             end
