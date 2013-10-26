@@ -6,7 +6,7 @@ module Oxidized
       module Helpers
         def send res, msg='OK', ascii=false, status=200
           res.body = msg
-          if ascii
+          if not ascii
             msg = {:result => msg}
             res['Content-Type'] = 'application/json'
             res.status = status
