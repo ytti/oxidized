@@ -50,7 +50,7 @@ module Oxidized
               if $1.include? '/'
                 group, node = $1.split("/")[1..2]
               else
-                group, node = 0, $1
+                group, node = nil, $1
               end
               ascii = if node[-4..-1] == '.txt'
                 node = node[0..-5]
