@@ -5,10 +5,13 @@ module Oxidized
     class Rest
       module Helpers
         def send res, msg='OK', status=200
-          msg = {:result => msg}
-          res['Content-Type'] = 'application/json'
-          res.status = status
-          res.body = JSON.dump msg
+          res.body = msg
+          if not res.body[-1] == '+' 
+            msg = {:result => msg}
+            res['Content-Type'] = 'application/json'
+            res.status = status
+            res.body = JSON.dump msg
+          end
         end
       end
       include Oxidized::API::Rest::Helpers
@@ -49,7 +52,12 @@ module Oxidized
               else
                 group, node = 0, $1
               end
-              send res, @nodes.fetch(node, group)
+              if node.include? '.txt'
+                node.gsub! '.txt', ''
+                send res, [ @nodes.fetch(node, group) + '+' ].join(':') # add local switch to trick 'send' out of json formatting
+              else
+                send res, @nodes.fetch(node, group)
+              end
             rescue Oxidized::NotSupported => e
               send res, e
             end
