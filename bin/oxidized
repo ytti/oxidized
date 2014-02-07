@@ -3,6 +3,7 @@
 require 'oxidized'
 
 begin
+  Process.daemon unless $DEBUG
   Oxidized.new
 rescue => e
   open Oxidized::Config::Crash, 'w' do |file|

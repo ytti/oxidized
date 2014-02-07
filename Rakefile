@@ -17,7 +17,8 @@ end
 RSpec::Core::RakeTask.new(:spec)
 
 desc "Build gem locally"
-task :build => [:spec, :gemspec] do
+#task :build => [:spec, :gemspec] do
+task :build => [:gemspec] do
   system "gem build #{gemspec.name}.gemspec"
   FileUtils.mkdir_p "gems"
   FileUtils.mv "#{gemspec.name}-#{gemspec.version}.gem", "gems"

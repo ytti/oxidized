@@ -21,7 +21,7 @@ module Oxidized
       status, config = :fail, nil
       @input.each do |input|
         @model.input = input = input.new
-        if input.connect self
+        if connect input
           config = input.get
           status = :success if config
           break
@@ -30,6 +30,16 @@ module Oxidized
         end
       end
       [status, config]
+    end
+
+    def connect input
+      rescue_fail = input.class::RescueFail + input.class.superclass::RescueFail
+      begin
+        input.connect self
+      rescue *rescue_fail => err
+        Log.warn '%s raised %s with msg' % [self.ip, err.class, err.message]
+        return false
+      end
     end
 
     def serialize

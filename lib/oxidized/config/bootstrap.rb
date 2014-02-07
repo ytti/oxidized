@@ -14,8 +14,11 @@ module Oxidized
   CFG.vars     = {
     :enable  => 'enablePW',
   }
-  CFG.input    = {
-    :default => 'ssh, telnet',
+  CFG.input   = {
+    :default  => 'ssh, telnet',
+    :ssh      =>  {
+      :secure => false,
+    }
   }
   CFG.output    = {
     :default => 'git',

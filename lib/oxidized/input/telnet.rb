@@ -2,6 +2,7 @@ module Oxidized
   require 'net/telnet'
   require 'oxidized/input/cli'
   class Telnet < Input
+    RescueFail = []
     include CLI 
     attr_reader :telnet
 
@@ -9,28 +10,20 @@ module Oxidized
       @node    = node
       @timeout = CFG.timeout
       @node.model.cfg['telnet'].each { |cb| instance_exec &cb }
-      begin
-        @telnet  = Net::Telnet.new 'Host' => @node.ip, 'Waittime' => @timeout,
-                                   'Model' => @node.model
-        expect username
-        @telnet.puts @node.auth[:username]
-        expect password
-        @telnet.puts @node.auth[:password]
-        expect @node.prompt
-      rescue  Timeout::Error, Errno::ECONNREFUSED, Errno::ECONNRESET, Errno::EPIPE, Errno::EHOSTUNREACH
-        return false
-      end
+      @telnet  = Net::Telnet.new 'Host' => @node.ip, 'Waittime' => @timeout,
+                                 'Model' => @node.model
+      expect username
+      @telnet.puts @node.auth[:username]
+      expect password
+      @telnet.puts @node.auth[:password]
+      expect @node.prompt
     end
 
     def cmd cmd, expect=@node.prompt
       Log.debug "Telnet: #{cmd} @#{@node.name}"
       args = { 'String' => cmd }
       args.merge!({ 'Match' => expect, 'Timeout' => @timeout }) if expect
-      begin
-        @telnet.cmd args
-      rescue Timeout::Error, Errno::ECONNRESET, Errno::EPIPE
-        return false
-      end
+      @telnet.cmd args
     end
 
     def send data

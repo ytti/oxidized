@@ -2,6 +2,10 @@ module Oxidized
   require 'net/ssh'
   require 'oxidized/input/cli'
   class SSH < Input
+    RescueFail = [
+      Net::SSH::Disconnect,
+      Net::SSH::AuthenticationFailed,
+    ]
     include CLI
     class NoShell < StandardError; end
 
@@ -9,14 +13,12 @@ module Oxidized
       @node       = node
       @output     = ''
       @node.model.cfg['ssh'].each { |cb| instance_exec &cb }
-      begin
-        @ssh = Net::SSH.start @node.ip, @node.auth[:username],
-                              :password => @node.auth[:password], :timeout => CFG.timeout
-      rescue Timeout::Error, Errno::ECONNREFUSED, Errno::ECONNRESET, Errno::EHOSTUNREACH, Net::SSH::Disconnect
-        return false
-      end
+      secure = CFG.input[:ssh][:secure]
+      @ssh = Net::SSH.start @node.ip, @node.auth[:username],
+                            :password => @node.auth[:password], :timeout => CFG.timeout,
+                            :paranoid => secure
       open_shell @ssh unless @exec
-      not @ssh.closed?
+      @ssh and not @ssh.closed?
     end
 
     def cmd cmd, expect=@node.prompt
