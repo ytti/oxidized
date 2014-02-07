@@ -5,6 +5,7 @@ module Oxidized
     RescueFail = [
       Net::SSH::Disconnect,
       Net::SSH::AuthenticationFailed,
+      RuntimeError,
     ]
     include CLI
     class NoShell < StandardError; end
@@ -41,7 +42,7 @@ module Oxidized
         disconnect_cli
         @ssh.loop
         @ssh.close if not @ssh.closed?
-      rescue Errno::ECONNRESET, Net::SSH::Disconnect
+      rescue Errno::ECONNRESET, Net::SSH::Disconnect, IOError
       end
     end
 

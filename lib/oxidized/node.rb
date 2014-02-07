@@ -37,7 +37,7 @@ module Oxidized
       begin
         input.connect self
       rescue *rescue_fail => err
-        Log.warn '%s raised %s with msg' % [self.ip, err.class, err.message]
+        Log.warn '%s raised %s with msg "%s"' % [self.ip, err.class, err.message]
         return false
       end
     end
