@@ -2,11 +2,15 @@ module Oxidized
   require 'net/ssh'
   require 'oxidized/input/cli'
   class SSH < Input
-    RescueFail = [
-      Net::SSH::Disconnect,
-      Net::SSH::AuthenticationFailed,
-      RuntimeError,
-    ]
+    RescueFail = {
+      :debug => [
+        Net::SSH::Disconnect,
+      ],
+      :warn => [
+        RuntimeError,
+        Net::SSH::AuthenticationFailed,
+      ],
+    }
     include CLI
     class NoShell < StandardError; end
 

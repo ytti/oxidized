@@ -21,9 +21,8 @@ module Oxidized
       status, config = :fail, nil
       @input.each do |input|
         @model.input = input = input.new
-        if connect input
-          config = input.get
-          status = :success if config
+        if config=run_input(input)
+          status = :success
           break
         else
           status = :no_connection
@@ -32,12 +31,22 @@ module Oxidized
       [status, config]
     end
 
-    def connect input
-      rescue_fail = input.class::RescueFail + input.class.superclass::RescueFail
+    def run_input input
+      rescue_fail = {}
+      [input.class::RescueFail, input.class.superclass::RescueFail].each do |hash|
+        hash.each do |level,errors|
+          errors.each do |err|
+            rescue_fail[err] = level
+          end
+        end
+      end
       begin
-        input.connect self
-      rescue *rescue_fail => err
-        Log.warn '%s raised %s with msg "%s"' % [self.ip, err.class, err.message]
+        if input.connect self
+          input.get
+        end
+      rescue *rescue_fail.keys.flatten => err
+        level = rescue_fail[err.class]
+        Log.send(level, '%s raised %s with msg "%s"' % [self.ip, err.class, err.message])
         return false
       end
     end
