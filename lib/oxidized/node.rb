@@ -44,9 +44,14 @@ module Oxidized
         if input.connect self
           input.get
         end
-      rescue *rescue_fail.keys.flatten => err
-        level = rescue_fail[err.class]
-        Log.send(level, '%s raised %s with msg "%s"' % [self.ip, err.class, err.message])
+      rescue *rescue_fail.keys => err
+        resc  = ''
+        if not level = rescue_fail[err.class]
+          resc  = err.class.ancestors.find{|e|rescue_fail.keys.include? e}
+          level = rescue_fail[resc]
+          resc  = " (rescued #{resc})"
+        end
+        Log.send(level, '%s raised %s%s with msg "%s"' % [self.ip, err.class, resc, err.message])
         return false
       end
     end

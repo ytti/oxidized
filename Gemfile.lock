@@ -1,7 +1,7 @@
 PATH
   remote: .
   specs:
-    oxidized (0.0.18)
+    oxidized (0.0.20)
       grit
       net-ssh
       sequel
