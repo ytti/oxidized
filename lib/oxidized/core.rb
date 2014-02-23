@@ -16,8 +16,10 @@ module Oxidized
       Oxidized.mgr = Manager.new
       nodes        = Nodes.new
       @worker      = Worker.new nodes
-      @rest        = API::Web.new nodes, CFG.rest if CFG.rest
-      @rest.run
+      if CFG.rest
+        @rest        = API::Web.new nodes, CFG.rest
+        @rest.run
+      end
       run
     end
 
@@ -26,7 +28,7 @@ module Oxidized
     def run
       while true
         @worker.work
-        Config::Sleep
+        sleep Config::Sleep
       end
     end
   end
