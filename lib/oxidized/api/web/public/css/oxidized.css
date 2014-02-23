@@ -1,0 +1,35 @@
+body {
+  background: #fdf6e3;
+  color: #002b36;
+}
+
+a:link {
+  /* color: #268bd2; */
+  color: #dc322f;
+  text-decoration: none;
+}
+
+a:visited {
+}
+
+a:hover {
+  color: #d33682;
+  text-decoration: underline;
+}
+
+a:active {
+}
+
+tr.odd {
+  background: #eee8d5;
+}
+
+tr.even {
+  background: #fdf6e3;
+}
+
+tr:hover {
+  background: #586e75;
+  color: #fdf6e3;
+}
+

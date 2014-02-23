@@ -11,7 +11,7 @@ module Oxidized
     # load config from file or bootstrap with built-ins
     def load
       if File.exists? @file
-        marshal_load YAML.load_file @file 
+        marshal_load YAML.load_file @file
       else
         require 'oxidized/config/bootstrap'
       end

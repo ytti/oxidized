@@ -5,7 +5,7 @@ module Oxidized
       @node         = node
       @start        = Time.now.utc
       super do |node|
-        @status, @config = node.run 
+        @status, @config = node.run
         @end             = Time.now.utc
         @time            = @end - @start
       end

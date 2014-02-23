@@ -4,7 +4,7 @@ module Oxidized
   require 'oxidized/worker'
   require 'oxidized/nodes'
   require 'oxidized/manager'
-  require 'oxidized/api/rest'
+  require 'oxidized/api/web'
   class << self
     def new *args
       Core.new args
@@ -16,7 +16,8 @@ module Oxidized
       Oxidized.mgr = Manager.new
       nodes        = Nodes.new
       @worker      = Worker.new nodes
-      @rest        = API::Rest.new nodes, CFG.rest if CFG.rest
+      @rest        = API::Web.new nodes, CFG.rest if CFG.rest
+      @rest.run
       run
     end
 
@@ -25,7 +26,7 @@ module Oxidized
     def run
       while true
         @worker.work
-        @rest ? @rest.work : sleep(Config::Sleep)
+        Config::Sleep
       end
     end
   end

@@ -25,7 +25,6 @@ class OxFile < Output
     open(file, 'w') { |fh| fh.write data }
   end
 
-  
   def fetch node, group
     cfg_dir = @cfg[:directory]
     if group # group is explicitly defined by user
@@ -39,6 +38,6 @@ class OxFile < Output
       end
     end
   end
-  
+
 end
 end

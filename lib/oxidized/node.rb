@@ -58,12 +58,14 @@ module Oxidized
 
     def serialize
       h = {
-        :name  => @name,
-        :ip    => @ip,
-        :group => @group,
-        :model => @model.class.to_s,
-        :last  => nil,
+        :name      => @name,
+        :full_name => @name,
+        :ip        => @ip,
+        :group     => @group,
+        :model     => @model.class.to_s,
+        :last      => nil,
       }
+      h[:full_name] = [@group, @name].join('/') if @group
       if @last
         h[:last] = {
           :start  => @last.start,

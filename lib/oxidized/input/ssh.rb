@@ -77,7 +77,7 @@ module Oxidized
       expect expect_re if expect_re
       @output
     end
-  
+
     def expect regexp
       @ssh.loop(0.1) do
         sleep 0.1

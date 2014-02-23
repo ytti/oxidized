@@ -1,0 +1,6 @@
+%html
+  !=haml :head
+  %body
+    -out='';PP.pp(@data,out)
+    %pre
+      =out

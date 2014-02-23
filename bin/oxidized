@@ -2,6 +2,8 @@
 
 require 'oxidized'
 
+trap("INT") { exit } # sinatra will otherwise steak this from us
+
 begin
   Process.daemon unless $DEBUG
   Oxidized.new
