@@ -73,8 +73,7 @@
 [rancid@lan-login1 /var/rancid/.config/oxidized]%
 ```
 
-### Configuration you end up after first run (and it'll crash on missing router.db
-file)
+### Configuration you end up after first run (and it'll crash on missing router.d file)
 ```
 ---
 :username: username
