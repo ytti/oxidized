@@ -48,7 +48,7 @@
 
 ## Cookbook
 
-# Configuration I use in one environment
+### Configuration I use in one environment
 ```
 [rancid@lan-login1 /var/rancid/.config/oxidized]% cat config
 ---
@@ -73,7 +73,7 @@
 [rancid@lan-login1 /var/rancid/.config/oxidized]%
 ```
 
-Configuration you end up after first run (and it'll crash on missing router.db
+### Configuration you end up after first run (and it'll crash on missing router.db
 file)
 ```
 ---
