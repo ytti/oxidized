@@ -18,8 +18,8 @@ class SQL < Source
           :model     => 'rancid',
         }
       }
+      CFG.save
     end
-    CFG.save
   end
 
   def load

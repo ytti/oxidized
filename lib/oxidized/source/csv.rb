@@ -15,8 +15,8 @@ class CSV < Source
           :model => 1,
         }
       }
+      CFG.save
     end
-    CFG.save
   end
 
   def load

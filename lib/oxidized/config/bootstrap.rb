@@ -10,7 +10,7 @@ module Oxidized
   CFG.threads  = 30
   CFG.timeout  = 5
   CFG.prompt   = /^([\w.@-]+[#>]\s?)$/
-  CFG.rest     = 8888
+  CFG.rest     = '0.0.0.0:8888'
   CFG.vars     = {
     :enable  => 'enablePW',
   }
@@ -30,5 +30,4 @@ module Oxidized
     'cisco'   => 'ios',
     'juniper' => 'junos',
   }
-  CFG.save
 end
