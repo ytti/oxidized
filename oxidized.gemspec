@@ -1,6 +1,6 @@
 Gem::Specification.new do |s|
   s.name              = 'oxidized'
-  s.version           = '0.0.25'
+  s.version           = '0.0.26'
   s.platform          = Gem::Platform::RUBY
   s.authors           = [ 'Saku Ytti' ]
   s.email             = %w( saku@ytti.fi )
@@ -17,6 +17,7 @@ Gem::Specification.new do |s|
   s.add_dependency 'net-ssh'
   s.add_dependency 'grit'
   s.add_dependency 'sinatra'
+  s.add_dependency 'sinatra-contrib'
   s.add_dependency 'haml'
   s.add_dependency 'puma'
 

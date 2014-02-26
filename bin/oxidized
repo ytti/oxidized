@@ -1,10 +1,9 @@
 #!/usr/bin/env ruby
 
-require 'oxidized'
-
 trap("INT") { exit } # sinatra will otherwise steak this from us
 
 begin
+  require 'oxidized'
   Process.daemon unless $DEBUG
   Oxidized.new
 rescue => e
