@@ -12,7 +12,7 @@ module Oxidized
     def load
       if File.exists? @file
         cfg = YAML.load_file @file
-        marshal_load self.to_h.merge(cfg)
+        marshal_load marshal_dump.merge(cfg)
       else
         save
       end
