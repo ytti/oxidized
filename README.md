@@ -13,7 +13,7 @@
    1. apt-get install libsqlite3-dev libssl-dev
    2. gem install oxidized
    3. oxidized
-   4. vi ~/.config/oxidized
+   4. vi ~/.config/oxidized/config
    5. (maybe point to your rancid/router.db or copy it there)
    6. oxidized
 
@@ -54,7 +54,6 @@
 ---
 :username: LANA
 :password: LANAAAAAAA
-:log: "/var/rancid/.config/oxidized/log"
 :output:
   :default: git
   :git:
@@ -109,3 +108,5 @@
 which reads nodes from rancid compatible router.db maps their model names to
 model names oxidized expects, stores config in git, will try ssh first then
 telnet, wont crash on changed ssh keys
+Hopefully most of them are obvious, log is ignored if Syslog::Logger exists
+(>=2.0) and syslog is used instead.
