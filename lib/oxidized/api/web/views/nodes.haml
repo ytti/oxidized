@@ -1,8 +1,7 @@
 %html
   !=haml :head
   %body
-    %a(href="/reload") reload list of nodes
-    %table
+    %table{:class=>'center'}
       %tr
         %th Name
         %th IP
@@ -25,3 +24,5 @@
             %a(href="/node/fetch/#{node[:full_name]}") config
           %td
             %a(href="/node/next/#{node[:full_name]}") update
+    %p{:class=>'center'}
+      %a(href="/reload") reload list of nodes

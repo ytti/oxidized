@@ -4,7 +4,6 @@ body {
 }
 
 a:link {
-  /* color: #268bd2; */
   color: #dc322f;
   text-decoration: none;
 }
@@ -20,6 +19,16 @@ a:hover {
 a:active {
 }
 
+.center {
+  margin-left: auto;
+  margin-right: auto;
+  text-align: center;
+}
+
+th {
+  color: #2aa198;
+}
+
 tr.odd {
   background: #eee8d5;
 }
@@ -32,4 +41,3 @@ tr:hover {
   background: #586e75;
   color: #fdf6e3;
 }
-
