@@ -6,6 +6,10 @@ module Oxidized
   module API
     class WebApp < Sinatra::Base
 
+      get '/' do
+        redirect '/nodes'
+      end
+
       get '/nodes.?:format?' do
         @data = nodes.list.map do |node|
           node[:status]    = 'never'

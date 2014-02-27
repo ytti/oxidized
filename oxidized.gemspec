@@ -1,6 +1,6 @@
 Gem::Specification.new do |s|
   s.name              = 'oxidized'
-  s.version           = '0.0.27'
+  s.version           = '0.0.28'
   s.platform          = Gem::Platform::RUBY
   s.authors           = [ 'Saku Ytti' ]
   s.email             = %w( saku@ytti.fi )
