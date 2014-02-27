@@ -28,6 +28,6 @@ module Oxidized
   CFG = Config.new
   CFG.defaults
   CFG.load
-  Log.file = CFG.log if CFG.log
   Log.level = Logger::INFO unless CFG.debug
+  Log.file = CFG.log if CFG.log
 end
