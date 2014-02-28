@@ -11,7 +11,6 @@ module Oxidized
         @source = CFG.source[:default]
         Oxidized.mgr.source = @source
         Oxidized.mgr.source[@source].new.load.each do |node|
-          n = nil
           begin
             n = Node.new node
           rescue LoadError => err
