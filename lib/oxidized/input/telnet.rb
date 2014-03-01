@@ -9,7 +9,7 @@ module Oxidized
     def connect node
       @node    = node
       @timeout = CFG.timeout
-      @node.model.cfg['telnet'].each { |cb| instance_exec &cb }
+      @node.model.cfg['telnet'].each { |cb| instance_exec(&cb) }
       @telnet  = Net::Telnet.new 'Host' => @node.ip, 'Waittime' => @timeout,
                                  'Model' => @node.model
       expect username
@@ -28,6 +28,10 @@ module Oxidized
 
     def send data
       @telnet.write data
+    end
+
+    def output
+      @telnet.output
     end
 
     private
@@ -59,6 +63,8 @@ end
 class Net::Telnet
   ## FIXME: we just need 'line = model.expects line' to handle pager
   ## how to do this, without redefining the whole damn thing
+  ## FIXME: we also need output (not sure I'm going to support this)
+  attr_reader :output
   def waitfor(options) # :yield: recvdata
     time_out = @options["Timeout"]
     waittime = @options["Waittime"]
@@ -93,6 +99,7 @@ class Net::Telnet
       end
       begin
         c = @sock.readpartial(1024 * 1024)
+        @output = c
         @dumplog.log_dump('<', c) if @options.has_key?("Dump_log")
         if @options["Telnetmode"]
           c = rest + c

@@ -5,6 +5,7 @@ module Oxidized
         Errno::ECONNREFUSED,
       ],
       :warn => [
+        IOError,
         Timeout::Error,
         Errno::ECONNRESET,
         Errno::EHOSTUNREACH,

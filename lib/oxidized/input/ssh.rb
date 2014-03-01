@@ -17,7 +17,7 @@ module Oxidized
     def connect node
       @node       = node
       @output     = ''
-      @node.model.cfg['ssh'].each { |cb| instance_exec &cb }
+      @node.model.cfg['ssh'].each { |cb| instance_exec(&cb) }
       secure = CFG.input[:ssh][:secure]
       @ssh = Net::SSH.start @node.ip, @node.auth[:username],
                             :password => @node.auth[:password], :timeout => CFG.timeout,
@@ -37,6 +37,10 @@ module Oxidized
 
     def send data
       @ses.send_data data
+    end
+
+    def output
+      @output
     end
 
     private

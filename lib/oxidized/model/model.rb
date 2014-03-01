@@ -53,6 +53,10 @@ module Oxidized
       out
     end
 
+    def output
+      @input.output
+    end
+
     def send data
       @input.send data
     end
