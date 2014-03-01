@@ -8,9 +8,6 @@
 # config
   * save keys as strings, load as symbols?
 
-# REST API
-  * figure out if is somehow possible to run rack/puma/sinatra stack with oxidized select()
-
 # other 
 should it offer cli mass config-pusher? (I think not, I have ideas for such
 program and I'm not sure if synergies are high enough for shared code without

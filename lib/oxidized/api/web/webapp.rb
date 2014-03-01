@@ -1,7 +1,7 @@
 require 'sinatra/base'
 require 'sinatra/json'
 require 'haml'
-require 'pp'
+require 'sass'
 module Oxidized
   module API
     class WebApp < Sinatra::Base
@@ -68,10 +68,11 @@ module Oxidized
         out :node
       end
 
-      #get '/node/:node' do
-      #  @data = nodes.show params[:node]
-      #  out
-      #end
+      get '/stylesheets/*.css' do
+        sass params[:splat].first.to_sym
+      end
+
+      private
 
       def out template=:default
         if @json or params[:format] == 'json'

@@ -1,11 +1,12 @@
 PATH
   remote: .
   specs:
-    oxidized (0.0.30)
+    oxidized (0.0.33)
       grit
       haml
       net-ssh
       puma
+      sass
       sequel
       sinatra
       sinatra-contrib
@@ -33,6 +34,7 @@ GEM
       rack
     rack-test (0.6.2)
       rack (>= 1.0)
+    sass (3.2.14)
     sequel (4.7.0)
     sinatra (1.4.4)
       rack (~> 1.4)

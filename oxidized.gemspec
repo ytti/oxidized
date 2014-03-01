@@ -1,6 +1,6 @@
 Gem::Specification.new do |s|
   s.name              = 'oxidized'
-  s.version           = '0.0.31'
+  s.version           = '0.0.33'
   s.platform          = Gem::Platform::RUBY
   s.authors           = [ 'Saku Ytti' ]
   s.email             = %w( saku@ytti.fi )
@@ -12,13 +12,14 @@ Gem::Specification.new do |s|
   s.executables       = %w( oxidized )
   s.require_path      = 'lib'
 
-  s.add_dependency 'sequel'
-  s.add_dependency 'sqlite3'
   s.add_dependency 'net-ssh'
+  s.add_dependency 'sqlite3'
   s.add_dependency 'grit'
+  s.add_dependency 'sequel'
   s.add_dependency 'sinatra'
   s.add_dependency 'sinatra-contrib'
-  s.add_dependency 'haml'
   s.add_dependency 'puma'
+  s.add_dependency 'haml'
+  s.add_dependency 'sass'
 
 end
