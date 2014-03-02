@@ -2,6 +2,7 @@ require 'sinatra/base'
 require 'sinatra/json'
 require 'haml'
 require 'sass'
+require 'pp'
 module Oxidized
   module API
     class WebApp < Sinatra::Base
