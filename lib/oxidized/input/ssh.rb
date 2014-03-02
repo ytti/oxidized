@@ -1,5 +1,6 @@
 module Oxidized
   require 'net/ssh'
+  require 'timeout'
   require 'oxidized/input/cli'
   class SSH < Input
     RescueFail = {
@@ -83,9 +84,11 @@ module Oxidized
     end
 
     def expect regexp
-      @ssh.loop(0.1) do
-        sleep 0.1
-        not @output.match regexp
+      Timeout::timeout(CFG.timeout) do
+        @ssh.loop(0.1) do
+          sleep 0.1
+          not @output.match regexp
+        end
       end
     end
 

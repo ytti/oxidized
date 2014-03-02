@@ -1,7 +1,7 @@
 PATH
   remote: .
   specs:
-    oxidized (0.0.33)
+    oxidized (0.0.34)
       grit
       haml
       net-ssh
