@@ -109,7 +109,7 @@ module Oxidized
       inputs = (opt[:input]  or CFG.input[:default])
       inputs.split(/\s*,\s*/).map do |input|
         if not Oxidized.mgr.input[input]
-          Oxidized.mgr.input = input or raise MethodNotFound, "#{input} not found"
+          Oxidized.mgr.add_input input or raise MethodNotFound, "#{input} not found for node #{ip}"
         end
         Oxidized.mgr.input[input]
       end
@@ -118,18 +118,17 @@ module Oxidized
     def resolve_output opt
       output = (opt[:output] or CFG.output[:default])
       if not Oxidized.mgr.output[output]
-        Oxidized.mgr.output = output or raise MethodNotFound, "#{output} not found"
+        Oxidized.mgr.add_output output or raise MethodNotFound, "#{output} not found for node #{ip}"
       end
       Oxidized.mgr.output[output]
     end
 
     def resolve_model opt
       model = (opt[:model] or CFG.model)
-      mgr = Oxidized.mgr
-      if not mgr.model[model]
-        mgr.model = model or raise ModelNotFound, "#{model} not found"
+      if not Oxidized.mgr.model[model]
+        Oxidized.mgr.add_model model or raise ModelNotFound, "#{model} not found for node #{ip}"
       end
-      mgr.model[model].new
+      Oxidized.mgr.model[model].new
     end
 
   end

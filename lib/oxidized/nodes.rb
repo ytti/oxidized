@@ -9,14 +9,14 @@ module Oxidized
       with_lock do
         new = []
         @source = CFG.source[:default]
-        Oxidized.mgr.source = @source
+        Oxidized.mgr.add_source @source
         Oxidized.mgr.source[@source].new.load.each do |node|
           begin
-            n = Node.new node
-          rescue LoadError => err
-            Log.warn 'load error %s with node %s' % [err.message, node]
+            _node = Node.new node
+            new.push _node
+          rescue ModelNotFound => err
+            Log.error "node %s raised %s with message %s" % [node, err.class, err.message]
           end
-          new.push n if n
         end
         replace new
       end
