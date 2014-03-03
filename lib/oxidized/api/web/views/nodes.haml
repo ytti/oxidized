@@ -1,28 +1,34 @@
 %html
   !=haml :head
   %body
-    %table{:class=>'center'}
-      %tr
-        %th Name
-        %th IP
-        %th Group
-        %th Last Status
-        %th Last Time
-        %th Config
-        %th Update
-      -trclass = %w(even odd)
-      -@data.sort_by{|e|e[:name]}.each do |node|
-        -klass = trclass.rotate!.first
-        %tr{:class=>klass}
-          %td
-            %a(href="/node/show/#{node[:name]}") #{node[:name]}
-          %td= node[:ip]
-          %td= node[:group]
-          %td= node[:status]
-          %td= node[:time]
-          %td
-            %a(href="/node/fetch/#{node[:full_name]}") config
-          %td
-            %a(href="/node/next/#{node[:full_name]}") update
+    %table{:id=>'nodesTable', :class=>'center tablesorter'}
+      %thead
+        %tr
+          %th Name
+          %th IP
+          %th Group
+          %th Last Status
+          %th Last Time
+          %th Config
+          %th Update
+      %tbody
+        -trclass = %w(even odd)
+        -@data.sort_by{|e|e[:name]}.each do |node|
+          -klass = trclass.rotate!.first
+          %tr{:class=>klass}
+            %td
+              %a(href="/node/show/#{node[:name]}") #{node[:name]}
+            %td= node[:ip]
+            %td= node[:group]
+            %td= node[:status]
+            %td= node[:time]
+            %td
+              %a(href="/node/fetch/#{node[:full_name]}") config
+            %td
+              %a(href="/node/next/#{node[:full_name]}") update
     %p{:class=>'center'}
       %a(href="/reload") reload list of nodes
+    :javascript
+      $(function(){
+        $("#nodesTable").tablesorter();
+      });
