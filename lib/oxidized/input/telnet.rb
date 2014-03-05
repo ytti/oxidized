@@ -48,14 +48,6 @@ module Oxidized
       end
     end
 
-    def username re=/^(Username|login)/
-      @username or @username = re
-    end
-
-    def password re=/^Password/
-      @password or @password = re
-    end
-
   end
 end
 

@@ -23,7 +23,10 @@ module Oxidized
       @ssh = Net::SSH.start @node.ip, @node.auth[:username],
                             :password => @node.auth[:password], :timeout => CFG.timeout,
                             :paranoid => secure
-      open_shell @ssh unless @exec
+      unless @exec
+        shell_open @ssh
+        @username ? shell_login : expect(@node.prompt)
+      end
       @ssh and not @ssh.closed?
     end
 
@@ -55,7 +58,7 @@ module Oxidized
       end
     end
 
-    def open_shell ssh
+    def shell_open ssh
       @ses = ssh.open_channel do |ch|
         ch.on_data do |ch, data|
           @output << data
@@ -68,7 +71,15 @@ module Oxidized
           end
         end
       end
-      expect @node.prompt
+    end
+
+    # Cisco WCS has extremely dubious SSH implementation, SSH auth is always
+    # success, it always opens shell and then run auth in shell. I guess
+    # they'll never support exec() :)
+    def shell_login
+      expect username
+      cmd @node.auth[:username], password
+      cmd @node.auth[:password]
     end
 
     def exec state=nil

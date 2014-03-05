@@ -5,6 +5,7 @@ module Oxidized
       def initialize
         @post_login = []
         @pre_logout = []
+        @username, @password, @exec = nil
       end
 
       def get
@@ -15,7 +16,7 @@ module Oxidized
       end
 
       def disconnect_cli
-        @pre_logout.each { |command, block| block ? block.call : (cmd command) }
+        @pre_logout.each { |command, block| block ? block.call : (cmd command, nil) }
       end
 
       def post_login _post_login=nil, &block
@@ -29,6 +30,15 @@ module Oxidized
           @pre_logout <<  [_pre_logout, block]
         end
       end
+
+      def username re=/^(Username|login)/
+        @username or @username = re
+      end
+
+      def password re=/^Password/
+        @password or @password = re
+      end
+
     end
   end
 end

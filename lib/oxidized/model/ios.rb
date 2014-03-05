@@ -21,6 +21,10 @@ class IOS < Oxidized::Model
     cfg.each_line.to_a[1..-3].join
   end
 
+  cmd 'show inventory' do |cfg|
+    comment cfg
+  end
+
   cmd 'show running-config' do |cfg|
     cfg = cfg.each_line.to_a[3..-1].join
     cfg.gsub! /^Current configuration : [^\n]*\n/, ''
@@ -29,10 +33,6 @@ class IOS < Oxidized::Model
                   (?:\ [^\n]*\n*)*
                   tunnel\ mpls\ traffic-eng\ auto-bw)/mx, '\1'
     cfg
-  end
-
-  cmd 'show inventory' do |cfg|
-    comment cfg
   end
 
   cfg :telnet do

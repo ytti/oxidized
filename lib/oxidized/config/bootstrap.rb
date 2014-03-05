@@ -8,7 +8,7 @@ module Oxidized
   CFG.log      = File.join Config::Root, 'log'
   CFG.debug    = false
   CFG.threads  = 30
-  CFG.timeout  = 5
+  CFG.timeout  = 30
   CFG.prompt   = /^([\w.@-]+[#>]\s?)$/
   CFG.rest     = '0.0.0.0:8888'
   CFG.vars     = {
