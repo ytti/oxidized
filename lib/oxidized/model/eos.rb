@@ -7,6 +7,10 @@ class EOS < Oxidized::Model
 
   comment  '! '
 
+  cmd :all do |cfg|
+     cfg.each_line.to_a[2..-2].join
+  end
+
   cmd 'show inventory | no-more' do |cfg|
     comment cfg
   end
