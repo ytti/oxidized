@@ -52,6 +52,8 @@ module Oxidized
           n.user = opt['user']
           n.msg  = opt['msg']
           n.from = opt['from']
+          # set last job to nil so that the node is picked for immediate update
+          n.last = nil
           put n
         end
       end
