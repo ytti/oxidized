@@ -18,7 +18,7 @@ module Oxidized
 
     def next opt
       data = JSON.dump opt
-      @web.put '/nodes/next/' + opt[:name].to_s, data
+      @web.put '/node/next/' + opt[:name].to_s, data
     end
 
   end
