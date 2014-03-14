@@ -3,7 +3,6 @@
   * if job ended later than now-iteration have rand(node.size) == 0 to add thread
   * if now is less than job_ended+iteration same chance to remove thread?
   * should we try to avoid max threads from being hit? (like maybe non-success thread is pulling average?)
-  * dont add thread, if even one thread is too much (too few nodes for interval), still must process 'next' request w/o delay
 
 # config
   * save keys as strings, load as symbols?
