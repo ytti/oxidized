@@ -2,8 +2,9 @@ module Oxidized
   class Model
     class << self
       def inherited klass
-        klass.instance_variable_set '@cmd',    Hash.new { |h,k| h[k] = [] }
-        klass.instance_variable_set '@cfg',    Hash.new { |h,k| h[k] = [] }
+        klass.instance_variable_set '@cmd',   Hash.new { |h,k| h[k] = [] }
+        klass.instance_variable_set '@cfg',   Hash.new { |h,k| h[k] = [] }
+        klass.instance_variable_set '@procs', Hash.new { |h,k| h[k] = [] }
         klass.instance_variable_set '@expect', []
         klass.const_set :CFG, CFG
         Oxidized.mgr.loader = { :class => klass }
@@ -38,6 +39,35 @@ module Oxidized
       end
       def expects
         @expect
+      end
+
+      # calls the block at the end of the model, prepending the output of the
+      # block to the output string
+      #
+      # @author Saku Ytti <saku@ytti.fi>
+      # @since 0.0.39
+      # @yield expects block which should return [String]
+      # @return [void]
+      def pre &block
+        @procs[:pre] << block
+      end
+
+      # calls the block at the end of the model, adding the output of the block
+      # to the output string
+      #
+      # @author Saku Ytti <saku@ytti.fi>
+      # @since 0.0.39
+      # @yield expects block which should return [String]
+      # @return [void]
+      def post &block
+        @procs[:post] << block
+      end
+
+      # @author Saku Ytti <saku@ytti.fi>
+      # @since 0.0.39
+      # @return [Hash] hash proc procs :pre+:post to be prepended/postfixed to output
+      def procs
+        @procs
       end
     end
 
@@ -87,14 +117,20 @@ module Oxidized
     end
 
     def get
-      data = ''
+      data, pre = '', ''
+      procs = self.class.procs
       self.class.cmds[:cmd].each do |command, block|
         out = cmd command, &block
         return false unless out
         data << out.to_s
       end
-      data << main.to_s if respond_to? :main
-      data
+      procs[:pre].each do |pre_proc|
+        pre << instance_eval(&pre_proc)
+      end
+      procs[:post].each do |post_proc|
+        data << instance_eval(&post_proc)
+      end
+      pre + data
     end
 
     def comment _comment
