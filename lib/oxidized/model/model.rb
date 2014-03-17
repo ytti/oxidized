@@ -125,10 +125,10 @@ module Oxidized
         data << out.to_s
       end
       procs[:pre].each do |pre_proc|
-        pre << instance_eval(&pre_proc)
+        pre << instance_eval(&pre_proc).to_s
       end
       procs[:post].each do |post_proc|
-        data << instance_eval(&post_proc)
+        data << instance_eval(&post_proc).to_s
       end
       pre + data
     end

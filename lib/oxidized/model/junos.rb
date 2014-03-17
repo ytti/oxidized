@@ -20,10 +20,12 @@ class JunOS < Oxidized::Model
   end
 
   post do
+    out = ''
     case @model
     when 'mx960'
-      cmd('show chassis fabric reachability')  { |cfg| comment cfg }
+      out << cmd('show chassis fabric reachability')  { |cfg| comment cfg }
     end
+    out
   end
 
   cmd 'show chassis hardware' do |cfg|
