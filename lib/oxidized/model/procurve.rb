@@ -22,8 +22,6 @@ class Procurve < Oxidized::Model
     new_cfg
   end
 
-  cmd 'show running-config'
-
   cmd 'show version' do |cfg|
     comment cfg
   end
@@ -32,9 +30,11 @@ class Procurve < Oxidized::Model
     comment cfg
   end
 
+  cmd 'show running-config'
+
   cfg :telnet do
-    username /^\r?Username:/
-    password /Password: /
+    username /Username:/
+    password /Password:/
   end
 
   cfg :telnet, :ssh do
