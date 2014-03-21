@@ -34,6 +34,8 @@ class Git < Output
     rescue Grit::NoSuchPathError
       Repo.init_bare repo
       retry
+    rescue Grit::Git::GitTimeout
+      Log.error "git timeout for #{file}"
     end
   end
 
