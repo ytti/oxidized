@@ -39,7 +39,7 @@ class Procurve < Oxidized::Model
 
   cfg :telnet, :ssh do
     post_login 'no page'
-    pre_logout "logout\ny"
+    pre_logout "logout\ny\nn"
   end
 
 end
