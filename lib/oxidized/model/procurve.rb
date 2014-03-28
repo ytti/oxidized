@@ -1,7 +1,7 @@
 class Procurve < Oxidized::Model
 
   # FIXME: this is way too unsafe
-  prompt /.*?([\w\d_]+# ).*/m
+  prompt /.*?(\w+# ).*/m
 
   comment  '! '
 
