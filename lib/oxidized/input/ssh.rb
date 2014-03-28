@@ -50,12 +50,12 @@ module Oxidized
     private
 
     def disconnect
-      begin
-        disconnect_cli
-        @ssh.loop
-        @ssh.close if not @ssh.closed?
-      rescue Errno::ECONNRESET, Net::SSH::Disconnect, IOError
-      end
+      disconnect_cli
+      # if disconnect does not disconnect us, give up after timeout
+      Timeout::timeout(CFG.timeout) { @ssh.loop }
+    rescue Errno::ECONNRESET, Net::SSH::Disconnect, IOError
+    ensure
+      @ssh.close if not @ssh.closed?
     end
 
     def shell_open ssh
