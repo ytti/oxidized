@@ -12,12 +12,12 @@ class AOSW < Oxidized::Model
 
   cmd 'show version' do |cfg|
     cfg = cfg.each_line.select { |line| not line.match /Switch uptime/i }
-    comment cfg
+    comment cfg.join
   end
 
   cmd 'show inventory' do |cfg|
-    cfg = cfg.each_line.take_while { |line| not line.match /Main Board Temp/i }
-    comment cfg
+    cfg = cfg.each_line.take_while { |line| not line.match /Output \d Config/i }
+    comment cfg.join
   end
 
   cmd 'show slots' do |cfg|
