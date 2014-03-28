@@ -15,7 +15,9 @@ module Oxidized
             _node = Node.new node
             new.push _node
           rescue ModelNotFound => err
-            Log.error "node %s raised %s with message %s" % [node, err.class, err.message]
+            Log.error "node %s raised %s with message '%s'" % [node, err.class, err.message]
+          rescue Resolv::ResolvError => err
+            Log.error "node %s is not resolvable, raised %s with message '%s'" % [node, err.class, err.message]
           end
         end
         replace new
