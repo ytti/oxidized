@@ -10,22 +10,27 @@ class FortiOS < Oxidized::Model
   end
 
   cmd 'get system status' do |cfg|
+    @vdom_enabled = cfg.include? 'Virtual domain configuration: enable'
     comment cfg
   end
 
-  cmd 'config global'
+  post do
+    cfg = []
+    cfg << cmd('config global') if @vdom_enabled
 
-  cmd 'get hardware status' do |cfg|
-    comment cfg
+    cfg << cmd('get hardware status') do |cfg|
+      comment cfg
+    end
+
+    cfg << cmd('diagnose autoupdate version') do |cfg|
+      comment cfg
+    end
+
+    cfg << cmd('end') if @vdom_enabled
+
+    cfg << cmd('show')
+    cfg.join "\n"
   end
-
-  cmd 'diagnose autoupdate version' do |cfg|
-    comment cfg
-  end
-
-  cmd 'end'
-
-  cmd 'show'
 
   cfg :telnet do
     username /^Username:/
