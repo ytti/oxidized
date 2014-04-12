@@ -5,12 +5,19 @@ module Oxidized
   class Nodes < Array
     attr_accessor :source
     alias :put :unshift
-    def load
+    def load node_want=nil
       with_lock do
         new = []
         @source = CFG.source[:default]
         Oxidized.mgr.add_source @source
         Oxidized.mgr.source[@source].new.load.each do |node|
+
+          # we want to load one specific node(s), not all of them
+          if node_want
+            next unless node[:name].to_s.match(node_want) or
+                        node[:ip].to_s.match(node_want)
+          end
+
           begin
             _node = Node.new node
             new.push _node
@@ -70,10 +77,11 @@ module Oxidized
 
     private
 
-    def initialize *args
-      super
+    def initialize opts={}
+      super()
+      node = opts.delete :node
       @mutex= Mutex.new  # we compete for the nodes with webapi thread
-      load if args.empty?
+      load node
     end
 
     def with_lock &block
