@@ -9,10 +9,14 @@ module Oxidized
       end
 
       def get
-        @post_login.each { |command, block| block ? block.call : (cmd command) }
+        connect_cli
         d = @node.model.get
         disconnect
         d
+      end
+
+      def connect_cli
+        @post_login.each { |command, block| block ? block.call : (cmd command) }
       end
 
       def disconnect_cli
