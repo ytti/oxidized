@@ -12,7 +12,7 @@ module Oxidized
   CFG.prompt   = /^([\w.@-]+[#>]\s?)$/
   CFG.rest     = '0.0.0.0:8888'
   CFG.vars     = {
-    :enable  => 'enablePW',
+    #:enable  => 'enablePW',
   }
   CFG.input   = {
     :default  => 'ssh, telnet',
