@@ -1,8 +1,8 @@
 module Oxidized
  require 'oxidized/node'
  require 'ipaddr'
- class Oxidized::NotSupported < StandardError; end
- class Oxidized::NodeNotFound < StandardError; end
+ class Oxidized::NotSupported < OxidizedError; end
+ class Oxidized::NodeNotFound < OxidizedError; end
   class Nodes < Array
     attr_accessor :source
     alias :put :unshift

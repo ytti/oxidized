@@ -13,7 +13,7 @@ module Oxidized
       ],
     }
     include CLI
-    class NoShell < StandardError; end
+    class NoShell < OxidizedError; end
 
     def connect node
       @node       = node

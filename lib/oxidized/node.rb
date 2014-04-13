@@ -1,7 +1,7 @@
 module Oxidized
   require 'resolv'
-  class MethodNotFound < StandardError; end
-  class ModelNotFound < StandardError; end
+  class MethodNotFound < OxidizedError; end
+  class ModelNotFound  < OxidizedError; end
   class Node
     attr_reader :name, :ip, :model, :input, :output, :group, :auth, :prompt
     attr_accessor :last, :running, :user, :msg, :from
