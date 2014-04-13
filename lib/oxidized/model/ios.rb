@@ -1,5 +1,6 @@
 class IOS < Oxidized::Model
 
+  prompt /^([\w.@()-]+[#>]\s?)$/
   comment  '! '
 
   # example how to handle pager

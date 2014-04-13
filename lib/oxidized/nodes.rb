@@ -9,7 +9,7 @@ module Oxidized
     def load node_want=nil
       with_lock do
         new = []
-        node_want_ip = (IPaddr.new(node_want) rescue nil) if node_want
+        node_want_ip = (IPAddr.new(node_want) rescue nil) if node_want
         @source = CFG.source[:default]
         Oxidized.mgr.add_source @source
         Oxidized.mgr.source[@source].new.load.each do |node|
