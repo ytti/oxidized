@@ -19,6 +19,10 @@ module Oxidized
       expect @node.prompt
     end
 
+    def connected?
+      @telnet and not @telnet.sock.closed?
+    end
+
     def cmd cmd, expect=@node.prompt
       Log.debug "Telnet: #{cmd} @#{@node.name}"
       args = { 'String' => cmd }

@@ -27,6 +27,10 @@ module Oxidized
         shell_open @ssh
         @username ? shell_login : expect(@node.prompt)
       end
+      connected?
+    end
+
+    def connected?
       @ssh and not @ssh.closed?
     end
 

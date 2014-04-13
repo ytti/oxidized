@@ -1,5 +1,6 @@
 module Oxidized
-  require 'oxidized/node'
+ require 'oxidized/node'
+ require 'ipaddr'
  class Oxidized::NotSupported < StandardError; end
  class Oxidized::NodeNotFound < StandardError; end
   class Nodes < Array
@@ -8,14 +9,18 @@ module Oxidized
     def load node_want=nil
       with_lock do
         new = []
+        node_want_ip = (IPaddr.new(node_want) rescue nil) if node_want
         @source = CFG.source[:default]
         Oxidized.mgr.add_source @source
         Oxidized.mgr.source[@source].new.load.each do |node|
 
-          # we want to load one specific node(s), not all of them
+          # we want to load specific node(s), not all of them
           if node_want
-            next unless node[:name].to_s.match(node_want) or
-                        node[:ip].to_s.match(node_want)
+            if node_want_ip
+              next unless node_want_ip == node[:ip]
+            else
+              next unless node[:name].match node_want
+            end
           end
 
           begin
