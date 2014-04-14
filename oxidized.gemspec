@@ -1,6 +1,6 @@
 Gem::Specification.new do |s|
   s.name              = 'oxidized'
-  s.version           = '0.0.50'
+  s.version           = '0.0.51'
   s.platform          = Gem::Platform::RUBY
   s.authors           = [ 'Saku Ytti' ]
   s.email             = %w( saku@ytti.fi )
@@ -22,6 +22,6 @@ Gem::Specification.new do |s|
   s.add_dependency 'haml'
   s.add_dependency 'sass'
   s.add_dependency 'slop'
-  s.add_dependency 'asetus', '>= 0.0.5'
+  s.add_dependency 'asetus', '>= 0.0.6'
 
 end

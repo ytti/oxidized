@@ -10,7 +10,7 @@ module Oxidized
       @map = (CFG.model_map or {})
     end
     def map_model model
-      @map.key?(model) ? @map[model] : model
+      @map.has_key?(model) ? @map[model] : model
     end
   end
 end
