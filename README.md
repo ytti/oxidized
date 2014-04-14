@@ -12,10 +12,10 @@
  * early days, but try:
    1. apt-get install libsqlite3-dev libssl-dev
    2. gem install oxidized
-   3. oxidized
+   3. oxidized -d
    4. vi ~/.config/oxidized/config
    5. (maybe point to your rancid/router.db or copy it there)
-   6. oxidized
+   6. oxidized -d
 
 # API
 ## Input
@@ -50,63 +50,78 @@
 
 ### Configuration I use in one environment
 ```
-[rancid@lan-login1 /var/rancid/.config/oxidized]% cat config
 ---
-:username: LANA
-:password: LANAAAAAAA
-:output:
-  :default: git
-  :git:
-    :user: Oxidized
-    :email: o@example.com
-    :repo: "/usr/local/lan/oxidized.git"
-:source:
-  :default: sql
-  :sql:
-    :adapter: sqlite
-    :file: "/usr/local/lan/corona.db"
-    :table: device
-    :map:
-      :name: ptr
-      :model: model
-[rancid@lan-login1 /var/rancid/.config/oxidized]%
+username: LANA
+password: LANAAAAAAA
+output:
+  default: git
+  git:
+    user: Oxidized
+    email: o@example.com
+    repo: "/usr/local/lan/oxidized.git"
+source:
+  default: sql
+  sql:
+    adapter: sqlite
+    file: "/usr/local/lan/corona.db"
+    table: device
+    map:
+      name: ptr
+      model: model
 ```
 
-### Configuration you end up after first run (and it'll crash on missing router.d file)
+### Configuration you end up after first run
+If you don't configure output and source, it'll further fill them with example
+configs for your chosen output/source in subsequent runs
 ```
 ---
-:username: username
-:password: password
-:model: junos
-:interval: 3600
-:log: "/var/rancid/.config/oxidized/log"
-:debug: false
-:threads: 30
-:timeout: 5
-:prompt: !ruby/regexp /^([\w.@-]+[#>]\s?)$/
-:rest: 0.0.0.0:8888
-:vars:
-  :enable: enablePW
-:input:
-  :default: ssh, telnet
-  :ssh:
-    :secure: false
-:output:
-  :default: git
-:source:
-  :default: csv
-  :csv:
-    :file: "/var/rancid/.config/oxidized/router.db"
-    :delimiter: !ruby/regexp /:/
-    :map:
-      :name: 0
-      :model: 1
-:model_map:
+username: username
+password: password
+model: junos
+interval: 3600
+log: "/home/fisakytt/.config/oxidized/log"
+debug: false
+threads: 30
+timeout: 30
+prompt: !ruby/regexp /^([\w.@-]+[#>]\s?)$/
+rest: 0.0.0.0:8888
+vars: {}
+input:
+  default: ssh, telnet
+  ssh:
+    secure: false
+output:
+  default: git
+source:
+  default: csv
+model_map:
   cisco: ios
   juniper: junos
+```
+
+Output and Source could be:
+```
+output:
+  default: git
+  git:
+    user: Oxidized
+    email: o@example.com
+    repo: "/home/fisakytt/.config/oxidized/oxidized.git"
+source:
+  default: csv
+  csv:
+    file: "/home/fisakytt/.config/oxidized/router.db"
+    delimiter: !ruby/regexp /:/
+    map:
+      name: 0
+      model: 1
 ```
 which reads nodes from rancid compatible router.db maps their model names to
 model names oxidized expects, stores config in git, will try ssh first then
 telnet, wont crash on changed ssh keys
 Hopefully most of them are obvious, log is ignored if Syslog::Logger exists
 (>=2.0) and syslog is used instead.
+System wide configurations can be stored in /etc/oxidized/config, this might be
+useful for storing for example source information, if many users are using
+oxs/Oxidized::Script, which would allow user specific config only to include
+username+password

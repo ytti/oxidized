@@ -1,19 +1,12 @@
 #!/usr/bin/env ruby
 
-trap("INT") { exit } # sinatra will otherwise steak this from us
+# FIX ME, killing oxidized needs -9
+trap("INT") { exit } # sinatra will otherwise steal this from us
 
 begin
-  require 'oxidized'
-  Process.daemon unless $DEBUG
-  Oxidized.new
-rescue => e
-  open Oxidized::Config::Crash, 'w' do |file|
-    file.puts '-' * 50
-    file.puts Time.now.utc
-    file.puts e.message + ' [' + e.class.to_s + ']'
-    file.puts '-' * 50
-    file.puts e.backtrace
-    file.puts '-' * 50
-  end
-  warn "ERROR: #{e}"
+  require 'oxidized/cli'
+  Oxidized::CLI.new.run
+rescue => error
+  warn "#{error}"
+  raise if Oxidized::CFG.debug
 end

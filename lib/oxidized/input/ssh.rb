@@ -12,14 +12,14 @@ module Oxidized
         Net::SSH::AuthenticationFailed,
       ],
     }
-    include CLI
+    include Input::CLI
     class NoShell < OxidizedError; end
 
     def connect node
       @node       = node
       @output     = ''
       @node.model.cfg['ssh'].each { |cb| instance_exec(&cb) }
-      secure = CFG.input[:ssh][:secure]
+      secure = CFG.input.ssh.secure
       @ssh = Net::SSH.start @node.ip, @node.auth[:username],
                             :password => @node.auth[:password], :timeout => CFG.timeout,
                             :paranoid => secure
@@ -64,14 +64,14 @@ module Oxidized
 
     def shell_open ssh
       @ses = ssh.open_channel do |ch|
-        ch.on_data do |ch, data|
+        ch.on_data do |_ch, data|
           @output << data
           @output = @node.model.expects @output
         end
-        ch.request_pty do |ch, success|
-          raise NoShell, "Can't get PTY" unless success
-          ch.send_channel_request 'shell' do |ch, success|
-            raise NoShell, "Can't get shell" unless success
+        ch.request_pty do |_ch, success_pty|
+          raise NoShell, "Can't get PTY" unless success_pty
+          ch.send_channel_request 'shell' do |_ch, success_shell|
+            raise NoShell, "Can't get shell" unless success_shell
           end
         end
       end

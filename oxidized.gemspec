@@ -21,5 +21,6 @@ Gem::Specification.new do |s|
   s.add_dependency 'puma'
   s.add_dependency 'haml'
   s.add_dependency 'sass'
+  s.add_dependency 'slop'
 
 end

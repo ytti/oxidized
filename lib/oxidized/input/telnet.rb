@@ -3,7 +3,7 @@ module Oxidized
   require 'oxidized/input/cli'
   class Telnet < Input
     RescueFail = {}
-    include CLI
+    include Input::CLI
     attr_reader :telnet
 
     def connect node

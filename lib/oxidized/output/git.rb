@@ -5,25 +5,24 @@ class Git < Output
   include Grit
 
   def initialize
-    @cfg = CFG.output[:git]
+    @cfg = CFG.output.git
   end
 
   def setup
-    if not @cfg
-      CFG.output[:git] = {
-        :user  => 'Oxidized',
-        :email => 'o@example.com',
-        :repo  => File.join(Config::Root, 'oxidized.git')
-      }
-      CFG.save
+    if @cfg.empty?
+      CFGS.user.output.git.user  = 'Oxidized'
+      CFGS.user.output.git.email = 'o@example.com'
+      CFGS.user.output.git.repo  =  File.join(Config::Root, 'oxidized.git')
+      CFGS.save :user
+      raise NoConfig, 'no output git config, edit ~/.config/oxidized/config'
     end
   end
 
   def store file, data, opt={}
     msg   = opt[:msg]
-    user  = (opt[:user]  or @cfg[:user])
-    email = (opt[:email] or @cfg[:email])
-    repo  = @cfg[:repo]
+    user  = (opt[:user]  or @cfg.user)
+    email = (opt[:email] or @cfg.email)
+    repo  = @cfg.repo
     if opt[:group]
       repo = File.join File.dirname(repo), opt[:group] + '.git'
     end
@@ -41,7 +40,7 @@ class Git < Output
 
   def fetch node, group
     begin
-      repo = Repo.new(@cfg[:repo])
+      repo = Repo.new(@cfg.repo)
       (repo.tree / node).data
     rescue
       'node not found'
