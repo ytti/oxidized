@@ -12,7 +12,7 @@ class IOS < Oxidized::Model
   # non-preferred way to handle additional PW prompt
   #expect /^[\w.]+>$/ do |data|
   #  send "enable\n"
-  #  send CFG.vars[:enable] + "\n"
+  #  send CFG.vars.enable + "\n"
   #  data
   #end
 
@@ -45,10 +45,10 @@ class IOS < Oxidized::Model
     post_login 'terminal length 0'
     post_login 'terminal width 0'
     # preferred way to handle additional passwords
-    if CFG.vars[:enable] and CFG.vars[:enable] != ''
+    if CFG.vars.enable?
       post_login do
         send "enable\n"
-        send CFG.vars[:enable] + "\n"
+        send CFG.vars.enable + "\n"
       end
     end
     pre_logout 'exit'

@@ -22,5 +22,6 @@ Gem::Specification.new do |s|
   s.add_dependency 'haml'
   s.add_dependency 'sass'
   s.add_dependency 'slop'
+  s.add_dependency 'asetus', '>= 0.0.5'
 
 end
