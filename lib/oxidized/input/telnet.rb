@@ -10,7 +10,7 @@ module Oxidized
       @node    = node
       @timeout = CFG.timeout
       @node.model.cfg['telnet'].each { |cb| instance_exec(&cb) }
-      @telnet  = Net::Telnet.new 'Host' => @node.ip, 'Waittime' => @timeout,
+      @telnet  = Net::Telnet.new 'Host' => @node.ip, 'Timeout' => @timeout,
                                  'Model' => @node.model
       expect username
       @telnet.puts @node.auth[:username]
