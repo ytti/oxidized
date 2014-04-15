@@ -1,5 +1,6 @@
 module Oxidized
   require 'oxidized/log'
+  require 'oxidized/string'
   require 'oxidized/config'
   require 'oxidized/worker'
   require 'oxidized/nodes'

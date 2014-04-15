@@ -76,6 +76,7 @@ module Oxidized
     def cmd string, &block
       out = @input.cmd string
       return false unless out
+      out = Oxidized::String out
       self.class.cmds[:all].each do |all_block|
         out = instance_exec out, string, &all_block
       end
