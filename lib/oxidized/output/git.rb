@@ -1,6 +1,10 @@
 module Oxidized
 class Git < Output
-  require 'grit'
+  begin
+    require 'grit'
+  rescue LoadError
+    raise LoadError, 'grit not found: sudo gem install grit'
+  end
   require 'oxidized/fix/grit' if RUBY_VERSION[0..1] == '2.'
   include Grit
 
