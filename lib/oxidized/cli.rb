@@ -18,11 +18,7 @@ module Oxidized
     private
 
     def initialize
-      if CFGS.system.empty? and CFGS.user.empty?
-        CFGS.user = CFGS.default
-        CFGS.save :user
-        raise NoConfig, 'edit ~/.config/oxidized/config'
-      end
+      raise NoConfig, 'edit ~/.config/oxidized/config' if CFGS.create
       _args, opts = parse_opts
       CFG.debug = true if opts[:debug]
     end
