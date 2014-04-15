@@ -19,7 +19,7 @@ class IOS < Oxidized::Model
   cmd :all do |cfg|
     #cfg.gsub! /\cH+\s{8}/, ''         # example how to handle pager
     #cfg.gsub! /\cH+/, ''              # example how to handle pager
-    cfg.each_line.to_a[1..-3].join
+    cfg.each_line.to_a[1..-2].join
   end
 
   cmd 'show inventory' do |cfg|
