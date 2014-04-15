@@ -26,10 +26,10 @@ module Oxidized
   CFGS.default.vars     = {}              # could be 'enable'=>'enablePW'
 
   CFGS.default.input.default = 'ssh, telnet'
-  CFGS.default.input.ssh.secure = false
+  CFGS.default.input.ssh.secure = false   # complain about changed certs
 
-  CFGS.default.output.default = 'git'
-  CFGS.default.source.default = 'csv'
+  CFGS.default.output.default = 'file'  # file, git
+  CFGS.default.source.default = 'csv'   # csv, sql
 
   CFGS.default.model_map = {
     'cisco'   => 'ios',
