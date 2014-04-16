@@ -12,10 +12,10 @@
  * early days, but try:
    1. apt-get install libsqlite3-dev libssl-dev
    2. gem install oxidized oxidized-web
-   3. oxidized -d
+   3. oxidized
    4. vi ~/.config/oxidized/config
    5. (maybe point to your rancid/router.db or copy it there)
-   6. oxidized -d
+   6. oxidized
 
 # API
 ## Input

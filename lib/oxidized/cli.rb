@@ -4,7 +4,7 @@ module Oxidized
     require 'slop'
 
     def run
-      Process.daemon unless CFG.debug
+      Process.daemon if @opts[:daemonize]
       begin
         Oxidized.new
       rescue => error
@@ -16,8 +16,8 @@ module Oxidized
     private
 
     def initialize
-      _args, opts = parse_opts
-      CFG.debug = true if opts[:debug]
+      _args, @opts = parse_opts
+      CFG.debug = true if @opts[:debug]
     end
 
     def crash error
@@ -34,6 +34,7 @@ module Oxidized
     def parse_opts
       opts = Slop.new(:help=>true) do
         on 'd', 'debug', 'turn on debugging'
+        on 'daemonize',  'Daemonize/fork the process'
       end
       [opts.parse!, opts]
     end
