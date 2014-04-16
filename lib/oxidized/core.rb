@@ -16,7 +16,7 @@ module Oxidized
       Oxidized.mgr = Manager.new
       nodes        = Nodes.new
       @worker      = Worker.new nodes
-      if CFG.rest
+      if CFG.rest?
         begin
           require 'oxidized/web'
         rescue LoadError
