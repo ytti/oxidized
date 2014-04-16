@@ -3,7 +3,7 @@ class Git < Output
   begin
     require 'grit'
   rescue LoadError
-    raise LoadError, 'grit not found: sudo gem install grit'
+    raise OxidizedError, 'grit not found: sudo gem install grit'
   end
   require 'oxidized/fix/grit' if RUBY_VERSION[0..1] == '2.'
   include Grit

@@ -20,7 +20,7 @@ module Oxidized
         begin
           require 'oxidized/web'
         rescue LoadError
-          raise LoadError, 'oxidized-web not found: sudo gem install oxidized-web'
+          raise OxidizedError, 'oxidized-web not found: sudo gem install oxidized-web'
         end
         @rest        = API::Web.new nodes, CFG.rest
         @rest.run

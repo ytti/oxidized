@@ -3,7 +3,7 @@ class SQL < Source
   begin
     require 'sequel'
   rescue LoadError
-    raise LoadError, 'sequel not found: sudo gem install sequel'
+    raise OxidizedError, 'sequel not found: sudo gem install sequel'
   end
 
   def initialize
@@ -30,7 +30,7 @@ class SQL < Source
       begin
         require 'sqlite3'
       rescue LoadError
-        raise LoadError, 'sqlite3 not found: sudo apt install libsqlite3-dev; sudo gem install sqlite3'
+        raise OxidizedError, 'sqlite3 not found: sudo apt install libsqlite3-dev; sudo gem install sqlite3'
       end
       Sequel.sqlite @cfg.file
     end
