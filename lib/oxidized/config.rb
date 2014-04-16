@@ -1,5 +1,6 @@
 module Oxidized
   require 'asetus'
+  class NoConfig < OxidizedError; end
   class Config
     Root      = File.join ENV['HOME'], '.config', 'oxidized'
     Crash     = File.join Root, 'crash'
@@ -41,4 +42,6 @@ module Oxidized
 
   Log.level = Logger::INFO unless CFG.debug
   Log.file  = CFG.log if CFG.log
+
+  raise NoConfig, 'edit ~/.config/oxidized/config' if CFGS.create
 end

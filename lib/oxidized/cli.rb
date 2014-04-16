@@ -2,8 +2,6 @@ module Oxidized
   class CLI
     require 'oxidized'
     require 'slop'
-    class CLIError < OxidizedError; end
-    class NoConfig < CLIError; end
 
     def run
       Process.daemon unless CFG.debug
@@ -18,7 +16,6 @@ module Oxidized
     private
 
     def initialize
-      raise NoConfig, 'edit ~/.config/oxidized/config' if CFGS.create
       _args, opts = parse_opts
       CFG.debug = true if opts[:debug]
     end

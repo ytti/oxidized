@@ -5,7 +5,6 @@ module Oxidized
   require 'oxidized/worker'
   require 'oxidized/nodes'
   require 'oxidized/manager'
-  require 'oxidized/api/web'
   class << self
     def new *args
       Core.new args
@@ -18,6 +17,11 @@ module Oxidized
       nodes        = Nodes.new
       @worker      = Worker.new nodes
       if CFG.rest
+        begin
+          require 'oxidized/web'
+        rescue LoadError
+          raise LoadError, 'oxidized-web not found: sudo gem install oxidized-web'
+        end
         @rest        = API::Web.new nodes, CFG.rest
         @rest.run
       end
