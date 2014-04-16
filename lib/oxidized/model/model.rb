@@ -80,6 +80,11 @@ module Oxidized
       self.class.cmds[:all].each do |all_block|
         out = instance_exec out, string, &all_block
       end
+      if CFG.remove_secret?
+        self.class.cmds[:secret].each do |all_block|
+          out = instance_exec out, string, &all_block
+        end
+      end
       out = instance_exec out, &block if block
       out
     end
