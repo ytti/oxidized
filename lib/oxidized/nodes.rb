@@ -96,7 +96,7 @@ module Oxidized
       super()
       node = opts.delete :node
       @mutex= Mutex.new  # we compete for the nodes with webapi thread
-      if nodes = opts.delete :nodes
+      if nodes = opts.delete(:nodes)
         replace nodes
       else
         load node
