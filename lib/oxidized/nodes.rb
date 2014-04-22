@@ -60,9 +60,8 @@ module Oxidized
 
     # @param node [String] name of the node moved into the head of array
     def next node, opt={}
-      with_lock do
-        n = waiting.del node
-        if n
+      if waiting.find_node_index(node)
+        with_lock do
           n = del node
           n.user = opt['user']
           n.msg  = opt['msg']
@@ -82,12 +81,10 @@ module Oxidized
       end
     end
 
-    # @param node node which is removed from nodes list
-    # @return [Node] deleted node
-    def del node
-      with_lock do
-        delete_at find_node_index(node)
-      end
+    # @param node node whose index number in Nodes to find
+    # @return [Fixnum] index number of node in Nodes
+    def find_node_index node
+      find_index node or raise Oxidized::NodeNotFound, "unable to find '#{node}'"
     end
 
     private
@@ -111,8 +108,10 @@ module Oxidized
       index { |e| e.name == node }
     end
 
-    def find_node_index node
-      find_index node or raise Oxidized::NodeNotFound, "unable to find '#{node}'"
+    # @param node node which is removed from nodes list
+    # @return [Node] deleted node
+    def del node
+      delete_at find_node_index(node)
     end
 
     # @return [Nodes] list of nodes running now
