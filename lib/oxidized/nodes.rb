@@ -61,7 +61,7 @@ module Oxidized
     # @param node [String] name of the node moved into the head of array
     def next node, opt={}
       with_lock do
-        n = running.del node
+        n = waiting.del node
         if n
           n = del node
           n.user = opt['user']
@@ -74,6 +74,7 @@ module Oxidized
       end
     end
     alias :top :next
+
     # @return [String] node from the head of the array
     def get
       with_lock do
@@ -81,16 +82,13 @@ module Oxidized
       end
     end
 
-    # @return [Array] list of nodes running now
-    def running
-      select { |node| node.running? }
+    # @param node node which is removed from nodes list
+    # @return [Node] deleted node
+    def del node
+      with_lock do
+        delete_at find_node_index(node)
+      end
     end
-
-    # @return [Array] list of nodes waiting (not running)
-    def waiting
-      select { |node| not node.running? }
-    end
-
 
     private
 
@@ -98,7 +96,11 @@ module Oxidized
       super()
       node = opts.delete :node
       @mutex= Mutex.new  # we compete for the nodes with webapi thread
-      load node
+      if nodes = opts.delete :nodes
+        replace nodes
+      else
+        load node
+      end
     end
 
     def with_lock &block
@@ -113,8 +115,15 @@ module Oxidized
       find_index node or raise Oxidized::NodeNotFound, "unable to find '#{node}'"
     end
 
-    def del node
-      delete_at find_node_index(node)
+    # @return [Nodes] list of nodes running now
+    def running
+      Nodes.new :nodes => select { |node| node.running? }
     end
+
+    # @return [Nodes] list of nodes waiting (not running)
+    def waiting
+      Nodes.new :nodes => select { |node| not node.running? }
+    end
+
   end
 end
