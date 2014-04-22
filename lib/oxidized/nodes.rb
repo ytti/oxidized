@@ -61,8 +61,9 @@ module Oxidized
     # @param node [String] name of the node moved into the head of array
     def next node, opt={}
       with_lock do
-        n = del node
+        n = running.del node
         if n
+          n = del node
           n.user = opt['user']
           n.msg  = opt['msg']
           n.from = opt['from']
@@ -79,6 +80,17 @@ module Oxidized
         (self << shift).last
       end
     end
+
+    # @return [Array] list of nodes running now
+    def running
+      select { |node| node.running? }
+    end
+
+    # @return [Array] list of nodes waiting (not running)
+    def waiting
+      select { |node| not node.running? }
+    end
+
 
     private
 

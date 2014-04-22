@@ -1,10 +1,9 @@
 begin
   require 'rake/testtask'
   require 'bundler'
-  Bundler.setup
+  # Bundler.setup
 rescue LoadError
   warn 'bunler missing'
-  exit 42
 end
 
 gemspec = eval(File.read(Dir['*.gemspec'].first))
@@ -33,7 +32,7 @@ end
 
 desc 'Install gem'
 task :install => :build do
-  system "sudo -E sh -c \'umask 022; gem install gems/#{file}\'"
+  system "sudo -Es sh -c \'umask 022; gem install gems/#{file}\'"
 end
 
 desc 'Remove gems'
