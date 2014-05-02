@@ -99,9 +99,19 @@ module Oxidized
     end
 
     def resolve_auth opt
+      # Resolve configured username/password, give priority to group level configuration
+      # TODO: refactor to use revised behaviour of Asetus
+      cfg_username, cfg_password =
+        if CFG.groups.has_key?(@group) and ['username', 'password'].all? {|e| CFG.groups[@group].has_key?(e)}
+          [CFG.groups[@group].username, CFG.groups[@group].password]
+        elsif ['username', 'password'].all? {|e| CFG.has_key?(e)}
+          [CFG.username, CFG.password]
+        else
+          [nil, nil]
+        end
       auth = {}
-      auth[:username] = (opt[:username] or CFG.username)
-      auth[:password] = (opt[:passowrd] or CFG.password)
+      auth[:username] = (opt[:username] or cfg_username)
+      auth[:password] = (opt[:password] or cfg_password)
       auth
     end
 
