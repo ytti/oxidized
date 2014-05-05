@@ -5,6 +5,7 @@ module Oxidized
   require 'oxidized/worker'
   require 'oxidized/nodes'
   require 'oxidized/manager'
+  require 'oxidized/config/vars'
   class << self
     def new *args
       Core.new args

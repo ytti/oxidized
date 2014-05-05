@@ -143,7 +143,7 @@ module Oxidized
       if not Oxidized.mgr.model[model]
         Oxidized.mgr.add_model model or raise ModelNotFound, "#{model} not found for node #{ip}"
       end
-      Oxidized.mgr.model[model].new 
+      Oxidized.mgr.model[model].new
     end
 
   end
