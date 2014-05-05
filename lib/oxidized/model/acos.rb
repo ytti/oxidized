@@ -55,10 +55,10 @@ class ACOS < Oxidized::Model
 
   cfg :telnet, :ssh do
     # preferred way to handle additional passwords
-    if CFG.vars.enable?
+    if vars :enable
       post_login do
         send "enable\n"
-        send CFG.vars.enable + "\n"
+        send vars(:enable) + "\n"
       end
     end
     post_login 'terminal length 0'

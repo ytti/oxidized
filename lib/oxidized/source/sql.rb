@@ -35,9 +35,16 @@ class SQL < Source
       Sequel.sqlite @cfg.file
     end
     db[@cfg.table.to_sym].each do |node|
+      # map node parameters
       keys = {}
       @cfg.map.each { |key, sql_column| keys[key.to_sym] = node[sql_column.to_sym] }
       keys[:model] = map_model keys[:model] if keys.key? :model
+      
+      # map node specific vars
+      vars = {}
+      @cfg.vars_map.each { |key, sql_column| vars[key.to_sym] = node[sql_column.to_sym] }
+      keys[:vars] = vars unless vars.empty?
+
       nodes << keys
     end
     nodes

@@ -1,5 +1,7 @@
 module Oxidized
   class Model
+    include Oxidized::Config::Vars
+    
     class << self
       def inherited klass
         klass.instance_variable_set '@cmd',   Hash.new { |h,k| h[k] = [] }
@@ -71,7 +73,7 @@ module Oxidized
       end
     end
 
-    attr_accessor :input
+    attr_accessor :input, :node
 
     def cmd string, &block
       out = @input.cmd string

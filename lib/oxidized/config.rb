@@ -9,6 +9,17 @@ module Oxidized
     ModelDir  = File.join Directory, %w(lib oxidized model)
     SourceDir = File.join Directory, %w(lib oxidized source)
     Sleep     = 1
+
+    module Vars
+      # convenience method for accessing node, group or global level user variables
+      # nil values will be ignored
+      def vars name
+        r =   @node.vars[name]
+        r ||= CFG.groups[@node.group].vars[name.to_s] if CFG.groups.has_key?(@node.group)
+        r ||= CFG.vars[name.to_s]
+      end
+    end
+
   end
   class << self
     attr_accessor :mgr
@@ -25,6 +36,7 @@ module Oxidized
   CFGS.default.prompt        = /^([\w.@-]+[#>]\s?)$/
   CFGS.default.rest          = '0.0.0.0:8888' # or false to disable
   CFGS.default.vars          = {}             # could be 'enable'=>'enablePW'
+  CFGS.default.groups        = {}             # group level configuration
   CFGS.default.remove_secret = false          # runs cmd(:secret) blocks if true
 
   CFGS.default.input.default = 'ssh, telnet'

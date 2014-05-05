@@ -3,7 +3,7 @@ module Oxidized
   class MethodNotFound < OxidizedError; end
   class ModelNotFound  < OxidizedError; end
   class Node
-    attr_reader :name, :ip, :model, :input, :output, :group, :auth, :prompt
+    attr_reader :name, :ip, :model, :input, :output, :group, :auth, :prompt, :vars
     attr_accessor :last, :running, :user, :msg, :from
     alias :running? :running
     def initialize opt
@@ -15,6 +15,10 @@ module Oxidized
       @model          = resolve_model opt
       @auth           = resolve_auth opt
       @prompt         = resolve_prompt opt
+      @vars           = opt[:vars]
+
+      # model instance needs to access node instance
+      @model.node = self
     end
 
     def run
@@ -73,6 +77,7 @@ module Oxidized
         :group     => @group,
         :model     => @model.class.to_s,
         :last      => nil,
+        :vars      => @vars,
       }
       h[:full_name] = [@group, @name].join('/') if @group
       if @last
@@ -138,7 +143,7 @@ module Oxidized
       if not Oxidized.mgr.model[model]
         Oxidized.mgr.add_model model or raise ModelNotFound, "#{model} not found for node #{ip}"
       end
-      Oxidized.mgr.model[model].new
+      Oxidized.mgr.model[model].new 
     end
 
   end

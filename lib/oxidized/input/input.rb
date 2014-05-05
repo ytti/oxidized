@@ -1,5 +1,7 @@
 module Oxidized
   class Input
+    include Oxidized::Config::Vars
+
     RescueFail = {
       :debug => [
         Errno::ECONNREFUSED,
