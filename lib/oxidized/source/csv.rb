@@ -26,7 +26,7 @@ class CSV < Source
         keys[key.to_sym] = data[position]
       end
       keys[:model] = map_model keys[:model] if keys.key? :model
-      
+
       # map node specific vars, empty value is considered as nil
       vars = {}
       @cfg.vars_map.each { |key, position| vars[key.to_sym] = data[position].to_s.empty? ? nil : data[position] }

@@ -1,7 +1,7 @@
 module Oxidized
   class Model
     include Oxidized::Config::Vars
-    
+
     class << self
       def inherited klass
         klass.instance_variable_set '@cmd',   Hash.new { |h,k| h[k] = [] }

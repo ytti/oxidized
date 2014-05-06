@@ -2,10 +2,10 @@ module Oxidized
   require 'oxidized/log'
   require 'oxidized/string'
   require 'oxidized/config'
+  require 'oxidized/config/vars'
   require 'oxidized/worker'
   require 'oxidized/nodes'
   require 'oxidized/manager'
-  require 'oxidized/config/vars'
   class << self
     def new *args
       Core.new args
