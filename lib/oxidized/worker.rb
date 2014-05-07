@@ -27,6 +27,7 @@ module Oxidized
     def process job
       node = job.node
       node.last = job
+      node.stats.add job
       @jobs.duration job.time
       if job.status == :success
         msg = "update #{node.name}"
