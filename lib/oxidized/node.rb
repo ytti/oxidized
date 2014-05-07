@@ -1,10 +1,11 @@
 module Oxidized
   require 'resolv'
+  require_relative 'node/stats'
   class MethodNotFound < OxidizedError; end
   class ModelNotFound  < OxidizedError; end
   class Node
     attr_reader :name, :ip, :model, :input, :output, :group, :auth, :prompt, :vars
-    attr_accessor :last, :running, :user, :msg, :from
+    attr_accessor :last, :running, :user, :msg, :from, :stats
     alias :running? :running
     def initialize opt
       @name           = opt[:name]
@@ -16,6 +17,7 @@ module Oxidized
       @auth           = resolve_auth opt
       @prompt         = resolve_prompt opt
       @vars           = opt[:vars]
+      @stats          = Stats.new
 
       # model instance needs to access node instance
       @model.node = self
