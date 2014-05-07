@@ -32,7 +32,7 @@ module Oxidized
             Log.error "node %s is not resolvable, raised %s with message '%s'" % [node, err.class, err.message]
           end
         end
-        replace new
+        size == 0 ? replace(new) : update_nodes(new)
       end
     end
 
@@ -122,6 +122,25 @@ module Oxidized
     # @return [Nodes] list of nodes waiting (not running)
     def waiting
       Nodes.new :nodes => select { |node| not node.running? }
+    end
+
+    # walks list of new nodes, if old node contains same name, adds last and
+    # stats information from old to new.
+    #
+    # @todo can we trust name to be unique identifier, what about when groups are used?
+    # @param [Array] nodes Array of nodes used to replace+update old
+    def update_nodes nodes
+      old = self.dup
+      replace(nodes)
+      each do |node|
+        begin
+          if i = old.find_node_index(node.name)
+            node.stats = old[i].stats
+            node.last  = old[i].last
+          end
+        rescue  Oxidized::NodeNotFound
+        end
+      end
     end
 
   end
