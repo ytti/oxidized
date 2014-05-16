@@ -4,8 +4,8 @@ module Oxidized
   class MethodNotFound < OxidizedError; end
   class ModelNotFound  < OxidizedError; end
   class Node
-    attr_reader :name, :ip, :model, :input, :output, :group, :auth, :prompt, :vars
-    attr_accessor :last, :running, :user, :msg, :from, :stats
+    attr_reader :name, :ip, :model, :input, :output, :group, :auth, :prompt, :vars, :last, :error
+    attr_accessor :running, :user, :msg, :from, :stats
     alias :running? :running
     def initialize opt
       @name           = opt[:name]
@@ -24,7 +24,7 @@ module Oxidized
     end
 
     def run
-      status, config = :fail, nil
+      status, config, @error = :fail, nil, nil
       @input.each do |input|
         @model.input = input = input.new
         if config=run_input(input)
@@ -34,6 +34,7 @@ module Oxidized
           status = :no_connection
         end
       end
+      @model.input = nil
       [status, config]
     end
 
@@ -51,6 +52,7 @@ module Oxidized
           input.get
         end
       rescue *rescue_fail.keys => err
+        @error = err
         resc  = ''
         if not level = rescue_fail[err.class]
           resc  = err.class.ancestors.find{|e|rescue_fail.keys.include? e}
@@ -60,6 +62,7 @@ module Oxidized
         Log.send(level, '%s raised %s%s with msg "%s"' % [self.ip, err.class, resc, err.message])
         return false
       rescue => err
+        @error = err
         file = Oxidized::Config::Crash + '.' + self.ip.to_s
         open file, 'w' do |fh|
           fh.puts Time.now.utc
@@ -91,6 +94,15 @@ module Oxidized
         }
       end
       h
+    end
+
+    def last= job
+      ostruct = OpenStruct.new
+      ostruct.start  = job.start
+      ostruct.end    = job.end
+      ostruct.status = job.status
+      ostruct.time   = job.time
+      @last = ostruct
     end
 
     def reset
