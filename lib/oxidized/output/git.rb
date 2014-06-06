@@ -44,7 +44,11 @@ class Git < Output
 
   def fetch node, group
     begin
-      repo = Repo.new(@cfg.repo)
+      repo = @cfg.repo
+      if group
+        repo = File.join File.dirname(repo), group + '.git'
+      end
+      repo = Repo.new(repo)
       (repo.tree / node).data
     rescue
       'node not found'
