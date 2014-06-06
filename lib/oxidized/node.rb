@@ -95,12 +95,16 @@ module Oxidized
     end
 
     def last= job
-      ostruct = OpenStruct.new
-      ostruct.start  = job.start
-      ostruct.end    = job.end
-      ostruct.status = job.status
-      ostruct.time   = job.time
-      @last = ostruct
+      if job
+        ostruct = OpenStruct.new
+        ostruct.start  = job.start
+        ostruct.end    = job.end
+        ostruct.status = job.status
+        ostruct.time   = job.time
+        @last = ostruct
+      else
+        @last = nil
+      end
     end
 
     def reset
