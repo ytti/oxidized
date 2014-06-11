@@ -12,6 +12,12 @@ class JunOS < Oxidized::Model
     cfg
   end
 
+  cmd :secret do |cfg| 
+    cfg.gsub! /encrypted-password (\S+).*/, '<secret removed>'
+    cfg.gsub! /community (\S+) {/, 'community <hidden> {'
+    cfg
+  end
+
   cmd 'show configuration'
 
   cmd 'show version' do |cfg|

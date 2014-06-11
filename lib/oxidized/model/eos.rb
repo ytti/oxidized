@@ -11,6 +11,12 @@ class EOS < Oxidized::Model
      cfg.each_line.to_a[2..-2].join
   end
 
+  cmd :secret do |cfg|
+     cfg.gsub! /^(snmp-server community).*/, '\\1 <configuration removed>'
+     cfg.gsub! /username (\S+) privilege (\d+) (\S+).*/, '<secret hidden>'
+     cfg
+  end
+
   cmd 'show inventory | no-more' do |cfg|
     comment cfg
   end

@@ -8,6 +8,12 @@ class IOSXR < Oxidized::Model
     cfg.each_line.to_a[2..-2].join
   end
 
+  cmd :secret do |cfg| 
+    cfg.gsub! /^(snmp-server community).*/, '\\1 <configuration removed>'
+    cfg.gsub! /secret (\d+) (\S+).*/, '<secret hidden>'
+    cfg
+  end
+
   cmd 'show inventory' do |cfg|
     comment cfg
   end
