@@ -14,10 +14,5 @@ module Oxidized
         Errno::EPIPE,
       ],
     }
-    class << self
-      def inherited klass
-        Oxidized.mgr.loader = { :class => klass }
-      end
-    end
   end
 end
