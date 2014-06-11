@@ -46,6 +46,9 @@
  * cmd is executed in instance of model
  * 'junos', 'ios', 'ironware' and 'powerconnect' implemented
 
+## Media
+ * TREX 2014 presentation - http://youtu.be/kBQ_CTUuqeU#t=3h
+
 ## Cookbook
 
 ### Configuration I use in one environment
@@ -125,3 +128,4 @@ System wide configurations can be stored in /etc/oxidized/config, this might be
 useful for storing for example source information, if many users are using
 oxs/Oxidized::Script, which would allow user specific config only to include
 username+password
+
