@@ -1,5 +1,5 @@
 module Oxidized
-class OxFile < Output
+class OxidizedFile < Output
   require 'fileutils'
 
   def initialize
