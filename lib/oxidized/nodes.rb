@@ -9,18 +9,14 @@ module Oxidized
     def load node_want=nil
       with_lock do
         new = []
-        node_want_ip = (IPAddr.new(node_want) rescue nil) if node_want
+        node_want_ip = (IPAddr.new(node_want) rescue false) if node_want
         @source = CFG.source.default
         Oxidized.mgr.add_source @source
         Oxidized.mgr.source[@source].new.load.each do |node|
 
           # we want to load specific node(s), not all of them
           if node_want
-            if node_want_ip
-              next unless node_want_ip == node[:ip]
-            else
-              next unless node[:name].match node_want
-            end
+            next unless node_want_ip == node[:ip] or node_want.match(node[:name])
           end
 
           begin
