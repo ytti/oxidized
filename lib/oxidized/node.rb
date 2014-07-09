@@ -1,5 +1,6 @@
 module Oxidized
   require 'resolv'
+  require 'ostruct'
   require_relative 'node/stats'
   class MethodNotFound < OxidizedError; end
   class ModelNotFound  < OxidizedError; end
