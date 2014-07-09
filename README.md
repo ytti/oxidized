@@ -87,7 +87,7 @@ debug: false
 threads: 30
 timeout: 30
 prompt: !ruby/regexp /^([\w.@-]+[#>]\s?)$/
-rest: 0.0.0.0:8888
+rest: 127.0.0.1:8888
 vars: {}
 input:
   default: ssh, telnet
