@@ -10,7 +10,7 @@
 
 # Install
  * early days, but try:
-   1. apt-get install libsqlite3-dev libssl-dev
+   1. apt-get install ruby libsqlite3-dev libssl-dev
    2. gem install oxidized oxidized-web
    3. oxidized
    4. vi ~/.config/oxidized/config
