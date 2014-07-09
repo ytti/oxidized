@@ -121,11 +121,12 @@ source:
 ```
 which reads nodes from rancid compatible router.db maps their model names to
 model names oxidized expects, stores config in git, will try ssh first then
-telnet, wont crash on changed ssh keys
+telnet, wont crash on changed ssh keys.
+
 Hopefully most of them are obvious, log is ignored if Syslog::Logger exists
 (>=2.0) and syslog is used instead.
+
 System wide configurations can be stored in /etc/oxidized/config, this might be
 useful for storing for example source information, if many users are using
 oxs/Oxidized::Script, which would allow user specific config only to include
-username+password
-
+username+password.
