@@ -13,10 +13,11 @@
    1. apt-get install ruby ruby-dev libsqlite3-dev libssl-dev
    2. gem install oxidized
    3. gem install oxidized-script oxidized-web # if you don't install oxidized-web, make sure you remove "rest" from your config
-   4. oxidized
-   5. vi ~/.config/oxidized/config
-   6. (maybe point to your rancid/router.db or copy it there)
-   7. oxidized
+   4. gem install grit # if you want Git
+   5. oxidized
+   6. vi ~/.config/oxidized/config
+   7. (maybe point to your rancid/router.db or copy it there)
+   8. oxidized
 
 # API
 ## Input
