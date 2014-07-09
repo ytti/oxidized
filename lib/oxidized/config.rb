@@ -23,7 +23,7 @@ module Oxidized
   CFGS.default.threads       = 30
   CFGS.default.timeout       = 30
   CFGS.default.prompt        = /^([\w.@-]+[#>]\s?)$/
-  CFGS.default.rest          = '0.0.0.0:8888' # or false to disable
+  CFGS.default.rest          = '127.0.0.1:8888' # or false to disable
   CFGS.default.vars          = {}             # could be 'enable'=>'enablePW'
   CFGS.default.groups        = {}             # group level configuration
   CFGS.default.remove_secret = false          # runs cmd(:secret) blocks if true
