@@ -12,6 +12,7 @@ Gem::Specification.new do |s|
   s.executables       = %w( oxidized )
   s.require_path      = 'lib'
 
+  s.required_ruby_version = '>= 1.9.3'
   s.add_dependency 'asetus', '>= 0.0.7'
   s.add_dependency 'slop'
   s.add_dependency 'net-ssh'
