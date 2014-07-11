@@ -41,7 +41,9 @@ module Oxidized
       @output.merge! method
     end
     def add_model _model
-      _model = Manager.load Config::ModelDir, _model
+      name = _model
+      _model = Manager.load File.join(Config::Root, 'model'), name
+      _model = Manager.load Config::ModelDir, name if _model.empty?
       return false if _model.empty?
       @model.merge! _model
     end
