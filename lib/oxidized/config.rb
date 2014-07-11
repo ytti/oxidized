@@ -43,7 +43,7 @@ module Oxidized
   CFG = CFGS.cfg  # convenienence, instead of Config.cfg.password, CFG.password
 
   Log.level = Logger::INFO unless CFG.debug
+  raise NoConfig, 'edit ~/.config/oxidized/config' if CFGS.create
   Log.file  = CFG.log if CFG.log
 
-  raise NoConfig, 'edit ~/.config/oxidized/config' if CFGS.create
 end
