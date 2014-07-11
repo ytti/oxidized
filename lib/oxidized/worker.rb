@@ -36,6 +36,7 @@ module Oxidized
         msg += " with message '#{node.msg}'" if node.msg
         node.output.new.store node.name, job.config,
                               :msg => msg, :user => node.user, :group => node.group
+        node.reset
       else
         msg = "#{node.name} status #{job.status}"
         if node.retry < CFG.retries
@@ -48,7 +49,6 @@ module Oxidized
         end
         Log.warn msg
       end
-      node.reset
     end
   end
 end

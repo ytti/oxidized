@@ -111,6 +111,7 @@ module Oxidized
 
     def reset
       @user = @msg = @from = nil
+      @retry = 0
     end
 
     private
