@@ -1,6 +1,7 @@
 module Oxidized
   require 'asetus'
   class NoConfig < OxidizedError; end
+  class InvalidConfig < OxidizedError; end
   class Config
     Root      = File.join ENV['HOME'], '.config', 'oxidized'
     Crash     = File.join Root, 'crash'
@@ -39,8 +40,13 @@ module Oxidized
     'juniper' => 'junos',
   }
 
-  CFGS.load       # load system+user configs, merge to Config.cfg
-  CFG = CFGS.cfg  # convenienence, instead of Config.cfg.password, CFG.password
+  begin
+    CFGS.load # load system+user configs, merge to Config.cfg
+  rescue => error
+    raise InvalidConfig, "Error loading config: #{error.message}"
+  ensure
+    CFG = CFGS.cfg  # convenienence, instead of Config.cfg.password, CFG.password
+  end
 
   Log.level = Logger::INFO unless CFG.debug
   raise NoConfig, 'edit ~/.config/oxidized/config' if CFGS.create
