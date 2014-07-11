@@ -11,6 +11,7 @@ module Oxidized
         Timeout::Error,
         Errno::ECONNRESET,
         Errno::EHOSTUNREACH,
+        Errno::ENETUNREACH,
         Errno::EPIPE,
       ],
     }

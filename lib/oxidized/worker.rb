@@ -29,17 +29,26 @@ module Oxidized
       node.last = job
       node.stats.add job
       @jobs.duration job.time
+      node.running = false
       if job.status == :success
         msg = "update #{node.name}"
         msg += " from #{node.from}" if node.from
         msg += " with message '#{node.msg}'" if node.msg
         node.output.new.store node.name, job.config,
                               :msg => msg, :user => node.user, :group => node.group
-        node.reset
       else
-        Log.warn "#{node.name} status #{job.status}"
+        msg = "#{node.name} status #{job.status}"
+        if node.retry < CFG.retries
+          node.retry += 1
+          msg += ", retry attempt #{node.retry}"
+          @nodes.next node.name
+        else
+          msg += ", retries exhausted, giving up"
+          node.retry = 0
+        end
+        Log.warn msg
       end
-      node.running = false
+      node.reset
     end
   end
 end

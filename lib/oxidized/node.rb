@@ -6,7 +6,7 @@ module Oxidized
   class ModelNotFound  < OxidizedError; end
   class Node
     attr_reader :name, :ip, :model, :input, :output, :group, :auth, :prompt, :vars, :last
-    attr_accessor :running, :user, :msg, :from, :stats
+    attr_accessor :running, :user, :msg, :from, :stats, :retry
     alias :running? :running
     def initialize opt
       @name           = opt[:name]
@@ -19,6 +19,7 @@ module Oxidized
       @prompt         = resolve_prompt opt
       @vars           = opt[:vars]
       @stats          = Stats.new
+      @retry          = 0
 
       # model instance needs to access node instance
       @model.node = self

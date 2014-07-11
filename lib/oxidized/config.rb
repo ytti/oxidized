@@ -22,7 +22,8 @@ module Oxidized
   CFGS.default.log           = File.join Config::Root, 'log'
   CFGS.default.debug         = false
   CFGS.default.threads       = 30
-  CFGS.default.timeout       = 30
+  CFGS.default.timeout       = 20
+  CFGS.default.retries       = 3
   CFGS.default.prompt        = /^([\w.@-]+[#>]\s?)$/
   CFGS.default.rest          = '127.0.0.1:8888' # or false to disable
   CFGS.default.vars          = {}             # could be 'enable'=>'enablePW'
