@@ -20,6 +20,7 @@ class CSV < Source
     nodes = []
     open(@cfg.file).each_line do |line|
       data  = line.chomp.split @cfg.delimiter
+      next if data.empty?
       # map node parameters
       keys = {}
       @cfg.map.each do |key, position|
