@@ -4,7 +4,6 @@ module Oxidized::Config::Vars
   def vars name
     r =   @node.vars[name] unless @node.vars.nil?
     r ||= Oxidized::CFG.groups[@node.group].vars[name.to_s] if Oxidized::CFG.groups.has_key?(@node.group)
-    r ||= Oxidized::CFG.vars[name.to_s]
+    r ||= Oxidized::CFG.vars[name.to_s] if Oxidized::CFG.vars.has_key?(name)
   end
 end
-

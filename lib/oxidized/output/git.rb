@@ -1,12 +1,10 @@
 module Oxidized
 class Git < Output
   begin
-    require 'grit'
+    require 'rugged'
   rescue LoadError
-    raise OxidizedError, 'grit not found: sudo gem install grit'
+    raise OxidizedError, 'rugged not found: sudo gem install rugged'
   end
-  require 'oxidized/fix/grit' if RUBY_VERSION[0..1] == '2.'
-  include Grit
 
   def initialize
     @cfg = CFG.output.git
@@ -31,14 +29,11 @@ class Git < Output
       repo = File.join File.dirname(repo), opt[:group] + '.git'
     end
     begin
-      repo = Repo.new repo
-      actor = Actor.new user, email
-      update_repo repo, file, data, msg, actor
-    rescue Grit::NoSuchPathError
-      Repo.init_bare repo
+      repo = Rugged::Repository.new repo
+      update_repo repo, file, data, msg, user, email
+    rescue Rugged::OSError, Rugged::RepositoryError
+      Rugged::Repository.init_at repo, :bare
       retry
-    rescue Grit::Git::GitTimeout
-      Log.error "git timeout for #{file}"
     end
   end
 
@@ -48,8 +43,10 @@ class Git < Output
       if group
         repo = File.join File.dirname(repo), group + '.git'
       end
-      repo = Repo.new(repo)
-      (repo.tree / node).data
+      repo = Rugged::Repository.new repo
+      index = repo.index
+      index.read_tree repo.head.target.tree unless repo.empty?
+      repo.read(index.get(node)[:oid]).data
     rescue
       'node not found'
     end
@@ -57,17 +54,23 @@ class Git < Output
 
   private
 
-  def update_repo repo, file, data, msg, actor
-    index  = repo.index
-    index.read_tree 'master'
-    old = index.write_tree index.tree, index.current_tree
-    index.add file, data
-    new = index.write_tree index.tree, index.current_tree
-    if old != new
-      parent = repo.commits(nil, 1).first
-      parent = [parent] if parent
-      Log.debug "GIT: comitting #{file}"
-      index.commit msg, parent, actor
+  def update_repo repo, file, data, msg, user, email
+    oid = repo.write data, :blob
+    index = repo.index
+    index.read_tree repo.head.target.tree unless repo.empty?
+
+    tree_old = index.write_tree repo
+    index.add :path=>file, :oid=>oid, :mode=>0100644
+    tree_new = index.write_tree repo
+
+    if tree_old != tree_new
+      Rugged::Commit.create(repo,
+        :tree       => index.write_tree(repo),
+        :message    => msg,
+        :parents    => repo.empty? ? [] : [repo.head.target].compact,
+        :update_ref => 'HEAD',
+        :author     => {:name=>user, :email=>email, :time=>Time.now.utc}
+      )
     end
   end
 end

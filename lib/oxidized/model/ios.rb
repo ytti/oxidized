@@ -22,7 +22,7 @@ class IOS < Oxidized::Model
     cfg.each_line.to_a[1..-2].join
   end
 
-  cmd :secret do |cfg| 
+  cmd :secret do |cfg|
     cfg.gsub! /^(snmp-server community).*/, '\\1 <configuration removed>'
     cfg.gsub! /username (\S+) privilege (\d+) (\S+).*/, '<secret hidden>'
     cfg
