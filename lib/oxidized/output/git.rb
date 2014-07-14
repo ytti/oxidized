@@ -64,12 +64,13 @@ class Git < Output
     tree_new = index.write_tree repo
 
     if tree_old != tree_new
+      repo.config['user.name']  = user
+      repo.config['user.email'] = email
       Rugged::Commit.create(repo,
         :tree       => index.write_tree(repo),
         :message    => msg,
         :parents    => repo.empty? ? [] : [repo.head.target].compact,
         :update_ref => 'HEAD',
-        :author     => {:name=>user, :email=>email, :time=>Time.now.utc}
       )
     end
   end
