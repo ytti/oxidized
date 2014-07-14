@@ -13,15 +13,16 @@ class PowerConnect < Oxidized::Model
     cfg.each_line.to_a[1..-3].join
   end
 
-  cmd 'show running-config'
-
   cmd 'show version' do |cfg|
     comment cfg
   end
 
   cmd 'show system' do |cfg|
+    cfg = cfg.each_line.take_while { |line| not line.match(/uptime/i) }
     comment cfg
   end
+
+  cmd 'show running-config'
 
   cfg :telnet do
     username /^User( Name)?:/
