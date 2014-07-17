@@ -28,7 +28,6 @@ module Oxidized
   CFGS.default.rest          = '127.0.0.1:8888' # or false to disable
   CFGS.default.vars          = {}             # could be 'enable'=>'enablePW'
   CFGS.default.groups        = {}             # group level configuration
-  CFGS.default.remove_secret = false          # runs cmd(:secret) blocks if true
 
   CFGS.default.input.default = 'ssh, telnet'
   CFGS.default.input.ssh.secure = false # complain about changed certs
