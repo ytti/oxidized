@@ -1,6 +1,7 @@
 Gem::Specification.new do |s|
   s.name              = 'oxidized'
-  s.version           = '0.0.65'
+  s.version           = '0.1.0'
+  s.licenses          = ['Apache-2.0']
   s.platform          = Gem::Platform::RUBY
   s.authors           = [ 'Saku Ytti' ]
   s.email             = %w( saku@ytti.fi )
@@ -12,8 +13,8 @@ Gem::Specification.new do |s|
   s.executables       = %w( oxidized )
   s.require_path      = 'lib'
 
-  s.required_ruby_version = '>= 1.9.3'
-  s.add_dependency 'asetus', '>= 0.1.0'
-  s.add_dependency 'slop'
-  s.add_dependency 'net-ssh'
+  s.required_ruby_version =   '>= 1.9.3'
+  s.add_dependency 'asetus',  '~> 0.1'
+  s.add_dependency 'slop',    '~> 3.5'
+  s.add_dependency 'net-ssh', '~> 2.8'
 end
