@@ -6,15 +6,10 @@ class SQL < Source
     raise OxidizedError, 'sequel not found: sudo gem install sequel'
   end
 
-  def initialize
-    super
-    @cfg = CFG.source.sql
-  end
-
   def setup
     if @cfg.empty?
       CFGS.user.source.sql.adapter   = 'sqlite'
-      CFGS.user.source.sql.file      = File.join(Config::Root, 'sqlite.db')
+      CFGS.user.source.sql.database  = File.join(Config::Root, 'sqlite.db')
       CFGS.user.source.sql.table     = 'devices'
       CFGS.user.source.sql.map.name  = 'name'
       CFGS.user.source.sql.map.model = 'rancid'
@@ -23,27 +18,11 @@ class SQL < Source
     end
   end
 
-  def connect
-    #begin
-      #require @cfg.adapter
-    #rescue LoadError
-      #raise OxidizedError, "@{cfg.adapter} not found: install gem"
-    #end
-    Sequel.connect(:adapter  => @cfg.adapter,
-                   :host     => @cfg.host,
-                   :user     => @cfg.user,
-                   :password => @cfg.password,
-                   :database => @cfg.database)
-  end
-
   def load
     nodes = []
     db = connect
-    if @cfg.query?
-      query = db[@cfg.table.to_sym].with_sql(@cfg.query)
-    else
-      query = db[@cfg.table.to_sym]
-    end
+    query = db[@cfg.table.to_sym]
+    query = query.with_sql(@cfg.query) if @cfg.query?
     query.each do |node|
       # map node parameters
       keys = {}
@@ -57,7 +36,25 @@ class SQL < Source
 
       nodes << keys
     end
+    db.disconnect
     nodes
+  end
+
+  private
+
+  def initialize
+    super
+    @cfg = CFG.source.sql
+  end
+
+  def connect
+    Sequel.connect(:adapter  => @cfg.adapter,
+                   :host     => @cfg.host?,
+                   :user     => @cfg.user?,
+                   :password => @cfg.password?,
+                   :database => @cfg.database)
+  rescue Sequel::AdapterNotFound => error
+    raise OxidizedError, "SQL adapter gem not installed: " + error.message
   end
 
 end
