@@ -23,18 +23,28 @@ class SQL < Source
     end
   end
 
+  def connect
+    #begin
+      #require @cfg.adapter
+    #rescue LoadError
+      #raise OxidizedError, "@{cfg.adapter} not found: install gem"
+    #end
+    Sequel.connect(:adapter  => @cfg.adapter,
+                   :host     => @cfg.host,
+                   :user     => @cfg.user,
+                   :password => @cfg.password,
+                   :database => @cfg.database)
+  end
+
   def load
     nodes = []
-    db = case @cfg.adapter
-    when 'sqlite'
-      begin
-        require 'sqlite3'
-      rescue LoadError
-        raise OxidizedError, 'sqlite3 not found: sudo apt install libsqlite3-dev; sudo gem install sqlite3'
-      end
-      Sequel.sqlite @cfg.file
+    db = connect
+    if @cfg.query?
+      query = db[@cfg.table.to_sym].with_sql(@cfg.query)
+    else
+      query = db[@cfg.table.to_sym]
     end
-    db[@cfg.table.to_sym].each do |node|
+    query.each do |node|
       # map node parameters
       keys = {}
       @cfg.map.each { |key, sql_column| keys[key.to_sym] = node[sql_column.to_sym] }
