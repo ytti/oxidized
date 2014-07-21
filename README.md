@@ -67,7 +67,7 @@ source:
   default: sql
   sql:
     adapter: sqlite
-    file: "/usr/local/lan/corona.db"
+    database: "/usr/local/lan/corona.db"
     table: device
     map:
       name: ptr
