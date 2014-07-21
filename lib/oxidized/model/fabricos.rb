@@ -6,10 +6,6 @@ class FabricOS < Oxidized::Model
   prompt /^([\w]+:+[\w]+[>]\s)$/
   comment  '# '
 
-  cmd :all do |cfg|
-    cfg
-  end
-
   cmd 'chassisShow' do |cfg|
     comment cfg
   end
@@ -20,10 +16,6 @@ class FabricOS < Oxidized::Model
 
   cfg :ssh do
     exec true  # don't run shell, run each command in exec channel
-  end
-
-  cfg :ssh do
-    pre_logout 'exit'
   end
 
 end
