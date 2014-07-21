@@ -3,11 +3,11 @@ module Oxidized
   class String < String
     # @return [Oxidized::String] copy of self with last line removed
     def cut_tail
-      Oxy::String.new each_line.to_a[0..-2].join
+      Oxidized::String.new each_line.to_a[0..-2].join
     end
     # @return [Oxidized::String] copy of self with first line removed
     def cut_head
-      Oxy::String.new each_line.to_a[1..-1].join
+      Oxidized::String.new each_line.to_a[1..-1].join
     end
   end
 end
