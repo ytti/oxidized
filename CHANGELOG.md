@@ -1,5 +1,6 @@
 # 0.1.x
-- FEATURE: Force10 model added
+- FEATURE: Force10 model added by @lysiszegerman
+- FEATURE: FabricOS model added by @thakala
 - BUGFIX: Oxidized::String convenience methods for models fixed
 
 # 0.1.1
