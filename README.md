@@ -8,8 +8,29 @@
  * restful API to fetch configurations (/node/fetch/[NODE] or /node/fetch/group/[NODE])
  * restful API to show list of nodes (GET /nodes)
 
+# Supported OS types
+
+ * A10 Networks ACOS
+ * Alcatel-Lucent Operating System AOS
+ * Alcatel-Lucent Operating System AOS7
+ * Alcatel-Lucent Operating System Wireless
+ * Alcatel-Lucent TiMOS
+ * Arista EOS
+ * Brocade Fabric OS
+ * Brocade Ironware
+ * Cisco AireOS
+ * Cisco ASA
+ * Cisco IOS
+ * Cisco IOS-XR
+ * DELL PowerConnect
+ * Force10 FTOS
+ * FortiGate FortiOS
+ * HP ProCurve
+ * Juniper JunOS
+
 # Install
- * early days, but try:
+
+ * Debian
    1. apt-get install ruby ruby-dev libsqlite3-dev libssl-dev
    2. gem install oxidized
    3. gem install oxidized-script oxidized-web # if you don't install oxidized-web, make sure you remove "rest" from your config
@@ -17,6 +38,38 @@
    5. vi ~/.config/oxidized/config
    6. (maybe point to your rancid/router.db or copy it there)
    7. oxidized
+
+ * CentOS, Oracle Linux, Red Hat Linux version 6
+   1. Install Ruby 1.9.3 or greater
+      * For Ruby 2.1.2 installation instructions see "Installing Ruby 2.1.2 using RVM"
+   2. Install Oxidized dependencies
+      * yum install cmake sqlite-devel openssl-devel 
+   3. Install Oxidized daemon and Web front-end from Ruby Gems 
+      * gem install oxidized
+      * gem install oxidized-script oxidized-web
+   4. Start Oxidized, this will create initial configuration
+      * oxidized
+   5. Edit Oxidized configuration and create device database
+      * vi ~/.config/oxidized/config
+      * vi ~/.config/oxidized/router.db
+   6. If you are using file system storage create config directory
+      * mkdir -p ~/.config/oxidized/configs/default
+   7. Start Oxidized
+      * oxidized 
+
+   * Installing Ruby 2.1.2 using RVM
+   1. Install Ruby 2.1.2 build dependencies
+     * yum install curl gcc-c++ patch readline readline-devel zlib zlib-devel 
+     * yum install libyaml-devel libffi-devel openssl-devel make cmake 
+     * yum install bzip2 autoconf automake libtool bison iconv-devel
+   2. Install RVM
+     * curl -L get.rvm.io | bash -s stable
+   3. Setup RVM environment
+     * source /etc/profile.d/rvm.sh
+   4. Compile and install Ruby 2.1.2
+     * rvm install 2.1.2
+   5. Set Ruby 2.1.2 as default
+     * rvm use --default 2.1.2
 
 # API
 ## Input
