@@ -41,23 +41,23 @@
 
  * CentOS, Oracle Linux, Red Hat Linux version 6
    1. Install Ruby 1.9.3 or greater
-      * For Ruby 2.1.2 installation instructions see "Installing Ruby 2.1.2 using RVM"
+     * For Ruby 2.1.2 installation instructions see "Installing Ruby 2.1.2 using RVM"
    2. Install Oxidized dependencies
-      * yum install cmake sqlite-devel openssl-devel 
+     * yum install cmake sqlite-devel openssl-devel 
    3. Install Oxidized daemon and Web front-end from Ruby Gems 
-      * gem install oxidized
-      * gem install oxidized-script oxidized-web
+     * gem install oxidized
+     * gem install oxidized-script oxidized-web
    4. Start Oxidized, this will create initial configuration
-      * oxidized
+     * oxidized
    5. Edit Oxidized configuration and create device database
-      * vi ~/.config/oxidized/config
-      * vi ~/.config/oxidized/router.db
+     * vi ~/.config/oxidized/config
+     * vi ~/.config/oxidized/router.db
    6. If you are using file system storage create config directory
-      * mkdir -p ~/.config/oxidized/configs/default
+     * mkdir -p ~/.config/oxidized/configs/default
    7. Start Oxidized
-      * oxidized 
+     * oxidized 
 
-   * Installing Ruby 2.1.2 using RVM
+ * Installing Ruby 2.1.2 using RVM
    1. Install Ruby 2.1.2 build dependencies
      * yum install curl gcc-c++ patch readline readline-devel zlib zlib-devel 
      * yum install libyaml-devel libffi-devel openssl-devel make cmake 
