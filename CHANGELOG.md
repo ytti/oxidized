@@ -1,3 +1,6 @@
+# 0.2.2
+- BUGFIX: mark node as failure if unknown error is raised
+
 # 0.2.1
 - BUGFIX: vars variable resolving for main level vars
 
