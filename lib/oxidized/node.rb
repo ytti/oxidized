@@ -71,6 +71,7 @@ module Oxidized
           fh.puts err.backtrace
         end
         Log.error '%s raised %s with msg "%s", %s saved' % [self.ip, err.class, err.message, file]
+        return false
       end
     end
 
