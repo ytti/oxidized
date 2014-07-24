@@ -13,6 +13,7 @@ module Oxidized
         Errno::EHOSTUNREACH,
         Errno::ENETUNREACH,
         Errno::EPIPE,
+        Errno::ETIMEDOUT,
       ],
     }
   end
