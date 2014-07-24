@@ -1,3 +1,6 @@
+# 0.2.1
+- BUGFIX: vars variable resolving for main level vars
+
 # 0.2.0
 - FEATURE: Force10 model added by @lysiszegerman
 - FEATURE: ScreenOS model added by @lysiszegerman
