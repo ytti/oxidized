@@ -1,0 +1,39 @@
+class ScreenOS  < Oxidized::Model
+
+  # Netscreen ScreenOS model #
+
+  comment  '! '
+
+  prompt '/^([\w.-\(\)]+->\s?)$/'
+
+  cmd :all do |cfg|
+    cfg.each_line.to_a[2..-2].join
+  end
+
+  cmd :secret do |cfg| 
+    cfg.gsub! /^(set admin name) .*|^(set admin password) .*/, '\\1 <removed>'
+    cfg.gsub! /^(set admin user .* password) .* (.*)/, '\\1 <removed> \\2'
+    cfg.gsub! /(secret|password|preshare) .*/, '\\1 <secret hidden>'
+    cfg
+  end
+
+  cmd 'get system' do |cfg|
+    comment cfg
+  end
+
+  cmd 'get config' do |cfg|
+    cfg = cfg.each_line.to_a[3..-1].join
+    cfg
+  end
+
+  cfg :telnet do
+    username '/^login:/'
+    password '/^password:/'
+  end
+
+  cfg :telnet, :ssh do
+    post_login 'set console page 0'
+    pre_logout 'exit'
+  end
+
+end
