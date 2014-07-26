@@ -18,6 +18,7 @@
  * Arista EOS
  * Brocade Fabric OS
  * Brocade Ironware
+ * Brocade Vyatta
  * Cisco AireOS
  * Cisco ASA
  * Cisco IOS
@@ -27,6 +28,7 @@
  * FortiGate FortiOS
  * HP ProCurve
  * Juniper JunOS
+ * Juniper ScreenOS (Netscreen)
 
 # Install
 
