@@ -1,5 +1,5 @@
 # 0.2.3
-- BUGFIX: rescue @ssh.close when far end closes ungracefully (ALU ISAM)
+- BUGFIX: rescue @ssh.close when far end closes disgracefully (ALU ISAM)
 
 # 0.2.2
 - BUGFIX: mark node as failure if unknown error is raised
