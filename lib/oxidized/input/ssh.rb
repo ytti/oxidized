@@ -59,7 +59,7 @@ module Oxidized
       Timeout::timeout(CFG.timeout) { @ssh.loop }
     rescue Errno::ECONNRESET, Net::SSH::Disconnect, IOError
     ensure
-      @ssh.close if not @ssh.closed?
+      (@ssh.close rescue true) unless @ssh.closed?
     end
 
     def shell_open ssh
