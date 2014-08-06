@@ -28,6 +28,7 @@
  * Force10 FTOS
  * FortiGate FortiOS
  * HP ProCurve
+ * Huawei VRP
  * Juniper JunOS
  * Juniper ScreenOS (Netscreen)
 
