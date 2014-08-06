@@ -28,6 +28,10 @@ class IOS < Oxidized::Model
     cfg
   end
 
+  cmd 'show version' do |cfg|
+    comment cfg.lines.first
+  end
+
   cmd 'show inventory' do |cfg|
     comment cfg
   end

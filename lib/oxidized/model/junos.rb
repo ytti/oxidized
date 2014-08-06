@@ -18,7 +18,7 @@ class JunOS < Oxidized::Model
     cfg
   end
 
-  cmd 'show configuration'
+  cmd 'show configuration | display omit'
 
   cmd 'show version' do |cfg|
     @model = $1 if cfg.match /^Model: (\S+)/
