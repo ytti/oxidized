@@ -79,16 +79,15 @@ module Oxidized
     def cmd string, &block
       out = @input.cmd string
       return false unless out
-      out = Oxidized::String.new out
       self.class.cmds[:all].each do |all_block|
-        out = instance_exec out, string, &all_block
+        out = instance_exec Oxidized::String.new(out), string, &all_block
       end
       if vars :remove_secret
         self.class.cmds[:secret].each do |all_block|
-          out = instance_exec out, string, &all_block
+          out = instance_exec Oxidized::String.new(out), string, &all_block
         end
       end
-      out = instance_exec out, &block if block
+      out = instance_exec Oxidized::String.new(out), &block if block
       process_cmd_output out, string
     end
 
@@ -152,12 +151,12 @@ module Oxidized
 
     private
 
-    def process_cmd_output cmd, name
-      if Hash === cmd
-        cmd[:name] = name
-        return cmd
+    def process_cmd_output output, name
+      if output.class != Oxidized::String
+        output = Oxidized::String.new output
       end
-      {:output=>cmd, :type=>'cfg', :name=>name}
+      output.cmd = name
+      output
     end
 
   end

@@ -7,13 +7,7 @@ module Oxidized
       end
 
       def type_to_str want_type
-        type(want_type).map { |h| h[:output] }.join
-      end
-
-      def each_type &block
-        types.each do |want_type|
-          yield [want_type, type(want_type)]
-        end
+        type(want_type).map { |out| out }.join
       end
 
       def << output
@@ -25,11 +19,11 @@ module Oxidized
       end
 
       def type type
-        @outputs.select { |h| h[:type]==type }
+        @outputs.select { |out| out.type==type }
       end
 
       def types
-        @outputs.map { |h| h[:type] }.uniq
+        @outputs.map { |out| out.type }.uniq - ['cfg']
       end
 
       private

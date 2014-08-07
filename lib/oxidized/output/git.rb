@@ -21,7 +21,6 @@ class Git < Output
   end
 
   def store file, outputs, opt={}
-    data  = outputs.to_cfg
     @msg   = opt[:msg]
     @user  = (opt[:user]  or @cfg.user)
     @email = (opt[:email] or @cfg.email)
@@ -29,11 +28,10 @@ class Git < Output
     repo   = @cfg.repo
 
     outputs.types.each do |type|
-      next if type == 'cfg'
       type_repo = File.join File.dirname(repo), type + '.git'
       outputs.type(type).each do |output|
-        type_file = file + '--' + output[:name].strip.gsub(/\s+/, '_')
-        update type_repo, type_file, output[:output]
+        type_file = file + '--' + output.name
+        update type_repo, type_file, output
       end
     end
 
