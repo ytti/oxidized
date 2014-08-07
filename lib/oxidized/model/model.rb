@@ -1,3 +1,5 @@
+require_relative 'outputs'
+
 module Oxidized
   class Model
     include Oxidized::Config::Vars
@@ -87,7 +89,7 @@ module Oxidized
         end
       end
       out = instance_exec out, &block if block
-      out
+      process_cmd_output out, string
     end
 
     def output
@@ -124,20 +126,20 @@ module Oxidized
     end
 
     def get
-      data, pre = '', ''
+      outputs = Outputs.new
       procs = self.class.procs
+      procs[:pre].each do |pre_proc|
+        outputs << instance_eval(&pre_proc)
+      end
       self.class.cmds[:cmd].each do |command, block|
         out = cmd command, &block
         return false unless out
-        data << out.to_s
-      end
-      procs[:pre].each do |pre_proc|
-        pre << instance_eval(&pre_proc).to_s
+        outputs << out
       end
       procs[:post].each do |post_proc|
-        data << instance_eval(&post_proc).to_s
+        outputs << instance_eval(&post_proc)
       end
-      pre + data
+      outputs
     end
 
     def comment _comment
@@ -146,6 +148,16 @@ module Oxidized
         data << self.class.comment << line
       end
       data
+    end
+
+    private
+
+    def process_cmd_output cmd, name
+      if Hash === cmd
+        cmd[:name] = name
+        return cmd
+      end
+      {:output=>cmd, :type=>'cfg', :name=>name}
     end
 
   end

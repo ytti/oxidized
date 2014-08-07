@@ -20,22 +20,26 @@ class Git < Output
     end
   end
 
-  def store file, data, opt={}
-    msg   = opt[:msg]
-    user  = (opt[:user]  or @cfg.user)
-    email = (opt[:email] or @cfg.email)
-    repo  = @cfg.repo
-    if opt[:group]
-      repo = File.join File.dirname(repo), opt[:group] + '.git'
+  def store file, outputs, opt={}
+    data  = outputs.to_cfg
+    @msg   = opt[:msg]
+    @user  = (opt[:user]  or @cfg.user)
+    @email = (opt[:email] or @cfg.email)
+    @opt   = opt
+    repo   = @cfg.repo
+
+    outputs.types.each do |type|
+      next if type == 'cfg'
+      type_repo = File.join File.dirname(repo), type + '.git'
+      outputs.type(type).each do |output|
+        type_file = file + '--' + output[:name].strip.gsub(/\s+/, '_')
+        update type_repo, type_file, output[:output]
+      end
     end
-    begin
-      repo = Rugged::Repository.new repo
-      update_repo repo, file, data, msg, user, email
-    rescue Rugged::OSError, Rugged::RepositoryError
-      Rugged::Repository.init_at repo, :bare
-      retry
-    end
+
+    update repo, file, outputs.to_cfg
   end
+
 
   def fetch node, group
     begin
@@ -53,6 +57,17 @@ class Git < Output
   end
 
   private
+
+  def update repo, file, data
+    if @opt[:group]
+      repo = File.join File.dirname(repo), @opt[:group] + '.git'
+    end
+    repo = Rugged::Repository.new repo
+    update_repo repo, file, data, @msg, @user, @email
+  rescue Rugged::OSError, Rugged::RepositoryError
+    Rugged::Repository.init_at repo, :bare
+    retry
+  end
 
   def update_repo repo, file, data, msg, user, email
     oid = repo.write data, :blob
