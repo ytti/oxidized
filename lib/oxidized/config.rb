@@ -29,7 +29,8 @@ module Oxidized
   CFGS.default.vars          = {}             # could be 'enable'=>'enablePW'
   CFGS.default.groups        = {}             # group level configuration
 
-  CFGS.default.input.default = 'ssh, telnet'
+  CFGS.default.input.default    = 'ssh, telnet'
+  CFGS.default.input.debug      = false # or String for session log file
   CFGS.default.input.ssh.secure = false # complain about changed certs
 
   CFGS.default.output.default = 'file'  # file, git
