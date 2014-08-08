@@ -14,14 +14,14 @@ class OxidizedFile < Output
     end
   end
 
-  def store node, data, opt={}
+  def store node, outputs, opt={}
     file = @cfg.directory
     if opt[:group]
       file = File.join File.dirname(file), opt[:group]
     end
     FileUtils.mkdir_p file
     file = File.join file, node
-    open(file, 'w') { |fh| fh.write data }
+    open(file, 'w') { |fh| fh.write outputs.to_cfg }
   end
 
   def fetch node, group

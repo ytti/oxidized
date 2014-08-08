@@ -3,7 +3,7 @@ module Oxidized
     class Outputs
 
       def to_cfg
-        type_to_str('cfg')
+        type_to_str(nil)
       end
 
       def type_to_str want_type
@@ -23,7 +23,7 @@ module Oxidized
       end
 
       def types
-        @outputs.map { |out| out.type }.uniq - ['cfg']
+        @outputs.map { |out| out.type }.uniq.compact
       end
 
       private

@@ -1,7 +1,7 @@
 module Oxidized
   # Used in models, contains convenience methods
   class String < String
-    attr_accessor :type, :cmd
+    attr_accessor :type, :cmd, :name
 
     # @return [Oxidized::String] copy of self with last line removed
     def cut_tail
@@ -13,17 +13,11 @@ module Oxidized
       Oxidized::String.new each_line.to_a[1..-1].join
     end
 
-    # @return clean/filename version of cmd
-    def name
-      cmd.strip.gsub(/\s+/, '_')
+    # sets @cmd and @name unless @name is already set
+    def set_cmd command
+      @cmd  = command
+      @name = @cmd.strip.gsub(/\s+/, '_') if @name == nil
     end
 
-    private
-
-    def initialize arg
-      super
-      @type = 'cfg'
-      @cmd  = 'n/a'
-    end
   end
 end

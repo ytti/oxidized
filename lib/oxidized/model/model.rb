@@ -155,7 +155,7 @@ module Oxidized
       if output.class != Oxidized::String
         output = Oxidized::String.new output
       end
-      output.cmd = name
+      output.set_cmd(name)
       output
     end
 

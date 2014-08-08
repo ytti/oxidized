@@ -28,11 +28,14 @@ class Git < Output
     repo   = @cfg.repo
 
     outputs.types.each do |type|
+      type_cfg = ''
       type_repo = File.join File.dirname(repo), type + '.git'
       outputs.type(type).each do |output|
+        (type_cfg << output; next) if not output.name
         type_file = file + '--' + output.name
         update type_repo, type_file, output
       end
+      update type_repo, file, type_cfg unless type_cfg.empty?
     end
 
     update repo, file, outputs.to_cfg
