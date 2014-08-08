@@ -20,6 +20,7 @@ module Oxidized
       @output     = ''
       @node.model.cfg['ssh'].each { |cb| instance_exec(&cb) }
       secure = CFG.input.ssh.secure
+      @log = File.open(CFG.input.debug?.to_s + '-ssh', 'w') if CFG.input.debug?
       @ssh = Net::SSH.start @node.ip, @node.auth[:username],
                             :password => @node.auth[:password], :timeout => CFG.timeout,
                             :paranoid => secure
@@ -59,12 +60,14 @@ module Oxidized
       Timeout::timeout(CFG.timeout) { @ssh.loop }
     rescue Errno::ECONNRESET, Net::SSH::Disconnect, IOError
     ensure
+      @log.close if CFG.input.debug?
       (@ssh.close rescue true) unless @ssh.closed?
     end
 
     def shell_open ssh
       @ses = ssh.open_channel do |ch|
         ch.on_data do |_ch, data|
+          @log.print data if CFG.input.debug?
           @output << data
           @output = @node.model.expects @output
         end
