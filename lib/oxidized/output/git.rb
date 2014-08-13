@@ -43,7 +43,8 @@ class Git < Output
       update type_repo, file, type_cfg unless type_cfg.empty?
     end
 
-    update repo, file, outputs.to_cfg
+    output = outputs.to_cfg
+    update repo, file, output unless output.empty?
   end
 
 
