@@ -14,6 +14,10 @@ module Oxidized
         @outputs << output
       end
 
+      def unshift output
+        @outputs.unshift output
+      end
+
       def all
         @outputs
       end

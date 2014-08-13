@@ -127,16 +127,16 @@ module Oxidized
     def get
       outputs = Outputs.new
       procs = self.class.procs
-      procs[:pre].each do |pre_proc|
-        outputs << instance_eval(&pre_proc)
-      end
       self.class.cmds[:cmd].each do |command, block|
         out = cmd command, &block
         return false unless out
         outputs << out
       end
+      procs[:pre].each do |pre_proc|
+        outputs.unshift Oxidized::String.new(instance_eval(&pre_proc))
+      end
       procs[:post].each do |post_proc|
-        outputs << instance_eval(&post_proc)
+        outputs << Oxidized::String.new(instance_eval(&post_proc))
       end
       outputs
     end

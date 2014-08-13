@@ -19,5 +19,14 @@ module Oxidized
       @name = @cmd.strip.gsub(/\s+/, '_') if @name == nil
     end
 
+    def initialize str=''
+      super
+      if str.class == Oxidized::String
+        @cmd  = str.cmd
+        @name = str.name
+        @type = str.type
+      end
+    end
+
   end
 end
