@@ -27,6 +27,7 @@ class Procurve < Oxidized::Model
   end
 
   cmd 'show system-information' do |cfg|
+    cfg = cfg.split("\n")[0..-8].join("\n")
     comment cfg
   end
 
