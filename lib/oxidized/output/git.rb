@@ -38,7 +38,7 @@ class Git < Output
           type_file = type + '/' + type_file
           type_repo = repo
         end
-        update type_repo, type_file, output
+        update type_repo, type_file, output unless output.empty?
       end
       update type_repo, file, type_cfg unless type_cfg.empty?
     end
