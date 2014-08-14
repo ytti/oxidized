@@ -38,13 +38,12 @@ class Git < Output
           type_file = type + '/' + type_file
           type_repo = repo
         end
-        update type_repo, type_file, output unless output.empty?
+        update type_repo, type_file, output
       end
-      update type_repo, file, type_cfg unless type_cfg.empty?
+      update type_repo, file, type_cfg
     end
 
-    output = outputs.to_cfg
-    update repo, file, output unless output.empty?
+    update repo, file, outputs.to_cfg
   end
 
 
@@ -66,6 +65,7 @@ class Git < Output
   private
 
   def update repo, file, data
+    return if data.empty?
     if @opt[:group]
       repo = File.join File.dirname(repo), @opt[:group] + '.git'
     end
