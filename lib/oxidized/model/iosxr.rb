@@ -2,6 +2,7 @@ class IOSXR < Oxidized::Model
 
   # IOS XR model #
 
+  prompt /^([\w.@:\/-]+[#>]\s?)$/
   comment  '! '
 
   cmd :all do |cfg|
