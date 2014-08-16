@@ -1,8 +1,9 @@
 # 0.2.3
 - BUGFIX: rescue @ssh.close when far end closes disgracefully (ALU ISAM)
-- BUGFIX: remove changing lines from model/procurve.rb 'show system-information' output
+- BUGFIX: bugfixes to models
 - FEATURE: Alcatel-Lucent ISAM 7302/7330 model added by @jalmargyyk
 - FEATURE: Huawei VRP model added by @jalmargyyk
+- FEATURE: Ubiquiti AirOS added by @willglyn
 - FEATURE: Support 'input' debug in config, ssh/telnet use it to write session log
 
 # 0.2.2
