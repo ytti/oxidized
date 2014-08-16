@@ -19,7 +19,7 @@ class PowerConnect < Oxidized::Model
 
   cmd 'show system' do |cfg|
     cfg = cfg.each_line.take_while { |line| not line.match(/uptime/i) }
-    comment cfg
+    comment cfg.join "\n"
   end
 
   cmd 'show running-config'
@@ -30,9 +30,14 @@ class PowerConnect < Oxidized::Model
   end
 
   cfg :telnet, :ssh do
-    post_login 'terminal datadump'
-    post_login 'enable'
-    pre_logout 'exit'
+    if vars :enable
+      send "enable\n"
+      send vars(:enable) + "\n"
+    end
+
+    post_login "terminal length 0"
+    pre_logout "logout"
+    
   end
 
 end
