@@ -51,6 +51,6 @@ module Oxidized
 
   Log.level = Logger::INFO unless CFG.debug
   raise NoConfig, 'edit ~/.config/oxidized/config' if CFGS.create
-  Log.file  = CFG.log if CFG.log
+  Log.file = CFG.log if CFG.log
 
 end
