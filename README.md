@@ -31,6 +31,7 @@
  * Huawei VRP
  * Juniper JunOS
  * Juniper ScreenOS (Netscreen)
+ * Ubiquiti AirOS
 
 # Install
 
