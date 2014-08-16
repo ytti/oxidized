@@ -16,11 +16,13 @@ module Oxidized
     private
 
     def initialize
+      Log.info "Oxidized starting, running as pid #{$$}"
       _args, @opts = parse_opts
       CFG.debug = true if @opts[:debug]
     end
 
     def crash error
+      Log.fatal "Oxidized crashed, crashfile written in #{Config::Crash}"
       open Config::Crash, 'w' do |file|
         file.puts '-' * 50
         file.puts Time.now.utc
