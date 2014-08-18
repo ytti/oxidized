@@ -24,6 +24,7 @@
  * Cisco ASA
  * Cisco IOS
  * Cisco IOS-XR
+ * Cisco SMB (Nikola series)
  * DELL PowerConnect
  * Force10 FTOS
  * FortiGate FortiOS
