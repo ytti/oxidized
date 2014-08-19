@@ -1,3 +1,6 @@
+# 0.2.4
+ - FEATURE: Cisco SMB (Nikola series VxWorks) model by @thetamind
+
 # 0.2.3
 - BUGFIX: rescue @ssh.close when far end closes disgracefully (ALU ISAM)
 - BUGFIX: bugfixes to models
