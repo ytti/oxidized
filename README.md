@@ -26,6 +26,7 @@
  * Cisco IOS-XR
  * Cisco SMB (Nikola series)
  * DELL PowerConnect
+ * Extreme Networks XOS
  * Force10 FTOS
  * FortiGate FortiOS
  * HP ProCurve
