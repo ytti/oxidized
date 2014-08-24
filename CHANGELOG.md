@@ -1,6 +1,7 @@
 # 0.2.4
- - FEATURE: Cisco SMB (Nikola series VxWorks) model by @thetamind
- - FEATURE: Extreme Networks XOS model (access by sjm)
+- FEATURE: Cisco SMB (Nikola series VxWorks) model by @thetamind
+- FEATURE: Extreme Networks XOS model (access by sjm)
+- FEATURE: Brocade NOS (Network Operating System) (access by sjm)
 
 # 0.2.3
 - BUGFIX: rescue @ssh.close when far end closes disgracefully (ALU ISAM)

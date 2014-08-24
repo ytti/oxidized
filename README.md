@@ -19,6 +19,7 @@
  * Arista EOS
  * Brocade Fabric OS
  * Brocade Ironware
+ * Brocade NOS (Network Operating System)
  * Brocade Vyatta
  * Cisco AireOS
  * Cisco ASA
