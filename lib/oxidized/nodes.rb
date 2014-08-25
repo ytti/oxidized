@@ -29,6 +29,7 @@ module Oxidized
     end
 
     def node_want? node_want, node
+      return true unless node_want
       node_want_ip = (IPAddr.new(node_want) rescue false)
       name_is_ip   = (IPAddr.new(node[:name]) rescue false)
       if name_is_ip and node_want_ip == node[:name]
