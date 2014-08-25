@@ -9,16 +9,11 @@ module Oxidized
     def load node_want=nil
       with_lock do
         new = []
-        node_want_ip = (IPAddr.new(node_want) rescue false) if node_want
         @source = CFG.source.default
         Oxidized.mgr.add_source @source
         Oxidized.mgr.source[@source].new.load.each do |node|
-
           # we want to load specific node(s), not all of them
-          if node_want
-            next unless node_want_ip == node[:ip] or node_want.match(node[:name])
-          end
-
+          next unless node_want? node_want, node
           begin
             _node = Node.new node
             new.push _node
@@ -32,6 +27,19 @@ module Oxidized
         size == 0 ? replace(new) : update_nodes(new)
       end
     end
+
+    def node_want? node_want, node
+      node_want_ip = (IPAddr.new(node_want) rescue false)
+      name_is_ip   = (IPAddr.new(node[:name]) rescue false)
+      if name_is_ip and node_want_ip == node[:name]
+        true
+      elsif node[:ip] and node_want_ip == node[:ip]
+        true
+      elsif node_want.match node[:name]
+        true unless name_is_ip
+      end
+    end
+
 
     def list
       with_lock do
