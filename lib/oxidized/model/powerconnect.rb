@@ -31,8 +31,10 @@ class PowerConnect < Oxidized::Model
 
   cfg :telnet, :ssh do
     if vars :enable
-      send "enable\n"
-      send vars(:enable) + "\n"
+      post_login do
+        send "enable\n"
+        send vars(:enable) + "\n"
+      end
     end
 
     post_login "terminal length 0"
