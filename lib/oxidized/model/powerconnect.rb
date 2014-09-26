@@ -18,8 +18,9 @@ class PowerConnect < Oxidized::Model
   end
 
   cmd 'show system' do |cfg|
-    cfg = cfg.each_line.take_while { |line| not line.match(/uptime/i) }
-    comment cfg.join "\n"
+    cfg = cfg.split("\n").select { |line| not line[/Up Time/] }
+    cfg = cfg[0..-28]<<" "
+    comment cfg.join("\n")
   end
 
   cmd 'show running-config'
