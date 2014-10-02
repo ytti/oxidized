@@ -25,6 +25,7 @@
  * Cisco ASA
  * Cisco IOS
  * Cisco IOS-XR
+ * Cisco NXOS
  * Cisco SMB (Nikola series)
  * DELL PowerConnect
  * Extreme Networks XOS
