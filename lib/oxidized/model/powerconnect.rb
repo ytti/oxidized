@@ -14,11 +14,12 @@ class PowerConnect < Oxidized::Model
   end
 
   cmd 'show version' do |cfg|
-    comment cfg
+    cfg = cfg.split("\n").select { |line| not line[/Up\sTime/] }
+    comment cfg.join("\n") + "\n"
   end
 
   cmd 'show system' do |cfg|
-    cfg = cfg.split("\n").select { |line| not line[/Up Time/] }
+    cfg = cfg.split("\n").select { |line| not line[/Up\sTime/] }
     cfg = cfg[0..-28]<<" "
     comment cfg.join("\n")
   end
