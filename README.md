@@ -114,6 +114,30 @@
 
 ## Cookbook
 
+### Debugging
+In case a plugin doesn't work correctly, you can enable live debugging of SSH/Telnet sessions, in case there are any issues. Add the ```debug``` option, specifying a log file destination to the ```input``` section.
+
+The following example will log ssh to ```/home/fisakytt/.config/oxidized/log_input-ssh``` and telnet to ```log_input-telnet``` The file will be truncated with each session, so you need to put a ```tailf``` or ```tail -f``` on that file.
+
+```
+---
+input:
+  default: ssh, telnet
+  debug: /home/fisakytt/.config/oxidized/log_input
+  ssh:
+    secure: false
+```
+
+### Sending the enable before other commands
+
+To put your routers in privileged mode, Oxidized needs to send the enable command. You can globally enable this, by adding the following snipped to the global configuration file.
+
+```
+---
+vars:
+   enable: S3cre7
+```
+
 ### Configuration I use in one environment
 ```
 ---
