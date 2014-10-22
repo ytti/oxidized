@@ -201,9 +201,9 @@ threads: 30
 timeout: 20
 retries: 3
 prompt: !ruby/regexp /^([\w.@-]+[#>]\s?)$/
-rest: 127.0.0.1:8888
 vars: {}
 groups: {}
+rest: 127.0.0.1:8888
 input:
   default: ssh, telnet
   debug: false
@@ -213,6 +213,12 @@ output:
   default: file
 source:
   default: csv
+  csv:
+    file: ~/.config/oxidized/router.db
+    delimiter: !ruby/regexp /:/
+    map:
+      name: 0
+      model: 1
 model_map:
   cisco: ios
   juniper: junos
