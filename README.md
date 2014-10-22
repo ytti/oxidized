@@ -23,8 +23,11 @@ Oxidized is a network device configration backup tool. Its a RANCID replacment!
 5. [Cookbook](#cookbook)
     * [Debugging](#debugging)
     * [Privileged mode](#privileged-mode)
-    * [SQLite Example Configuration](#sqlite-example-configuration)
-    * [Default Configuration](#default-configuration)
+    * [Source: CSV](#source-csv)
+    * [Source: SQLite](#source-sqlite)
+    * [Output: GIT](#output-git)
+    * [Output: File](#output-file)
+    * [Advanced Configuration](#advanced-configuration)
 6. [Ruby API](#ruby-api)
     * [Input](#input)
     * [Output](#output)
@@ -209,7 +212,7 @@ source:
       enable: enable
 ```
 
-### Output: CSV
+### Output: File
 
 Parent directory needs to be created manually, one file per device, with most recent running config.
 
