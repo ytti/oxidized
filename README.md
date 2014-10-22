@@ -87,6 +87,11 @@ gem install oxidized-script oxidized-web
 
 To initialize an empty configuration file, simply run ```oxidized``` once to create a config in you home directory ```~/.config/oxidized/config```. The configuration file is in YAML format.
 
+Create the directory where the ```output``` is going to store configurations:
+```
+mkdir ~/.config/oxidized/configs
+```
+
 Lets tell Oxidized where it finds a list of network devices to backup configuration from. You can either use CSV or SQLite as source. To create a CVS source add the following snippet:
 
 ```
@@ -182,27 +187,30 @@ source:
 ```
 
 ### Default Configuration
-If you don't configure output and source, it'll further fill them with example
-configs for your chosen output/source in subsequent runs
+If you don't configure output and source, it'll further fill them with example configs for your chosen output/source in subsequent runs.
+
 ```
 ---
 username: username
 password: password
 model: junos
 interval: 3600
-log: "/home/fisakytt/.config/oxidized/log"
+log: ~/.config/oxidized/log
 debug: false
 threads: 30
-timeout: 30
+timeout: 20
+retries: 3
 prompt: !ruby/regexp /^([\w.@-]+[#>]\s?)$/
 rest: 127.0.0.1:8888
 vars: {}
+groups: {}
 input:
   default: ssh, telnet
+  debug: false
   ssh:
     secure: false
 output:
-  default: git
+  default: file
 source:
   default: csv
 model_map:
@@ -217,11 +225,11 @@ output:
   git:
     user: Oxidized
     email: o@example.com
-    repo: "/home/fisakytt/.config/oxidized/oxidized.git"
+    repo: "~/.config/oxidized/oxidized.git"
 source:
   default: csv
   csv:
-    file: "/home/fisakytt/.config/oxidized/router.db"
+    file: "~/.config/oxidized/router.db"
     delimiter: !ruby/regexp /:/
     map:
       name: 0
