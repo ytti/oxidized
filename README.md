@@ -1,6 +1,6 @@
 # Oxidized
 
-Oxidized is a network device configration backup tool. Its a RANCID replcament!
+Oxidized is a network device configration backup tool. Its a RANCID replacment!
 
 * automatically adds/removes threads to meet configured retrieval interval
 * restful API to move node immediately to head-of-queue (GET/POST /node/next/[NODE])
@@ -27,9 +27,9 @@ Oxidized is a network device configration backup tool. Its a RANCID replcament!
     * [Default Configuration](#default-configuration)
 6. [Ruby API](#ruby-api)
     * [Input](#input)
-    * [Output](#output
-    * [Source](#source
-    * [Model](#model
+    * [Output](#output)
+    * [Source](#source)
+    * [Model](#model)
 
 # Supported OS types
 
