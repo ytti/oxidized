@@ -16,11 +16,10 @@ class ASA < Oxidized::Model
     cfg
   end
 
-  cmd 'show clock' do |cfg|
-    comment cfg
-  end
-
   cmd 'show version' do |cfg|
+    # avoid commits due to uptime / ixo-router01 up 2 mins 28 secs / ixo-router01 up 1 days 2 hours
+    cfg = cfg.each_line.select { |line| not line.match /\s+up\s+\d+\s+/ }
+    cfg = cfg.join
     comment cfg
   end
 
