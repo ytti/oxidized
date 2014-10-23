@@ -69,7 +69,8 @@ Oxidized is a network device configration backup tool. Its a RANCID replacment!
 Install all required packages and gems.
 
 ```shell
-apt-get install ruby ruby-dev libsqlite3-dev libssl-dev
+apt-get install ruby ruby-dev libsqlite3-dev libssl-dev pkg-config cmake
+gem install rugged
 gem install oxidized
 gem install oxidized-script oxidized-web # if you don't install oxidized-web, make sure you remove "rest" from your config
 ```
