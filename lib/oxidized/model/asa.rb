@@ -3,7 +3,7 @@ class ASA < Oxidized::Model
   # Cisco ASA model #
   # Only SSH supported for the sake of security
 
-  prompt /^\r*([\w]+[#>]\s?)$/
+  prompt /^\r*([\w.@()-]+[#>]\s?)$/
   comment  '! '
 
   cmd :all do |cfg|
