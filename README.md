@@ -191,7 +191,9 @@ source:
       name: 0
       model: 1
       username: 2
-      enable: 3
+      password: 3
+    var_map:
+      enable: 4
 ```
 
 ### Source: SQLite
@@ -210,6 +212,7 @@ source:
       model: model
       username: username
       password: password
+    var_map:
       enable: enable
 ```
 
@@ -275,6 +278,7 @@ source:
       model: 1
       username: 2
       password: 3
+    var_map:
       enable: 4
 model_map:
   cisco: ios
