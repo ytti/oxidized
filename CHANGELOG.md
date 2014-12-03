@@ -1,3 +1,6 @@
+# 0.3.0
+- FEATURE: *FIXME* bunch of stuff I did for richih, docs needed
+
 # 0.2.4
 - FEATURE: Cisco SMB (Nikola series VxWorks) model by @thetamind
 - FEATURE: Extreme Networks XOS model (access by sjm)
