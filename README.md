@@ -1,12 +1,38 @@
-# Pitch
- * automatically adds/removes threads to meet configured retrieval interval
- * restful API to move node immediately to head-of-queue (GET/POST /node/next/[NODE])
-   * syslog udp+file example to catch config change event (ios/junos) and trigger config fetch
-   * will signal ios/junos user who made change, which output module can (git does) use (via POST)
-   * 'git blame' will show for each line who and when the change was made
- * restful API to reload list of nodes (GET /reload)
- * restful API to fetch configurations (/node/fetch/[NODE] or /node/fetch/group/[NODE])
- * restful API to show list of nodes (GET /nodes)
+# Oxidized
+
+Oxidized is a network device configration backup tool. Its a RANCID replacment!
+
+* automatically adds/removes threads to meet configured retrieval interval
+* restful API to move node immediately to head-of-queue (GET/POST /node/next/[NODE])
+  * syslog udp+file example to catch config change event (ios/junos) and trigger config fetch
+  * will signal ios/junos user who made change, which output module can (git does) use (via POST)
+  * 'git blame' will show for each line who and when the change was made
+* restful API to reload list of nodes (GET /reload)
+* restful API to fetch configurations (/node/fetch/[NODE] or /node/fetch/group/[NODE])
+* restful API to show list of nodes (GET /nodes)
+
+[Youtube Video: Oxidized TREX 2014 presentation](http://youtu.be/kBQ_CTUuqeU#t=3h)
+
+#### Index
+1. [Supported OS Types](#supported-os-types)
+2. [Installation](#installation)
+    * [Debian](#debian)
+    * [CentOS, Oracle Linux, Red Hat Linux version 6](#centos-oracle-linux-red-hat-linux-version 6)
+3. [Initial Configuration](#configuration)
+4. [Installing Ruby 2.1.2 using RVM](#installing-ruby-2.1.2-using-rvm)
+5. [Cookbook](#cookbook)
+    * [Debugging](#debugging)
+    * [Privileged mode](#privileged-mode)
+    * [Source: CSV](#source-csv)
+    * [Source: SQLite](#source-sqlite)
+    * [Output: GIT](#output-git)
+    * [Output: File](#output-file)
+    * [Advanced Configuration](#advanced-configuration)
+6. [Ruby API](#ruby-api)
+    * [Input](#input)
+    * [Output](#output)
+    * [Source](#source)
+    * [Model](#model)
 
 # Supported OS types
 
@@ -19,13 +45,16 @@
  * Arista EOS
  * Brocade Fabric OS
  * Brocade Ironware
+ * Brocade NOS (Network Operating System)
  * Brocade Vyatta
  * Cisco AireOS
  * Cisco ASA
  * Cisco IOS
  * Cisco IOS-XR
+ * Cisco NXOS
  * Cisco SMB (Nikola series)
  * DELL PowerConnect
+ * Extreme Networks XOS
  * Force10 FTOS
  * FortiGate FortiOS
  * HP ProCurve
@@ -34,50 +63,233 @@
  * Juniper ScreenOS (Netscreen)
  * Ubiquiti AirOS
 
-# Install
 
- * Debian
-   1. apt-get install ruby ruby-dev libsqlite3-dev libssl-dev
-   2. gem install oxidized
-   3. gem install oxidized-script oxidized-web # if you don't install oxidized-web, make sure you remove "rest" from your config
-   4. oxidized
-   5. vi ~/.config/oxidized/config
-   6. (maybe point to your rancid/router.db or copy it there)
-   7. oxidized
+# Installation
+## Debian
+Install all required packages and gems.
 
- * CentOS, Oracle Linux, Red Hat Linux version 6
-   1. Install Ruby 1.9.3 or greater
-     * For Ruby 2.1.2 installation instructions see "Installing Ruby 2.1.2 using RVM"
-   2. Install Oxidized dependencies
-     * yum install cmake sqlite-devel openssl-devel 
-   3. Install Oxidized daemon and Web front-end from Ruby Gems 
-     * gem install oxidized
-     * gem install oxidized-script oxidized-web
-   4. Start Oxidized, this will create initial configuration
-     * oxidized
-   5. Edit Oxidized configuration and create device database
-     * vi ~/.config/oxidized/config
-     * vi ~/.config/oxidized/router.db
-   6. If you are using file system storage create config directory
-     * mkdir -p ~/.config/oxidized/configs/default
-   7. Start Oxidized
-     * oxidized 
+```shell
+apt-get install ruby ruby-dev libsqlite3-dev libssl-dev pkg-config cmake
+gem install rugged
+gem install oxidized
+gem install oxidized-script oxidized-web # if you don't install oxidized-web, make sure you remove "rest" from your config
+```
 
- * Installing Ruby 2.1.2 using RVM
-   1. Install Ruby 2.1.2 build dependencies
-     * yum install curl gcc-c++ patch readline readline-devel zlib zlib-devel 
-     * yum install libyaml-devel libffi-devel openssl-devel make cmake 
-     * yum install bzip2 autoconf automake libtool bison iconv-devel
-   2. Install RVM
-     * curl -L get.rvm.io | bash -s stable
-   3. Setup RVM environment
-     * source /etc/profile.d/rvm.sh
-   4. Compile and install Ruby 2.1.2
-     * rvm install 2.1.2
-   5. Set Ruby 2.1.2 as default
-     * rvm use --default 2.1.2
+## CentOS, Oracle Linux, Red Hat Linux version 6
+Install Ruby 1.9.3 or greater (for Ruby 2.1.2 installation instructions see "Installing Ruby 2.1.2 using RVM"), then install Oxidized dependencies
+```shell
+yum install cmake sqlite-devel openssl-devel
+```
 
-# API
+Now lets install oxidized via Rubygems:
+```shell
+gem install oxidized
+gem install oxidized-script oxidized-web
+```
+
+# Configuration
+
+Oxidized configuration is in YAML format. Configuration files are subsequently sourced from ```/etc/oxidized/config``` then ```~/.config/oxidized/config```. The hashes will be merged, this might be useful for storing source information in a system wide file and  user specific configuration in the home directory (to only include a staff specific username and password). Eg. if many users are using ```oxs```, see [Oxidized::Script](https://github.com/ytti/oxidized-script).
+
+To initialize a default configuration in your home directory ```~/.config/oxidized/config```, simply run ```oxidized``` once. If you don't further configure anything from the output and source sections, it'll extend the examples on a subsequent ```oxidized``` execution. This is useful to see what options for a specific source or output backend are available.
+
+## Source
+
+Oxidized supports ```CSV``` and ```SQLite``` as source backends. The CSV backend reads nodes from a rancid compatible router.db file. The SQLite backend will fire queries against a database and map certain fields to model items. Take a look at the [Cookbook](#cookbook) for more details.
+
+## Outputs
+
+Possible outputs are either ```file``` or ```git```. The file backend takes a destination directory as argument and will keep a file per device, with most recent running version of a device. The GIT backend (recommended) will initialize an empty GIT repository in the specified path and create a new commit on every configuration change. Take a look at the [Cookbook](#cookbook) for more details.
+
+Maps define how to map a model's fields to model [model fields](https://github.com/ytti/oxidized/tree/master/lib/oxidized/model). Most of the settings should be self explanatory, log is ignored if Syslog::Logger exists (>=2.0) and syslog is used instead.
+
+First create the directory where the CSV ```output``` is going to store device configs and start Oxidized once.
+```
+mkdir ~/.config/oxidized/configs
+oxidized
+```
+
+Now tell Oxidized where it finds a list of network devices to backup configuration from. You can either use CSV or SQLite as source. To create a CVS source add the following snippet:
+
+```
+source:
+  default: csv
+  csv:
+    file: ~/.config/oxidized/router.db
+    delimiter: !ruby/regexp /:/
+    map:
+      name: 0
+      model: 1
+```
+
+Now lets create a file based device database (you might want to switch to SQLite later on). Put your routers in ```~/.config/oxidized/router.db``` (file format is compatible with rancid). Simply add an item per line:
+
+```
+router01.example.com:ios
+switch01.example.com:procurve
+router02.example.com:ios
+```
+
+Run ```oxidized``` again to take the first backups.
+
+# Installing Ruby 2.1.2 using RVM
+
+Install Ruby 2.1.2 build dependencies
+```
+yum install curl gcc-c++ patch readline readline-devel zlib zlib-devel
+yum install libyaml-devel libffi-devel openssl-devel make cmake
+yum install bzip2 autoconf automake libtool bison iconv-devel
+```
+
+Install RVM
+```
+curl -L get.rvm.io | bash -s stable
+```
+
+Setup RVM environment and compile and install Ruby 2.1.2 and set it as default
+```
+source /etc/profile.d/rvm.sh
+rvm install 2.1.2
+rvm use --default 2.1.2
+```
+
+
+## Cookbook
+### Debugging
+In case a model plugin doesn't work correctly (ios, procurve, etc.), you can enable live debugging of SSH/Telnet sessions. Just add a ```debug``` option, specifying a log file destination to the ```input``` section.
+
+The following example will log an active ssh session to ```/home/fisakytt/.config/oxidized/log_input-ssh``` and telnet to ```log_input-telnet```. The file will be truncated on each consecutive ssh/telnet session, so you need to put a ```tailf``` or ```tail -f``` on that file!
+
+```
+input:
+  default: ssh, telnet
+  debug: ~/.config/oxidized/log_input
+  ssh:
+    secure: false
+```
+
+### Privileged mode
+
+To start privileged mode before pulling the configuration, Oxidized needs to send the enable command. You can globally enable this, by adding the following snippet to the global section of the configuration file.
+
+```
+vars:
+   enable: S3cre7
+```
+
+### Source: CSV
+
+One line per device, colon seperated.
+
+```
+source:
+  default: csv
+  csv:
+    file: /var/lib/oxidized/router.db
+    delimiter: !ruby/regexp /:/
+    map:
+      name: 0
+      model: 1
+      username: 2
+      password: 3
+    var_map:
+      enable: 4
+```
+
+### Source: SQLite
+
+One row per device, filtered by hostname.
+
+```
+source:
+  default: sql
+  sql:
+    adapter: sqlite
+    database: "/var/lib/oxidized/devices.db"
+    table: devices
+    map:
+      name: fqdn
+      model: model
+      username: username
+      password: password
+    var_map:
+      enable: enable
+```
+
+### Output: File
+
+Parent directory needs to be created manually, one file per device, with most recent running config.
+
+```
+output:
+  file:
+    directory: /var/lib/oxidized/configs
+```
+
+### Output: Git
+
+```
+output:
+  default: git
+  git:
+    user: Oxidized
+    email: o@example.com
+    repo: "/var/lib/oxidized/devices.git"
+```
+
+### Advanced Configuration
+
+Below is an advanced example configuration. You will be able to (optinally) override options per device. The router.db format used is ```hostname:model:username:password:enable_password```. Hostname and model will be the only required options, all others override the global configuration sections.
+
+```
+---
+username: oxidized
+password: S3cr3tx
+model: junos
+interval: 3600
+log: ~/.config/oxidized/log
+debug: false
+threads: 30
+timeout: 20
+retries: 3
+prompt: !ruby/regexp /^([\w.@-]+[#>]\s?)$/
+vars:
+  enable: S3cr3tx
+groups: {}
+rest: 127.0.0.1:8888
+input:
+  default: ssh, telnet
+  debug: false
+  ssh:
+    secure: false
+output:
+  default: git
+  git:
+      user: Oxidized
+      email: oxidized@example.com
+      repo: "~/.config/oxidized/oxidized.git"
+source:
+  default: csv
+  csv:
+    file: ~/.config/oxidized/router.db
+    delimiter: !ruby/regexp /:/
+    map:
+      name: 0
+      model: 1
+      username: 2
+      password: 3
+    var_map:
+      enable: 4
+model_map:
+  cisco: ios
+  juniper: junos
+```
+
+
+# Ruby API
+
+The following objects exist in Oxidized.
+
 ## Input
  * gets config from nodes
  * must implement 'connect', 'get', 'cmd'
@@ -105,88 +317,3 @@
  * cfg is executed in input/output/source context
  * cmd is executed in instance of model
  * 'junos', 'ios', 'ironware' and 'powerconnect' implemented
-
-## Media
- * TREX 2014 presentation - http://youtu.be/kBQ_CTUuqeU#t=3h
-
-## Cookbook
-
-### Configuration I use in one environment
-```
----
-username: LANA
-password: LANAAAAAAA
-output:
-  default: git
-  git:
-    user: Oxidized
-    email: o@example.com
-    repo: "/usr/local/lan/oxidized.git"
-source:
-  default: sql
-  sql:
-    adapter: sqlite
-    database: "/usr/local/lan/corona.db"
-    table: device
-    map:
-      name: ptr
-      model: model
-```
-
-### Configuration you end up after first run
-If you don't configure output and source, it'll further fill them with example
-configs for your chosen output/source in subsequent runs
-```
----
-username: username
-password: password
-model: junos
-interval: 3600
-log: "/home/fisakytt/.config/oxidized/log"
-debug: false
-threads: 30
-timeout: 30
-prompt: !ruby/regexp /^([\w.@-]+[#>]\s?)$/
-rest: 127.0.0.1:8888
-vars: {}
-input:
-  default: ssh, telnet
-  ssh:
-    secure: false
-output:
-  default: git
-source:
-  default: csv
-model_map:
-  cisco: ios
-  juniper: junos
-```
-
-Output and Source could be:
-```
-output:
-  default: git
-  git:
-    user: Oxidized
-    email: o@example.com
-    repo: "/home/fisakytt/.config/oxidized/oxidized.git"
-source:
-  default: csv
-  csv:
-    file: "/home/fisakytt/.config/oxidized/router.db"
-    delimiter: !ruby/regexp /:/
-    map:
-      name: 0
-      model: 1
-```
-which reads nodes from rancid compatible router.db maps their model names to
-model names oxidized expects, stores config in git, will try ssh first then
-telnet, wont crash on changed ssh keys.
-
-Hopefully most of them are obvious, log is ignored if Syslog::Logger exists
-(>=2.0) and syslog is used instead.
-
-System wide configurations can be stored in /etc/oxidized/config, this might be
-useful for storing for example source information, if many users are using
-oxs/Oxidized::Script, which would allow user specific config only to include
-username+password.

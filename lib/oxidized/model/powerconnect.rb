@@ -14,12 +14,14 @@ class PowerConnect < Oxidized::Model
   end
 
   cmd 'show version' do |cfg|
-    comment cfg
+    cfg = cfg.split("\n").select { |line| not line[/Up\sTime/] }
+    comment cfg.join("\n") + "\n"
   end
 
   cmd 'show system' do |cfg|
-    cfg = cfg.each_line.take_while { |line| not line.match(/uptime/i) }
-    comment cfg.join "\n"
+    cfg = cfg.split("\n").select { |line| not line[/Up\sTime/] }
+    cfg = cfg[0..-28]<<" "
+    comment cfg.join("\n")
   end
 
   cmd 'show running-config'
@@ -31,8 +33,10 @@ class PowerConnect < Oxidized::Model
 
   cfg :telnet, :ssh do
     if vars :enable
-      send "enable\n"
-      send vars(:enable) + "\n"
+      post_login do
+        send "enable\n"
+        send vars(:enable) + "\n"
+      end
     end
 
     post_login "terminal length 0"
