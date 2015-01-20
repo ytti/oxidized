@@ -1,7 +1,8 @@
 class AOSW < Oxidized::Model
 
-  # AOSW - Alcatel-Lucent OS - Wireless 
-  # Used in Alcatel OAW-4750 WLAN controller (Aruba)
+  # AOSW Aruba Wireless
+  # Used in Alcatel OAW-4750 WLAN controller
+  # Also Dell controllers
 
   comment  '# '
   prompt /^\([^)]+\) #/
@@ -17,6 +18,8 @@ class AOSW < Oxidized::Model
 
   cmd 'show inventory' do |cfg|
     cfg = cfg.each_line.take_while { |line| not line.match /Output \d Config/i }
+    # drop the temperature, fan speed and voltage, which change each run
+    cfg.gsub! /[0-9]+ (RPM|mV|C)\n/, ''
     comment cfg.join
   end
 
