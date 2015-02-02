@@ -1,10 +1,10 @@
 Gem::Specification.new do |s|
   s.name              = 'oxidized'
-  s.version           = '0.3.0'
+  s.version           = '0.2.4'
   s.licenses          = %w( Apache-2.0 )
   s.platform          = Gem::Platform::RUBY
-  s.authors           = [ 'Saku Ytti' ]
-  s.email             = %w( saku@ytti.fi )
+  s.authors           = [ 'Saku Ytti', 'Samer Abdel-Hafez' ]
+  s.email             = %w( saku@ytti.fi sam@arahant.net )
   s.homepage          = 'http://github.com/ytti/oxidized'
   s.summary           = 'feeble attempt at rancid'
   s.description       = 'software to fetch configuration from network devices and store them'
