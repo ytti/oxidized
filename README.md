@@ -57,6 +57,7 @@ Oxidized is a network device configration backup tool. Its a RANCID replacment!
  * Extreme Networks XOS
  * Force10 FTOS
  * FortiGate FortiOS
+ * HP Comware (HP A-series, H3C, 3Com)
  * HP ProCurve
  * Huawei VRP
  * Juniper JunOS
