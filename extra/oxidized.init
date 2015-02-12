@@ -1,4 +1,7 @@
 #!/bin/sh
+#
+# Written by Stefan Schlesinger / sts@ono.at / http://sts.ono.at
+#
 ### BEGIN INIT INFO
 # Provides:          oxidized
 # Required-Start:    $remote_fs $syslog
