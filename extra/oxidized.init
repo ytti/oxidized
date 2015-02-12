@@ -1,0 +1,83 @@
+#!/bin/sh
+### BEGIN INIT INFO
+# Provides:          oxidized
+# Required-Start:    $remote_fs $syslog
+# Required-Stop:     $remote_fs $syslog
+# Default-Start:     2 3 4 5
+# Default-Stop:      0 1 6
+# Short-Description: Start Oxidized at boot time
+# Description:       Oxidized - Network Device Configuration Backup Tool
+### END INIT INFO
+
+set -e
+
+PATH=/sbin:/bin:/usr/sbin:/usr/bin
+DAEMON=/home/sts/oxidized/bin/oxidized
+NAME="oxidized"
+DESC="Oxidized - Network Device Configuration Backup Tool"
+ARGS=""
+USER="sts"
+
+test -x $DAEMON || exit 0
+
+. /lib/lsb/init-functions
+
+if [ -r /etc/default/$NAME ]; then
+	. /etc/default/$NAME
+fi
+
+CONFIG="${CONFIG:-/etc/oxidized/config}"
+
+PIDFILE=/var/run/$NAME.pid
+
+do_start()
+{
+        start-stop-daemon --start --quiet --background --pidfile $PIDFILE --make-pidfile  \
+        --oknodo --chuid $USER --exec $DAEMON -- -c $CONFIG $ARGS
+}
+
+do_stop()
+{
+        start-stop-daemon --oknodo --stop --quiet -v --pidfile $PIDFILE \
+        --chuid $USER --retry KILL/10 -- -c $CONFIG $ARGS
+}
+
+case "$1" in
+  start)
+        if [ "$ENABLED" = "no" ]; then
+                log_failure_msg "Not starting $DESC: disabled via /etc/default/$NAME"
+                exit 0
+        fi
+
+        log_daemon_msg "Starting $DESC..." "$NAME"
+        if do_start ; then
+                log_end_msg 0
+        else
+                log_end_msg 1
+        fi
+        ;;
+  stop)
+        log_daemon_msg "Stopping $DESC..." "$NAME"
+        if do_stop ; then
+                log_end_msg 0
+        else
+                log_end_msg 1
+        fi
+        ;;
+
+  restart|force-reload)
+        $0 stop
+        sleep 1
+        $0 start
+        ;;
+  status)
+	status_of_proc -p $PIDFILE $DAEMON $NAME
+	;;
+  *)
+	N=/etc/init.d/$NAME
+	echo "Usage: $N {start|stop|restart|force-reload|status}" >&2
+	exit 1
+	;;
+esac
+
+exit 0
