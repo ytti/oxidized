@@ -1,5 +1,11 @@
 # 0.3.0
 - FEATURE: *FIXME* bunch of stuff I did for richih, docs needed
+- FEATURE: ComWare model (by erJasp)
+- FEATURE: Add comment support for router.db file
+- FEATURE: Add input debugging and related configuration options
+- BUGFIX: Fix ASA model prompt
+- BUGFIX: Fix Aruba model display
+- BUGFIX: Fix changing output in PowerConnect model
 
 # 0.2.4
 - FEATURE: Cisco SMB (Nikola series VxWorks) model by @thetamind
