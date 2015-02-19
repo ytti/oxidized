@@ -1,5 +1,6 @@
 # 0.3.1
 - BUGFIX: xos while using telnet (by @fhibler)
+- BUGFIX: ironware logout on some models (by @fhibler)
 
 # 0.3.0
 - FEATURE: *FIXME* bunch of stuff I did for richih, docs needed
