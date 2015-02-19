@@ -27,7 +27,7 @@ class IronWare < Oxidized::Model
 
   cfg :telnet, :ssh do
     post_login 'skip-page-display'
-    pre_logout 'exit'
+    pre_logout 'logout'
   end
 
 end
