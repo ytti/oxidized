@@ -29,7 +29,7 @@ class XOS < Oxidized::Model
 
   cfg :telnet do
     username /^login:/
-    password /^passowrd:/
+    password /^\r*password:/
   end
 
   cfg :telnet, :ssh do
