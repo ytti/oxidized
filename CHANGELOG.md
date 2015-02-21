@@ -1,4 +1,5 @@
 # 0.3.1
+- FEATURE: allow setting IP address in addition to name in source (SQL/CSV)
 - BUGFIX: xos while using telnet (by @fhibler)
 - BUGFIX: ironware logout on some models (by @fhibler)
 
