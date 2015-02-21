@@ -2,15 +2,18 @@ module Oxidized
   require 'oxidized/job'
   require 'oxidized/jobs'
   class Worker
+    MAX_INTER_JOB_GAP = 300
     def initialize nodes
       @nodes   = nodes
       @jobs    = Jobs.new CFG.threads, CFG.interval, @nodes
+      @last    = Time.now.utc
       Thread.abort_on_exception = true
     end
     def work
       ended = []
       @jobs.delete_if { |job| ended << job if not job.alive? }
       ended.each      { |job| process job }
+      @jobs.add_job if Time.now.utc - @last > MAX_INTER_JOB_GAP
       while @jobs.size < @jobs.want
         Log.debug "Jobs #{@jobs.size}, Want: #{@jobs.want}"
         # ask for next node in queue non destructive way
@@ -21,6 +24,7 @@ module Oxidized
         # shift nodes and get the next node
         node = @nodes.get
         node.running? ? next : node.running = true
+        @last = Time.now.utc
         @jobs.push Job.new node
       end
     end
