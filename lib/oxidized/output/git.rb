@@ -1,5 +1,6 @@
 module Oxidized
 class Git < Output
+  class GitError < OxidizedError; end
   begin
     gem 'rugged', '~> 0.21.0'
     require 'rugged'
@@ -71,8 +72,12 @@ class Git < Output
     end
     repo = Rugged::Repository.new repo
     update_repo repo, file, data, @msg, @user, @email
-  rescue Rugged::OSError, Rugged::RepositoryError
-    Rugged::Repository.init_at repo, :bare
+  rescue Rugged::OSError, Rugged::RepositoryError => open_error
+    begin
+      Rugged::Repository.init_at repo, :bare
+    rescue => create_error
+      raise GitError, "first '#{open_error.message}' was raised while opening git repo, then '#{create_error.message}' was while trying to create git repo"
+    end
     retry
   end
 
