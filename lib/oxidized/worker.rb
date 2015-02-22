@@ -3,12 +3,14 @@ module Oxidized
   require 'oxidized/jobs'
   class Worker
     MAX_INTER_JOB_GAP = 300
+
     def initialize nodes
       @nodes   = nodes
       @jobs    = Jobs.new CFG.threads, CFG.interval, @nodes
       @last    = Time.now.utc
       Thread.abort_on_exception = true
     end
+
     def work
       ended = []
       @jobs.delete_if { |job| ended << job if not job.alive? }
@@ -28,6 +30,7 @@ module Oxidized
         @jobs.push Job.new node
       end
     end
+
     def process job
       node = job.node
       node.last = job
@@ -53,6 +56,9 @@ module Oxidized
         end
         Log.warn msg
       end
+    rescue NodeNotFound
+      Log.warn "#{node.name} not found, removed while collecting?"
     end
+
   end
 end
