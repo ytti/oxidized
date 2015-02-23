@@ -133,10 +133,10 @@ module Oxidized
         outputs << out
       end
       procs[:pre].each do |pre_proc|
-        outputs.unshift Oxidized::String.new(instance_eval(&pre_proc))
+        outputs.unshift process_cmd_output(instance_eval(&pre_proc), nil)
       end
       procs[:post].each do |post_proc|
-        outputs << Oxidized::String.new(instance_eval(&post_proc))
+        outputs << process_cmd_output(instance_eval(&post_proc), nil)
       end
       outputs
     end
@@ -152,9 +152,8 @@ module Oxidized
     private
 
     def process_cmd_output output, name
-      if output.class != Oxidized::String
-        output = Oxidized::String.new output
-      end
+      output = Oxidized::String.new output if ::String === output
+      output = Oxidized::String.new '' unless Oxidized::String === output
       output.set_cmd(name)
       output
     end
