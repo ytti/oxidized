@@ -133,10 +133,10 @@ module Oxidized
         outputs << out
       end
       procs[:pre].each do |pre_proc|
-        outputs.unshift process_cmd_output(instance_eval(&pre_proc), nil)
+        outputs.unshift process_cmd_output(instance_eval(&pre_proc), '')
       end
       procs[:post].each do |post_proc|
-        outputs << process_cmd_output(instance_eval(&post_proc), nil)
+        outputs << process_cmd_output(instance_eval(&post_proc), '')
       end
       outputs
     end
