@@ -1,6 +1,6 @@
 module Oxidized
- require 'oxidized/node'
  require 'ipaddr'
+ require 'oxidized/node'
  class Oxidized::NotSupported < OxidizedError; end
  class Oxidized::NodeNotFound < OxidizedError; end
   class Nodes < Array

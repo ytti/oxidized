@@ -10,7 +10,8 @@ module Oxidized
     alias :running? :running
     def initialize opt
       @name           = opt[:name]
-      @ip             = Resolv.getaddress @name
+      @ip             = IPAddr.new(opt[:ip]).to_s rescue nil
+      @ip           ||= Resolv.getaddress @name
       @group          = opt[:group]
       @input          = resolve_input opt
       @output         = resolve_output opt

@@ -7,10 +7,12 @@ module Oxidized
       @jobs    = Jobs.new CFG.threads, CFG.interval, @nodes
       Thread.abort_on_exception = true
     end
+
     def work
       ended = []
       @jobs.delete_if { |job| ended << job if not job.alive? }
       ended.each      { |job| process job }
+      @jobs.work
       while @jobs.size < @jobs.want
         Log.debug "Jobs #{@jobs.size}, Want: #{@jobs.want}"
         # ask for next node in queue non destructive way
@@ -24,6 +26,7 @@ module Oxidized
         @jobs.push Job.new node
       end
     end
+
     def process job
       node = job.node
       node.last = job
@@ -49,6 +52,9 @@ module Oxidized
         end
         Log.warn msg
       end
+    rescue NodeNotFound
+      Log.warn "#{node.name} not found, removed while collecting?"
     end
+
   end
 end
