@@ -11,7 +11,7 @@ module Oxidized
     def initialize opt
       @name           = opt[:name]
       @ip             = IPAddr.new(opt[:ip]).to_s rescue nil
-      @ip           ||= Resolv.getaddress @name
+      @ip           ||= Resolv.new.getaddress @name
       @group          = opt[:group]
       @input          = resolve_input opt
       @output         = resolve_output opt
