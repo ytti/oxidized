@@ -17,7 +17,7 @@ module Oxidized
       Oxidized.mgr = Manager.new
       nodes        = Nodes.new
       @worker      = Worker.new nodes
-      trap 'HUP' { nodes.load }
+      trap('HUP') { nodes.load }
       if CFG.rest?
         begin
           require 'oxidized/web'
