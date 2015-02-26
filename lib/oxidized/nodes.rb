@@ -23,8 +23,8 @@ module Oxidized
             Log.error "node %s is not resolvable, raised %s with message '%s'" % [node, err.class, err.message]
           end
         end
-        Log.info "Loaded #{size} nodes"
         size == 0 ? replace(new) : update_nodes(new)
+	Log.info "Loaded #{size} nodes"
       end
     end
 
