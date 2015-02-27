@@ -26,6 +26,12 @@ class EOS < Oxidized::Model
   end
 
   cfg :telnet, :ssh do
+    if vars :enable
+      post_login do
+        send "enable\n"
+        send vars(:enable) + "\n"
+      end
+    end
     pre_logout 'exit'
   end
 

@@ -2,6 +2,8 @@
 - FEATURE: allow setting IP address in addition to name in source (SQL/CSV)
 - FEATURE: approximate how long it takes to get node from larger view than 1
 - FEATURE: unconditionally start new job if too long has passed since previous start
+- FEATURE: add enable to Arista EOS model
+- FEATURE: add rugged dependency in gemspec
 - BUGFIX: xos while using telnet (by @fhibler)
 - BUGFIX: ironware logout on some models (by @fhibler)
 - BUGFIX: allow node to be removed while it is being collected

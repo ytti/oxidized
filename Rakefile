@@ -3,7 +3,7 @@ begin
   require 'bundler'
   # Bundler.setup
 rescue LoadError
-  warn 'bunler missing'
+  warn 'bundler missing'
 end
 
 gemspec = eval(File.read(Dir['*.gemspec'].first))
