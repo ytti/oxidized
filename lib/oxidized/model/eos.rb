@@ -1,9 +1,8 @@
 class EOS < Oxidized::Model
 
   # Arista EOS model #
-  # need to add telnet support here .. #
 
-  prompt /^[^\(]+\([^\)]+\)#/
+  prompt /^([\w.@()-]+[#>]\s?)$/
 
   comment  '! '
 
