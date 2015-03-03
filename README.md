@@ -192,7 +192,7 @@ source:
       model: 1
       username: 2
       password: 3
-    var_map:
+    vars_map:
       enable: 4
 ```
 
@@ -212,7 +212,7 @@ source:
       model: model
       username: username
       password: password
-    var_map:
+    vars_map:
       enable: enable
 ```
 
@@ -278,7 +278,7 @@ source:
       model: 1
       username: 2
       password: 3
-    var_map:
+    vars_map:
       enable: 4
 model_map:
   cisco: ios
