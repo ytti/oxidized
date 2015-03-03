@@ -2,12 +2,12 @@ class EOS < Oxidized::Model
 
   # Arista EOS model #
 
-  prompt /^([\w.@()-]+[#>]\s?)$/
+  prompt /^.+[#>]\s?$/
 
   comment  '! '
 
   cmd :all do |cfg|
-     cfg.each_line.to_a[2..-2].join
+     cfg.each_line.to_a[1..-2].join
   end
 
   cmd :secret do |cfg|
@@ -28,10 +28,14 @@ class EOS < Oxidized::Model
     if vars :enable
       post_login do
         send "enable\n"
+        expect /[pP]assword:\s?$/
         send vars(:enable) + "\n"
+        expect /^.+[#>]\s?$/
       end
+      post_login 'terminal length 0'
     end
     pre_logout 'exit'
   end
 
 end
+
