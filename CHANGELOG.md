@@ -4,10 +4,13 @@
 - FEATURE: unconditionally start new job if too long has passed since previous start
 - FEATURE: add enable to Arista EOS model
 - FEATURE: add rugged dependency in gemspec
+- FEATURE: log prompt detection failures
 - BUGFIX: xos while using telnet (by @fhibler)
 - BUGFIX: ironware logout on some models (by @fhibler)
 - BUGFIX: allow node to be removed while it is being collected
 - BUGFIX: if model returns non string value, return empty string
+- BUGFIX: better prompt for Arista EOS model (by @rodecker)
+- BUGFIX: improved configuration handling for Arista EOS model (by @rodecker) 
 
 # 0.3.0
 - FEATURE: *FIXME* bunch of stuff I did for richih, docs needed

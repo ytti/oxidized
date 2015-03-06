@@ -26,7 +26,11 @@ module Oxidized
                             :paranoid => secure
       unless @exec
         shell_open @ssh
-        @username ? shell_login : expect(@node.prompt)
+        begin
+          @username ? shell_login : expect(@node.prompt)
+        rescue Timeout::Error
+          raise PromptUndetect, [ @output, 'not matching configured prompt', @node.prompt ].join(' ')
+        end
       end
       connected?
     end

@@ -20,7 +20,11 @@ module Oxidized
       @telnet.puts @node.auth[:username]
       expect password
       @telnet.puts @node.auth[:password]
-      expect @node.prompt
+      begin
+        expect @node.prompt
+      rescue Timeout::Error
+        raise PromptUndetect, [ 'unable to detect prompt:', @node.prompt ].join(' ')
+      end
     end
 
     def connected?

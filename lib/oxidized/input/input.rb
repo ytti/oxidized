@@ -1,4 +1,5 @@
 module Oxidized
+  class PromptUndetect < OxidizedError; end
   class Input
     include Oxidized::Config::Vars
 
@@ -8,6 +9,7 @@ module Oxidized
       ],
       :warn => [
         IOError,
+        PromptUndetect,
         Timeout::Error,
         Errno::ECONNRESET,
         Errno::EHOSTUNREACH,
