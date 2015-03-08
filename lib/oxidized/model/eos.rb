@@ -28,8 +28,11 @@ class EOS < Oxidized::Model
     if vars :enable
       post_login do
         send "enable\n"
-        expect /[pP]assword:\s?$/
-        send vars(:enable) + "\n"
+        # Interpret enable: true as meaning we won't be prompted for a password
+        unless vars(:enable).is_a? TrueClass
+          expect /[pP]assword:\s?$/
+          send vars(:enable) + "\n"
+        end
         expect /^.+[#>]\s?$/
       end
       post_login 'terminal length 0'
@@ -38,4 +41,3 @@ class EOS < Oxidized::Model
   end
 
 end
-
