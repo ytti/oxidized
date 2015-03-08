@@ -33,6 +33,7 @@ class OxidizedFile < Output
         IO.readlines File.join(cfg_dir, node)
       else
         path = Dir.glob File.join(cfg_dir, '**', node) # fetch node in all groups
+        return nil if path[0].nil?
         open(path[0], 'r').readlines
       end
     end
