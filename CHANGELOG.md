@@ -1,3 +1,7 @@
+# 0.4.1
+- BUGFIX: handle missing output file (by @brandt)
+- BUGFIX: fix passwordless enable on Arista EOS model (by @brandt)
+
 # 0.4.0
 - FEATURE: allow setting IP address in addition to name in source (SQL/CSV)
 - FEATURE: approximate how long it takes to get node from larger view than 1
