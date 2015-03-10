@@ -1,5 +1,7 @@
 # Oxidized
 
+[![Gem Version](https://badge.fury.io/rb/oxidized.svg)](http://badge.fury.io/rb/oxidized)
+
 Oxidized is a network device configration backup tool. Its a RANCID replacment!
 
 * automatically adds/removes threads to meet configured retrieval interval
