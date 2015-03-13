@@ -1,0 +1,10 @@
+# by @MrRJ45 at issues #45
+
+[program:oxidized]
+command=/usr/local/bin/oxidized
+autostart=true
+autorestart=true
+user=oxidized
+stderr_logfile=/var/log/oxidized.err.log
+stdout_logfile=/var/log/oxidized.out.log
+environment=HOME='/home/oxidized/'
