@@ -14,7 +14,7 @@
 
 require 'socket'
 require 'resolv'
-require './rest_client'
+require_relative 'rest_client'
 
 module Oxidized
   class SyslogMonitor
