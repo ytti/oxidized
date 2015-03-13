@@ -1,7 +1,7 @@
 #!/usr/bin/env ruby
 
 # IOS:
-# logging discriminator CFG mnemonics includes CONFIG_I 
+# logging discriminator CFG mnemonics includes CONFIG_I
 # logging host SERVER discriminator CFG
 
 # JunOS:
@@ -31,6 +31,7 @@ module Oxidized
 
     class << self
       def udp port=PORT, listen=0
+        port ||= PORT
         io = UDPSocket.new
         io.bind listen, port
         new io, :udp
@@ -42,7 +43,7 @@ module Oxidized
       end
     end
 
-    private 
+    private
 
     def initialize io, mode=:udp
       @mode = mode
@@ -86,7 +87,7 @@ module Oxidized
         if @mode == :udp
           log, ip = log.recvfrom_nonblock 2000
           ip = ip.last
-        else 
+        else
           begin
             log = log.read_nonblock 2000
           rescue EOFError
