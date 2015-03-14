@@ -39,6 +39,7 @@ class PowerConnect < Oxidized::Model
       end
     end
 
+    post_login "terminal datadump"
     post_login "terminal length 0"
     pre_logout "logout"
     
