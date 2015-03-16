@@ -11,10 +11,6 @@ class Mikrotik < Oxidized::Model
     cfg.join("\n") + "\n"                                                                                
   end                                                                                                    
 
-  cfg :telnet do                                                                                         
-    pre_logout "quit"                                                                                    
-  end                                                                                                    
-
   cfg :ssh do                                                                                            
     exec true                                                                                            
   end                                                                                                    
