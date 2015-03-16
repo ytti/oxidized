@@ -64,6 +64,7 @@ Oxidized is a network device configration backup tool. Its a RANCID replacment!
  * Huawei VRP
  * Juniper JunOS
  * Juniper ScreenOS (Netscreen)
+ * Mikrotik RouterOS
  * Ubiquiti AirOS
 
 
