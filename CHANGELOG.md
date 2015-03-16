@@ -1,3 +1,7 @@
+- FEATURE: Mikrotik RouterOS model (by @emjemj)
+- BUGFIX: pager error for old dell powerconnect switches (by @emjemj)
+- BUGFIX: logout error for old dell powerconnect switches (by @emjemj)
+
 # 0.4.1
 - BUGFIX: handle missing output file (by @brandt)
 - BUGFIX: fix passwordless enable on Arista EOS model (by @brandt)
