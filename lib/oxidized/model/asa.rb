@@ -23,7 +23,7 @@ class ASA < Oxidized::Model
     comment cfg
   end
 
-  cmd 'show running-config' do |cfg|
+  cmd 'more system:running-config' do |cfg|
     cfg = cfg.each_line.to_a[3..-1].join
     cfg.gsub! /^: [^\n]*\n/, ''
     cfg
