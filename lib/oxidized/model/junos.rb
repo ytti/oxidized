@@ -9,7 +9,7 @@ class JunOS < Oxidized::Model
   cmd :all do |cfg|
     # we don't need screen-scraping in ssh due to exec
     cfg = cfg.lines.to_a[1..-2].join if telnet
-    cfg
+    cfg.lines.map { |line| line.rstrip }.join "\n"
   end
 
   cmd :secret do |cfg| 
