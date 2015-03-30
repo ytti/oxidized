@@ -19,9 +19,8 @@ class PowerConnect < Oxidized::Model
   end
 
   cmd 'show system' do |cfg|
-    cfg = cfg.split("\n").select { |line| not line[/Up\sTime/] }
-    cfg = cfg[0..-28]<<" "
-    comment cfg.join("\n")
+    @model = $1 if cfg.match /Power[C|c]onnect (\d{4}[A-Z]?)/
+    clean cfg
   end
 
   cmd 'show running-config'
@@ -45,5 +44,25 @@ class PowerConnect < Oxidized::Model
     pre_logout "exit"
     
   end
+
+  def clean cfg
+    out = []
+    skip_block = false
+    cfg.each_line do |line|
+      if line.match /Up\sTime|Temperature|Power Supplies/i
+        # For 34xx, 54xx, 55xx, and 8024F we should skip this block (terminated by a blank line)
+        skip_block = true if @model =~ /^34(24|48)$|^54(24|48)$|^55(24|48)$|^8024F$/
+      end
+      # If we have lines to skip do this until we reach and empty line
+      if skip_block
+        skip_block = false if /\S/ !~ line
+        next
+      end
+      out << line.strip
+    end
+    out = comment out.join "\n"
+    out << "\n"
+  end
+
 
 end
