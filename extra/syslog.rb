@@ -8,6 +8,8 @@
 # set system syslog host SERVER interactive-commands notice
 # set system syslog host SERVER match "^mgd\[[0-9]+\]: UI_COMMIT: .*"
 
+# Ports < 1024 need extra privileges, use a port higher than this by passing the first argument a number
+# To use the default port for syslog (514) you shouldnt pass an argument, but you will need to allow this with:
 # sudo setcap 'cap_net_bind_service=+ep' /usr/bin/ruby
 
 # exit if fork   ## TODO: proper daemonize
@@ -25,7 +27,7 @@ module Oxidized
     PORT = 514
     FILE = 'messages'
     MSG = {
-      :ios   => '%SYS-5-CONFIG_I:',
+      :ios   => /%SYS-(SW[0-9]+-)?5-CONFIG_I:/,
       :junos => 'UI_COMMIT:',
     }
 
@@ -73,7 +75,7 @@ module Oxidized
 
     def handle_log log, ip
       log = log.to_s.split ' '
-      if i = log.index(MSG[:ios])
+      if i = log.find_index { |e| e.match( MSG[:ios] ) }
         ios ip, log,  i
       elsif i = log.index(MSG[:junos])
         jnpr ip, log, i
