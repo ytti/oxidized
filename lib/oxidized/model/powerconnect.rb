@@ -19,7 +19,7 @@ class PowerConnect < Oxidized::Model
   end
 
   cmd 'show system' do |cfg|
-    @model = $1 if cfg.match /Power[C|c]onnect (\d{4}[A-Z]?)/
+    @model = $1 if cfg.match /Power[C|c]onnect (\d{4})[P|F]?/
     clean cfg
   end
 
@@ -51,7 +51,7 @@ class PowerConnect < Oxidized::Model
     cfg.each_line do |line|
       if line.match /Up\sTime|Temperature|Power Supplies/i
         # For 34xx, 54xx, 55xx, and 8024F we should skip this block (terminated by a blank line)
-        skip_block = true if @model =~ /^34(24|48)$|^54(24|48)$|^55(24|48)$|^8024F$/
+        skip_block = true if @model =~ /^(34|35)(24|48)$|^(54|55)(24|48)$|^8024$/
       end
       # If we have lines to skip do this until we reach and empty line
       if skip_block
