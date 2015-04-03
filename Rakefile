@@ -40,7 +40,12 @@ task :clean do
   FileUtils.rm_rf 'gems'
 end
 
+desc 'Tag the release'
+task :tag do
+  system "git tag #{gemspec.version}"
+end
+
 desc 'Push to rubygems'
-task :push do
+task :push => :tag do
   system "gem push gems/#{file}"
 end
