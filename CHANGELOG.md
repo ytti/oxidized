@@ -1,4 +1,8 @@
+# 0.5.0
 - FEATURE: Mikrotik RouterOS model (by @emjemj)
+- FEATURE: add support for Cisco VSS (by @MrRJ45)
+- BUGFIX: general fixes to powerconnect model (by @MrRJ45)
+- BUGFIX: fix initial commit issues with rugged (by @MrRJ45)
 - BUGFIX: pager error for old dell powerconnect switches (by @emjemj)
 - BUGFIX: logout error for old dell powerconnect switches (by @emjemj)
 
