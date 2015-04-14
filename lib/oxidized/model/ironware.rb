@@ -57,7 +57,10 @@ class IronWare < Oxidized::Model
       end
     end
     post_login 'skip-page-display'
+    post_login 'terminal length 0'
     pre_logout 'logout'
+    pre_logout 'exit'
+    pre_logout 'exit'
   end
 
 end
