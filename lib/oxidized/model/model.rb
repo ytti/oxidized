@@ -1,3 +1,4 @@
+require 'strscan'
 require_relative 'outputs'
 
 module Oxidized
