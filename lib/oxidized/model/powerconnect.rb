@@ -4,7 +4,7 @@ class PowerConnect < Oxidized::Model
 
   comment  '! '
 
-  expect /^\s--More--\s+.*$/ do |data, re|
+  expect /^\s*--More--\s+.*$/ do |data, re|
      send ' '
      data.sub re, ''
   end
@@ -50,8 +50,8 @@ class PowerConnect < Oxidized::Model
     skip_block = false
     cfg.each_line do |line|
       if line.match /Up\sTime|Temperature|Power Supplies/i
-        # For 34xx, 54xx, 55xx, and 8024F we should skip this block (terminated by a blank line)
-        skip_block = true if @model =~ /^(34|35)(24|48)$|^(54|55)(24|48)$|^8024$/
+        # For 34xx, 35xx, 54xx, 55xx, 62xx and 8024F we should skip this block (terminated by a blank line)
+        skip_block = true if @model =~ /^(34|35)(24|48)$|^(54|55)(24|48)$|^(62)(24|48)$|^8024$/
       end
       # If we have lines to skip do this until we reach and empty line
       if skip_block
@@ -63,6 +63,5 @@ class PowerConnect < Oxidized::Model
     out = comment out.join "\n"
     out << "\n"
   end
-
 
 end
