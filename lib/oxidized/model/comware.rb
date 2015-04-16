@@ -21,6 +21,17 @@ class Comware < Oxidized::Model
   end
 
   cfg :telnet, :ssh do
+    # enable command-line mode on SMB comware switches (HP V1910, V1920)
+    # autodetection is hard, because the 'summary' command is paged, and
+    # the pager cannot be disabled before _cmdline-mode on.
+    if vars :comware_cmdline
+      post_login do
+        send "_cmdline-mode on\n"
+        send "y\n"
+        send vars(:comware_cmdline) + "\n"
+      end
+    end
+
     post_login 'screen-length disable'
     post_login 'undo terminal monitor'
     pre_logout 'quit'
