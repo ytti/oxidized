@@ -18,7 +18,7 @@ class CSV < Source
 
   def load
     nodes = []
-    open(@cfg.file).each_line do |line|
+    open(File.expand_path @cfg.file).each_line do |line|
       next if line.match /^\s*#/
       data  = line.chomp.split @cfg.delimiter
       next if data.empty?
