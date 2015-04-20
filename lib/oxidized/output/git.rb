@@ -68,17 +68,23 @@ class Git < Output
   def update repo, file, data
     return if data.empty?
     if @opt[:group]
-      repo = File.join File.dirname(repo), @opt[:group] + '.git'
+      if @cfg.single_repo?
+        file = File.join @opt[:group], file
+      else
+        repo = File.join File.dirname(repo), @opt[:group] + '.git'
+      end
     end
-    repo = Rugged::Repository.new repo
-    update_repo repo, file, data, @msg, @user, @email
-  rescue Rugged::OSError, Rugged::RepositoryError => open_error
     begin
-      Rugged::Repository.init_at repo, :bare
-    rescue => create_error
-      raise GitError, "first '#{open_error.message}' was raised while opening git repo, then '#{create_error.message}' was while trying to create git repo"
+      repo = Rugged::Repository.new repo
+      update_repo repo, file, data, @msg, @user, @email
+    rescue Rugged::OSError, Rugged::RepositoryError => open_error
+      begin
+        Rugged::Repository.init_at repo, :bare
+      rescue => create_error
+        raise GitError, "first '#{open_error.message}' was raised while opening git repo, then '#{create_error.message}' was while trying to create git repo"
+      end
+      retry
     end
-    retry
   end
 
   def update_repo repo, file, data, msg, user, email
