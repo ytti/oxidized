@@ -1,6 +1,6 @@
 class IronWare < Oxidized::Model
 
-  prompt /^(\S*)([>#])+$/
+  prompt /^.+[>#]\s?$/
   comment  '! '
   
   #to handle pager without enable
