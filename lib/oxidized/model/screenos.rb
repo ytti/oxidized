@@ -33,7 +33,10 @@ class ScreenOS  < Oxidized::Model
 
   cfg :telnet, :ssh do
     post_login 'set console page 0'
-    pre_logout 'exit'
+    pre_logout do
+      send "exit\n"
+      send "n"
+    end
   end
 
 end
