@@ -25,7 +25,28 @@ class IronWare < Oxidized::Model
   end
 
   cmd 'show version' do |cfg|
-    cfg.gsub! /(^((.*)uptime(.*))$)/, '' #remove unwanted line system uptime
+    cfg.gsub! /(^((.*)[Ss]ystem uptime(.*))$)/, '' #remove unwanted line system uptime
+    cfg.gsub! /uptime is .*/,''
+
+    comment cfg
+  end
+
+  cmd 'show chassis' do |cfg|
+    cfg.gsub! "\xFF", '' # ugly hack - avoids JSON.dump utf-8 breakage on 1.9..
+    cfg.gsub! /(^((.*)Current temp(.*))$)/, '' #remove unwanted lines current temperature
+    cfg.gsub! /Speed = [A-Z]{3} \(\d{2}\%\)/, '' #remove unwanted lines Speed Fans
+    cfg.gsub! /current speed is [A-Z]{3} \(\d{2}\%\)/, ''
+    cfg.gsub! /Fan controlled temperature: \d{2}\.\d deg-C/, 'Fan controlled temperature: XX.X d deg-C'
+    if cfg.include? "TEMPERATURE"
+      sc = StringScanner.new cfg
+      out = ''
+      temps = ''
+      out << sc.scan_until(/.*TEMPERATURE/)
+      temps << sc.scan_until(/.*Fans/)
+      out << sc.rest
+      cfg = out
+    end
+    
     comment cfg
   end
   
