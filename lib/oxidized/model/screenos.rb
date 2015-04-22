@@ -4,7 +4,7 @@ class ScreenOS  < Oxidized::Model
 
   comment  '! '
 
-  prompt /^[\w.\(\)-]+->\s?$/
+  prompt /^[\w.:\(\)-]+->\s?$/
 
   cmd :all do |cfg|
     cfg.each_line.to_a[2..-2].join
