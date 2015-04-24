@@ -4,7 +4,7 @@ class ScreenOS  < Oxidized::Model
 
   comment  '! '
 
-  prompt '/^([\w.-\(\)]+->\s?)$/'
+  prompt /^[\w.:\(\)-]+->\s?$/
 
   cmd :all do |cfg|
     cfg.each_line.to_a[2..-2].join
@@ -33,7 +33,10 @@ class ScreenOS  < Oxidized::Model
 
   cfg :telnet, :ssh do
     post_login 'set console page 0'
-    pre_logout 'exit'
+    pre_logout do
+      send "exit\n"
+      send "n"
+    end
   end
 
 end

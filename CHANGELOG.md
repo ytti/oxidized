@@ -1,3 +1,14 @@
+# 0.6.0
+- FEATURE: support cumulus linux (by @FlorianDoublet)
+- FEATURE: support HP Comware SMB siwtches (by @sid3windr)
+- FEATURE: remove secret additions (by @rodecker)
+- FEATURE: option to put all groups in single repo (by @ytti)
+- FEATURE: expand path in source: csv: (so that ~/foo/bar works) (by @ytti)
+- BUGFIX: screenos fixes (by @rixxxx)
+- BUGFIX: ironware fixes (by @FlorianDoublet)
+- BUGFIX: powerconnect fixes (by @sid3windr)
+- BUGFIX: don't ask interactive password in new net/ssh (by @ytti)
+
 # 0.5.0
 - FEATURE: Mikrotik RouterOS model (by @emjemj)
 - FEATURE: add support for Cisco VSS (by @MrRJ45)
@@ -22,7 +33,7 @@
 - BUGFIX: allow node to be removed while it is being collected
 - BUGFIX: if model returns non string value, return empty string
 - BUGFIX: better prompt for Arista EOS model (by @rodecker)
-- BUGFIX: improved configuration handling for Arista EOS model (by @rodecker) 
+- BUGFIX: improved configuration handling for Arista EOS model (by @rodecker)
 
 # 0.3.0
 - FEATURE: *FIXME* bunch of stuff I did for richih, docs needed
