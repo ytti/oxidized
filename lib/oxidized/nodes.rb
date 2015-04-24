@@ -148,6 +148,35 @@ module Oxidized
         end
       end
     end
+    
+    public
+    
+    def version node, group
+      with_lock do
+        i = find_node_index node
+        output = self[i].output.new
+        raise Oxidized::NotSupported unless output.respond_to? :fetch
+        output.version node, group
+      end
+    end
+    
+    def get_version node, group, oid
+      with_lock do
+        i = find_node_index node
+        output = self[i].output.new
+        raise Oxidized::NotSupported unless output.respond_to? :fetch
+        output.get_version node, group, oid
+      end
+    end
+    
+    def get_diff node, group, oid1, oid2
+      with_lock do
+        i = find_node_index node
+        output = self[i].output.new
+        raise Oxidized::NotSupported unless output.respond_to? :fetch
+        output.get_diff node, group, oid1, oid2
+      end
+    end
 
   end
 end
