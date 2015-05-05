@@ -18,6 +18,8 @@ class ScreenOS  < Oxidized::Model
   end
 
   cmd 'get system' do |cfg|
+    cfg.gsub! /^Date\ .*\n/, ''
+    cfg.gsub! /^Up\ .*\n/, ''
     comment cfg
   end
 
