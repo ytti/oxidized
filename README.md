@@ -115,7 +115,7 @@ mkdir ~/.config/oxidized/configs
 oxidized
 ```
 
-Now tell Oxidized where it finds a list of network devices to backup configuration from. You can either use CSV or SQLite as source. To create a CVS source add the following snippet:
+Now tell Oxidized where it finds a list of network devices to backup configuration from. You can either use CSV or SQLite as source. To create a CSV source add the following snippet:
 
 ```
 source:
