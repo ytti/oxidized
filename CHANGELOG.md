@@ -1,3 +1,9 @@
+# 0.7.0
+- FEATURE: support http source (by @laf)
+- FEATURE: support Palo Alto PANOS (by @rixxxx)
+- BUGFIX:  screenos fixes (by @rixxxx)
+- BUGFIX:  allow 'none' auth in ssh (spotted by @SaldoorMike, needed by ciscosmb+aireos)
+
 # 0.6.0
 - FEATURE: support cumulus linux (by @FlorianDoublet)
 - FEATURE: support HP Comware SMB siwtches (by @sid3windr)
