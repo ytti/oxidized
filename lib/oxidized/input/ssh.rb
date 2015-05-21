@@ -24,7 +24,7 @@ module Oxidized
       @ssh = Net::SSH.start @node.ip, @node.auth[:username],
                             :password => @node.auth[:password], :timeout => CFG.timeout,
                             :paranoid => secure,
-                            :auth_methods => %w(publickey password),
+                            :auth_methods => %w(none publickey password),
                             :number_of_password_prompts => 0
       unless @exec
         shell_open @ssh
