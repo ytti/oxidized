@@ -23,10 +23,6 @@ class CiscoSMB < Oxidized::Model
     comment cfg
   end
 
-  cmd 'show inventory' do |cfg|
-    comment cfg
-  end
-
   cmd 'show running-config' do |cfg|
     cfg = cfg.each_line.to_a[0..-1].join
     cfg.gsub! /^Current configuration : [^\n]*\n/, ''
