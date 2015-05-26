@@ -2,7 +2,6 @@ module Oxidized
 class Git < Output
   class GitError < OxidizedError; end
   begin
-    gem 'rugged', '~> 0.21.0'
     require 'rugged'
   rescue LoadError
     raise OxidizedError, 'rugged not found: sudo gem install rugged'
