@@ -25,13 +25,7 @@ class IronWare < Oxidized::Model
   end
 
   cmd 'show version' do |cfg|
-    cfg.gsub! /(^((.*)system uptime(.*))$)/, '' #remove unwanted line system uptime
-    comment cfg
-  end
-
-  cmd 'show chassis' do |cfg|
-    cfg.gsub! "\xFF", '' # ugly hack - avoids JSON.dump utf-8 breakage on 1.9..
-    cfg.gsub! /(^((.*)Current temp(.*))$)/, '' #remove unwanted lines current temperature
+    cfg.gsub! /(^((.*)uptime(.*))$)/, '' #remove unwanted line system uptime
     comment cfg
   end
   
