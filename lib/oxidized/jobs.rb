@@ -26,7 +26,7 @@ module Oxidized
     end
 
     def new_count
-      @want = ((@nodes.size * @duration) / @interval).to_i
+      @want = (@nodes.size * @duration) / @interval
       @want = 1 if @want < 1
       @want = @nodes.size if @want > @nodes.size
       @want = @max if @want > @max
