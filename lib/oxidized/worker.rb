@@ -37,8 +37,10 @@ module Oxidized
         msg = "update #{node.name}"
         msg += " from #{node.from}" if node.from
         msg += " with message '#{node.msg}'" if node.msg
-        node.output.new.store node.name, job.config,
+        if node.output.new.store node.name, job.config,
                               :msg => msg, :user => node.user, :group => node.group
+          Log.info "Configuration updated for #{node.group}/#{node.name}"
+        end
         node.reset
       else
         msg = "#{node.name} status #{job.status}"
