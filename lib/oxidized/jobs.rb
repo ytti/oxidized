@@ -10,7 +10,7 @@ module Oxidized
       @nodes     = nodes
       @last      = Time.now.utc
       @durations = Array.new @nodes.size, AVERAGE_DURATION
-      duration AVERAGE_DURATION
+      @duration  = AVERAGE_DURATION
       super()
     end
 
@@ -26,7 +26,7 @@ module Oxidized
     end
 
     def new_count
-      @want = (@nodes.size * @duration) / @interval
+      @want = ((@nodes.size * @duration) / @interval).to_i
       @want = 1 if @want < 1
       @want = @nodes.size if @want > @nodes.size
       @want = @max if @want > @max
