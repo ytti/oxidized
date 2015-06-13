@@ -6,7 +6,7 @@
 
 # JunOS:
 # set system syslog host SERVER interactive-commands notice
-# set system syslog host SERVER match "^mgd\[[0-9]+\]: UI_COMMIT: .*"
+# set system syslog host SERVER match "^mgd\[[0-9]+\]: UI_COMMIT_[A-Z]+:.* commit complete"
 
 # Ports < 1024 need extra privileges, use a port higher than this by passing the first argument a number
 # To use the default port for syslog (514) you shouldnt pass an argument, but you will need to allow this with:
@@ -28,7 +28,7 @@ module Oxidized
     FILE = 'messages'
     MSG = {
       :ios   => /%SYS-(SW[0-9]+-)?5-CONFIG_I:/,
-      :junos => 'UI_COMMIT:',
+      :junos => /UI_COMMIT_[A-Z]+:.* commit complete/,
     }
 
     class << self
