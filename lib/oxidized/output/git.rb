@@ -61,6 +61,81 @@ class Git < Output
       'node not found'
     end
   end
+  
+  #give a hash of all oid revision for the givin node, and the date of the commit
+    def version node, group
+      begin
+        repo = @cfg.repo
+        if group
+          repo = File.join File.dirname(repo), group + '.git'
+        end
+        repo = Rugged::Repository.new repo  
+        walker = Rugged::Walker.new(repo)
+        walker.sorting(Rugged::SORT_DATE)
+        walker.push(repo.head.target)
+        i = -1
+        tab  = []
+        walker.each do |commit|
+          if commit.diff(paths: [node]).size > 0
+            hash = {}
+            hash[:date] = commit.time.to_s 
+            hash[:oid] = commit.oid
+            tab[i += 1] = hash
+          end
+        end
+        walker.reset
+        tab
+      rescue
+        'node not found'
+      end
+    end
+    
+    #give the blob of a specific revision
+    def get_version node, group, oid
+      begin
+        repo = @cfg.repo
+        if group && group != ''
+          repo = File.join File.dirname(repo), group + '.git'
+        end
+        repo = Rugged::Repository.new repo 
+        repo.blob_at(oid,node).content
+      rescue
+        'version not found'
+      end
+    end
+    
+    #give a hash with the patch of a diff between 2 revision and the stats (added and deleted lines)
+    def get_diff node, group, oid1, oid2
+      begin
+        repo = @cfg.repo
+        diff_commits = nil
+        if group && group != ''
+          repo = File.join File.dirname(repo), group + '.git'
+        end
+        repo = Rugged::Repository.new repo 
+        commit = repo.lookup(oid1)
+        #if the second revision is precised 
+        if oid2 
+          commit_old = repo.lookup(oid2)
+          diff = repo.diff(commit_old, commit)
+          diff.each do |patch|
+            if /#{node}\s+/.match(patch.to_s.lines.first)
+              diff_commits = {:patch => patch.to_s, :stat => patch.stat}
+              break
+            end
+          end
+        #else gives the diffs between the first oid and his first parrent
+        else
+          stat = commit.parents[0].diff(commit).stat
+          stat = [stat[1],stat[2]]
+          patch = commit.parents[0].diff(commit).patch
+          diff_commits = {:patch => patch, :stat => stat}
+        end
+        diff_commits
+      rescue
+        'no diffs'
+      end
+    end
 
   private
 
