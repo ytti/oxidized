@@ -32,7 +32,7 @@ class IronWare < Oxidized::Model
   end
 
   cmd 'show chassis' do |cfg|
-    cfg.gsub! "\xFF", '' # ugly hack - avoids JSON.dump utf-8 breakage on 1.9..
+    cfg.gsub! /\xFF/n, '' # ugly hack - avoids JSON.dump utf-8 breakage on 1.9..
     cfg.gsub! /(^((.*)Current temp(.*))$)/, '' #remove unwanted lines current temperature
     cfg.gsub! /Speed = [A-Z]{3} \(\d{2}\%\)/, '' #remove unwanted lines Speed Fans
     cfg.gsub! /current speed is [A-Z]{3} \(\d{2}\%\)/, ''
