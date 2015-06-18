@@ -170,7 +170,7 @@ The following example will log an active ssh session to ```/home/fisakytt/.confi
 ```
 input:
   default: ssh, telnet
-  debug: ~/.config/oxidized/log_input
+  debug: /tmp/oxidized_log_input
   ssh:
     secure: false
 ```
