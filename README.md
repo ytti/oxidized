@@ -12,6 +12,7 @@ Oxidized is a network device configuration backup tool. It's a RANCID replacemen
 * restful API to reload list of nodes (GET /reload)
 * restful API to fetch configurations (/node/fetch/[NODE] or /node/fetch/group/[NODE])
 * restful API to show list of nodes (GET /nodes)
+* restful API to show list of version for a node (/node/version[NODE]) and diffs
 
 [Youtube Video: Oxidized TREX 2014 presentation](http://youtu.be/kBQ_CTUuqeU#t=3h)
 
