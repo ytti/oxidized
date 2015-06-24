@@ -19,9 +19,9 @@ json.each do |node|
 end
 
 if critical
-  puts 'Unable to backup: ' + critical_nodes.join(' ')
+  puts '[CRIT] Unable to backup: ' + critical_nodes.join(' ')
   exit 2
 else
-  puts 'Backup of all nodes completed successfully.'
+  puts '[OK] Backup of all nodes completed successfully.'
   exit 0
 end
