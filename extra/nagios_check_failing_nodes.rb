@@ -10,9 +10,11 @@ critical_nodes = []
 
 json = JSON.load(open("http://localhost:8888/nodes.json"))
 json.each do |node|
-  if node['last']['status'] != 'success'
-    critical_nodes << node['name']
-    critical = true
+  if not node['last'].nil?
+    if node['last']['status'] != 'success'
+      critical_nodes << node['name']
+      critical = true
+    end
   end
 end
 
