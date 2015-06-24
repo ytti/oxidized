@@ -31,6 +31,7 @@ Oxidized is a network device configuration backup tool. It's a RANCID replacemen
     * [Source: HTTP](#source-http)
     * [Output: GIT](#output-git)
     * [Output: File](#output-file)
+    * [Output types](#output-types)
     * [Advanced Configuration](#advanced-configuration)
 6. [Ruby API](#ruby-api)
     * [Input](#input)
@@ -264,6 +265,52 @@ output:
     user: Oxidized
     email: o@example.com
     repo: "/var/lib/oxidized/devices.git"
+```
+
+### Output types
+
+If you prefer to have different outputs in different files and/or directories, you can easily do this by modifying the corresponding model. To change the behaviour for IOS, you would edit `lib/oxidized/model/ios.rb`.
+
+For example, let's say you want to split out `show version` and `show inventory` into separate files in a directory called `nodiff` which your tools will not send automated diffstats for. You can apply a patch along the lines of
+
+```
+-  cmd 'show version' do |cfg|
+-    comment cfg.lines.first
++  cmd 'show version' do |state|
++    state.type = 'nodiff'
++    state
+
+-  cmd 'show inventory' do |cfg|
+-    comment cfg
++  cmd 'show inventory' do |state|
++    state.type = 'nodiff'
++    state
++  end
+
+-  cmd 'show running-config' do |cfg|
+-    cfg = cfg.each_line.to_a[3..-1].join
+-    cfg.gsub! /^Current configuration : [^\n]*\n/, ''
+-    cfg.sub! /^(ntp clock-period).*/, '! \1'
+-    cfg.gsub! /^\ tunnel\ mpls\ traffic-eng\ bandwidth[^\n]*\n*(
++  cmd 'show running-config' do |state|
++    state = state.each_line.to_a[3..-1].join
++    state.gsub! /^Current configuration : [^\n]*\n/, ''
++    state.sub! /^(ntp clock-period).*/, '! \1'
++    state.gsub! /^\ tunnel\ mpls\ traffic-eng\ bandwidth[^\n]*\n*(
+                   (?:\ [^\n]*\n*)*
+                   tunnel\ mpls\ traffic-eng\ auto-bw)/mx, '\1'
+-    cfg
++    state = Oxidized::String.new state
++    state.type = 'nodiff'
++    state
+```
+
+which will result in the following layout
+
+```
+diff/$FQDN--show_running_config
+nodiff/$FQDN--show_version
+nodiff/$FQDN--show_inventory
 ```
 
 ### Advanced Configuration
