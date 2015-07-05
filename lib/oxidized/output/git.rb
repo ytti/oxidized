@@ -50,13 +50,17 @@ class Git < Output
   def fetch node, group
     begin
       repo = @cfg.repo
-      if group
+      if (group && !@cfg.single_repo?)
         repo = File.join File.dirname(repo), group + '.git'
       end
       repo = Rugged::Repository.new repo
       index = repo.index
       index.read_tree repo.head.target.tree unless repo.empty?
-      repo.read(index.get(node)[:oid]).data
+      if (group && @cfg.single_repo?)
+        repo.read(index.get(group + '/' + node)[:oid]).data
+      else
+        repo.read(index.get(node)[:oid]).data
+      end
     rescue
       'node not found'
     end
