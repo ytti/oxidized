@@ -18,7 +18,10 @@ module Oxidized
         # ask for next node in queue non destructive way
         nextnode = @nodes.first
         unless nextnode.last.nil?
-          break if nextnode.last.end + CFG.interval > Time.now.utc
+          if nextnode.last.end + CFG.interval > Time.now.utc
+            @nodes.get
+            next
+          end
         end
         # shift nodes and get the next node
         node = @nodes.get
@@ -28,8 +31,9 @@ module Oxidized
     end
 
     def process job
+      
       node = job.node
-      node.last = job
+      node.last
       node.stats.add job
       @jobs.duration job.time
       node.running = false

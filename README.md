@@ -81,6 +81,7 @@ Install all required packages and gems.
 apt-get install ruby ruby-dev libsqlite3-dev libssl-dev pkg-config cmake
 gem install oxidized
 gem install oxidized-script oxidized-web # if you don't install oxidized-web, make sure you remove "rest" from your config
+gem install sqlite3
 ```
 
 ## CentOS, Oracle Linux, Red Hat Linux version 6
@@ -93,6 +94,7 @@ Now lets install oxidized via Rubygems:
 ```shell
 gem install oxidized
 gem install oxidized-script oxidized-web
+gem install sqlite3
 ```
 
 # Configuration
@@ -332,6 +334,7 @@ prompt: !ruby/regexp /^([\w.@-]+[#>]\s?)$/
 vars:
   enable: S3cr3tx
 groups: {}
+database: oxidized_database.db
 rest: 127.0.0.1:8888
 input:
   default: ssh, telnet
