@@ -7,15 +7,15 @@ module Oxidized
       
       store = Store.new
       #store stats in sql database and return a hashmap
-
+      hash = store.update_stats node
+      
+      @start        = hash[:start]
       super do |node|
-        hash = store.update_stats node
-        @start        = hash[:start]
         @status       = hash[:status]
         @config       = hash[:config]
         @end          = hash[:end]
         @time         = hash[:time]
-      end
+      end  
     end
   end
 end

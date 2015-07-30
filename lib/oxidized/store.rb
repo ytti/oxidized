@@ -53,6 +53,7 @@ module Oxidized
      else
        nil
      end     
+<<<<<<< HEAD
     end
     
     #Get stats for all nodes, in desired order, end ASC by default
@@ -60,6 +61,9 @@ module Oxidized
       create_table_stats
       res = @db.execute("SELECT * FROM stats ORDER BY #{order};")
     end
+=======
+    end 
+>>>>>>> 5212f8508d3cc561be1187199b98c6c523c35335
    
   end
 end
