@@ -83,7 +83,7 @@ module Oxidized
         :ip        => @ip,
         :group     => @group,
         :model     => @model.class.to_s,
-        :last      => nil,
+        :last      => last,
         :vars      => @vars,
       }
       h[:full_name] = [@group, @name].join('/') if @group
@@ -98,17 +98,25 @@ module Oxidized
       h
     end
 
-    def last= job
-      if job
+    def last
+      store = Store.new
+      stats = store.get_node_stats @name
+      if stats
         ostruct = OpenStruct.new
-        ostruct.start  = job.start
-        ostruct.end    = job.end
-        ostruct.status = job.status
-        ostruct.time   = job.time
+        ostruct.start  = stats[:start]
+        ostruct.end    = stats[:end]
+        ostruct.status = stats[:status]
+        ostruct.time   = stats[:time]
+        
         @last = ostruct
       else
         @last = nil
       end
+    end
+    
+    def for_update
+      store = Store.new
+      store.reset @name
     end
 
     def reset

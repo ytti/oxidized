@@ -29,7 +29,8 @@ module Oxidized
 
     def process job
       node = job.node
-      node.last = job
+      store_stats job
+      node.last
       node.stats.add job
       @jobs.duration job.time
       node.running = false
@@ -56,6 +57,12 @@ module Oxidized
       end
     rescue NodeNotFound
       Log.warn "#{node.name} not found, removed while collecting?"
+    end
+    
+    def store_stats job
+      store = Store.new
+      #store stats for a node in sql database
+      store.update_stats job
     end
 
   end
