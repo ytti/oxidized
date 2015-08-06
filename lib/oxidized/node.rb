@@ -1,6 +1,6 @@
 module Oxidized
-  require 'resolv'
   require 'ostruct'
+  require 'socket'
   require_relative 'node/stats'
   class MethodNotFound < OxidizedError; end
   class ModelNotFound  < OxidizedError; end
@@ -11,7 +11,7 @@ module Oxidized
     def initialize opt
       @name           = opt[:name]
       @ip             = IPAddr.new(opt[:ip]).to_s rescue nil
-      @ip           ||= Resolv.new.getaddress @name
+      @ip             = IPSocket::getaddress(@name)
       @group          = opt[:group]
       @input          = resolve_input opt
       @output         = resolve_output opt
