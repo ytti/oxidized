@@ -111,7 +111,7 @@ module Oxidized
     end
 
     def find_index node
-      index { |e| e.name == node }
+      index { |e| e.name == node or e.ip == node}
     end
 
     # @param node node which is removed from nodes list
