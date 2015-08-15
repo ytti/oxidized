@@ -8,9 +8,17 @@
 # set system syslog host SERVER interactive-commands notice
 # set system syslog host SERVER match "^mgd\[[0-9]+\]: UI_COMMIT: .*"
 
-# Ports < 1024 need extra privileges, use a port higher than this by passing the first argument a number
-# To use the default port for syslog (514) you shouldnt pass an argument, but you will need to allow this with:
+# Ports < 1024 need extra privileges, use a port higher than this by setting the port option in your oxidized config file.
+# To use the default port for syslog (514) you shouldn't pass an argument, but you will need to allow this with:
 # sudo setcap 'cap_net_bind_service=+ep' /usr/bin/ruby
+
+# Config options are:
+# syslogd
+#  port (Default = 514)
+#  file (Default = messages)
+#  resolve (Default = true)
+
+# To stop the resolution of IP's to PTR you can set resolve to false
 
 # exit if fork   ## TODO: proper daemonize
 
@@ -19,26 +27,42 @@ require 'resolv'
 require_relative 'rest_client'
 
 module Oxidized
+  
+  require 'asetus'
+  class Config
+    Root      = File.join ENV['HOME'], '.config', 'oxidized'
+  end
+
+  CFGS = Asetus.new :name=>'oxidized', :load=>false, :key_to_s=>true
+  CFGS.default.syslogd.port        = 514
+  CFGS.default.syslogd.file        = 'messages'
+  CFGS.default.syslogd.resolve     = true
+
+  begin
+    CFGS.load
+  rescue => error
+    raise InvalidConfig, "Error loading config: #{error.message}"
+  ensure
+    CFG = CFGS.cfg  # convenienence, instead of Config.cfg.password, CFG.password
+  end
+
   class SyslogMonitor
     NAME_MAP = {
       /(.*)\.ip\.tdc\.net/ => '\1',
       /(.*)\.ip\.fi/       => '\1',
     }
-    PORT = 514
-    FILE = 'messages'
     MSG = {
       :ios   => /%SYS-(SW[0-9]+-)?5-CONFIG_I:/,
       :junos => 'UI_COMMIT:',
     }
 
     class << self
-      def udp port=PORT, listen=0
-        port ||= PORT
+      def udp port=Oxidized::CFG.syslogd.port, listen=0
         io = UDPSocket.new
         io.bind listen, port
         new io, :udp
       end
-      def file syslog_file=FILE
+      def file syslog_file=Oxidized::CFG.syslogd.file
         io = open syslog_file, 'r'
         io.seek 0, IO::SEEK_END
         new io, :file
@@ -102,9 +126,13 @@ module Oxidized
     end
 
     def getname ip
-      name = (Resolv.getname ip.to_s rescue ip)
-      NAME_MAP.each { |re, sub| name.sub! re, sub }
-      name
+      if Oxidized::CFG.syslogd.resolve == false
+        ip
+      else
+        name = (Resolv.getname ip.to_s rescue ip)
+        NAME_MAP.each { |re, sub| name.sub! re, sub }
+        name
+      end
     end
   end
 end
