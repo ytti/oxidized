@@ -137,5 +137,5 @@ module Oxidized
   end
 end
 
-Oxidized::SyslogMonitor.udp ARGV[0]
+Oxidized::SyslogMonitor.udp
 #Oxidized::SyslogMonitor.file '/var/log/poop'
