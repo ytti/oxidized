@@ -80,6 +80,8 @@ class Git < Output
             hash = {}
             hash[:date] = commit.time.to_s 
             hash[:oid] = commit.oid
+            hash[:author] = commit.author
+            hash[:message] = commit.message
             tab[i += 1] = hash
           end
         end
