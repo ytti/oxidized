@@ -69,6 +69,7 @@ Oxidized is a network device configuration backup tool. It's a RANCID replacemen
  * Juniper JunOS
  * Juniper ScreenOS (Netscreen)
  * Mikrotik RouterOS
+ * MRV Master-OS
  * Ubiquiti AirOS
  * Palo Alto PAN-OS
  * Zyxel ZyNOS
