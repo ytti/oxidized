@@ -3,8 +3,8 @@ Gem::Specification.new do |s|
   s.version           = '0.7.2'
   s.licenses          = %w( Apache-2.0 )
   s.platform          = Gem::Platform::RUBY
-  s.authors           = [ 'Saku Ytti', 'Samer Abdel-Hafez' ]
-  s.email             = %w( saku@ytti.fi sam@arahant.net )
+  s.authors           = [ 'Saku Ytti', 'Samer Abdel-Hafez', 'Anton Aksola' ]
+  s.email             = %w( saku@ytti.fi sam@arahant.net aakso@iki.fi)
   s.homepage          = 'http://github.com/ytti/oxidized'
   s.summary           = 'feeble attempt at rancid'
   s.description       = 'software to fetch configuration from network devices and store them'
@@ -18,4 +18,5 @@ Gem::Specification.new do |s|
   s.add_runtime_dependency 'slop',    '~> 3.5'
   s.add_runtime_dependency 'net-ssh', '~> 2.8'
   s.add_runtime_dependency 'rugged',  '~> 0.21', '>= 0.21.4'
+  s.add_development_dependency 'pry'
 end
