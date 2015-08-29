@@ -23,7 +23,8 @@ Oxidized is a network device configuration backup tool. It's a RANCID replacemen
     * [CentOS, Oracle Linux, Red Hat Linux version 6](#centos-oracle-linux-red-hat-linux-version 6)
 3. [Initial Configuration](#configuration)
 4. [Installing Ruby 2.1.2 using RVM](#installing-ruby-2.1.2-using-rvm)
-5. [Cookbook](#cookbook)
+5. [Running with Docker](#running-with-docker)
+6. [Cookbook](#cookbook)
     * [Debugging](#debugging)
     * [Privileged mode](#privileged-mode)
     * [Source: CSV](#source-csv)
@@ -33,7 +34,7 @@ Oxidized is a network device configuration backup tool. It's a RANCID replacemen
     * [Output: File](#output-file)
     * [Output types](#output-types)
     * [Advanced Configuration](#advanced-configuration)
-6. [Ruby API](#ruby-api)
+7. [Ruby API](#ruby-api)
     * [Input](#input)
     * [Output](#output)
     * [Source](#source)
@@ -163,6 +164,41 @@ rvm install 2.1.2
 rvm use --default 2.1.2
 ```
 
+# Running with Docker
+1. clone git repo:
+
+    root@bla:~# git clone https://github.com/ytti/oxidized
+
+2. build container locally:
+
+    root@bla:~# docker build -q -t oxidized/oxidized:latest oxidized/
+
+3. create config directory in main system:
+
+    root@bla~:# mkdir /etc/oxidized
+
+4. run container the first time:
+
+    root@bla:~# docker run -v /etc/oxidized:/root/.config/oxidized -p 8888:8888/tcp -t oxidized/oxidized:latest oxidized
+
+5. add 'router.db' to /etc/oxidized:
+
+    root@bla:~# vim /etc/oxidized/router.db
+    [ ... ]
+    root@bla:~#
+
+6. run container again:
+
+    root@bla:~# docker run -v /etc/oxidized:/root/.config/oxidized -p 8888:8888/tcp -t oxidized/oxidized:latest oxidized
+    oxidized[1]: Oxidized starting, running as pid 1
+    oxidized[1]: Loaded 1 nodes
+    Puma 2.13.4 starting...
+    * Min threads: 0, max threads: 16
+    * Environment: development
+    * Listening on tcp://0.0.0.0:8888
+    ^C
+
+    root@bla:~#
 
 ## Cookbook
 ### Debugging
