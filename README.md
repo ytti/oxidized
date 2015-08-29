@@ -167,28 +167,29 @@ rvm use --default 2.1.2
 # Running with Docker
 1. clone git repo:
 
+```
     root@bla:~# git clone https://github.com/ytti/oxidized
-
+```
 2. build container locally:
-
+```
     root@bla:~# docker build -q -t oxidized/oxidized:latest oxidized/
-
+```
 3. create config directory in main system:
-
+```
     root@bla~:# mkdir /etc/oxidized
-
+```
 4. run container the first time:
-
+```
     root@bla:~# docker run -v /etc/oxidized:/root/.config/oxidized -p 8888:8888/tcp -t oxidized/oxidized:latest oxidized
-
+```
 5. add 'router.db' to /etc/oxidized:
-
+```
     root@bla:~# vim /etc/oxidized/router.db
     [ ... ]
     root@bla:~#
-
+```
 6. run container again:
-
+```
     root@bla:~# docker run -v /etc/oxidized:/root/.config/oxidized -p 8888:8888/tcp -t oxidized/oxidized:latest oxidized
     oxidized[1]: Oxidized starting, running as pid 1
     oxidized[1]: Loaded 1 nodes
@@ -199,6 +200,7 @@ rvm use --default 2.1.2
     ^C
 
     root@bla:~#
+```
 
 ## Cookbook
 ### Debugging
