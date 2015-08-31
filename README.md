@@ -362,6 +362,57 @@ model_map:
   juniper: junos
 ```
 
+# Hooks
+You can define arbitrary number of hooks that subscribe different events. The hook system is modular and different kind of hook types can be enabled.
+
+## Configuration
+Following configuration keys need to be defined for all hooks:
+
+  * `events`: which events to subscribe. Needs to be an array. See below for the list of available events.
+  * `type`: what hook class to use. See below for the list of available hook types.
+
+### Events
+  * `node_success`: triggered when configuration is succesfully pulled from a node and right before storing the configuration.
+  * `node_fail`: triggered after `retries` amount of failed node pulls.
+  * `post_store`: triggered after node configuration is stored.
+
+## Hook type: exec
+The `exec` hook type allows users to run an arbitrary shell command or a binary when triggered.
+
+The command is executed on a separate child process either in synchronous or asynchronous fashion. Non-zero exit values cause errors to be logged. STDOUT and STDERR are currently not collected.
+
+Command is executed with the following environment:
+```
+OX_EVENT
+OX_NODE_NAME
+OX_NODE_FROM
+OX_NODE_MSG
+OX_NODE_GROUP
+OX_JOB_STATUS
+OX_JOB_TIME
+```
+
+Exec hook recognizes following configuration keys:
+
+  * `timeout`: hard timeout for the command execution. SIGTERM will be sent to the child process after the timeout has elapsed. Default: 60
+  * `async`: influences whether main thread will wait for the command execution. Set this true for long running commands so node pull is not blocked. Default: false
+  * `cmd`: command to run.
+
+
+## Hook configuration example
+```
+hooks:
+  name_for_example_hook1:
+    type: exec
+    events: [node_success]
+    cmd: 'echo "Node success $OX_NODE_NAME" >> /tmp/ox_node_success.log'
+  name_for_example_hook2:
+    type: exec
+    events: [post_store, node_fail]
+    cmd: 'echo "Doing long running stuff for $OX_NODE_NAME" >> /tmp/ox_node_stuff.log; sleep 60'
+    async: true
+    timeout: 120
+```
 
 # Ruby API
 
