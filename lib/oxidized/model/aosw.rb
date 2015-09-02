@@ -5,7 +5,7 @@ class AOSW < Oxidized::Model
   # Also Dell controllers
 
   comment  '# '
-  prompt /^\([^)]+\) #/
+  prompt /^\([^)]+\) [#>]/
 
   cmd :all do |cfg|
     cfg.each_line.to_a[1..-2].join
@@ -36,7 +36,16 @@ class AOSW < Oxidized::Model
   end
 
   cfg :telnet, :ssh do
+    if vars :enable
+      post_login do
+        send 'enable\n'
+        send vars(:enable) + '\n'
+      end
+    end
     post_login 'no paging'
+    if vars :enable
+      pre_logout 'exit'
+    end
     pre_logout 'exit'
   end
 
@@ -50,7 +59,7 @@ class AOSW < Oxidized::Model
       next if line.match /[0-9]+ (RPM|mV|C)$/
       out << line.strip
     end
-    out = out.join "\n"
+    out = comment out.join "\n"
     out << "\n"
   end
 
