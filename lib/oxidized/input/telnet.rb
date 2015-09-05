@@ -10,9 +10,12 @@ module Oxidized
       @node    = node
       @timeout = CFG.timeout
       @node.model.cfg['telnet'].each { |cb| instance_exec(&cb) }
+      port = vars(:telnet_port) or 23
 
-      opt = { 'Host' => @node.ip, 'Timeout' => @timeout,
-              'Model' => @node.model }
+      opt = { 'Host'    => @node.ip,
+              'Port'    => port.to_i,
+              'Timeout' => @timeout,
+              'Model'   => @node.model }
       opt['Output_log'] = CFG.input.debug?.to_s + '-telnet' if CFG.input.debug?
 
       @telnet  = Net::Telnet.new opt
