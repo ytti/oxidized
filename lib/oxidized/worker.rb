@@ -34,12 +34,16 @@ module Oxidized
       @jobs.duration job.time
       node.running = false
       if job.status == :success
+        Oxidized.Hooks.handle :node_success, :node => node,
+                                             :job => job
         msg = "update #{node.name}"
         msg += " from #{node.from}" if node.from
         msg += " with message '#{node.msg}'" if node.msg
         if node.output.new.store node.name, job.config,
                               :msg => msg, :user => node.user, :group => node.group
           Log.info "Configuration updated for #{node.group}/#{node.name}"
+          Oxidized.Hooks.handle :post_store, :node => node,
+                                             :job => job
         end
         node.reset
       else
@@ -51,6 +55,8 @@ module Oxidized
         else
           msg += ", retries exhausted, giving up"
           node.retry = 0
+          Oxidized.Hooks.handle :node_fail, :node => node,
+                                            :job => job
         end
         Log.warn msg
       end

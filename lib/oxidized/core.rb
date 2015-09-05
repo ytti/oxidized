@@ -6,6 +6,7 @@ module Oxidized
   require 'oxidized/worker'
   require 'oxidized/nodes'
   require 'oxidized/manager'
+  require 'oxidized/hook'
   class << self
     def new *args
       Core.new args
@@ -15,6 +16,7 @@ module Oxidized
   class Core
     def initialize args
       Oxidized.mgr = Manager.new
+      Oxidized.Hooks = HookManager.from_config CFG
       nodes        = Nodes.new
       @worker      = Worker.new nodes
       trap('HUP') { nodes.load }

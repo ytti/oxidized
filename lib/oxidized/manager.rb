@@ -23,12 +23,13 @@ module Oxidized
         end
       end
     end
-    attr_reader :input, :output, :model, :source
+    attr_reader :input, :output, :model, :source, :hook
     def initialize
       @input  = {}
       @output = {}
       @model  = {}
       @source = {}
+      @hook = {}
     end
     def add_input method
       method = Manager.load Config::InputDir, method
@@ -52,6 +53,14 @@ module Oxidized
       _source = Manager.load Config::SourceDir, _source
       return false if _source.empty?
       @source.merge! _source
+    end
+    def add_hook _hook
+      return nil if @hook.key? _hook
+      name = _hook
+      _hook = Manager.load File.join(Config::Root, 'hook'), name
+      _hook = Manager.load Config::HookDir, name if _hook.empty?
+      return false if _hook.empty?
+      @hook.merge! _hook
     end
   end
 end
