@@ -10,7 +10,7 @@ module Oxidized
       @node    = node
       @timeout = CFG.timeout
       @node.model.cfg['telnet'].each { |cb| instance_exec(&cb) }
-      port = vars(:telnet_port) or 23
+      port = vars(:telnet_port) || 23
 
       opt = { 'Host'    => @node.ip,
               'Port'    => port.to_i,
