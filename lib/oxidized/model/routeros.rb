@@ -7,7 +7,7 @@ class RouterOS < Oxidized::Model
   end
 
   cmd '/export' do |cfg|
-    cfg.gsub! /\[(?:\d+)?(?:;\d+)?(?:m)?/, '' # strip ANSI colours
+    cfg.gsub! /\x1B\[([0-9]{1,3}((;[0-9]{1,3})*)?)?[m|K]/, '' # strip ANSI colours
     cfg = cfg.split("\n").select { |line| not line[/^\#\s\w{3}\/\d{2}\/\d{4}.*$/] }
     cfg.join("\n") + "\n"
   end
