@@ -100,8 +100,7 @@ module Oxidized
                 String      :status
         end
       end
-
-
+      
     end
   end
 end
