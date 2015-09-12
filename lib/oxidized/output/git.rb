@@ -26,7 +26,7 @@ class Git < Output
     @user  = (opt[:user]  or @cfg.user)
     @email = (opt[:email] or @cfg.email)
     @opt   = opt
-    repo   = @cfg.repo
+    repo   = File.expand_path @cfg.repo
 
     outputs.types.each do |type|
       type_cfg = ''
@@ -61,7 +61,7 @@ class Git < Output
       'node not found'
     end
   end
-  
+
   #give a hash of all oid revision for the givin node, and the date of the commit
     def version node, group
       begin
@@ -69,7 +69,7 @@ class Git < Output
         if group
           repo = File.join File.dirname(repo), group + '.git'
         end
-        repo = Rugged::Repository.new repo  
+        repo = Rugged::Repository.new repo
         walker = Rugged::Walker.new(repo)
         walker.sorting(Rugged::SORT_DATE)
         walker.push(repo.head.target)
@@ -78,7 +78,7 @@ class Git < Output
         walker.each do |commit|
           if commit.diff(paths: [node]).size > 0
             hash = {}
-            hash[:date] = commit.time.to_s 
+            hash[:date] = commit.time.to_s
             hash[:oid] = commit.oid
             hash[:author] = commit.author
             hash[:message] = commit.message
@@ -91,7 +91,7 @@ class Git < Output
         'node not found'
       end
     end
-    
+
     #give the blob of a specific revision
     def get_version node, group, oid
       begin
@@ -99,13 +99,13 @@ class Git < Output
         if group && group != ''
           repo = File.join File.dirname(repo), group + '.git'
         end
-        repo = Rugged::Repository.new repo 
+        repo = Rugged::Repository.new repo
         repo.blob_at(oid,node).content
       rescue
         'version not found'
       end
     end
-    
+
     #give a hash with the patch of a diff between 2 revision and the stats (added and deleted lines)
     def get_diff node, group, oid1, oid2
       begin
@@ -114,10 +114,10 @@ class Git < Output
         if group && group != ''
           repo = File.join File.dirname(repo), group + '.git'
         end
-        repo = Rugged::Repository.new repo 
+        repo = Rugged::Repository.new repo
         commit = repo.lookup(oid1)
-        #if the second revision is precised 
-        if oid2 
+        #if the second revision is precised
+        if oid2
           commit_old = repo.lookup(oid2)
           diff = repo.diff(commit_old, commit)
           diff.each do |patch|
@@ -181,7 +181,7 @@ class Git < Output
         :parents    => repo.empty? ? [] : [repo.head.target].compact,
         :update_ref => 'HEAD',
       )
-      
+
       index.write
       true
     end
