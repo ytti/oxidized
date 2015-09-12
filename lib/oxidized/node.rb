@@ -19,7 +19,8 @@ module Oxidized
       @auth           = resolve_auth opt
       @prompt         = resolve_prompt opt
       @vars           = opt[:vars]
-      @stats          = Stats.new
+      @stats          = Stats.new @name, @group
+      @force          = false
       @retry          = 0
 
       # model instance needs to access node instance
@@ -101,19 +102,16 @@ module Oxidized
       h
     end
 
-    def last= job
-      if job
-        ostruct = OpenStruct.new
-        ostruct.start  = job.start
-        ostruct.end    = job.end
-        ostruct.status = job.status
-        ostruct.time   = job.time
-        @last = ostruct
-      else
-        @last = nil
-      end
+    def last
+      @stats.fetch
     end
 
+    def last= job
+      if job
+        @stats.store job
+      end
+    end
+    
     def reset
       @user = @msg = @from = nil
       @retry = 0
