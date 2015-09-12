@@ -15,14 +15,12 @@ module Oxidized
       @jobs.work
       while @jobs.size < @jobs.want
         Log.debug "Jobs #{@jobs.size}, Want: #{@jobs.want}"
-        # ask for next node in queue non destructive way
-        nextnode = @nodes.first
-        unless nextnode.last.nil?
-          break if nextnode.last.end + CFG.interval > Time.now.utc
-        end
-        # shift nodes and get the next node
         node = @nodes.get
+        unless node.force or node.last.nil?
+          break if node.last.end + CFG.interval > Time.now.utc
+        end
         node.running? ? next : node.running = true
+        node.force = false if node.force
         @jobs.push Job.new node
       end
     end
