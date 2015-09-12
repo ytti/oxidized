@@ -28,9 +28,9 @@ module Oxidized
       end
       
       def fetch
+        r = nil
         if sqlcfg.empty?
         # no sql config - fetch from memory
-          r = nil
           unless @@last_store[@group].nil?
             r = OpenStruct.new(@@last_store[@group][@name]) unless @@last_store[@group][@name].nil?
           end
@@ -39,11 +39,7 @@ module Oxidized
           db = connect
           check_stats_table db
           stats = db[(sqlcfg.table + '_stats').to_sym].where(:name => @name, :group => @group).select( :start, :end, :time, :status).all
-          if stats.empty?
-            r = nil
-          else
-            r = OpenStruct.new(stats.first)
-          end
+          r = OpenStruct.new(stats.first) unless stats.empty?
           db.disconnect
         end
         r
