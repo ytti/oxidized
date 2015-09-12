@@ -14,10 +14,13 @@ module Oxidized
   end
 
   class Core
+    class NoNodesFound < OxidizedError; end
+
     def initialize args
       Oxidized.mgr = Manager.new
       Oxidized.Hooks = HookManager.from_config CFG
       nodes        = Nodes.new
+      raise NoNodesFound, 'source returns no usable nodes' if nodes.size == 0
       @worker      = Worker.new nodes
       trap('HUP') { nodes.load }
       if CFG.rest?

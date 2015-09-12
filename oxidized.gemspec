@@ -18,5 +18,5 @@ Gem::Specification.new do |s|
   s.add_runtime_dependency 'slop',    '~> 3.5'
   s.add_runtime_dependency 'net-ssh', '~> 2.8'
   s.add_runtime_dependency 'rugged',  '~> 0.21', '>= 0.21.4'
-  s.add_development_dependency 'pry'
+  s.add_development_dependency 'pry', '~> 0'
 end
