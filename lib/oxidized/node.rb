@@ -111,7 +111,7 @@ module Oxidized
         @stats.store job
       end
     end
-    
+
     def reset
       @user = @msg = @from = nil
       @retry = 0
