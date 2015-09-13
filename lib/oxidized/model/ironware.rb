@@ -71,6 +71,7 @@ class IronWare < Oxidized::Model
         send vars(:enable) + "\n"
       end
     end
+    post_login ''
     post_login 'skip-page-display'
     post_login 'terminal length 0'
     pre_logout 'logout'
