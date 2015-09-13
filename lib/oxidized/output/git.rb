@@ -19,6 +19,7 @@ class Git < Output
       CFGS.save :user
       raise NoConfig, 'no output git config, edit ~/.config/oxidized/config'
     end
+    @cfg.repo = File.expand_path @cfg.repo
   end
 
   def store file, outputs, opt={}
@@ -26,7 +27,7 @@ class Git < Output
     @user  = (opt[:user]  or @cfg.user)
     @email = (opt[:email] or @cfg.email)
     @opt   = opt
-    repo   = File.expand_path @cfg.repo
+    repo   = @cfg.repo
 
     outputs.types.each do |type|
       type_cfg = ''
