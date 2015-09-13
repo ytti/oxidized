@@ -1,6 +1,6 @@
 class IronWare < Oxidized::Model
 
-  prompt /^.+[>#]\s?$/
+  prompt /^.*(telnet|ssh)\@.+[>#]\s?$/i
   comment  '! '
   
   #to handle pager without enable
