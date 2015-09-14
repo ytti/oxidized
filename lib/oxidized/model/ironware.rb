@@ -1,6 +1,6 @@
 class IronWare < Oxidized::Model
 
-  prompt /^.+[>#]\s?$/
+  prompt /^.*(telnet|ssh)\@.+[>#]\s?$/i
   comment  '! '
   
   #to handle pager without enable
@@ -32,7 +32,7 @@ class IronWare < Oxidized::Model
   end
 
   cmd 'show chassis' do |cfg|
-    cfg.gsub! /\xFF/n, '' # ugly hack - avoids JSON.dump utf-8 breakage on 1.9..
+    cfg.encode!("UTF-8", :invalid => :replace) #sometimes ironware returns broken encoding
     cfg.gsub! /(^((.*)Current temp(.*))$)/, '' #remove unwanted lines current temperature
     cfg.gsub! /Speed = [A-Z]{3} \(\d{2}\%\)/, '' #remove unwanted lines Speed Fans
     cfg.gsub! /current speed is [A-Z]{3} \(\d{2}\%\)/, ''
@@ -71,6 +71,7 @@ class IronWare < Oxidized::Model
         send vars(:enable) + "\n"
       end
     end
+    post_login ''
     post_login 'skip-page-display'
     post_login 'terminal length 0'
     pre_logout 'logout'
