@@ -6,7 +6,7 @@ class XOS < Oxidized::Model
   comment  '# '
 
   cmd :all do |cfg|
-    cfg.each_line.to_a[1..-2].join.rstrip
+    cfg.each_line.to_a[1..-2].join
   end
 
   cmd 'show version' do |cfg|
