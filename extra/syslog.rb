@@ -54,6 +54,8 @@ module Oxidized
     MSG = {
       :ios   => /%SYS-(SW[0-9]+-)?5-CONFIG_I:/,
       :junos => 'UI_COMMIT:',
+      :eos   => /%SYS-5-CONFIG_I:/,
+      :nxos  => /%VSHD-5-VSHD_SYSLOG_CONFIG_I:/,
     }
 
     class << self
