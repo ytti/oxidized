@@ -1,3 +1,14 @@
+# 0.8.0
+- FEATURE: hooks (by @aakso)
+- FEATURE: MRV MasterOS support (by @kwibbly)
+- FEATURE: EdgeOS support (by @laf)
+- FEATURE: FTP input and Zyxel ZynOS support (by @ytti)
+- FEATURE: version and diffs API For oxidized-web (by @FlorianDoublet)
+- BUGFIX: aosw, ironware, routeros, xos models
+- BUGFIX: crash with 0 nodes
+- BUGFIX: ssh auth fail without keyboard-interactive
+- Full changelog https://github.com/ytti/oxidized/compare/0.7.1...HEAD
+
 # 0.7.0
 - FEATURE: support http source (by @laf)
 - FEATURE: support Palo Alto PANOS (by @rixxxx)
