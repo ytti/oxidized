@@ -1,6 +1,6 @@
 Gem::Specification.new do |s|
   s.name              = 'oxidized'
-  s.version           = '0.8.0'
+  s.version           = '0.8.1'
   s.licenses          = %w( Apache-2.0 )
   s.platform          = Gem::Platform::RUBY
   s.authors           = [ 'Saku Ytti', 'Samer Abdel-Hafez', 'Anton Aksola' ]

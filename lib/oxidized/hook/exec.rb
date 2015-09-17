@@ -9,9 +9,9 @@ class Exec < Oxidized::Hook
 
   def validate_cfg!
     # Syntax check
-    if cfg.has_key? "timeout" 
+    if cfg.has_key? "timeout"
       @timeout = cfg.timeout
-      raise "invalid timeout value" unless @timeout.is_a?(Integer) && 
+      raise "invalid timeout value" unless @timeout.is_a?(Integer) &&
                                            @timeout > 0
     end
 
@@ -25,7 +25,7 @@ class Exec < Oxidized::Hook
     end
 
   rescue RuntimeError => e
-    raise ArgumentError, 
+    raise ArgumentError,
       "#{self.class.name}: configuration invalid: #{e.message}"
   end
 

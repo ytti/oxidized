@@ -1,3 +1,6 @@
+# 0.8.1
+- BUGFIX: restore ruby 1.9.3 compatibility
+
 # 0.8.0
 - FEATURE: hooks (by @aakso)
 - FEATURE: MRV MasterOS support (by @kwibbly)
