@@ -25,7 +25,7 @@ class PowerConnect < Oxidized::Model
 
   cmd 'show running-config'
 
-  cfg :telnet do
+  cfg :telnet, :ssh do
     username /^User( Name)?:/
     password /^\r?Password:/
   end
