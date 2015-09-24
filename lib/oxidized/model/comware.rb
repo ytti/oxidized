@@ -38,7 +38,7 @@ class Comware < Oxidized::Model
   end
 
   cmd 'display version' do |cfg|
-    cfg = cfg.each_line.select {|l| not l.match /uptime/ }.join
+    cfg = cfg.each_line.select {|l| not l.match /uptime/i }.join
     comment cfg
   end
 
