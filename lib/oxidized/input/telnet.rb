@@ -19,7 +19,7 @@ module Oxidized
       opt['Output_log'] = CFG.input.debug?.to_s + '-telnet' if CFG.input.debug?
 
       @telnet  = Net::Telnet.new opt
-      if !@node.auth[:username].nil? and @node.auth[:username].length > 0
+      if @node.auth[:username] and @node.auth[:username].length > 0
         expect username
         @telnet.puts @node.auth[:username]
       end
