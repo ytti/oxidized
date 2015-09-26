@@ -19,11 +19,6 @@ class IronWare < Oxidized::Model
     cfg.each_line.to_a[1..-2].join
   end
 
-  cmd 'show running-config' do |cfg|
-    cfg = cfg.each_line.to_a[3..-1].join
-    cfg
-  end
-
   cmd 'show version' do |cfg|
     cfg.gsub! /(^((.*)[Ss]ystem uptime(.*))$)/, '' #remove unwanted line system uptime
     cfg.gsub! /[Uu]p\s?[Tt]ime is .*/,''
@@ -56,6 +51,11 @@ class IronWare < Oxidized::Model
   
   cmd 'show module' do |cfg|
     comment cfg
+  end
+
+  cmd 'show running-config' do |cfg|
+    cfg = cfg.each_line.to_a[3..-1].join
+    cfg
   end
 
   cfg :telnet do
