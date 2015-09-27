@@ -50,6 +50,7 @@ class IronWare < Oxidized::Model
   end
   
   cmd 'show module' do |cfg|
+    cfg.gsub! /^((Invalid input)|(Type \?)).*$/, '' # some ironware devices are fixed config
     comment cfg
   end
 
