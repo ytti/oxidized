@@ -31,7 +31,7 @@ class IronWare < Oxidized::Model
     cfg.gsub! /(^((.*)Current temp(.*))$)/, '' #remove unwanted lines current temperature
     cfg.gsub! /Speed = [A-Z]{3} \(\d{2}\%\)/, '' #remove unwanted lines Speed Fans
     cfg.gsub! /current speed is [A-Z]{3} \(\d{2}\%\)/, ''
-    cfg.gsub! /Fan controlled temperature: \d{2}\.\d deg-C/, 'Fan controlled temperature: XX.X d deg-C'
+    cfg.gsub! /\d{2}\.\d deg-C/, 'XX.X deg-C'
     if cfg.include? "TEMPERATURE"
       sc = StringScanner.new cfg
       out = ''
@@ -55,21 +55,23 @@ class IronWare < Oxidized::Model
   end
 
   cmd 'show running-config' do |cfg|
-    cfg = cfg.each_line.to_a[3..-1].join
-    cfg
+    arr = cfg.each_line.to_a
+    arr[3..-1].join unless arr.length < 3
   end
 
   cfg :telnet do
-    username /^Username:/
-    password /^Password:/
+    # match expected prompts on both older and newer
+    # versions of IronWare
+    username /^(Please Enter Login Name|Username):/
+    password /^(Please Enter )Password:/
   end
 
   #handle pager with enable
   cfg :telnet, :ssh do
     if vars :enable
       post_login do
-        send "enable\n"
-        send vars(:enable) + "\n"
+        send "enable\r\n"
+        send vars(:enable) + "\r\n"
       end
     end
     post_login ''
