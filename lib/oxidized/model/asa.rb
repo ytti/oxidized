@@ -23,14 +23,14 @@ class ASA < Oxidized::Model
     comment cfg
   end
 
+  cmd 'show inventory' do |cfg|
+    comment cfg
+  end
+
   cmd 'more system:running-config' do |cfg|
     cfg = cfg.each_line.to_a[3..-1].join
     cfg.gsub! /^: [^\n]*\n/, ''
     cfg
-  end
-
-  cmd 'show inventory' do |cfg|
-    comment cfg
   end
 
   cfg :ssh do
