@@ -353,6 +353,20 @@ nodiff/$FQDN--show_version
 nodiff/$FQDN--show_inventory
 ```
 
+### RESTful API and Web Interface
+
+The RESTful API and Web Interface is enabled by configuring the `rest:` parameter in the config file.  This parameter can optionally contain a relative URI.
+
+```
+# Listen on http://127.0.0.1:8888/
+rest: 127.0.0.1:8888
+```
+
+```
+# Listen on http://10.0.0.1:8000/oxidized/
+rest: 10.0.0.1:8000/oxidized
+```
+
 ### Advanced Configuration
 
 Below is an advanced example configuration. You will be able to (optinally) override options per device. The router.db format used is ```hostname:model:username:password:enable_password```. Hostname and model will be the only required options, all others override the global configuration sections.
