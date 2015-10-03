@@ -16,7 +16,9 @@ class IronWare < Oxidized::Model
   #end
 
   cmd :all do |cfg|
-    cfg.each_line.to_a[1..-2].join
+    # sometimes ironware inserts arbitrary whitespace after commands are
+    # issued on the CLI, from run to run.  this normalises the output.
+    cfg.each_line.to_a[1..-2].drop_while { |e| e.match /^\s+$/ }.join  + "\n"
   end
 
   cmd 'show version' do |cfg|
@@ -56,7 +58,7 @@ class IronWare < Oxidized::Model
 
   cmd 'show running-config' do |cfg|
     arr = cfg.each_line.to_a
-    arr[3..-1].join unless arr.length < 3
+    arr[2..-1].join unless arr.length < 2
   end
 
   cfg :telnet do
