@@ -16,7 +16,7 @@ module Oxidized
               'Port'    => port.to_i,
               'Timeout' => @timeout,
               'Model'   => @node.model }
-      opt['Output_log'] = CFG.input.debug?.to_s + '-telnet' if CFG.input.debug?
+      opt['Output_log'] = Oxidized::Config::Crash + "-#{@node.ip}-telnet" if CFG.input.debug?
 
       @telnet  = Net::Telnet.new opt
       if @node.auth[:username] and @node.auth[:username].length > 0

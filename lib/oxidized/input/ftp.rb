@@ -18,7 +18,7 @@ module Oxidized
     def connect node
       @node       = node
       @node.model.cfg['ftp'].each { |cb| instance_exec(&cb) }
-      @log = File.open(CFG.input.debug?.to_s + '-ftp', 'w') if CFG.input.debug?
+      @log = File.open(Oxidized::Config::Crash + "-#{@node.ip}-ftp", 'w') if CFG.input.debug?
       @ftp = Net::FTP.new @node.ip, @node.auth[:username], @node.auth[:password]
       connected?
     end
