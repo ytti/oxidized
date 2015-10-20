@@ -1,7 +1,8 @@
 class Comware < Oxidized::Model
   # HP (A-series)/H3C/3Com Comware
   
-  prompt /^(<[\w.-]+>)$/
+  # sometimes the prompt might have a leading nul
+  prompt /^\0*(<[\w.-]+>)$/
   comment '# '
 
   # example how to handle pager
