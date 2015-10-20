@@ -1,6 +1,6 @@
 Gem::Specification.new do |s|
   s.name              = 'oxidized'
-  s.version           = '0.7.2'
+  s.version           = '0.8.1'
   s.licenses          = %w( Apache-2.0 )
   s.platform          = Gem::Platform::RUBY
   s.authors           = [ 'Saku Ytti', 'Samer Abdel-Hafez', 'Anton Aksola' ]
@@ -18,5 +18,5 @@ Gem::Specification.new do |s|
   s.add_runtime_dependency 'slop',    '~> 3.5'
   s.add_runtime_dependency 'net-ssh', '~> 2.8'
   s.add_runtime_dependency 'rugged',  '~> 0.21', '>= 0.21.4'
-  s.add_development_dependency 'pry'
+  s.add_development_dependency 'pry', '~> 0'
 end

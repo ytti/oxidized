@@ -21,7 +21,8 @@ module Oxidized
       @node.model.cfg['ssh'].each { |cb| instance_exec(&cb) }
       secure = CFG.input.ssh.secure
       @log = File.open(CFG.input.debug?.to_s + '-ssh', 'w') if CFG.input.debug?
-      @ssh = Net::SSH.start @node.ip, @node.auth[:username],
+      port = vars(:ssh_port) || 22
+      @ssh = Net::SSH.start @node.ip, @node.auth[:username], :port => port.to_i,
                             :password => @node.auth[:password], :timeout => CFG.timeout,
                             :paranoid => secure,
                             :auth_methods => %w(none publickey password keyboard-interactive),

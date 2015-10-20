@@ -19,7 +19,7 @@ class HookManager
   # RegisteredHook is a container for a Hook instance
   class RegisteredHook < Struct.new(:name, :hook); end
 
-  Events = [ 
+  Events = [
     :node_success,
     :node_fail,
     :post_store,
@@ -49,7 +49,7 @@ class HookManager
     Log.debug "Hook #{name.inspect} registered #{hook.class} for event #{event.inspect}"
   end
 
-  def handle event, **ctx_params
+  def handle event, ctx_params={}
     ctx = HookContext.new ctx_params
     ctx.event = event
 

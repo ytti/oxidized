@@ -23,7 +23,8 @@ Oxidized is a network device configuration backup tool. It's a RANCID replacemen
     * [CentOS, Oracle Linux, Red Hat Linux version 6](#centos-oracle-linux-red-hat-linux-version 6)
 3. [Initial Configuration](#configuration)
 4. [Installing Ruby 2.1.2 using RVM](#installing-ruby-2.1.2-using-rvm)
-5. [Cookbook](#cookbook)
+5. [Running with Docker](#running-with-docker)
+6. [Cookbook](#cookbook)
     * [Debugging](#debugging)
     * [Privileged mode](#privileged-mode)
     * [Source: CSV](#source-csv)
@@ -33,7 +34,7 @@ Oxidized is a network device configuration backup tool. It's a RANCID replacemen
     * [Output: File](#output-file)
     * [Output types](#output-types)
     * [Advanced Configuration](#advanced-configuration)
-6. [Ruby API](#ruby-api)
+7. [Ruby API](#ruby-api)
     * [Input](#input)
     * [Output](#output)
     * [Source](#source)
@@ -69,6 +70,7 @@ Oxidized is a network device configuration backup tool. It's a RANCID replacemen
  * Juniper JunOS
  * Juniper ScreenOS (Netscreen)
  * Mikrotik RouterOS
+ * MRV Master-OS
  * Ubiquiti AirOS
  * Palo Alto PAN-OS
  * Zyxel ZyNOS
@@ -162,6 +164,43 @@ rvm install 2.1.2
 rvm use --default 2.1.2
 ```
 
+# Running with Docker
+1. clone git repo:
+
+```
+    root@bla:~# git clone https://github.com/ytti/oxidized
+```
+2. build container locally:
+```
+    root@bla:~# docker build -q -t oxidized/oxidized:latest oxidized/
+```
+3. create config directory in main system:
+```
+    root@bla~:# mkdir /etc/oxidized
+```
+4. run container the first time:
+```
+    root@bla:~# docker run -v /etc/oxidized:/root/.config/oxidized -p 8888:8888/tcp -t oxidized/oxidized:latest oxidized
+```
+5. add 'router.db' to /etc/oxidized:
+```
+    root@bla:~# vim /etc/oxidized/router.db
+    [ ... ]
+    root@bla:~#
+```
+6. run container again:
+```
+    root@bla:~# docker run -v /etc/oxidized:/root/.config/oxidized -p 8888:8888/tcp -t oxidized/oxidized:latest oxidized
+    oxidized[1]: Oxidized starting, running as pid 1
+    oxidized[1]: Loaded 1 nodes
+    Puma 2.13.4 starting...
+    * Min threads: 0, max threads: 16
+    * Environment: development
+    * Listening on tcp://0.0.0.0:8888
+    ^C
+
+    root@bla:~#
+```
 
 ## Cookbook
 ### Debugging
@@ -314,6 +353,20 @@ nodiff/$FQDN--show_version
 nodiff/$FQDN--show_inventory
 ```
 
+### RESTful API and Web Interface
+
+The RESTful API and Web Interface is enabled by configuring the `rest:` parameter in the config file.  This parameter can optionally contain a relative URI.
+
+```
+# Listen on http://127.0.0.1:8888/
+rest: 127.0.0.1:8888
+```
+
+```
+# Listen on http://10.0.0.1:8000/oxidized/
+rest: 10.0.0.1:8000/oxidized
+```
+
 ### Advanced Configuration
 
 Below is an advanced example configuration. You will be able to (optinally) override options per device. The router.db format used is ```hostname:model:username:password:enable_password```. Hostname and model will be the only required options, all others override the global configuration sections.
@@ -445,3 +498,22 @@ The following objects exist in Oxidized.
  * cfg is executed in input/output/source context
  * cmd is executed in instance of model
  * 'junos', 'ios', 'ironware' and 'powerconnect' implemented
+
+
+# License and Copyright
+
+Copyright 2013-2015 Saku Ytti <saku@ytti.fi>
+          2013-2015 Samer Abdel-Hafez <sam@arahant.net>
+
+
+Licensed under the Apache License, Version 2.0 (the "License");
+you may not use this file except in compliance with the License.
+You may obtain a copy of the License at
+
+  http://www.apache.org/licenses/LICENSE-2.0
+
+Unless required by applicable law or agreed to in writing, software
+distributed under the License is distributed on an "AS IS" BASIS,
+WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
+See the License for the specific language governing permissions and
+limitations under the License.
