@@ -1,6 +1,6 @@
 class GithubRepo < Oxidized::Hook
   def validate_cfg!
-    cfg.has_key?('remote_repo') or raise 'remote_repo is required'
+    cfg.has_key?('remote_repo') or raise KeyError, 'remote_repo is required'
   end
 
   def run_hook(ctx)
