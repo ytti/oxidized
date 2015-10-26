@@ -10,7 +10,5 @@ class GithubRepo < Oxidized::Hook
     remote = repo.remotes['origin'] || repo.remotes.create('origin', cfg.remote_repo)
     log "to remote: #{remote.url}"
     remote.push(['refs/heads/master'], credentials: credentials)
-  rescue Exception => e
-    log e.backtrace.join('\n')
   end
 end
