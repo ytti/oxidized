@@ -26,7 +26,7 @@ class NOS < Oxidized::Model
   end
 
   cfg 'show system' do |cfg|
-    commen cfg.each_line.reject { |line| line.match /Time/ or line.match /speed/ }
+    comment cfg.each_line.reject { |line| line.match /Time/ or line.match /speed/ }
   end
 
   cmd 'show running-config'
