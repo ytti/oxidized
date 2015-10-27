@@ -66,7 +66,7 @@ end
 
 # Hook abstract base class
 class Hook
-  attr_accessor :cfg
+  attr_reader :cfg
 
   def initialize
   end

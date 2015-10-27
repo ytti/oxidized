@@ -18,7 +18,7 @@ module Oxidized
     def initialize
       Log.info "Oxidized starting, running as pid #{$$}"
       _args, @opts = parse_opts
-      CFG.debug = true if @opts[:debug]
+      Oxidized.config.debug = true if @opts[:debug]
     end
 
     def crash error
