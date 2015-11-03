@@ -70,7 +70,7 @@ module Oxidized
         Log.send(level, '%s raised %s%s with msg "%s"' % [self.ip, err.class, resc, err.message])
         return false
       rescue => err
-        file = Oxidized::Config::Crash + '.' + self.ip.to_s
+        file = Oxidized::Config::Crash + '.' + opt[:name]
         open file, 'w' do |fh|
           fh.puts Time.now.utc
           fh.puts err.message + ' [' + err.class.to_s + ']'
