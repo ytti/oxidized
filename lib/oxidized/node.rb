@@ -9,6 +9,9 @@ module Oxidized
     attr_accessor :running, :user, :msg, :from, :stats, :retry
     alias :running? :running
     def initialize opt
+      if CFG.debug == true or opt[:debug] == true
+        puts 'resolving DNS for %s...' % opt[:name]
+      end
       @name           = opt[:name]
       @ip             = IPAddr.new(opt[:ip]).to_s rescue nil
       @ip           ||= Resolv.new.getaddress @name

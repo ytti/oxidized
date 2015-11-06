@@ -23,12 +23,12 @@ json.each do |node|
   end
 end
 
-if pending
-  puts '[WARN] Pending backup: ' + pending_nodes.join(',')
-  exit 1
-elsif critical
+if critical
   puts '[CRIT] Unable to backup: ' + critical_nodes.join(',')
   exit 2
+elsif pending
+  puts '[WARN] Pending backup: ' + pending_nodes.join(',')
+  exit 1
 else
   puts '[OK] Backup of all nodes completed successfully.'
   exit 0
