@@ -1,3 +1,8 @@
+# 0.9.0
+- FEATURE: input log now uses devices name as file, instead of string from config (by @skoef)
+- FEATURE: Dell Networkign OS (dnos) support (by @erefre)
+- BUGFIX: CiscoSMB, powerconnect, comware, xos, ironware, nos fixes
+
 # 0.8.1
 - BUGFIX: restore ruby 1.9.3 compatibility
 
