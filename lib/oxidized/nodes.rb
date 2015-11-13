@@ -9,7 +9,7 @@ module Oxidized
     def load node_want=nil
       with_lock do
         new = []
-        @source = CFG.source.default
+        @source = Oxidized.config.source.default
         Oxidized.mgr.add_source @source
         Oxidized.mgr.source[@source].new.load.each do |node|
           # we want to load specific node(s), not all of them

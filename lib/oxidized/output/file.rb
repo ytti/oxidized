@@ -3,13 +3,13 @@ class OxidizedFile < Output
   require 'fileutils'
 
   def initialize
-    @cfg = CFG.output.file
+    @cfg = Oxidized.config.output.file
   end
 
   def setup
     if @cfg.empty?
-      CFGS.user.output.file.directory = File.join(Config::Root, 'configs')
-      CFGS.save :user
+      Oxidized.asetus.user.output.file.directory = File.join(Config::Root, 'configs')
+      Oxidized.asetus.save :user
       raise NoConfig, 'no output file config, edit ~/.config/oxidized/config'
     end
   end

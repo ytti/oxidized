@@ -1,4 +1,4 @@
-# Oxidized
+# Oxidized [![Build Status](https://travis-ci.org/Shopify/oxidized.svg)](https://travis-ci.org/Shopify/oxidized)
 
 [![Gem Version](https://badge.fury.io/rb/oxidized.svg)](http://badge.fury.io/rb/oxidized)
 

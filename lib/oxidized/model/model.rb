@@ -11,7 +11,8 @@ module Oxidized
         klass.instance_variable_set '@cfg',   Hash.new { |h,k| h[k] = [] }
         klass.instance_variable_set '@procs', Hash.new { |h,k| h[k] = [] }
         klass.instance_variable_set '@expect', []
-        klass.const_set :CFG, CFG
+        klass.instance_variable_set '@comment', nil
+        klass.instance_variable_set '@prompt', nil
       end
       def comment _comment='# '
         return @comment if @comment

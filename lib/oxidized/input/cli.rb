@@ -1,6 +1,7 @@
 module Oxidized
   class Input
     module CLI
+      attr_reader :node
 
       def initialize
         @post_login = []
@@ -10,7 +11,7 @@ module Oxidized
 
       def get
         connect_cli
-        d = @node.model.get
+        d = node.model.get
         disconnect
         d
       end
