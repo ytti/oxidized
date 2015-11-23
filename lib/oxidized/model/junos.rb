@@ -42,8 +42,8 @@ class JunOS < Oxidized::Model
   end
 
   cmd('show chassis environment') do |cfg|
-    cfg.gsub! /\d+ degrees.* F/, '<measurement stripped>'
-    cfg.gsub! /Spinning at \S+/, '<measurement stripped>'
+    cfg.gsub!(/\d+ degrees.* F/, '<measurement stripped>')
+    cfg.gsub!(/Spinning at \S+/, '<measurement stripped>')
     comment cfg
   end
   cmd('show chassis firmware') { |cfg| comment cfg }
