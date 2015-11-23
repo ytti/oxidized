@@ -42,9 +42,9 @@ Oxidized is a network device configuration backup tool. It's a RANCID replacemen
 
 # Supported OS types
 
- * A10 Networks 
+ * A10 Networks
    * ACOS
- * Alcatel-Lucent 
+ * Alcatel-Lucent
    * ISAM
    * AOS
    * AOS7
@@ -56,49 +56,51 @@ Oxidized is a network device configuration backup tool. It's a RANCID replacemen
    * C4CMTS
  * Aruba
    * AOSW
- * Brocade 
+ * Brocade
    * FabricOS
    * Ironware
    * NOS (Network Operating System)
    * Vyatta
- * Cisco 
+ * Ciena
+   * SOAS
+ * Cisco
    * AireOS
    * ASA
    * IOS
    * IOSXR
    * NXOS
    * SMB (Nikola series)
- * Cumulus 
+ * Cumulus
    * Linux
- * DELL 
+ * DELL
    * PowerConnect
    * AOSW
- * Extreme Networks 
+ * Extreme Networks
    * XOS
- * Force10 
+ * Force10
    * FTOS
- * Force10 
+ * Force10
    * DNOS
- * FortiGate 
+ * FortiGate
    * FortiOS
- * HP 
+ * HP
    * Comware (HP A-series, H3C, 3Com)
    * Procurve
- * Huawei 
+ * Huawei
    * VRP
- * Juniper 
+ * Juniper
    * JunOS
    * ScreenOS (Netscreen)
- * Mikrotik 
+ * Mikrotik
    * RouterOS
- * MRV 
+ * MRV
    * MasterOS
- * Ubiquiti 
+ * Ubiquiti
    * AirOS
    * Edgeos
- * Palo Alto 
+ * Palo Alto
    * PANOS
- * Zyxel 
+ * Zyxel
    * ZyNOS
 
 
