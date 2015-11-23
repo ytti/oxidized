@@ -47,9 +47,18 @@ class JunOS < Oxidized::Model
     comment cfg
   end
   cmd('show chassis firmware') { |cfg| comment cfg }
-  cmd('show chassis fpc detail') { |cfg| comment cfg }
+  cmd('show chassis fpc detail') do |cfg|
+    cfg.gsub!(/(Temperature\s+)(\d+)(.+)/, '\1<stripped>\3')
+    cfg.gsub!(/(\s+\d+ days,)(.+seconds)/, '\1 <stripped>\3')
+    comment cfg
+  end
   cmd('show chassis hardware detail') { |cfg| comment cfg }
-  cmd('show chassis routing-engine') { |cfg| comment cfg }
+  cmd('show chassis routing-engine') do |cfg|
+    cfg.gsub!(/(\S+\s+)(\d+)( percent)/, '\1<stripped>\3')
+    cfg.gsub!(/(\s+\d+ days,)(.+seconds)/, '\1 <stripped>\3')
+    cfg.gsub!(/(\s+)(\d+\.\d+)(\s+)(\d+\.\d+)(\s+)(\d+\.\d+)/, '\1<stripped>\3<stripped>\5<stripped>')
+    comment cfg
+  end
   cmd('show chassis alarms') { |cfg| comment cfg }
   cmd('show system license') { |cfg| comment cfg }
   cmd('show system boot-messages') { |cfg| comment cfg }
