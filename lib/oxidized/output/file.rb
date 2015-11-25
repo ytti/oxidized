@@ -39,5 +39,9 @@ class OxidizedFile < Output
     end
   end
 
+  def version node, group
+    'not implemented for file output'
+  end
+
 end
 end
