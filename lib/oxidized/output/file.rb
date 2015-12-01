@@ -40,7 +40,12 @@ class OxidizedFile < Output
   end
 
   def version node, group
-    'not implemented for file output'
+    # not supported
+    []
+  end
+
+  def get_version node, group, oid
+    'not supported'
   end
 
 end
