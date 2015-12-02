@@ -20,7 +20,7 @@ class JunOS < Oxidized::Model
 
   cmd 'show configuration | display omit'
 
-  cmd 'show version' do |cfg|
+  cmd 'show version detail' do |cfg|
     @model = $1 if cfg.match(/^Model: (\S+)/)
     comment cfg
   end
@@ -30,13 +30,39 @@ class JunOS < Oxidized::Model
     case @model
     when 'mx960'
       out << cmd('show chassis fabric reachability')  { |cfg| comment cfg }
+    when 'mx480'
+      out << cmd('show chassis scb')  { |cfg| comment cfg }
+      out << cmd('show chassis sfm detail')  { |cfg| comment cfg }
+      out << cmd('show chassis ssb')  { |cfg| comment cfg }
+      out << cmd('show chassis feb detail')  { |cfg| comment cfg }
+      out << cmd('show chassis feb')  { |cfg| comment cfg }
+      out << cmd('show chassis cfeb')  { |cfg| comment cfg }
     end
     out
   end
 
-  cmd 'show chassis hardware' do |cfg|
+  cmd('show chassis environment') do |cfg|
+    cfg.gsub!(/\d+ degrees.* F/, '<measurement stripped>')
+    cfg.gsub!(/Spinning at \S+/, '<measurement stripped>')
     comment cfg
   end
+  cmd('show chassis firmware') { |cfg| comment cfg }
+  cmd('show chassis fpc detail') do |cfg|
+    cfg.gsub!(/(Temperature\s+)(\d+)(.+)/, '\1<stripped>\3')
+    cfg.gsub!(/(\s+\d+ days,)(.+seconds)/, '\1 <stripped>\3')
+    comment cfg
+  end
+  cmd('show chassis hardware detail') { |cfg| comment cfg }
+  cmd('show chassis routing-engine') do |cfg|
+    cfg.gsub!(/(\S+\s+)(\d+)( percent)/, '\1<stripped>\3')
+    cfg.gsub!(/(\s+\d+ days,)(.+seconds)/, '\1 <stripped>\3')
+    cfg.gsub!(/(\s+)(\d+\.\d+)(\s+)(\d+\.\d+)(\s+)(\d+\.\d+)/, '\1<stripped>\3<stripped>\5<stripped>')
+    comment cfg
+  end
+  cmd('show chassis alarms') { |cfg| comment cfg }
+  cmd('show system license') { |cfg| comment cfg }
+  cmd('show system boot-messages') { |cfg| comment cfg }
+  cmd('show system core-dumps') { |cfg| comment cfg }
 
   cfg :telnet do
     username(/^login:/)
