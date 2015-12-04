@@ -4,7 +4,7 @@ class GithubRepo < Oxidized::Hook
   end
 
   def run_hook(ctx)
-    credentials =  Rugged::Credentials::SshKeyFromAgent.new(username: 'git')
+    credentials = Rugged::Credentials::UserPassword.new(username: cfg.username, password: cfg.password)
     repo = Rugged::Repository.new(Oxidized.config.output.git.repo)
     log "Pushing local repository(#{repo.path})..."
     remote = repo.remotes['origin'] || repo.remotes.create('origin', cfg.remote_repo)
