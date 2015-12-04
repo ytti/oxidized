@@ -9,6 +9,6 @@ class GithubRepo < Oxidized::Hook
     log "Pushing local repository(#{repo.path})..."
     remote = repo.remotes['origin'] || repo.remotes.create('origin', cfg.remote_repo)
     log "to remote: #{remote.url}"
-    remote.push(['refs/heads/master'], credentials: credentials)
+    remote.push(['+refs/heads/master'], credentials: credentials)
   end
 end
