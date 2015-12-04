@@ -6,6 +6,10 @@ describe Oxidized::Node do
   before(:each) do
     asetus = Asetus.new
     asetus.cfg.output.git.repo = 'foo.git'
+    asetus.cfg.hooks.github_repo_hook.remote_repo = 'https://github.com/blah/blah.git'
+    asetus.cfg.hooks.github_repo_hook.username = 'username'
+    asetus.cfg.hooks.github_repo_hook.password = 'password'
+    GithubRepo.any_instance.stubs(:cfg).returns(asetus.cfg.hooks.github_repo_hook)
     Oxidized.stubs(:asetus).returns(asetus)
     repo = mock()
     remote = mock()
