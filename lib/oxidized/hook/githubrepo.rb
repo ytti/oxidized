@@ -9,6 +9,24 @@ class GithubRepo < Oxidized::Hook
     log "Pushing local repository(#{repo.path})..."
     remote = repo.remotes['origin'] || repo.remotes.create('origin', cfg.remote_repo)
     log "to remote: #{remote.url}"
-    remote.push(['+refs/heads/master'], credentials: credentials)
+
+    fetch_and_merge_remote(repo, credentials)
+
+    remote.push([repo.head.name], credentials: credentials)
+  end
+
+  def fetch_and_merge_remote(repo, credentials)
+    their_branch = repo.branches["origin/master"] or return
+
+    repo.fetch('origin', [repo.head.name], credentials: credentials)
+
+    merge_index = repo.merge_commits(repo.head.target_id, their_branch.target_id)
+
+    Rugged::Commit.create(repo, {
+      parents: [repo.head.target, their_branch.target],
+      tree: merge_index.write_tree(repo),
+      message: "Merge remote-tracking branch '#{their_branch.name}'",
+      update_ref: "HEAD"
+    })
   end
 end
