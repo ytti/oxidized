@@ -54,7 +54,8 @@ class JunOS < Oxidized::Model
   end
   cmd('show chassis hardware detail') { |cfg| comment cfg }
   cmd('show chassis routing-engine') do |cfg|
-    cfg.gsub!(/(\S+\s+)(\d+)( percent)/, '\1<stripped>\3')
+    cfg.gsub!(/(\S+\s+)(\d{2})( percent)/, '\1<stripped>\3')
+    cfg.gsub!(/(\S+\s+)(\s\d{1})( percent)/, '\1<stripped>\3')
     cfg.gsub!(/(\s+\d+ days,)(.+seconds)/, '\1 <stripped>\3')
     cfg.gsub!(/(\s+)(\d+\.\d+)(\s+)(\d+\.\d+)(\s+)(\d+\.\d+)/, '\1<stripped>\3<stripped>\5<stripped>')
     comment cfg

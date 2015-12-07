@@ -18,10 +18,11 @@ module Oxidized
     private
 
     def initialize
-      Log.info "Oxidized starting, running as pid #{$$}"
+      Log.info "Oxidized starting, running as pid #{$$} by #{ENV['USER']}"
       _args, @opts = parse_opts
       Oxidized.config.debug = true if @opts[:debug]
       @pidfile = File.expand_path("pid")
+      Log.debug "pidfile: #{@pidfile}"
     end
 
     def crash error
