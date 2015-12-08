@@ -16,11 +16,13 @@ class GithubRepo < Oxidized::Hook
   end
 
   def fetch_and_merge_remote(repo, credentials)
-    their_branch = repo.branches["origin/master"] or return
-
     repo.fetch('origin', [repo.head.name], credentials: credentials)
 
+    their_branch = repo.branches["origin/master"] or return
+
     merge_index = repo.merge_commits(repo.head.target_id, their_branch.target_id)
+
+    log("Conflicts detected", :warn) if merge_index.conflicts?
 
     Rugged::Commit.create(repo, {
       parents: [repo.head.target, their_branch.target],
