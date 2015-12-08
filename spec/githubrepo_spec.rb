@@ -18,8 +18,9 @@ describe Oxidized::Node do
     repo.expects(:remotes).returns({'origin' => remote})
     repo.expects(:path).returns('foo.git')
     repo_head = mock()
-    repo_head.expects(:name).returns('origin/master')
-    repo.expects(:head).returns(repo_head)
+    repo_head.expects(:name).twice.returns('origin/master')
+    repo.expects(:head).twice.returns(repo_head)
+    repo.expects(:fetch).returns(true)
     repo.expects(:branches).returns({})
     Rugged::Repository.expects(:new).with('foo.git').returns(repo)
   end
