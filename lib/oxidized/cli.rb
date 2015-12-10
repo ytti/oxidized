@@ -1,13 +1,14 @@
 module Oxidized
   class CLI
-    require 'oxidized'
     require 'slop'
+    require 'oxidized'
 
     def run
       check_pid
       Process.daemon if @opts[:daemonize]
       write_pid
       begin
+        Oxidized.logger.info "Oxidized starting, running as pid #{$$}"
         Oxidized.new
       rescue => error
         crash error
@@ -18,15 +19,16 @@ module Oxidized
     private
 
     def initialize
-      Log.info "Oxidized starting, running as pid #{$$} by #{ENV['USER']}"
       _args, @opts = parse_opts
-      Oxidized.config.debug = true if @opts[:debug]
+
+      Config.load(@opts)
+      Oxidized.setup_logger
+
       @pidfile = File.expand_path("pid")
-      Log.debug "pidfile: #{@pidfile}"
     end
 
     def crash error
-      Log.fatal "Oxidized crashed, crashfile written in #{Config::Crash}"
+      Oxidized.logger.fatal "Oxidized crashed, crashfile written in #{Config::Crash}"
       open Config::Crash, 'w' do |file|
         file.puts '-' * 50
         file.puts Time.now.utc

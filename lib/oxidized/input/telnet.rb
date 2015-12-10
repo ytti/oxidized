@@ -37,7 +37,7 @@ module Oxidized
     end
 
     def cmd cmd, expect=@node.prompt
-      Log.debug "Telnet: #{cmd} @#{@node.name}"
+      Oxidized.logger.debug "Telnet: #{cmd} @#{@node.name}"
       args = { 'String' => cmd }
       args.merge!({ 'Match' => expect, 'Timeout' => @timeout }) if expect
       @telnet.cmd args

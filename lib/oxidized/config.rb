@@ -12,7 +12,7 @@ module Oxidized
     HookDir   = File.join Directory, %w(lib oxidized hook)
     Sleep     = 1
 
-    def self.load
+    def self.load(cmd_opts={})
       asetus = Asetus.new(name: 'oxidized', load: false, key_to_s: true)
       Oxidized.asetus = asetus
 
@@ -20,7 +20,7 @@ module Oxidized
       asetus.default.password      = 'password'
       asetus.default.model         = 'junos'
       asetus.default.interval      = 3600
-      asetus.default.log           = File.join Config::Root, 'log'
+      asetus.default.use_syslog    = false
       asetus.default.debug         = false
       asetus.default.threads       = 30
       asetus.default.timeout       = 20
@@ -48,9 +48,10 @@ module Oxidized
         raise InvalidConfig, "Error loading config: #{error.message}"
       end
 
-      Log.level = Logger::INFO unless asetus.cfg.debug
       raise NoConfig, 'edit ~/.config/oxidized/config' if asetus.create
-      Log.file = asetus.cfg.log if asetus.cfg.log
+
+      # override if comand line flag given
+      asetus.cfg.debug = cmd_opts[:debug] if cmd_opts[:debug]
 
       asetus
     end

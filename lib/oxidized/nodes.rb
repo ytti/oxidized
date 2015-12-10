@@ -1,8 +1,8 @@
 module Oxidized
- require 'ipaddr'
- require 'oxidized/node'
- class Oxidized::NotSupported < OxidizedError; end
- class Oxidized::NodeNotFound < OxidizedError; end
+  require 'ipaddr'
+  require 'oxidized/node'
+  class Oxidized::NotSupported < OxidizedError; end
+  class Oxidized::NodeNotFound < OxidizedError; end
   class Nodes < Array
     attr_accessor :source
     alias :put :unshift
@@ -18,13 +18,13 @@ module Oxidized
             _node = Node.new node
             new.push _node
           rescue ModelNotFound => err
-            Log.error "node %s raised %s with message '%s'" % [node, err.class, err.message]
+            Oxidized.logger.error "node %s raised %s with message '%s'" % [node, err.class, err.message]
           rescue Resolv::ResolvError => err
-            Log.error "node %s is not resolvable, raised %s with message '%s'" % [node, err.class, err.message]
+            Oxidized.logger.error "node %s is not resolvable, raised %s with message '%s'" % [node, err.class, err.message]
           end
         end
         size == 0 ? replace(new) : update_nodes(new)
-	Log.info "Loaded #{size} nodes"
+        Oxidized.logger.info "Loaded #{size} nodes"
       end
     end
 
@@ -148,9 +148,9 @@ module Oxidized
         end
       end
     end
-    
+
     public
-    
+
     def version node, group
       with_lock do
         i = find_node_index node
@@ -159,7 +159,7 @@ module Oxidized
         output.version node, group
       end
     end
-    
+
     def get_version node, group, oid
       with_lock do
         i = find_node_index node
@@ -168,7 +168,7 @@ module Oxidized
         output.get_version node, group, oid
       end
     end
-    
+
     def get_diff node, group, oid1, oid2
       with_lock do
         i = find_node_index node
