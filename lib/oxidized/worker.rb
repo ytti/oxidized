@@ -14,7 +14,7 @@ module Oxidized
       ended.each      { |job| process job }
       @jobs.work
       while @jobs.size < @jobs.want
-        Log.debug "Jobs #{@jobs.size}, Want: #{@jobs.want}"
+        Oxidized.logger.debug "Jobs #{@jobs.size}, Want: #{@jobs.want}"
         # ask for next node in queue non destructive way
         nextnode = @nodes.first
         unless nextnode.last.nil?
@@ -41,7 +41,7 @@ module Oxidized
         msg += " with message '#{node.msg}'" if node.msg
         if node.output.new.store node.name, job.config,
                               :msg => msg, :user => node.user, :group => node.group
-          Log.info "Configuration updated for #{node.group}/#{node.name}"
+          Oxidized.logger.info "Configuration updated for #{node.group}/#{node.name}"
           Oxidized.Hooks.handle :post_store, :node => node,
                                              :job => job
         end
@@ -58,10 +58,10 @@ module Oxidized
           Oxidized.Hooks.handle :node_fail, :node => node,
                                             :job => job
         end
-        Log.warn msg
+        Oxidized.logger.warn msg
       end
     rescue NodeNotFound
-      Log.warn "#{node.name} not found, removed while collecting?"
+      Oxidized.logger.warn "#{node.name} not found, removed while collecting?"
     end
 
   end

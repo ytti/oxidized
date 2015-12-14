@@ -28,7 +28,7 @@ module Oxidized
     end
 
     def cmd file
-      Log.debug "FTP: #{file} @ #{@node.name}"
+      Oxidized.logger.debug "FTP: #{file} @ #{@node.name}"
       @ftp.getbinaryfile file, nil
     end
 

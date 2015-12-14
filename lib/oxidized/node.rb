@@ -62,7 +62,7 @@ module Oxidized
           level = rescue_fail[resc]
           resc  = " (rescued #{resc})"
         end
-        Log.send(level, '%s raised %s%s with msg "%s"' % [self.ip, err.class, resc, err.message])
+        Oxidized.logger.send(level, '%s raised %s%s with msg "%s"' % [self.ip, err.class, resc, err.message])
         return false
       rescue => err
         file = Oxidized::Config::Crash + '.' + self.ip.to_s
@@ -72,7 +72,7 @@ module Oxidized
           fh.puts '-' * 50
           fh.puts err.backtrace
         end
-        Log.error '%s raised %s with msg "%s", %s saved' % [self.ip, err.class, err.message, file]
+        Oxidized.logger.error '%s raised %s with msg "%s", %s saved' % [self.ip, err.class, err.message, file]
         return false
       end
     end

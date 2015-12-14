@@ -6,6 +6,7 @@ describe Oxidized::Node do
   before(:each) do
     Oxidized.asetus = Asetus.new
     Oxidized.config.output.git.repo = 'foo.git'
+    Oxidized.setup_logger
 
     @credentials = mock()
 

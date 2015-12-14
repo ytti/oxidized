@@ -43,7 +43,7 @@ module Oxidized
     end
 
     def cmd cmd, expect=node.prompt
-      Log.debug "SSH: #{cmd} @ #{node.name}"
+      Oxidized.logger.debug "SSH: #{cmd} @ #{node.name}"
       if @exec
         @ssh.exec! cmd
       else
