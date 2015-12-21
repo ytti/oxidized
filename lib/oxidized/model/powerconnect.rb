@@ -14,6 +14,9 @@ class PowerConnect < Oxidized::Model
   end
 
   cmd 'show version' do |cfg|
+    if (@stackable.nil?)
+      @stackable = true if cfg.match /(U|u)nit\s/
+    end
     cfg = cfg.split("\n").select { |line| not line[/Up\sTime/] }
     comment cfg.join("\n") + "\n"
   end
@@ -47,15 +50,17 @@ class PowerConnect < Oxidized::Model
 
   def clean cfg
     out = []
-    skip_block = false
+    skip_blocks = 0
     cfg.each_line do |line|
-      if line.match /Up\sTime|Temperature|Power Supplies/i
-        # For 34xx, 35xx, 54xx, 55xx, 62xx and 8024F we should skip this block (terminated by a blank line)
-        skip_block = true if @model =~ /^(34|35)(24|48)$|^(54|55)(24|48)$|^(62)(24|48)$|^8024$/
+      # If this is a stackable switch we should skip this block of information
+      if (line.match /Up\sTime|Temperature|Power Suppl(ies|y)|Fans/i and @stackable == true)
+        skip_blocks = 1
+        # Some switches have another empty line. This is identified by this line having a colon
+        skip_blocks = 2 if line.match /:/
       end
       # If we have lines to skip do this until we reach and empty line
-      if skip_block
-        skip_block = false if /\S/ !~ line
+      if skip_blocks > 0
+        skip_blocks -= 1 if /\S/ !~ line
         next
       end
       out << line.strip
