@@ -471,6 +471,8 @@ OX_NODE_MSG
 OX_NODE_GROUP
 OX_JOB_STATUS
 OX_JOB_TIME
+OX_REPO_COMMITREF
+OX_REPO_NAME
 ```
 
 Exec hook recognizes following configuration keys:
