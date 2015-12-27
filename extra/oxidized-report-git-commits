@@ -27,6 +27,11 @@
 #    async: true
 #    timeout: 120
 # 
+#
+# The script takes a single argument, namely a git working directory name,
+# e.g.  "~/gitdir/".  This is only used as a staging directory and should
+# not be set to be the same as the git repo directory.
+#
 
 PATH=${PATH}:/usr/local/bin:/usr/local/sbin
 export PATH
