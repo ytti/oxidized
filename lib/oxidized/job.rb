@@ -4,11 +4,12 @@ module Oxidized
     def initialize node
       @node         = node
       @start        = Time.now.utc
+      
       super do |node|
         @status, @config = node.run
         @end             = Time.now.utc
         @time            = @end - @start
-      end
+      end  
     end
   end
 end

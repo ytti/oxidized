@@ -29,6 +29,7 @@ module Oxidized
   CFGS.default.rest          = '127.0.0.1:8888' # or false to disable
   CFGS.default.vars          = {}             # could be 'enable'=>'enablePW'
   CFGS.default.groups        = {}             # group level configuration
+  CFGS.default.database      = 'oxidized_database.db'
 
   CFGS.default.input.default    = 'ssh, telnet'
   CFGS.default.input.debug      = false # or String for session log file

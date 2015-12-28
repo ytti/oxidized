@@ -1,6 +1,7 @@
 module Oxidized
  require 'ipaddr'
  require 'oxidized/node'
+ require 'oxidized/store'
  class Oxidized::NotSupported < OxidizedError; end
  class Oxidized::NodeNotFound < OxidizedError; end
   class Nodes < Array
@@ -23,9 +24,35 @@ module Oxidized
             Log.error "node %s is not resolvable, raised %s with message '%s'" % [node, err.class, err.message]
           end
         end
+        new = save(new)
         size == 0 ? replace(new) : update_nodes(new)
-	Log.info "Loaded #{size} nodes"
+        Log.info "Loaded #{size} nodes"
       end
+    end
+    
+    def save nodes
+      new = []
+      old_nodes = []
+      store = Store.new
+      nds = store.get_nodes_stats
+      nds.each do |node|
+        old_nodes.push node["node"]
+      end
+      
+      #new node first
+      nodes.each do |node|
+        new.push node unless old_nodes.include? node.name
+      end
+      #then old in good order
+      old_nodes.each do |old_node|
+        nodes.each do |node|
+          if old_node == node.name
+            new.push node
+            nodes.delete node
+          end
+        end     
+      end   
+      new
     end
 
     def node_want? node_want, node
@@ -73,7 +100,7 @@ module Oxidized
           n.msg  = opt['msg']
           n.from = opt['from']
           # set last job to nil so that the node is picked for immediate update
-          n.last = nil
+          n.for_update
           put n
         end
       end
