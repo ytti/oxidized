@@ -2,6 +2,8 @@ module Oxidized
 class OxidizedFile < Output
   require 'fileutils'
 
+  attr_reader :commitref
+
   def initialize
     @cfg = CFG.output.file
   end
@@ -22,6 +24,7 @@ class OxidizedFile < Output
     FileUtils.mkdir_p file
     file = File.join file, node
     open(file, 'w') { |fh| fh.write outputs.to_cfg }
+    @commitref = file
   end
 
   def fetch node, group

@@ -5,7 +5,7 @@ module Oxidized
   class MethodNotFound < OxidizedError; end
   class ModelNotFound  < OxidizedError; end
   class Node
-    attr_reader :name, :ip, :model, :input, :output, :group, :auth, :prompt, :vars, :last
+    attr_reader :name, :ip, :model, :input, :output, :group, :auth, :prompt, :vars, :last, :repo
     attr_accessor :running, :user, :msg, :from, :stats, :retry
     alias :running? :running
     def initialize opt
@@ -24,6 +24,7 @@ module Oxidized
       @vars           = opt[:vars]
       @stats          = Stats.new
       @retry          = 0
+      @repo           = CFG.output.git.repo
 
       # model instance needs to access node instance
       @model.node = self
