@@ -1,0 +1,18 @@
+start on started networking
+
+respawn
+
+setuid oxidized
+setgid oxidized
+
+chdir /home/oxidized
+
+env HOME=/home/oxidized
+
+pre-start script
+	test -x /usr/local/rvm/wrappers/ruby-2.1.2/oxidized || { stop; exit 0; }
+end script
+
+script
+	exec /usr/local/rvm/wrappers/ruby-2.1.2/oxidized
+end script
