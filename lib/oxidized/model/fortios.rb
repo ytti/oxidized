@@ -2,7 +2,7 @@ class FortiOS < Oxidized::Model
 
   comment  '# '
 
-  prompt /^([-\w\.]+(\s[\(\w\-\.\)]+)?\s?[#>]\s?)$/
+  prompt /^([-\w\.]+(\s[\(\w\-\.\)]+)?\~?\s?[#>]\s?)$/
 
   cmd :all do |cfg, cmdstring|
     new_cfg = comment "COMMAND: #{cmdstring}\n"

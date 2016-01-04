@@ -42,39 +42,66 @@ Oxidized is a network device configuration backup tool. It's a RANCID replacemen
 
 # Supported OS types
 
- * A10 Networks ACOS
- * Alcatel-Lucent ISAM 7302/7330
- * Alcatel-Lucent Operating System AOS
- * Alcatel-Lucent Operating System AOS7
- * Alcatel-Lucent Operating System Wireless
- * Alcatel-Lucent TiMOS
- * Arista EOS
- * Brocade Fabric OS
- * Brocade Ironware
- * Brocade NOS (Network Operating System)
- * Brocade Vyatta
- * Cisco AireOS
- * Cisco ASA
- * Cisco IOS
- * Cisco IOS-XR
- * Cisco NXOS
- * Cisco SMB (Nikola series)
- * Cumulus Linux
- * DELL PowerConnect
- * Extreme Networks XOS
- * Force10 FTOS
- * Force10 NDOS
- * FortiGate FortiOS
- * HP Comware (HP A-series, H3C, 3Com)
- * HP ProCurve
- * Huawei VRP
- * Juniper JunOS
- * Juniper ScreenOS (Netscreen)
- * Mikrotik RouterOS
- * MRV Master-OS
- * Ubiquiti AirOS
- * Palo Alto PAN-OS
- * Zyxel ZyNOS
+ * A10 Networks
+   * ACOS
+ * Alcatel-Lucent
+   * ISAM
+   * AOS
+   * AOS7
+   * Wireless
+   * TiMOS
+ * Arista
+   * EOS
+ * Arris
+   * C4CMTS
+ * Aruba
+   * AOSW
+ * Brocade
+   * FabricOS
+   * Ironware
+   * NOS (Network Operating System)
+   * Vyatta
+ * Ciena
+   * SOAS
+ * Cisco
+   * AireOS
+   * ASA
+   * IOS
+   * IOSXR
+   * NXOS
+   * SMB (Nikola series)
+ * Cumulus
+   * Linux
+ * DELL
+   * PowerConnect
+   * AOSW
+ * Extreme Networks
+   * XOS
+ * Force10
+   * FTOS
+ * Force10
+   * DNOS
+ * FortiGate
+   * FortiOS
+ * HP
+   * Comware (HP A-series, H3C, 3Com)
+   * Procurve
+ * Huawei
+   * VRP
+ * Juniper
+   * JunOS
+   * ScreenOS (Netscreen)
+ * Mikrotik
+   * RouterOS
+ * MRV
+   * MasterOS
+ * Ubiquiti
+   * AirOS
+   * Edgeos
+ * Palo Alto
+   * PANOS
+ * Zyxel
+   * ZyNOS
 
 
 # Installation
@@ -444,6 +471,8 @@ OX_NODE_MSG
 OX_NODE_GROUP
 OX_JOB_STATUS
 OX_JOB_TIME
+OX_REPO_COMMITREF
+OX_REPO_NAME
 ```
 
 Exec hook recognizes following configuration keys:
