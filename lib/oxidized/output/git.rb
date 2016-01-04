@@ -7,6 +7,8 @@ class Git < Output
     raise OxidizedError, 'rugged not found: sudo gem install rugged'
   end
 
+  attr_reader :commitref
+
   def initialize
     @cfg = Oxidized.config.output.git
   end
@@ -27,6 +29,7 @@ class Git < Output
     @user  = (opt[:user]  or @cfg.user)
     @email = (opt[:email] or @cfg.email)
     @opt   = opt
+    @commitref = nil
     repo   = @cfg.repo
 
     outputs.types.each do |type|
@@ -63,7 +66,7 @@ class Git < Output
     end
   end
 
-  #give a hash of all oid revision for the givin node, and the date of the commit
+  #give a hash of all oid revision for the given node, and the date of the commit
     def version node, group
       begin
         repo = @cfg.repo
@@ -176,7 +179,7 @@ class Git < Output
     if tree_old != tree_new
       repo.config['user.name']  = user
       repo.config['user.email'] = email
-      Rugged::Commit.create(repo,
+      @commitref = Rugged::Commit.create(repo,
         :tree       => index.write_tree(repo),
         :message    => msg,
         :parents    => repo.empty? ? [] : [repo.head.target].compact,

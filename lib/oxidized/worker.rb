@@ -39,11 +39,13 @@ module Oxidized
         msg = "update #{node.name}"
         msg += " from #{node.from}" if node.from
         msg += " with message '#{node.msg}'" if node.msg
-        if node.output.new.store node.name, job.config,
+        output = node.output.new
+        if output.store node.name, job.config,
                               :msg => msg, :user => node.user, :group => node.group
           Oxidized.logger.info "Configuration updated for #{node.group}/#{node.name}"
           Oxidized.Hooks.handle :post_store, :node => node,
-                                             :job => job
+                                             :job => job,
+                                             :commitref => output.commitref
         end
         node.reset
       else

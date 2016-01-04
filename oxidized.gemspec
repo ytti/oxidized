@@ -21,7 +21,7 @@ Gem::Specification.new do |s|
   s.required_ruby_version =           '>= 1.9.3'
   s.add_runtime_dependency 'asetus',  '~> 0.1'
   s.add_runtime_dependency 'slop',    '~> 3.5'
-  s.add_runtime_dependency 'net-ssh', '~> 2.8'
+  s.add_runtime_dependency 'net-ssh', '~> 3.0', '>= 3.0.2'
   s.add_runtime_dependency 'rugged',  '~> 0.21', '>= 0.21.4'
   s.add_development_dependency 'pry', '~> 0'
   s.add_development_dependency 'bundler', '~> 1.10'
