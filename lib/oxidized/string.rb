@@ -16,7 +16,7 @@ module Oxidized
     # sets @cmd and @name unless @name is already set
     def set_cmd command
       @cmd  = command
-      @name = @cmd.strip.gsub(/\s+/, '_') if @name == nil
+      @name ||= @cmd.strip.gsub(/\s+/, '_')
     end
 
     def initialize str=''

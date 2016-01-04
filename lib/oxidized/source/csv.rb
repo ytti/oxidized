@@ -1,17 +1,17 @@
 module Oxidized
 class CSV < Source
   def initialize
-    @cfg = CFG.source.csv
+    @cfg = Oxidized.config.source.csv
     super
   end
 
   def setup
     if @cfg.empty?
-      CFGS.user.source.csv.file      = File.join(Config::Root, 'router.db')
-      CFGS.user.source.csv.delimiter = /:/
-      CFGS.user.source.csv.map.name  = 0
-      CFGS.user.source.csv.map.model = 1
-      CFGS.save :user
+      Oxidized.asetus.user.source.csv.file      = File.join(Config::Root, 'router.db')
+      Oxidized.asetus.user.source.csv.delimiter = /:/
+      Oxidized.asetus.user.source.csv.map.name  = 0
+      Oxidized.asetus.user.source.csv.map.model = 1
+      Oxidized.asetus.save :user
       raise NoConfig, 'no source csv config, edit ~/.config/oxidized/config'
     end
   end
@@ -19,7 +19,7 @@ class CSV < Source
   def load
     nodes = []
     open(File.expand_path @cfg.file).each_line do |line|
-      next if line.match /^\s*#/
+      next if line.match(/^\s*#/)
       data  = line.chomp.split @cfg.delimiter
       next if data.empty?
       # map node parameters

@@ -10,15 +10,15 @@ class Git < Output
   attr_reader :commitref
 
   def initialize
-    @cfg = CFG.output.git
+    @cfg = Oxidized.config.output.git
   end
 
   def setup
     if @cfg.empty?
-      CFGS.user.output.git.user  = 'Oxidized'
-      CFGS.user.output.git.email = 'o@example.com'
-      CFGS.user.output.git.repo  =  File.join(Config::Root, 'oxidized.git')
-      CFGS.save :user
+      Oxidized.asetus.user.output.git.user  = 'Oxidized'
+      Oxidized.asetus.user.output.git.email = 'o@example.com'
+      Oxidized.asetus.user.output.git.repo  =  File.join(Config::Root, 'oxidized.git')
+      Oxidized.asetus.save :user
       raise NoConfig, 'no output git config, edit ~/.config/oxidized/config'
     end
     @cfg.repo = File.expand_path @cfg.repo

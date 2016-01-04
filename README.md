@@ -1,4 +1,4 @@
-# Oxidized
+# Oxidized [![Build Status](https://travis-ci.org/Shopify/oxidized.svg)](https://travis-ci.org/Shopify/oxidized)
 
 [![Gem Version](https://badge.fury.io/rb/oxidized.svg)](http://badge.fury.io/rb/oxidized)
 
@@ -140,7 +140,7 @@ Oxidized supports ```CSV```, ```SQLite``` and ```HTTP``` as source backends. The
 
 Possible outputs are either ```file``` or ```git```. The file backend takes a destination directory as argument and will keep a file per device, with most recent running version of a device. The GIT backend (recommended) will initialize an empty GIT repository in the specified path and create a new commit on every configuration change. Take a look at the [Cookbook](#cookbook) for more details.
 
-Maps define how to map a model's fields to model [model fields](https://github.com/ytti/oxidized/tree/master/lib/oxidized/model). Most of the settings should be self explanatory, log is ignored if Syslog::Logger exists (>=2.0) and syslog is used instead.
+Maps define how to map a model's fields to model [model fields](https://github.com/ytti/oxidized/tree/master/lib/oxidized/model). Most of the settings should be self explanatory, log is ignored if `use_syslog`(requires Ruby >= 2.0) is set to `true`.
 
 First create the directory where the CSV ```output``` is going to store device configs and start Oxidized once.
 ```

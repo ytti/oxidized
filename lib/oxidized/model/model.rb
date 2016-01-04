@@ -11,7 +11,8 @@ module Oxidized
         klass.instance_variable_set '@cfg',   Hash.new { |h,k| h[k] = [] }
         klass.instance_variable_set '@procs', Hash.new { |h,k| h[k] = [] }
         klass.instance_variable_set '@expect', []
-        klass.const_set :CFG, CFG
+        klass.instance_variable_set '@comment', nil
+        klass.instance_variable_set '@prompt', nil
       end
       def comment _comment='# '
         return @comment if @comment
@@ -78,7 +79,7 @@ module Oxidized
     attr_accessor :input, :node
 
     def cmd string, &block
-      out = @input.cmd string
+      out = "====================== #{string} ======================\n" + @input.cmd(string)
       return false unless out
       self.class.cmds[:all].each do |all_block|
         out = instance_exec Oxidized::String.new(out), string, &all_block

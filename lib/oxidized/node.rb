@@ -9,7 +9,7 @@ module Oxidized
     attr_accessor :running, :user, :msg, :from, :stats, :retry
     alias :running? :running
     def initialize opt
-      if CFG.debug == true or opt[:debug] == true
+      if Oxidized.config.debug == true or opt[:debug] == true
         puts 'resolving DNS for %s...' % opt[:name]
       end
       @name           = opt[:name]
@@ -24,7 +24,7 @@ module Oxidized
       @vars           = opt[:vars]
       @stats          = Stats.new
       @retry          = 0
-      @repo           = CFG.output.git.repo
+      @repo           = Oxidized.config.output.git.repo
 
       # model instance needs to access node instance
       @model.node = self
@@ -58,9 +58,7 @@ module Oxidized
         end
       end
       begin
-        if input.connect self
-          input.get
-        end
+        input.connect(self) and input.get
       rescue *rescue_fail.keys => err
         resc  = ''
         if not level = rescue_fail[err.class]
@@ -68,7 +66,7 @@ module Oxidized
           level = rescue_fail[resc]
           resc  = " (rescued #{resc})"
         end
-        Log.send(level, '%s raised %s%s with msg "%s"' % [self.ip, err.class, resc, err.message])
+        Oxidized.logger.send(level, '%s raised %s%s with msg "%s"' % [self.ip, err.class, resc, err.message])
         return false
       rescue => err
         file = Oxidized::Config::Crash + '.' + self.ip.to_s
@@ -78,7 +76,7 @@ module Oxidized
           fh.puts '-' * 50
           fh.puts err.backtrace
         end
-        Log.error '%s raised %s with msg "%s", %s saved' % [self.ip, err.class, err.message, file]
+        Oxidized.logger.error '%s raised %s with msg "%s", %s saved' % [self.ip, err.class, err.message, file]
         return false
       end
     end
@@ -126,19 +124,17 @@ module Oxidized
     private
 
     def resolve_prompt opt
-      prompt =   opt[:prompt]
-      prompt ||= @model.prompt
-      prompt ||= CFG.prompt
+      opt[:prompt] || @model.prompt || Oxidized.config.prompt
     end
 
     def resolve_auth opt
       # Resolve configured username/password, give priority to group level configuration
       # TODO: refactor to use revised behaviour of Asetus
       cfg_username, cfg_password =
-        if CFG.groups.has_key?(@group) and ['username', 'password'].all? {|e| CFG.groups[@group].has_key?(e)}
-          [CFG.groups[@group].username, CFG.groups[@group].password]
-        elsif ['username', 'password'].all? {|e| CFG.has_key?(e)}
-          [CFG.username, CFG.password]
+        if Oxidized.config.groups.has_key?(@group) and ['username', 'password'].all? {|e| Oxidized.config.groups[@group].has_key?(e)}
+          [Oxidized.config.groups[@group].username, Oxidized.config.groups[@group].password]
+        elsif ['username', 'password'].all? {|e| Oxidized.config.has_key?(e)}
+          [Oxidized.config.username, Oxidized.config.password]
         else
           [nil, nil]
         end
@@ -149,7 +145,7 @@ module Oxidized
     end
 
     def resolve_input opt
-      inputs = (opt[:input]  or CFG.input.default)
+      inputs = (opt[:input]  or Oxidized.config.input.default)
       inputs.split(/\s*,\s*/).map do |input|
         if not Oxidized.mgr.input[input]
           Oxidized.mgr.add_input input or raise MethodNotFound, "#{input} not found for node #{ip}"
@@ -159,7 +155,7 @@ module Oxidized
     end
 
     def resolve_output opt
-      output = (opt[:output] or CFG.output.default)
+      output = (opt[:output] or Oxidized.config.output.default)
       if not Oxidized.mgr.output[output]
         Oxidized.mgr.add_output output or raise MethodNotFound, "#{output} not found for node #{ip}"
       end
@@ -167,7 +163,7 @@ module Oxidized
     end
 
     def resolve_model opt
-      model = (opt[:model] or CFG.model)
+      model = (opt[:model] or Oxidized.config.model)
       if not Oxidized.mgr.model[model]
         Oxidized.mgr.add_model model or raise ModelNotFound, "#{model} not found for node #{ip}"
       end

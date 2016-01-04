@@ -19,11 +19,11 @@ module Oxidized
       @node       = node
       @output     = ''
       @node.model.cfg['ssh'].each { |cb| instance_exec(&cb) }
-      secure = CFG.input.ssh.secure
-      @log = File.open(Oxidized::Config::Crash + "-#{@node.ip}-ssh", 'w') if CFG.input.debug?
+      secure = Oxidized.config.input.ssh.secure
+      @log = File.open(Oxidized::Config::Crash + "-#{@node.ip}-ssh", 'w') if Oxidized.config.input.debug?
       port = vars(:ssh_port) || 22
       @ssh = Net::SSH.start @node.ip, @node.auth[:username], :port => port.to_i,
-                            :password => @node.auth[:password], :timeout => CFG.timeout,
+                            :password => @node.auth[:password], :timeout => Oxidized.config.timeout,
                             :paranoid => secure,
                             :auth_methods => %w(none publickey password keyboard-interactive),
                             :number_of_password_prompts => 0
@@ -42,8 +42,8 @@ module Oxidized
       @ssh and not @ssh.closed?
     end
 
-    def cmd cmd, expect=@node.prompt
-      Log.debug "SSH: #{cmd} @ #{@node.name}"
+    def cmd cmd, expect=node.prompt
+      Oxidized.logger.debug "SSH: #{cmd} @ #{node.name}"
       if @exec
         @ssh.exec! cmd
       else
@@ -64,17 +64,17 @@ module Oxidized
     def disconnect
       disconnect_cli
       # if disconnect does not disconnect us, give up after timeout
-      Timeout::timeout(CFG.timeout) { @ssh.loop }
+      Timeout::timeout(Oxidized.config.timeout) { @ssh.loop }
     rescue Errno::ECONNRESET, Net::SSH::Disconnect, IOError
     ensure
-      @log.close if CFG.input.debug?
+      @log.close if Oxidized.config.input.debug?
       (@ssh.close rescue true) unless @ssh.closed?
     end
 
     def shell_open ssh
       @ses = ssh.open_channel do |ch|
         ch.on_data do |_ch, data|
-          @log.print data if CFG.input.debug?
+          @log.print data if Oxidized.config.input.debug?
           @output << data
           @output = @node.model.expects @output
         end
@@ -109,7 +109,7 @@ module Oxidized
     end
 
     def expect regexp
-      Timeout::timeout(CFG.timeout) do
+      Timeout::timeout(Oxidized.config.timeout) do
         @ssh.loop(0.1) do
           sleep 0.1
           not @output.match regexp

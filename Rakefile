@@ -1,10 +1,5 @@
-begin
-  require 'rake/testtask'
-  require 'bundler'
-  # Bundler.setup
-rescue LoadError
-  warn 'bundler missing'
-end
+require 'bundler/gem_tasks'
+require 'rake/testtask'
 
 gemspec = eval(File.read(Dir['*.gemspec'].first))
 file    = [gemspec.name, gemspec.version].join('-') + '.gem'
@@ -17,8 +12,9 @@ end
 desc 'Run minitest'
 task :test do
   Rake::TestTask.new do |t|
-    t.libs.push "lib"
-    t.test_files = FileList['spec/*_spec.rb']
+    t.libs << 'spec'
+    t.test_files = FileList['spec/**/*_spec.rb']
+    t.warning = true
     t.verbose = true
   end
 end
@@ -49,3 +45,5 @@ desc 'Push to rubygems'
 task :push => :tag do
   system "gem push gems/#{file}"
 end
+
+task default: :test
