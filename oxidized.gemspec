@@ -5,11 +5,7 @@ require 'oxidized/version'
 
 Gem::Specification.new do |s|
   s.name              = 'oxidized'
-<<<<<<< HEAD
   s.version           = Oxidized::VERSION
-=======
-  s.version           = '0.9.0'
->>>>>>> upstream/master
   s.licenses          = %w( Apache-2.0 )
   s.platform          = Gem::Platform::RUBY
   s.authors           = [ 'Saku Ytti', 'Samer Abdel-Hafez', 'Anton Aksola' ]
