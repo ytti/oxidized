@@ -4,7 +4,7 @@ module Oxidized
   class Worker
     def initialize nodes
       @nodes   = nodes
-      @jobs    = Jobs.new CFG.threads, CFG.interval, @nodes
+      @jobs    = Jobs.new(Oxidized.config.threads, Oxidized.config.interval, @nodes)
       Thread.abort_on_exception = true
     end
 
@@ -14,11 +14,11 @@ module Oxidized
       ended.each      { |job| process job }
       @jobs.work
       while @jobs.size < @jobs.want
-        Log.debug "Jobs #{@jobs.size}, Want: #{@jobs.want}"
+        Oxidized.logger.debug "Jobs #{@jobs.size}, Want: #{@jobs.want}"
         # ask for next node in queue non destructive way
         nextnode = @nodes.first
         unless nextnode.last.nil?
-          break if nextnode.last.end + CFG.interval > Time.now.utc
+          break if nextnode.last.end + Oxidized.config.interval > Time.now.utc
         end
         # shift nodes and get the next node
         node = @nodes.get
@@ -42,7 +42,7 @@ module Oxidized
         output = node.output.new
         if output.store node.name, job.config,
                               :msg => msg, :user => node.user, :group => node.group
-          Log.info "Configuration updated for #{node.group}/#{node.name}"
+          Oxidized.logger.info "Configuration updated for #{node.group}/#{node.name}"
           Oxidized.Hooks.handle :post_store, :node => node,
                                              :job => job,
                                              :commitref => output.commitref
@@ -50,7 +50,7 @@ module Oxidized
         node.reset
       else
         msg = "#{node.name} status #{job.status}"
-        if node.retry < CFG.retries
+        if node.retry < Oxidized.config.retries
           node.retry += 1
           msg += ", retry attempt #{node.retry}"
           @nodes.next node.name
@@ -60,10 +60,10 @@ module Oxidized
           Oxidized.Hooks.handle :node_fail, :node => node,
                                             :job => job
         end
-        Log.warn msg
+        Oxidized.logger.warn msg
       end
     rescue NodeNotFound
-      Log.warn "#{node.name} not found, removed while collecting?"
+      Oxidized.logger.warn "#{node.name} not found, removed while collecting?"
     end
 
   end

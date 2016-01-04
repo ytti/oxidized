@@ -9,5 +9,5 @@ begin
   Oxidized::CLI.new.run
 rescue => error
   warn "#{error}"
-  raise if Oxidized::CFG.debug
+  raise if Oxidized.config.debug
 end

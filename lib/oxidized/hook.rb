@@ -46,7 +46,7 @@ class HookManager
     hook.cfg = cfg
 
     @registered_hooks[event] << RegisteredHook.new(name, hook)
-    Log.debug "Hook #{name.inspect} registered #{hook.class} for event #{event.inspect}"
+    Oxidized.logger.debug "Hook #{name.inspect} registered #{hook.class} for event #{event.inspect}"
   end
 
   def handle event, ctx_params={}
@@ -57,7 +57,7 @@ class HookManager
       begin
         r_hook.hook.run_hook ctx
       rescue => e
-        Log.error "Hook #{r_hook.name} (#{r_hook.hook}) failed " +
+        Oxidized.logger.error "Hook #{r_hook.name} (#{r_hook.hook}) failed " +
                   "(#{e.inspect}) for event #{event.inspect}"
       end
     end
@@ -66,7 +66,7 @@ end
 
 # Hook abstract base class
 class Hook
-  attr_accessor :cfg
+  attr_reader :cfg
 
   def initialize
   end
@@ -81,7 +81,7 @@ class Hook
   end
 
   def log(msg, level=:info)
-    Log.send(level, "#{self.class.name}: #{msg}")
+    Oxidized.logger.send(level, "#{self.class.name}: #{msg}")
   end
 
 end

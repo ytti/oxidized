@@ -3,7 +3,7 @@ class JunOS < Oxidized::Model
   comment  '# '
 
   def telnet
-    @input.class.to_s.match /Telnet/
+    @input.class.to_s.match(/Telnet/)
   end
 
   cmd :all do |cfg|
@@ -12,16 +12,16 @@ class JunOS < Oxidized::Model
     cfg.lines.map { |line| line.rstrip }.join("\n") + "\n"
   end
 
-  cmd :secret do |cfg| 
-    cfg.gsub! /encrypted-password (\S+).*/, '<secret removed>'
-    cfg.gsub! /community (\S+) {/, 'community <hidden> {'
+  cmd :secret do |cfg|
+    cfg.gsub!(/encrypted-password (\S+).*/, '<secret removed>')
+    cfg.gsub!(/community (\S+) {/, 'community <hidden> {')
     cfg
   end
 
   cmd 'show configuration | display omit'
 
   cmd 'show version' do |cfg|
-    @model = $1 if cfg.match /^Model: (\S+)/
+    @model = $1 if cfg.match(/^Model: (\S+)/)
     comment cfg
   end
 
@@ -34,13 +34,11 @@ class JunOS < Oxidized::Model
     out
   end
 
-  cmd 'show chassis hardware' do |cfg|
-    comment cfg
-  end
+  cmd('show chassis hardware') { |cfg| comment cfg }
 
   cfg :telnet do
-    username  /^login:/
-    password  /^Password:/
+    username(/^login:/)
+    password(/^Password:/)
   end
 
   cfg :ssh do
