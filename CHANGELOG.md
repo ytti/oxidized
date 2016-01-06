@@ -1,3 +1,9 @@
+# 0.10.0
+- FEATURE: Various refactoring (by @ElvinEfendi)
+- FEATURE: Ciena SOAS support (by @jgroom33)
+- FEATURE: support group variables (by @supertylerc)
+- BUGFIX: various ((orly))  (by @marnovdm, @danbaugher, @MrRJ45, @asynet, @nickhilliard)
+
 # 0.9.0
 - FEATURE: input log now uses devices name as file, instead of string from config (by @skoef)
 - FEATURE: Dell Networkign OS (dnos) support (by @erefre)
