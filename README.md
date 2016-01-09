@@ -7,8 +7,8 @@ Oxidized is a network device configuration backup tool. It's a RANCID replacemen
 * automatically adds/removes threads to meet configured retrieval interval
 * restful API to move node immediately to head-of-queue (GET/POST /node/next/[NODE])
   * syslog udp+file example to catch config change event (ios/junos) and trigger config fetch
-  * will signal ios/junos user who made change, which output module can (git does) use (via POST)
-  * 'git blame' will show for each line who and when the change was made
+  * will signal ios/junos user who made change, which output modules can use (via POST)
+  * The git output module uses this info - 'git blame' will for each line show who made the change and when
 * restful API to reload list of nodes (GET /reload)
 * restful API to fetch configurations (/node/fetch/[NODE] or /node/fetch/group/[NODE])
 * restful API to show list of nodes (GET /nodes)
@@ -325,6 +325,8 @@ output:
 ```
 
 ### Output: Git
+
+This uses the rugged/libgit2 interface. So you should remember that normal Git hooks will not be executed.
 
 ```
 output:
