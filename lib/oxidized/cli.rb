@@ -24,7 +24,7 @@ module Oxidized
       Config.load(@opts)
       Oxidized.setup_logger
 
-      @pidfile = File.expand_path("pid")
+      @pidfile = File.join(Oxidized::Config::Root, 'pid')
     end
 
     def crash error
