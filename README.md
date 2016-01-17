@@ -296,6 +296,8 @@ source:
 
 One object per device.
 
+HTTP Supports basic auth, configure the user and pass you want to use under the http: section.
+
 ```
 source:
   default: http
