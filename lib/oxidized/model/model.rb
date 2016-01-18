@@ -79,7 +79,7 @@ module Oxidized
     attr_accessor :input, :node
 
     def cmd string, &block
-      out = "====================== #{string} ======================\n" + @input.cmd(string)
+      out = @input.cmd(string)
       return false unless out
       self.class.cmds[:all].each do |all_block|
         out = instance_exec Oxidized::String.new(out), string, &all_block
