@@ -459,7 +459,7 @@ Following configuration keys need to be defined for all hooks:
 ### Events
   * `node_success`: triggered when configuration is succesfully pulled from a node and right before storing the configuration.
   * `node_fail`: triggered after `retries` amount of failed node pulls.
-  * `post_store`: triggered after node configuration is stored.
+  * `post_store`: triggered after node configuration is stored (this is executed only when the configuration has changed).
 
 ## Hook type: exec
 The `exec` hook type allows users to run an arbitrary shell command or a binary when triggered.
