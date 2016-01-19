@@ -1,0 +1,12 @@
+#!/bin/bash
+
+if [ -z "$CONFIG_RELOAD_INTERVAL" ]; then
+    # Just stop and do nothing
+    read
+fi
+
+while true; do
+    sleep $CONFIG_RELOAD_INTERVAL
+    echo "Reloading config..."
+    curl -s http://localhost:8888/reload?format=json -O /dev/null
+done
