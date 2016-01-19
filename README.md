@@ -230,6 +230,11 @@ rvm use --default 2.1.2
     root@bla:~#
 ```
 
+If you want to have the config automatically reloaded (e.g. when using a http source that changes)
+```
+    root@bla:~# docker run -v /etc/oxidized:/root/.config/oxidized -p 8888:8888/tcp -e CONFIG_RELOAD_INTERVAL=3600 -t oxidized/oxidized:latest oxidized
+```
+
 ## Cookbook
 ### Debugging
 In case a model plugin doesn't work correctly (ios, procurve, etc.), you can enable live debugging of SSH/Telnet sessions. Just add a ```debug``` option, specifying a log file destination to the ```input``` section.

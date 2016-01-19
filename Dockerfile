@@ -12,3 +12,4 @@ RUN apt-get remove -y ruby-dev pkg-config make cmake
 RUN apt-get -y autoremove
 
 ADD extra/oxidized.runit /etc/service/oxidized/run
+ADD extra/auto-reload-config.runit /etc/service/auto-reload-config/run
