@@ -1,5 +1,6 @@
 module Oxidized
   require 'net/ssh'
+  require 'net/ssh/proxy/command'
   require 'timeout'
   require 'oxidized/input/cli'
   class SSH < Input
@@ -22,11 +23,15 @@ module Oxidized
       secure = Oxidized.config.input.ssh.secure
       @log = File.open(Oxidized::Config::Crash + "-#{@node.ip}-ssh", 'w') if Oxidized.config.input.debug?
       port = vars(:ssh_port) || 22
-      @ssh = Net::SSH.start @node.ip, @node.auth[:username], :port => port.to_i,
+      if proxy_host = vars(:proxy)
+        proxy =  Net::SSH::Proxy::Command.new("ssh #{proxy_host} nc %h %p")
+      end
+      @ssh = Net::SSH.start(@node.ip, @node.auth[:username], :port => port.to_i,
                             :password => @node.auth[:password], :timeout => Oxidized.config.timeout,
                             :paranoid => secure,
                             :auth_methods => %w(none publickey password keyboard-interactive),
-                            :number_of_password_prompts => 0
+                            :number_of_password_prompts => 0,
+                            :proxy => proxy)
       unless @exec
         shell_open @ssh
         begin
