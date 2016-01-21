@@ -23,7 +23,7 @@
 #  email_output:
 #    type: exec
 #    events: [post_store, node_fail]
-#    cmd: 'update-local-repo.sh ~/gitdir/ | mail -s "Oxidized updates for ${OX_NODE_NAME}" update-recipient@example.com'
+#    cmd: '/home/oxidized/extra/oxidized-report-git-commits ~/gitdir/ | mail -s "Oxidized updates for ${OX_NODE_NAME}" update-recipient@example.com'
 #    async: true
 #    timeout: 120
 # 
