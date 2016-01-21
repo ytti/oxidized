@@ -144,7 +144,7 @@ Maps define how to map a model's fields to model [model fields](https://github.c
 
 First create the directory where the CSV ```output``` is going to store device configs and start Oxidized once.
 ```
-mkdir ~/.config/oxidized/configs
+mkdir -p ~/.config/oxidized/configs
 oxidized
 ```
 
