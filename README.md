@@ -277,6 +277,21 @@ source:
       enable: 4
 ```
 
+### SSH Proxy Command
+
+Oxidized can `ssh` through a proxy as well. To do so we just need to set `proxy` variable.
+
+```
+...
+map:
+  name: 0
+  model: 1
+vars_map:
+  enable: 2
+  proxy: 3
+...
+```
+
 ### Source: SQLite
 
 One row per device, filtered by hostname.
