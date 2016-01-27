@@ -147,6 +147,7 @@ module Oxidized
         rescue  Oxidized::NodeNotFound
         end
       end
+      sort_by! { |x| x.last.nil? ? Time.new(0) : x.last.end }
     end
 
     public
