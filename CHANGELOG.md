@@ -1,3 +1,9 @@
+# 0.11.0
+- FEATURE: ssh proxycommand (by @ElvinEfendi)
+- FEATURE: basic auth in HTTP source (by @laf)
+- BUGFIX: do not inject string to output before model gets it
+- BUGFIX: store pidfile in oxidized root
+
 # 0.10.0
 - FEATURE: Various refactoring (by @ElvinEfendi)
 - FEATURE: Ciena SOAS support (by @jgroom33)
