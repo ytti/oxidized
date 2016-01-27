@@ -5,6 +5,7 @@ module Oxidized
   class Config
     Root      = File.join ENV['HOME'], '.config', 'oxidized'
     Crash     = File.join Root, 'crash'
+    Log       = File.join Root, 'log'
     InputDir  = File.join Directory, %w(lib oxidized input)
     OutputDir = File.join Directory, %w(lib oxidized output)
     ModelDir  = File.join Directory, %w(lib oxidized model)
