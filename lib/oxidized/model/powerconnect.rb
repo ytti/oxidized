@@ -26,7 +26,9 @@ class PowerConnect < Oxidized::Model
     clean cfg
   end
 
-  cmd 'show running-config'
+  cmd 'show running-config' do |cfg|
+    cfg.sub(/^(sflow \S+ destination owner \S+ timeout )\d+$/, '! \1<timeout>')
+  end
 
   cfg :telnet, :ssh do
     username /^User( Name)?:/
