@@ -27,7 +27,7 @@ class PowerConnect < Oxidized::Model
   end
 
   cmd 'show running-config' do |cfg|
-    cfg.sub(/^(sflow 1 destination owner 1 timeout )\d+$/, '! \1<timeout>')
+    cfg.sub(/^(sflow \S+ destination owner \S+ timeout )\d+$/, '! \1<timeout>')
   end
 
   cfg :telnet, :ssh do
