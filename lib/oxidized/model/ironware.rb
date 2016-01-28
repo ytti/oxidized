@@ -31,7 +31,7 @@ class IronWare < Oxidized::Model
   cmd 'show chassis' do |cfg|
     cfg.encode!("UTF-8", :invalid => :replace) #sometimes ironware returns broken encoding
     cfg.gsub! /(^((.*)Current temp(.*))$)/, '' #remove unwanted lines current temperature
-    cfg.gsub! /Speed = [A-Z]{3} \(\d{2}\%\)/, '' #remove unwanted lines Speed Fans
+    cfg.gsub! /Speed = [A-Z-]{3,6} \(\d{2}\%\)/, '' #remove unwanted lines Speed Fans
     cfg.gsub! /current speed is [A-Z]{3} \(\d{2}\%\)/, ''
     cfg.gsub! /\d{2}\.\d deg-C/, 'XX.X deg-C'
     if cfg.include? "TEMPERATURE"
