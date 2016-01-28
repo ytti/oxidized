@@ -218,7 +218,7 @@ rvm use --default 2.1.2
 ```
 6. run container again:
 ```
-    root@bla:~# docker run -v /etc/oxidized:/root/.config/oxidized -p 8888:8888/tcp -t oxidized/oxidized:latest oxidized
+    root@bla:~# docker run -v /etc/oxidized:/root/.config/oxidized -p 8888:8888/tcp -t oxidized/oxidized:latest
     oxidized[1]: Oxidized starting, running as pid 1
     oxidized[1]: Loaded 1 nodes
     Puma 2.13.4 starting...
@@ -232,7 +232,7 @@ rvm use --default 2.1.2
 
 If you want to have the config automatically reloaded (e.g. when using a http source that changes)
 ```
-    root@bla:~# docker run -v /etc/oxidized:/root/.config/oxidized -p 8888:8888/tcp -e CONFIG_RELOAD_INTERVAL=3600 -t oxidized/oxidized:latest oxidized
+    root@bla:~# docker run -v /etc/oxidized:/root/.config/oxidized -p 8888:8888/tcp -e CONFIG_RELOAD_INTERVAL=3600 -t oxidized/oxidized:latest
 ```
 
 ## Cookbook
