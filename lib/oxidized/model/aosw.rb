@@ -11,6 +11,20 @@ class AOSW < Oxidized::Model
     cfg.each_line.to_a[1..-2].join
   end
 
+  cmd :secret do |cfg|
+    cfg.gsub!(/PRE-SHARE (\S+)$/, 'PRE-SHARE <secret removed>')
+    cfg.gsub!(/ipsec (\S+)$/, 'ipsec <secret removed>')
+    cfg.gsub!(/community (\S+)$/, 'community <secret removed>')
+    cfg.gsub!(/ sha (\S+)/, ' sha <secret removed>')
+    cfg.gsub!(/ des (\S+)/, ' des <secret removed>')
+    cfg.gsub!(/mobility-manager (\S+) user (\S+) (\S+)/, 'mobility-manager \1 user \2 <secret removed>')
+    cfg.gsub!(/mgmt-user (\S+) (\S+) (\S+)$/, 'mgmt-user \1 \2 <secret removed>')
+    cfg.gsub!(/key (\S+)$/, 'key <secret removed>')
+    cfg.gsub!(/secret (\S+)$/, 'secret <secret removed>')
+    cfg.gsub!(/wpa-passphrase (\S+)$/, 'wpa-passphrase <secret removed>')
+    cfg
+  end
+
   cmd 'show version' do |cfg|
     cfg = cfg.each_line.select { |line| not line.match /Switch uptime/i }
     comment cfg.join
@@ -26,8 +40,15 @@ class AOSW < Oxidized::Model
   cmd 'show license' do |cfg|
     comment cfg
   end
-  cmd 'show configuration' do |cfg|
-    cfg
+  cmd 'show running-config' do |cfg|
+    out = []
+    cfg.each_line do |line|
+      next if line.match /^controller config \d+$/
+      next if line.match /^Building Configuration/
+      out << line.strip
+    end
+    out = out.join "\n"
+    out << "\n"
   end
 
   cfg :telnet do
@@ -43,6 +64,7 @@ class AOSW < Oxidized::Model
       end
     end
     post_login 'no paging'
+    post_login 'encrypt disable'
     if vars :enable
       pre_logout 'exit'
     end
