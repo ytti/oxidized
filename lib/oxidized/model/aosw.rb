@@ -56,7 +56,7 @@ class AOSW < Oxidized::Model
       next if line.match /Output \d Config/i
       next if line.match /(Tachometers|Temperatures|Voltages)/
       next if line.match /((Card|CPU) Temperature|Chassis Fan|VMON1[0-9])/
-      next if line.match /[0-9]+ (RPM|RPMs|mV|C)$/
+      next if line.match /[0-9]+ (RPMS?|m?V|C)/i
       out << line.strip
     end
     out = comment out.join "\n"
