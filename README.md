@@ -77,6 +77,8 @@ Oxidized is a network device configuration backup tool. It's a RANCID replacemen
    * AOSW
  * Extreme Networks
    * XOS
+ * F5
+   * TMOS
  * Force10
    * FTOS
  * Force10
