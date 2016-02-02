@@ -45,11 +45,11 @@ Oxidized is a network device configuration backup tool. It's a RANCID replacemen
  * A10 Networks
    * ACOS
  * Alcatel-Lucent
-   * ISAM
    * AOS
    * AOS7
-   * Wireless
+   * ISAM
    * TiMOS
+   * Wireless
  * Arista
    * EOS
  * Arris
@@ -80,9 +80,8 @@ Oxidized is a network device configuration backup tool. It's a RANCID replacemen
  * F5
    * TMOS
  * Force10
-   * FTOS
- * Force10
    * DNOS
+   * FTOS
  * FortiGate
    * FortiOS
  * HP
@@ -97,11 +96,14 @@ Oxidized is a network device configuration backup tool. It's a RANCID replacemen
    * RouterOS
  * MRV
    * MasterOS
+ * Opengear
+   * Opengear
+ * Palo Alto
+   * PANOS
  * Ubiquiti
    * AirOS
    * Edgeos
- * Palo Alto
-   * PANOS
+   * EdgeSwitch
  * Zyxel
    * ZyNOS
 
