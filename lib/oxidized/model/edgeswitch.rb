@@ -7,7 +7,7 @@ class EdgeSwitch < Oxidized::Model
   prompt /[(]\w*\s\w*[)][\s#>]*[\s#>]/
 
   cmd 'show running-config' do |cfg|
-    comment cfg
+    comment cfg.each_line.reject { |line| line.match /System Up Time.*/ or line.match /Current SNTP Synchronized Time.*/ }.join
   end
 
   cfg :telnet do
