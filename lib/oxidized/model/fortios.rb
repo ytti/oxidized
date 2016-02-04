@@ -11,6 +11,7 @@ class FortiOS < Oxidized::Model
 
   cmd 'get system status' do |cfg|
     @vdom_enabled = cfg.include? 'Virtual domain configuration: enable'
+    cfg.gsub!(/(System time: )(.*)/, '\1<stripped>\3')
     comment cfg
   end
 
