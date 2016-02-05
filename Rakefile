@@ -19,13 +19,6 @@ task :test do
   end
 end
 
-desc 'Build gem'
-task :build do
-  system "gem build #{gemspec.name}.gemspec"
-  FileUtils.mkdir_p 'gems'
-  FileUtils.mv file, 'gems'
-end
-
 desc 'Install gem'
 task :install => :build do
   system "sudo -Es sh -c \'umask 022; gem install gems/#{file}\'"
