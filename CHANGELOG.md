@@ -1,3 +1,15 @@
+# 0.12.0
+- FEATURE: enhance AOSW (by @mikebryant)
+- FEATURE: F5 TMOS support (by @mikebryant)
+- FEATURE: Opengear support (by @mikebryant)
+- FEATURE: EdgeSwitch support (by @doogieconsulting)
+- BUGFIX: rename input debug log files
+- BUGFIX: powerconnect model fixes (by @Madpilot0)
+- BUGFIX: fortigate model fixes (by @ElvinEfendi) 
+- BUGFIX: various (by @mikebryant)
+- BUGFIX: write SSH debug to file without buffering
+- BUGFIX: fix IOS XR prompt handling
+
 # 0.11.0
 - FEATURE: ssh proxycommand (by @ElvinEfendi)
 - FEATURE: basic auth in HTTP source (by @laf)

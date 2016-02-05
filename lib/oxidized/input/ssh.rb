@@ -79,7 +79,10 @@ module Oxidized
     def shell_open ssh
       @ses = ssh.open_channel do |ch|
         ch.on_data do |_ch, data|
-          @log.print data if Oxidized.config.input.debug?
+          if Oxidized.config.input.debug?
+            @log.print data
+            @log.fsync
+          end
           @output << data
           @output = @node.model.expects @output
         end
