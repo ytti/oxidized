@@ -36,7 +36,7 @@ end
 
 desc 'Push to rubygems'
 task :push => :tag do
-  system "gem push gems/#{file}"
+  system "gem push pkg/#{file}"
 end
 
 task default: :test
