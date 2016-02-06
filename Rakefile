@@ -26,7 +26,7 @@ end
 
 desc 'Remove gems'
 task :clean do
-  FileUtils.rm_rf 'gems'
+  FileUtils.rm_rf 'pkg'
 end
 
 desc 'Tag the release'
