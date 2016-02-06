@@ -1,3 +1,6 @@
+# 0.12.2
+- BUGFIX: more MRV model fixes (by @natm)
+
 # 0.12.1
 - BUGFIX: set term to vty100
 - BUGFIX: MRV model fixes (by @natm)
