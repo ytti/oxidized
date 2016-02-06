@@ -1,3 +1,7 @@
+# 0.12.1
+- BUGFIX: set term to vty100
+- BUGFIX: MRV model fixes (by @natm)
+
 # 0.12.0
 - FEATURE: enhance AOSW (by @mikebryant)
 - FEATURE: F5 TMOS support (by @mikebryant)
