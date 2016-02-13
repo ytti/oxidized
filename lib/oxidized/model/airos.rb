@@ -7,7 +7,7 @@ class Airos < Oxidized::Model
     cfg.split("\n").map { |line| "# #{line}" }.join("\n") + "\n"
   end
   
-  cmd 'cat /tmp/system.cfg'
+  cmd 'sort /tmp/system.cfg'
   
   cmd :secret do |cfg|
     cfg.gsub! /^(users\.\d+\.password|snmp\.community)=.+/, "# \\1=<hidden>"
