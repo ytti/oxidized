@@ -3,6 +3,7 @@ require 'spec_helper'
 describe Oxidized::Node do
   before(:each) do
     Oxidized.stubs(:asetus).returns(Asetus.new)
+    Oxidized.config.output.git.repo = '/tmp/repository.git'
 
     Oxidized::Node.any_instance.stubs(:resolve_output)
     @node = Oxidized::Node.new(name: 'example.com',
@@ -39,6 +40,30 @@ describe Oxidized::Node do
 
       status, _ = @node.run
       status.must_equal :success
+    end
+  end
+
+  describe '#repo' do
+    it 'when there is no groups' do
+      @node.repo.must_equal '/tmp/repository.git'
+    end
+
+    describe 'when there are groups' do
+      let(:node) do
+        Oxidized::Node.new({
+          ip: '127.0.0.1', group: 'ggrroouupp', model: 'junos'
+        })
+      end
+
+      it 'with only one repository' do
+        Oxidized.config.output.git.single_repo = true
+        node.repo.must_equal '/tmp/repository.git'
+      end
+
+      it 'with more than one repository' do
+        Oxidized.config.output.git.single_repo = false
+        node.repo.must_equal '/tmp/ggrroouupp.git'
+      end
     end
   end
 end
