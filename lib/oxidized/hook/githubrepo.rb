@@ -4,9 +4,9 @@ class GithubRepo < Oxidized::Hook
   end
 
   def run_hook(ctx)
-    repo = Rugged::Repository.new(Oxidized.config.output.git.repo)
+    repo = Rugged::Repository.new(ctx.node.repo)
     log "Pushing local repository(#{repo.path})..."
-    remote = repo.remotes['origin'] || repo.remotes.create('origin', cfg.remote_repo)
+    remote = repo.remotes['origin'] || repo.remotes.create('origin', remote_repo(ctx.node))
     log "to remote: #{remote.url}"
 
     fetch_and_merge_remote(repo)
@@ -52,6 +52,18 @@ class GithubRepo < Oxidized::Hook
       log "Using ssh auth", :debug
       Rugged::Credentials::SshKeyFromAgent.new(username: 'git')
     end
+  end
+
+  def remote_repo(node)
+    if node.group.nil? || single_repo?
+      cfg.remote_repo
+    else
+      Oxidized.config.groups[node.group].remote_repo
+    end
+  end
+
+  def single_repo?
+    Oxidized.config.git.single_repo?
   end
 
 end
