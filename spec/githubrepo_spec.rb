@@ -12,6 +12,7 @@ describe Oxidized::Node do
   before(:each) do
     Oxidized.asetus = Asetus.new
     Oxidized.config.output.git.repo = 'foo.git'
+    Oxidized.config.log = '/dev/null'
     Oxidized.setup_logger
   end
 
