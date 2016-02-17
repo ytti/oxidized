@@ -1,7 +1,7 @@
 PATH
   remote: .
   specs:
-    oxidized (0.11.0)
+    oxidized (0.12.2)
       asetus (~> 0.1)
       net-ssh (~> 3.0, >= 3.0.2)
       rugged (~> 0.21, >= 0.21.4)
