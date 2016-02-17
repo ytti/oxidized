@@ -30,6 +30,8 @@ class JunOS < Oxidized::Model
     case @model
     when 'mx960'
       out << cmd('show chassis fabric reachability')  { |cfg| comment cfg }
+    when /^(ex22|ex33|ex4|ex8|qfx)/
+      out << cmd('show virtual-chassis') { |cfg| comment cfg }
     end
     out
   end
