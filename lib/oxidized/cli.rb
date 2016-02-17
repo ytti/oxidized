@@ -43,6 +43,10 @@ module Oxidized
       opts = Slop.new(:help=>true) do
         on 'd', 'debug', 'turn on debugging'
         on 'daemonize',  'Daemonize/fork the process'
+        on 'v', 'version', 'show version' do
+          puts Oxidized::VERSION
+          Kernel.exit
+        end
       end
       [opts.parse!, opts]
     end
