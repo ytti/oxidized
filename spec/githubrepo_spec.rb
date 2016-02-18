@@ -2,7 +2,7 @@ require 'spec_helper'
 require 'rugged'
 require 'oxidized/hook/githubrepo'
 
-describe Oxidized::GithubRepo do
+describe GithubRepo do
   let(:credentials) { mock() }
   let(:remote) { mock() }
   let(:remotes) { mock() }
@@ -15,6 +15,18 @@ describe Oxidized::GithubRepo do
     Oxidized.config.output.git.repo = 'foo.git'
     Oxidized.config.log = '/dev/null'
     Oxidized.setup_logger
+  end
+
+  describe '#validate_cfg!' do
+    before do
+      gr.expects(:respond_to?).with(:validate_cfg!).returns(false) # `cfg=` call
+    end
+
+    it 'raise a error when `remote_repo` is not configured' do
+      Oxidized.config.hooks.github_repo_hook = { type: 'githubrepo' }
+      gr.cfg = Oxidized.config.hooks.github_repo_hook
+      proc { gr.validate_cfg! }.must_raise(KeyError)
+    end
   end
 
   describe "#fetch_and_merge_remote" do
