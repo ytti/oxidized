@@ -4,6 +4,11 @@ class FortiOS < Oxidized::Model
 
   prompt /^([-\w\.]+(\s[\(\w\-\.\)]+)?\~?\s?[#>]\s?)$/
 
+  expect /^--More--\s$/ do |data, re|
+    send ' '
+    data.sub re, ''
+  end
+
   cmd :all do |cfg, cmdstring|
     new_cfg = comment "COMMAND: #{cmdstring}\n"
     new_cfg << cfg.each_line.to_a[1..-2].map { |line| line.gsub(/(conf_file_ver=)(.*)/, '\1<stripped>\3') }.join
