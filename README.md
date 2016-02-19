@@ -535,14 +535,15 @@ This hook configures the repository `remote` and _push_ the code when the specif
   * `username`: username for repository auth.
   * `password`: password for repository auth.
 
-When using groups repositories, the remotes should be passed in the `groups` config for each group.
+When using groups repositories, each group must have its own `remote` in the `remote_repo` config.
 
 ``` yaml
-vars: {}
-groups:
-  routers: git@git.intranet:oxidized/routers.git
-  switches: git@git.intranet:oxidized/switches.git
-  firewalls: git@git.intranet:oxidized/firewalls.git
+hooks:
+  push_to_remote:
+    remote_repo:
+      routers: git@git.intranet:oxidized/routers.git
+      switches: git@git.intranet:oxidized/switches.git
+      firewalls: git@git.intranet:oxidized/firewalls.git
 ```
 
 
@@ -550,7 +551,7 @@ groups:
 
 ``` yaml
 hooks:
-  push_to_gitlab:
+  push_to_remote:
     type: githubrepo
     events: [node_success, post_store]
     remote_repo: git@git.intranet:oxidized/test.git

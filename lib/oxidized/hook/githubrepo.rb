@@ -58,7 +58,7 @@ class GithubRepo < Oxidized::Hook
     if node.group.nil? || single_repo?
       cfg.remote_repo
     else
-      Oxidized.config.groups[node.group].remote_repo
+      cfg.remote_repo[node.group]
     end
   end
 

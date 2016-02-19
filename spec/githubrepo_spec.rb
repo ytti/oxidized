@@ -126,8 +126,6 @@ describe GithubRepo do
       before do
         Rugged::Credentials::SshKeyFromAgent.expects(:new).with(username: 'git').returns(credentials)
         Rugged::Repository.expects(:new).with(repository).returns(repo)
-        Oxidized.config.groups.ggrroouupp.remote_repo = 'ggrroouupp#remote_repo'
-        Oxidized.config.hooks.github_repo_hook.remote_repo = 'github_repo_hook#remote_repo'
         Oxidized.config.output.git.single_repo = single_repo
 
         repo.expects(:remotes).twice.returns(remotes)
@@ -137,10 +135,14 @@ describe GithubRepo do
         remote.expects(:push).with(['refs/heads/master'], credentials: credentials).returns(true)
       end
 
-      describe 'when there are several repositories' do
+      describe 'and there are several repositories' do
         let(:create_remote) { 'ggrroouupp#remote_repo' }
         let(:repository) { './ggrroouupp.git' }
         let(:single_repo) { nil }
+
+        before do
+          Oxidized.config.hooks.github_repo_hook.remote_repo.ggrroouupp = 'ggrroouupp#remote_repo'
+        end
 
         it 'will push to the node group repository' do
           gr.cfg = Oxidized.config.hooks.github_repo_hook
@@ -148,10 +150,14 @@ describe GithubRepo do
         end
       end
 
-      describe 'when is a single repository' do
+      describe 'and has a single repository' do
         let(:create_remote) { 'github_repo_hook#remote_repo' }
         let(:repository) { 'foo.git' }
         let(:single_repo) { true }
+
+        before do
+          Oxidized.config.hooks.github_repo_hook.remote_repo = 'github_repo_hook#remote_repo'
+        end
 
         it 'will push to the correct repository' do
           gr.cfg = Oxidized.config.hooks.github_repo_hook
