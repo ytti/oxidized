@@ -1,10 +1,22 @@
 class Redback < Oxidized::Model
-  prompt /^([\[\]\w.@-]+[#>]\s?)$/
+
   # Ericsson Redback
 
-  cmd 'show chassis'
-  cmd 'show hardware detail'
-  cmd 'show release'
+  prompt /^([\[\]\w.@-]+[#>]\s?)$/
+  comment '! '
+
+  cmd 'show chassis' do |cfg|
+    comment cfg
+  end
+
+  cmd 'show hardware detail' do |cfg|
+    comment cfg
+  end
+
+  cmd 'show release' do |cfg|
+    comment cfg
+  end
+
   cmd 'show config'
 
   cfg :telnet do
