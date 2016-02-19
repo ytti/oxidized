@@ -1,6 +1,6 @@
-class mtrlwm < Oxidized::Model
+class mtrlrfs < Oxidized::Model
 
-  # Motorola WM3400
+  # Motorola RFS/Extreme WM
 
   comment  '# '
 
