@@ -132,12 +132,13 @@ describe GithubRepo do
 
         repo.expects(:remotes).twice.returns(remotes)
         remotes.expects(:[]).with('origin').returns(nil)
-        remotes.expects(:create).with('origin', 'ggrroouupp#remote_repo').returns(remote)
+        remotes.expects(:create).with('origin', create_remote).returns(remote)
         remote.expects(:url).returns('url')
         remote.expects(:push).with(['refs/heads/master'], credentials: credentials).returns(true)
       end
 
       describe 'when there are several repositories' do
+        let(:create_remote) { 'ggrroouupp#remote_repo' }
         let(:repository) { './ggrroouupp.git' }
         let(:single_repo) { nil }
 
@@ -148,6 +149,7 @@ describe GithubRepo do
       end
 
       describe 'when is a single repository' do
+        let(:create_remote) { 'github_repo_hook#remote_repo' }
         let(:repository) { 'foo.git' }
         let(:single_repo) { true }
 

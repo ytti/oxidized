@@ -63,7 +63,7 @@ class GithubRepo < Oxidized::Hook
   end
 
   def single_repo?
-    Oxidized.config.git.single_repo?
+    Oxidized.config.output.git.single_repo?
   end
 
 end
