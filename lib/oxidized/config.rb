@@ -3,7 +3,7 @@ module Oxidized
   class NoConfig < OxidizedError; end
   class InvalidConfig < OxidizedError; end
   class Config
-    Root      = File.join ENV['HOME'], '.config', 'oxidized'
+    Root      = ENV['OXIDIZED_HOME'] || File.join(ENV['HOME'], '.config', 'oxidized')
     Crash     = File.join Root, 'crash'
     Log       = File.join Root, 'log'
     InputDir  = File.join Directory, %w(lib oxidized input)
@@ -27,7 +27,7 @@ module Oxidized
       asetus.default.timeout       = 20
       asetus.default.retries       = 3
       asetus.default.prompt        = /^([\w.@-]+[#>]\s?)$/
-        asetus.default.rest          = '127.0.0.1:8888' # or false to disable
+      asetus.default.rest          = '127.0.0.1:8888' # or false to disable
       asetus.default.vars          = {}             # could be 'enable'=>'enablePW'
       asetus.default.groups        = {}             # group level configuration
 
