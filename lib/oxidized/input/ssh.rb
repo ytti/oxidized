@@ -26,12 +26,18 @@ module Oxidized
       if proxy_host = vars(:proxy)
         proxy =  Net::SSH::Proxy::Command.new("ssh #{proxy_host} nc %h %p")
       end
-      @ssh = Net::SSH.start(@node.ip, @node.auth[:username], :port => port.to_i,
-                            :password => @node.auth[:password], :timeout => Oxidized.config.timeout,
-                            :paranoid => secure,
-                            :auth_methods => %w(none publickey password keyboard-interactive),
-                            :number_of_password_prompts => 0,
-                            :proxy => proxy)
+      ssh_opts = {
+        :port => port.to_i,
+        :password => @node.auth[:password], :timeout => Oxidized.config.timeout,
+        :paranoid => secure,
+        :auth_methods => %w(none publickey password keyboard-interactive),
+        :number_of_password_prompts => 0,
+        :proxy => proxy
+      }
+      ssh_opts[:encryption] = vars(:ssh_encryption) if vars(:ssh_encryption)
+      ssh_opts[:kex] = vars(:ssh_kex) if vars(:ssh_kex)
+
+      @ssh = Net::SSH.start(@node.ip, @node.auth[:username], ssh_opts)
       unless @exec
         shell_open @ssh
         begin
