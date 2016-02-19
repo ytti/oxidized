@@ -75,6 +75,8 @@ Oxidized is a network device configuration backup tool. It's a RANCID replacemen
  * DELL
    * PowerConnect
    * AOSW
+ * Ericsson/Redback
+   * SmartEdge
  * Extreme Networks
    * XOS
  * F5
