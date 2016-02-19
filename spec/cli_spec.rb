@@ -12,7 +12,8 @@ describe Oxidized::CLI do
       before { ARGV.replace [option] }
 
       it 'prints the version and exits' do
-        Oxidized::Config.expects(:load).returns(asetus)
+        Oxidized::Config.expects(:load)
+        Oxidized.expects(:setup_logger)
         Kernel.expects(:exit)
 
         proc {
