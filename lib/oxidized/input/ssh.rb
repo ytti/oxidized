@@ -34,8 +34,8 @@ module Oxidized
         :number_of_password_prompts => 0,
         :proxy => proxy
       }
-      ssh_opts[:encryption] = vars(:ssh_encryption) if vars(:ssh_encryption)
-      ssh_opts[:kex] = vars(:ssh_kex) if vars(:ssh_kex)
+      ssh_opts[:kex] = vars(:ssh_kex).split(/,\s*/) if vars(:ssh_kex)
+      ssh_opts[:encryption] = vars(:ssh_encryption).split(/,\s*/) if vars(:ssh_encryption)
 
       @ssh = Net::SSH.start(@node.ip, @node.auth[:username], ssh_opts)
       unless @exec
