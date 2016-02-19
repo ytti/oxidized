@@ -77,6 +77,7 @@ Oxidized is a network device configuration backup tool. It's a RANCID replacemen
    * AOSW
  * Extreme Networks
    * XOS
+   * WM
  * F5
    * TMOS
  * Force10
@@ -94,6 +95,8 @@ Oxidized is a network device configuration backup tool. It's a RANCID replacemen
    * ScreenOS (Netscreen)
  * Mikrotik
    * RouterOS
+ * Motorola
+   * RFS
  * MRV
    * MasterOS
  * Opengear
