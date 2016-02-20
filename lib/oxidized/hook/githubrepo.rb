@@ -55,15 +55,10 @@ class GithubRepo < Oxidized::Hook
   end
 
   def remote_repo(node)
-    if node.group.nil? || single_repo?
+    if node.group.nil? || cfg.remote_repo.is_a?(String)
       cfg.remote_repo
     else
       cfg.remote_repo[node.group]
     end
   end
-
-  def single_repo?
-    Oxidized.config.output.git.single_repo?
-  end
-
 end

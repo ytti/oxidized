@@ -126,7 +126,6 @@ describe GithubRepo do
       before do
         Rugged::Credentials::SshKeyFromAgent.expects(:new).with(username: 'git').returns(credentials)
         Rugged::Repository.expects(:new).with(repository).returns(repo)
-        Oxidized.config.output.git.single_repo = single_repo
 
         repo.expects(:remotes).twice.returns(remotes)
         remotes.expects(:[]).with('origin').returns(nil)
@@ -138,7 +137,6 @@ describe GithubRepo do
       describe 'and there are several repositories' do
         let(:create_remote) { 'ggrroouupp#remote_repo' }
         let(:repository) { './ggrroouupp.git' }
-        let(:single_repo) { nil }
 
         before do
           Oxidized.config.hooks.github_repo_hook.remote_repo.ggrroouupp = 'ggrroouupp#remote_repo'
@@ -153,10 +151,10 @@ describe GithubRepo do
       describe 'and has a single repository' do
         let(:create_remote) { 'github_repo_hook#remote_repo' }
         let(:repository) { 'foo.git' }
-        let(:single_repo) { true }
 
         before do
           Oxidized.config.hooks.github_repo_hook.remote_repo = 'github_repo_hook#remote_repo'
+          Oxidized.config.output.git.single_repo = true
         end
 
         it 'will push to the correct repository' do
