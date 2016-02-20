@@ -1,6 +1,7 @@
-class Redback < Oxidized::Model
+class IPOS < Oxidized::Model
 
-  # Ericsson Redback
+  # Ericsson SSR (IPOS)
+  # Redback SE (SEOS)
 
   prompt /^([\[\]\w.@-]+[#>]\s?)$/
   comment '! '
