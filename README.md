@@ -141,6 +141,21 @@ Oxidized configuration is in YAML format. Configuration files are subsequently s
 
 To initialize a default configuration in your home directory ```~/.config/oxidized/config```, simply run ```oxidized``` once. If you don't further configure anything from the output and source sections, it'll extend the examples on a subsequent ```oxidized``` execution. This is useful to see what options for a specific source or output backend are available.
 
+You can set the env variable `OXIDIZED_HOME` to change its home directory.
+
+```
+OXIDIZED_HOME=/etc/oxidized
+
+$ tree -L 1 /etc/oxidized
+/etc/oxidized/
+├── config
+├── log-router-ssh
+├── log-router-telnet
+├── pid
+├── router.db
+└── repository.git
+```
+
 ## Source
 
 Oxidized supports ```CSV```, ```SQLite``` and ```HTTP``` as source backends. The CSV backend reads nodes from a rancid compatible router.db file. The SQLite backend will fire queries against a database and map certain fields to model items. The HTTP backend will fire queries against a http/https url. Take a look at the [Cookbook](#cookbook) for more details.
