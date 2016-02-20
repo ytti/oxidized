@@ -446,6 +446,7 @@ vars:
   enable: S3cr3tx
 groups: {}
 rest: 127.0.0.1:8888
+pid: /var/run/oxidized.pid
 input:
   default: ssh, telnet
   debug: false
