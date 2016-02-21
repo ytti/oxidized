@@ -27,8 +27,10 @@ class mtrlrfs < Oxidized::Model
 
   cfg :telnet, :ssh do
     post_login 'terminal length 0'
-    pre_logout 'exit'
-    pre_logout 'n'
+    pre_logout do
+      send "exit\n"
+      send "n\n"
+    end
   end
 
 end
