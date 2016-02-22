@@ -31,6 +31,7 @@ Oxidized is a network device configuration backup tool. It's a RANCID replacemen
     * [Source: SQLite](#source-sqlite)
     * [Source: HTTP](#source-http)
     * [Output: GIT](#output-git)
+    * [Output: HTTP](#output-http)
     * [Output: File](#output-file)
     * [Output types](#output-types)
     * [Advanced Configuration](#advanced-configuration)
@@ -381,6 +382,19 @@ output:
     user: Oxidized
     email: o@example.com
     repo: "/var/lib/oxidized/devices.git"
+```
+
+### Output: Http
+
+POST a config to the specified URL
+
+```
+output:
+  default: http
+  http:
+    user: admin
+    password: changeit
+    url: "http://192.168.162.50:8080/db/coll"
 ```
 
 ### Output types
