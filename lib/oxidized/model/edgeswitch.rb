@@ -12,7 +12,7 @@ class EdgeSwitch < Oxidized::Model
 
   cfg :telnet do
     username /Username:\s/
-    passsword /^Password:\s/
+    password /^Password:\s/
   end
 
   cfg :telnet, :ssh do
