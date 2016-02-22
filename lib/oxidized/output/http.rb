@@ -14,7 +14,9 @@ module Oxidized
         raise NoConfig, 'no output http config, edit ~/.config/oxidized/config'
       end
     end
-
+    require "net/http"
+    require "uri"
+    require "json"
     def store node, outputs, opt={}
       @commitref = nil
       json = JSON.pretty_generate(
