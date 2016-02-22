@@ -41,4 +41,50 @@ describe Oxidized::Node do
       status.must_equal :success
     end
   end
+
+  describe '#repo' do
+    let(:group) { nil }
+    let(:node) do
+      Oxidized::Node.new({
+        ip: '127.0.0.1', group: group, model: 'junos'
+      })
+    end
+
+    it 'when there are no groups' do
+      Oxidized.config.output.git.repo = '/tmp/repository.git'
+      node.repo.must_equal '/tmp/repository.git'
+    end
+
+    describe 'when there are groups' do
+      let(:group) { 'ggrroouupp' }
+
+      before do
+        Oxidized.config.output.git.single_repo = single_repo
+      end
+
+      describe 'with only one repository' do
+        let(:single_repo) { true }
+
+        before do
+          Oxidized.config.output.git.repo = '/tmp/repository.git'
+        end
+
+        it 'should use the correct remote' do
+          node.repo.must_equal '/tmp/repository.git'
+        end
+      end
+
+      describe 'with more than one repository' do
+        let(:single_repo) { nil }
+
+        before do
+          Oxidized.config.output.git.repo.ggrroouupp = '/tmp/ggrroouupp.git'
+        end
+
+        it 'should use the correct remote' do
+          node.repo.must_equal '/tmp/ggrroouupp.git'
+        end
+      end
+    end
+  end
 end

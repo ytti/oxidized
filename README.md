@@ -375,13 +375,40 @@ output:
 
 This uses the rugged/libgit2 interface. So you should remember that normal Git hooks will not be executed.
 
-```
+
+For a single repositories for all devices:
+
+``` yaml
 output:
   default: git
   git:
     user: Oxidized
     email: o@example.com
     repo: "/var/lib/oxidized/devices.git"
+```
+
+And for groups repositories:
+
+``` yaml
+output:
+  default: git
+  git:
+    user: Oxidized
+    email: o@example.com
+    repo:
+      first: "/var/lib/oxidized/first.git"
+      second: "/var/lib/oxidized/second.git"
+```
+
+If you would like to use groups and a single repository, you can force this with the `single_repo` config.
+
+``` yaml
+output:
+  default: git
+  git:
+    single_repo: true
+    repo: "/var/lib/oxidized/devices.git"
+
 ```
 
 ### Output: Http
@@ -557,6 +584,40 @@ hooks:
     cmd: 'echo "Doing long running stuff for $OX_NODE_NAME" >> /tmp/ox_node_stuff.log; sleep 60'
     async: true
     timeout: 120
+```
+
+### githubrepo
+
+This hook configures the repository `remote` and _push_ the code when the specified event is triggerd. If the `username` and `password` are not provided, the `Rugged::Credentials::SshKeyFromAgent` will be used.
+
+`githubrepo` hook recognizes following configuration keys:
+
+  * `remote_repo`: the remote repository to be pushed to.
+  * `username`: username for repository auth.
+  * `password`: password for repository auth.
+
+When using groups repositories, each group must have its own `remote` in the `remote_repo` config.
+
+``` yaml
+hooks:
+  push_to_remote:
+    remote_repo:
+      routers: git@git.intranet:oxidized/routers.git
+      switches: git@git.intranet:oxidized/switches.git
+      firewalls: git@git.intranet:oxidized/firewalls.git
+```
+
+
+## Hook configuration example
+
+``` yaml
+hooks:
+  push_to_remote:
+    type: githubrepo
+    events: [node_success, post_store]
+    remote_repo: git@git.intranet:oxidized/test.git
+    username: user
+    password: pass
 ```
 
 # Ruby API
