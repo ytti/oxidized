@@ -3,7 +3,6 @@ require 'spec_helper'
 describe Oxidized::Node do
   before(:each) do
     Oxidized.stubs(:asetus).returns(Asetus.new)
-    Oxidized.config.output.git.repo = '/tmp/repository.git'
 
     Oxidized::Node.any_instance.stubs(:resolve_output)
     @node = Oxidized::Node.new(name: 'example.com',
@@ -44,25 +43,47 @@ describe Oxidized::Node do
   end
 
   describe '#repo' do
-    it 'when there is no groups' do
-      @node.repo.must_equal '/tmp/repository.git'
+    let(:group) { nil }
+    let(:node) do
+      Oxidized::Node.new({
+        ip: '127.0.0.1', group: group, model: 'junos'
+      })
+    end
+
+    it 'when there are no groups' do
+      Oxidized.config.output.git.repo = '/tmp/repository.git'
+      node.repo.must_equal '/tmp/repository.git'
     end
 
     describe 'when there are groups' do
-      let(:node) do
-        Oxidized::Node.new({
-          ip: '127.0.0.1', group: 'ggrroouupp', model: 'junos'
-        })
+      let(:group) { 'ggrroouupp' }
+
+      before do
+        Oxidized.config.output.git.single_repo = single_repo
       end
 
-      it 'with only one repository' do
-        Oxidized.config.output.git.single_repo = true
-        node.repo.must_equal '/tmp/repository.git'
+      describe 'with only one repository' do
+        let(:single_repo) { true }
+
+        before do
+          Oxidized.config.output.git.repo = '/tmp/repository.git'
+        end
+
+        it 'should use the correct remote' do
+          node.repo.must_equal '/tmp/repository.git'
+        end
       end
 
-      it 'with more than one repository' do
-        Oxidized.config.output.git.single_repo = false
-        node.repo.must_equal '/tmp/ggrroouupp.git'
+      describe 'with more than one repository' do
+        let(:single_repo) { nil }
+
+        before do
+          Oxidized.config.output.git.repo.ggrroouupp = '/tmp/ggrroouupp.git'
+        end
+
+        it 'should use the correct remote' do
+          node.repo.must_equal '/tmp/ggrroouupp.git'
+        end
       end
     end
   end

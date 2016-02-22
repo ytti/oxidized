@@ -171,14 +171,12 @@ module Oxidized
     end
 
     def resolve_repo
-      git = Oxidized.config.output.git
-      cfg_repo = git.repo
+      remote_repo = Oxidized.config.output.git.repo
 
-      if group && !git.single_repo?
-        basedir = File.dirname(cfg_repo)
-        File.join(basedir, "#{group}.git")
+      if Oxidized.config.output.git.single_repo? || @group.nil? || remote_repo.is_a?(String)
+        remote_repo
       else
-        cfg_repo
+        remote_repo[@group]
       end
     end
 

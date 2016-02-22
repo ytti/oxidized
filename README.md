@@ -354,13 +354,40 @@ output:
 
 This uses the rugged/libgit2 interface. So you should remember that normal Git hooks will not be executed.
 
-```
+
+For a single repositories for all devices:
+
+``` yaml
 output:
   default: git
   git:
     user: Oxidized
     email: o@example.com
     repo: "/var/lib/oxidized/devices.git"
+```
+
+And for groups repositories:
+
+``` yaml
+output:
+  default: git
+  git:
+    user: Oxidized
+    email: o@example.com
+    repo:
+      first: "/var/lib/oxidized/first.git"
+      second: "/var/lib/oxidized/second.git"
+```
+
+If you would like to use groups and a single repository, you can force this with the `single_repo` config.
+
+``` yaml
+output:
+  default: git
+  git:
+    single_repo: true
+    repo: "/var/lib/oxidized/devices.git"
+
 ```
 
 ### Output types

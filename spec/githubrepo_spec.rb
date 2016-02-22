@@ -12,7 +12,6 @@ describe GithubRepo do
 
   before(:each) do
     Oxidized.asetus = Asetus.new
-    Oxidized.config.output.git.repo = 'foo.git'
     Oxidized.config.log = '/dev/null'
     Oxidized.setup_logger
   end
@@ -97,6 +96,7 @@ describe GithubRepo do
 
     describe 'when there is only one repository and no groups' do
       before do
+        Oxidized.config.output.git.repo = 'foo.git'
         remote.expects(:url).returns('https://github.com/username/foo.git')
         remote.expects(:push).with(['refs/heads/master'], credentials: credentials).returns(true)
         repo.expects(:remotes).returns({'origin' => remote})
@@ -139,6 +139,7 @@ describe GithubRepo do
         let(:repository) { './ggrroouupp.git' }
 
         before do
+          Oxidized.config.output.git.repo.ggrroouupp = repository
           Oxidized.config.hooks.github_repo_hook.remote_repo.ggrroouupp = 'ggrroouupp#remote_repo'
         end
 
@@ -153,6 +154,7 @@ describe GithubRepo do
         let(:repository) { 'foo.git' }
 
         before do
+          Oxidized.config.output.git.repo = repository
           Oxidized.config.hooks.github_repo_hook.remote_repo = 'github_repo_hook#remote_repo'
           Oxidized.config.output.git.single_repo = true
         end
