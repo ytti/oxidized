@@ -41,6 +41,8 @@ class TMOS < Oxidized::Model
     comment cfg
   end
 
+  cmd('cat /config/partitions/*/bigip.conf') { |cfg| comment cfg }
+
   cfg :ssh do
     exec true  # don't run shell, run each command in exec channel
   end
