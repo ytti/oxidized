@@ -304,7 +304,7 @@ source:
 
 ### SSH Proxy Command
 
-Oxidized can `ssh` through a proxy as well. To do so we just need to set `proxy` variable.
+Oxidized can `ssh` through a proxy as well. To do so we just need to set `ssh_proxy` variable.
 
 ```
 ...
@@ -313,7 +313,7 @@ map:
   model: 1
 vars_map:
   enable: 2
-  proxy: 3
+  ssh_proxy: 3
 ...
 ```
 
