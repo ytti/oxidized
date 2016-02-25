@@ -4,7 +4,7 @@ class EdgeSwitch < Oxidized::Model
 
   comment '!'
 
-  prompt /[(]\w*\s\w*[)][\s#>]*[\s#>]/
+  prompt /\(.*\)\s[#>]/
 
   cmd 'show running-config' do |cfg|
     cfg.each_line.reject { |line| line.match /System Up Time.*/ or line.match /Current SNTP Synchronized Time.*/ }.join
