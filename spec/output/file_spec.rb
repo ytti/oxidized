@@ -32,6 +32,7 @@ describe Oxidized::OxidizedFile do
 
       it 'should store a file without a group' do
         subject.store(node, outputs, {})
+        subject.commitref.must_equal(file)
       end
     end
 
@@ -46,6 +47,7 @@ describe Oxidized::OxidizedFile do
 
       it 'should store a file in the group directory' do
         subject.store(node, outputs, { group: group })
+        subject.commitref.must_equal(file)
       end
     end
   end
