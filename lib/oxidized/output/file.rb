@@ -19,11 +19,11 @@ class OxidizedFile < Output
   def store node, outputs, opt={}
     file = @cfg.directory
     if opt[:group]
-      file = File.join File.dirname(file), opt[:group]
+      file = File.join file, opt[:group]
     end
     FileUtils.mkdir_p file
     file = File.join file, node
-    open(file, 'w') { |fh| fh.write outputs.to_cfg }
+    File.open(file, 'w') { |fh| fh.write outputs.to_cfg }
     @commitref = file
   end
 
