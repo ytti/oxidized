@@ -595,8 +595,8 @@ This hook configures the repository `remote` and _push_ the code when the specif
   * `remote_repo`: the remote repository to be pushed to.
   * `username`: username for repository auth.
   * `password`: password for repository auth.
-  * `pubkey`: publickey for repository auth.
-  * `privkey`: privatekey for repository auth.
+  * `publickey`: publickey for repository auth.
+  * `privatekey`: privatekey for repository auth.
 
 When using groups repositories, each group must have its own `remote` in the `remote_repo` config.
 
