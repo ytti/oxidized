@@ -49,7 +49,7 @@ class GithubRepo < Oxidized::Hook
       log "Using https auth", :debug
       Rugged::Credentials::UserPassword.new(username: cfg.username, password: cfg.password)
     else
-      @credentials ||= if cfg.has_key?('pubkey') && cfg.has_key?('privkey')
+      if cfg.has_key?('pubkey') && cfg.has_key?('privkey')
         log "Using ssh auth with key", :debug
         Rugged::Credentials::SshKey.new(username: 'git', publickey: File.expand_path(cfg.pubkey), privatekey: File.expand_path(cfg.privkey))
       else
