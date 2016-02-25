@@ -127,7 +127,7 @@ gem install oxidized-script oxidized-web # if you don't install oxidized-web, ma
 ## CentOS, Oracle Linux, Red Hat Linux version 6
 Install Ruby 1.9.3 or greater (for Ruby 2.1.2 installation instructions see "Installing Ruby 2.1.2 using RVM"), then install Oxidized dependencies
 ```shell
-yum install cmake sqlite-devel openssl-devel
+yum install cmake sqlite-devel openssl-devel libssh2-devel
 ```
 
 Now lets install oxidized via Rubygems:
@@ -202,7 +202,7 @@ Install Ruby 2.1.2 build dependencies
 ```
 yum install curl gcc-c++ patch readline readline-devel zlib zlib-devel
 yum install libyaml-devel libffi-devel openssl-devel make cmake
-yum install bzip2 autoconf automake libtool bison iconv-devel
+yum install bzip2 autoconf automake libtool bison iconv-devel libssh2-devel
 ```
 
 Install RVM
