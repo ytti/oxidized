@@ -71,6 +71,8 @@ Oxidized is a network device configuration backup tool. It's a RANCID replacemen
    * IOSXR
    * NXOS
    * SMB (Nikola series)
+ * Citrix
+   * NetScaler (Virtual Applicance)
  * Cumulus
    * Linux
  * DELL
