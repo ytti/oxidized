@@ -23,7 +23,7 @@ class TMOS < Oxidized::Model
   cmd('cat /config/bigip.license') { |cfg| comment cfg }
 
   cmd 'tmsh -q list' do |cfg|
-    cfg.gsub!(/state (up|down|checking)/, '')
+    cfg.gsub!(/state (up|down|checking|irule-down)/, '')
     cfg.gsub!(/errors (\d+)/, '')
     cfg
   end
