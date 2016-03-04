@@ -22,24 +22,26 @@ class TMOS < Oxidized::Model
 
   cmd('cat /config/bigip.license') { |cfg| comment cfg }
 
-  cmd 'tmsh list' do |cfg|
-    cfg.gsub!(/state (up|down)/, '')
+  cmd 'tmsh -q list' do |cfg|
+    cfg.gsub!(/state (up|down|checking|irule-down)/, '')
     cfg.gsub!(/errors (\d+)/, '')
     cfg
   end
 
-  cmd('tmsh list net route all') { |cfg| comment cfg }
+  cmd('tmsh -q list net route all') { |cfg| comment cfg }
 
   cmd('/bin/ls --full-time --color=never /config/ssl/ssl.crt') { |cfg| comment cfg }
 
   cmd('/bin/ls --full-time --color=never /config/ssl/ssl.key') { |cfg| comment cfg }
 
-  cmd 'tmsh show running-config sys db all-properties' do |cfg|
+  cmd 'tmsh -q show running-config sys db all-properties' do |cfg|
     cfg.gsub!(/sys db configsync.localconfigtime {[^}]+}/m, '')
     cfg.gsub!(/sys db gtm.configtime {[^}]+}/m, '')
     cfg.gsub!(/sys db ltm.configtime {[^}]+}/m, '')
     comment cfg
   end
+
+  cmd('cat /config/partitions/*/bigip.conf') { |cfg| comment cfg }
 
   cfg :ssh do
     exec true  # don't run shell, run each command in exec channel

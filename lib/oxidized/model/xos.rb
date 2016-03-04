@@ -36,8 +36,10 @@ class XOS < Oxidized::Model
 
   cfg :telnet, :ssh do
     post_login 'disable clipaging'
-    pre_logout 'exit'
-    pre_logout 'n'
+    pre_logout do
+      send "exit\n"
+      send "n\n"
+    end
   end
 
 end

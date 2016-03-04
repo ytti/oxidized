@@ -24,7 +24,7 @@ module Oxidized
       @vars           = opt[:vars]
       @stats          = Stats.new
       @retry          = 0
-      @repo           = Oxidized.config.output.git.repo
+      @repo           = resolve_repo
 
       # model instance needs to access node instance
       @model.node = self
@@ -168,6 +168,16 @@ module Oxidized
         Oxidized.mgr.add_model model or raise ModelNotFound, "#{model} not found for node #{ip}"
       end
       Oxidized.mgr.model[model].new
+    end
+
+    def resolve_repo
+      remote_repo = Oxidized.config.output.git.repo
+
+      if Oxidized.config.output.git.single_repo? || @group.nil? || remote_repo.is_a?(String)
+        remote_repo
+      else
+        remote_repo[@group]
+      end
     end
 
   end

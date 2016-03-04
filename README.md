@@ -31,6 +31,7 @@ Oxidized is a network device configuration backup tool. It's a RANCID replacemen
     * [Source: SQLite](#source-sqlite)
     * [Source: HTTP](#source-http)
     * [Output: GIT](#output-git)
+    * [Output: HTTP](#output-http)
     * [Output: File](#output-file)
     * [Output types](#output-types)
     * [Advanced Configuration](#advanced-configuration)
@@ -70,6 +71,8 @@ Oxidized is a network device configuration backup tool. It's a RANCID replacemen
    * IOSXR
    * NXOS
    * SMB (Nikola series)
+ * Citrix
+   * NetScaler (Virtual Applicance)
  * Cumulus
    * Linux
  * DELL
@@ -126,7 +129,7 @@ gem install oxidized-script oxidized-web # if you don't install oxidized-web, ma
 ## CentOS, Oracle Linux, Red Hat Linux version 6
 Install Ruby 1.9.3 or greater (for Ruby 2.1.2 installation instructions see "Installing Ruby 2.1.2 using RVM"), then install Oxidized dependencies
 ```shell
-yum install cmake sqlite-devel openssl-devel
+yum install cmake sqlite-devel openssl-devel libssh2-devel
 ```
 
 Now lets install oxidized via Rubygems:
@@ -140,6 +143,21 @@ gem install oxidized-script oxidized-web
 Oxidized configuration is in YAML format. Configuration files are subsequently sourced from ```/etc/oxidized/config``` then ```~/.config/oxidized/config```. The hashes will be merged, this might be useful for storing source information in a system wide file and  user specific configuration in the home directory (to only include a staff specific username and password). Eg. if many users are using ```oxs```, see [Oxidized::Script](https://github.com/ytti/oxidized-script).
 
 To initialize a default configuration in your home directory ```~/.config/oxidized/config```, simply run ```oxidized``` once. If you don't further configure anything from the output and source sections, it'll extend the examples on a subsequent ```oxidized``` execution. This is useful to see what options for a specific source or output backend are available.
+
+You can set the env variable `OXIDIZED_HOME` to change its home directory.
+
+```
+OXIDIZED_HOME=/etc/oxidized
+
+$ tree -L 1 /etc/oxidized
+/etc/oxidized/
+├── config
+├── log-router-ssh
+├── log-router-telnet
+├── pid
+├── router.db
+└── repository.git
+```
 
 ## Source
 
@@ -186,7 +204,7 @@ Install Ruby 2.1.2 build dependencies
 ```
 yum install curl gcc-c++ patch readline readline-devel zlib zlib-devel
 yum install libyaml-devel libffi-devel openssl-devel make cmake
-yum install bzip2 autoconf automake libtool bison iconv-devel
+yum install bzip2 autoconf automake libtool bison iconv-devel libssh2-devel
 ```
 
 Install RVM
@@ -288,7 +306,7 @@ source:
 
 ### SSH Proxy Command
 
-Oxidized can `ssh` through a proxy as well. To do so we just need to set `proxy` variable.
+Oxidized can `ssh` through a proxy as well. To do so we just need to set `ssh_proxy` variable.
 
 ```
 ...
@@ -297,7 +315,7 @@ map:
   model: 1
 vars_map:
   enable: 2
-  proxy: 3
+  ssh_proxy: 3
 ...
 ```
 
@@ -359,13 +377,53 @@ output:
 
 This uses the rugged/libgit2 interface. So you should remember that normal Git hooks will not be executed.
 
-```
+
+For a single repositories for all devices:
+
+``` yaml
 output:
   default: git
   git:
     user: Oxidized
     email: o@example.com
     repo: "/var/lib/oxidized/devices.git"
+```
+
+And for groups repositories:
+
+``` yaml
+output:
+  default: git
+  git:
+    user: Oxidized
+    email: o@example.com
+    repo:
+      first: "/var/lib/oxidized/first.git"
+      second: "/var/lib/oxidized/second.git"
+```
+
+If you would like to use groups and a single repository, you can force this with the `single_repo` config.
+
+``` yaml
+output:
+  default: git
+  git:
+    single_repo: true
+    repo: "/var/lib/oxidized/devices.git"
+
+```
+
+### Output: Http
+
+POST a config to the specified URL
+
+```
+output:
+  default: http
+  http:
+    user: admin
+    password: changeit
+    url: "http://192.168.162.50:8080/db/coll"
 ```
 
 ### Output types
@@ -529,6 +587,42 @@ hooks:
     cmd: 'echo "Doing long running stuff for $OX_NODE_NAME" >> /tmp/ox_node_stuff.log; sleep 60'
     async: true
     timeout: 120
+```
+
+### githubrepo
+
+This hook configures the repository `remote` and _push_ the code when the specified event is triggerd. If the `username` and `password` are not provided, the `Rugged::Credentials::SshKeyFromAgent` will be used.
+
+`githubrepo` hook recognizes following configuration keys:
+
+  * `remote_repo`: the remote repository to be pushed to.
+  * `username`: username for repository auth.
+  * `password`: password for repository auth.
+  * `publickey`: publickey for repository auth.
+  * `privatekey`: privatekey for repository auth.
+
+When using groups repositories, each group must have its own `remote` in the `remote_repo` config.
+
+``` yaml
+hooks:
+  push_to_remote:
+    remote_repo:
+      routers: git@git.intranet:oxidized/routers.git
+      switches: git@git.intranet:oxidized/switches.git
+      firewalls: git@git.intranet:oxidized/firewalls.git
+```
+
+
+## Hook configuration example
+
+``` yaml
+hooks:
+  push_to_remote:
+    type: githubrepo
+    events: [node_success, post_store]
+    remote_repo: git@git.intranet:oxidized/test.git
+    username: user
+    password: pass
 ```
 
 # Ruby API

@@ -23,8 +23,8 @@ module Oxidized
       secure = Oxidized.config.input.ssh.secure
       @log = File.open(Oxidized::Config::Log + "-#{@node.ip}-ssh", 'w') if Oxidized.config.input.debug?
       port = vars(:ssh_port) || 22
-      if proxy_host = vars(:proxy)
-        proxy =  Net::SSH::Proxy::Command.new("ssh #{proxy_host} nc %h %p")
+      if proxy_host = vars(:ssh_proxy)
+        proxy =  Net::SSH::Proxy::Command.new("ssh #{proxy_host} -W %h:%p")
       end
       ssh_opts = {
         :port => port.to_i,
@@ -92,7 +92,7 @@ module Oxidized
           @output << data
           @output = @node.model.expects @output
         end
-        ch.request_pty (opts={:term=>'vt100'}) do |_ch, success_pty|
+        ch.request_pty (_opts={:term=>'vt100'}) do |_ch, success_pty|
           raise NoShell, "Can't get PTY" unless success_pty
           ch.send_channel_request 'shell' do |_ch, success_shell|
             raise NoShell, "Can't get shell" unless success_shell

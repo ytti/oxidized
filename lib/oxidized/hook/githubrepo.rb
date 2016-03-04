@@ -1,12 +1,12 @@
 class GithubRepo < Oxidized::Hook
   def validate_cfg!
-    cfg.has_key?('remote_repo') or raise KeyError, 'remote_repo is required'
+    raise KeyError, 'hook.remote_repo is required' unless cfg.has_key?('remote_repo')
   end
 
   def run_hook(ctx)
-    repo = Rugged::Repository.new(Oxidized.config.output.git.repo)
+    repo = Rugged::Repository.new(ctx.node.repo)
     log "Pushing local repository(#{repo.path})..."
-    remote = repo.remotes['origin'] || repo.remotes.create('origin', cfg.remote_repo)
+    remote = repo.remotes['origin'] || repo.remotes.create('origin', remote_repo(ctx.node))
     log "to remote: #{remote.url}"
 
     fetch_and_merge_remote(repo)
@@ -49,9 +49,21 @@ class GithubRepo < Oxidized::Hook
       log "Using https auth", :debug
       Rugged::Credentials::UserPassword.new(username: cfg.username, password: cfg.password)
     else
-      log "Using ssh auth", :debug
-      Rugged::Credentials::SshKeyFromAgent.new(username: 'git')
+      if cfg.has_key?('publickey') && cfg.has_key?('privatekey')
+        log "Using ssh auth with key", :debug
+        Rugged::Credentials::SshKey.new(username: 'git', publickey: File.expand_path(cfg.publickey), privatekey: File.expand_path(cfg.privatekey))
+      else
+        log "Using ssh auth with agentforwarding", :debug
+        Rugged::Credentials::SshKeyFromAgent.new(username: 'git')
+      end
     end
   end
 
+  def remote_repo(node)
+    if node.group.nil? || cfg.remote_repo.is_a?(String)
+      cfg.remote_repo
+    else
+      cfg.remote_repo[node.group]
+    end
+  end
 end

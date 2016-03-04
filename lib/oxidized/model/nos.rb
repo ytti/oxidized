@@ -33,7 +33,7 @@ class NOS < Oxidized::Model
 
   cfg :telnet do
     username /^.* login: /
-    username /^Password:/
+    password /^Password:/
   end
 
   cfg :telnet, :ssh do
