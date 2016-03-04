@@ -24,7 +24,7 @@ class DataCom < Oxidized::Model
     cfg.cut_head
   end
 
-  cfg :telnet do
+  cfg :telnet, :ssh do
     username /login:\s$/
     password /^Password:\s$/
     pre_logout 'exit'
