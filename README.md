@@ -618,7 +618,7 @@ hooks:
 hooks:
   push_to_remote:
     type: githubrepo
-    events: [node_success, post_store]
+    events: [post_store]
     remote_repo: git@git.intranet:oxidized/test.git
     username: user
     password: pass
