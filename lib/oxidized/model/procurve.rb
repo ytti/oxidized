@@ -21,6 +21,13 @@ class Procurve < Oxidized::Model
     cfg = cfg.gsub /^\r/, ''
   end
 
+  cmd :secret do |cfg|
+    cfg.gsub! /^(snmp-server community).*/, '\\1 <configuration removed>'
+    cfg.gsub! /^(snmp-server host).*/, '\\1 <configuration removed>'
+    cfg.gsub! /^(radius-server host).*/, '\\1 <configuration removed>'
+    cfg
+  end
+
   cmd 'show version' do |cfg|
     comment cfg
   end
