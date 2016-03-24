@@ -106,6 +106,8 @@ Oxidized is a network device configuration backup tool. It's a RANCID replacemen
    * RFS
  * MRV
    * MasterOS
+ * Netonix
+   * WISP Switch (As Netonix)
  * Opengear
    * Opengear
  * Palo Alto
