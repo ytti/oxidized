@@ -16,9 +16,17 @@ class EdgeSwitch < Oxidized::Model
   end
 
   cfg :telnet, :ssh do
-    post_login 'enable'
-    post_login 'terminal length 0'
+    post_login do
+      if vars :enable
+        send "enable\n"
+        cmd vars(:enable)
+      else
+        cmd 'enable'
+      end
+      cmd 'terminal length 0'
+    end
     pre_logout 'quit'
+    pre_logout 'n'
   end
 
 end
