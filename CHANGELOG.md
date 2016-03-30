@@ -1,5 +1,5 @@
 # 0.13.1
-- BUGFIX: file versions
+- BUGFIX: file permissions (Sigh...)
 
 # 0.13.0
 - FEATURE: http post for configs (by @jgroom33)
