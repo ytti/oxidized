@@ -1,4 +1,4 @@
-class mtrlrfs < Oxidized::Model
+class Mtrlrfs < Oxidized::Model
 
   # Motorola RFS/Extreme WM
 
