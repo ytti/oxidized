@@ -1,3 +1,6 @@
+# 0.13.1
+- BUGFIX: file versions
+
 # 0.13.0
 - FEATURE: http post for configs (by @jgroom33)
 - FEATURE: support ericsson redbacks (by @roedie)
