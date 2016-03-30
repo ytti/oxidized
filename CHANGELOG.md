@@ -1,3 +1,18 @@
+# 0.13.0
+- FEATURE: http post for configs (by @jgroom33)
+- FEATURE: support ericsson redbacks (by @roedie)
+- FEATURE: support motorola wireless controllers (by @roadie)
+- FEATURE: support citrix netscaler (by @roadie)
+- FEATURE: support datacom devices (by @danilopopeye)
+- FEATURE: support netonix devices
+- FEATURE: support specifying ssh cipher and kex (by @roadie)
+- FEATURE: rename proxy to ssh_proxy (by @roadie)
+- FEATURE: support ssh keys on ssh_proxy (by @awix)
+- BUGFIX: various (by @danilopopeye)
+- BUGFIX: Node#repo with groups (by @danilopopeye)
+- BUGFIX: githubrepohoook (by @danilopopeye)
+- BUGFIX: fortios, airos, junos, xos, edgeswitch, nos, tmos, procurve, ipos models
+
 # 0.12.2
 - BUGFIX: more MRV model fixes (by @natm)
 
@@ -12,7 +27,7 @@
 - FEATURE: EdgeSwitch support (by @doogieconsulting)
 - BUGFIX: rename input debug log files
 - BUGFIX: powerconnect model fixes (by @Madpilot0)
-- BUGFIX: fortigate model fixes (by @ElvinEfendi) 
+- BUGFIX: fortigate model fixes (by @ElvinEfendi)
 - BUGFIX: various (by @mikebryant)
 - BUGFIX: write SSH debug to file without buffering
 - BUGFIX: fix IOS XR prompt handling
