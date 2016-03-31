@@ -1,13 +1,6 @@
 class Supermicro < Oxidized::Model
   comment  '! '
 
-  # example how to handle pager
-  # --- [Space] Next page, [Enter] Next line, [A] All, Others to exit ---
-  expect /^---(.*)exit ---$/ do |data, re|
-    send 'a'
-    data.sub re, ''
-  end
-
   cmd :secret do |cfg|
     cfg.gsub!(/password \d+ (\S+).*/, '<secret removed>')
     cfg.gsub!(/community (\S+)/, 'community <hidden>')
@@ -15,7 +8,7 @@ class Supermicro < Oxidized::Model
   end
 
   cmd :all do |cfg|
-     cfg.each_line.to_a[1..-2].join
+     cfg.each_line.to_a[2..-2].join
   end
 
   cmd 'show running-config'
@@ -25,6 +18,10 @@ class Supermicro < Oxidized::Model
   end
 
   cmd 'show memory' do |cfg|
+    comment cfg
+  end
+
+  cmd 'show system' do |cfg|
     comment cfg
   end
 
@@ -42,7 +39,7 @@ class Supermicro < Oxidized::Model
   end
 
   cfg :telnet, :ssh do
+    post_login 'terminal length 0'
     pre_logout 'exit'
   end
-
 end
