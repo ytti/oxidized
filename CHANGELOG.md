@@ -1,3 +1,6 @@
+# 0 14.0
+- FEATURE: support supermicro swithes (by @funzoneq)
+
 # 0.13.1
 - BUGFIX: file permissions (Sigh...)
 
