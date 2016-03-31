@@ -112,6 +112,8 @@ Oxidized is a network device configuration backup tool. It's a RANCID replacemen
    * Opengear
  * Palo Alto
    * PANOS
+ * Supermicro
+   * Supermicro
  * Ubiquiti
    * AirOS
    * Edgeos
