@@ -3,10 +3,12 @@ class TMOS < Oxidized::Model
   comment  '# '
 
   cmd :secret do |cfg|
-    cfg.gsub!(/password (\S+)/, 'password <secret removed>')
-    cfg.gsub!(/passphrase (\S+)/, 'passphrase <secret removed>')
-    cfg.gsub!(/community (\S+)/, 'community <secret removed>')
-    cfg.gsub!(/community-name (\S+)/, 'community-name <secret removed>')
+    cfg.gsub!(/^([\s\t]*)secret \S+/, '\1secret <secret removed>')
+    cfg.gsub!(/^([\s\t]*\S*)password \S+/, '\1password <secret removed>')
+    cfg.gsub!(/^([\s\t]*\S*)passphrase \S+/, '\1passphrase <secret removed>')
+    cfg.gsub!(/community \S+/, 'community <secret removed>')
+    cfg.gsub!(/community-name \S+/, 'community-name <secret removed>')
+    cfg.gsub!(/^([\s\t]*\S*)encrypted \S+$/, '\1encrypted <secret removed>')
     cfg
   end
 
