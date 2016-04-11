@@ -29,7 +29,7 @@ class NOS < Oxidized::Model
     comment cfg.each_line.reject { |line| line.match /Time/ or line.match /speed/ }
   end
 
-  cmd 'show running-config'
+  cmd 'show running-config | nomore'
 
   cfg :telnet do
     username /^.* login: /
