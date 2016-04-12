@@ -17,19 +17,20 @@ module Oxidized
       asetus = Asetus.new(name: 'oxidized', load: false, key_to_s: true)
       Oxidized.asetus = asetus
 
-      asetus.default.username      = 'username'
-      asetus.default.password      = 'password'
-      asetus.default.model         = 'junos'
-      asetus.default.interval      = 3600
-      asetus.default.use_syslog    = false
-      asetus.default.debug         = false
-      asetus.default.threads       = 30
-      asetus.default.timeout       = 20
-      asetus.default.retries       = 3
-      asetus.default.prompt        = /^([\w.@-]+[#>]\s?)$/
-      asetus.default.rest          = '127.0.0.1:8888' # or false to disable
-      asetus.default.vars          = {}             # could be 'enable'=>'enablePW'
-      asetus.default.groups        = {}             # group level configuration
+      asetus.default.username          = 'username'
+      asetus.default.password          = 'password'
+      asetus.default.model             = 'junos'
+      asetus.default.interval          = 3600
+      asetus.default.use_syslog        = false
+      asetus.default.debug             = false
+      asetus.default.threads           = 30
+      asetus.default.timeout           = 20
+      asetus.default.retries           = 3
+      asetus.default.prompt            = /^([\w.@-]+[#>]\s?)$/
+      asetus.default.rest              = '127.0.0.1:8888' # or false to disable
+      asetus.default.rest_hide_enable  = false        # to don't break actual setup, we set to false
+      asetus.default.vars              = {}             # could be 'enable'=>'enablePW'
+      asetus.default.groups            = {}             # group level configuration
 
       asetus.default.input.default    = 'ssh, telnet'
       asetus.default.input.debug      = false # or String for session log file

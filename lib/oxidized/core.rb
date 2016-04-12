@@ -22,7 +22,9 @@ module Oxidized
           raise OxidizedError, 'oxidized-web not found: sudo gem install oxidized-web - \
           or disable web support by setting "rest: false" in your configuration'
         end
-        @rest        = API::Web.new nodes, Oxidized.config.rest
+        @rest        = API::Web.new nodes,
+                                    Oxidized.config.rest,
+                                    Oxidized.config.rest_hide_enable
         @rest.run
       end
       run
