@@ -403,9 +403,23 @@ output:
   git:
     user: Oxidized
     email: o@example.com
-    repo:
-      first: "/var/lib/oxidized/first.git"
-      second: "/var/lib/oxidized/second.git"
+    repo: "/var/lib/oxidized/git-repos/default.git"
+```
+
+Oxidized will create a repository for each group in the same directory as the `default.git`. For
+example:
+
+``` csv
+host1:ios:first
+host2:nxos:second
+```
+
+This will generate the following repositories:
+
+``` bash
+$ ls /var/lib/oxidized/git-repos
+
+default.git first.git second.git
 ```
 
 If you would like to use groups and a single repository, you can force this with the `single_repo` config.
