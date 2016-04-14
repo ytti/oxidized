@@ -28,9 +28,9 @@ module Oxidized
       asetus.default.retries           = 3
       asetus.default.prompt            = /^([\w.@-]+[#>]\s?)$/
       asetus.default.rest              = '127.0.0.1:8888' # or false to disable
-      asetus.default.rest_hide_enable  = false        # to don't break actual setup, we set to false
-      asetus.default.vars              = {}             # could be 'enable'=>'enablePW'
-      asetus.default.groups            = {}             # group level configuration
+      asetus.default.rest_hide_enable  = false            # so don't break current setup, setting it to false
+      asetus.default.vars              = {}               # could be 'enable'=>'enablePW'
+      asetus.default.groups            = {}               # group level configuration
 
       asetus.default.input.default    = 'ssh, telnet'
       asetus.default.input.debug      = false # or String for session log file
