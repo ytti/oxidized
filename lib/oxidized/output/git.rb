@@ -70,7 +70,10 @@ class Git < Output
     def version node, group
       begin
         repo = @cfg.repo
-        if group
+        path = node
+        if group and @cfg.single_repo?
+          path = "#{group}/#{node}"
+        elsif group
           repo = File.join File.dirname(repo), group + '.git'
         end
         repo = Rugged::Repository.new repo
@@ -80,7 +83,7 @@ class Git < Output
         i = -1
         tab  = []
         walker.each do |commit|
-          if commit.diff(paths: [node]).size > 0
+          if commit.diff(paths: [path]).size > 0
             hash = {}
             hash[:date] = commit.time.to_s
             hash[:oid] = commit.oid
@@ -100,7 +103,7 @@ class Git < Output
     def get_version node, group, oid
       begin
         repo = @cfg.repo
-        if group && group != ''
+        if group && group != '' && !@cfg.single_repo?
           repo = File.join File.dirname(repo), group + '.git'
         end
         repo = Rugged::Repository.new repo
@@ -115,7 +118,7 @@ class Git < Output
       begin
         repo = @cfg.repo
         diff_commits = nil
-        if group && group != ''
+        if group && group != '' && !@cfg.single_repo?
           repo = File.join File.dirname(repo), group + '.git'
         end
         repo = Rugged::Repository.new repo
