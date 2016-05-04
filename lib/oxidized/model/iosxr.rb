@@ -30,7 +30,7 @@ class IOSXR < Oxidized::Model
 
   cfg :telnet do
     username /^Username:/
-    password /^Password:/
+    password /^\r?Password:/
   end
 
   cfg :telnet, :ssh do
