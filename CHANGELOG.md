@@ -1,5 +1,9 @@
 # 0 14.0
 - FEATURE: support supermicro swithes (by @funzoneq)
+- FEATURE: support catos switches
+- BUGFIX: git+groups+singlerepo (by @PANZERBARON)
+- BUGFIX: asa, tmos, ironware, ios-xr
+- BUGFIX: mandate net-ssh 3.0.x, don't accept 3.1 (numerous issues)
 
 # 0.13.1
 - BUGFIX: file permissions (Sigh...)
