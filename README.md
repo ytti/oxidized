@@ -292,6 +292,30 @@ vars:
    enable: S3cre7
 ```
 
+### Removing secrets
+
+To strip out secrets from configurations before storing them, Oxidized needs the the remove_secrets flag. You can globally enable this by adding the following snippet to the global sections of the configuration file.
+
+```
+vars:
+  remove_secret: true
+```
+
+Device models can contain substitution filters to remove potentially sensitive data from configs.
+
+As a partial example from ios.rb:
+
+```  
+  cmd :secret do |cfg|
+    cfg.gsub! /^(snmp-server community).*/, '\\1 <configuration removed>'
+    (...)    
+    cfg
+  end
+```
+The above strips out snmp community strings from your saved configs.
+
+**NOTE:** Removing secrets reduces the usefulness as a full configuration backup, but it may make sharing configs easier.
+
 ### Source: CSV
 
 One line per device, colon seperated.
