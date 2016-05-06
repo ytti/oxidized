@@ -1,4 +1,7 @@
-# 0 14.0
+# 0.14.1
+- BUGFIX: git get_version when groups and single_repo are used
+
+# 0.14.0
 - FEATURE: support supermicro swithes (by @funzoneq)
 - FEATURE: support catos switches
 - BUGFIX: git+groups+singlerepo (by @PANZERBARON)
