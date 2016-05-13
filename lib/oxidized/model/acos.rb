@@ -1,5 +1,5 @@
 class ACOS < Oxidized::Model
-	# A10 ACOS model for AX and Thunder series
+        # A10 ACOS model for AX and Thunder series
 
   comment  '! '
 
@@ -17,10 +17,14 @@ class ACOS < Oxidized::Model
   cmd 'show running-config all-partitions'
 
   cmd 'show aflex all-partitions' do |cfg|
+    comment cfg
+  end
+
+  cmd 'show aflex all-partitions' do |cfg|
     @partitions_aflex = cfg.lines.each_with_object({}) do |l,h|
       h[$1] = [] if l.match /partition: (.+)/
       # only consider scripts that have passed syntax check
-      h[h.keys.last] << $1 if l.match /^([\w-]+) +Check/  
+      h[h.keys.last] << $1 if l.match /^([\w-]+) +Check/
     end
     ''
   end
@@ -52,18 +56,20 @@ class ACOS < Oxidized::Model
     username  /login:/
     password  /^Password:/
   end
-
+  
   cfg :telnet, :ssh do
     # preferred way to handle additional passwords
     if vars :enable
       post_login do
-        send "enable\n"
-        send vars(:enable) + "\n"
+        send "enable\r"
+        send vars(:enable) + "\r"
       end
     end
     post_login 'terminal length 0'
     post_login 'terminal width 0'
-    pre_logout "exit\nexit\ny"
+    post_login 'terminal idle-timeout 10'
+    post_login "en\n"
+    pre_logout "exit\nexit\nY\r\n"
   end
 
 end
