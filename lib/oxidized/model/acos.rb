@@ -68,7 +68,7 @@ class ACOS < Oxidized::Model
       end
     end
     post_login 'terminal length 0'
-	post_login 'terminal width 0'
+    post_login 'terminal width 0'
     pre_logout "exit\nexit\nY\r\n"
   end
 
