@@ -21,7 +21,14 @@ class Git < Output
       Oxidized.asetus.save :user
       raise NoConfig, 'no output git config, edit ~/.config/oxidized/config'
     end
-    @cfg.repo = File.expand_path @cfg.repo
+
+    if @cfg.repo.respond_to?(:each)
+      @cfg.repo.each do |group, repo|
+        @cfg.repo["#{group}="] = File.expand_path repo
+      end
+    else
+      @cfg.repo = File.expand_path @cfg.repo
+    end
   end
 
   def store file, outputs, opt={}
@@ -152,13 +159,19 @@ class Git < Output
 
   def update repo, file, data
     return if data.empty?
+
     if @opt[:group]
       if @cfg.single_repo?
         file = File.join @opt[:group], file
       else
-        repo = File.join File.dirname(repo), @opt[:group] + '.git'
+        repo = if repo.is_a?(String)
+                 File.join File.dirname(repo), @opt[:group] + '.git'
+               else
+                 repo[@opt[:group]]
+               end
       end
     end
+
     begin
       repo = Rugged::Repository.new repo
       update_repo repo, file, data, @msg, @user, @email
