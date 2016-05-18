@@ -56,7 +56,6 @@ class ACOS < Oxidized::Model
     username  /login:/
     password  /^Password:/
   end
-
   cfg :telnet, :ssh do
     # preferred way to handle additional passwords
     post_login do
