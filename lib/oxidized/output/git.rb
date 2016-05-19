@@ -112,7 +112,7 @@ class Git < Output
         repo = @cfg.repo
         if group && group != '' && !@cfg.single_repo?
           repo = File.join File.dirname(repo), group + '.git'
-        elsif group
+        elsif group && group != ''
           node = File.join group, node
         end
         repo = Rugged::Repository.new repo
