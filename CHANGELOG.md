@@ -1,3 +1,8 @@
+# 0.14.2
+- BUGFIX: git expand path for all groups
+- BUGFIX: git get_version, teletubbies do it again
+- BUGFIX: comware, acos, procurve models
+
 # 0.14.1
 - BUGFIX: git get_version when groups and single_repo are used
 
