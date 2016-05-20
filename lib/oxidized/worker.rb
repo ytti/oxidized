@@ -39,13 +39,16 @@ module Oxidized
         msg = "update #{node.name}"
         msg += " from #{node.from}" if node.from
         msg += " with message '#{node.msg}'" if node.msg
-        output = node.output.new
-        if output.store node.name, job.config,
+
+        node.output.each do |output| 
+          output = output.new
+          if output.store node.name, job.config,
                               :msg => msg, :user => node.user, :group => node.group
-          Oxidized.logger.info "Configuration updated for #{node.group}/#{node.name}"
-          Oxidized.Hooks.handle :post_store, :node => node,
+            Oxidized.logger.info "Configuration updated for #{node.group}/#{node.name}"
+            Oxidized.Hooks.handle :post_store, :node => node,
                                              :job => job,
                                              :commitref => output.commitref
+          end
         end
         node.reset
       else
@@ -68,3 +71,4 @@ module Oxidized
 
   end
 end
+

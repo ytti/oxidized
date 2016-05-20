@@ -155,11 +155,13 @@ module Oxidized
     end
 
     def resolve_output opt
-      output = (opt[:output] or Oxidized.config.output.default)
-      if not Oxidized.mgr.output[output]
-        Oxidized.mgr.add_output output or raise MethodNotFound, "#{output} not found for node #{ip}"
+      outputs = (opt[:output] or Oxidized.config.output.default)
+      outputs.split(/\s*,\s*/).map do |output|
+        if not Oxidized.mgr.output[output]
+          Oxidized.mgr.add_output output or raise MethodNotFound, "#{output} not found for node #{ip}"
+        end
+        Oxidized.mgr.output[output]
       end
-      Oxidized.mgr.output[output]
     end
 
     def resolve_model opt
@@ -182,3 +184,4 @@ module Oxidized
 
   end
 end
+

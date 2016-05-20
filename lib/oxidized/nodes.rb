@@ -58,7 +58,8 @@ module Oxidized
     def fetch node, group
       with_lock do
         i = find_node_index node
-        output = self[i].output.new
+        # Use first output type
+        output = self[i].output[0].new
         raise Oxidized::NotSupported unless output.respond_to? :fetch
         output.fetch node, group
       end
@@ -155,7 +156,8 @@ module Oxidized
     def version node, group
       with_lock do
         i = find_node_index node
-        output = self[i].output.new
+        # Use first output type
+        output = self[i].output[0].new
         raise Oxidized::NotSupported unless output.respond_to? :fetch
         output.version node, group
       end
@@ -164,7 +166,8 @@ module Oxidized
     def get_version node, group, oid
       with_lock do
         i = find_node_index node
-        output = self[i].output.new
+        # Use first output type
+        output = self[i].output[0].new
         raise Oxidized::NotSupported unless output.respond_to? :fetch
         output.get_version node, group, oid
       end
@@ -173,7 +176,8 @@ module Oxidized
     def get_diff node, group, oid1, oid2
       with_lock do
         i = find_node_index node
-        output = self[i].output.new
+        # Use first output type
+        output = self[i].output[0].new
         raise Oxidized::NotSupported unless output.respond_to? :fetch
         output.get_diff node, group, oid1, oid2
       end
@@ -181,3 +185,4 @@ module Oxidized
 
   end
 end
+
