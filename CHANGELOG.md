@@ -1,3 +1,6 @@
+# 0.14.3
+- BUGFIX: fix git when using multiple groups without single_repo
+
 # 0.14.2
 - BUGFIX: git expand path for all groups
 - BUGFIX: git get_version, teletubbies do it again
