@@ -164,7 +164,7 @@ class Git < Output
       if @cfg.single_repo?
         file = File.join @opt[:group], file
       else
-        repo = if repo.is_a?(String)
+        repo = if repo.is_a?(::String)
                  File.join File.dirname(repo), @opt[:group] + '.git'
                else
                  repo[@opt[:group]]
