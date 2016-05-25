@@ -1,4 +1,4 @@
-class MLNX < Oxidized::Model
+class MLNXOS < Oxidized::Model
 
   prompt /([\w.@()-\[:\s\]]+[#>]\s)$/
   comment  '## '
