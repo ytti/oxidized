@@ -11,7 +11,14 @@ class PanOS < Oxidized::Model
   end
 
   cmd 'show system info' do |cfg|
-    cfg.gsub! /^(up)?time:\ .*\n/, ''
+    cfg.gsub! /^(up)?time:\ .*$/, ''
+    cfg.gsub! /^app-.*?:\ .*$/, ''
+    cfg.gsub! /^av-.*?:\ .*$/, ''
+    cfg.gsub! /^threat-.*?:\ .*$/, ''
+    cfg.gsub! /^wildfire-.*?:\ .*$/, ''
+    cfg.gsub! /^wf-private.*?:\ .*$/, ''
+    cfg.gsub! /^url-filtering.*?:\ .*$/, ''
+    cfg.gsub! /^global-.*?:\ .*$/, ''
     comment cfg
   end
 
