@@ -18,7 +18,9 @@ module Oxidized
         # ask for next node in queue non destructive way
         nextnode = @nodes.first
         unless nextnode.last.nil?
-          break if nextnode.last.end + Oxidized.config.interval > Time.now.utc
+          # Set unobtainable value for 'last' if interval checking is disabled
+          last = Oxidized.config.interval == 0 ? Time.now.utc + 10 : nextnode.last.end
+          break if last + Oxidized.config.interval > Time.now.utc
         end
         # shift nodes and get the next node
         node = @nodes.get
