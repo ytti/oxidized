@@ -7,6 +7,14 @@ class ACOS < Oxidized::Model
   prompt /^([-\w.\/:?\[\]\(\)]+[#>]\s?)$/
 
   cmd 'show version' do |cfg|
+    cfg.gsub! /\s(Last configuration saved at).*/, ' \\1 <removed>'
+    cfg.gsub! /\s(Memory).*/, ' \\1 <removed>'
+    cfg.gsub! /\s(Current time is).*/, ' \\1 <removed>'
+    cfg.gsub! /\s(The system has been up).*/, ' \\1 <removed>'
+    comment cfg
+  end
+
+  cmd 'show bootimage' do |cfg|
     comment cfg
   end
 
@@ -14,7 +22,12 @@ class ACOS < Oxidized::Model
     comment cfg
   end
 
-  cmd 'show running-config all-partitions'
+  cmd 'show running-config all-partitions' do |cfg|
+     cfg.gsub! /(Current configuration).*/, '\\1 <removed>'
+     cfg.gsub! /(Configuration last updated at).*/, '\\1 <removed>'
+     cfg.gsub! /(Configuration last saved at).*/, '\\1 <removed>'
+     cfg.gsub! /(Configuration last synchronized at).*/, '\\1 <removed>'
+  end
 
   cmd 'show aflex all-partitions' do |cfg|
     comment cfg
