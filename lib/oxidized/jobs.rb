@@ -6,6 +6,9 @@ module Oxidized
 
     def initialize max, interval, nodes
       @max       = max
+      # Set interval to 1 if interval is 0 (=disabled) so we don't break 
+      # the 'ceil' function
+      @interval  = 1 if @interval == 0
       @interval  = interval
       @nodes     = nodes
       @last      = Time.now.utc
