@@ -8,7 +8,7 @@ module Oxidized
       @max       = max
       # Set interval to 1 if interval is 0 (=disabled) so we don't break 
       # the 'ceil' function
-      @interval  = @interval == 0 ? 1 : interval
+      @interval  = interval == 0 ? 1 : interval
       @nodes     = nodes
       @last      = Time.now.utc
       @durations = Array.new @nodes.size, AVERAGE_DURATION
