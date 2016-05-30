@@ -40,7 +40,8 @@ class Procurve < Oxidized::Model
 
   # not supported on all models
   cmd 'show system information' do |cfg|
-    cfg = cfg.split("\n")[0..-8].join("\n")
+    cfg = cfg.each_line.select { |line| not line.match /(.*CPU.*)|(.*Up Time.*)|(.*Total.*)|(.*Free.*)|(.*Lowest.*)|(.*Missed.*)/ }
+    cfg = cfg.join
     comment cfg
   end
 
