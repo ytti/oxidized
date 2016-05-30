@@ -121,6 +121,8 @@ Oxidized is a network device configuration backup tool. It's a RANCID replacemen
    * AirOS
    * Edgeos
    * EdgeSwitch
+ * Watchguard
+   * Fireware OS
  * Zyxel
    * ZyNOS
 
