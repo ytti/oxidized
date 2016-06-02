@@ -2,10 +2,7 @@ require 'spec_helper'
 require 'oxidized/cli'
 
 describe Oxidized::CLI do
-  before do
-    @original = ARGV
-    @asetus = Asetus.new
-  end
+  before { @original = ARGV }
   after  { ARGV.replace @original }
 
   %w[-v --version].each do |option|
@@ -13,7 +10,9 @@ describe Oxidized::CLI do
       before { ARGV.replace([option]) }
 
       it 'prints the version and exits' do
-        Asetus.expects(:new).returns(@asetus)
+        Oxidized::Config.expects(:load)
+        Oxidized.expects(:setup_logger)
+        File.expects(:expand_path)
         Kernel.expects(:exit)
 
         assert_output("#{Oxidized::VERSION}\n") { Oxidized::CLI.new }
