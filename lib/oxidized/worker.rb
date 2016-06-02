@@ -28,7 +28,7 @@ module Oxidized
         @jobs.push Job.new node
         Oxidized.logger.debug "lib/oxidized/worker.rb: Added #{node.name} to the job queue"
       end
-      Oxidized.logger.debug "lib/oxidized/worker.rb: #{@jobs.size} jobs running in parallel"
+      Oxidized.logger.debug("lib/oxidized/worker.rb: #{@jobs.size} jobs running in parallel") unless @jobs.empty?
     end
 
     def process job

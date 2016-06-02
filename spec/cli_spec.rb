@@ -2,21 +2,21 @@ require 'spec_helper'
 require 'oxidized/cli'
 
 describe Oxidized::CLI do
-  let(:asetus) { mock() }
-
+  before do
+    @original = ARGV
+    @asetus = Asetus.new
+  end
   after  { ARGV.replace @original }
-  before { @original = ARGV }
 
   %w[-v --version].each do |option|
     describe option do
-      before { ARGV.push(option) }
+      before { ARGV.replace([option]) }
 
       it 'prints the version and exits' do
+        Asetus.expects(:new).returns(@asetus)
         Kernel.expects(:exit)
 
-        proc {
-          Oxidized::CLI.new
-        }.must_output "#{Oxidized::VERSION}\n"
+        assert_output("#{Oxidized::VERSION}\n") { Oxidized::CLI.new }
       end
     end
   end
