@@ -3,7 +3,9 @@ require 'spec_helper'
 describe Oxidized::Nodes do
   before(:each) do
     Resolv.any_instance.stubs(:getaddress)
-    Oxidized.stubs(:asetus).returns(Asetus.new)
+    Oxidized.asetus = Asetus.new
+    Oxidized.setup_logger
+
     opts = {
       input: 'ssh',
       output: 'git',

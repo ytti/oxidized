@@ -9,11 +9,9 @@ describe Oxidized::CLI do
 
   %w[-v --version].each do |option|
     describe option do
-      before { ARGV.replace [option] }
+      before { ARGV.push(option) }
 
       it 'prints the version and exits' do
-        Oxidized::Config.expects(:load)
-        Oxidized.expects(:setup_logger)
         Kernel.expects(:exit)
 
         proc {
