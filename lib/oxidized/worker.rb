@@ -14,7 +14,7 @@ module Oxidized
       ended.each      { |job| process job }
       @jobs.work
       while @jobs.size < @jobs.want
-        Oxidized.logger.debug "Jobs #{@jobs.size}, Want: #{@jobs.want}"
+        Oxidized.logger.debug "lib/oxidized/worker.rb: Jobs #{@jobs.size}, Want: #{@jobs.want}"
         # ask for next node in queue non destructive way
         nextnode = @nodes.first
         unless nextnode.last.nil?
@@ -26,7 +26,9 @@ module Oxidized
         node = @nodes.get
         node.running? ? next : node.running = true
         @jobs.push Job.new node
+        Oxidized.logger.debug "lib/oxidized/worker.rb: Added #{node.name} to the job queue"
       end
+      Oxidized.logger.debug "lib/oxidized/worker.rb: #{@jobs.size} jobs running in parallel"
     end
 
     def process job

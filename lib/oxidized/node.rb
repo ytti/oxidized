@@ -38,9 +38,11 @@ module Oxidized
         next unless @model.cfg[cfg_name] and not @model.cfg[cfg_name].empty?
         @model.input = input = input.new
         if config=run_input(input)
+          Oxidized.logger.debug "lib/oxidized/node.rb: #{input.class.name} ran for #{name} successfully"
           status = :success
           break
         else
+          Oxidized.logger.debug "lib/oxidized/node.rb: #{input.class.name} failed for #{name}"
           status = :no_connection
         end
       end
@@ -165,6 +167,7 @@ module Oxidized
     def resolve_model opt
       model = (opt[:model] or Oxidized.config.model)
       if not Oxidized.mgr.model[model]
+        Oxidized.logger.debug "lib/oxidized/node.rb: Loading model #{model.inspect}"
         Oxidized.mgr.add_model model or raise ModelNotFound, "#{model} not found for node #{ip}"
       end
       Oxidized.mgr.model[model].new
