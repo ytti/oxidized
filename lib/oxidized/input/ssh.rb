@@ -37,6 +37,7 @@ module Oxidized
       ssh_opts[:kex] = vars(:ssh_kex).split(/,\s*/) if vars(:ssh_kex)
       ssh_opts[:encryption] = vars(:ssh_encryption).split(/,\s*/) if vars(:ssh_encryption)
 
+      Oxidized.logger.debug "lib/oxidized/input/ssh.rb: Connecting to #{@node.name}"
       @ssh = Net::SSH.start(@node.ip, @node.auth[:username], ssh_opts)
       unless @exec
         shell_open @ssh
@@ -54,7 +55,7 @@ module Oxidized
     end
 
     def cmd cmd, expect=node.prompt
-      Oxidized.logger.debug "SSH: #{cmd} @ #{node.name}"
+      Oxidized.logger.debug "lib/oxidized/input/ssh.rb #{cmd} @ #{node.name} with expect: #{expect.inspect}"
       if @exec
         @ssh.exec! cmd
       else
@@ -123,6 +124,7 @@ module Oxidized
     end
 
     def expect regexp
+      Oxidized.logger.debug "lib/oxidized/input/ssh.rb: expecting #{regexp.inspect} at #{node.name}"
       Timeout::timeout(Oxidized.config.timeout) do
         @ssh.loop(0.1) do
           sleep 0.1
@@ -130,6 +132,5 @@ module Oxidized
         end
       end
     end
-
   end
 end

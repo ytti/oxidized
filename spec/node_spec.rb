@@ -2,7 +2,8 @@ require 'spec_helper'
 
 describe Oxidized::Node do
   before(:each) do
-    Oxidized.stubs(:asetus).returns(Asetus.new)
+    Oxidized.asetus = Asetus.new
+    Oxidized.setup_logger
 
     Oxidized::Node.any_instance.stubs(:resolve_output)
     @node = Oxidized::Node.new(name: 'example.com',

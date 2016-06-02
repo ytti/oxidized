@@ -1,9 +1,9 @@
 PATH
   remote: .
   specs:
-    oxidized (0.12.2)
+    oxidized (0.14.3)
       asetus (~> 0.1)
-      net-ssh (~> 3.0, >= 3.0.2)
+      net-ssh (>= 3.0.0, < 3.1)
       rugged (~> 0.21, >= 0.21.4)
       slop (~> 3.5)
 
@@ -23,7 +23,7 @@ GEM
       method_source (~> 0.8.1)
       slop (~> 3.4)
     rake (10.4.2)
-    rugged (0.23.3)
+    rugged (0.24.0)
     slop (3.6.0)
 
 PLATFORMS
@@ -38,4 +38,4 @@ DEPENDENCIES
   rake (~> 10.0)
 
 BUNDLED WITH
-   1.11.2
+   1.12.4
