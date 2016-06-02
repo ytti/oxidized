@@ -35,6 +35,7 @@ module Oxidized
         else
           @cmd[:cmd] << [_cmd, block]
         end
+        Oxidized.logger.debug "lib/oxidized/model/model.rb Added #{_cmd} to the commands list"
       end
       def cmds
         @cmd
@@ -79,6 +80,7 @@ module Oxidized
     attr_accessor :input, :node
 
     def cmd string, &block
+      Oxidized.logger.debug "lib/oxidized/model/model.rb Executing #{string}"
       out = @input.cmd(string)
       return false unless out
       self.class.cmds[:all].each do |all_block|
@@ -127,6 +129,7 @@ module Oxidized
     end
 
     def get
+      Oxidized.logger.debug 'lib/oxidized/model/model.rb Collecting commands\' outputs'
       outputs = Outputs.new
       procs = self.class.procs
       self.class.cmds[:cmd].each do |command, block|

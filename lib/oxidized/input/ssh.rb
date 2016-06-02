@@ -54,7 +54,7 @@ module Oxidized
     end
 
     def cmd cmd, expect=node.prompt
-      Oxidized.logger.debug "SSH: #{cmd} @ #{node.name}"
+      Oxidized.logger.debug "lib/oxidized/input/ssh.rb #{cmd} @ #{node.name} with expect: #{expect.inspect}"
       if @exec
         @ssh.exec! cmd
       else
@@ -123,6 +123,7 @@ module Oxidized
     end
 
     def expect regexp
+      Oxidized.logger.debug "lib/oxidized/input/ssh.rb: expecting #{regexp.inspect} at #{node.name}"
       Timeout::timeout(Oxidized.config.timeout) do
         @ssh.loop(0.1) do
           sleep 0.1
@@ -130,6 +131,5 @@ module Oxidized
         end
       end
     end
-
   end
 end
