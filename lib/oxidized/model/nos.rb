@@ -22,7 +22,7 @@ class NOS < Oxidized::Model
   end
 
   cmd 'show chassis' do |cfg|
-    comment cfg.each_line.reject { |line| line.match /Time/ }.join
+    comment cfg.each_line.reject { |line| line.match /Time/ or line.match /Update/ }.join
   end
 
   cfg 'show system' do |cfg|
