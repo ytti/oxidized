@@ -33,18 +33,17 @@ class ASA < Oxidized::Model
     # backup any xml referenced in the configuration.
     anyconnect_profiles = cfg.scan(Regexp.new('(\sdisk0:/.+\.xml)')).flatten
     anyconnect_profiles.each do |profile|
-	cfg << (comment profile + "\n" )
-    	cmd ("more" + profile) do |xml|
-	  cfg << (comment xml)
-	end
+  	  cfg << (comment profile + "\n" )
+   	  cmd ("more" + profile) do |xml|
+	      cfg << (comment xml)
+	    end
     end
     # if DAP is enabled, also backup dap.xml
     if cfg.rindex(/dynamic-access-policy-record\s(?!DfltAccessPolicy)/)
-   	cfg << (comment "disk0:/dap.xml\n")
-        cmd "more disk0:/dap.xml" do |xml|
-          cfg << (comment xml)
-	  puts xml
-        end
+   	  cfg << (comment "disk0:/dap.xml\n")
+      cmd "more disk0:/dap.xml" do |xml|
+        cfg << (comment xml)
+      end
     end
     cfg
   end
