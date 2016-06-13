@@ -1,4 +1,4 @@
-class Quanta < Oxidized::Model
+class QuantaOS < Oxidized::Model
 
   prompt /^\((\w|\S)+\) (>|#)$/
   comment '! '
