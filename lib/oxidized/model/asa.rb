@@ -52,7 +52,7 @@ class ASA < Oxidized::Model
     if vars :enable
       post_login do
         send "enable\n"
-        send vars(:enable) + "\n"
+        cmd vars(:enable)
       end
     end
     post_login 'terminal pager 0'
