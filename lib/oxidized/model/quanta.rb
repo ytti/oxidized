@@ -2,13 +2,13 @@ class Quanta < Oxidized::Model
 
   prompt /^\((\w|\S)+\) (>|#)$/
   comment '! '
+  
   cmd 'show run' do |cfg|
-    cfg = cfg.each_line.select { |line| not line.match /^!.*$/ }
-    cfg = cfg.join
-    cfg = cfg.each_line.select { |line| not line.match /^\((\w|\S)+\) (>|#)$/ }
-    cfg = cfg.join
-    cfg = cfg.each_line.select { |line| not line.match /^show run$/ }
-    cfg = cfg.join
+    cfg.each_line.select do |line|
+      not line.match /^!.*$/ and
+      not line.match /^\((\w|\S)+\) (>|#)$/ and
+      not line.match /^show run$/
+    end.join
   end
 
   cfg :telnet do
