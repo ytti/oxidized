@@ -16,11 +16,9 @@ module Oxidized
       CFGS.load
     rescue => error
       raise InvalidConfig, "Error loading config: #{error.message}"
-    ensure
-      CFG = CFGS.cfg
     end
 
-    restcfg = CFG.rest
+    restcfg = CFGS.cfg.rest
     unless restcfg.match(/^http:\/\//)
       restcfg.insert(0, 'http://')
     end
