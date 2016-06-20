@@ -1,5 +1,7 @@
 class Coriant8800 < Oxidized::Model
 
+  comment '# '
+  
   prompt /^[^\s#]+#\s/
 
   cmd 'show node extensive' do |cfg|

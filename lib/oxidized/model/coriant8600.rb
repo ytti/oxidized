@@ -1,6 +1,8 @@
 class Coriant8600 < Oxidized::Model
 
-  prompt /^[^\s#]+[#>]/
+  comment '# '
+  
+  prompt /^[^\s#>]+[#>]/
 
   cmd 'show hw-inventory' do |cfg|
     comment cfg
