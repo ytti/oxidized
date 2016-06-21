@@ -1,4 +1,4 @@
-class Coriant8800 < Oxidized::Model
+class CoriantTmos < Oxidized::Model
 
   comment '# '
   
