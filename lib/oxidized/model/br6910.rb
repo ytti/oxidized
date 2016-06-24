@@ -1,7 +1,7 @@
 
 class BR6910 < Oxidized::Model
 
-  prompt /^Vty-1\#$/
+  prompt /^Vty-[0-9]\#$/
   comment  '! '
 
   # not possible to disable paging prior to show running-config
