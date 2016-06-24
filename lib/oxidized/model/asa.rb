@@ -18,9 +18,7 @@ class ASA < Oxidized::Model
 
   # check for multiple contexts
   cmd 'show mode' do |cfg|
-    if (@context.nil?)
-      @context = true if cfg.include? 'multiple'
-    end
+    @is_multiple_context = cfg.include? 'multiple'
   end
 
   cmd 'show version' do |cfg|
@@ -34,27 +32,27 @@ class ASA < Oxidized::Model
     comment cfg
   end
 
+
   post do
-    if (@context == true)
-      # Multiple context mode
-      cmd 'changeto system' do |cfg|
-        cmd 'show running-config' do |systemcfg|
-          allcfg = "\n\n" + systemcfg + "\n\n"
-          contexts = systemcfg.scan(/^context (\S+)$/)
-          files = systemcfg.scan(/config-url (\S+)$/)
-          i = 0
-          contexts.each do |cont|
-            allcfg = allcfg + "\n\n---=== [ CONTEXT " + cont.join(" ") + " FILE " + files[i].join(" ") + " ] ===---\n\n"
-            cmd "more " + files[i].join(" ") do |cfgcontext|
-              allcfg = allcfg + "\n\n" + cfgcontext
-            end
-            i += 1
-          end
-          cfg = allcfg
-        end
-        cfg
-      end
+    if @is_multiple_context
+      multiple_context
     else
+      single_context
+    end
+  end
+
+  cfg :ssh do
+    if vars :enable
+      post_login do
+        send "enable\n"
+        send vars(:enable) + "\n"
+      end
+    end
+    post_login 'terminal pager 0'
+    pre_logout 'exit'
+  end
+
+  def single_context
       # Single context mode
       cmd 'more system:running-config' do |cfg|
         cfg = cfg.each_line.to_a[3..-1].join
@@ -77,19 +75,25 @@ class ASA < Oxidized::Model
         end
         cfg
       end
-    end
   end
 
-
-  cfg :ssh do
-    if vars :enable
-      post_login do
-        send "enable\n"
-        cmd vars(:enable)
+  def multiple_context
+      # Multiple context mode
+      cmd 'changeto system' do |cfg|
+        cmd 'show running-config' do |systemcfg|
+          allcfg = "\n\n" + systemcfg + "\n\n"
+          contexts = systemcfg.scan(/^context (\S+)$/)
+          files = systemcfg.scan(/config-url (\S+)$/)
+          contexts.each_with_index do |cont, i|
+            allcfg = allcfg + "\n\n----------========== [ CONTEXT " + cont.join(" ") + " FILE " + files[i].join(" ") + " ] ==========----------\n\n"
+            cmd "more " + files[i].join(" ") do |cfgcontext|
+              allcfg = allcfg + "\n\n" + cfgcontext
+            end
+          end
+          cfg = allcfg
+        end
+        cfg
       end
-    end
-    post_login 'terminal pager 0'
-    pre_logout 'exit'
   end
 
 end
