@@ -62,6 +62,7 @@ Oxidized is a network device configuration backup tool. It's a RANCID replacemen
    * Ironware
    * NOS (Network Operating System)
    * Vyatta
+   * 6910
  * Ciena
    * SOAS
  * Cisco
