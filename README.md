@@ -155,7 +155,7 @@ RHEL 7 / CentOS 7 will work out of the box with the following package list:
 yum install cmake sqlite-devel openssl-devel libssh2-devel ruby gcc ruby-devel
 ```
 
-Now lets install oxidized via Rubygems:
+Now let's install oxidized via Rubygems:
 ```shell
 gem install oxidized
 gem install oxidized-script oxidized-web
