@@ -20,7 +20,7 @@ Oxidized is a network device configuration backup tool. It's a RANCID replacemen
 1. [Supported OS Types](#supported-os-types)
 2. [Installation](#installation)
     * [Debian](#debian)
-    * [CentOS, Oracle Linux, Red Hat Linux version 6](#centos-oracle-linux-red-hat-linux-version 6)
+    * [CentOS, Oracle Linux, Red Hat Linux](#centos-oracle-linux-red-hat-linux)
 3. [Initial Configuration](#configuration)
 4. [Installing Ruby 2.1.2 using RVM](#installing-ruby-2.1.2-using-rvm)
 5. [Running with Docker](#running-with-docker)
@@ -143,13 +143,19 @@ gem install oxidized
 gem install oxidized-script oxidized-web # if you don't install oxidized-web, make sure you remove "rest" from your config
 ```
 
-## CentOS, Oracle Linux, Red Hat Linux version 6
-Install Ruby 1.9.3 or greater (for Ruby 2.1.2 installation instructions see "Installing Ruby 2.1.2 using RVM"), then install Oxidized dependencies
+## CentOS, Oracle Linux, Red Hat Linux
+On CentOS 6 / RHEL 6, install Ruby 1.9.3 or greater (for Ruby 2.1.2 installation instructions see "Installing Ruby 2.1.2 using RVM"), then install Oxidized dependencies
 ```shell
 yum install cmake sqlite-devel openssl-devel libssh2-devel
 ```
 
-Now lets install oxidized via Rubygems:
+RHEL 7 / CentOS 7 will work out of the box with the following package list:
+
+```shell
+yum install cmake sqlite-devel openssl-devel libssh2-devel ruby gcc ruby-devel
+```
+
+Now let's install oxidized via Rubygems:
 ```shell
 gem install oxidized
 gem install oxidized-script oxidized-web
