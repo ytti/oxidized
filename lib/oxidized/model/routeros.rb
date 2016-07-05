@@ -18,6 +18,6 @@ class RouterOS < Oxidized::Model
   end
 
   cfg :ssh do
-    exec true
+    exec true unless vars :ssh_no_exec
   end
 end
