@@ -8,7 +8,7 @@ class JunOS < Oxidized::Model
 
   cmd :all do |cfg|
     # we don't need screen-scraping in ssh due to exec
-    cfg = cfg.lines.to_a[1..-2].join if telnet
+    cfg = cfg.lines.to_a[1..-2].join if telnet || !vars(:ssh_no_exec)
     cfg.lines.map { |line| line.rstrip }.join("\n") + "\n"
   end
 
@@ -44,7 +44,7 @@ class JunOS < Oxidized::Model
   end
 
   cfg :ssh do
-    exec true  # don't run shell, run each command in exec channel
+    exec true unless vars :ssh_no_exec  # don't run shell, run each command in exec channel
   end
 
   cfg :telnet, :ssh do

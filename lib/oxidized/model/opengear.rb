@@ -13,7 +13,7 @@ class OpenGear < Oxidized::Model
   cmd 'config -g config'
 
   cfg :ssh do
-    exec true  # don't run shell, run each command in exec channel
+    exec true unless vars :ssh_no_exec  # don't run shell, run each command in exec channel
   end
 
 end

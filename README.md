@@ -27,6 +27,7 @@ Oxidized is a network device configuration backup tool. It's a RANCID replacemen
 6. [Cookbook](#cookbook)
     * [Debugging](#debugging)
     * [Privileged mode](#privileged-mode)
+    * [Disabling SSH exec channels](#disabling-ssh-exec-channels)
     * [Source: CSV](#source-csv)
     * [Source: SQLite](#source-sqlite)
     * [Source: HTTP](#source-http)
@@ -331,6 +332,16 @@ As a partial example from ios.rb:
 The above strips out snmp community strings from your saved configs.
 
 **NOTE:** Removing secrets reduces the usefulness as a full configuration backup, but it may make sharing configs easier.
+
+### Disabling SSH exec channels
+
+Oxidized uses exec channels to make information extraction simpler, but there are some situations where this doesn't work well, e.g. configuring devices.  This feature can be turned off by setting the ```ssh_no_exec```
+variable.
+
+```
+vars:
+  ssh_no_exec: true
+```
 
 ### Source: CSV
 
