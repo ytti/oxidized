@@ -22,6 +22,7 @@ class AOSW < Oxidized::Model
     cfg.gsub!(/key (\S+)$/, 'key <secret removed>')
     cfg.gsub!(/secret (\S+)$/, 'secret <secret removed>')
     cfg.gsub!(/wpa-passphrase (\S+)$/, 'wpa-passphrase <secret removed>')
+    cfg.gsub!(/bkup-passwords (\S+)$/, 'bkup-passwords <secret removed>')
     cfg
   end
 
