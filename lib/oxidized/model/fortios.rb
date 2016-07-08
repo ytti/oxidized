@@ -2,7 +2,7 @@ class FortiOS < Oxidized::Model
 
   comment  '# '
 
-  prompt /^([-\w\.]+(\s[\(\w\-\.\)]+)?\~?\s?[#>$]\s?)$/
+  prompt /^([-\w\.\~]+(\s[\(\w\-\.\)]+)?\~?\s?[#>$]\s?)$/
 
   expect /^--More--\s$/ do |data, re|
     send ' '
