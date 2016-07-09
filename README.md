@@ -166,6 +166,14 @@ gem install oxidized-script oxidized-web
 
 Oxidized configuration is in YAML format. Configuration files are subsequently sourced from ```/etc/oxidized/config``` then ```~/.config/oxidized/config```. The hashes will be merged, this might be useful for storing source information in a system wide file and  user specific configuration in the home directory (to only include a staff specific username and password). Eg. if many users are using ```oxs```, see [Oxidized::Script](https://github.com/ytti/oxidized-script).
 
+It is recommended practice to run Oxidized using its own username.  This username can be added using standard command-line tools:
+
+```
+useradd oxidized
+```
+
+It is recommended not to run Oxidized as root.
+
 To initialize a default configuration in your home directory ```~/.config/oxidized/config```, simply run ```oxidized``` once. If you don't further configure anything from the output and source sections, it'll extend the examples on a subsequent ```oxidized``` execution. This is useful to see what options for a specific source or output backend are available.
 
 You can set the env variable `OXIDIZED_HOME` to change its home directory.

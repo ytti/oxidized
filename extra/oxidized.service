@@ -6,7 +6,7 @@ Description=Oxidized - Network Device Configuration Backup Tool
 
 [Service]
 ExecStart=/usr/local/bin/oxidized
-User=root
+User=oxidized
 
 [Install]
 WantedBy=multi-user.target
