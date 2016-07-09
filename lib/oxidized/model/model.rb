@@ -154,6 +154,10 @@ module Oxidized
       data
     end
 
+    def screenscrape
+      @input.class.to_s.match(/Telnet/) || vars(:ssh_no_exec)
+    end
+
     private
 
     def process_cmd_output output, name
