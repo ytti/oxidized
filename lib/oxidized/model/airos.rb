@@ -15,6 +15,6 @@ class Airos < Oxidized::Model
   end
 
   cfg :ssh do
-    exec true unless vars :ssh_no_exec
+    exec true
   end
 end
