@@ -15,7 +15,7 @@ class FabricOS < Oxidized::Model
   end
 
   cfg :ssh do
-    exec true unless vars :ssh_no_exec  # don't run shell, run each command in exec channel
+    exec true  # don't run shell, run each command in exec channel
   end
 
 end
