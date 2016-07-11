@@ -1,3 +1,14 @@
+# 0.15.0
+- FEATURE: disable periodic collection, only on demand (by Adam Winberg)
+- FEATURE: allow disabling ssh exec mode always (mainly for oxidized-script) (by @nickhilliard)
+- FEATURE: support mellanox devices (by @ham5ter)
+- FEATURE: support firewireos devices (by @alexandre-io)
+- FEATURE: support quanta devices (by @f0o)
+- FEATURE: support tellabs coriant8800, coriant8600 (by @udhos)
+- FEATURE: support brocade6910 (by @cardboardpig)
+- BUGFIX: debugging, tests (by @ElvinEfendi)
+- BUGFIX: nos, panos, acos, procurve, eos, edgeswitch, aosw, fortios updates
+
 # 0.14.3
 - BUGFIX: fix git when using multiple groups without single_repo
 
