@@ -11,7 +11,7 @@ class Procurve < Oxidized::Model
     data.gsub re, ''
   end
 
-  expect /Press any key to continue/ do
+  expect /Press any key to continue(\e\[\??\d+(;\d+)*[A-Za-z])*$/ do
     send ' '
     ""
   end
