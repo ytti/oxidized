@@ -17,7 +17,9 @@ class SAOS < Oxidized::Model
     username /login:/
     password /assword:/
   end
-  cfg :telnet do
+
+  cfg :telnet, :ssh do
+    post_login 'system shell set more off'
     post_login 'system shell session set more off'
     pre_logout 'exit'
   end
