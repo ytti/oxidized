@@ -65,7 +65,7 @@ Oxidized is a network device configuration backup tool. It's a RANCID replacemen
    * Vyatta
    * 6910
  * Check Point
-   * GAIA OS
+   * GaiaOS
  * Ciena
    * SOAS
  * Cisco
