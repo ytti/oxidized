@@ -1,8 +1,8 @@
-class GAIA < Oxidized::Model
+class GaiaOS < Oxidized::Model
 
-  # CheckPoint - GAIA OS Model
+  # CheckPoint - Gaia OS Model
   
-  # GAIA Prompt
+  # Gaia Prompt
   prompt /^([\[\]\w.@:-]+[#>]\s?)$/
 
   # Comment tag
