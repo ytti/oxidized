@@ -15,6 +15,7 @@ describe Oxidized::Nodes do
       prompt: 'test_prompt'
     }
 
+    Oxidized::Node.any_instance.stubs(:resolve_repo)
     Oxidized::Node.any_instance.stubs(:resolve_output)
     @nodes_org = %w(ltt-pe1.hel kes2-rr1.tku tor-peer1.oul
                     hal-p2.tre sav-gr1-sw1.kuo psl-sec-pe1.hel).map { |e| Oxidized::Node.new(opts.merge(name: e)) }

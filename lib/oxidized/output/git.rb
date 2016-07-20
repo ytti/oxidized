@@ -41,7 +41,7 @@ class Git < Output
 
     outputs.types.each do |type|
       type_cfg = ''
-      type_repo = File.join File.dirname(repo), type + '.git'
+      puts type_repo = File.join(File.dirname(repo), type + '.git')
       outputs.type(type).each do |output|
         (type_cfg << output; next) if not output.name
         type_file = file + '--' + output.name
@@ -60,29 +60,21 @@ class Git < Output
 
   def fetch node, group
     begin
-      repo = @cfg.repo
-      repo = File.join File.dirname(repo), group + '.git' if group and not @cfg.single_repo?
+      repo, path = yield_repo_and_path(node, group)
       repo = Rugged::Repository.new repo
       index = repo.index
       index.read_tree repo.head.target.tree unless repo.empty?
-      file = node
-      file = File.join(group, node) if group and @cfg.single_repo?
-      repo.read(index.get(file)[:oid]).data
+      repo.read(index.get(path)[:oid]).data
     rescue
       'node not found'
     end
   end
 
-  #give a hash of all oid revision for the given node, and the date of the commit
+    # give a hash of all oid revision for the given node, and the date of the commit
     def version node, group
       begin
-        repo = @cfg.repo
-        path = node
-        if group and @cfg.single_repo?
-          path = "#{group}/#{node}"
-        elsif group
-          repo = File.join File.dirname(repo), group + '.git'
-        end
+        repo, path = yield_repo_and_path(node, group)
+
         repo = Rugged::Repository.new repo
         walker = Rugged::Walker.new(repo)
         walker.sorting(Rugged::SORT_DATE)
@@ -109,14 +101,9 @@ class Git < Output
     #give the blob of a specific revision
     def get_version node, group, oid
       begin
-        repo = @cfg.repo
-        if group && group != '' && !@cfg.single_repo?
-          repo = File.join File.dirname(repo), group + '.git'
-        elsif group && group != ''
-          node = File.join group, node
-        end
+        repo, path = yield_repo_and_path(node, group)
         repo = Rugged::Repository.new repo
-        repo.blob_at(oid,node).content
+        repo.blob_at(oid,path).content
       rescue
         'version not found'
       end
@@ -125,30 +112,27 @@ class Git < Output
     #give a hash with the patch of a diff between 2 revision and the stats (added and deleted lines)
     def get_diff node, group, oid1, oid2
       begin
-        repo = @cfg.repo
         diff_commits = nil
-        if group && group != '' && !@cfg.single_repo?
-          repo = File.join File.dirname(repo), group + '.git'
-        end
+        repo, _ = yield_repo_and_path(node, group)
         repo = Rugged::Repository.new repo
         commit = repo.lookup(oid1)
-        #if the second revision is precised
+
         if oid2
           commit_old = repo.lookup(oid2)
           diff = repo.diff(commit_old, commit)
           diff.each do |patch|
-            if /#{node}\s+/.match(patch.to_s.lines.first)
+            if /#{node.name}\s+/.match(patch.to_s.lines.first)
               diff_commits = {:patch => patch.to_s, :stat => patch.stat}
               break
             end
           end
-        #else gives the diffs between the first oid and his first parrent
         else
           stat = commit.parents[0].diff(commit).stat
           stat = [stat[1],stat[2]]
           patch = commit.parents[0].diff(commit).patch
           diff_commits = {:patch => patch, :stat => stat}
         end
+
         diff_commits
       rescue
         'no diffs'
@@ -156,6 +140,16 @@ class Git < Output
     end
 
   private
+
+  def yield_repo_and_path(node, group)
+    repo, path = node.repo, node.name
+
+    if group and @cfg.single_repo?
+      path = "#{group}/#{node.name}"
+    end
+
+    [repo, path]
+  end
 
   def update repo, file, data
     return if data.empty?
