@@ -41,7 +41,7 @@ class Git < Output
 
     outputs.types.each do |type|
       type_cfg = ''
-      puts type_repo = File.join(File.dirname(repo), type + '.git')
+      type_repo = File.join(File.dirname(repo), type + '.git')
       outputs.type(type).each do |output|
         (type_cfg << output; next) if not output.name
         type_file = file + '--' + output.name
