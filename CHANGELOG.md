@@ -1,3 +1,6 @@
+# 0.16.1
+- BUGFIX: unnecessary puts statement removed from git.rb
+
 # 0.16.0
 - FEATURE: support Gaia OS devices (by @totosh)
 - BUGFIX: #fetch, #version fixes in nodes.rb (by @danilopopeye)
