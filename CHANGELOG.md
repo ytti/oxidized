@@ -1,3 +1,8 @@
+# 0.16.0
+- FEATURE: support Gaia OS devices (by @totosh)
+- BUGFIX: #fetch, #version fixes in nodes.rb (by @danilopopeye)
+- BUGFIX: procurve
+
 # 0.15.0
 - FEATURE: disable periodic collection, only on demand (by Adam Winberg)
 - FEATURE: allow disabling ssh exec mode always (mainly for oxidized-script) (by @nickhilliard)
