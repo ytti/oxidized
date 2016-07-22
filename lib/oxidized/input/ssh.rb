@@ -21,7 +21,7 @@ module Oxidized
       @output     = ''
       @node.model.cfg['ssh'].each { |cb| instance_exec(&cb) }
       secure = Oxidized.config.input.ssh.secure
-      @log = File.open(Oxidized::Config::Log + "-#{@node.ip}-ssh", 'w') if Oxidized.config.input.debug?
+      @log = File.open(Oxidized::Config::Log + "/#{@node.ip}-ssh", 'w') if Oxidized.config.input.debug?
       port = vars(:ssh_port) || 22
       if proxy_host = vars(:ssh_proxy)
         proxy =  Net::SSH::Proxy::Command.new("ssh #{proxy_host} -W %h:%p")
