@@ -5,6 +5,7 @@ describe Oxidized::Node do
     Oxidized.asetus = Asetus.new
     Oxidized.setup_logger
 
+    Oxidized::Node.any_instance.stubs(:resolve_repo)
     Oxidized::Node.any_instance.stubs(:resolve_output)
     @node = Oxidized::Node.new(name: 'example.com',
                                input: 'ssh',
@@ -44,6 +45,10 @@ describe Oxidized::Node do
   end
 
   describe '#repo' do
+    before do
+      Oxidized::Node.any_instance.unstub(:resolve_repo)
+    end
+
     let(:group) { nil }
     let(:node) do
       Oxidized::Node.new({

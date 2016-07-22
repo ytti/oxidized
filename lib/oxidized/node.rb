@@ -174,8 +174,12 @@ module Oxidized
     def resolve_repo
       remote_repo = Oxidized.config.output.git.repo
 
-      if Oxidized.config.output.git.single_repo? || @group.nil? || remote_repo.is_a?(String)
-        remote_repo
+      if remote_repo.is_a?(::String)
+        if Oxidized.config.output.git.single_repo? || @group.nil?
+          remote_repo
+        else
+          File.join(File.dirname(remote_repo), @group + '.git')
+        end
       else
         remote_repo[@group]
       end

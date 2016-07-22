@@ -5,6 +5,7 @@ describe Oxidized::SSH do
   before(:each) do
     Oxidized.asetus = Asetus.new
     Oxidized.setup_logger
+    Oxidized::Node.any_instance.stubs(:resolve_repo)
     Oxidized::Node.any_instance.stubs(:resolve_input)
     Oxidized::Node.any_instance.stubs(:resolve_output)
     @node = Oxidized::Node.new(name: 'example.com',
