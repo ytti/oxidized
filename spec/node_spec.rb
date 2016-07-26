@@ -46,6 +46,7 @@ describe Oxidized::Node do
 
   describe '#repo' do
     before do
+      Oxidized.config.output.default = 'git'
       Oxidized::Node.any_instance.unstub(:resolve_repo)
     end
 

@@ -22,7 +22,7 @@ module Oxidized
       @vars           = opt[:vars]
       @stats          = Stats.new
       @retry          = 0
-      @repo           = resolve_repo
+      @repo           = resolve_repo opt
 
       # model instance needs to access node instance
       @model.node = self
@@ -171,7 +171,9 @@ module Oxidized
       Oxidized.mgr.model[model].new
     end
 
-    def resolve_repo
+    def resolve_repo opt
+      return unless is_git? opt
+
       remote_repo = Oxidized.config.output.git.repo
 
       if remote_repo.is_a?(::String)
@@ -183,6 +185,10 @@ module Oxidized
       else
         remote_repo[@group]
       end
+    end
+
+    def is_git? opt
+      (opt[:output] || Oxidized.config.output.default) == 'git'
     end
 
   end
