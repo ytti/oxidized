@@ -13,6 +13,8 @@ class ASA < Oxidized::Model
   cmd :secret do |cfg|
     cfg.gsub! /enable password (\S+) (.*)/, 'enable password <secret hidden> \2'
     cfg.gsub! /username (\S+) password (\S+) (.*)/, 'username \1 password <secret hidden> \3'
+    cfg.gsub! /ikev2 pre-shared-key (\S+)/, 'ikev2 pre-shared-key <secret hidden>'
+    cfg.gsub! /ikev2 (remote|local)-authentication pre-shared-key (\S+)/, 'ikev2 \1-authentication pre-shared-key <secret hidden>'
     cfg
   end
 
