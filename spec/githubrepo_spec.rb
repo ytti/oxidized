@@ -10,10 +10,11 @@ describe GithubRepo do
   let(:repo) { mock() }
   let(:gr) { GithubRepo.new }
 
-  before(:each) do
+  before do
     Oxidized.asetus = Asetus.new
     Oxidized.config.log = '/dev/null'
     Oxidized.setup_logger
+    Oxidized.config.output.default = 'git'
   end
 
   describe '#validate_cfg!' do
@@ -84,23 +85,23 @@ describe GithubRepo do
     let(:group) { nil }
     let(:ctx) { OpenStruct.new(node: node) }
     let(:node) do
-      Oxidized::Node.new(ip: '127.0.0.1', group: group, model: 'junos', output: 'output')
+      Oxidized::Node.new(ip: '127.0.0.1', group: group, model: 'junos', output: 'git')
     end
 
     before do
       repo_head.expects(:name).twice.returns('refs/heads/master')
       repo.expects(:head).twice.returns(repo_head)
-      repo.expects(:path).returns('foo.git')
+      repo.expects(:path).returns('/foo.git')
       repo.expects(:fetch).with('origin', ['refs/heads/master'], credentials: credentials).returns(Hash.new(0))
     end
 
     describe 'when there is only one repository and no groups' do
       before do
-        Oxidized.config.output.git.repo = 'foo.git'
+        Oxidized.config.output.git.repo = '/foo.git'
         remote.expects(:url).returns('https://github.com/username/foo.git')
         remote.expects(:push).with(['refs/heads/master'], credentials: credentials).returns(true)
         repo.expects(:remotes).returns({'origin' => remote})
-        Rugged::Repository.expects(:new).with('foo.git').returns(repo)
+        Rugged::Repository.expects(:new).with('/foo.git').returns(repo)
       end
 
       it "will push to the remote repository using https" do
@@ -136,7 +137,7 @@ describe GithubRepo do
 
       describe 'and there are several repositories' do
         let(:create_remote) { 'ggrroouupp#remote_repo' }
-        let(:repository) { './ggrroouupp.git' }
+        let(:repository) { '/ggrroouupp.git' }
 
         before do
           Oxidized.config.output.git.repo.ggrroouupp = repository
@@ -151,7 +152,7 @@ describe GithubRepo do
 
       describe 'and has a single repository' do
         let(:create_remote) { 'github_repo_hook#remote_repo' }
-        let(:repository) { 'foo.git' }
+        let(:repository) { '/foo.git' }
 
         before do
           Oxidized.config.output.git.repo = repository
