@@ -43,7 +43,7 @@ module Oxidized
                   else
                     require 'logger'
                     if config.has_key?('log')
-                      Logger.new(config.log)
+                      Logger.new(File.expand_path(config.log))
                     else
                       Logger.new(STDERR)
                     end
