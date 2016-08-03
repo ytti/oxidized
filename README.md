@@ -50,7 +50,6 @@ Oxidized is a network device configuration backup tool. It's a RANCID replacemen
    * AOS
    * AOS7
    * ISAM
-   * TiMOS
    * Wireless
  * Arista
    * EOS
@@ -118,6 +117,8 @@ Oxidized is a network device configuration backup tool. It's a RANCID replacemen
    * MasterOS
  * Netonix
    * WISP Switch (As Netonix)
+ * Nokia (formerly TiMetra, Alcatel, Alcatel-Lucent)
+   * SR OS (TiMOS)
  * Opengear
    * Opengear
  * Palo Alto
