@@ -5,10 +5,6 @@ class TiMOS < Oxidized::Model
   # Used in 7705 SAR, 7210 SAS, 7450 ESS, 7750 SR, 7950 XRS, and NSP.
   #
 
-  # 
-  # Define comment but don't actually use it.  SR OS has a lot of output that
-  # is exactly 80 columns wide, and the comment make the output look funny.
-  #
   comment  '# '
 
   prompt /^([-\w\.:>\*]+\s?[#>]\s?)$/
@@ -21,7 +17,9 @@ class TiMOS < Oxidized::Model
   #
   # Show the boot options file.
   #
-  cmd 'show bof'
+  cmd 'show bof' do |cfg|
+    comment cfg
+  end
 
   #
   # Show the system information.
@@ -31,12 +29,15 @@ class TiMOS < Oxidized::Model
     # Strip uptime.
     #
     cfg.sub! /^System Up Time.*\n/, ''
+    comment cfg
   end
 
   #
   # Show the card state.
   #
-  cmd 'show card state'
+  cmd 'show card state' do |cfg|
+    comment cfg
+  end
 
   #
   # Show the boot log.
@@ -47,12 +48,15 @@ class TiMOS < Oxidized::Model
     #
     cfg.gsub! /\r/, ''
     cfg.gsub! /[\b][\b][\b]/, "\n"
+    comment cfg
   end
 
   #
   # Show the running debug configuration.
   #
-  cmd 'show debug'
+  cmd 'show debug' do |cfg|
+    comment cfg
+  end
 
   #
   # Show the saved debug configuration (admin debug-save).
@@ -62,6 +66,7 @@ class TiMOS < Oxidized::Model
     # Strip carriage returns.
     #
     cfg.gsub! /\r/, ''
+    comment cfg
   end
 
   #
@@ -72,6 +77,7 @@ class TiMOS < Oxidized::Model
     # Strip carriage returns.
     #
     cfg.gsub! /\r/, ''
+    comment cfg
   end
 
   #
