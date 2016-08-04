@@ -50,7 +50,6 @@ Oxidized is a network device configuration backup tool. It's a RANCID replacemen
    * AOS
    * AOS7
    * ISAM
-   * TiMOS
    * Wireless
  * Arista
    * EOS
@@ -118,6 +117,8 @@ Oxidized is a network device configuration backup tool. It's a RANCID replacemen
    * MasterOS
  * Netonix
    * WISP Switch (As Netonix)
+ * Nokia (formerly TiMetra, Alcatel, Alcatel-Lucent)
+   * SR OS (TiMOS)
  * Opengear
    * Opengear
  * Palo Alto
@@ -510,7 +511,7 @@ output:
 
 ### Output types
 
-If you prefer to have different outputs in different files and/or directories, you can easily do this by modifying the corresponding model. To change the behaviour for IOS, you would edit `lib/oxidized/model/ios.rb`.
+If you prefer to have different outputs in different files and/or directories, you can easily do this by modifying the corresponding model. To change the behaviour for IOS, you would edit `lib/oxidized/model/ios.rb` (run `gem contents oxidized` to find out the full file path).
 
 For example, let's say you want to split out `show version` and `show inventory` into separate files in a directory called `nodiff` which your tools will not send automated diffstats for. You can apply a patch along the lines of
 
