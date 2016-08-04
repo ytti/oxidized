@@ -1,8 +1,10 @@
 class TiMOS < Oxidized::Model
 
-  # Alcatel-Lucent TiMOS (Timetra)
-  # used in SR/ESS/SAS routers
- 
+  #
+  # Nokia SR OS (TiMOS) (formerly TiMetra, Alcatel, Alcatel-Lucent).
+  # Used in 7705 SAR, 7210 SAS, 7450 ESS, 7750 SR, 7950 XRS, and NSP.
+  #
+
   comment  '# '
 
   prompt /^([-\w\.:>\*]+\s?[#>]\s?)$/
@@ -12,26 +14,81 @@ class TiMOS < Oxidized::Model
     new_cfg << cfg.each_line.to_a[1..-2].join
   end
 
+  #
+  # Show the boot options file.
+  #
   cmd 'show bof' do |cfg|
     comment cfg
   end
 
+  #
+  # Show the system information.
+  #
   cmd 'show system information' do |cfg|
-    # strip uptime
+    #
+    # Strip uptime.
+    #
     cfg.sub! /^System Up Time.*\n/, ''
     comment cfg
   end
 
+  #
+  # Show the card state.
+  #
   cmd 'show card state' do |cfg|
     comment cfg
   end
 
-  cmd 'show boot-messages' do |cfg|
-    cfg.gsub! /\r/, ""
+  #
+  # Show the boot log.
+  #
+  cmd 'file type bootlog.txt' do |cfg|
+    #
+    # Strip carriage returns and backspaces.
+    #
+    cfg.gsub! /\r/, ''
+    cfg.gsub! /[\b][\b][\b]/, "\n"
     comment cfg
   end
 
-  cmd 'admin display-config'
+  #
+  # Show the running debug configuration.
+  #
+  cmd 'show debug' do |cfg|
+    comment cfg
+  end
+
+  #
+  # Show the saved debug configuration (admin debug-save).
+  #
+  cmd 'file type config.dbg' do |cfg|
+    #
+    # Strip carriage returns.
+    #
+    cfg.gsub! /\r/, ''
+    comment cfg
+  end
+
+  #
+  # Show the running persistent indices.
+  #
+  cmd 'admin display-config index' do |cfg|
+    #
+    # Strip carriage returns.
+    #
+    cfg.gsub! /\r/, ''
+    comment cfg
+  end
+
+  #
+  # Show the running configuration.
+  #
+  cmd 'admin display-config' do |cfg|
+    #
+    # Strip carriage returns.
+    #
+    cfg.gsub! /\r/, ''
+  end
 
   cfg :telnet do
     username /^Login: /
