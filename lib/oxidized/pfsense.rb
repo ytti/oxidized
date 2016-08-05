@@ -1,6 +1,5 @@
 class PfSense < Oxidized::Model
   
-  prompt /^\e\[0;1;33m\[\S*\e\[0;1;33m\]\e\[0;1;33m\e\[\S*\e\[0;1;31m@\S*\e\[0;1;33m\]\S*\e\[0;1;31m:\e\[0;0;0m\s$/
   comment  '# '
   
   
@@ -19,6 +18,10 @@ class PfSense < Oxidized::Model
     cfg += cmd 'cat /cf/conf/config.xml'    
   end
   
+
+  cfg :ssh do
+    exec true
+  end
 
   cfg :telnet do
     username /^Username:/
