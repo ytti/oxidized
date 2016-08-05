@@ -2,7 +2,6 @@ class PfSense < Oxidized::Model
   
   comment  '# '
   
-  
   #add a comment in the final conf
   def add_comment comment
     "\n###### #{comment} ######\n" 
@@ -18,20 +17,9 @@ class PfSense < Oxidized::Model
     cfg += cmd 'cat /cf/conf/config.xml'    
   end
   
-
   cfg :ssh do
     exec true
-  end
-
-  cfg :telnet do
-    username /^Username:/
-    password /^Password:/
-  end
-
-  cfg :telnet, :ssh do
     pre_logout 'exit'
   end
  
-
 end
-
