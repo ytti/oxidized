@@ -422,6 +422,8 @@ source:
     url: https://url/api
     scheme: https
     delimiter: !ruby/regexp /:/
+    user: username
+    pass: password
     map:
       name: hostname
       model: os
