@@ -14,6 +14,9 @@ module Oxidized
         d = node.model.get
         disconnect
         d
+      rescue PromptUndetect
+        disconnect
+        raise
       end
 
       def connect_cli
