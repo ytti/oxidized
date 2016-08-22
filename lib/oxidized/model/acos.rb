@@ -34,6 +34,7 @@ class ACOS < Oxidized::Model
      cfg.gsub! /(Configuration last updated at).*/, '\\1 <removed>'
      cfg.gsub! /(Configuration last saved at).*/, '\\1 <removed>'
      cfg.gsub! /(Configuration last synchronized at).*/, '\\1 <removed>'
+     cfg
   end
 
   cmd 'show aflex all-partitions' do |cfg|
