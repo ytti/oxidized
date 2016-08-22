@@ -6,6 +6,13 @@ class ACOS < Oxidized::Model
   ##ACOS prompt changes depending on the state of the device
   prompt /^([-\w.\/:?\[\]\(\)]+[#>]\s?)$/
 
+  cmd :secret do |cfg|
+    cfg.gsub!(/community read encrypted (\S+)/, 'community read encrypted <hidden>') # snmp
+    cfg.gsub!(/secret encrypted (\S+)/, 'secret encrypted <hidden>') # tacacs-server
+    cfg.gsub!(/password encrypted (\S+)/, 'password encrypted <hidden>') # user
+    cfg
+  end
+
   cmd 'show version' do |cfg|
     cfg.gsub! /\s(Last configuration saved at).*/, ' \\1 <removed>'
     cfg.gsub! /\s(Memory).*/, ' \\1 <removed>'
@@ -22,7 +29,7 @@ class ACOS < Oxidized::Model
     comment cfg
   end
 
-  cmd 'show running-config all-partitions' do |cfg|
+  cmd 'show running-config' do |cfg|
      cfg.gsub! /(Current configuration).*/, '\\1 <removed>'
      cfg.gsub! /(Configuration last updated at).*/, '\\1 <removed>'
      cfg.gsub! /(Configuration last saved at).*/, '\\1 <removed>'
