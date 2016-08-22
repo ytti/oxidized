@@ -1,6 +1,6 @@
 class Cumulus < Oxidized::Model
   
-  prompt /^((\w*)@(.*)([>#]\s)+)$/
+  prompt /^((\w*)@(.*)):/
   comment  '# '
   
   
@@ -22,7 +22,7 @@ class Cumulus < Oxidized::Model
     cfg += cmd 'cat /etc/hosts'
     
     cfg += add_comment 'THE INTERFACES'
-    cfg += cmd 'cat /etc/network/interfaces'
+    cfg += cmd 'grep -r "" /etc/network/interface* | cut -d "/" -f 4-'
     
     cfg += add_comment 'RESOLV.CONF'
     cfg += cmd 'cat /etc/resolv.conf'
@@ -30,6 +30,9 @@ class Cumulus < Oxidized::Model
     cfg += add_comment 'NTP.CONF'
     cfg += cmd 'cat /etc/ntp.conf'
     
+    cfg += add_comment 'IP Routes'
+    cfg += cmd 'netstat -rn'
+
     cfg += add_comment 'QUAGGA DAEMONS'
     cfg += cmd 'cat /etc/quagga/daemons'
     
@@ -55,10 +58,13 @@ class Cumulus < Oxidized::Model
     cfg += cmd 'cat /etc/cumulus/switchd.conf'
     
     cfg += add_comment 'ACL'
-    cfg += cmd 'iptables -L'
+    cfg += cmd 'iptables -L -n'
     
     cfg += add_comment 'VERSION'
     cfg += cmd 'cat /etc/cumulus/etc.replace/os-release'
+
+    cfg += add_comment 'License'
+    cfg += cmd 'cl-license'
     
   end
   
