@@ -1,6 +1,10 @@
 # 0.16.3
 - BUGFIX: cumulus prompt not working with default switch configs (by @nertwork)
 
+# 0.16.2
+- BUGFIX: when not using git (by @danilopopeye)
+- BUGFIX: screenos update
+
 # 0.16.1
 - BUGFIX: unnecessary puts statement removed from git.rb
 
