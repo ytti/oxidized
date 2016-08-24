@@ -15,7 +15,7 @@ class ASA < Oxidized::Model
     cfg.gsub! /username (\S+) password (\S+) (.*)/, 'username \1 password <secret hidden> \3'
     cfg.gsub! /ikev2 pre-shared-key (\S+)/, 'ikev2 pre-shared-key <secret hidden>'
     cfg.gsub! /ikev2 (remote|local)-authentication pre-shared-key (\S+)/, 'ikev2 \1-authentication pre-shared-key <secret hidden>'
-    cfg.gsub! /^(aaa-server TACACS\+ \(\S+\) host.*\n\skey) \S+$/m, '\1 <secret hidden>'
+    cfg.gsub! /^(aaa-server TACACS\+? \(\S+\) host.*\n\skey) \S+$/mi, '\1 <secret hidden>'
     cfg
   end
 
