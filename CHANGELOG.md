@@ -1,5 +1,8 @@
 # 0.16.3
+- FEATURE: pfsense support (by @stokbaek)
 - BUGFIX: cumulus prompt not working with default switch configs (by @nertwork)
+- BUGFIX: disconnect ssh when prompt wasn't found (by @andir)
+- BUGFIX: saos, asa, acos, timos updates, cumulus
 
 # 0.16.2
 - BUGFIX: when not using git (by @danilopopeye)
