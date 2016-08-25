@@ -193,7 +193,7 @@ module Oxidized
 
       #group
       if Oxidized.config.groups.has_key?(@group)
-        if Oxidized.config.groups[@group].has.key?(key_str)
+        if Oxidized.config.groups[@group].has_key?(key_str)
           value = Oxidized.config.groups[@group][key_str]
           Oxidized.logger.debug "setting node key #{key} to value #{value} from group"
         end
