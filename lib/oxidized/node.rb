@@ -181,7 +181,7 @@ module Oxidized
     def resolve_key key, opt, global=nil
       # resolve key, first get global, then get group then get node config
       key_sym = key.to_sym
-      key_str = key.to_str
+      key_str = key.to_s
       value   = global
 
       #global
