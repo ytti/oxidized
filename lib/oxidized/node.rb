@@ -128,24 +128,15 @@ module Oxidized
     end
 
     def resolve_auth opt
-      # Resolve configured username/password, give priority to group level configuration
-      # TODO: refactor to use revised behaviour of Asetus
-      cfg_username, cfg_password =
-        if Oxidized.config.groups.has_key?(@group) and ['username', 'password'].all? {|e| Oxidized.config.groups[@group].has_key?(e)}
-          [Oxidized.config.groups[@group].username, Oxidized.config.groups[@group].password]
-        elsif ['username', 'password'].all? {|e| Oxidized.config.has_key?(e)}
-          [Oxidized.config.username, Oxidized.config.password]
-        else
-          [nil, nil]
-        end
-      auth = {}
-      auth[:username] = (opt[:username] or cfg_username)
-      auth[:password] = (opt[:password] or cfg_password)
-      auth
+      # Resolve configured username/password
+      {
+        username: resolve_key(:username, opt),
+        password: resolve_key(:password, opt),
+      }
     end
 
     def resolve_input opt
-      inputs = (opt[:input]  or Oxidized.config.input.default)
+      inputs = resolve_key :input, opt, Oxidized.config.input.default
       inputs.split(/\s*,\s*/).map do |input|
         if not Oxidized.mgr.input[input]
           Oxidized.mgr.add_input input or raise MethodNotFound, "#{input} not found for node #{ip}"
@@ -155,7 +146,7 @@ module Oxidized
     end
 
     def resolve_output opt
-      output = (opt[:output] or Oxidized.config.output.default)
+      output = resolve_key :output, opt, Oxidized.config.output.default
       if not Oxidized.mgr.output[output]
         Oxidized.mgr.add_output output or raise MethodNotFound, "#{output} not found for node #{ip}"
       end
@@ -163,7 +154,7 @@ module Oxidized
     end
 
     def resolve_model opt
-      model = (opt[:model] or Oxidized.config.model)
+      model = resolve_key :model, opt
       if not Oxidized.mgr.model[model]
         Oxidized.logger.debug "lib/oxidized/node.rb: Loading model #{model.inspect}"
         Oxidized.mgr.add_model model or raise ModelNotFound, "#{model} not found for node #{ip}"
@@ -185,6 +176,28 @@ module Oxidized
       else
         remote_repo[@group]
       end
+    end
+
+    def resolve_key key, opt, global=nil
+      # resolve key, first get global, then get group then get node config
+      key_sym = key.to_sym
+      key_str = key.to_str
+      value   = global
+
+      #global
+      if not value and Oxidized.config.has_key?(key_str)
+        value = Oxidized.config[key_str]
+      end
+      
+      #group
+      if Oxidized.config.groups.has_key?(@group)
+        if Oxidized.config.groups[@group].has.key?(key_str)
+          value = Oxidized.config.groups[@group][key_str]
+        end
+      end
+
+      #node
+      opt[key_sym] || value
     end
 
     def is_git? opt
