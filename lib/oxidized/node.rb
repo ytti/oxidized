@@ -183,21 +183,26 @@ module Oxidized
       key_sym = key.to_sym
       key_str = key.to_s
       value   = global
+      Oxidized.logger.debug "resolving node key #{key}, with global value of #{value} and node value #{opt[key_sym]}"
 
       #global
       if not value and Oxidized.config.has_key?(key_str)
         value = Oxidized.config[key_str]
+        Oxidized.logger.debug "setting node key #{key} to value #{value} from global"
       end
-      
+
       #group
       if Oxidized.config.groups.has_key?(@group)
         if Oxidized.config.groups[@group].has.key?(key_str)
           value = Oxidized.config.groups[@group][key_str]
+          Oxidized.logger.debug "setting node key #{key} to value #{value} from group"
         end
       end
 
       #node
-      opt[key_sym] || value
+      value = opt[key_sym] || value
+      Oxidized.logger.debug "returning node key #{key} with value #{value}"
+      value
     end
 
     def is_git? opt
