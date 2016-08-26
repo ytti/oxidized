@@ -2,21 +2,12 @@ class PfSense < Oxidized::Model
 
   # use other use than 'admin' user, 'admin' user cannot get ssh/exec. See issue #535
   
-  comment  '# '
-  
-  #add a comment in the final conf
-  def add_comment comment
-    "\n###### #{comment} ######\n" 
-  end
-
   cmd :all do |cfg|
     cfg.each_line.to_a[1..-2].join
   end
   
-  #show the persistent configuration
-  pre do
-    cfg = add_comment 'Configuration'
-    cfg += cmd 'cat /cf/conf/config.xml'    
+  cmd 'cat /cf/conf/config.xml' do |cfg|
+    cfg.gsub! /\s<revision>\s*<time>\d*<\/time>\s*.*\s*.*\s*<\/revision>/, ''
   end
   
   cfg :ssh do
