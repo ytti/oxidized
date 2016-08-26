@@ -254,46 +254,54 @@ rvm use --default 2.1.2
 ```
 
 # Running with Docker
-1. clone git repo:
+
+clone git repo:
 
 ```
-    root@bla:~# git clone https://github.com/ytti/oxidized
+git clone https://github.com/ytti/oxidized
 ```
-2. build container locally:
-```
-    root@bla:~# docker build -q -t oxidized/oxidized:latest oxidized/
-```
-3. create config directory in main system:
-```
-    root@bla~:# mkdir /etc/oxidized
-```
-4. run container the first time:
-```
-    root@bla:~# docker run -v /etc/oxidized:/root/.config/oxidized -p 8888:8888/tcp -t oxidized/oxidized:latest oxidized
-```
-5. add 'router.db' to /etc/oxidized:
-```
-    root@bla:~# vim /etc/oxidized/router.db
-    [ ... ]
-    root@bla:~#
-```
-6. run container again:
-```
-    root@bla:~# docker run -v /etc/oxidized:/root/.config/oxidized -p 8888:8888/tcp -t oxidized/oxidized:latest
-    oxidized[1]: Oxidized starting, running as pid 1
-    oxidized[1]: Loaded 1 nodes
-    Puma 2.13.4 starting...
-    * Min threads: 0, max threads: 16
-    * Environment: development
-    * Listening on tcp://0.0.0.0:8888
-    ^C
 
-    root@bla:~#
+build container locally:
+
+```
+docker build -q -t oxidized/oxidized:latest oxidized/
+```
+
+create config directory in main system:
+
+```
+mkdir /etc/oxidized
+```
+
+run container the first time:
+_Note: this step in only needed for creating Oxidized's configuration file and can be skipped if you already have it
+
+```
+docker run --rm -v /etc/oxidized:/root/.config/oxidized -p 8888:8888/tcp -t oxidized/oxidized:latest oxidized
+```
+
+create the `/etc/oxidized/router.db`
+
+```
+vim /etc/oxidized/router.db
+```
+
+run container again:
+
+```
+docker run -v /etc/oxidized:/root/.config/oxidized -p 8888:8888/tcp -t oxidized/oxidized:latest
+oxidized[1]: Oxidized starting, running as pid 1
+oxidized[1]: Loaded 1 nodes
+Puma 2.13.4 starting...
+* Min threads: 0, max threads: 16
+* Environment: development
+* Listening on tcp://0.0.0.0:8888
 ```
 
 If you want to have the config automatically reloaded (e.g. when using a http source that changes)
+
 ```
-    root@bla:~# docker run -v /etc/oxidized:/root/.config/oxidized -p 8888:8888/tcp -e CONFIG_RELOAD_INTERVAL=3600 -t oxidized/oxidized:latest
+docker run -v /etc/oxidized:/root/.config/oxidized -p 8888:8888/tcp -e CONFIG_RELOAD_INTERVAL=3600 -t oxidized/oxidized:latest
 ```
 
 ## Cookbook
