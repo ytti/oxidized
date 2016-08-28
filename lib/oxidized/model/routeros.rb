@@ -1,5 +1,5 @@
 class RouterOS < Oxidized::Model
-  prompt /\[\w+@\S+(\s?\S+){0,}\]\s?>\s?$/
+  prompt /\[\w+@\S+(\s?\S+)*\]\s?>\s?$/
   comment "# "
 
   cmd '/system routerboard print' do |cfg|
