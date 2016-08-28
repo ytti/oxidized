@@ -34,6 +34,7 @@ Oxidized is a network device configuration backup tool. It's a RANCID replacemen
     * [Output: File](#output-file)
     * [Output types](#output-types)
     * [Advanced Configuration](#advanced-configuration)
+    * [Advanced Group Configuration](#advanced-group-configuration)
 7. [Ruby API](#ruby-api)
     * [Input](#input)
     * [Output](#output)
@@ -580,7 +581,7 @@ rest: 10.0.0.1:8000/oxidized
 
 ### Advanced Configuration
 
-Below is an advanced example configuration. You will be able to (optinally) override options per device. The router.db format used is ```hostname:model:username:password:enable_password```. Hostname and model will be the only required options, all others override the global configuration sections.
+Below is an advanced example configuration. You will be able to (optionally) override options per device. The router.db format used is ```hostname:model:username:password:enable_password```. Hostname and model will be the only required options, all others override the global configuration sections.
 
 ```
 ---
@@ -619,12 +620,35 @@ source:
       name: 0
       model: 1
       username: 2
-      password: 3
+      passsword: 3
     vars_map:
       enable: 4
 model_map:
   cisco: ios
   juniper: junos
+
+```
+
+### Advanced Group Configuration
+
+For group specific credentials
+
+```
+groups:
+  mikrotik:
+    username: admin
+    password: blank
+  ubiquiti:
+    username: ubnt
+    password: ubnt
+
+```
+and add group mapping
+```
+map:
+  model: 0
+  name: 1
+  group: 2
 ```
 
 # Hooks
