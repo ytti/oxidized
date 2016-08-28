@@ -17,7 +17,7 @@ class OxidizedFile < Output
   end
 
   def store node, outputs, opt={}
-    file = @cfg.directory
+    file = File.expand_path @cfg.directory
     if opt[:group]
       file = File.join File.dirname(file), opt[:group]
     end
@@ -28,7 +28,7 @@ class OxidizedFile < Output
   end
 
   def fetch node, group
-    cfg_dir = @cfg.directory
+    cfg_dir = File.expand_path @cfg.directory
     if group # group is explicitly defined by user
       IO.readlines File.join(cfg_dir, group, node)
     else
