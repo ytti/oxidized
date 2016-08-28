@@ -620,7 +620,7 @@ source:
       name: 0
       model: 1
       username: 2
-      passsword: 3
+      password: 3
     vars_map:
       enable: 4
 model_map:
