@@ -641,7 +641,6 @@ groups:
   ubiquiti:
     username: ubnt
     password: ubnt
-
 ```
 and add group mapping
 ```
