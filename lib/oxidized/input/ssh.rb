@@ -42,7 +42,7 @@ module Oxidized
       unless @exec
         shell_open @ssh
         begin
-          @username ? shell_login : expect(@node.prompt)
+          login
         rescue Timeout::Error
           raise PromptUndetect, [ @output, 'not matching configured prompt', @node.prompt ].join(' ')
         end
@@ -102,13 +102,18 @@ module Oxidized
       end
     end
 
-    # Cisco WCS has extremely dubious SSH implementation, SSH auth is always
-    # success, it always opens shell and then run auth in shell. I guess
-    # they'll never support exec() :)
-    def shell_login
-      expect username
-      cmd @node.auth[:username], password
-      cmd @node.auth[:password]
+    # some models have SSH auth or terminal auth based on version of code
+    # if SSH is configured for terminal auth, we'll still try to detect prompt
+    def login
+      if @username
+        match = expect username, @node.prompt
+        if match == username
+          cmd @node.auth[:username], password
+          cmd @node.auth[:password]
+        end
+      else
+        expect @node.prompt
+      end
     end
 
     def exec state=nil
@@ -123,14 +128,18 @@ module Oxidized
       @output
     end
 
-    def expect regexp
-      Oxidized.logger.debug "lib/oxidized/input/ssh.rb: expecting #{regexp.inspect} at #{node.name}"
+    def expect *regexps
+      regexps = [regexps].flatten
+      Oxidized.logger.debug "lib/oxidized/input/ssh.rb: expecting #{regexps.inspect} at #{node.name}"
       Timeout::timeout(Oxidized.config.timeout) do
         @ssh.loop(0.1) do
           sleep 0.1
-          not @output.match regexp
+          match = regexps.find { |regexp| @output.match regexp }
+          return match if match
+          true
         end
       end
     end
+
   end
 end
