@@ -19,10 +19,10 @@ task :test do
   end
 end
 
-desc 'Install gem'
-task :install => :build do
-  system "sudo -Es sh -c \'umask 022; gem install gems/#{file}\'"
-end
+## desc 'Install gem'
+## task :install => :build do
+##   system "sudo -Es sh -c \'umask 022; gem install gems/#{file}\'"
+## end
 
 desc 'Remove gems'
 task :clean do
