@@ -749,7 +749,7 @@ The following objects exist in Oxidized.
 ## Input
  * gets config from nodes
  * must implement 'connect', 'get', 'cmd'
- * 'ssh', 'telnet, sqlite, ftp, and tftp' implemented
+ * 'ssh', 'telnet, ftp, and tftp' implemented
 
 ## Output
  * stores config
