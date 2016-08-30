@@ -50,6 +50,8 @@ Oxidized is a network device configuration backup tool. It's a RANCID replacemen
    * AOS7
    * ISAM
    * Wireless
+ * Alvarion
+   * BreezeACCESS
  * Arista
    * EOS
  * Arris
@@ -747,7 +749,7 @@ The following objects exist in Oxidized.
 ## Input
  * gets config from nodes
  * must implement 'connect', 'get', 'cmd'
- * 'ssh' and 'telnet' implemented
+ * 'ssh', 'telnet, ftp, and tftp' implemented
 
 ## Output
  * stores config
