@@ -1,5 +1,4 @@
 module Oxidized
-  require 'timeout'
   require 'stringio'
   require_relative 'cli'
   
