@@ -49,7 +49,6 @@ module Oxidized
 
     def disconnect
       # TFTP uses UDP, there is no connection to close
-    #rescue Errno::ECONNRESET, IOError
     ensure
       @log.close if Oxidized.config.input.debug?
     end
