@@ -1,5 +1,4 @@
 module Oxidized
-  require 'net/tftp'
   require 'timeout'
   require 'stringio'
   require_relative 'cli'
@@ -19,6 +18,11 @@ module Oxidized
     
     # TFTP utilizes UDP, there is not a connection. We simply specify an IP and send/receive data.
     def connect node
+      begin
+        require 'net/tftp'
+      rescue LoadError
+        raise OxidizedError, 'net/tftp not found: sudo gem install net-tftp'
+      end
       @node       = node
 
       @node.model.cfg['tftp'].each { |cb| instance_exec(&cb) }
@@ -49,6 +53,7 @@ module Oxidized
 
     def disconnect
       # TFTP uses UDP, there is no connection to close
+    #rescue Errno::ECONNRESET, IOError
     ensure
       @log.close if Oxidized.config.input.debug?
     end
