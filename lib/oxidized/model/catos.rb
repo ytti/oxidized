@@ -1,6 +1,6 @@
 class Catos < Oxidized::Model
 
-  prompt /^[\w.@-]+> \(enable\) $/
+  prompt /^[\w.@-]+>\s?(\(enable\) )?$/
   comment '# '
 
   cmd :all do |cfg|
@@ -28,8 +28,15 @@ class Catos < Oxidized::Model
     password /^Password:/
   end
 
-  cfg :ssh, :telnet do
+  cfg :telnet, :ssh do
     post_login 'set length 0'
+    # preferred way to handle additional passwords
+    if vars :enable
+      post_login do
+        send "enable\n"
+        cmd vars(:enable)
+      end
+    end
     pre_logout 'exit'
   end
 
