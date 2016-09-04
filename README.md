@@ -400,48 +400,50 @@ vars_map:
 ...
 ```
 ### Source: SQL
- ### Source: MYSQL
- ```sudo apt-get install libmysqlclient-dev```
- 
- The values correspond to your fields in the DB such that ip, model, etc are field names in the DB
- 
- ```
- source:
-   default: sql
-   sql:
-     adapter: mysql
-     database: oxidized
-     table: nodes
-     username: root 
-     password: rootpass
-     map:
-       name: ip 
-       model: model
-       username: username
-       password: password
-     vars_map:
-       enable: enable
- ```
- 
- ### Source: SQLite
- 
- One row per device, filtered by hostname.
- 
- ```
- source:
-   default: sql
-   sql:
-     adapter: sqlite
-     database: "/var/lib/oxidized/devices.db"
-     table: devices
-     map:
-       name: fqdn
-       model: model
-       username: username
-       password: password
-     vars_map:
-       enable: enable
- ```
+ Oxidized uses the `sequel` ruby gem. You can use a variety of databases that aren't explicitly listed. For more information visit https://github.com/jeremyevans/sequel Make sure you have the correct adapter!
+### Source: MYSQL
+
+```sudo apt-get install libmysqlclient-dev```
+
+The values correspond to your fields in the DB such that ip, model, etc are field names in the DB
+
+```
+source:
+  default: sql
+  sql:
+    adapter: mysql
+    database: oxidized
+    table: nodes
+    username: root 
+    password: rootpass
+    map:
+      name: ip 
+      model: model
+      username: username
+      password: password
+    vars_map:
+      enable: enable
+```
+
+### Source: SQLite
+
+One row per device, filtered by hostname.
+
+```
+source:
+  default: sql
+  sql:
+    adapter: sqlite
+    database: "/var/lib/oxidized/devices.db"
+    table: devices
+    map:
+      name: fqdn
+      model: model
+      username: username
+      password: password
+    vars_map:
+      enable: enable
+```
 
 ### Source: HTTP
 
