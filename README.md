@@ -27,7 +27,9 @@ Oxidized is a network device configuration backup tool. It's a RANCID replacemen
     * [Privileged mode](#privileged-mode)
     * [Disabling SSH exec channels](#disabling-ssh-exec-channels)
     * [Source: CSV](#source-csv)
-    * [Source: SQLite](#source-sqlite)
+    * [Source: SQL](#source-sqlite)
+      * [Source: SQLite](#source-sqlite)
+      * [Source: Mysql](#source-mysql)
     * [Source: HTTP](#source-http)
     * [Output: GIT](#output-git)
     * [Output: HTTP](#output-http)
@@ -397,7 +399,8 @@ vars_map:
   ssh_proxy: 3
 ...
 ```
-### Source: SQL->MYSQL
+
+### Source: MYSQL
 
 One row per device, filtered by hostname
 require 'mysql'
