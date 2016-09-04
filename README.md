@@ -397,6 +397,31 @@ vars_map:
   ssh_proxy: 3
 ...
 ```
+### Source: SQL->MYSQL
+
+One row per device, filtered by hostname
+require 'mysql'
+sudo apt-get install libmysqlclient-dev
+
+```
+source:
+  default: sql
+  sql:
+    adapter: mysql
+    database: oxidized
+    table: nodes
+    username: root #Make sure the user has permissions to login 
+    password: rootpass
+    #The keys inside the map hash are static
+    #The values correspond to your fields in the DB
+    map:
+      name: ip #<-- IP is a field
+      model: model
+      username: username
+      password: password
+    vars_map:
+      enable: enable
+```
 
 ### Source: SQLite
 
