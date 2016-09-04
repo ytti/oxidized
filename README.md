@@ -150,7 +150,7 @@ gem install oxidized-script oxidized-web # if you don't install oxidized-web, ma
 ```
 
 ## CentOS, Oracle Linux, Red Hat Linux
-On CentOS 6 / RHEL 6, install Ruby 1.9.3 or greater (for Ruby 2.1.2 installation instructions see "Installing Ruby 2.1.2 using RVM"), then install Oxidized dependencies
+On CentOS 6 / RHEL 6, install Ruby greater than 1.9.3 (for Ruby 2.1.2 installation instructions see "Installing Ruby 2.1.2 using RVM"), then install Oxidized dependencies
 ```shell
 yum install cmake sqlite-devel openssl-devel libssh2-devel
 ```
