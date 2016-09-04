@@ -27,7 +27,7 @@ Oxidized is a network device configuration backup tool. It's a RANCID replacemen
     * [Privileged mode](#privileged-mode)
     * [Disabling SSH exec channels](#disabling-ssh-exec-channels)
     * [Source: CSV](#source-csv)
-    * [Source: SQL](#source-sqlite)
+    * [Source: SQL](#source-sql)
       * [Source: SQLite](#source-sqlite)
       * [Source: Mysql](#source-mysql)
     * [Source: HTTP](#source-http)
@@ -401,12 +401,7 @@ vars_map:
 ```
 ### Source: SQL
 ### Source: MYSQL
-
-One row per device, filtered by hostname
-
-require 'mysql'
-
-sudo apt-get install libmysqlclient-dev
+```sudo apt-get install libmysqlclient-dev```
 
 Make sure the user has permissions to login 
 
@@ -425,7 +420,6 @@ source:
     table: nodes
     username: root 
     password: rootpass
-    
     map:
       name: ip 
       model: model
