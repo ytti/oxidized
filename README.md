@@ -399,12 +399,22 @@ vars_map:
   ssh_proxy: 3
 ...
 ```
-
+### Source: SQL
 ### Source: MYSQL
 
 One row per device, filtered by hostname
+
 require 'mysql'
+
 sudo apt-get install libmysqlclient-dev
+
+Make sure the user has permissions to login 
+
+The keys inside the map hash are static
+
+The values correspond to your fields in the DB
+
+ip, model, etc are field names in the DB
 
 ```
 source:
@@ -413,12 +423,11 @@ source:
     adapter: mysql
     database: oxidized
     table: nodes
-    username: root #Make sure the user has permissions to login 
+    username: root 
     password: rootpass
-    #The keys inside the map hash are static
-    #The values correspond to your fields in the DB
+    
     map:
-      name: ip #<-- IP is a field
+      name: ip 
       model: model
       username: username
       password: password
