@@ -411,7 +411,7 @@ The values correspond to your fields in the DB such that ip, model, etc are fiel
 source:
   default: sql
   sql:
-    adapter: mysql
+    adapter: mysql2
     database: oxidized
     table: nodes
     username: root 
