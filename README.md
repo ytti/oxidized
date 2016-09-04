@@ -400,54 +400,48 @@ vars_map:
 ...
 ```
 ### Source: SQL
-### Source: MYSQL
-```sudo apt-get install libmysqlclient-dev```
-
-Make sure the user has permissions to login 
-
-The keys inside the map hash are static
-
-The values correspond to your fields in the DB
-
-ip, model, etc are field names in the DB
-
-```
-source:
-  default: sql
-  sql:
-    adapter: mysql
-    database: oxidized
-    table: nodes
-    username: root 
-    password: rootpass
-    map:
-      name: ip 
-      model: model
-      username: username
-      password: password
-    vars_map:
-      enable: enable
-```
-
-### Source: SQLite
-
-One row per device, filtered by hostname.
-
-```
-source:
-  default: sql
-  sql:
-    adapter: sqlite
-    database: "/var/lib/oxidized/devices.db"
-    table: devices
-    map:
-      name: fqdn
-      model: model
-      username: username
-      password: password
-    vars_map:
-      enable: enable
-```
+ ### Source: MYSQL
+ ```sudo apt-get install libmysqlclient-dev```
+ 
+ The values correspond to your fields in the DB such that ip, model, etc are field names in the DB
+ 
+ ```
+ source:
+   default: sql
+   sql:
+     adapter: mysql
+     database: oxidized
+     table: nodes
+     username: root 
+     password: rootpass
+     map:
+       name: ip 
+       model: model
+       username: username
+       password: password
+     vars_map:
+       enable: enable
+ ```
+ 
+ ### Source: SQLite
+ 
+ One row per device, filtered by hostname.
+ 
+ ```
+ source:
+   default: sql
+   sql:
+     adapter: sqlite
+     database: "/var/lib/oxidized/devices.db"
+     table: devices
+     map:
+       name: fqdn
+       model: model
+       username: username
+       password: password
+     vars_map:
+       enable: enable
+ ```
 
 ### Source: HTTP
 
