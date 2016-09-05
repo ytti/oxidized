@@ -27,7 +27,9 @@ Oxidized is a network device configuration backup tool. It's a RANCID replacemen
     * [Privileged mode](#privileged-mode)
     * [Disabling SSH exec channels](#disabling-ssh-exec-channels)
     * [Source: CSV](#source-csv)
-    * [Source: SQLite](#source-sqlite)
+    * [Source: SQL](#source-sql)
+      * [Source: SQLite](#source-sqlite)
+      * [Source: Mysql](#source-mysql)
     * [Source: HTTP](#source-http)
     * [Output: GIT](#output-git)
     * [Output: HTTP](#output-http)
@@ -396,6 +398,31 @@ vars_map:
   enable: 2
   ssh_proxy: 3
 ...
+```
+### Source: SQL
+ Oxidized uses the `sequel` ruby gem. You can use a variety of databases that aren't explicitly listed. For more information visit https://github.com/jeremyevans/sequel Make sure you have the correct adapter!
+### Source: MYSQL
+
+```sudo apt-get install libmysqlclient-dev```
+
+The values correspond to your fields in the DB such that ip, model, etc are field names in the DB
+
+```
+source:
+  default: sql
+  sql:
+    adapter: mysql2
+    database: oxidized
+    table: nodes
+    username: root 
+    password: rootpass
+    map:
+      name: ip 
+      model: model
+      username: username
+      password: password
+    vars_map:
+      enable: enable
 ```
 
 ### Source: SQLite
