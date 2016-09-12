@@ -3,7 +3,7 @@ MAINTAINER Samer Abdel-Hafez <sam@arahant.net>
 
 RUN add-apt-repository ppa:brightbox/ruby-ng && \
 	apt-get update && \
-  apt-get install -y ruby2.1 ruby2.1-dev libsqlite3-dev libssl-dev pkg-config make cmake
+  apt-get install -y ruby2.3 ruby2.3-dev libsqlite3-dev libssl-dev pkg-config make cmake
 
 RUN gem install oxidized oxidized-web --no-ri --no-rdoc
 
