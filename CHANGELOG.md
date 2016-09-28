@@ -1,3 +1,13 @@
+# 0 17.3
+- FEATURE: "nil", "false" and "true" in source (e.g. router.db) are interpeted as nil, false, true. Empty is now always considered empty string, instead of in some cases nil and some cases empty string.
+- FEATURE: support tftp as input model (@MajesticFalcon)
+- FEATURE: add alvarion model (@MajesticFalcon)
+- FEATURE: detect if ssh wants password terminal/CLI prompt or not
+- FEATURE: node (group, model, username, password) resolution refactoring, supports wider range of use-cases
+- BUGFIX: fetch for file output (@danilopopeye)
+- BUGFIX: net-ssh version specification
+- BUGFIX: routeros, catos, pfsense
+
 # 0.16.3
 - FEATURE: pfsense support (by @stokbaek)
 - BUGFIX: cumulus prompt not working with default switch configs (by @nertwork)
