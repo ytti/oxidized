@@ -60,8 +60,7 @@ Oxidized is a network device configuration backup tool. It's a RANCID replacemen
    * C4CMTS
  * Aruba
    * AOSW
- * APC
-   * APC AP7922 (May work with others switched rack PDUs using the APC Web/SNMP Management Card)
+ * APC_AOS
  * Brocade
    * FabricOS
    * Ironware
