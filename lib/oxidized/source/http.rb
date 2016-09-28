@@ -43,9 +43,11 @@ class HTTP < Source
       end
       keys[:model] = map_model keys[:model] if keys.key? :model
 
-      # map node specific vars, empty value is considered as nil
+      # map node specific vars
       vars = {}
-      @cfg.vars_map.each { |key, position| vars[key.to_sym] = line[position].to_s.empty? ? nil : line[position] }
+      @cfg.vars_map.each do |key, position|
+        vars[key.to_sym] = node_var_interpolate line[position]
+      end
       keys[:vars] = vars unless vars.empty?
 
       nodes << keys

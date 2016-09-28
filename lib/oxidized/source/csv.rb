@@ -20,7 +20,7 @@ class CSV < Source
     nodes = []
     open(File.expand_path @cfg.file).each_line do |line|
       next if line.match(/^\s*#/)
-      data  = line.chomp.split @cfg.delimiter
+      data  = line.chomp.split(@cfg.delimiter, -1)
       next if data.empty?
       # map node parameters
       keys = {}
@@ -29,9 +29,11 @@ class CSV < Source
       end
       keys[:model] = map_model keys[:model] if keys.key? :model
 
-      # map node specific vars, empty value is considered as nil
+      # map node specific vars
       vars = {}
-      @cfg.vars_map.each { |key, position| vars[key.to_sym] = data[position].to_s.empty? ? nil : data[position] }
+      @cfg.vars_map.each do |key, position|
+        vars[key.to_sym] = node_var_interpolate data[position]
+      end
       keys[:vars] = vars unless vars.empty?
 
       nodes << keys
