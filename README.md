@@ -1,4 +1,4 @@
-# Oxidized [![Build Status](https://travis-ci.org/Shopify/oxidized.svg)](https://travis-ci.org/Shopify/oxidized) [![Gem Version](https://badge.fury.io/rb/oxidized.svg)](http://badge.fury.io/rb/oxidized) [![Join the chat at https://gitter.im/oxidized/Lobby](https://badges.gitter.im/oxidized/Lobby.svg)](https://gitter.im/oxidized/Lobby?utm_source=badge&utm_medium=badge&utm_campaign=pr-badge&utm_content=badge) 
+# Oxidized [![Build Status](https://travis-ci.org/Shopify/oxidized.svg)](https://travis-ci.org/Shopify/oxidized) [![Gem Version](https://badge.fury.io/rb/oxidized.svg)](http://badge.fury.io/rb/oxidized) [![Join the chat at https://gitter.im/oxidized/Lobby](https://badges.gitter.im/oxidized/Lobby.svg)](https://gitter.im/oxidized/Lobby?utm_source=badge&utm_medium=badge&utm_campaign=pr-badge&utm_content=badge)
 
 Oxidized is a network device configuration backup tool. It's a RANCID replacement!
 
@@ -45,104 +45,104 @@ Oxidized is a network device configuration backup tool. It's a RANCID replacemen
 
 # Supported OS types
  * Vendor
-   * OS - model_name
+   * OS model
 
  * A10 Networks
-   * ACOS - acos
+   * [ACOS](lib/oxidized/model/acos.rb)
  * Alcatel-Lucent
-   * AOS - aos
-   * AOS7 - aos7
-   * ISAM - isam
+   * [AOS](lib/oxidized/model/aos.rb)
+   * [AOS7](lib/oxidized/model/aos7.rb)
+   * [ISAM](lib/oxidized/model/isam.rb)
    * Wireless
  * Alvarion
-   * BreezeACCESS - alvarion
+   * [BreezeACCESS](lib/oxidized/model/alvarion.rb)
  * APC
-   * AOS - apc_aos
+   * [AOS](lib/oxidized/model/apc_aos.rb)
  * Arista
-   * EOS - eos
+   * [EOS](lib/oxidized/model/eos.rb)
  * Arris
-   * C4CMTS - c4cmts
+   * [C4CMTS](lib/oxidized/model/c4cmts.rb)
  * Aruba
-   * AOSW - aosw
+   * [AOSW](lib/oxidized/model/aosw.rb)
  * Brocade
-   * FabricOS - fabricos
-   * Ironware - ironware
-   * NOS (Network Operating System) - nos
-   * Vyatta - vyatta
-   * 6910 - br6910
+   * [FabricOS](lib/oxidized/model/fabricos.rb)
+   * [Ironware](lib/oxidized/model/ironware.rb)
+   * [NOS (Network Operating System)](lib/oxidized/model/nos.rb)
+   * [Vyatta](lib/oxidized/model/vyatta.rb)
+   * [6910](lib/oxidized/model/br6910.rb)
  * Check Point
-   * GaiaOS - gaiaos
+   * [GaiaOS](lib/oxidized/model/gaiaos.rb)
  * Ciena
-   * SOAS - saos
+   * [SOAS](lib/oxidized/model/saos.rb)
  * Cisco
-   * AireOS - aireos
-   * ASA - asa
-   * CatOS - catos
-   * IOS - ios
-   * IOSXR - iosxr
-   * NXOS - nxos
-   * SMB (Nikola series) - ciscosmb
+   * [AireOS](lib/oxidized/model/aireos.rb)
+   * [ASA](lib/oxidized/model/asa.rb)
+   * [CatOS](lib/oxidized/model/catos.rb)
+   * [IOS](lib/oxidized/model/ios.rb)
+   * [IOSXR](lib/oxidized/model/iosxr.rb)
+   * [NXOS](lib/oxidized/model/nxos.rb)
+   * [SMB (Nikola series)](lib/oxidized/model/ciscosmb.rb)
  * Citrix
-   * NetScaler (Virtual Applicance) - netscaler
+   * [NetScaler (Virtual Applicance)](lib/oxidized/model/netscaler.rb)
  * Coriant (former Tellabs)
-   * TMOS (8800) - corianttmos
-   * 8600 - coriant8600
+   * [TMOS (8800)](lib/oxidized/model/corianttmos.rb)
+   * [8600](lib/oxidized/model/coriant8600.rb)
  * Cumulus
-   * Linux - cumulus
+   * [Linux](lib/oxidized/model/cumulus.rb)
  * DataCom
-   * DmSwitch 3000 - datacom
+   * [DmSwitch 3000](lib/oxidized/model/datacom.rb)
  * DELL
-   * PowerConnect - powerconnect
-   * AOSW - aosw
+   * [PowerConnect](lib/oxidized/model/powerconnect.rb)
+   * [AOSW](lib/oxidized/model/aosw.rb)
  * Ericsson/Redback
-   * IPOS (former SEOS) - ipos
+   * [IPOS (former SEOS)](lib/oxidized/model/ipos.rb)
  * Extreme Networks
-   * XOS - xos
-   * WM - mtrlrfs
+   * [XOS](lib/oxidized/model/xos.rb)
+   * [WM](lib/oxidized/model/mtrlrfs.rb)
  * F5
-   * TMOS - tmos
+   * [TMOS](lib/oxidized/model/tmos.rb)
  * Force10
-   * DNOS - dnos
-   * FTOS - ftos
+   * [DNOS](lib/oxidized/model/dnos.rb)
+   * [FTOS](lib/oxidized/model/ftos.rb)
  * FortiGate
-   * FortiOS - fortios
+   * [FortiOS](lib/oxidized/model/fortios.rb)
  * HP
    * Comware (HP A-series, H3C, 3Com) - comware
-   * Procurve - procurve
+   * [Procurve](lib/oxidized/model/procurve.rb)
  * Huawei
-   * VRP - vrp
+   * [VRP](lib/oxidized/model/vrp.rb)
  * Juniper
-   * JunOS - junos
-   * ScreenOS (Netscreen) - screenos
+   * [JunOS](lib/oxidized/model/junos.rb)
+   * [ScreenOS (Netscreen)](lib/oxidized/model/screenos.rb)
  * Mellanox
    * MLNX-OS - mlnxos
  * Mikrotik
-   * RouterOS - routeros
+   * [RouterOS](lib/oxidized/model/routeros.rb)
  * Motorola
-   * RFS - mtrlrfs
+   * [RFS](lib/oxidized/model/mtrlrfs.rb)
  * MRV
-   * MasterOS - masteros
+   * [MasterOS](lib/oxidized/model/masteros.rb)
  * Netonix
-   * WISP Switch (As Netonix) - netonix
+   * [WISP Switch (As Netonix)](lib/oxidized/model/netonix.rb)
  * Nokia (formerly TiMetra, Alcatel, Alcatel-Lucent)
-   * SR OS (TiMOS) - timos
+   * [SR OS (TiMOS)](lib/oxidized/model/timos.rb)
  * Opengear
-   * Opengear - opengear
+   * [Opengear](lib/oxidized/model/opengear.rb)
  * Palo Alto
-   * PANOS - panos
- * pfSense - pfsense
+   * [PANOS](lib/oxidized/model/panos.rb)
+ * [pfSense](lib/oxidized/model/pfsense.rb)
  * Quanta
-   * Quanta / VxWorks 6.6 (1.1.0.8) - quantaos
+   * [Quanta / VxWorks 6.6 (1.1.0.8)](lib/oxidized/model/quantaos.rb)
  * Supermicro
-   * Supermicro - supermicro
+   * [Supermicro](lib/oxidized/model/supermicro.rb)
  * Ubiquiti
-   * AirOS - airos
-   * Edgeos - edgeos
-   * EdgeSwitch - edgeswitch
+   * [AirOS](lib/oxidized/model/airos.rb)
+   * [Edgeos](lib/oxidized/model/edgeos.rb)
+   * [EdgeSwitch](lib/oxidized/model/edgeswitch.rb)
  * Watchguard
-   * Fireware OS - firewareos
+   * [Fireware OS](lib/oxidized/model/firewareos.rb)
  * Zyxel
-   * ZyNOS - zynos
+   * [ZyNOS](lib/oxidized/model/zynos.rb)
 
 
 # Installation
@@ -349,10 +349,10 @@ Device models can contain substitution filters to remove potentially sensitive d
 
 As a partial example from ios.rb:
 
-```  
+```
   cmd :secret do |cfg|
     cfg.gsub! /^(snmp-server community).*/, '\\1 <configuration removed>'
-    (...)    
+    (...)
     cfg
   end
 ```
@@ -418,10 +418,10 @@ source:
     adapter: mysql2
     database: oxidized
     table: nodes
-    username: root 
+    username: root
     password: rootpass
     map:
-      name: ip 
+      name: ip
       model: model
       username: username
       password: password
