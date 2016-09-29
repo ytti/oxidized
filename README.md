@@ -107,7 +107,7 @@ Oxidized is a network device configuration backup tool. It's a RANCID replacemen
  * FortiGate
    * [FortiOS](lib/oxidized/model/fortios.rb)
  * HP
-   * Comware (HP A-series, H3C, 3Com) - comware
+   * [Comware (HP A-series, H3C, 3Com)](lib/oxidized/model/comware.rb)
    * [Procurve](lib/oxidized/model/procurve.rb)
  * Huawei
    * [VRP](lib/oxidized/model/vrp.rb)
