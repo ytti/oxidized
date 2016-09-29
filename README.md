@@ -44,102 +44,104 @@ Oxidized is a network device configuration backup tool. It's a RANCID replacemen
     * [Model](#model)
 
 # Supported OS types
+ * Vendor
+   * OS - model_name
 
  * A10 Networks
-   * ACOS
+   * ACOS - acos
  * Alcatel-Lucent
-   * AOS
-   * AOS7
-   * ISAM
+   * AOS - aos
+   * AOS7 - aos7
+   * ISAM - isam
    * Wireless
  * Alvarion
-   * BreezeACCESS
- * Arista
-   * EOS
- * Arris
-   * C4CMTS
- * Aruba
-   * AOSW
+   * BreezeACCESS - alvarion
  * APC_AOS
+ * Arista
+   * EOS - eos
+ * Arris
+   * C4CMTS - c4cmts
+ * Aruba
+   * AOSW - aosw
  * Brocade
-   * FabricOS
-   * Ironware
-   * NOS (Network Operating System)
-   * Vyatta
-   * 6910
+   * FabricOS - fabricos
+   * Ironware - ironware
+   * NOS (Network Operating System) - nos
+   * Vyatta - vyatta
+   * 6910 - br6910
  * Check Point
-   * GaiaOS
+   * GaiaOS - gaiaos
  * Ciena
-   * SOAS
+   * SOAS - saos
  * Cisco
-   * AireOS
-   * ASA
-   * CatOS
-   * IOS
-   * IOSXR
-   * NXOS
-   * SMB (Nikola series)
+   * AireOS - aireos
+   * ASA - asa
+   * CatOS - catos
+   * IOS - ios
+   * IOSXR - iosxr
+   * NXOS - nxos
+   * SMB (Nikola series) 
  * Citrix
-   * NetScaler (Virtual Applicance)
+   * NetScaler (Virtual Applicance) - netscaler
  * Coriant (former Tellabs)
-   * TMOS (8800)
-   * 8600
+   * TMOS (8800) - tmos
+   * 8600 - 
  * Cumulus
    * Linux
  * DataCom
    * DmSwitch 3000
  * DELL
-   * PowerConnect
-   * AOSW
+   * PowerConnect - powerconnect
+   * AOSW - aosw
  * Ericsson/Redback
-   * IPOS (former SEOS)
+   * IPOS (former SEOS) - ipos
  * Extreme Networks
-   * XOS
+   * XOS - xos
    * WM
  * F5
    * TMOS
  * Force10
-   * DNOS
-   * FTOS
+   * DNOS - dnos
+   * FTOS - ftos
  * FortiGate
-   * FortiOS
+   * FortiOS - fortios
  * HP
-   * Comware (HP A-series, H3C, 3Com)
-   * Procurve
+   * Comware (HP A-series, H3C, 3Com) - comware
+   * Procurve - procurve
  * Huawei
    * VRP
  * Juniper
    * JunOS
    * ScreenOS (Netscreen)
  * Mellanox
-   * MLNX-OS
+   * MLNX-OS - mlnxos
  * Mikrotik
-   * RouterOS
+   * RouterOS - routeros
  * Motorola
    * RFS
  * MRV
-   * MasterOS
+   * MasterOS - masteros
  * Netonix
-   * WISP Switch (As Netonix)
+   * WISP Switch (As Netonix) - netonix
  * Nokia (formerly TiMetra, Alcatel, Alcatel-Lucent)
-   * SR OS (TiMOS)
+   * SR OS (TiMOS) - timos
  * Opengear
-   * Opengear
+   * Opengear - opengear
  * Palo Alto
-   * PANOS
- * pfSense
+   * PANOS - panos
+ * pfSense - pfsense
  * Quanta
-   * Quanta / VxWorks 6.6 (1.1.0.8)
+   * Quanta / VxWorks 6.6 (1.1.0.8) - quantaos
  * Supermicro
-   * Supermicro
+   * Supermicro - supermicro
  * Ubiquiti
-   * AirOS
-   * Edgeos
-   * EdgeSwitch
+   * AirOS - airos
+   * Edgeos - edgeos
+   * EdgeSwitch - edgeswitch
  * Watchguard
-   * Fireware OS
+   * Fireware OS - firewareos
  * Zyxel
-   * ZyNOS
+   * ZyNOS - zynos
 
 
 # Installation
