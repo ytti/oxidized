@@ -56,7 +56,8 @@ Oxidized is a network device configuration backup tool. It's a RANCID replacemen
    * Wireless
  * Alvarion
    * BreezeACCESS - alvarion
- * APC_AOS
+ * APC
+   * AOS - apc_aos
  * Arista
    * EOS - eos
  * Arris
