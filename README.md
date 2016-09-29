@@ -81,16 +81,16 @@ Oxidized is a network device configuration backup tool. It's a RANCID replacemen
    * IOS - ios
    * IOSXR - iosxr
    * NXOS - nxos
-   * SMB (Nikola series) 
+   * SMB (Nikola series) - ciscosmb
  * Citrix
    * NetScaler (Virtual Applicance) - netscaler
  * Coriant (former Tellabs)
-   * TMOS (8800) - tmos
-   * 8600 - 
+   * TMOS (8800) - corianttmos
+   * 8600 - coriant8600
  * Cumulus
-   * Linux
+   * Linux - cumulus
  * DataCom
-   * DmSwitch 3000
+   * DmSwitch 3000 - datacom
  * DELL
    * PowerConnect - powerconnect
    * AOSW - aosw
@@ -98,9 +98,9 @@ Oxidized is a network device configuration backup tool. It's a RANCID replacemen
    * IPOS (former SEOS) - ipos
  * Extreme Networks
    * XOS - xos
-   * WM
+   * WM - mtrlrfs
  * F5
-   * TMOS
+   * TMOS - tmos
  * Force10
    * DNOS - dnos
    * FTOS - ftos
@@ -110,16 +110,16 @@ Oxidized is a network device configuration backup tool. It's a RANCID replacemen
    * Comware (HP A-series, H3C, 3Com) - comware
    * Procurve - procurve
  * Huawei
-   * VRP
+   * VRP - vrp
  * Juniper
-   * JunOS
-   * ScreenOS (Netscreen)
+   * JunOS - junos
+   * ScreenOS (Netscreen) - screenos
  * Mellanox
    * MLNX-OS - mlnxos
  * Mikrotik
    * RouterOS - routeros
  * Motorola
-   * RFS
+   * RFS - mtrlrfs
  * MRV
    * MasterOS - masteros
  * Netonix
