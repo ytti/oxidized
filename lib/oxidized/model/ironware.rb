@@ -2,14 +2,14 @@ class IronWare < Oxidized::Model
 
   prompt /^.*(telnet|ssh)\@.+[>#]\s?$/i
   comment  '! '
-  
+
   #to handle pager without enable
   #expect /^((.*)--More--(.*))$/ do |data, re|
   #  send ' '
   #  data.sub re, ''
   #end
 
-  
+
   #to remove backspace (if handle pager without enable)
   #expect /^((.*)[\b](.*))$/ do |data, re|
   #  data.sub re, ''
@@ -44,14 +44,14 @@ class IronWare < Oxidized::Model
       out << sc.rest
       cfg = out
     end
-    
+
     comment cfg
   end
-  
+
   cmd 'show flash' do |cfg|
     comment cfg
   end
-  
+
   cmd 'show module' do |cfg|
     cfg.gsub! /^((Invalid input)|(Type \?)).*$/, '' # some ironware devices are fixed config
     comment cfg
@@ -74,7 +74,7 @@ class IronWare < Oxidized::Model
     if vars :enable
       post_login do
         send "enable\r\n"
-        send vars(:enable) + "\r\n"
+        cmd vars(:enable)
       end
     end
     post_login ''
