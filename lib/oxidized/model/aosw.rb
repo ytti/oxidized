@@ -60,8 +60,8 @@ class AOSW < Oxidized::Model
   cfg :telnet, :ssh do
     if vars :enable
       post_login do
-        send 'enable\n'
-        send vars(:enable) + '\n'
+        send "enable\n"
+        send vars(:enable) + "\n"
       end
     end
     post_login 'no paging'
