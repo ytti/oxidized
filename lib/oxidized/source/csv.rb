@@ -25,7 +25,7 @@ class CSV < Source
       # map node parameters
       keys = {}
       @cfg.map.each do |key, position|
-        keys[key.to_sym] = data[position]
+        keys[key.to_sym] = node_var_interpolate data[position]
       end
       keys[:model] = map_model keys[:model] if keys.key? :model
 

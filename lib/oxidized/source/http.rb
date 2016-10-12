@@ -39,7 +39,7 @@ class HTTP < Source
       # map node parameters
       keys = {}
       @cfg.map.each do |key, position|
-        keys[key.to_sym] = line[position]
+        keys[key.to_sym] = node_var_interpolate line[position]
       end
       keys[:model] = map_model keys[:model] if keys.key? :model
 
