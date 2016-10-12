@@ -288,6 +288,24 @@ _Note: this step in only needed for creating Oxidized's configuration file and c
 ```
 docker run --rm -v /etc/oxidized:/root/.config/oxidized -p 8888:8888/tcp -t oxidized/oxidized:latest oxidized
 ```
+If the RESTful API and Web Interface are enabled, on the docker host running the container
+edit /etc/oxidized/config and modify 'rest: 127.0.0.1:8888' by 'rest: 0.0.0.0:8888'
+this will bind port 8888 to all interfaces then expose port out. (Issue #445)
+
+You can also use docker-compose to launch oxidized container:
+```
+# docker-compose.yml 
+# docker-compose file example for oxidized that will start along with docker daemon
+oxidized:
+  restart: always
+  image: oxidized/oxidized:latest 
+  ports:
+    - 8888:8888/tcp
+  environment:
+    CONFIG_RELOAD_INTERVAL: 600
+  volumes:
+    - /etc/oxidized:/root/.config/oxidized 
+```
 
 create the `/etc/oxidized/router.db`
 
