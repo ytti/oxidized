@@ -1,0 +1,14 @@
+<VirtualHost *:80>
+	# Place in sites-available
+	
+    ServerAdmin admin@example.com
+    ServerName oxidized.example.com
+    ServerAlias oxidized
+
+    ProxyPass /  http://127.0.0.1:8888/
+    ProxyPassReverse / http://127.0.0.1:8888/
+
+    ErrorLog /var/log/apache2/oxidized_error.log
+    CustomLog /var/log/apache2/oxidized_access.log combined
+
+</VirtualHost>
