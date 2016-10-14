@@ -1,4 +1,9 @@
-# 0 17.3
+# 0.18.0
+- FEATURE: APC model (by @davromaniak )
+- BUGFIX: ironware, aosw
+- BUGFIX: interpolate nil, false, true for node vars too
+
+# 0 17.0
 - FEATURE: "nil", "false" and "true" in source (e.g. router.db) are interpeted as nil, false, true. Empty is now always considered empty string, instead of in some cases nil and some cases empty string.
 - FEATURE: support tftp as input model (@MajesticFalcon)
 - FEATURE: add alvarion model (@MajesticFalcon)
