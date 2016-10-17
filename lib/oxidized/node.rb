@@ -132,7 +132,6 @@ module Oxidized
       {
         username:       resolve_key(:username, opt),
         password:       resolve_key(:password, opt),
-        private_key:    resolve_key(:private_key, opt),
       }
     end
 

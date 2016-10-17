@@ -23,7 +23,6 @@ module Oxidized
       secure = Oxidized.config.input.ssh.secure
       @log = File.open(Oxidized::Config::Log + "/#{@node.ip}-ssh", 'w') if Oxidized.config.input.debug?
       port = vars(:ssh_port) || 22
-      keys = node.auth[:private_key].is_a?(Array) ? @node.auth[:private_key] : [@node.auth[:private_key]]
       if proxy_host = vars(:ssh_proxy)
         proxy =  Net::SSH::Proxy::Command.new("ssh #{proxy_host} -W %h:%p")
       end
@@ -34,9 +33,9 @@ module Oxidized
         :auth_methods => %w(none publickey password keyboard-interactive),
         :number_of_password_prompts => 0,
         :proxy => proxy,
-        :keys => keys
       }
-      ssh_opts[:kex] = vars(:ssh_kex).split(/,\s*/) if vars(:ssh_kex)
+      ssh_opts[:keys] = vars(:ssh_keys).is_a?(Array) ? vars(:ssh_keys) : [vars(:ssh_keys)] if vars(:ssh_keys)
+      ssh_opts[:kex]  = vars(:ssh_kex).split(/,\s*/) if vars(:ssh_kex)
       ssh_opts[:encryption] = vars(:ssh_encryption).split(/,\s*/) if vars(:ssh_encryption)
 
       Oxidized.logger.debug "lib/oxidized/input/ssh.rb: Connecting to #{@node.name}"
