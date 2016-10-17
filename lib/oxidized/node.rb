@@ -130,8 +130,8 @@ module Oxidized
     def resolve_auth opt
       # Resolve configured username/password
       {
-        username: resolve_key(:username, opt),
-        password: resolve_key(:password, opt),
+        username:       resolve_key(:username, opt),
+        password:       resolve_key(:password, opt),
       }
     end
 
