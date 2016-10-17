@@ -8,6 +8,7 @@ class PfSense < Oxidized::Model
   
   cmd 'cat /cf/conf/config.xml' do |cfg|
     cfg.gsub! /\s<revision>\s*<time>\d*<\/time>\s*.*\s*.*\s*<\/revision>/, ''
+    cfg
   end
   
   cfg :ssh do
