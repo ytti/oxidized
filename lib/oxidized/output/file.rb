@@ -39,10 +39,11 @@ class OxidizedFile < Output
         File.read File.join(cfg_dir, node_name)
       else
         path = Dir.glob(File.join(cfg_dir, '**', node_name)).first # fetch node in all groups
-        return nil if not path
         File.read path
       end
     end
+  rescue Errno::ENOENT
+    return nil
   end
 
   def version node, group
