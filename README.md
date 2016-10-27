@@ -111,6 +111,7 @@ Oxidized is a network device configuration backup tool. It's a RANCID replacemen
  * HP
    * [Comware (HP A-series, H3C, 3Com)](lib/oxidized/model/comware.rb)
    * [Procurve](lib/oxidized/model/procurve.rb)
+   * [BladeSystem (Onboard Administrator)](lib/oxidized/model/hpebladesystem.rb)
  * Huawei
    * [VRP](lib/oxidized/model/vrp.rb)
  * Juniper
