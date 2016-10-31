@@ -73,11 +73,11 @@ module Oxidized
       @output
     end
 
-    private
-
     def pty_options hash
       @pty_options = @pty_options.merge hash
     end
+
+    private
 
     def disconnect
       disconnect_cli
