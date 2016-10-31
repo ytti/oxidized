@@ -17,8 +17,9 @@ module Oxidized
     class NoShell < OxidizedError; end
 
     def connect node
-      @node       = node
-      @output     = ''
+      @node        = node
+      @output      = ''
+      @pty_options = { term: "vt100" }
       @node.model.cfg['ssh'].each { |cb| instance_exec(&cb) }
       secure = Oxidized.config.input.ssh.secure
       @log = File.open(Oxidized::Config::Log + "/#{@node.ip}-ssh", 'w') if Oxidized.config.input.debug?
@@ -74,6 +75,10 @@ module Oxidized
 
     private
 
+    def pty_options hash
+      @pty_options = @pty_options.merge hash
+    end
+
     def disconnect
       disconnect_cli
       # if disconnect does not disconnect us, give up after timeout
@@ -94,7 +99,7 @@ module Oxidized
           @output << data
           @output = @node.model.expects @output
         end
-        ch.request_pty (_opts={:term=>'vt100'}) do |_ch, success_pty|
+        ch.request_pty (@pty_options) do |_ch, success_pty|
           raise NoShell, "Can't get PTY" unless success_pty
           ch.send_channel_request 'shell' do |_ch, success_shell|
             raise NoShell, "Can't get shell" unless success_shell
