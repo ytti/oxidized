@@ -1,0 +1,63 @@
+class PlanetSGS < Oxidized::Model
+
+  prompt /^\r?([\w.@()-]+[#>]\s?)$/
+  comment  '! '
+
+  # example how to handle pager
+  #expect /^\s--More--\s+.*$/ do |data, re|
+  # send ' '
+  # data.sub re, ''
+  #end
+
+  # non-preferred way to handle additional PW prompt
+  #expect /^[\w.]+>$/ do |data|
+  #  send "enable\n"
+  #  send vars(:enable) + "\n"
+  #  data
+  #end
+
+  cmd :all do |cfg|
+    #cfg.gsub! /\cH+\s{8}/, ''         # example how to handle pager
+    #cfg.gsub! /\cH+/, ''              # example how to handle pager
+    cfg.each_line.to_a[1..-2].join
+  end
+
+  cmd :secret do |cfg|
+    cfg.gsub! /^(snmp-server community).*/, '\\1 <configuration removed>'
+    cfg.gsub! /username (\S+) privilege (\d+) (\S+).*/, '<secret hidden>'
+    cfg.gsub! /^username \S+ password \d \S+/, '<secret hidden>'
+    cfg.gsub! /^enable password \d \S+/, '<secret hidden>'
+    cfg.gsub! /wpa-psk ascii \d \S+/, '<secret hidden>'
+    cfg.gsub! /^tacacs-server key \d \S+/, '<secret hidden>'
+    cfg
+  end
+
+  cmd 'show version' do |cfg|
+    comment cfg.each_line.to_a[0..-2].join
+  end
+
+
+  cmd 'show running-config'
+  
+  cmd 'show transceiver detail | include transceiver detail information|found|Type|length|Nominal|wavelength|Base information' do |cfg|
+    comment cfg
+  end
+
+  cfg :telnet do
+    username /^Username:/
+    password /^Password:/
+  end
+
+  cfg :telnet, :ssh do
+    post_login 'terminal length 0'
+    # preferred way to handle additional passwords
+    if vars :enable
+      post_login do
+        send "enable\n"
+        cmd vars(:enable)
+      end
+    end
+    pre_logout 'exit'
+  end
+
+end
