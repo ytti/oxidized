@@ -145,6 +145,8 @@ Oxidized is a network device configuration backup tool. It's a RANCID replacemen
    * [Quanta / VxWorks 6.6 (1.1.0.8)](lib/oxidized/model/quantaos.rb)
  * Supermicro
    * [Supermicro](lib/oxidized/model/supermicro.rb)
+ * Trango Systems
+   * [Trango](lib/oxidized/model/trango.rb)
  * Ubiquiti
    * [AirOS](lib/oxidized/model/airos.rb)
    * [Edgeos](lib/oxidized/model/edgeos.rb)
