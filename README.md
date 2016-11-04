@@ -70,6 +70,8 @@ Oxidized is a network device configuration backup tool. It's a RANCID replacemen
    * [NOS (Network Operating System)](lib/oxidized/model/nos.rb)
    * [Vyatta](lib/oxidized/model/vyatta.rb)
    * [6910](lib/oxidized/model/br6910.rb)
+ * Casa
+   * [Casa](lib/oxidized/model/casa.rb)
  * Check Point
    * [GaiaOS](lib/oxidized/model/gaiaos.rb)
  * Ciena
