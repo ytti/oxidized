@@ -94,6 +94,8 @@ Oxidized is a network device configuration backup tool. It's a RANCID replacemen
  * DELL
    * [PowerConnect](lib/oxidized/model/powerconnect.rb)
    * [AOSW](lib/oxidized/model/aosw.rb)
+ * D-Link
+   * [D-Link](lib/oxidized/model/dlink.rb)
  * Ericsson/Redback
    * [IPOS (former SEOS)](lib/oxidized/model/ipos.rb)
  * Extreme Networks
