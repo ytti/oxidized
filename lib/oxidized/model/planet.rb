@@ -1,4 +1,4 @@
-class PlanetSGS < Oxidized::Model
+class Planet < Oxidized::Model
 
   prompt /^\r?([\w.@()-]+[#>]\s?)$/
   comment  '! '
@@ -33,15 +33,35 @@ class PlanetSGS < Oxidized::Model
   end
 
   cmd 'show version' do |cfg|
-    comment cfg.each_line.to_a[0..-2].join
+    cfg.gsub! "\n\r", "\n"
+    @planetgs = true if cfg.match /^System Name\w*:\w*GS-.*$/
+    @planetsgs = true if cfg.match /SGS-(.*) Device, Compiled on .*$/
+
+    cfg = cfg.each_line.to_a[0...-2]
+
+   # Strip system time and system uptime from planet gs switches
+    cfg = cfg.reject { |line| line.match /System Time\s*:.*/ }
+    cfg = cfg.reject { |line| line.match /System Uptime\s*:.*/ }
+
+    comment cfg.join
   end
 
 
-  cmd 'show running-config'
+  cmd 'show running-config' do |cfg|
+    cfg.gsub! "\n\r", "\n"
+    cfg = cfg.each_line.to_a
+
+    cfg = cfg.reject { |line| line.match "Building configuration..." }
   
-  cmd 'show transceiver detail | include transceiver detail information|found|Type|length|Nominal|wavelength|Base information' do |cfg|
-    comment cfg
+    if @planetsgs
+      cfg << cmd('show transceiver detail | include transceiver detail information|found|Type|length|Nominal|wavelength|Base information') do |cfg|
+        comment cfg
+      end
+    end
+
+    cfg.join
   end
+  
 
   cfg :telnet do
     username /^Username:/
