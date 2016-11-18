@@ -34,7 +34,7 @@ class CiscoSMB < Oxidized::Model
   end
 
   cfg :telnet, :ssh do
-    username /^User Name:/
+    username /^Username:/
     password /^\r?Password:$/
     post_login 'terminal len 0'
     pre_logout 'exit' #exit returns to previous priv level, no way to quit from exec(#)
