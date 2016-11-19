@@ -20,6 +20,7 @@ class HTTP < Source
     uri = URI.parse(@cfg.url)
     http = Net::HTTP.new(uri.host, uri.port)
     http.use_ssl = true if uri.scheme == 'https'
+    http.verify_mode = OpenSSL::SSL::VERIFY_NONE if uri.no_check_certificate == true
 
     # map headers
     headers = {}
