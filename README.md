@@ -506,7 +506,7 @@ source:
       X-Auth-Token: 'somerandomstring'
 ```
 
-You can also pass `no_check_certificate = true` if you want to disable ssl certificate verification:
+You can also pass `secure: false` if you want to disable ssl certificate verification:
 
 ```
 source:
@@ -514,7 +514,7 @@ source:
   http:
     url: https://url/api
     scheme: https
-    no_check_certificate: true
+    secure: false
 ```
 
 ### Output: File
