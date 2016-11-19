@@ -506,6 +506,17 @@ source:
       X-Auth-Token: 'somerandomstring'
 ```
 
+You can also pass `secure: false` if you want to disable ssl certificate verification:
+
+```
+source:
+  default: http
+  http:
+    url: https://url/api
+    scheme: https
+    secure: false
+```
+
 ### Output: File
 
 Parent directory needs to be created manually, one file per device, with most recent running config.
