@@ -19,7 +19,7 @@ class OxidizedFile < Output
   def store node, outputs, opt={}
     file = File.expand_path @cfg.directory
     if opt[:group]
-      file = File.join File.dirname(file), opt[:group]
+      file = File.join file, opt[:group]
     end
     FileUtils.mkdir_p file
     file = File.join file, node
