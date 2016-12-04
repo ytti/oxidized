@@ -307,17 +307,17 @@ this will bind port 8888 to all interfaces then expose port out. (Issue #445)
 
 You can also use docker-compose to launch oxidized container:
 ```
-# docker-compose.yml 
+# docker-compose.yml
 # docker-compose file example for oxidized that will start along with docker daemon
 oxidized:
   restart: always
-  image: oxidized/oxidized:latest 
+  image: oxidized/oxidized:latest
   ports:
     - 8888:8888/tcp
   environment:
     CONFIG_RELOAD_INTERVAL: 600
   volumes:
-    - /etc/oxidized:/root/.config/oxidized 
+    - /etc/oxidized:/root/.config/oxidized
 ```
 
 create the `/etc/oxidized/router.db`
@@ -814,6 +814,35 @@ hooks:
     username: user
     password: pass
 ```
+
+## Hook type: awssns
+
+The `awssns` hook publishes messages to AWS SNS topics. This allows you to notify other systems of device configuration changes, for example a config orchestration pipeline. Multiple services can subscribe to the same AWS topic.
+
+Fields sent in the message:
+
+  * `event`: Event type (e.g. `node_success`)
+  * `group`: Group name
+  * `model`: Model name (e.g. `eos`)
+  * `node`: Device hostname
+
+Configuration example:
+
+``` yaml
+hooks:
+  hook_script:
+    type: awssns
+    events: [node_fail,node_success,post_store]
+    region: us-east-1
+    topic_arn: arn:aws:sns:us-east-1:1234567:oxidized-test-backup_events
+```
+
+AWS SNS hook requires the following configuration keys:
+
+  * `region`: AWS Region name
+  * `topic_arn`: ASN Topic reference
+
+Your AWS credentials should be stored in `~/.aws/credentials`.
 
 # Ruby API
 
