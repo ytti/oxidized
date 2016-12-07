@@ -34,7 +34,7 @@ class CiscoSMB < Oxidized::Model
   end
 
   cfg :telnet, :ssh do
-    username /^Username:/
+    username /^User ?[nN]ame:/
     password /^\r?Password:$/
     post_login 'terminal datadump' # Disable pager
     post_login 'terminal width 0'
