@@ -32,6 +32,7 @@ class Comware < Oxidized::Model
         send "_cmdline-mode on\n"
         send "y\n"
         send vars(:comware_cmdline) + "\n"
+        sleep(10) # wait for CLI enable
       end
     end
 
