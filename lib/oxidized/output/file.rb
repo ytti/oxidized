@@ -38,7 +38,7 @@ class OxidizedFile < Output
       if File.exists? File.join(cfg_dir, node_name) # node configuration file is stored on base directory
         File.read File.join(cfg_dir, node_name)
       else
-        path = Dir.glob(File.join(cfg_dir, '**', node_name)).first # fetch node in all groups
+        path = Dir.glob(File.join(File.dirname(cfg_dir), '**', node_name)).first # fetch node in all groups
         File.read path
       end
     end
