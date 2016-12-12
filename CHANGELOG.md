@@ -1,3 +1,17 @@
+# 0.19.0
+- FEATURE: allow setting ssh_keys (not relying on openssh config) (@denvera)
+- FEATURE: fujitsupy model (@stokbaek)
+- FEATURE: fiberdriver model (@emjemj)
+- FEATURE: hpbladesystems model (@flokli)
+- FEATURE: planetsgs model (@flokli)
+- FEATURE: trango model (@rfdrake)
+- FEATURE: casa model (@rfdrake)
+- FEATURE: dlink model (@rfdrake)
+- FEATURE: hatteras model (@rfdrake)
+- FEATURE: ability to ignore SSL certs in http (@laf)
+- FEATURE: awsns hooks, publish messages to AWS SNS topics (@natm)
+- BUGFIX: pfsense, dnos, powerconnect, ciscosmb, eos, aosw
+
 # 0.18.0
 - FEATURE: APC model (by @davromaniak )
 - BUGFIX: ironware, aosw
