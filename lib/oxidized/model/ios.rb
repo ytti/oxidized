@@ -26,7 +26,9 @@ class IOS < Oxidized::Model
     cfg.gsub! /^(snmp-server community).*/, '\\1 <configuration removed>'
     cfg.gsub! /username (\S+) privilege (\d+) (\S+).*/, '<secret hidden>'
     cfg.gsub! /^username \S+ password \d \S+/, '<secret hidden>'
+    cfg.gsub! /^username \S+ secret \d \S+/, '<secret hidden>'
     cfg.gsub! /^enable password \d \S+/, '<secret hidden>'
+    cfg.gsub! /^enable secret \d \S+/, '<secret hidden>'
     cfg.gsub! /wpa-psk ascii \d \S+/, '<secret hidden>'
     cfg.gsub! /^tacacs-server key \d \S+/, '<secret hidden>'
     cfg
