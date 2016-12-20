@@ -49,7 +49,7 @@ class Cumulus < Oxidized::Model
     cfg += cmd 'cat /etc/quagga/ospf6d.conf'
     
     cfg += add_comment 'QUAGGA CONF'
-    cfg += cmd 'cat /etc/quagga/Quagga.conf
+    cfg += cmd 'cat /etc/quagga/Quagga.conf'
     
     cfg += add_comment 'MOTD'
     cfg += cmd 'cat /etc/motd'
