@@ -1,12 +1,12 @@
-class IOS < Oxidized::Model
+class Planet < Oxidized::Model
 
-  prompt /^([\w.@()-]+[#>]\s?)$/
+  prompt /^\r?([\w.@()-]+[#>]\s?)$/
   comment  '! '
 
   # example how to handle pager
   #expect /^\s--More--\s+.*$/ do |data, re|
-  #  send ' '
-  #  data.sub re, ''
+  # send ' '
+  # data.sub re, ''
   #end
 
   # non-preferred way to handle additional PW prompt
@@ -26,31 +26,42 @@ class IOS < Oxidized::Model
     cfg.gsub! /^(snmp-server community).*/, '\\1 <configuration removed>'
     cfg.gsub! /username (\S+) privilege (\d+) (\S+).*/, '<secret hidden>'
     cfg.gsub! /^username \S+ password \d \S+/, '<secret hidden>'
-    cfg.gsub! /^username \S+ secret \d \S+/, '<secret hidden>'
     cfg.gsub! /^enable password \d \S+/, '<secret hidden>'
-    cfg.gsub! /^enable secret \d \S+/, '<secret hidden>'
     cfg.gsub! /wpa-psk ascii \d \S+/, '<secret hidden>'
     cfg.gsub! /^tacacs-server key \d \S+/, '<secret hidden>'
     cfg
   end
 
   cmd 'show version' do |cfg|
-    comment cfg.lines.first
+    cfg.gsub! "\n\r", "\n"
+    @planetgs = true if cfg.match /^System Name\w*:\w*GS-.*$/
+    @planetsgs = true if cfg.match /SGS-(.*) Device, Compiled on .*$/
+
+    cfg = cfg.each_line.to_a[0...-2]
+
+   # Strip system time and system uptime from planet gs switches
+    cfg = cfg.reject { |line| line.match /System Time\s*:.*/ }
+    cfg = cfg.reject { |line| line.match /System Uptime\s*:.*/ }
+
+    comment cfg.join
   end
 
-  cmd 'show inventory' do |cfg|
-    comment cfg
-  end
 
   cmd 'show running-config' do |cfg|
-    cfg = cfg.each_line.to_a[3..-1]
-    cfg = cfg.reject { |line| line.match /^ntp clock-period / }.join
-    cfg.gsub! /^Current configuration : [^\n]*\n/, ''
-    cfg.gsub! /^\ tunnel\ mpls\ traffic-eng\ bandwidth[^\n]*\n*(
-                  (?:\ [^\n]*\n*)*
-                  tunnel\ mpls\ traffic-eng\ auto-bw)/mx, '\1'
-    cfg
+    cfg.gsub! "\n\r", "\n"
+    cfg = cfg.each_line.to_a
+
+    cfg = cfg.reject { |line| line.match "Building configuration..." }
+  
+    if @planetsgs
+      cfg << cmd('show transceiver detail | include transceiver detail information|found|Type|length|Nominal|wavelength|Base information') do |cfg|
+        comment cfg
+      end
+    end
+
+    cfg.join
   end
+  
 
   cfg :telnet do
     username /^Username:/
@@ -59,7 +70,6 @@ class IOS < Oxidized::Model
 
   cfg :telnet, :ssh do
     post_login 'terminal length 0'
-    post_login 'terminal width 0'
     # preferred way to handle additional passwords
     if vars :enable
       post_login do

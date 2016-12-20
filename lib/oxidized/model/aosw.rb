@@ -28,19 +28,21 @@ class AOSW < Oxidized::Model
 
   cmd 'show version' do |cfg|
     cfg = cfg.each_line.select { |line| not line.match /Switch uptime/i }
-    comment cfg.join
+    rstrip_cfg comment cfg.join
   end
 
   cmd 'show inventory' do |cfg|
-    clean cfg
+    rstrip_cfg clean cfg
   end
 
   cmd 'show slots' do |cfg|
-    comment cfg
+    rstrip_cfg comment cfg
   end
+
   cmd 'show license' do |cfg|
-    comment cfg
+    rstrip_cfg comment cfg
   end
+
   cmd 'show running-config' do |cfg|
     out = []
     cfg.each_line do |line|
@@ -60,8 +62,8 @@ class AOSW < Oxidized::Model
   cfg :telnet, :ssh do
     if vars :enable
       post_login do
-        send 'enable\n'
-        send vars(:enable) + '\n'
+        send "enable\n"
+        cmd vars(:enable)
       end
     end
     post_login 'no paging'
@@ -70,6 +72,15 @@ class AOSW < Oxidized::Model
       pre_logout 'exit'
     end
     pre_logout 'exit'
+  end
+
+  def rstrip_cfg cfg
+    out = []
+    cfg.each_line do |line|
+      out << line.rstrip
+    end
+    out = out.join "\n"
+    out << "\n"
   end
 
   def clean cfg

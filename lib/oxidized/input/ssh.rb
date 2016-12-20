@@ -17,8 +17,9 @@ module Oxidized
     class NoShell < OxidizedError; end
 
     def connect node
-      @node       = node
-      @output     = ''
+      @node        = node
+      @output      = ''
+      @pty_options = { term: "vt100" }
       @node.model.cfg['ssh'].each { |cb| instance_exec(&cb) }
       secure = Oxidized.config.input.ssh.secure
       @log = File.open(Oxidized::Config::Log + "/#{@node.ip}-ssh", 'w') if Oxidized.config.input.debug?
@@ -32,9 +33,10 @@ module Oxidized
         :paranoid => secure,
         :auth_methods => %w(none publickey password keyboard-interactive),
         :number_of_password_prompts => 0,
-        :proxy => proxy
+        :proxy => proxy,
       }
-      ssh_opts[:kex] = vars(:ssh_kex).split(/,\s*/) if vars(:ssh_kex)
+      ssh_opts[:keys] = vars(:ssh_keys).is_a?(Array) ? vars(:ssh_keys) : [vars(:ssh_keys)] if vars(:ssh_keys)
+      ssh_opts[:kex]  = vars(:ssh_kex).split(/,\s*/) if vars(:ssh_kex)
       ssh_opts[:encryption] = vars(:ssh_encryption).split(/,\s*/) if vars(:ssh_encryption)
 
       Oxidized.logger.debug "lib/oxidized/input/ssh.rb: Connecting to #{@node.name}"
@@ -42,7 +44,7 @@ module Oxidized
       unless @exec
         shell_open @ssh
         begin
-          @username ? shell_login : expect(@node.prompt)
+          login
         rescue Timeout::Error
           raise PromptUndetect, [ @output, 'not matching configured prompt', @node.prompt ].join(' ')
         end
@@ -71,6 +73,10 @@ module Oxidized
       @output
     end
 
+    def pty_options hash
+      @pty_options = @pty_options.merge hash
+    end
+
     private
 
     def disconnect
@@ -93,7 +99,7 @@ module Oxidized
           @output << data
           @output = @node.model.expects @output
         end
-        ch.request_pty (_opts={:term=>'vt100'}) do |_ch, success_pty|
+        ch.request_pty (@pty_options) do |_ch, success_pty|
           raise NoShell, "Can't get PTY" unless success_pty
           ch.send_channel_request 'shell' do |_ch, success_shell|
             raise NoShell, "Can't get shell" unless success_shell
@@ -102,13 +108,18 @@ module Oxidized
       end
     end
 
-    # Cisco WCS has extremely dubious SSH implementation, SSH auth is always
-    # success, it always opens shell and then run auth in shell. I guess
-    # they'll never support exec() :)
-    def shell_login
-      expect username
-      cmd @node.auth[:username], password
-      cmd @node.auth[:password]
+    # some models have SSH auth or terminal auth based on version of code
+    # if SSH is configured for terminal auth, we'll still try to detect prompt
+    def login
+      if @username
+        match = expect username, @node.prompt
+        if match == username
+          cmd @node.auth[:username], password
+          cmd @node.auth[:password]
+        end
+      else
+        expect @node.prompt
+      end
     end
 
     def exec state=nil
@@ -123,14 +134,18 @@ module Oxidized
       @output
     end
 
-    def expect regexp
-      Oxidized.logger.debug "lib/oxidized/input/ssh.rb: expecting #{regexp.inspect} at #{node.name}"
+    def expect *regexps
+      regexps = [regexps].flatten
+      Oxidized.logger.debug "lib/oxidized/input/ssh.rb: expecting #{regexps.inspect} at #{node.name}"
       Timeout::timeout(Oxidized.config.timeout) do
         @ssh.loop(0.1) do
           sleep 0.1
-          not @output.match regexp
+          match = regexps.find { |regexp| @output.match regexp }
+          return match if match
+          true
         end
       end
     end
+
   end
 end

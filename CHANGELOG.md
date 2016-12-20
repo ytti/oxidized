@@ -1,5 +1,41 @@
+# 0.19.0
+- FEATURE: allow setting ssh_keys (not relying on openssh config) (@denvera)
+- FEATURE: fujitsupy model (@stokbaek)
+- FEATURE: fiberdriver model (@emjemj)
+- FEATURE: hpbladesystems model (@flokli)
+- FEATURE: planetsgs model (@flokli)
+- FEATURE: trango model (@rfdrake)
+- FEATURE: casa model (@rfdrake)
+- FEATURE: dlink model (@rfdrake)
+- FEATURE: hatteras model (@rfdrake)
+- FEATURE: ability to ignore SSL certs in http (@laf)
+- FEATURE: awsns hooks, publish messages to AWS SNS topics (@natm)
+- BUGFIX: pfsense, dnos, powerconnect, ciscosmb, eos, aosw
+
+# 0.18.0
+- FEATURE: APC model (by @davromaniak )
+- BUGFIX: ironware, aosw
+- BUGFIX: interpolate nil, false, true for node vars too
+
+# 0 17.0
+- FEATURE: "nil", "false" and "true" in source (e.g. router.db) are interpeted as nil, false, true. Empty is now always considered empty string, instead of in some cases nil and some cases empty string.
+- FEATURE: support tftp as input model (@MajesticFalcon)
+- FEATURE: add alvarion model (@MajesticFalcon)
+- FEATURE: detect if ssh wants password terminal/CLI prompt or not
+- FEATURE: node (group, model, username, password) resolution refactoring, supports wider range of use-cases
+- BUGFIX: fetch for file output (@danilopopeye)
+- BUGFIX: net-ssh version specification
+- BUGFIX: routeros, catos, pfsense
+
 # 0.16.3
+- FEATURE: pfsense support (by @stokbaek)
 - BUGFIX: cumulus prompt not working with default switch configs (by @nertwork)
+- BUGFIX: disconnect ssh when prompt wasn't found (by @andir)
+- BUGFIX: saos, asa, acos, timos updates, cumulus
+
+# 0.16.2
+- BUGFIX: when not using git (by @danilopopeye)
+- BUGFIX: screenos update
 
 # 0.16.2
 - BUGFIX: when not using git (by @danilopopeye)

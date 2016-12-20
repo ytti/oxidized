@@ -17,7 +17,7 @@ class OxidizedFile < Output
   end
 
   def store node, outputs, opt={}
-    file = @cfg.directory
+    file = File.expand_path @cfg.directory
     if opt[:group]
       file = File.join File.dirname(file), opt[:group]
     end
@@ -28,18 +28,22 @@ class OxidizedFile < Output
   end
 
   def fetch node, group
-    cfg_dir = @cfg.directory
+    cfg_dir   = File.expand_path @cfg.directory
+    node_name = node.name
+
     if group # group is explicitly defined by user
-      IO.readlines File.join(cfg_dir, group, node)
+      cfg_dir = File.join File.dirname(cfg_dir), group
+      File.read File.join(cfg_dir, node_name)
     else
-      if File.exists? File.join(cfg_dir, node) # node configuration file is stored on base directory
-        IO.readlines File.join(cfg_dir, node)
+      if File.exists? File.join(cfg_dir, node_name) # node configuration file is stored on base directory
+        File.read File.join(cfg_dir, node_name)
       else
-        path = Dir.glob File.join(cfg_dir, '**', node) # fetch node in all groups
-        return nil if path[0].nil?
-        open(path[0], 'r').readlines
+        path = Dir.glob(File.join(File.dirname(cfg_dir), '**', node_name)).first # fetch node in all groups
+        File.read path
       end
     end
+  rescue Errno::ENOENT
+    return nil
   end
 
   def version node, group

@@ -1,6 +1,4 @@
-# Oxidized [![Build Status](https://travis-ci.org/Shopify/oxidized.svg)](https://travis-ci.org/Shopify/oxidized)
-
-[![Gem Version](https://badge.fury.io/rb/oxidized.svg)](http://badge.fury.io/rb/oxidized)
+# Oxidized [![Build Status](https://travis-ci.org/Shopify/oxidized.svg)](https://travis-ci.org/Shopify/oxidized) [![Gem Version](https://badge.fury.io/rb/oxidized.svg)](http://badge.fury.io/rb/oxidized) [![Join the chat at https://gitter.im/oxidized/Lobby](https://badges.gitter.im/oxidized/Lobby.svg)](https://gitter.im/oxidized/Lobby?utm_source=badge&utm_medium=badge&utm_campaign=pr-badge&utm_content=badge)
 
 Oxidized is a network device configuration backup tool. It's a RANCID replacement!
 
@@ -29,13 +27,16 @@ Oxidized is a network device configuration backup tool. It's a RANCID replacemen
     * [Privileged mode](#privileged-mode)
     * [Disabling SSH exec channels](#disabling-ssh-exec-channels)
     * [Source: CSV](#source-csv)
-    * [Source: SQLite](#source-sqlite)
+    * [Source: SQL](#source-sql)
+      * [Source: SQLite](#source-sqlite)
+      * [Source: Mysql](#source-mysql)
     * [Source: HTTP](#source-http)
     * [Output: GIT](#output-git)
     * [Output: HTTP](#output-http)
     * [Output: File](#output-file)
     * [Output types](#output-types)
     * [Advanced Configuration](#advanced-configuration)
+    * [Advanced Group Configuration](#advanced-group-configuration)
 7. [Ruby API](#ruby-api)
     * [Input](#input)
     * [Output](#output)
@@ -43,99 +44,118 @@ Oxidized is a network device configuration backup tool. It's a RANCID replacemen
     * [Model](#model)
 
 # Supported OS types
+ * Vendor
+   * OS model
 
  * A10 Networks
-   * ACOS
+   * [ACOS](lib/oxidized/model/acos.rb)
  * Alcatel-Lucent
-   * AOS
-   * AOS7
-   * ISAM
+   * [AOS](lib/oxidized/model/aos.rb)
+   * [AOS7](lib/oxidized/model/aos7.rb)
+   * [ISAM](lib/oxidized/model/isam.rb)
    * Wireless
+ * Alvarion
+   * [BreezeACCESS](lib/oxidized/model/alvarion.rb)
+ * APC
+   * [AOS](lib/oxidized/model/apc_aos.rb)
  * Arista
-   * EOS
+   * [EOS](lib/oxidized/model/eos.rb)
  * Arris
-   * C4CMTS
+   * [C4CMTS](lib/oxidized/model/c4cmts.rb)
  * Aruba
-   * AOSW
+   * [AOSW](lib/oxidized/model/aosw.rb)
  * Brocade
-   * FabricOS
-   * Ironware
-   * NOS (Network Operating System)
-   * Vyatta
-   * 6910
+   * [FabricOS](lib/oxidized/model/fabricos.rb)
+   * [Ironware](lib/oxidized/model/ironware.rb)
+   * [NOS (Network Operating System)](lib/oxidized/model/nos.rb)
+   * [Vyatta](lib/oxidized/model/vyatta.rb)
+   * [6910](lib/oxidized/model/br6910.rb)
+ * Casa
+   * [Casa](lib/oxidized/model/casa.rb)
  * Check Point
-   * GaiaOS
+   * [GaiaOS](lib/oxidized/model/gaiaos.rb)
  * Ciena
-   * SOAS
+   * [SOAS](lib/oxidized/model/saos.rb)
  * Cisco
-   * AireOS
-   * ASA
-   * CatOS
-   * IOS
-   * IOSXR
-   * NXOS
-   * SMB (Nikola series)
+   * [AireOS](lib/oxidized/model/aireos.rb)
+   * [ASA](lib/oxidized/model/asa.rb)
+   * [CatOS](lib/oxidized/model/catos.rb)
+   * [IOS](lib/oxidized/model/ios.rb)
+   * [IOSXR](lib/oxidized/model/iosxr.rb)
+   * [NXOS](lib/oxidized/model/nxos.rb)
+   * [SMB (Nikola series)](lib/oxidized/model/ciscosmb.rb)
  * Citrix
-   * NetScaler (Virtual Applicance)
+   * [NetScaler (Virtual Applicance)](lib/oxidized/model/netscaler.rb)
  * Coriant (former Tellabs)
-   * TMOS (8800)
-   * 8600
+   * [TMOS (8800)](lib/oxidized/model/corianttmos.rb)
+   * [8600](lib/oxidized/model/coriant8600.rb)
  * Cumulus
-   * Linux
+   * [Linux](lib/oxidized/model/cumulus.rb)
  * DataCom
-   * DmSwitch 3000
+   * [DmSwitch 3000](lib/oxidized/model/datacom.rb)
  * DELL
-   * PowerConnect
-   * AOSW
+   * [PowerConnect](lib/oxidized/model/powerconnect.rb)
+   * [AOSW](lib/oxidized/model/aosw.rb)
+ * D-Link
+   * [D-Link](lib/oxidized/model/dlink.rb)
  * Ericsson/Redback
-   * IPOS (former SEOS)
+   * [IPOS (former SEOS)](lib/oxidized/model/ipos.rb)
  * Extreme Networks
-   * XOS
-   * WM
+   * [XOS](lib/oxidized/model/xos.rb)
+   * [WM](lib/oxidized/model/mtrlrfs.rb)
  * F5
-   * TMOS
+   * [TMOS](lib/oxidized/model/tmos.rb)
  * Force10
-   * DNOS
-   * FTOS
+   * [DNOS](lib/oxidized/model/dnos.rb)
+   * [FTOS](lib/oxidized/model/ftos.rb)
  * FortiGate
-   * FortiOS
+   * [FortiOS](lib/oxidized/model/fortios.rb)
+ * Fujitsu
+   * [PRIMERGY Blade switch 1/10Gbe](lib/oxidized/model/fujitsupy.rb)
+ * Hatteras
+   * [Hatteras](lib/oxidized/model/hatteras.rb)
  * HP
-   * Comware (HP A-series, H3C, 3Com)
-   * Procurve
+   * [Comware (HP A-series, H3C, 3Com)](lib/oxidized/model/comware.rb)
+   * [Procurve](lib/oxidized/model/procurve.rb)
+   * [BladeSystem (Onboard Administrator)](lib/oxidized/model/hpebladesystem.rb)
  * Huawei
-   * VRP
+   * [VRP](lib/oxidized/model/vrp.rb)
  * Juniper
-   * JunOS
-   * ScreenOS (Netscreen)
+   * [JunOS](lib/oxidized/model/junos.rb)
+   * [ScreenOS (Netscreen)](lib/oxidized/model/screenos.rb)
  * Mellanox
-   * MLNX-OS
+   * [MLNX-OS](lib/oxidized/model/mlnxos.rb)
  * Mikrotik
-   * RouterOS
+   * [RouterOS](lib/oxidized/model/routeros.rb)
  * Motorola
-   * RFS
+   * [RFS](lib/oxidized/model/mtrlrfs.rb)
  * MRV
-   * MasterOS
+   * [MasterOS](lib/oxidized/model/masteros.rb)
+   * [FiberDriver](lib/oxidized/model/fiberdriver.rb)
  * Netonix
-   * WISP Switch (As Netonix)
+   * [WISP Switch (As Netonix)](lib/oxidized/model/netonix.rb)
  * Nokia (formerly TiMetra, Alcatel, Alcatel-Lucent)
-   * SR OS (TiMOS)
+   * [SR OS (TiMOS)](lib/oxidized/model/timos.rb)
  * Opengear
-   * Opengear
+   * [Opengear](lib/oxidized/model/opengear.rb)
  * Palo Alto
-   * PANOS
- * pfSense
+   * [PANOS](lib/oxidized/model/panos.rb)
+ * [PLANET SG/SGS Switches](lib/oxidized/model/planet.rb)
+ * [pfSense](lib/oxidized/model/pfsense.rb)
  * Quanta
-   * Quanta / VxWorks 6.6 (1.1.0.8)
+   * [Quanta / VxWorks 6.6 (1.1.0.8)](lib/oxidized/model/quantaos.rb)
  * Supermicro
-   * Supermicro
+   * [Supermicro](lib/oxidized/model/supermicro.rb)
+ * Trango Systems
+   * [Trango](lib/oxidized/model/trango.rb)
  * Ubiquiti
-   * AirOS
-   * Edgeos
-   * EdgeSwitch
+   * [AirOS](lib/oxidized/model/airos.rb)
+   * [Edgeos](lib/oxidized/model/edgeos.rb)
+   * [EdgeSwitch](lib/oxidized/model/edgeswitch.rb)
  * Watchguard
-   * Fireware OS
+   * [Fireware OS](lib/oxidized/model/firewareos.rb)
  * Zyxel
-   * ZyNOS
+   * [ZyNOS](lib/oxidized/model/zynos.rb)
 
 
 # Installation
@@ -149,7 +169,7 @@ gem install oxidized-script oxidized-web # if you don't install oxidized-web, ma
 ```
 
 ## CentOS, Oracle Linux, Red Hat Linux
-On CentOS 6 / RHEL 6, install Ruby 1.9.3 or greater (for Ruby 2.1.2 installation instructions see "Installing Ruby 2.1.2 using RVM"), then install Oxidized dependencies
+On CentOS 6 / RHEL 6, install Ruby greater than 1.9.3 (for Ruby 2.1.2 installation instructions see "Installing Ruby 2.1.2 using RVM"), then install Oxidized dependencies
 ```shell
 yum install cmake sqlite-devel openssl-devel libssh2-devel
 ```
@@ -256,46 +276,72 @@ rvm use --default 2.1.2
 ```
 
 # Running with Docker
-1. clone git repo:
+
+clone git repo:
 
 ```
-    root@bla:~# git clone https://github.com/ytti/oxidized
+git clone https://github.com/ytti/oxidized
 ```
-2. build container locally:
-```
-    root@bla:~# docker build -q -t oxidized/oxidized:latest oxidized/
-```
-3. create config directory in main system:
-```
-    root@bla~:# mkdir /etc/oxidized
-```
-4. run container the first time:
-```
-    root@bla:~# docker run -v /etc/oxidized:/root/.config/oxidized -p 8888:8888/tcp -t oxidized/oxidized:latest oxidized
-```
-5. add 'router.db' to /etc/oxidized:
-```
-    root@bla:~# vim /etc/oxidized/router.db
-    [ ... ]
-    root@bla:~#
-```
-6. run container again:
-```
-    root@bla:~# docker run -v /etc/oxidized:/root/.config/oxidized -p 8888:8888/tcp -t oxidized/oxidized:latest
-    oxidized[1]: Oxidized starting, running as pid 1
-    oxidized[1]: Loaded 1 nodes
-    Puma 2.13.4 starting...
-    * Min threads: 0, max threads: 16
-    * Environment: development
-    * Listening on tcp://0.0.0.0:8888
-    ^C
 
-    root@bla:~#
+build container locally:
+
+```
+docker build -q -t oxidized/oxidized:latest oxidized/
+```
+
+create config directory in main system:
+
+```
+mkdir /etc/oxidized
+```
+
+run container the first time:
+_Note: this step in only needed for creating Oxidized's configuration file and can be skipped if you already have it
+
+```
+docker run --rm -v /etc/oxidized:/root/.config/oxidized -p 8888:8888/tcp -t oxidized/oxidized:latest oxidized
+```
+If the RESTful API and Web Interface are enabled, on the docker host running the container
+edit /etc/oxidized/config and modify 'rest: 127.0.0.1:8888' by 'rest: 0.0.0.0:8888'
+this will bind port 8888 to all interfaces then expose port out. (Issue #445)
+
+You can also use docker-compose to launch oxidized container:
+```
+# docker-compose.yml
+# docker-compose file example for oxidized that will start along with docker daemon
+oxidized:
+  restart: always
+  image: oxidized/oxidized:latest
+  ports:
+    - 8888:8888/tcp
+  environment:
+    CONFIG_RELOAD_INTERVAL: 600
+  volumes:
+    - /etc/oxidized:/root/.config/oxidized
+```
+
+create the `/etc/oxidized/router.db`
+
+```
+vim /etc/oxidized/router.db
+```
+
+run container again:
+
+```
+docker run -v /etc/oxidized:/root/.config/oxidized -p 8888:8888/tcp -t oxidized/oxidized:latest
+oxidized[1]: Oxidized starting, running as pid 1
+oxidized[1]: Loaded 1 nodes
+Puma 2.13.4 starting...
+* Min threads: 0, max threads: 16
+* Environment: development
+* Listening on tcp://0.0.0.0:8888
 ```
 
 If you want to have the config automatically reloaded (e.g. when using a http source that changes)
+
 ```
-    root@bla:~# docker run -v /etc/oxidized:/root/.config/oxidized -p 8888:8888/tcp -e CONFIG_RELOAD_INTERVAL=3600 -t oxidized/oxidized:latest
+docker run -v /etc/oxidized:/root/.config/oxidized -p 8888:8888/tcp -e CONFIG_RELOAD_INTERVAL=3600 -t oxidized/oxidized:latest
 ```
 
 ## Cookbook
@@ -334,10 +380,10 @@ Device models can contain substitution filters to remove potentially sensitive d
 
 As a partial example from ios.rb:
 
-```  
+```
   cmd :secret do |cfg|
     cfg.gsub! /^(snmp-server community).*/, '\\1 <configuration removed>'
-    (...)    
+    (...)
     cfg
   end
 ```
@@ -388,6 +434,31 @@ vars_map:
   ssh_proxy: 3
 ...
 ```
+### Source: SQL
+ Oxidized uses the `sequel` ruby gem. You can use a variety of databases that aren't explicitly listed. For more information visit https://github.com/jeremyevans/sequel Make sure you have the correct adapter!
+### Source: MYSQL
+
+```sudo apt-get install libmysqlclient-dev```
+
+The values correspond to your fields in the DB such that ip, model, etc are field names in the DB
+
+```
+source:
+  default: sql
+  sql:
+    adapter: mysql2
+    database: oxidized
+    table: nodes
+    username: root
+    password: rootpass
+    map:
+      name: ip
+      model: model
+      username: username
+      password: password
+    vars_map:
+      enable: enable
+```
 
 ### Source: SQLite
 
@@ -433,6 +504,17 @@ source:
       enable: enable
     headers:
       X-Auth-Token: 'somerandomstring'
+```
+
+You can also pass `secure: false` if you want to disable ssl certificate verification:
+
+```
+source:
+  default: http
+  http:
+    url: https://url/api
+    scheme: https
+    secure: false
 ```
 
 ### Output: File
@@ -574,7 +656,7 @@ rest: 10.0.0.1:8000/oxidized
 
 ### Advanced Configuration
 
-Below is an advanced example configuration. You will be able to (optinally) override options per device. The router.db format used is ```hostname:model:username:password:enable_password```. Hostname and model will be the only required options, all others override the global configuration sections.
+Below is an advanced example configuration. You will be able to (optionally) override options per device. The router.db format used is ```hostname:model:username:password:enable_password```. Hostname and model will be the only required options, all others override the global configuration sections.
 
 ```
 ---
@@ -619,6 +701,28 @@ source:
 model_map:
   cisco: ios
   juniper: junos
+
+```
+
+### Advanced Group Configuration
+
+For group specific credentials
+
+```
+groups:
+  mikrotik:
+    username: admin
+    password: blank
+  ubiquiti:
+    username: ubnt
+    password: ubnt
+```
+and add group mapping
+```
+map:
+  model: 0
+  name: 1
+  group: 2
 ```
 
 # Hooks
@@ -711,6 +815,35 @@ hooks:
     password: pass
 ```
 
+## Hook type: awssns
+
+The `awssns` hook publishes messages to AWS SNS topics. This allows you to notify other systems of device configuration changes, for example a config orchestration pipeline. Multiple services can subscribe to the same AWS topic.
+
+Fields sent in the message:
+
+  * `event`: Event type (e.g. `node_success`)
+  * `group`: Group name
+  * `model`: Model name (e.g. `eos`)
+  * `node`: Device hostname
+
+Configuration example:
+
+``` yaml
+hooks:
+  hook_script:
+    type: awssns
+    events: [node_fail,node_success,post_store]
+    region: us-east-1
+    topic_arn: arn:aws:sns:us-east-1:1234567:oxidized-test-backup_events
+```
+
+AWS SNS hook requires the following configuration keys:
+
+  * `region`: AWS Region name
+  * `topic_arn`: ASN Topic reference
+
+Your AWS credentials should be stored in `~/.aws/credentials`.
+
 # Ruby API
 
 The following objects exist in Oxidized.
@@ -718,7 +851,7 @@ The following objects exist in Oxidized.
 ## Input
  * gets config from nodes
  * must implement 'connect', 'get', 'cmd'
- * 'ssh' and 'telnet' implemented
+ * 'ssh', 'telnet, ftp, and tftp' implemented
 
 ## Output
  * stores config
