@@ -346,14 +346,18 @@ docker run -v /etc/oxidized:/root/.config/oxidized -p 8888:8888/tcp -e CONFIG_RE
 
 ## Cookbook
 ### Debugging
-In case a model plugin doesn't work correctly (ios, procurve, etc.), you can enable live debugging of SSH/Telnet sessions. Just add a ```debug``` option, specifying a log file destination to the ```input``` section.
+In case a model plugin doesn't work correctly (ios, procurve, etc.), you can enable live debugging of SSH/Telnet sessions. Just add a ```debug``` option containing the value true to the ```input``` section. The log files will be created depending on the parent directory of the logfile option.
 
-The following example will log an active ssh session to ```/home/fisakytt/.config/oxidized/log_input-ssh``` and telnet to ```log_input-telnet```. The file will be truncated on each consecutive ssh/telnet session, so you need to put a ```tailf``` or ```tail -f``` on that file!
+The following example will log an active ssh/telnet session ```/home/oxidized/.config/oxidized/log/<IP-Adress>-<PROTOCOL>```. The file will be truncated on each consecutive ssh/telnet session, so you need to put a ```tailf``` or ```tail -f``` on that file!
 
 ```
+log: /home/oxidized/.config/oxidized/log
+
+...
+
 input:
   default: ssh, telnet
-  debug: /tmp/oxidized_log_input
+  debug: true
   ssh:
     secure: false
 ```
