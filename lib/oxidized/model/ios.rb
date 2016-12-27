@@ -58,8 +58,6 @@ class IOS < Oxidized::Model
   end
 
   cfg :telnet, :ssh do
-    post_login 'terminal length 0'
-    post_login 'terminal width 0'
     # preferred way to handle additional passwords
     if vars :enable
       post_login do
@@ -67,6 +65,8 @@ class IOS < Oxidized::Model
         cmd vars(:enable)
       end
     end
+    post_login 'terminal length 0'
+    post_login 'terminal width 0'
     pre_logout 'exit'
   end
 
