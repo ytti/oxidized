@@ -35,7 +35,7 @@ module Oxidized
       node = job.node
       node.last = job
       node.stats.add job
-      @jobs.duration job.time
+      @jobs.duration job.time.dup
       node.running = false
       if job.status == :success
         Oxidized.Hooks.handle :node_success, :node => node,
