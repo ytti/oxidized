@@ -6,14 +6,15 @@ module Oxidized
       # @param [Job] job job whose information add to stats
       # @return [void]
       def add job
-        stat = {
-          :start  => job.start,
-          :end    => job.end,
-          :time   => job.time,
+        status = job.stats.dup
+        stat   = {
+          :start  => job.start.dup,
+          :end    => job.end.dup,
+          :time   => job.time.dup,
         }
-        @stats[job.status] ||= []
-        @stats[job.status].shift if @stats[job.status].size > MAX_STAT
-        @stats[job.status].push stat
+        @stats[status] ||= []
+        @stats[status].shift if @stats[status].size > MAX_STAT
+        @stats[status].push stat
       end
 
       # @param [Symbol] status stats for specific status
