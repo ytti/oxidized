@@ -565,6 +565,12 @@ example:
 host1:ios:first
 host2:nxos:second
 ```
+Nested Groups
+
+``` csv
+host1:ios:first/sub1
+host2:ios:first/sub2
+host3:nxos:second/sub1
 
 This will generate the following repositories:
 
