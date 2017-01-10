@@ -11,6 +11,10 @@ class FiberDriver < Oxidized::Model
 
   cmd "show running-config" do |cfg|
     cfg.each_line.to_a[3..-1].join
+    cfg.gsub! /^Building configuration.*$/, ''
+    cfg.gsub! /^Current configuration:.*$$/, ''
+    cfg.gsub! /^! Configuration saved on .*$/, ''
+    cfg
   end
 
   cfg :ssh do
