@@ -14,6 +14,7 @@ class FiberDriver < Oxidized::Model
     cfg.gsub! /^Building configuration.*$/, ''
     cfg.gsub! /^Current configuration:.*$$/, ''
     cfg.gsub! /^! Configuration saved on .*$/, ''
+    cfg
   end
 
   cfg :ssh do
