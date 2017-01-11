@@ -3,8 +3,9 @@ module Oxidized
   require 'oxidized/jobs'
   class Worker
     def initialize nodes
-      @nodes   = nodes
-      @jobs    = Jobs.new(Oxidized.config.threads, Oxidized.config.interval, @nodes)
+      @nodes      = nodes
+      @jobs       = Jobs.new(Oxidized.config.threads, Oxidized.config.interval, @nodes)
+      @nodes.jobs = @jobs
       Thread.abort_on_exception = true
     end
 
