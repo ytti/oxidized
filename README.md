@@ -409,7 +409,7 @@ vars:
 
 ### Source: CSV
 
-One line per device, colon seperated.
+One line per device, colon seperated. If `ip` isn't present, a DNS lookup will be done against `name`.  For large installations, setting `ip` will dramatically reduce startup time.
 
 ```
 source:
@@ -419,11 +419,12 @@ source:
     delimiter: !ruby/regexp /:/
     map:
       name: 0
-      model: 1
-      username: 2
-      password: 3
+      ip: 1
+      model: 2
+      username: 3
+      password: 4
     vars_map:
-      enable: 4
+      enable: 5
 ```
 
 ### SSH Proxy Command
