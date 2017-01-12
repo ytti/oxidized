@@ -73,7 +73,7 @@ module Oxidized
           # set last job to nil so that the node is picked for immediate update
           n.last = nil
           put n
-          jobs.want += 1
+          jobs.want += 1 if Config.next_adds_job
         end
       end
     end
