@@ -19,9 +19,13 @@ class CSV < Source
 
   def load
     nodes = []
-    crypto = GPGME::Crypto.new
-    file = (@cfg.gpg == 'false') ? open(File.expand_path @cfg.file) : crypto.decrypt(File.open(@cfg.file))
-    open(file).each_line do |line|
+    if @cfg.gpg != 'false'
+      crypto = GPGME::Crypto.new :password => @cfg.gpg_password
+      file   = crypto.decrypt(File.open(@cfg.file))
+    else
+      file = open(File.expand_path @cfg.file)
+    end
+    file.each_line do |line|
       next if line.match(/^\s*#/)
       data  = line.chomp.split(@cfg.delimiter, -1)
       next if data.empty?

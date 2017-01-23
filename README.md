@@ -243,6 +243,7 @@ source:
     file: ~/.config/oxidized/router.db
     delimiter: !ruby/regexp /:/
     gpg: 'false'
+    gpg_password: 'password'
     map:
       name: 0
       model: 1
