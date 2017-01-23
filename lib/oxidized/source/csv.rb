@@ -19,7 +19,7 @@ class CSV < Source
 
   def load
     nodes = []
-    file = @cfg.gpg == 'false' ? open(File.expand_path @cfg.file) : crypto.decrypt File.open(@cfg.file)
+    file = (@cfg.gpg == 'false') ? open(File.expand_path @cfg.file) : crypto.decrypt(File.open(@cfg.file))
     open(file).each_line do |line|
       next if line.match(/^\s*#/)
       data  = line.chomp.split(@cfg.delimiter, -1)
