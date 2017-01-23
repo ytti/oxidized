@@ -21,7 +21,7 @@ class CSV < Source
     nodes = []
     if @cfg.gpg != 'false'
       crypto = GPGME::Crypto.new :password => @cfg.gpg_password
-      file   = crypto.decrypt(File.open(@cfg.file))
+      file   = crypto.decrypt(File.open(@cfg.file)).to_s
     else
       file = open(File.expand_path @cfg.file)
     end
