@@ -36,10 +36,12 @@ class AOSW < Oxidized::Model
   end
 
   cmd 'show slots' do |cfg|
+    cfg = "" if cfg.match /Invalid input detected at '\^' marker/ #Don't show for unsupported devices
     rstrip_cfg comment cfg
   end
 
   cmd 'show license' do |cfg|
+    cfg = "" if cfg.match /Invalid input detected at '\^' marker/ #Don't show for unsupported devices
     rstrip_cfg comment cfg
   end
 
