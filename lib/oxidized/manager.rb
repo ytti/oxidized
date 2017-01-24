@@ -3,7 +3,6 @@ module Oxidized
   require 'oxidized/input/input'
   require 'oxidized/output/output'
   require 'oxidized/source/source'
-  require 'gpgme'
   class Manager
     class << self
       def load dir, file
