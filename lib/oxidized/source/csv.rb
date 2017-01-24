@@ -10,6 +10,7 @@ class CSV < Source
       Oxidized.asetus.user.source.csv.file      = File.join(Config::Root, 'router.db')
       Oxidized.asetus.user.source.csv.delimiter = /:/
       Oxidized.asetus.user.source.csv.map.name  = 0
+      Oxidized.asetus.user.source.csv.map.model = 1
       Oxidized.asetus.user.source.csv.gpg       = false
       Oxidized.asetus.save :user
       raise NoConfig, 'no source csv config, edit ~/.config/oxidized/config'
