@@ -11,14 +11,23 @@ class CSV < Source
       Oxidized.asetus.user.source.csv.delimiter = /:/
       Oxidized.asetus.user.source.csv.map.name  = 0
       Oxidized.asetus.user.source.csv.map.model = 1
+      Oxidized.asetus.user.source.csv.gpg       = false
       Oxidized.asetus.save :user
       raise NoConfig, 'no source csv config, edit ~/.config/oxidized/config'
     end
+    require 'gpgme' if @cfg.gpg?
   end
 
   def load
     nodes = []
-    open(File.expand_path @cfg.file).each_line do |line|
+    file = File.expand_path(@cfg.file)
+    file = if @cfg.gpg?
+      crypto = GPGME::Crypto.new password: @cfg.gpg_password
+      crypto.decrypt(file).to_s
+    else
+      open(file)
+    end  
+    file.each_line do |line|
       next if line.match(/^\s*#/)
       data  = line.chomp.split(@cfg.delimiter, -1)
       next if data.empty?

@@ -235,12 +235,15 @@ oxidized
 
 Now tell Oxidized where it finds a list of network devices to backup configuration from. You can either use CSV or SQLite as source. To create a CSV source add the following snippet:
 
+Note: If gpg is set to anything other than false it will attempt to decrypt the file contents
 ```
 source:
   default: csv
   csv:
     file: ~/.config/oxidized/router.db
     delimiter: !ruby/regexp /:/
+    gpg: false
+    gpg_password: 'password'
     map:
       name: 0
       model: 1
