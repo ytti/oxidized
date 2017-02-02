@@ -188,6 +188,13 @@ gem install oxidized
 gem install oxidized-script oxidized-web
 ```
 
+## Building from Git
+```shell
+git clone
+rake install
+gem install pkg/*.gem
+```
+
 # Configuration
 
 Oxidized configuration is in YAML format. Configuration files are subsequently sourced from ```/etc/oxidized/config``` then ```~/.config/oxidized/config```. The hashes will be merged, this might be useful for storing source information in a system wide file and  user specific configuration in the home directory (to only include a staff specific username and password). Eg. if many users are using ```oxs```, see [Oxidized::Script](https://github.com/ytti/oxidized-script).
