@@ -154,6 +154,8 @@ Oxidized is a network device configuration backup tool. It's a RANCID replacemen
    * [EdgeSwitch](lib/oxidized/model/edgeswitch.rb)
  * Watchguard
    * [Fireware OS](lib/oxidized/model/firewareos.rb)
+ * Zhone
+   * [Zhone (OLT and MX)](lib/oxidized/model/zhoneolt.rb)
  * Zyxel
    * [ZyNOS](lib/oxidized/model/zynos.rb)
 
@@ -233,12 +235,15 @@ oxidized
 
 Now tell Oxidized where it finds a list of network devices to backup configuration from. You can either use CSV or SQLite as source. To create a CSV source add the following snippet:
 
+Note: If gpg is set to anything other than false it will attempt to decrypt the file contents
 ```
 source:
   default: csv
   csv:
     file: ~/.config/oxidized/router.db
     delimiter: !ruby/regexp /:/
+    gpg: false
+    gpg_password: 'password'
     map:
       name: 0
       model: 1
@@ -407,7 +412,7 @@ vars:
 
 ### Source: CSV
 
-One line per device, colon seperated.
+One line per device, colon seperated. If `ip` isn't present, a DNS lookup will be done against `name`.  For large installations, setting `ip` will dramatically reduce startup time.
 
 ```
 source:
@@ -417,11 +422,12 @@ source:
     delimiter: !ruby/regexp /:/
     map:
       name: 0
-      model: 1
-      username: 2
-      password: 3
+      ip: 1
+      model: 2
+      username: 3
+      password: 4
     vars_map:
-      enable: 4
+      enable: 5
 ```
 
 ### SSH Proxy Command
@@ -565,12 +571,6 @@ example:
 host1:ios:first
 host2:nxos:second
 ```
-Nested Groups
-
-``` csv
-host1:ios:first/sub1
-host2:ios:first/sub2
-host3:nxos:second/sub1
 
 This will generate the following repositories:
 
