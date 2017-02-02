@@ -192,7 +192,7 @@ gem install oxidized-script oxidized-web
 ```shell
 git clone https://github.com/ytti/oxidized.git
 cd oxidized/
-rake install
+gem build *.gemspec
 gem install pkg/*.gem
 ```
 
