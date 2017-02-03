@@ -10,8 +10,11 @@ module Oxidized
     alias :running? :running
     def initialize opt
       Oxidized.logger.debug 'resolving DNS for %s...' % opt[:name]
+      # remove the prefix if an IP Address is provided with one as IPAddr converts it to a network address.
+      ip_addr, _ = opt[:ip].to_s.split("/")
+      Oxidized.logger.debug 'IPADDR %s' % ip_addr.to_s
       @name           = opt[:name]
-      @ip             = IPAddr.new(opt[:ip]).to_s rescue nil
+      @ip             = IPAddr.new(ip_addr).to_s rescue nil
       @ip           ||= Resolv.new.getaddress @name
       @group          = opt[:group]
       @input          = resolve_input opt
