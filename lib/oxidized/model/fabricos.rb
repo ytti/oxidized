@@ -7,10 +7,11 @@ class FabricOS < Oxidized::Model
   comment  '# '
 
   cmd 'chassisShow' do |cfg|
-    comment cfg
+    comment cfg.each_line.reject { |line| line.match /Time Awake:/ or line.match /Power Usage \(Watts\):/ or line.match /Time Alive:/ or line.match /Update:/ }.join
   end
 
   cmd 'configShow -all' do |cfg|
+    cfg = cfg.each_line.reject { |line| line.match /date = /}.join
     cfg
   end
 
