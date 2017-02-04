@@ -74,16 +74,20 @@ class IronWare < Oxidized::Model
   cfg :telnet, :ssh do
     if vars :enable
       post_login do
-        send "enable\r\n"
+        send "enable\n"
         cmd vars(:enable)
       end
     end
     post_login ''
     post_login 'skip-page-display'
     post_login 'terminal length 0'
-    pre_logout 'logout'
-    pre_logout 'exit'
-    pre_logout 'exit'
+    pre_logout do
+      send "logout\n"
+      sleep 0.01
+      send "exit\n"
+      sleep 0.01
+      send "exit\n"
+    end
   end
 
 end
