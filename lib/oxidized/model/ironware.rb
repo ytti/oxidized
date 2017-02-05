@@ -81,13 +81,7 @@ class IronWare < Oxidized::Model
     post_login ''
     post_login 'skip-page-display'
     post_login 'terminal length 0'
-    pre_logout do
-      send "logout\n"
-      sleep 0.01
-      send "exit\n"
-      sleep 0.01
-      send "exit\n"
-    end
+    pre_logout "logout\nexit\nexit\n"
   end
 
 end
