@@ -33,14 +33,13 @@ class CiscoSMB < Oxidized::Model
     cfg
   end
 
-  cfg :telnet do
-    username /^User Name:/
-    password /^\r?Password:$/
-  end
-
   cfg :telnet, :ssh do
+    username /^User ?[nN]ame:/
+    password /^\r?Password:$/
     post_login 'terminal datadump' # Disable pager
     post_login 'terminal width 0'
+    post_login 'terminal len 0'
+    pre_logout 'exit' #exit returns to previous priv level, no way to quit from exec(#)
     pre_logout 'exit'
   end
 

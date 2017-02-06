@@ -16,8 +16,13 @@ class NXOS < Oxidized::Model
     cfg.gsub! /^!Time:[^\n]*\n/, ''
   end
 
-  cfg :ssh do
+  cfg :ssh, :telnet do
     post_login 'terminal length 0'
     pre_logout 'exit'
+  end
+
+  cfg :telnet do
+    username /^login:/
+    password /^Password:/
   end
 end

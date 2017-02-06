@@ -57,4 +57,8 @@ class Procurve < Oxidized::Model
     pre_logout "logout\ny\nn"
   end
 
+  cfg :ssh do
+    pty_options({ chars_wide: 1000 })
+  end
+
 end

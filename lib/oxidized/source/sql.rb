@@ -26,12 +26,14 @@ class SQL < Source
     query.each do |node|
       # map node parameters
       keys = {}
-      @cfg.map.each { |key, sql_column| keys[key.to_sym] = node[sql_column.to_sym] }
+      @cfg.map.each { |key, sql_column| keys[key.to_sym] = node_var_interpolate node[sql_column.to_sym] }
       keys[:model] = map_model keys[:model] if keys.key? :model
 
       # map node specific vars
       vars = {}
-      @cfg.vars_map.each { |key, sql_column| vars[key.to_sym] = node[sql_column.to_sym] }
+      @cfg.vars_map.each do |key, sql_column|
+        vars[key.to_sym] = node_var_interpolate node[sql_column.to_sym]
+      end
       keys[:vars] = vars unless vars.empty?
 
       nodes << keys

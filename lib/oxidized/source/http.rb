@@ -20,6 +20,7 @@ class HTTP < Source
     uri = URI.parse(@cfg.url)
     http = Net::HTTP.new(uri.host, uri.port)
     http.use_ssl = true if uri.scheme == 'https'
+    http.verify_mode = OpenSSL::SSL::VERIFY_NONE unless @cfg.secure
 
     # map headers
     headers = {}
@@ -39,13 +40,15 @@ class HTTP < Source
       # map node parameters
       keys = {}
       @cfg.map.each do |key, position|
-        keys[key.to_sym] = line[position]
+        keys[key.to_sym] = node_var_interpolate line[position]
       end
       keys[:model] = map_model keys[:model] if keys.key? :model
 
-      # map node specific vars, empty value is considered as nil
+      # map node specific vars
       vars = {}
-      @cfg.vars_map.each { |key, position| vars[key.to_sym] = line[position].to_s.empty? ? nil : line[position] }
+      @cfg.vars_map.each do |key, position|
+        vars[key.to_sym] = node_var_interpolate line[position]
+      end
       keys[:vars] = vars unless vars.empty?
 
       nodes << keys

@@ -22,7 +22,7 @@ class EOS < Oxidized::Model
     comment cfg
   end
 
-  cmd 'show running-config | no-more' do |cfg|
+  cmd 'show running-config | no-more | exclude ! Time:' do |cfg|
     cfg
   end
 

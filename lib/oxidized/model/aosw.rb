@@ -28,19 +28,23 @@ class AOSW < Oxidized::Model
 
   cmd 'show version' do |cfg|
     cfg = cfg.each_line.select { |line| not line.match /Switch uptime/i }
-    comment cfg.join
+    rstrip_cfg comment cfg.join
   end
 
   cmd 'show inventory' do |cfg|
-    clean cfg
+    rstrip_cfg clean cfg
   end
 
   cmd 'show slots' do |cfg|
-    comment cfg
+    cfg = "" if cfg.match /Invalid input detected at '\^' marker/ #Don't show for unsupported devices
+    rstrip_cfg comment cfg
   end
+
   cmd 'show license' do |cfg|
-    comment cfg
+    cfg = "" if cfg.match /Invalid input detected at '\^' marker/ #Don't show for unsupported devices
+    rstrip_cfg comment cfg
   end
+
   cmd 'show running-config' do |cfg|
     out = []
     cfg.each_line do |line|
@@ -60,8 +64,8 @@ class AOSW < Oxidized::Model
   cfg :telnet, :ssh do
     if vars :enable
       post_login do
-        send 'enable\n'
-        send vars(:enable) + '\n'
+        send "enable\n"
+        cmd vars(:enable)
       end
     end
     post_login 'no paging'
@@ -72,6 +76,15 @@ class AOSW < Oxidized::Model
     pre_logout 'exit'
   end
 
+  def rstrip_cfg cfg
+    out = []
+    cfg.each_line do |line|
+      out << line.rstrip
+    end
+    out = out.join "\n"
+    out << "\n"
+  end
+
   def clean cfg
     out = []
     cfg.each_line do |line|
@@ -79,7 +92,7 @@ class AOSW < Oxidized::Model
       next if line.match /Output \d Config/i
       next if line.match /(Tachometers|Temperatures|Voltages)/
       next if line.match /((Card|CPU) Temperature|Chassis Fan|VMON1[0-9])/
-      next if line.match /[0-9]+ (RPMS?|m?V|C)/i
+      next if line.match /[0-9]+\s+(RPMS?|m?V|C)/i
       out << line.strip
     end
     out = comment out.join "\n"

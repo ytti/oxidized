@@ -28,20 +28,22 @@ class OxidizedFile < Output
   end
 
   def fetch node, group
-    cfg_dir = File.expand_path @cfg.directory
+    cfg_dir   = File.expand_path @cfg.directory
     node_name = node.name
 
     if group # group is explicitly defined by user
-      IO.readlines File.join(cfg_dir, group, node_name)
+      cfg_dir = File.join File.dirname(cfg_dir), group
+      File.read File.join(cfg_dir, node_name)
     else
       if File.exists? File.join(cfg_dir, node_name) # node configuration file is stored on base directory
-        IO.readlines File.join(cfg_dir, node_name)
+        File.read File.join(cfg_dir, node_name)
       else
-        path = Dir.glob File.join(cfg_dir, '**', node_name) # fetch node in all groups
-        return nil if path[0].nil?
-        open(path[0], 'r').readlines
+        path = Dir.glob(File.join(File.dirname(cfg_dir), '**', node_name)).first # fetch node in all groups
+        File.read path
       end
     end
+  rescue Errno::ENOENT
+    return nil
   end
 
   def version node, group

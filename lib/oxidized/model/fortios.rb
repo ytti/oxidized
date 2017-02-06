@@ -14,6 +14,11 @@ class FortiOS < Oxidized::Model
     new_cfg << cfg.each_line.to_a[1..-2].map { |line| line.gsub(/(conf_file_ver=)(.*)/, '\1<stripped>\3') }.join
   end
 
+  cmd :secret do |cfg|
+    cfg.gsub! /(set (?:passwd|password)).*/, '\\1 <configuration removed>'
+    cfg
+  end
+
   cmd 'get system status' do |cfg|
     @vdom_enabled = cfg.include? 'Virtual domain configuration: enable'
     cfg.gsub!(/(System time: )(.*)/, '\1<stripped>\3')
