@@ -15,8 +15,7 @@ class FortiOS < Oxidized::Model
   end
 
   cmd :secret do |cfg|
-    cfg.gsub! /(set password).*/, '\\1 <configuration removed>'
-    cfg.gsub! /(set passwd).*/, '\\1 <configuration removed>'
+    cfg.gsub! /(set (?:passwd|password)).*/, '\\1 <configuration removed>'
     cfg
   end
 
