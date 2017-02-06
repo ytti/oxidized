@@ -34,7 +34,7 @@ class FortiOS < Oxidized::Model
     end
 
     cfg << cmd('diagnose autoupdate version') do |cfg|
-      comment cfg
+      comment cfg.each_line.reject { |line| line.match /Last Update|Result/ }.join
     end
 
     cfg << cmd('end') if @vdom_enabled
