@@ -1,14 +1,5 @@
 require 'spec_helper'
-require 'oxidized/cli'
-
-describe Oxidized::CLI do
-  before { @original = ARGV }
-  after  { ARGV.replace @original }
-
-  %w[-v --version].each do |option|
-    describe option do
-      before { ARGV.replace([option]) }
-
+require 'oxid
       it 'prints the version and exits' do
         Oxidized::Config.expects(:load)
         Oxidized.expects(:setup_logger)
