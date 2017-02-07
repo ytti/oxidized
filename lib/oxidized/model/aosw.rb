@@ -5,43 +5,50 @@ class AOSW < Oxidized::Model
   # Also Dell controllers
 
   comment  '# '
-  prompt /^\([^)]+\) [#>]/
+  prompt /^\(?.+\)?\s?[#>]/
 
   cmd :all do |cfg|
     cfg.each_line.to_a[1..-2].join
   end
 
   cmd :secret do |cfg|
+    cfg.gsub!(/enable secret (\S+)$/, 'enable secret <secret removed>')
     cfg.gsub!(/PRE-SHARE (\S+)$/, 'PRE-SHARE <secret removed>')
     cfg.gsub!(/ipsec (\S+)$/, 'ipsec <secret removed>')
     cfg.gsub!(/community (\S+)$/, 'community <secret removed>')
     cfg.gsub!(/ sha (\S+)/, ' sha <secret removed>')
     cfg.gsub!(/ des (\S+)/, ' des <secret removed>')
     cfg.gsub!(/mobility-manager (\S+) user (\S+) (\S+)/, 'mobility-manager \1 user \2 <secret removed>')
-    cfg.gsub!(/mgmt-user (\S+) (\S+) (\S+)$/, 'mgmt-user \1 \2 <secret removed>')
+    cfg.gsub!(/mgmt-user (\S+) (root|guest\-provisioning|network\-operations|read\-only|location\-api\-mgmt) (\S+)$/, 'mgmt-user \1 \2 <secret removed>') #MAS & Wireless Controler 
+    cfg.gsub!(/mgmt-user (\S+) (\S+)( (read\-only|guest\-mgmt))?$/, 'mgmt-user \1 <secret removed> \3') #IAP 
+#MAS format: mgmt-user <username> <accesslevel>   <password hash>
+#IAP format: mgmt-user <username> <password hash>
+#IAP format: mgmt-user <username> <password hash> <access level>
     cfg.gsub!(/key (\S+)$/, 'key <secret removed>')
-    cfg.gsub!(/secret (\S+)$/, 'secret <secret removed>')
     cfg.gsub!(/wpa-passphrase (\S+)$/, 'wpa-passphrase <secret removed>')
     cfg.gsub!(/bkup-passwords (\S+)$/, 'bkup-passwords <secret removed>')
+    cfg.gsub!(/user (\S+) (\S+) (\S+)$/, 'user \1 <secret removed> \3')
+    cfg.gsub!(/virtual-controller-key (\S+)$/, 'virtual-controller-key <secret removed>')
     cfg
   end
 
   cmd 'show version' do |cfg|
-    cfg = cfg.each_line.select { |line| not line.match /Switch uptime/i }
+    cfg = cfg.each_line.select { |line| not line.match /(Switch|AP) uptime/i }
     rstrip_cfg comment cfg.join
   end
 
   cmd 'show inventory' do |cfg|
+    cfg = "" if cfg.match /(Invalid input detected at '\^' marker|Parse error)/ #Don't show for unsupported devices
     rstrip_cfg clean cfg
   end
 
   cmd 'show slots' do |cfg|
-    cfg = "" if cfg.match /Invalid input detected at '\^' marker/ #Don't show for unsupported devices
+    cfg = "" if cfg.match /(Invalid input detected at '\^' marker|Parse error)/ #Don't show for unsupported devices
     rstrip_cfg comment cfg
   end
 
   cmd 'show license' do |cfg|
-    cfg = "" if cfg.match /Invalid input detected at '\^' marker/ #Don't show for unsupported devices
+    cfg = "" if cfg.match /(Invalid input detected at '\^' marker|Parse error)/ #Don't show for unsupported devices
     rstrip_cfg comment cfg
   end
 
