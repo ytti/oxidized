@@ -6,6 +6,11 @@ class Procurve < Oxidized::Model
 
   comment  '! '
 
+  # replace next line control sequence with a new line
+  expect /\eE/ do |data, re|
+    data.gsub re, "\n"
+  end
+
   # replace all used vt100 control sequences
   expect /\e\[\??\d+(;\d+)*[A-Za-z]/ do |data, re|
     data.gsub re, ''
