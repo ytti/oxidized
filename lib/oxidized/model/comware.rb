@@ -18,6 +18,12 @@ class Comware < Oxidized::Model
     cfg.each_line.to_a[1..-2].join
   end
  
+  cmd :secret do |cfg|
+    cfg.gsub! /^( snmp-agent community).*/, '\\1 <configuration removed>'
+    cfg.gsub! /^( password hash).*/, '\\1 <configuration removed>'
+    cfg
+  end
+
   cfg :telnet do
     username /^Username:$/
     password /^Password:$/
