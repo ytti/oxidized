@@ -69,8 +69,8 @@ if RUBY_VERSION < '2.3'
         value
       elsif value.respond_to?(:dig)
         value.dig(*rest)
-      else
-        fail TypeError, "#{value.class} does not have #dig method"
+      else # foo.bar.baz (bar exist but is not hash)
+        return nil
       end
     end
   end
