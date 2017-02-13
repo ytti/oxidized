@@ -28,8 +28,9 @@ module Oxidized
       asetus.default.retries       = 3
       asetus.default.prompt        = /^([\w.@-]+[#>]\s?)$/
       asetus.default.rest          = '127.0.0.1:8888' # or false to disable
-      asetus.default.vars          = {}             # could be 'enable'=>'enablePW'
-      asetus.default.groups        = {}             # group level configuration
+      asetus.default.next_adds_job = false            # if true, /next adds job, so device is fetched immmeiately
+      asetus.default.vars          = {}               # could be 'enable'=>'enablePW'
+      asetus.default.groups        = {}               # group level configuration
       asetus.default.pid           = File.join(Oxidized::Config::Root, 'pid')
 
       asetus.default.input.default    = 'ssh, telnet'

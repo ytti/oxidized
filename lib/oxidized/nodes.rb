@@ -4,7 +4,7 @@ module Oxidized
   class Oxidized::NotSupported < OxidizedError; end
   class Oxidized::NodeNotFound < OxidizedError; end
   class Nodes < Array
-    attr_accessor :source
+    attr_accessor :source, :jobs
     alias :put :unshift
     def load node_want=nil
       with_lock do
@@ -73,6 +73,7 @@ module Oxidized
           # set last job to nil so that the node is picked for immediate update
           n.last = nil
           put n
+          jobs.want += 1 if Oxidized.config.next_adds_job?
         end
       end
     end
