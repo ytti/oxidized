@@ -747,7 +747,7 @@ map:
 
 A node can be moved to head-of-queue via the REST API `GET/POST /node/next/[NODE]`.
 
-In the default configuration this node will be processed when the next job worker becomes available, it could take some time if existing backups are in progress. To execute moved jobs immediately a new job be added:
+In the default configuration this node will be processed when the next job worker becomes available, it could take some time if existing backups are in progress. To execute moved jobs immediately a new job can be added:
 
 ```
 next_adds_job: true
