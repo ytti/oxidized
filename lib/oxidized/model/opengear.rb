@@ -1,6 +1,8 @@
 class OpenGear < Oxidized::Model
 
   comment  '# '
+  
+  prompt /^(\$\s)?$/
 
   cmd :secret do |cfg|
     cfg.gsub!(/password (\S+)/, 'password <secret removed>')
