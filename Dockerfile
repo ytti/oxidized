@@ -3,7 +3,7 @@ MAINTAINER Samer Abdel-Hafez <sam@arahant.net>
 
 RUN add-apt-repository ppa:brightbox/ruby-ng && \
 	apt-get update && \
-  apt-get install -y ruby2.3 ruby2.3-dev libsqlite3-dev libssl-dev pkg-config make cmake libssh2-1-dev git
+  apt-get install -y ruby2.3 ruby2.3-dev libsqlite3-dev libssl-dev pkg-config make cmake libssh2-1-dev git g++
 
 RUN mkdir -p /tmp/oxidized
 COPY . /tmp/oxidized/
@@ -17,6 +17,7 @@ RUN gem install oxidized-web --no-ri --no-rdoc
 
 # dependencies for hooks
 RUN gem install aws-sdk
+RUN gem install slack-api
 
 RUN rm -rf /tmp/oxidized
 
