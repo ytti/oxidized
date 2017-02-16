@@ -50,7 +50,7 @@ class TPLink < Oxidized::Model
     if vars :enable
       post_login do
         send "enable\r"
-        send vars(:enable) + "\r"
+        cmd vars(:enable)
       end
     end
 
