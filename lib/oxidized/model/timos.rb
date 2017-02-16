@@ -18,6 +18,8 @@ class TiMOS < Oxidized::Model
   # Show the boot options file.
   #
   cmd 'show bof' do |cfg|
+    cfg.gsub! /# Finished .*/, ''
+    cfg.gsub! /# Generated .*/, ''
     comment cfg
   end
 
@@ -29,6 +31,8 @@ class TiMOS < Oxidized::Model
     # Strip uptime.
     #
     cfg.sub! /^System Up Time.*\n/, ''
+    cfg.gsub! /# Finished .*/, ''
+    cfg.gsub! /# Generated .*/, ''
     comment cfg
   end
 
@@ -36,6 +40,8 @@ class TiMOS < Oxidized::Model
   # Show the card state.
   #
   cmd 'show card state' do |cfg|
+    cfg.gsub! /# Finished .*/, ''
+    cfg.gsub! /# Generated .*/, ''
     comment cfg
   end
 
@@ -48,6 +54,8 @@ class TiMOS < Oxidized::Model
     #
     cfg.gsub! /\r/, ''
     cfg.gsub! /[\b][\b][\b]/, "\n"
+    cfg.gsub! /# Finished .*/, ''
+    cfg.gsub! /# Generated .*/, ''
     comment cfg
   end
 
@@ -55,6 +63,8 @@ class TiMOS < Oxidized::Model
   # Show the running debug configuration.
   #
   cmd 'show debug' do |cfg|
+    cfg.gsub! /# Finished .*/, ''
+    cfg.gsub! /# Generated .*/, ''
     comment cfg
   end
 
@@ -66,6 +76,8 @@ class TiMOS < Oxidized::Model
     # Strip carriage returns.
     #
     cfg.gsub! /\r/, ''
+    cfg.gsub! /# Finished .*/, ''
+    cfg.gsub! /# Generated .*/, ''
     comment cfg
   end
 
@@ -77,6 +89,8 @@ class TiMOS < Oxidized::Model
     # Strip carriage returns.
     #
     cfg.gsub! /\r/, ''
+    cfg.gsub! /# Finished .*/, ''
+    cfg.gsub! /# Generated .*/, ''
     comment cfg
   end
 
@@ -88,6 +102,8 @@ class TiMOS < Oxidized::Model
     # Strip carriage returns.
     #
     cfg.gsub! /\r/, ''
+    cfg.gsub! /# Finished .*/, ''
+    cfg.gsub! /# Generated .*/, ''
   end
 
   cfg :telnet do

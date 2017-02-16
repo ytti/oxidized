@@ -29,7 +29,7 @@ class HTTP < Source
     end
 
     request = Net::HTTP::Get.new(uri.request_uri, headers)
-    if (@cfg.user && @cfg.pass)
+    if (@cfg.user? && @cfg.pass?)
         request.basic_auth(@cfg.user,@cfg.pass)
     end
 
