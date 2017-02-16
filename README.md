@@ -148,6 +148,8 @@ Oxidized is a network device configuration backup tool. It's a RANCID replacemen
    * [Supermicro](lib/oxidized/model/supermicro.rb)
  * Trango Systems
    * [Trango](lib/oxidized/model/trango.rb)
+ * TPLink
+   * [TPLink](lib/oxidized/model/tplink.rb)
  * Ubiquiti
    * [AirOS](lib/oxidized/model/airos.rb)
    * [Edgeos](lib/oxidized/model/edgeos.rb)
