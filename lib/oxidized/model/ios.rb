@@ -30,6 +30,7 @@ class IOS < Oxidized::Model
     cfg.gsub! /^enable (password|secret) \d \S+/, '<secret hidden>'
     cfg.gsub! /^(\s+(?:password|secret)) (?:\d )?\S+/, '\\1 <secret hidden>'
     cfg.gsub! /wpa-psk ascii \d \S+/, '<secret hidden>'
+    cfg.gsub! /key 7 \d.+/, '<secret hidden>'
     cfg.gsub! /^tacacs-server key \d \S+/, '<secret hidden>'
     cfg
   end

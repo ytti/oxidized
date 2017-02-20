@@ -32,7 +32,10 @@ class Cumulus < Oxidized::Model
     
     cfg += add_comment 'IP Routes'
     cfg += cmd 'netstat -rn'
-
+    
+    cfg += add_comment 'SNMP settings'
+    cfg += cmd 'cat /etc/snmp/snmpd.conf'
+    
     cfg += add_comment 'QUAGGA DAEMONS'
     cfg += cmd 'cat /etc/quagga/daemons'
     
@@ -47,6 +50,9 @@ class Cumulus < Oxidized::Model
     
     cfg += add_comment 'QUAGGA OSPF6'
     cfg += cmd 'cat /etc/quagga/ospf6d.conf'
+    
+    cfg += add_comment 'QUAGGA CONF'
+    cfg += cmd 'cat /etc/quagga/Quagga.conf'
     
     cfg += add_comment 'MOTD'
     cfg += cmd 'cat /etc/motd'
