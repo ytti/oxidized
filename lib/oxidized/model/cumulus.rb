@@ -34,7 +34,7 @@ class Cumulus < Oxidized::Model
     cfg += cmd 'netstat -rn'
     
     cfg += add_comment 'SNMP settings'
-    cfg i= cmd 'cat /etc/snmp/snmpd.conf'
+    cfg += cmd 'cat /etc/snmp/snmpd.conf'
     
     cfg += add_comment 'QUAGGA DAEMONS'
     cfg += cmd 'cat /etc/quagga/daemons'
