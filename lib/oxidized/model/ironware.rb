@@ -67,7 +67,7 @@ class IronWare < Oxidized::Model
     # match expected prompts on both older and newer
     # versions of IronWare
     username /^(Please Enter Login Name|Username):/
-    password /^(Please Enter )Password:/
+    password /^(Please Enter Password |Password):/
   end
 
   #handle pager with enable
