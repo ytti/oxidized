@@ -13,9 +13,10 @@ class ASA < Oxidized::Model
   cmd :secret do |cfg|
     cfg.gsub! /enable password (\S+) (.*)/, 'enable password <secret hidden> \2'
     cfg.gsub! /username (\S+) password (\S+) (.*)/, 'username \1 password <secret hidden> \3'
-    cfg.gsub! /ikev2 pre-shared-key (\S+)/, 'ikev2 pre-shared-key <secret hidden>'
-    cfg.gsub! /ikev2 (remote|local)-authentication pre-shared-key (\S+)/, 'ikev2 \1-authentication pre-shared-key <secret hidden>'
+    cfg.gsub! /(ikev[12] ((remote|local)-authentication )?pre-shared-key) (\S+)/, '\1 <secret hidden>'
     cfg.gsub! /^(aaa-server TACACS\+? \(\S+\) host.*\n\skey) \S+$/mi, '\1 <secret hidden>'
+    cfg.gsub! /ldap-login-password (\S+)/, 'ldap-login-password <secret hidden>'
+    cfg.gsub! /^snmp-server host (.*) community (\S+)/, 'snmp-server host \1 community <secret hidden>'
     cfg
   end
 
