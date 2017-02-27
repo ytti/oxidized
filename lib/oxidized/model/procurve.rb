@@ -1,13 +1,13 @@
 class Procurve < Oxidized::Model
 
-  # some models start lines with \r 
+  # some models start lines with \r
   # previous command is repeated followed by "\eE", which sometimes ends up on last line
-  prompt /^\r?([\w -]+\eE)?([\w.-]+# )$/
+  prompt /^\r?([\w.-]+# )$/
 
   comment  '! '
 
   # replace next line control sequence with a new line
-  expect /\eE/ do |data, re|
+  expect /(\e\[1M\e\[\??\d+(;\d+)*[A-Za-z]\e\[1L)|(\eE)/ do |data, re|
     data.gsub re, "\n"
   end
 
@@ -22,7 +22,7 @@ class Procurve < Oxidized::Model
   end
 
   cmd :all do |cfg|
-    cfg = cfg.each_line.to_a[1..-3].join
+    cfg = cfg.each_line.to_a[1..-2].join
     cfg = cfg.gsub /^\r/, ''
   end
 
