@@ -60,15 +60,21 @@ class Cumulus < Oxidized::Model
     cfg += add_comment 'PASSWD'
     cfg += cmd 'cat /etc/passwd'
     
-    cfg += add_comment ' SWITCHD'
+    cfg += add_comment 'SWITCHD'
     cfg += cmd 'cat /etc/cumulus/switchd.conf'
     
+    cfg += add_comment 'PORTS'
+    cfg += cmd 'cat /etc/cumulus/ports.conf'
+    
+    cfg += add_comment 'TRAFFIC'
+    cfg += cmd 'cat /etc/cumulus/datapath/traffic.conf'
+   	
     cfg += add_comment 'ACL'
     cfg += cmd 'iptables -L -n'
     
     cfg += add_comment 'VERSION'
     cfg += cmd 'cat /etc/cumulus/etc.replace/os-release'
-
+    
     cfg += add_comment 'License'
     cfg += cmd 'cl-license'
     
