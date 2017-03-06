@@ -7,7 +7,8 @@ class PfSense < Oxidized::Model
   end
   
   cmd 'cat /cf/conf/config.xml' do |cfg|
-    cfg.gsub! /\s<revision>\s*.*\s*<time>\d*<\/time>\s*.*\s*<\/revision>/, ''
+    cfg.gsub! /\s<revision>\s*<time>\d*<\/time>\s*.*\s*.*\s*<\/revision>/, ''
+    cfg.gsub! /\s<last_rule_upd_time>\d*<\/last_rule_upd_time>/, ''
     cfg
   end
   
