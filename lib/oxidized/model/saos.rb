@@ -10,6 +10,7 @@ class SAOS < Oxidized::Model
   end
 
   cmd 'configuration show' do |cfg|
+    cfg.gsub! /^! Created: [^\n]*\n/, ''
     cfg
   end
 
