@@ -2,7 +2,7 @@ class SAOS < Oxidized::Model
 
   # Ciena SAOS switch
   # used for 6.x devices
- 
+
   comment  '! '
 
   cmd :all do |cfg|
@@ -11,6 +11,7 @@ class SAOS < Oxidized::Model
 
   cmd 'configuration show' do |cfg|
     cfg.gsub! /^! Created: [^\n]*\n/, ''
+    cfg.gsub! /^! On terminal: [^\n]*\n/, ''
     cfg
   end
 

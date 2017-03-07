@@ -75,7 +75,7 @@ Oxidized is a network device configuration backup tool. It's a RANCID replacemen
  * Check Point
    * [GaiaOS](lib/oxidized/model/gaiaos.rb)
  * Ciena
-   * [SOAS](lib/oxidized/model/saos.rb)
+   * [SAOS](lib/oxidized/model/saos.rb)
  * Cisco
    * [AireOS](lib/oxidized/model/aireos.rb)
    * [ASA](lib/oxidized/model/asa.rb)
