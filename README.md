@@ -136,6 +136,8 @@ Oxidized is a network device configuration backup tool. It's a RANCID replacemen
    * [WISP Switch (As Netonix)](lib/oxidized/model/netonix.rb)
  * Nokia (formerly TiMetra, Alcatel, Alcatel-Lucent)
    * [SR OS (TiMOS)](lib/oxidized/model/timos.rb)
+ * OneAccess
+   * [OneOS](lib/oxidized/model/oneos.rb)
  * Opengear
    * [Opengear](lib/oxidized/model/opengear.rb)
  * Palo Alto

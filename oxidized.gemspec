@@ -25,7 +25,7 @@ Gem::Specification.new do |s|
   s.add_runtime_dependency 'rugged',  '~> 0.21',  '>= 0.21.4'
 
   if defined?(RUBY_VERSION) && RUBY_VERSION > '2.3'
-      s.add_runtime_dependency 'net-telnet'
+      s.add_runtime_dependency 'net-telnet', '~> 0'
   end
 
   s.add_development_dependency 'pry',      '~> 0'
