@@ -1,6 +1,6 @@
 class Vyatta < Oxidized::Model
 
-  # Brocade Vyatta / VyOS model #
+  # Brocade Vyatta #
   
   prompt /\@.*?\:~\$\s/
 
