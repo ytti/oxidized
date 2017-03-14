@@ -41,7 +41,7 @@ class SlackDiff < Oxidized::Hook
           msg = cfg.message % {:node => ctx.node.name.to_s, :group => ctx.node.group.to_s, :commitref => ctx.commitref, :model => ctx.node.model.class.name.to_s.downcase}
           log msg
           log "Posting message to #{cfg.channel}"
-          client.chat_postMessage(channel: "#oxidized-test", text: msg,  as_user: true)
+          client.chat_postMessage(channel: cfg.channel, text: msg,  as_user: true)
         end
         log "Finished"
       end
