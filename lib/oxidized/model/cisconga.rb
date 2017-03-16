@@ -8,7 +8,7 @@ class CiscoNGA < Oxidized::Model
   end
 
   cmd 'show configuration' do |cfg|
-    comment cfg
+    cfg
   end
   
   cfg :ssh do
