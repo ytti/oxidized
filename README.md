@@ -900,7 +900,7 @@ hooks:
 
 # Extra
 
-## Ubuntu init setup
+## Ubuntu SystemV init setup
 
 The init script assumes that you have a used named 'oxidized' and that oxidized is in one of the following paths:
 
@@ -912,16 +912,15 @@ The init script assumes that you have a used named 'oxidized' and that oxidized 
 /usr/local/bin
 ```
 
-Copy init script from extra/ folder to /etc/init.d/oxidized
-
-Setup /var/run/
+1.)Copy init script from extra/ folder to /etc/init.d/oxidized
+2.)Setup /var/run/
 
 ```
 mkdir /var/run/oxidized
 chown oxidized:oxidized /var/run/oxidized
 ```
 
-To make oxidized start on boot
+3.)Make oxidized start on boot
 
 ```
 update-rc.d oxidized deafults
