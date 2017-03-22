@@ -898,6 +898,34 @@ hooks:
     channel: "#network-changes"
 ```
 
+# Extra
+
+## Ubuntu SystemV init setup
+
+The init script assumes that you have a used named 'oxidized' and that oxidized is in one of the following paths:
+
+```
+/sbin
+/bin
+/usr/sbin
+/usr/bin
+/usr/local/bin
+```
+
+1.)Copy init script from extra/ folder to /etc/init.d/oxidized
+2.)Setup /var/run/
+
+```
+mkdir /var/run/oxidized
+chown oxidized:oxidized /var/run/oxidized
+```
+
+3.)Make oxidized start on boot
+
+```
+update-rc.d oxidized deafults
+```
+
 Note the channel name must be in quotes.
 
 # Ruby API
