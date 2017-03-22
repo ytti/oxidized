@@ -14,12 +14,12 @@
 
 set -e
 
-PATH=/sbin:/bin:/usr/sbin:/usr/bin
-DAEMON=/home/sts/oxidized/bin/oxidized
+PATH=/sbin:/bin:/usr/sbin:/usr/bin:/usr/local/bin
+DAEMON=$(which oxidized)
 NAME="oxidized"
 DESC="Oxidized - Network Device Configuration Backup Tool"
 ARGS=""
-USER="sts"
+USER="oxidized"
 
 test -x $DAEMON || exit 0
 
