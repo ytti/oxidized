@@ -2,7 +2,7 @@
 
 if [ -z "$CONFIG_RELOAD_INTERVAL" ]; then
     # Just stop and do nothing
-    read
+    sleep infinity
 fi
 
 while true; do
