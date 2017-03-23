@@ -75,13 +75,14 @@ Oxidized is a network device configuration backup tool. It's a RANCID replacemen
  * Check Point
    * [GaiaOS](lib/oxidized/model/gaiaos.rb)
  * Ciena
-   * [SOAS](lib/oxidized/model/saos.rb)
+   * [SAOS](lib/oxidized/model/saos.rb)
  * Cisco
    * [AireOS](lib/oxidized/model/aireos.rb)
    * [ASA](lib/oxidized/model/asa.rb)
    * [CatOS](lib/oxidized/model/catos.rb)
    * [IOS](lib/oxidized/model/ios.rb)
    * [IOSXR](lib/oxidized/model/iosxr.rb)
+   * [NGA](lib/oxidized/model/cisconga.rb)
    * [NXOS](lib/oxidized/model/nxos.rb)
    * [SMB (Nikola series)](lib/oxidized/model/ciscosmb.rb)
  * Citrix
@@ -895,6 +896,34 @@ hooks:
     events: [post_store]
     token: SLACK_BOT_TOKEN
     channel: "#network-changes"
+```
+
+# Extra
+
+## Ubuntu SystemV init setup
+
+The init script assumes that you have a used named 'oxidized' and that oxidized is in one of the following paths:
+
+```
+/sbin
+/bin
+/usr/sbin
+/usr/bin
+/usr/local/bin
+```
+
+1.)Copy init script from extra/ folder to /etc/init.d/oxidized
+2.)Setup /var/run/
+
+```
+mkdir /var/run/oxidized
+chown oxidized:oxidized /var/run/oxidized
+```
+
+3.)Make oxidized start on boot
+
+```
+update-rc.d oxidized deafults
 ```
 
 Note the channel name must be in quotes.
