@@ -19,6 +19,8 @@ class IOS < Oxidized::Model
   cmd :all do |cfg|
     #cfg.gsub! /\cH+\s{8}/, ''         # example how to handle pager
     #cfg.gsub! /\cH+/, ''              # example how to handle pager
+    # get rid of errors for commands that don't work on some devices
+    cfg.gsub! /^ % Invalid input detected at '\^' marker\./, ''
     cfg.each_line.to_a[1..-2].join
   end
 
@@ -36,7 +38,42 @@ class IOS < Oxidized::Model
   end
 
   cmd 'show version' do |cfg|
-    comment cfg.lines.first
+    comments = []
+    comments << cfg.lines.first
+    lines = cfg.lines
+    lines.each_with_index do |line,i|
+        slave = ''
+        slaveslot = ''
+
+        if line.match /^Slave in slot (\d+) is running/
+            slave = " Slave:";
+            slaveslot = ", slot #{$1}";
+        end
+
+        if line.match /(\S+(?:\sseries)?)\s+(?:\((\S+)\)\s+processor|\(revision[^)]+\)).*\s+with (\S+k) bytes/i
+            sproc = $1
+            cpu = $2
+            mem = $3
+            cpuxtra = ''
+            comments << "Chassis type:#{slave} #{sproc}";
+            comments << "Memory:#{slave} main #{mem}";
+            # check the next two lines for more CPU info
+            if cfg.lines[i+1].match /processor board id (\S+)/i
+		comments << "Processor ID: #{$1}";
+            end
+            if cfg.lines[i+2].match /(cpu at |processor: |#{cpu} processor,)/i
+               # change implementation to impl and prepend comma
+               cpuxtra = cfg.lines[i+2].gsub(/implementation/,'impl').gsub(/^/,', ').chomp;
+            end
+            comments << "CPU:#{slave} #{cpu}#{cpuxtra}#{slaveslot}";
+        end
+
+        if line.match /^System image file is "([^\"]*)"$/
+            comments << "Image: #{$1}"
+        end
+    end
+    comments << "\n"
+    comment comments.join "\n"
   end
 
   cmd 'show inventory' do |cfg|
