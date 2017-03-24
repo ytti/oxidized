@@ -76,6 +76,12 @@ class IOS < Oxidized::Model
     comment comments.join "\n"
   end
 
+  cmd 'show vtp status' do |cfg|
+    cfg.gsub! /^$\n/, ''
+    cfg.gsub! /^/, 'VTP: ' if (!cfg.empty?)
+    comment "#{cfg}\n"
+  end
+
   cmd 'show inventory' do |cfg|
     comment cfg
   end
