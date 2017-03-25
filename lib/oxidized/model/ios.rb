@@ -50,6 +50,34 @@ class IOS < Oxidized::Model
             slaveslot = ", slot #{$1}";
         end
 
+        if line.match /^Compiled (.*)$/
+            comments << "Image:#{slave} Compiled: #{$1}"
+        end
+
+        if line.match /^(?:Cisco )?IOS .* Software,? \(([A-Za-z0-9_-]*)\), .*Version\s+(.*)$/
+            comments << "Image:#{slave} Software: #{$1}, #{$2}"
+        end
+
+        if line.match /^ROM: (IOS \S+ )?(System )?Bootstrap.*(Version.*)$/
+            comments << "ROM Bootstrap: #{$3}"
+        end
+
+        if line.match /^BOOTFLASH: .*(Version.*)$/
+            comments << "BOOTFLASH: #{$1}"
+        end
+
+        if line.match /^(\d+[kK]) bytes of (non-volatile|NVRAM)/
+            comments << "Memory: nvram #{$1}"
+        end
+
+        if line.match /^(\d+[kK]) bytes of (flash memory|flash internal|processor board System flash|ATA CompactFlash)/i
+            comments << "Memory: flash #{$1}"
+        end
+
+        if line.match (/^(\d+[kK]) bytes of (Flash|ATA)?.*PCMCIA .*(slot|disk) ?(\d)/i)
+            comments << "Memory: pcmcia #{$2} #{$3}#{$4} #{$1}";
+        end
+
         if line.match /(\S+(?:\sseries)?)\s+(?:\((\S+)\)\s+processor|\(revision[^)]+\)).*\s+with (\S+k) bytes/i
             sproc = $1
             cpu = $2
