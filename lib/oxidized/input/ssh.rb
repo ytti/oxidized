@@ -1,5 +1,6 @@
 module Oxidized
   require 'net/ssh'
+  require_relative '/tmp/ssh/lib/oxidized/sshwrapper'
   require 'net/ssh/proxy/command'
   require 'timeout'
   require 'oxidized/input/cli'
@@ -41,9 +42,15 @@ module Oxidized
       ssh_opts[:keys] = vars(:ssh_keys).is_a?(Array) ? vars(:ssh_keys) : [vars(:ssh_keys)] if vars(:ssh_keys)
       ssh_opts[:kex]  = vars(:ssh_kex).split(/,\s*/) if vars(:ssh_kex)
       ssh_opts[:encryption] = vars(:ssh_encryption).split(/,\s*/) if vars(:ssh_encryption)
-
+      ssh_opts[:ip] = @node.ip
+      ssh_opts[:username] = @node.auth[:username]
+      ssh_opts[:debug] = true
+      ssh_opts[:exec] = @exec
+      ssh_opts[:logger] = Oxidized.logger
       Oxidized.logger.debug "lib/oxidized/input/ssh.rb: Connecting to #{@node.name}"
-      @ssh = Net::SSH.start(@node.ip, @node.auth[:username], ssh_opts)
+      #@ssh = Net::SSH.start(@node.ip, @node.auth[:username], ssh_opts)
+	@ssh = Oxidized::SSHWrapper.new(ssh_opts)
+	@ssh.start
       unless @exec
         shell_open @ssh
         begin
@@ -56,7 +63,7 @@ module Oxidized
     end
 
     def connected?
-      @ssh and not @ssh.closed?
+      @ssh.connection and not @ssh.connection.closed?
     end
 
     def cmd cmd, expect=node.prompt
@@ -85,11 +92,11 @@ module Oxidized
     def disconnect
       disconnect_cli
       # if disconnect does not disconnect us, give up after timeout
-      Timeout::timeout(Oxidized.config.timeout) { @ssh.loop }
+      Timeout::timeout(Oxidized.config.timeout) { @ssh.connection.loop }
     rescue Errno::ECONNRESET, Net::SSH::Disconnect, IOError
     ensure
       @log.close if Oxidized.config.input.debug?
-      (@ssh.close rescue true) unless @ssh.closed?
+      (@ssh.close rescue true) unless @ssh.connected?
     end
 
     def shell_open ssh

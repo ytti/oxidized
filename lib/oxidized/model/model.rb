@@ -130,7 +130,7 @@ module Oxidized
 
     def get
       Oxidized.logger.debug 'lib/oxidized/model/model.rb Collecting commands\' outputs'
-      outputs = Outputs.new
+     outputs = Outputs.new
       procs = self.class.procs
       self.class.cmds[:cmd].each do |command, block|
         out = cmd command, &block
