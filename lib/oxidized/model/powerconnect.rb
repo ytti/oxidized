@@ -67,6 +67,7 @@ class PowerConnect < Oxidized::Model
       end
       out << line.strip
     end
+    out = out.select { |line| not line[/Up\sTime/] }
     out = comment out.join "\n"
     out << "\n"
   end
