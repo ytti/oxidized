@@ -1,6 +1,6 @@
 module Oxidized
   require 'net/ssh'
-  require_relative '/tmp/ssh/lib/oxidized/sshwrapper'
+  require_relative '/etc/oxidized/oxidized-ssh/lib/oxidized/sshwrapper'
   require 'net/ssh/proxy/command'
   require 'timeout'
   require 'oxidized/input/cli'
@@ -67,10 +67,11 @@ module Oxidized
     end
 
     def cmd cmd, expect=node.prompt
-      Oxidized.logger.debug "lib/oxidized/input/ssh.rb #{cmd} @ #{node.name} with expect: #{expect.inspect}"
       if @exec
-        @ssh.exec! cmd
+        Oxidized.logger.debug "lib/oxidized/input/ssh.rb #{cmd} @ #{node.name}"
+        #@ssh.exec! cmd
       else
+        Oxidized.logger.debug "lib/oxidized/input/ssh.rb #{cmd} @ #{node.name} with expect: #{expect.inspect}"
         cmd_shell(cmd, expect).gsub(/\r\n/, "\n")
       end
     end
