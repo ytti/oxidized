@@ -1,6 +1,6 @@
 module Oxidized
   require 'net/ssh'
-  require_relative '/etc/oxidized/oxidized-ssh/lib/oxidized/sshwrapper'
+  require 'oxidized/sshwrapper'
   require 'net/ssh/proxy/command'
   require 'timeout'
   require 'oxidized/input/cli'
@@ -45,16 +45,18 @@ module Oxidized
       ssh_opts[:ip] = @node.ip
       ssh_opts[:username] = @node.auth[:username]
       ssh_opts[:debug] = true
-      ssh_opts[:exec] = @exec
+      ssh_opts[:exec] = false
       ssh_opts[:logger] = Oxidized.logger
+      ssh_opts[:prompt] = node.prompt
       Oxidized.logger.debug "lib/oxidized/input/ssh.rb: Connecting to #{@node.name}"
       #@ssh = Net::SSH.start(@node.ip, @node.auth[:username], ssh_opts)
+	#Oxidized.logger.debug @exec
 	@ssh = Oxidized::SSHWrapper.new(ssh_opts)
 	@ssh.start
       unless @exec
-        shell_open @ssh
+        shell_open @ssh.connection
         begin
-          login
+        login
         rescue Timeout::Error
           raise PromptUndetect, [ @output, 'not matching configured prompt', @node.prompt ].join(' ')
         end
@@ -69,9 +71,10 @@ module Oxidized
     def cmd cmd, expect=node.prompt
       if @exec
         Oxidized.logger.debug "lib/oxidized/input/ssh.rb #{cmd} @ #{node.name}"
-        #@ssh.exec! cmd
+        @ssh.exec! cmd
       else
         Oxidized.logger.debug "lib/oxidized/input/ssh.rb #{cmd} @ #{node.name} with expect: #{expect.inspect}"
+	#@ssh.exec!(cmd)       
         cmd_shell(cmd, expect).gsub(/\r\n/, "\n")
       end
     end
@@ -107,8 +110,10 @@ module Oxidized
             @log.print data
             @log.fsync
           end
+	  Oxidized.logger.debug(data)
           @output << data
-          @output = @node.model.expects @output
+          #@output = @node.model.expects @output
+          #@output = @node.model.expects @output
         end
         ch.request_pty (@pty_options) do |_ch, success_pty|
           raise NoShell, "Can't get PTY" unless success_pty
@@ -146,6 +151,7 @@ module Oxidized
     end
 
     def expect *regexps
+
       regexps = [regexps].flatten
       Oxidized.logger.debug "lib/oxidized/input/ssh.rb: expecting #{regexps.inspect} at #{node.name}"
       Timeout::timeout(Oxidized.config.timeout) do

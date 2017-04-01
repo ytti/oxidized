@@ -15,14 +15,12 @@ module Oxidized
 
     # sets @cmd and @name unless @name is already set
     def set_cmd command
-	binding.pry
 
       @cmd  = command
       @name ||= @cmd.strip.gsub(/\s+/, '_')
     end
 
     def initialize str=''
-	binding.pry
       super
       if str.class == Oxidized::String
         @cmd  = str.cmd

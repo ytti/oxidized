@@ -82,7 +82,6 @@ module Oxidized
     def cmd string, &block
       Oxidized.logger.debug "lib/oxidized/model/model.rb Executing #{string}"
       out = @input.cmd(string)
-      binding.pry
       return false unless out
       self.class.cmds[:all].each do |all_block|
         out = instance_exec Oxidized::String.new(out), string, &all_block
@@ -134,7 +133,6 @@ module Oxidized
      outputs = Outputs.new
       procs = self.class.procs
       self.class.cmds[:cmd].each do |command, block|
-	binding.pry
         out = cmd command, &block
         return false unless out
         outputs << out
