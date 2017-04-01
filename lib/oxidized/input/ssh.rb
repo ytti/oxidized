@@ -44,23 +44,13 @@ module Oxidized
       ssh_opts[:encryption] = vars(:ssh_encryption).split(/,\s*/) if vars(:ssh_encryption)
       ssh_opts[:ip] = @node.ip
       ssh_opts[:username] = @node.auth[:username]
-      ssh_opts[:debug] = true
-      ssh_opts[:exec] = false
+      ssh_opts[:debug] = false
+      ssh_opts[:exec] = @exec
       ssh_opts[:logger] = Oxidized.logger
       ssh_opts[:prompt] = node.prompt
       Oxidized.logger.debug "lib/oxidized/input/ssh.rb: Connecting to #{@node.name}"
-      #@ssh = Net::SSH.start(@node.ip, @node.auth[:username], ssh_opts)
-	#Oxidized.logger.debug @exec
-	@ssh = Oxidized::SSHWrapper.new(ssh_opts)
-	@ssh.start
-      unless @exec
-        shell_open @ssh.connection
-        begin
-        login
-        rescue Timeout::Error
-          raise PromptUndetect, [ @output, 'not matching configured prompt', @node.prompt ].join(' ')
-        end
-      end
+      @ssh = Oxidized::SSHWrapper.new(ssh_opts)
+      @ssh.start
       connected?
     end
 
@@ -69,14 +59,9 @@ module Oxidized
     end
 
     def cmd cmd, expect=node.prompt
-      if @exec
-        Oxidized.logger.debug "lib/oxidized/input/ssh.rb #{cmd} @ #{node.name}"
+	msg = "lib/oxidized/input/ssh.rb #{cmd} @ #{node.name}"
+        msg << "with expect #{expect.inspect}" if @exec
         @ssh.exec! cmd
-      else
-        Oxidized.logger.debug "lib/oxidized/input/ssh.rb #{cmd} @ #{node.name} with expect: #{expect.inspect}"
-	#@ssh.exec!(cmd)       
-        cmd_shell(cmd, expect).gsub(/\r\n/, "\n")
-      end
     end
 
     def send data
@@ -84,7 +69,7 @@ module Oxidized
     end
 
     def output
-      @output
+      @ssh.output
     end
 
     def pty_options hash
@@ -103,27 +88,6 @@ module Oxidized
       (@ssh.close rescue true) unless @ssh.connected?
     end
 
-    def shell_open ssh
-      @ses = ssh.open_channel do |ch|
-        ch.on_data do |_ch, data|
-          if Oxidized.config.input.debug?
-            @log.print data
-            @log.fsync
-          end
-	  Oxidized.logger.debug(data)
-          @output << data
-          #@output = @node.model.expects @output
-          #@output = @node.model.expects @output
-        end
-        ch.request_pty (@pty_options) do |_ch, success_pty|
-          raise NoShell, "Can't get PTY" unless success_pty
-          ch.send_channel_request 'shell' do |_ch, success_shell|
-            raise NoShell, "Can't get shell" unless success_shell
-          end
-        end
-      end
-    end
-
     # some models have SSH auth or terminal auth based on version of code
     # if SSH is configured for terminal auth, we'll still try to detect prompt
     def login
@@ -140,28 +104,6 @@ module Oxidized
 
     def exec state=nil
       state == nil ? @exec : (@exec=state) unless vars :ssh_no_exec
-    end
-
-    def cmd_shell(cmd, expect_re)
-      @output = ''
-      @ses.send_data cmd + "\n"
-      @ses.process
-      expect expect_re if expect_re
-      @output
-    end
-
-    def expect *regexps
-
-      regexps = [regexps].flatten
-      Oxidized.logger.debug "lib/oxidized/input/ssh.rb: expecting #{regexps.inspect} at #{node.name}"
-      Timeout::timeout(Oxidized.config.timeout) do
-        @ssh.loop(0.1) do
-          sleep 0.1
-          match = regexps.find { |regexp| @output.match regexp }
-          return match if match
-          true
-        end
-      end
     end
 
   end
