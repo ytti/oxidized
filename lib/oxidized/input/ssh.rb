@@ -75,6 +75,7 @@ module Oxidized
 
     def pty_options hash
       @pty_options = @pty_options.merge hash
+      @ssh.pty_options = @pty_options
     end
 
     private
