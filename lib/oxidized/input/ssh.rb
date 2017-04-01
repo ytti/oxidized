@@ -44,12 +44,13 @@ module Oxidized
       ssh_opts[:encryption] = vars(:ssh_encryption).split(/,\s*/) if vars(:ssh_encryption)
       ssh_opts[:ip] = @node.ip
       ssh_opts[:username] = @node.auth[:username]
-      ssh_opts[:debug] = false
       ssh_opts[:exec] = @exec
       ssh_opts[:logger] = Oxidized.logger
       ssh_opts[:prompt] = node.prompt
       Oxidized.logger.debug "lib/oxidized/input/ssh.rb: Connecting to #{@node.name}"
       @ssh = Oxidized::SSHWrapper.new(ssh_opts)
+      @ssh.username_prompt = username
+      @ssh.password_prompt = password
       @ssh.start
       connected?
     end
@@ -86,20 +87,6 @@ module Oxidized
     ensure
       @log.close if Oxidized.config.input.debug?
       (@ssh.close rescue true) unless @ssh.connected?
-    end
-
-    # some models have SSH auth or terminal auth based on version of code
-    # if SSH is configured for terminal auth, we'll still try to detect prompt
-    def login
-      if @username
-        match = expect username, @node.prompt
-        if match == username
-          cmd @node.auth[:username], password
-          cmd @node.auth[:password]
-        end
-      else
-        expect @node.prompt
-      end
     end
 
     def exec state=nil
