@@ -126,6 +126,7 @@ Oxidized is a network device configuration backup tool. It's a RANCID replacemen
    * [ScreenOS (Netscreen)](lib/oxidized/model/screenos.rb)
  * Mellanox
    * [MLNX-OS](lib/oxidized/model/mlnxos.rb)
+   * [Voltaire](lib/oxidized/model/voltaire.rb)
  * Mikrotik
    * [RouterOS](lib/oxidized/model/routeros.rb)
  * Motorola
