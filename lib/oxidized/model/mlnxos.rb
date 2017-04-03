@@ -42,6 +42,6 @@ class MLNXOS < Oxidized::Model
 
   cfg :ssh do
     password /^Password:\s*/
-    pre_logout 'exit'
+    pre_logout "\nexit"
   end
 end
