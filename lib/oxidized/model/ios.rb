@@ -26,14 +26,15 @@ class IOS < Oxidized::Model
 
   cmd :secret do |cfg|
     cfg.gsub! /^(snmp-server community).*/, '\\1 <configuration removed>'
-    cfg.gsub! /username (\S+) privilege (\d+) (\S+).*/, '<secret hidden>'
-    cfg.gsub! /^username \S+ password \d \S+/, '<secret hidden>'
-    cfg.gsub! /^username \S+ secret \d \S+/, '<secret hidden>'
-    cfg.gsub! /^enable (password|secret) \d \S+/, '<secret hidden>'
+    cfg.gsub! /^(username \S+ privilege \d+) (\S+).*/, '\\1 <secret hidden>'
+    cfg.gsub! /^(username \S+ password \d) (\S+)/, '\\1 <secret hidden>'
+    cfg.gsub! /^(username \S+ secret \d) (\S+)/, '\\1 <secret hidden>'
+    cfg.gsub! /^(enable (password|secret) \d) (\S+)/, '\\1 <secret hidden>'
     cfg.gsub! /^(\s+(?:password|secret)) (?:\d )?\S+/, '\\1 <secret hidden>'
-    cfg.gsub! /wpa-psk ascii \d \S+/, '<secret hidden>'
-    cfg.gsub! /key 7 \d.+/, '<secret hidden>'
-    cfg.gsub! /^tacacs-server key \d \S+/, '<secret hidden>'
+    cfg.gsub! /^(.*wpa-psk ascii \d) (\S+)/, '\\1 <secret hidden>'
+    cfg.gsub! /^(.*key 7) (\d.+)/, '\\1 <secret hidden>'
+    cfg.gsub! /^(tacacs-server key \d) (\S+)/, '\\1 <secret hidden>'
+    cfg.gsub! /^(crypto isakmp key) (\S+) (.*)/, '\\1 <secret hidden> \\3'
     cfg
   end
 
