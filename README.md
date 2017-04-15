@@ -32,6 +32,7 @@ Oxidized is a network device configuration backup tool. It's a RANCID replacemen
       * [Source: Mysql](#source-mysql)
     * [Source: HTTP](#source-http)
     * [Output: GIT](#output-git)
+    * [Output: GIT-Crypt](#output-git-crypt)
     * [Output: HTTP](#output-http)
     * [Output: File](#output-file)
     * [Output types](#output-types)
@@ -236,7 +237,7 @@ Oxidized supports ```CSV```, ```SQLite``` and ```HTTP``` as source backends. The
 
 ## Outputs
 
-Possible outputs are either ```file``` or ```git```. The file backend takes a destination directory as argument and will keep a file per device, with most recent running version of a device. The GIT backend (recommended) will initialize an empty GIT repository in the specified path and create a new commit on every configuration change. Take a look at the [Cookbook](#cookbook) for more details.
+Possible outputs are either ```file```, ```git``` or ```git-crypt```. The file backend takes a destination directory as argument and will keep a file per device, with most recent running version of a device. The GIT backend (recommended) will initialize an empty GIT repository in the specified path and create a new commit on every configuration change. The GIT-Crypt backend will also initialize a GIT repository but every configuration push to it will be encrypted on the fly by using ```git-crypt``` tool. Take a look at the [Cookbook](#cookbook) for more details.
 
 Maps define how to map a model's fields to model [model fields](https://github.com/ytti/oxidized/tree/master/lib/oxidized/model). Most of the settings should be self explanatory, log is ignored if `use_syslog`(requires Ruby >= 2.0) is set to `true`.
 
@@ -603,6 +604,72 @@ output:
     repo: "/var/lib/oxidized/devices.git"
 
 ```
+
+### Output: Git-Crypt
+
+This uses the gem git and system git-crypt interfaces. Have a look at [GIT-Crypt](https://www.agwa.name/projects/git-crypt/) documentation to know how to install it.
+Additionally to user and email informations, you have to provide the users ID that can be a key ID, a full fingerprint, an email address, or anything else that uniquely identifies a public key to GPG (see "HOW TO SPECIFY A USER ID" in the gpg man page).
+
+
+For a single repositories for all devices:
+
+``` yaml
+output:
+  default: gitcrypt
+  gitcrypt:
+    user: Oxidized
+    email: o@example.com
+    repo: "/var/lib/oxidized/devices"
+    users:
+      - "0x0123456789ABCDEF"
+      - "<user@example.com>"
+```
+
+And for groups repositories:
+
+``` yaml
+output:
+  default: gitcrypt
+  gitcrypt:
+    user: Oxidized
+    email: o@example.com
+    repo: "/var/lib/oxidized/git-repos/default"
+    users:
+      - "0xABCDEF0123456789"
+      - "0x0123456789ABCDEF"
+```
+
+Oxidized will create a repository for each group in the same directory as the `default`. For
+example:
+
+``` csv
+host1:ios:first
+host2:nxos:second
+```
+
+This will generate the following repositories:
+
+``` bash
+$ ls /var/lib/oxidized/git-repos
+
+default.git first.git second.git
+```
+
+If you would like to use groups and a single repository, you can force this with the `single_repo` config.
+
+``` yaml
+output:
+  default: gitcrypt
+  gitcrypt:
+    single_repo: true
+    repo: "/var/lib/oxidized/devices"
+    users:
+      - "0xABCDEF0123456789"
+      - "0x0123456789ABCDEF"
+
+```
+
+Please note that user list is only updated once at creation.
 
 ### Output: Http
 
