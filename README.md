@@ -198,6 +198,7 @@ gem install oxidized-script oxidized-web
 
 ## FreeBSD
 Use RVM to install Ruby v2.1.2
+
 Install all required packages and gems.
 
 ```shell
