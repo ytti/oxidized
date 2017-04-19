@@ -19,6 +19,7 @@ Oxidized is a network device configuration backup tool. It's a RANCID replacemen
 2. [Installation](#installation)
     * [Debian](#debian)
     * [CentOS, Oracle Linux, Red Hat Linux](#centos-oracle-linux-red-hat-linux)
+    * [BSD](#freebsd)
 3. [Initial Configuration](#configuration)
 4. [Installing Ruby 2.1.2 using RVM](#installing-ruby-2.1.2-using-rvm)
 5. [Running with Docker](#running-with-docker)
@@ -194,6 +195,19 @@ Now let's install oxidized via Rubygems:
 gem install oxidized
 gem install oxidized-script oxidized-web
 ```
+
+## FreeBSD
+Use RVM to install Ruby v2.1.2
+
+Install all required packages and gems.
+
+```shell
+pkg install cmake pkgconf
+gem install oxidized
+gem install oxidized-script oxidized-web
+```
+
+
 
 ## Build from Git
 ```shell
