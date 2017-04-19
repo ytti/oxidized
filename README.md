@@ -204,7 +204,7 @@ Install all required packages and gems.
 ```shell
 pkg install cmake pkgconf
 gem install oxidized
-gem install oxidized script oxidized-web
+gem install oxidized-script oxidized-web
 ```
 
 
