@@ -2,8 +2,6 @@ class Siklu < Oxidized::Model
 
   # Siklu EtherHaul #
 
-  comment '# '
-
   prompt /^[\w-]+>$/
 
   cmd 'copy startup-configuration display' do |cfg|
