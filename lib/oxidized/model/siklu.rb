@@ -6,10 +6,12 @@ class Siklu < Oxidized::Model
 
   prompt /^[\w-]+>$/
 
-  cmd 'copy running-configuration display'
+  cmd 'copy startup-configuration display' do |cfg|
+    cfg.each_line.to_a[2..2].join
+  end
 
-  cmd :all do |cfg|
-    cfg.each_line.to_a[1..-2].join
+  cmd 'copy running-configuration display' do |cfg|
+    cfg.each_line.to_a[3..-2].join
   end
 
   cfg :ssh do
