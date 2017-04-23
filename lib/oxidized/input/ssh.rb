@@ -1,4 +1,5 @@
 module Oxidized
+	require 'pry'
   require 'net/ssh'
   require 'oxidized/sshwrapper'
   require 'net/ssh/proxy/command'
@@ -25,6 +26,7 @@ module Oxidized
       secure = Oxidized.config.input.ssh.secure
       @log = File.open(Oxidized::Config::Log + "/#{@node.ip}-ssh", 'w') if Oxidized.config.input.debug?
       port = vars(:ssh_port) || 22
+	binding.pry
       if proxy_host = vars(:ssh_proxy)
         proxy_command =  "ssh "
         proxy_command += "-o StrictHostKeyChecking=no " unless secure
@@ -61,7 +63,7 @@ module Oxidized
 
     def cmd cmd, expect=node.prompt
 	msg = "lib/oxidized/input/ssh.rb #{cmd} @ #{node.name}"
-        msg << "with expect #{expect.inspect}" if @exec
+        msg << "with expect #{expect.inspect}" unless @exec
         @ssh.exec! cmd
     end
 
