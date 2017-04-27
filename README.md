@@ -136,6 +136,8 @@ Oxidized is a network device configuration backup tool. It's a RANCID replacemen
  * MRV
    * [MasterOS](lib/oxidized/model/masteros.rb)
    * [FiberDriver](lib/oxidized/model/fiberdriver.rb)
+ * Netgear
+   * [Netgear](lib/oxidized/model/netgear.rb)
  * Netonix
    * [WISP Switch (As Netonix)](lib/oxidized/model/netonix.rb)
  * Nokia (formerly TiMetra, Alcatel, Alcatel-Lucent)
