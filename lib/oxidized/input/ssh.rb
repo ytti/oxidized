@@ -1,5 +1,4 @@
 module Oxidized
-	require 'pry'
   require 'net/ssh'
   require 'oxidized/sshwrapper'
   require 'net/ssh/proxy/command'
@@ -20,34 +19,35 @@ module Oxidized
 
     def connect node
       @node        = node
-      @output      = ''
-      @pty_options = { term: "vt100" }
       @node.model.cfg['ssh'].each { |cb| instance_exec(&cb) }
-      secure = Oxidized.config.input.ssh.secure
       @log = File.open(Oxidized::Config::Log + "/#{@node.ip}-ssh", 'w') if Oxidized.config.input.debug?
-      port = vars(:ssh_port) || 22
-      ssh_opts = {
-        :port => port.to_i,
-        :password => @node.auth[:password], :timeout => Oxidized.config.timeout,
-        :paranoid => secure,
-        :auth_methods => %w(none publickey password keyboard-interactive),
+
+      wrapper_opts = {
+        :port 			=> vars(:ssh_port).to_i || 22,
+        :password 		=> @node.auth[:password], :timeout => Oxidized.config.timeout,
+        :paranoid	 	=> Oxidized.config.input.ssh.secure,
+        :auth_methods   	=> %w(none publickey password keyboard-interactive),
         :number_of_password_prompts => 0,
-        :proxy => vars(:ssh_proxy)
+        :proxy 			=> vars(:ssh_proxy),
+        :logger 		=> Oxidized.logger,
+	:prompt 		=> node.prompt,
+	:exec 			=> @exec,
+	:ip 			=> @node.ip,
+        :username		=> @node.auth[:username],
+	:username_prompt	=> username,
+	:password_prompt	=> password 
+	:pty_options		=> {term: "vt100" }
       }
-      ssh_opts[:keys] = vars(:ssh_keys).is_a?(Array) ? vars(:ssh_keys) : [vars(:ssh_keys)] if vars(:ssh_keys)
-      ssh_opts[:kex]  = vars(:ssh_kex).split(/,\s*/) if vars(:ssh_kex)
-      ssh_opts[:encryption] = vars(:ssh_encryption).split(/,\s*/) if vars(:ssh_encryption)
-      ssh_opts[:ip] = @node.ip
-      ssh_opts[:username] = @node.auth[:username]
-      ssh_opts[:exec] = @exec
-      ssh_opts[:logger] = Oxidized.logger
-      ssh_opts[:prompt] = node.prompt
+
+      wrapper_opts[:keys] = vars(:ssh_keys).is_a?(Array) ? vars(:ssh_keys) : [vars(:ssh_keys)] if vars(:ssh_keys)
+      wrapper_opts[:kex]  = vars(:ssh_kex).split(/,\s*/) if vars(:ssh_kex)
+      wrapper_opts[:encryption] = vars(:ssh_encryption).split(/,\s*/) if vars(:ssh_encryption)
+
       Oxidized.logger.debug "lib/oxidized/input/ssh.rb: Connecting to #{@node.name}"
-      Oxidized.logger.debug ssh_opts
-      @ssh = Oxidized::SSHWrapper.new(ssh_opts)
-      @ssh.username_prompt = username
-      @ssh.password_prompt = password
+
+      @ssh = Oxidized::SSHWrapper.new(wrapper_opts)
       @ssh.start
+
       connected?
     end
 
