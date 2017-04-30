@@ -26,7 +26,6 @@ module Oxidized
       secure = Oxidized.config.input.ssh.secure
       @log = File.open(Oxidized::Config::Log + "/#{@node.ip}-ssh", 'w') if Oxidized.config.input.debug?
       port = vars(:ssh_port) || 22
-	binding.pry
       if proxy_host = vars(:ssh_proxy)
         proxy_command =  "ssh "
         proxy_command += "-o StrictHostKeyChecking=no " unless secure
@@ -50,6 +49,7 @@ module Oxidized
       ssh_opts[:logger] = Oxidized.logger
       ssh_opts[:prompt] = node.prompt
       Oxidized.logger.debug "lib/oxidized/input/ssh.rb: Connecting to #{@node.name}"
+      Oxidized.logger.debug ssh_opts
       @ssh = Oxidized::SSHWrapper.new(ssh_opts)
       @ssh.username_prompt = username
       @ssh.password_prompt = password

@@ -40,7 +40,6 @@ class CSV < Source
 
       # map node specific vars
       vars = {}
-binding.pry
       @cfg.vars_map.each do |key, position|
         vars[key.to_sym] = node_var_interpolate data[position]
       end
