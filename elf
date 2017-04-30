@@ -1,0 +1,60 @@
+=> [32m#<Oxidized::Telnet:0x007effd6dbfd80[0m
+ @exec[32m=[0m[1;36mnil[0m,
+ @node[32m=[0m
+  [32m#<Oxidized::Node:0x007effd6d92f88[0m
+   @auth[32m=[0m{[33m:username[0m=>[31m[1;31m"[0m[31mruby_Service[1;31m"[0m[31m[0m, [33m:password[0m=>[31m[1;31m"[0m[31mwant-manama-ve-no-yank-hiram[1;31m"[0m[31m[0m},
+   @group[32m=[0m[31m[1;31m"[0m[31mmikrotik-read[1;31m"[0m[31m[0m,
+   @input[32m=[0m[[1;34;4mOxidized[0m::[1;34;4mSSH[0m, [1;34;4mOxidized[0m::[1;34;4mTelnet[0m, [1;34;4mOxidized[0m::[1;34;4mTFTP[0m],
+   @ip[32m=[0m[31m[1;31m"[0m[31m10.0.7.50[1;31m"[0m[31m[0m,
+   @model[32m=[0m
+    [32m#<RouterOS:0x007effd6970ba8[0m
+     @input[32m=[0m[32m#<Oxidized::Telnet:0x007effd6dbfd80[0m ...[32m>[0m,
+     @node[32m=[0m[32m#<Oxidized::Node:0x007effd6d92f88[0m ...[32m>[0m[32m>[0m,
+   @name[32m=[0m[31m[1;31m"[0m[31mtest[1;31m"[0m[31m[0m,
+   @output[32m=[0m[1;34;4mOxidized[0m::[1;34;4mOxidizedFile[0m,
+   @prompt[32m=[0m[35m[1;35m/[0m[35m[1;35m\[[0m[35m[1;35m\w[0m[35m+@[1;35m\S[0m[35m+([1;35m\s[0m[35m?[1;35m\S[0m[35m+)*[1;35m\][0m[35m[1;35m\s[0m[35m?>[1;35m\s[0m[35m?$[1;35m/[0m[35m[0m,
+   @repo[32m=[0m[1;36mnil[0m,
+   @retry[32m=[0m[1;34m0[0m,
+   @running[32m=[0m[1;36mtrue[0m,
+   @stats[32m=[0m[32m#<Oxidized::Node::Stats:0x007effd6981368[0m @stats[32m=[0m{}[32m>[0m,
+   @vars[32m=[0m{[33m:enable[0m=>[1;36mnil[0m}[32m>[0m,
+ @password[32m=[0m[35m[1;35m/[0m[35m^Password:[1;35m/[0m[35m[0m,
+ @post_login[32m=[0m[],
+ @pre_logout[32m=[0m[],
+ @telnet[32m=[0m
+  [32m#<Net::Telnet:0x007effd74cbca0[0m
+   @log[32m=[0m[32m#<File:/home/sutley/.config/oxidized/logs/10.0.7.50-telnet>[0m,
+   @options[32m=[0m
+    {[31m[1;31m"[0m[31mHost[1;31m"[0m[31m[0m=>[31m[1;31m"[0m[31m10.0.7.50[1;31m"[0m[31m[0m,
+     [31m[1;31m"[0m[31mPort[1;31m"[0m[31m[0m=>[1;34m23[0m,
+     [31m[1;31m"[0m[31mTimeout[1;31m"[0m[31m[0m=>[1;34m20[0m,
+     [31m[1;31m"[0m[31mModel[1;31m"[0m[31m[0m=>
+      [32m#<RouterOS:0x007effd6970ba8[0m
+       @input[32m=[0m[32m#<Oxidized::Telnet:0x007effd6dbfd80[0m ...[32m>[0m,
+       @node[32m=[0m
+        [32m#<Oxidized::Node:0x007effd6d92f88[0m
+         @auth[32m=[0m
+          {[33m:username[0m=>[31m[1;31m"[0m[31mruby_Service[1;31m"[0m[31m[0m, [33m:password[0m=>[31m[1;31m"[0m[31mwant-manama-ve-no-yank-hiram[1;31m"[0m[31m[0m},
+         @group[32m=[0m[31m[1;31m"[0m[31mmikrotik-read[1;31m"[0m[31m[0m,
+         @input[32m=[0m[[1;34;4mOxidized[0m::[1;34;4mSSH[0m, [1;34;4mOxidized[0m::[1;34;4mTelnet[0m, [1;34;4mOxidized[0m::[1;34;4mTFTP[0m],
+         @ip[32m=[0m[31m[1;31m"[0m[31m10.0.7.50[1;31m"[0m[31m[0m,
+         @model[32m=[0m[32m#<RouterOS:0x007effd6970ba8[0m ...[32m>[0m,
+         @name[32m=[0m[31m[1;31m"[0m[31mtest[1;31m"[0m[31m[0m,
+         @output[32m=[0m[1;34;4mOxidized[0m::[1;34;4mOxidizedFile[0m,
+         @prompt[32m=[0m[35m[1;35m/[0m[35m[1;35m\[[0m[35m[1;35m\w[0m[35m+@[1;35m\S[0m[35m+([1;35m\s[0m[35m?[1;35m\S[0m[35m+)*[1;35m\][0m[35m[1;35m\s[0m[35m?>[1;35m\s[0m[35m?$[1;35m/[0m[35m[0m,
+         @repo[32m=[0m[1;36mnil[0m,
+         @retry[32m=[0m[1;34m0[0m,
+         @running[32m=[0m[1;36mtrue[0m,
+         @stats[32m=[0m[32m#<Oxidized::Node::Stats:0x007effd6981368[0m @stats[32m=[0m{}[32m>[0m,
+         @vars[32m=[0m{[33m:enable[0m=>[1;36mnil[0m}[32m>[0m[32m>[0m,
+     [31m[1;31m"[0m[31mOutput_log[1;31m"[0m[31m[0m=>[31m[1;31m"[0m[31m/home/sutley/.config/oxidized/logs/10.0.7.50-telnet[1;31m"[0m[31m[0m,
+     [31m[1;31m"[0m[31mPrompt[1;31m"[0m[31m[0m=>[35m[1;35m/[0m[35m[$%#>] [1;35m\z[0m[35m[1;35m/[0m[35m[35mn[0m[35m[0m,
+     [31m[1;31m"[0m[31mWaittime[1;31m"[0m[31m[0m=>[1;34m0[0m,
+     [31m[1;31m"[0m[31mBinmode[1;31m"[0m[31m[0m=>[1;36mfalse[0m,
+     [31m[1;31m"[0m[31mTelnetmode[1;31m"[0m[31m[0m=>[1;36mtrue[0m},
+   @output[32m=[0m
+    [31m[1;31m"[0m[31m[1;35m\r[0m[31m[1;35m\x00[0m[31m       routerboard: yes[1;35m\r[0m[31m[1;35m\n[0m[31m             model: 2011UAS[1;35m\r[0m[31m[1;35m\n[0m[31m     serial-number: 436C021658F2[1;35m\r[0m[31m[1;35m\n[0m[31m  current-firmware: 3.18[1;35m\r[0m[31m[1;35m\n[0m[31m  upgrade-firmware: 3.18[1;35m\r[0m[31m[1;35m\x00[0m[31m[1;35m\r[0m[31m[1;35m\n[0m[31m[1;35m\r[0m[31m[1;35m\x00[0m[31m[1;35m\r[0m[31m[1;35m\x00[0m[31m[1;35m\r[0m[31m[1;35m\x00[0m[31m[1;35m\r[0m[31m[1;35m\x00[0m[31m[ruby_Service@MT-DHCP] >                                                       [1;35m\r[0m[31m[1;35m\x00[0m[31m[ruby_Service@MT-DHCP] > [1;31m"[0m[31m[0m,
+   @sock[32m=[0m[32m#<TCPSocket:fd 15>[0m,
+   @telnet_option[32m=[0m{[31m[1;31m"[0m[31mSGA[1;31m"[0m[31m[0m=>[1;36mtrue[0m, [31m[1;31m"[0m[31mBINARY[1;31m"[0m[31m[0m=>[1;36mfalse[0m}[32m>[0m,
+ @timeout[32m=[0m[1;34m20[0m,
+ @username[32m=[0m[35m[1;35m/[0m[35m^Login:[1;35m/[0m[35m[0m[32m>[0m
