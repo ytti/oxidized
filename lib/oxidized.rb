@@ -1,5 +1,4 @@
 require 'fileutils'
-require 'pry'
 
 module Oxidized
   class OxidizedError < StandardError; end
