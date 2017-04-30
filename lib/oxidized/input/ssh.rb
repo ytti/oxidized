@@ -23,7 +23,7 @@ module Oxidized
       @log = File.open(Oxidized::Config::Log + "/#{@node.ip}-ssh", 'w') if Oxidized.config.input.debug?
 
       wrapper_opts = {
-        :port 			=> vars(:ssh_port).to_i || 22,
+        :port 			=> vars(:ssh_port) || 22,
         :password 		=> @node.auth[:password], :timeout => Oxidized.config.timeout,
         :paranoid	 	=> Oxidized.config.input.ssh.secure,
         :auth_methods   	=> %w(none publickey password keyboard-interactive),
@@ -35,7 +35,7 @@ module Oxidized
 	:ip 			=> @node.ip,
         :username		=> @node.auth[:username],
 	:username_prompt	=> username,
-	:password_prompt	=> password 
+	:password_prompt	=> password,
 	:pty_options		=> {term: "vt100" }
       }
 
