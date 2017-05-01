@@ -109,10 +109,10 @@ module Oxidized
     def last= job
       if job
         ostruct = OpenStruct.new
-        ostruct.start  = job.start
-        ostruct.end    = job.end
-        ostruct.status = job.status
-        ostruct.time   = job.time
+        ostruct.start  = job.start.dup
+        ostruct.end    = job.end.dup
+        ostruct.status = job.status.dup
+        ostruct.time   = job.time.dup
         @last = ostruct
       else
         @last = nil
