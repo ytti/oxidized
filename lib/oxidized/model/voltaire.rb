@@ -1,6 +1,6 @@
-class MLNXOS < Oxidized::Model
+class VOLTAIRE < Oxidized::Model
 
-  prompt /([\w.@()-\[:\s\]]+[#>]\s)$/
+  prompt /([\w.@()-\[:\s\]]+[#>]\s|(One or more tests have failed.*))$/
   comment  '## '
   
   # Pager Handling
@@ -8,6 +8,7 @@ class MLNXOS < Oxidized::Model
     send ' '
     data.sub re, ''
   end
+
 
   cmd :all do |cfg|
     cfg.gsub! /\[\?1h=\r/, '' # Pager Handling
@@ -26,22 +27,30 @@ class MLNXOS < Oxidized::Model
     cfg
   end
 
-  cmd 'show version' do |cfg|
+
+  cmd 'version show' do |cfg|
     comment cfg
   end
 
-  cmd 'show inventory' do |cfg|
+  cmd 'firmware-version show' do |cfg|
     comment cfg
   end
 
-  cmd 'enable'
+  cmd 'remote show' do |cfg|
+    cfg
+  end
 
-  cmd 'show running-config' do |cfg|
+  cmd 'sm-info show' do |cfg|
+    cfg
+  end
+
+  cmd ' show' do |cfg|
     cfg
   end
 
   cfg :ssh do
+    post_login "no\n"
     password /^Password:\s*/
-    pre_logout "\nexit"
+    pre_logout 'exit'
   end
 end

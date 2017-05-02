@@ -33,6 +33,7 @@ PLATFORMS
 
 DEPENDENCIES
   bundler (~> 1.10)
+  git (~> 1)
   minitest (~> 5.8)
   mocha (~> 1.1)
   oxidized!

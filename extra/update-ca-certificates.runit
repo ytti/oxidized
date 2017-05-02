@@ -1,0 +1,7 @@
+#!/bin/bash
+
+if [ "$UPDATE_CA_CERTIFICATES" == "true" ]; then
+    update-ca-certificates
+fi
+
+sleep infinity
