@@ -839,6 +839,17 @@ map:
   name: 1
   group: 2
 ```
+For model specific credentials
+
+```
+models:
+  mikrotik:
+    username: admin
+    password: blank
+  ubiquiti:
+    username: ubnt
+    password: ubnt
+```
 
 ### Triggered backups
 
