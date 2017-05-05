@@ -843,12 +843,17 @@ For model specific credentials
 
 ```
 models:
-  mikrotik:
+  junos:
     username: admin
-    password: blank
-  ubiquiti:
-    username: ubnt
-    password: ubnt
+    password: password
+  ironware:
+    username: admin
+    password: password
+    vars: 
+      enable: enablepassword
+  apc_aos:
+    username: apc
+    password: password
 ```
 
 ### Triggered backups
