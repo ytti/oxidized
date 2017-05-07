@@ -839,6 +839,22 @@ map:
   name: 1
   group: 2
 ```
+For model specific credentials
+
+```
+models:
+  junos:
+    username: admin
+    password: password
+  ironware:
+    username: admin
+    password: password
+    vars: 
+      enable: enablepassword
+  apc_aos:
+    username: apc
+    password: password
+```
 
 ### Triggered backups
 
