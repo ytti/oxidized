@@ -22,6 +22,10 @@ class RouterOS < Oxidized::Model
     password /^Password:/
   end
 
+  cfg :telnet, :ssh do
+    pre_logout 'quit'
+  end
+
   cfg :ssh do
     exec true
   end
