@@ -58,6 +58,7 @@ module Oxidized
     def cmd cmd, expect=node.prompt
 	msg = "lib/oxidized/input/ssh.rb #{cmd} @ #{node.name}"
         msg << "with expect #{expect.inspect}" unless @exec
+	Oxidized.logger.debug msg
         @ssh.exec! cmd
     end
 
@@ -78,12 +79,7 @@ module Oxidized
 
     def disconnect
       disconnect_cli
-      # if disconnect does not disconnect us, give up after timeout
-      Timeout::timeout(Oxidized.config.timeout) { @ssh.connection.loop }
     rescue Errno::ECONNRESET, Net::SSH::Disconnect, IOError
-    ensure
-      @log.close if Oxidized.config.input.debug?
-      (@ssh.close rescue true) unless @ssh.connected?
     end
 
     def exec state=nil
