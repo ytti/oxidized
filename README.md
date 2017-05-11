@@ -889,6 +889,7 @@ Command is executed with the following environment:
 ```
 OX_EVENT
 OX_NODE_NAME
+OX_NODE_IP
 OX_NODE_FROM
 OX_NODE_MSG
 OX_NODE_GROUP
