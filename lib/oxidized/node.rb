@@ -216,6 +216,14 @@ module Oxidized
         end
       end
 
+      #model
+      if Oxidized.config.models.has_key?(@model.class.name.to_s.downcase)
+        if Oxidized.config.models[@model.class.name.to_s.downcase].has_key?(key_str)
+          value = Oxidized.config.models[@model.class.name.to_s.downcase][key_str]
+          Oxidized.logger.debug "node.rb: setting node key '#{key}' to value '#{value}' from model"
+        end
+      end
+
       #node
       value = opt[key_sym] || value
       Oxidized.logger.debug "node.rb: returning node key '#{key}' with value '#{value}'"
