@@ -64,7 +64,7 @@ module Oxidized
     end
 
     def send data
-      @ses.send_data data
+      @ssh.send data
     end
 
     def output
