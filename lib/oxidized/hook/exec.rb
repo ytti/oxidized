@@ -67,6 +67,7 @@ class Exec < Oxidized::Hook
     if ctx.node
       env.merge!(
         "OX_NODE_NAME" => ctx.node.name.to_s,
+        "OX_NODE_IP" => ctx.node.ip.to_s,
         "OX_NODE_FROM" => ctx.node.from.to_s,
         "OX_NODE_MSG" => ctx.node.msg.to_s,
         "OX_NODE_GROUP" => ctx.node.group.to_s,
