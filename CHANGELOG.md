@@ -1,3 +1,20 @@
+# 0.20.0
+- FEATURE: gpg support for CSV source (@elmobp)
+- FEATURE: slackdiff (@natm)
+- FEATURE: gitcrypt output model (@clement-parisot)
+- FEATURE: model specific credentials (@davromaniak)
+- FEATURE: hierarchical json in http source model
+- FEATURE: next-adds-job config toggle (to add new job when ever /next is called)
+- FEATURE: netgear model (@aschaber1)
+- FEATURE: zhone model (@rfdrake)
+- FEATURE: tplink model (@mediumo)
+- FEATURE: oneos model (@crami)
+- FEATURE: cisco NGA model (@udhos)
+- FEATURE: voltaire model (@clement-parisot)
+- FEATURE: siklu model (@bdg-robert)
+- FEATURE: voss model (@ospfbgp)
+- BUGFIX: ios, cumulus, ironware, nxos, fiberdiver, aosw, fortios, comware, procurve, opengear, timos, routeros, junos, asa, aireos, mlnxos, pfsense, saos, powerconnect, firewareos, quantaos
+
 # 0.19.0
 - FEATURE: allow setting ssh_keys (not relying on openssh config) (@denvera)
 - FEATURE: fujitsupy model (@stokbaek)
