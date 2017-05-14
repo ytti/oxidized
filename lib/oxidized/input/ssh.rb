@@ -36,7 +36,8 @@ module Oxidized
         :username		=> @node.auth[:username],
 	:username_prompt	=> username,
 	:password_prompt	=> password,
-	:pty_options		=> {term: "vt100" }
+	:pty_options		=> {term: "vt100" },
+	:expectation_handler    => [@node.model, :expects]
       }
 
       wrapper_opts[:keys] = vars(:ssh_keys).is_a?(Array) ? vars(:ssh_keys) : [vars(:ssh_keys)] if vars(:ssh_keys)
