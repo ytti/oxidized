@@ -39,6 +39,7 @@ class Boss < Oxidized::Model
     cfg.gsub! /(^((.*)sysUpTime(.*))$)/, 'removed sysUpTime'
     cfg.gsub! /(^((.*)sysNtpTime(.*))$)/, 'removed sysNtpTime'
     cfg.gsub! /(^((.*)sysRtcTime(.*))$)/, 'removed sysNtpTime'
+    # remove timestamp
     cfg.gsub! /\d{4}-\d{2}-\d{2} \d{2}:\d{2}:\d{2} .*/, ''
     comment "#{cfg}\n"
   end
@@ -46,6 +47,7 @@ class Boss < Oxidized::Model
   # if a stack then collect the stacking information
   cmd 'show stack-info' do |cfg|
     if @stack
+      # remove timestamp
       cfg.gsub! /\d{4}-\d{2}-\d{2} \d{2}:\d{2}:\d{2} .*/, ''
       comment "#{cfg}\n"
     end
@@ -53,7 +55,7 @@ class Boss < Oxidized::Model
 
   cmd 'show running-config' do |cfg|
     cfg.gsub! /^show running-config/, '! show running-config'
-    # remove cli timestamp
+    # remove timestamp
     cfg.gsub! /\d{4}-\d{2}-\d{2} \d{2}:\d{2}:\d{2} .*/, ''
     cfg.gsub! /^[^\s#>]+[#>]$/, ''
     cfg.gsub! /^! clock set.*/, '! removed clock set'
@@ -66,15 +68,9 @@ class Boss < Oxidized::Model
   end
 
   cfg :telnet, :ssh do
-    pre_logout do
-      # Backup the running-config via tftp to a tftpserver of your choice
-      #send "copy running-config tftp address x.x.x.x filename " + node.name + ".cli\n"
-      send "logout\n"
-    end
-    post_login do
-      send "terminal length 0\n"
-      send "terminal width 132\n"
-    end
+    pre_logout 'logout'
+    post_login 'terminal length 0'
+    post_login 'terminal width 132'
   end
 
 end
