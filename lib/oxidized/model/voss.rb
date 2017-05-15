@@ -27,14 +27,10 @@ class Voss < Oxidized::Model
     password /Password: $/
   end
 
-cfg :telnet, :ssh do
+  cfg :telnet, :ssh do
     pre_logout 'exit'
-    post_login do
-      send "enable\n"
-      send "terminal more disable\n"
-      # Backup the config via tftp to a tftpserver of your choice
-      #send "copy config.cfg x.x.x.x:" + node.name + ".cfg\n"
-    end
+    post_login 'enable'
+    post_login 'terminal more disable'
   end
 
 end
