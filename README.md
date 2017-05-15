@@ -67,7 +67,8 @@ Oxidized is a network device configuration backup tool. It's a RANCID replacemen
  * Aruba
    * [AOSW](lib/oxidized/model/aosw.rb)
  * Avaya
-   * [VOSS](lib/oxidized/model/voss.rb)
+   * [VOSS (VSP Operating System Software)](lib/oxidized/model/voss.rb)
+   * [BOSS (Baystack Operating System Software)](lib/oxidized/model/boss.rb)
  * Brocade
    * [FabricOS](lib/oxidized/model/fabricos.rb)
    * [Ironware](lib/oxidized/model/ironware.rb)
