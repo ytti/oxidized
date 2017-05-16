@@ -120,6 +120,8 @@ Oxidized is a network device configuration backup tool. It's a RANCID replacemen
    * [PRIMERGY Blade switch 1/10Gbe](lib/oxidized/model/fujitsupy.rb)
  * Hatteras
    * [Hatteras](lib/oxidized/model/hatteras.rb)
+ * Hirschmann
+   * [HiOS](lib/oxidized/model/hirschmann.rb)
  * HP
    * [Comware (HP A-series, H3C, 3Com)](lib/oxidized/model/comware.rb)
    * [Procurve](lib/oxidized/model/procurve.rb)
