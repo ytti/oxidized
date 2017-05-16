@@ -38,6 +38,7 @@ class FortiOS < Oxidized::Model
     #do not include if variable "show_autoupdate" is set to false
     if  defined?(vars(:fortios_autoupdate)).nil? || vars(:fortios_autoupdate)
        cfg << cmd('diagnose autoupdate version') do |cfg|
+          cfg.gsub! /(FDS Address\n---------\n).*/, '\\1IP Address removed'
           comment cfg.each_line.reject { |line| line.match /Last Update|Result/ }.join
        end
     end
