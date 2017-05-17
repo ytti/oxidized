@@ -44,8 +44,6 @@ module Oxidized
       wrapper_opts[:kex]  = vars(:ssh_kex).split(/,\s*/) if vars(:ssh_kex)
       wrapper_opts[:encryption] = vars(:ssh_encryption).split(/,\s*/) if vars(:ssh_encryption)
 
-      Oxidized.logger.debug "lib/oxidized/input/ssh.rb: Connecting to #{@node.name}"
-
       @ssh = Oxidized::SSHWrapper.new(wrapper_opts)
       @ssh.start
 
@@ -59,7 +57,6 @@ module Oxidized
     def cmd cmd, expect=node.prompt
 	msg = "lib/oxidized/input/ssh.rb #{cmd} @ #{node.name}"
         msg << "with expect #{expect.inspect}" unless @exec
-	Oxidized.logger.debug msg
         @ssh.exec! cmd
     end
 
@@ -80,6 +77,7 @@ module Oxidized
 
     def disconnect
       disconnect_cli
+      @ssh.disconnect
     rescue Errno::ECONNRESET, Net::SSH::Disconnect, IOError
     end
 
