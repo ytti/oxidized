@@ -20,12 +20,6 @@ class ASA < Oxidized::Model
     cfg
   end
 
-  cmd :secret do |cfg|
-    cfg.gsub! /enable password (\S+) (.*)/, 'enable password <secret hidden> \2'
-    cfg.gsub! /username (\S+) password (\S+) (.*)/, 'username \1 password <secret hidden> \3'
-    cfg
-  end
-
   # check for multiple contexts
   cmd 'show mode' do |cfg|
     @is_multiple_context = cfg.include? 'multiple'
