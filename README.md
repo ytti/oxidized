@@ -169,6 +169,7 @@ Oxidized is a network device configuration backup tool. It's a RANCID replacemen
    * [AirOS](lib/oxidized/model/airos.rb)
    * [Edgeos](lib/oxidized/model/edgeos.rb)
    * [EdgeSwitch](lib/oxidized/model/edgeswitch.rb)
+ * [VyOS](lib/oxidized/model/vyos.rb)
  * Watchguard
    * [Fireware OS](lib/oxidized/model/firewareos.rb)
  * Zhone

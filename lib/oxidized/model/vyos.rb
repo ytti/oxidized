@@ -1,7 +1,6 @@
-class Vyatta < Oxidized::Model
+class VyOS < Oxidized::Model
+  # VyOS Model #
 
-  # Brocade Vyatta #
-  
   prompt /\@.*?\:~\$\s/
 
   cmd :all do |cfg|
