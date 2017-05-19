@@ -12,7 +12,7 @@ module Oxidized
       @nodes     = nodes
       @last      = Time.now.utc
       @durations = Array.new @nodes.size, AVERAGE_DURATION
-      duration AVERAGE_DURATION
+      @duration  = AVERAGE_DURATION
       super()
     end
 
