@@ -55,6 +55,12 @@ cfg << cmd('end') if @vdom_enabled
   end
 
   cfg :telnet, :ssh do
+    post_login "config system console\n"
+    post_login "set output standard\n"
+    post_login "end\n"
+    pre_logout "config system console\n"
+    pre_logout "unset output\n"
+    pre_logout "end\n"
     pre_logout "exit\n"
   end
 
