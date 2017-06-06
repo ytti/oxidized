@@ -41,6 +41,7 @@ class ASA < Oxidized::Model
       multiple_context
     else
       single_context
+    end
   end
 
   cfg :ssh do
