@@ -35,6 +35,7 @@ class IronWare < Oxidized::Model
     cfg.gsub! /Speed = [A-Z-]{2,6} \(\d{2,3}\%\)/, '' #remove unwanted lines Speed Fans
     cfg.gsub! /current speed is [A-Z]{2,6} \(\d{2,3}\%\)/, ''
     cfg.gsub! /Fan [1-6] - STATUS: OK [A-Z()[0-9] :-]{0,30}/, '' # Fix for ADX Fan speed reporting
+    cfg.gsub! /[0-9][0-9] deg C/, '' # Fix for ADX temperature reporting
     cfg.gsub! /([\[]*)1([\]]*)<->([\[]*)2([\]]*)(<->([\[]*)3([\]]*))*/, ''
     cfg.gsub! /\d{2}\.\d deg-C/, 'XX.X deg-C'
     if cfg.include? "TEMPERATURE"
