@@ -52,6 +52,7 @@ class IronWare < Oxidized::Model
   end
 
   cmd 'show flash' do |cfg|
+    cfg.gsub! /(\d+) bytes/, '' # Fix for ADX flash size
     comment cfg
   end
 
