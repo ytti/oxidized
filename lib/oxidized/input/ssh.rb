@@ -24,20 +24,23 @@ module Oxidized
       secure = Oxidized.config.input.ssh.secure
       @log = File.open(Oxidized::Config::Log + "/#{@node.ip}-ssh", 'w') if Oxidized.config.input.debug?
       port = vars(:ssh_port) || 22
+      
+      ssh_opts = {
+                :port => port.to_i,
+                :password => @node.auth[:password], :timeout => Oxidized.config.timeout,
+                :paranoid => secure,
+                :auth_methods => %w(none publickey password keyboard-interactive),
+                :number_of_password_prompts => 0,
+        }
+
       if proxy_host = vars(:ssh_proxy)
         proxy_command =  "ssh "
         proxy_command += "-o StrictHostKeyChecking=no " unless secure
         proxy_command += "#{proxy_host} -W %h:%p"
         proxy =  Net::SSH::Proxy::Command.new(proxy_command)
+        ssh_opts[:proxy] = proxy
       end
-      ssh_opts = {
-        :port => port.to_i,
-        :password => @node.auth[:password], :timeout => Oxidized.config.timeout,
-        :paranoid => secure,
-        :auth_methods => %w(none publickey password keyboard-interactive),
-        :number_of_password_prompts => 0,
-        :proxy => proxy,
-      }
+
       ssh_opts[:keys] = vars(:ssh_keys).is_a?(Array) ? vars(:ssh_keys) : [vars(:ssh_keys)] if vars(:ssh_keys)
       ssh_opts[:kex]  = vars(:ssh_kex).split(/,\s*/) if vars(:ssh_kex)
       ssh_opts[:encryption] = vars(:ssh_encryption).split(/,\s*/) if vars(:ssh_encryption)
