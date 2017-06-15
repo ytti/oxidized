@@ -39,6 +39,10 @@ echo "Group name: ${OX_NODE_GROUP}"
 echo "Job status: ${OX_JOB_STATUS}"
 echo "Job time: ${OX_JOB_TIME}"
 
+if [ "${OX_EVENT}" = "node_fail" ]; then
+    echo 'Job failed'
+    exit 64
+fi
 
 if [ -z "${OX_REPO_COMMITREF}" ]; then
 	echo '$OX_REPO_COMMITREF not set'
