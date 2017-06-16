@@ -166,18 +166,32 @@ module Oxidized
     end
 
     def resolve_repo opt
-      return unless is_git? opt
+      if is_git? opt
+        remote_repo = Oxidized.config.output.git.repo
 
-      remote_repo = Oxidized.config.output.git.repo
-
-      if remote_repo.is_a?(::String)
-        if Oxidized.config.output.git.single_repo? || @group.nil?
-          remote_repo
+        if remote_repo.is_a?(::String)
+          if Oxidized.config.output.git.single_repo? || @group.nil?
+            remote_repo
+          else
+            File.join(File.dirname(remote_repo), @group + '.git')
+          end
         else
-          File.join(File.dirname(remote_repo), @group + '.git')
+          remote_repo[@group]
+        end
+      elsif is_gitcrypt? opt
+        remote_repo = Oxidized.config.output.gitcrypt.repo
+
+        if remote_repo.is_a?(::String)
+          if Oxidized.config.output.gitcrypt.single_repo? || @group.nil?
+            remote_repo
+          else
+            File.join(File.dirname(remote_repo), @group + '.git')
+          end
+        else
+          remote_repo[@group]
         end
       else
-        remote_repo[@group]
+        return
       end
     end
 
@@ -202,6 +216,14 @@ module Oxidized
         end
       end
 
+      #model
+      if Oxidized.config.models.has_key?(@model.class.name.to_s.downcase)
+        if Oxidized.config.models[@model.class.name.to_s.downcase].has_key?(key_str)
+          value = Oxidized.config.models[@model.class.name.to_s.downcase][key_str]
+          Oxidized.logger.debug "node.rb: setting node key '#{key}' to value '#{value}' from model"
+        end
+      end
+
       #node
       value = opt[key_sym] || value
       Oxidized.logger.debug "node.rb: returning node key '#{key}' with value '#{value}'"
@@ -210,6 +232,10 @@ module Oxidized
 
     def is_git? opt
       (opt[:output] || Oxidized.config.output.default) == 'git'
+    end
+
+    def is_gitcrypt? opt
+      (opt[:output] || Oxidized.config.output.default) == 'gitcrypt'
     end
 
   end

@@ -19,6 +19,7 @@ Oxidized is a network device configuration backup tool. It's a RANCID replacemen
 2. [Installation](#installation)
     * [Debian](#debian)
     * [CentOS, Oracle Linux, Red Hat Linux](#centos-oracle-linux-red-hat-linux)
+    * [BSD](#freebsd)
 3. [Initial Configuration](#configuration)
 4. [Installing Ruby 2.1.2 using RVM](#installing-ruby-2.1.2-using-rvm)
 5. [Running with Docker](#running-with-docker)
@@ -32,6 +33,7 @@ Oxidized is a network device configuration backup tool. It's a RANCID replacemen
       * [Source: Mysql](#source-mysql)
     * [Source: HTTP](#source-http)
     * [Output: GIT](#output-git)
+    * [Output: GIT-Crypt](#output-git-crypt)
     * [Output: HTTP](#output-http)
     * [Output: File](#output-file)
     * [Output types](#output-types)
@@ -64,6 +66,9 @@ Oxidized is a network device configuration backup tool. It's a RANCID replacemen
    * [C4CMTS](lib/oxidized/model/c4cmts.rb)
  * Aruba
    * [AOSW](lib/oxidized/model/aosw.rb)
+ * Avaya
+   * [VOSS (VSP Operating System Software)](lib/oxidized/model/voss.rb)
+   * [BOSS (Baystack Operating System Software)](lib/oxidized/model/boss.rb)
  * Brocade
    * [FabricOS](lib/oxidized/model/fabricos.rb)
    * [Ironware](lib/oxidized/model/ironware.rb)
@@ -115,6 +120,8 @@ Oxidized is a network device configuration backup tool. It's a RANCID replacemen
    * [PRIMERGY Blade switch 1/10Gbe](lib/oxidized/model/fujitsupy.rb)
  * Hatteras
    * [Hatteras](lib/oxidized/model/hatteras.rb)
+ * Hirschmann
+   * [HiOS](lib/oxidized/model/hirschmann.rb)
  * HP
    * [Comware (HP A-series, H3C, 3Com)](lib/oxidized/model/comware.rb)
    * [Procurve](lib/oxidized/model/procurve.rb)
@@ -126,6 +133,7 @@ Oxidized is a network device configuration backup tool. It's a RANCID replacemen
    * [ScreenOS (Netscreen)](lib/oxidized/model/screenos.rb)
  * Mellanox
    * [MLNX-OS](lib/oxidized/model/mlnxos.rb)
+   * [Voltaire](lib/oxidized/model/voltaire.rb)
  * Mikrotik
    * [RouterOS](lib/oxidized/model/routeros.rb)
  * Motorola
@@ -133,6 +141,8 @@ Oxidized is a network device configuration backup tool. It's a RANCID replacemen
  * MRV
    * [MasterOS](lib/oxidized/model/masteros.rb)
    * [FiberDriver](lib/oxidized/model/fiberdriver.rb)
+ * Netgear
+   * [Netgear](lib/oxidized/model/netgear.rb)
  * Netonix
    * [WISP Switch (As Netonix)](lib/oxidized/model/netonix.rb)
  * Nokia (formerly TiMetra, Alcatel, Alcatel-Lucent)
@@ -147,6 +157,8 @@ Oxidized is a network device configuration backup tool. It's a RANCID replacemen
  * [pfSense](lib/oxidized/model/pfsense.rb)
  * Quanta
    * [Quanta / VxWorks 6.6 (1.1.0.8)](lib/oxidized/model/quantaos.rb)
+ * Siklu
+   * [EtherHaul](lib/oxidized/model/siklu.rb)
  * Supermicro
    * [Supermicro](lib/oxidized/model/supermicro.rb)
  * Trango Systems
@@ -193,6 +205,19 @@ gem install oxidized
 gem install oxidized-script oxidized-web
 ```
 
+## FreeBSD
+Use RVM to install Ruby v2.1.2
+
+Install all required packages and gems.
+
+```shell
+pkg install cmake pkgconf
+gem install oxidized
+gem install oxidized-script oxidized-web
+```
+
+
+
 ## Build from Git
 ```shell
 git clone https://github.com/ytti/oxidized.git
@@ -236,7 +261,7 @@ Oxidized supports ```CSV```, ```SQLite``` and ```HTTP``` as source backends. The
 
 ## Outputs
 
-Possible outputs are either ```file``` or ```git```. The file backend takes a destination directory as argument and will keep a file per device, with most recent running version of a device. The GIT backend (recommended) will initialize an empty GIT repository in the specified path and create a new commit on every configuration change. Take a look at the [Cookbook](#cookbook) for more details.
+Possible outputs are either ```file```, ```git``` or ```git-crypt```. The file backend takes a destination directory as argument and will keep a file per device, with most recent running version of a device. The GIT backend (recommended) will initialize an empty GIT repository in the specified path and create a new commit on every configuration change. The GIT-Crypt backend will also initialize a GIT repository but every configuration push to it will be encrypted on the fly by using ```git-crypt``` tool. Take a look at the [Cookbook](#cookbook) for more details.
 
 Maps define how to map a model's fields to model [model fields](https://github.com/ytti/oxidized/tree/master/lib/oxidized/model). Most of the settings should be self explanatory, log is ignored if `use_syslog`(requires Ruby >= 2.0) is set to `true`.
 
@@ -360,6 +385,12 @@ If you want to have the config automatically reloaded (e.g. when using a http so
 
 ```
 docker run -v /etc/oxidized:/root/.config/oxidized -p 8888:8888/tcp -e CONFIG_RELOAD_INTERVAL=3600 -t oxidized/oxidized:latest
+```
+
+If you need to use an internal CA (e.g. to connect to an private github instance)
+
+```
+docker run -v /etc/oxidized:/root/.config/oxidized -v /path/to/MY-CA.crt:/usr/local/share/ca-certificates/MY-CA.crt -p 8888:8888/tcp -e UPDATE_CA_CERTIFICATES=true -t oxidized/oxidized:latest
 ```
 
 ## Cookbook
@@ -604,6 +635,72 @@ output:
 
 ```
 
+### Output: Git-Crypt
+
+This uses the gem git and system git-crypt interfaces. Have a look at [GIT-Crypt](https://www.agwa.name/projects/git-crypt/) documentation to know how to install it.
+Additionally to user and email informations, you have to provide the users ID that can be a key ID, a full fingerprint, an email address, or anything else that uniquely identifies a public key to GPG (see "HOW TO SPECIFY A USER ID" in the gpg man page).
+
+
+For a single repositories for all devices:
+
+``` yaml
+output:
+  default: gitcrypt
+  gitcrypt:
+    user: Oxidized
+    email: o@example.com
+    repo: "/var/lib/oxidized/devices"
+    users:
+      - "0x0123456789ABCDEF"
+      - "<user@example.com>"
+```
+
+And for groups repositories:
+
+``` yaml
+output:
+  default: gitcrypt
+  gitcrypt:
+    user: Oxidized
+    email: o@example.com
+    repo: "/var/lib/oxidized/git-repos/default"
+    users:
+      - "0xABCDEF0123456789"
+      - "0x0123456789ABCDEF"
+```
+
+Oxidized will create a repository for each group in the same directory as the `default`. For
+example:
+
+``` csv
+host1:ios:first
+host2:nxos:second
+```
+
+This will generate the following repositories:
+
+``` bash
+$ ls /var/lib/oxidized/git-repos
+
+default.git first.git second.git
+```
+
+If you would like to use groups and a single repository, you can force this with the `single_repo` config.
+
+``` yaml
+output:
+  default: gitcrypt
+  gitcrypt:
+    single_repo: true
+    repo: "/var/lib/oxidized/devices"
+    users:
+      - "0xABCDEF0123456789"
+      - "0x0123456789ABCDEF"
+
+```
+
+Please note that user list is only updated once at creation.
+
 ### Output: Http
 
 POST a config to the specified URL
@@ -747,6 +844,22 @@ map:
   name: 1
   group: 2
 ```
+For model specific credentials
+
+```
+models:
+  junos:
+    username: admin
+    password: password
+  ironware:
+    username: admin
+    password: password
+    vars: 
+      enable: enablepassword
+  apc_aos:
+    username: apc
+    password: password
+```
 
 ### Triggered backups
 
@@ -781,6 +894,7 @@ Command is executed with the following environment:
 ```
 OX_EVENT
 OX_NODE_NAME
+OX_NODE_IP
 OX_NODE_FROM
 OX_NODE_MSG
 OX_NODE_GROUP

@@ -10,6 +10,10 @@ class RouterOS < Oxidized::Model
     comment cfg
   end
 
+  cmd '/system history print' do |cfg|
+    comment cfg
+  end
+
   cmd '/export' do |cfg|
     cfg.gsub! /\x1B\[([0-9]{1,3}((;[0-9]{1,3})*)?)?[m|K]/, '' # strip ANSI colours
     cfg.gsub! /\\\r\n\s+/, ''   # strip new line
@@ -20,6 +24,10 @@ class RouterOS < Oxidized::Model
   cfg :telnet do
     username /^Login:/
     password /^Password:/
+  end
+
+  cfg :telnet, :ssh do
+    pre_logout 'quit'
   end
 
   cfg :ssh do

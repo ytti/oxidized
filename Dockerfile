@@ -27,6 +27,7 @@ RUN apt-get -y autoremove
 
 ADD extra/oxidized.runit /etc/service/oxidized/run
 ADD extra/auto-reload-config.runit /etc/service/auto-reload-config/run
+ADD extra/update-ca-certificates.runit /etc/service/update-ca-certificates/run
 
 VOLUME ["/root/.config/oxidized"]
 EXPOSE 8888/tcp

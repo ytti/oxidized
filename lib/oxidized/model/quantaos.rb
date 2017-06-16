@@ -12,7 +12,7 @@ class QuantaOS < Oxidized::Model
   end
 
   cfg :telnet do
-    username /^Username:/
+    username /^User(name)?:/
     password /^Password:/
   end
 
