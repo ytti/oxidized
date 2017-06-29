@@ -42,6 +42,10 @@ class Procurve < Oxidized::Model
     comment cfg
   end
 
+  cmd 'show interfaces transceiver' do |cfg|
+    comment cfg
+  end
+
   cmd 'show flash' do |cfg|
     comment cfg
   end
