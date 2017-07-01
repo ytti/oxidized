@@ -30,10 +30,23 @@ class Procurve < Oxidized::Model
     cfg.gsub! /^(snmp-server community).*/, '\\1 <configuration removed>'
     cfg.gsub! /^(snmp-server host).*/, '\\1 <configuration removed>'
     cfg.gsub! /^(radius-server host).*/, '\\1 <configuration removed>'
+    cfg.gsub! /^(radius-server key).*/, '\\1 <configuration removed>'
     cfg
   end
 
   cmd 'show version' do |cfg|
+    comment cfg
+  end
+
+  cmd 'show modules' do |cfg|
+    comment cfg
+  end
+
+  cmd 'show interfaces transceiver' do |cfg|
+    comment cfg
+  end
+
+  cmd 'show flash' do |cfg|
     comment cfg
   end
 
