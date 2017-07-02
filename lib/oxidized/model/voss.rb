@@ -1,7 +1,7 @@
 class Voss < Oxidized::Model
   # Avaya VSP Operating System Software(VOSS)
   # Created by danielcoxman@gmail.com
-  # May 15, 2017
+  # May 25, 2017
   # This was tested on vsp4k and vsp8k
 
   comment '# '
@@ -10,10 +10,16 @@ class Voss < Oxidized::Model
 
   # needed for proper formatting after post_login
   cmd('') { |cfg| comment "#{cfg}\n" }
-  # get some general information about switch
-  cmd('show sys-info card') { |cfg| comment "#{cfg}\n" }
-  cmd('show sys-info fan') { |cfg| comment "#{cfg}\n" }
-  cmd('show sys-info power') { |cfg| comment "#{cfg}\n" }
+  
+  # Get sys-info and remove information that changes such has temperature and power
+  cmd 'show sys-info' do |cfg|
+    cfg.gsub! /(^((.*)SysUpTime(.*))$)/, 'removed SysUpTime'
+    cfg.gsub! /^((.*)Temperature Info \:(.*\r?\n){4})/, 'removed Temperature Info and 3 more lines'
+    cfg.gsub! /(^((.*)AmbientTemperature(.*)\:(.*))$)/, 'removed AmbientTemperature'
+    cfg.gsub! /(^((.*)Temperature(.*)\:(.*))$)/, 'removed Temperature'
+    cfg.gsub! /(^((.*)Total Power Usage(.*)\:(.*))$)/, 'removed Total Power Usage'
+    comment "#{cfg}\n"
+  end
 
   # more the config rather than doing a show run
   cmd 'more config.cfg' do |cfg|
