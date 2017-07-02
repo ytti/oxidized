@@ -28,6 +28,6 @@ class PanOS < Oxidized::Model
 
   cfg :ssh do
     post_login 'set cli pager off'
-    pre_logout 'exit'
+    pre_logout 'quit'
   end
 end
