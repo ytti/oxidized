@@ -39,9 +39,10 @@ class Planet < Oxidized::Model
 
     cfg = cfg.each_line.to_a[0...-2]
 
-   # Strip system time and system uptime from planet gs switches
+   # Strip system (up)time and temperature
     cfg = cfg.reject { |line| line.match /System Time\s*:.*/ }
     cfg = cfg.reject { |line| line.match /System Uptime\s*:.*/ }
+    cfg = cfg.reject { |line| line.match /Temperature\s*:.*/ }
 
     comment cfg.join
   end

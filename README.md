@@ -1,5 +1,9 @@
 # Oxidized [![Build Status](https://travis-ci.org/Shopify/oxidized.svg)](https://travis-ci.org/Shopify/oxidized) [![Gem Version](https://badge.fury.io/rb/oxidized.svg)](http://badge.fury.io/rb/oxidized) [![Join the chat at https://gitter.im/oxidized/Lobby](https://badges.gitter.im/oxidized/Lobby.svg)](https://gitter.im/oxidized/Lobby?utm_source=badge&utm_medium=badge&utm_campaign=pr-badge&utm_content=badge)
 
+** Is your company using Oxidized and has Ruby developers on staff? I'd love help from an extra maintainer!**
+
+[WANTED: MAINTAINER](#help-needed)
+
 Oxidized is a network device configuration backup tool. It's a RANCID replacement!
 
 * automatically adds/removes threads to meet configured retrieval interval
@@ -1074,6 +1078,39 @@ The following objects exist in Oxidized.
  * cmd is executed in instance of model
  * 'junos', 'ios', 'ironware' and 'powerconnect' implemented
 
+
+# Help Needed
+
+As things stand right now, `oxidized` is maintained by a single person. A great
+many [contributors](https://github.com/ytti/oxidized/graphs/contributors) have
+helped further the software, however contributions are not the same as ongoing
+owner- and maintainership. It appears that many companies use the software to
+manage their network infrastructure, this is great news! But without additional
+help to maintain the software and put out releases, the future of oxidized
+might be less bright. The current pace of development and the much needed
+refactoring simply are not sustainable if they are to be driven by a single
+person.
+
+## Maintainer duties and expectations
+
+* 4 hours per week to perform triage on issues, review pull requests and help answer any questions from users.
+* Above average knowledge of the Ruby programming language.
+* Professional experience with both oxidized and some other config backup tool (like rancid).
+* Ability to keep a cool head, and enjoy interaction with end users! :)
+* A desire and passion to help drive `oxidized` towards its `1.x.x` stage of life
+  * help refactor the code
+  * rework the core infrastructure
+* Permission from your employer to contribute to open source projects
+
+## YES, I WANT TO HELP
+
+Awesome! Simply send an email to Saku Ytti <saku@ytti.fi>.
+
+## Further reading
+
+Brian Anderson (from Rust fame) wrote an [excellent
+post](http://brson.github.io/2017/04/05/minimally-nice-maintainer) on what it
+means to be a maintainer.
 
 # License and Copyright
 
