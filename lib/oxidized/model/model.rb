@@ -115,22 +115,28 @@ module Oxidized
       self.class.prompt
     end
 
-    def expects data
+    def expects obj="", data=""
+      if obj.is_a? String
+	Oxidized.logger.debug("Oops, you're using the old expects function, please supply two params, obj and data")
+	data = obj
+	obj = self
+      end
+
       self.class.expects.each do |re, cb|
-        if data.match re
-          if cb.arity == 2
-            data = instance_exec [data, re], &cb
+	if data.match re
+	  if cb.arity ==2
+	    obj.instance_exec [data, re], &cb
           else
-            data = instance_exec data, &cb
+	    obj.instance_exec data, &cb
           end
         end
       end
-      data
+
     end
 
     def get
       Oxidized.logger.debug 'lib/oxidized/model/model.rb Collecting commands\' outputs'
-      outputs = Outputs.new
+     outputs = Outputs.new
       procs = self.class.procs
       self.class.cmds[:cmd].each do |command, block|
         out = cmd command, &block
