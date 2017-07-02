@@ -514,7 +514,7 @@ source:
     map:
       name: ip
       model: model
-      username: username
+      user: username
       password: password
     vars_map:
       enable: enable
