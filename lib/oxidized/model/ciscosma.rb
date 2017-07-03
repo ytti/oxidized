@@ -1,6 +1,6 @@
-class SMA < Oxidized::Model
+class CiscoSMA < Oxidized::Model
 
-	# ESA prompt "mail.example.com> "
+	# SMA prompt "mail.example.com> "
 	prompt /^\r*([-\w. ]+\.[-\w. ]+\.[-\w. ]+[#>]\s+)$/
 	comment  '! '
 	
