@@ -1,4 +1,4 @@
-class ESA < Oxidized::Model
+class AsyncOS < Oxidized::Model
 
 	# ESA prompt "(mail.example.com)> "
 	prompt /^\r*([(][\w. ]+[)][#>]\s+)$/
