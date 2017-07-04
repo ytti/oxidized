@@ -7,7 +7,7 @@ Create a user with no privileges
     [~HUAWEI] aaa
     [~HUAWEI-aaa] local-user oxidized password irreversible-cipher verysecret
     [*HUAWEI-aaa] local-user oxidized level 1
-    [*HUAWEI-aaa] local-user rancid service-type terminal ssh
+    [*HUAWEI-aaa] local-user oxidized service-type terminal ssh
     [*HUAWEI-aaa] commit
 
 The commands Oxidized executes are:
