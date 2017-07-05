@@ -107,6 +107,8 @@ Oxidized is a network device configuration backup tool. It's a RANCID replacemen
    * [Linux](lib/oxidized/model/cumulus.rb)
  * DataCom
    * [DmSwitch 3000](lib/oxidized/model/datacom.rb)
+ * DCN
+   * [DCN](lib/oxidized/model/ios.rb) - Map this to ios.
  * DELL
    * [PowerConnect](lib/oxidized/model/powerconnect.rb)
    * [AOSW](lib/oxidized/model/aosw.rb)
