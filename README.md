@@ -1045,7 +1045,7 @@ chown oxidized:oxidized /var/run/oxidized
 3.)Make oxidized start on boot
 
 ```
-update-rc.d oxidized deafults
+update-rc.d oxidized defaults
 ```
 
 Note the channel name must be in quotes.
