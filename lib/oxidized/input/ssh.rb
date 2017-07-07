@@ -24,7 +24,7 @@ module Oxidized
       secure = Oxidized.config.input.ssh.secure
       @log = File.open(Oxidized::Config::Log + "/#{@node.ip}-ssh", 'w') if Oxidized.config.input.debug?
       port = vars(:ssh_port) || 22
-      
+
       ssh_opts = {
                 :port => port.to_i,
                 :password => @node.auth[:password], :timeout => Oxidized.config.timeout,
@@ -47,15 +47,18 @@ module Oxidized
 
       Oxidized.logger.debug "lib/oxidized/input/ssh.rb: Connecting to #{@node.name}"
       @ssh = Net::SSH.start(@node.ip, @node.auth[:username], ssh_opts)
+      connected?
+    end
+
+    def login
       unless @exec
         shell_open @ssh
         begin
-          login
+          shell_login
         rescue Timeout::Error
           raise PromptUndetect, [ @output, 'not matching configured prompt', @node.prompt ].join(' ')
         end
       end
-      connected?
     end
 
     def connected?
@@ -116,7 +119,7 @@ module Oxidized
 
     # some models have SSH auth or terminal auth based on version of code
     # if SSH is configured for terminal auth, we'll still try to detect prompt
-    def login
+    def shell_login
       if @username
         match = expect username, @node.prompt
         if match == username

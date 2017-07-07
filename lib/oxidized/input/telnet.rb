@@ -19,6 +19,9 @@ module Oxidized
       opt['Output_log'] = Oxidized::Config::Log + "/#{@node.ip}-telnet" if Oxidized.config.input.debug?
 
       @telnet  = Net::Telnet.new opt
+    end
+
+    def login
       if @node.auth[:username] and @node.auth[:username].length > 0
         expect username
         @telnet.puts @node.auth[:username]
