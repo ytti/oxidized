@@ -1022,6 +1022,9 @@ hooks:
     channel: "#network-changes"
 ```
 
+Note the channel name must be in quotes.
+
+
 # Extra
 
 ## Ubuntu SystemV init setup
@@ -1049,8 +1052,6 @@ chown oxidized:oxidized /var/run/oxidized
 ```
 update-rc.d oxidized defaults
 ```
-
-Note the channel name must be in quotes.
 
 # Ruby API
 
