@@ -16,10 +16,15 @@ class CiscoSMB < Oxidized::Model
   cmd :secret do |cfg|
     cfg.gsub! /^(snmp-server community).*/, '\\1 <configuration removed>'
     cfg.gsub! /username (\S+) privilege (\d+) (\S+).*/, '<secret hidden>'
+    cfg.gsub! /^(encrypted radius-server key).*/, '\\1 <configuration removed>'
     cfg
   end
 
   cmd 'show version' do |cfg|
+    comment cfg
+  end
+  
+  cmd 'show bootvar' do |cfg|
     comment cfg
   end
 
