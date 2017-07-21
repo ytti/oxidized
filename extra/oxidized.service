@@ -9,6 +9,7 @@ Description=Oxidized - Network Device Configuration Backup Tool
 [Service]
 ExecStart=/usr/local/bin/oxidized
 User=oxidized
+KillSignal=SIGINT
 
 [Install]
 WantedBy=multi-user.target
