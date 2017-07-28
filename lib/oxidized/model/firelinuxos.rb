@@ -33,6 +33,8 @@ class FireLinuxOS < Oxidized::Model
   cmd 'show running-config all' do |cfg|
     cfg = cfg.each_line.to_a[3..-1]
     cfg = cfg.reject { |line| line.match /^ntp clock-period / }.join
+    cfg = cfg.reject { |line| line.match /^firepower up / }.join
+    cfg = cfg.reject { |line| line.match /^failover cluster up / }.join
     cfg.gsub! /^Current configuration : [^\n]*\n/, ''
     cfg
   end
