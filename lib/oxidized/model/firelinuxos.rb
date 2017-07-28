@@ -18,11 +18,6 @@ class FireLinuxOS < Oxidized::Model
     cfg
   end
 
-  # check for multiple contexts
-  cmd 'show mode' do |cfg|
-    @is_multiple_context = cfg.include? 'multiple'
-  end
-
   cmd 'show version system' do |cfg|
     cfg = cfg.each_line.select { |line| not line.match /(\s+up\s+\d+\s+)|(.*days.*)/ }
     cfg = cfg.join
@@ -35,7 +30,6 @@ class FireLinuxOS < Oxidized::Model
 
   cmd 'show running-config all' do |cfg|
     cfg = cfg.each_line.to_a[3..-1]
-    cfg.gsub! /^Current configuration : [^\n]*\n/, ''
     cfg
   end
 
