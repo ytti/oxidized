@@ -9,20 +9,23 @@ class FireLinuxOS < Oxidized::Model
   end
 
   cmd :secret do |cfg|
-    cfg.gsub! /^(snmp-server community).*/, '\\1 <configuration removed>'
-    cfg.gsub! /^(username \S+ privilege \d+) (\S+).*/, '\\1 <secret hidden>'
-    cfg.gsub! /^(username \S+ password \d) (\S+)/, '\\1 <secret hidden>'
-    cfg.gsub! /^(username \S+ secret \d) (\S+)/, '\\1 <secret hidden>'
-    cfg.gsub! /^(enable (password|secret) \d) (\S+)/, '\\1 <secret hidden>'
-    cfg.gsub! /^(\s+(?:password|secret)) (?:\d )?\S+/, '\\1 <secret hidden>'
-    cfg.gsub! /^(.*wpa-psk ascii \d) (\S+)/, '\\1 <secret hidden>'
-    cfg.gsub! /^(.*key 7) (\d.+)/, '\\1 <secret hidden>'
-    cfg.gsub! /^(tacacs-server key \d) (\S+)/, '\\1 <secret hidden>'
-    cfg.gsub! /^(crypto isakmp key) (\S+) (.*)/, '\\1 <secret hidden> \\3'
+    cfg.gsub! /enable password (\S+) (.*)/, 'enable password <secret hidden> \2'
+    cfg.gsub! /username (\S+) password (\S+) (.*)/, 'username \1 password <secret hidden> \3'
+    cfg.gsub! /(ikev[12] ((remote|local)-authentication )?pre-shared-key) (\S+)/, '\1 <secret hidden>'
+    cfg.gsub! /^(aaa-server TACACS\+? \(\S+\) host.*\n\skey) \S+$/mi, '\1 <secret hidden>'
+    cfg.gsub! /ldap-login-password (\S+)/, 'ldap-login-password <secret hidden>'
+    cfg.gsub! /^snmp-server host (.*) community (\S+)/, 'snmp-server host \1 community <secret hidden>'
     cfg
   end
 
+  # check for multiple contexts
+  cmd 'show mode' do |cfg|
+    @is_multiple_context = cfg.include? 'multiple'
+  end
+
   cmd 'show version system' do |cfg|
+    cfg = cfg.each_line.select { |line| not line.match /(\s+up\s+\d+\s+)|(.*days.*)/ }
+    cfg = cfg.join
     comment cfg
   end
 
@@ -32,9 +35,6 @@ class FireLinuxOS < Oxidized::Model
 
   cmd 'show running-config all' do |cfg|
     cfg = cfg.each_line.to_a[3..-1]
-    cfg = cfg.reject { |line| line.match /^ntp clock-period / }.join
-    cfg = cfg.reject { |line| line.match /^firepower up / }.join
-    cfg = cfg.reject { |line| line.match /^failover cluster up / }.join
     cfg.gsub! /^Current configuration : [^\n]*\n/, ''
     cfg
   end
