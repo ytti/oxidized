@@ -45,7 +45,7 @@ class Aireos < Oxidized::Model
     cfg.each_line do |line|
       next if line.match /^\s*$/
       next if line.match /rogue (adhoc|client) (alert|Unknown) [\da-f]{2}:/
-      next if line.match /interface nat-address management set \d+{9}\.\d+{3}\.\d+\.\d+{9}:/
+      next if line.match /interface nat-address management set \d+.\d+.\d+.\d+/
       line = line[1..-1] if line[0] == "\r"
       out << line.strip
     end
