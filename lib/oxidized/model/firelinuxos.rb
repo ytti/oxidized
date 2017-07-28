@@ -29,7 +29,8 @@ class FireLinuxOS < Oxidized::Model
   end
 
   cmd 'show running-config all' do |cfg|
-    cfg = cfg.each_line.to_a[3..-1]
+    cfg = cfg.each_line.to_a[3..-1].join
+    cfg.gsub! /^: [^\n]*\n/, ''
     cfg
   end
 
