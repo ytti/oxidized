@@ -1,4 +1,5 @@
 class FireLinuxOS < Oxidized::Model
+# Fire Linux OS is what the new FTD (FirePOWER) series devices from Cisco run. At the backend, it's mostly identical to ASA's. 
 
   prompt /^[#>]\(?.+\)?\s?/
   comment  '! '
@@ -34,7 +35,7 @@ class FireLinuxOS < Oxidized::Model
     cfg
   end
 
-  cfg :ssh do
+  cfg :telnet, :ssh do
     pre_logout 'exit'
   end
 
