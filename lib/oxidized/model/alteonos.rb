@@ -1,4 +1,4 @@
-class RADWARE < Oxidized::Model
+class ALTEONOS < Oxidized::Model
 
   prompt  /^\(?.+\)?\s?[#>]/
 
