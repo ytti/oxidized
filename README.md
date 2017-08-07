@@ -165,6 +165,8 @@ Oxidized is a network device configuration backup tool. It's a RANCID replacemen
    * [PANOS](lib/oxidized/model/panos.rb)
  * [PLANET SG/SGS Switches](lib/oxidized/model/planet.rb)
  * [pfSense](lib/oxidized/model/pfsense.rb)
+ * [Radware]
+   * [AlteonOS](lib/oxidized/model/alteonos.rb)
  * Quanta
    * [Quanta / VxWorks 6.6 (1.1.0.8)](lib/oxidized/model/quantaos.rb)
  * Siklu
