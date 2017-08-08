@@ -170,7 +170,11 @@ module Oxidized
         remote_repo = Oxidized.config.output.git.repo
 
         if remote_repo.is_a?(::String)
-          if Oxidized.config.output.git.single_repo? || @group.nil?
+          if Oxidized.config.output.git.individual_repo? && !@group.nil?
+            File.join(File.dirname(remote_repo), @group + '/' + @name + '.git')
+          elsif Oxidized.config.output.git.individual_repo? && @group.nil?
+            File.join(File.dirname(remote_repo), '/default/' + @name + '.git')
+          elsif Oxidized.config.output.git.single_repo? || @group.nil?
             remote_repo
           else
             File.join(File.dirname(remote_repo), @group + '.git')
