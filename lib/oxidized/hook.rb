@@ -23,6 +23,7 @@ class HookManager
     :node_success,
     :node_fail,
     :post_store,
+    :nodes_done
   ]
   attr_reader :registered_hooks
 
