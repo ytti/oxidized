@@ -114,6 +114,8 @@ Oxidized is a network device configuration backup tool. It's a RANCID replacemen
    * [BladeSystem (Onboard Administrator)](lib/oxidized/model/hpebladesystem.rb)
  * Huawei
    * [VRP](lib/oxidized/model/vrp.rb)
+ * IBM (Blade Networks/Lenovo)
+   * [IBM](lib/oxidized/model/ibm.rb)
  * Juniper
    * [JunOS](lib/oxidized/model/junos.rb)
    * [ScreenOS (Netscreen)](lib/oxidized/model/screenos.rb)
