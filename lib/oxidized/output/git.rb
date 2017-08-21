@@ -144,8 +144,10 @@ class Git < Output
   def yield_repo_and_path(node, group)
     repo, path = node.repo, node.name
 
-    if group and @cfg.single_repo?
+    if group && group != "" && @cfg.single_repo?
       path = "#{group}/#{node.name}"
+    else
+      path = "#{node.name}"
     end
 
     [repo, path]
