@@ -24,6 +24,14 @@ class RouterOS < Oxidized::Model
     end
   end
 
+  cmd :secret do |cfg|
+    cfg.gsub! /(password=)(\S+)/, '\\1<password hidden>'
+    cfg.gsub! /((?:wpa|wpa2)-pre-shared-key=)(\S+)/, '\\1<password hidden>'
+    cfg.gsub! /(authentication-key=)(\S+)/, '\\1<password hidden>'
+    cfg.gsub! /(tcp-md5-key=)(\S+)/, '\\1<password hidden>'
+    cfg
+  end
+
   cfg :telnet do
     username /^Login:/
     password /^Password:/
