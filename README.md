@@ -117,8 +117,9 @@ Oxidized is a network device configuration backup tool. It's a RANCID replacemen
  * Ericsson/Redback
    * [IPOS (former SEOS)](lib/oxidized/model/ipos.rb)
  * Extreme Networks
-   * [XOS](lib/oxidized/model/xos.rb)
+   * [Enterasys](/lib/oxidized/model/enterasys.rb)
    * [WM](lib/oxidized/model/mtrlrfs.rb)
+   * [XOS](lib/oxidized/model/xos.rb)
  * F5
    * [TMOS](lib/oxidized/model/tmos.rb)
  * Force10
