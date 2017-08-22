@@ -5,9 +5,9 @@ class ALTEONOS < Oxidized::Model
   comment '! '
 
   cmd :secret do |cfg|
-        cfg.gsub!(/^([\s\t]*admpw ).*/, '\1 <password removed>')
-        cfg.gsub!(/^([\s\t]*pswd ).*/, '\1 <password removed>')
-        cfg.gsub!(/^([\s\t]*esecret ).*/, '\1 <password removed>')
+    cfg.gsub!(/^([\s\t]*admpw ).*/, '\1 <password removed>')
+    cfg.gsub!(/^([\s\t]*pswd ).*/, '\1 <password removed>')
+    cfg.gsub!(/^([\s\t]*esecret ).*/, '\1 <password removed>')
     cfg
   end
 
