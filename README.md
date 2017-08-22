@@ -503,12 +503,12 @@ source:
     adapter: mysql2
     database: oxidized
     table: nodes
-    username: root
+    user: root
     password: rootpass
     map:
       name: ip
       model: model
-      user: username
+      username: username
       password: password
     vars_map:
       enable: enable
