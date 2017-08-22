@@ -520,7 +520,7 @@ source:
     adapter: mysql2
     database: oxidized
     table: nodes
-    username: root
+    user: root
     password: rootpass
     map:
       name: ip
