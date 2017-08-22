@@ -29,10 +29,6 @@ class XOS < Oxidized::Model
 
   cmd 'show configuration'
 
-  cmd 'show policy detail' do |cfg|
-    comment cfg
-  end
-
   cfg :telnet do
     username /^login:/
     password /^\r*password:/
