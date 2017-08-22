@@ -181,8 +181,6 @@ Oxidized is a network device configuration backup tool. It's a RANCID replacemen
    * [EdgeSwitch](lib/oxidized/model/edgeswitch.rb)
  * Watchguard
    * [Fireware OS](lib/oxidized/model/firewareos.rb)
- * Westell
-   * [Westell 8178G, Westell 8266G](lib/oxidized/model/weos.rb)
  * Zhone
    * [Zhone (OLT and MX)](lib/oxidized/model/zhoneolt.rb)
  * Zyxel
