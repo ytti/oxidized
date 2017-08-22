@@ -98,6 +98,7 @@ Oxidized is a network device configuration backup tool. It's a RANCID replacemen
    * [NXOS](lib/oxidized/model/nxos.rb)
    * [SMA](lib/oxidized/model/ciscosma.rb)
    * [SMB (Nikola series)](lib/oxidized/model/ciscosmb.rb)
+   * [UCS](lib/oxidized/model/ucs.rb)
  * Citrix
    * [NetScaler (Virtual Applicance)](lib/oxidized/model/netscaler.rb)
  * Coriant (former Tellabs)
