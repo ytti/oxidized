@@ -170,7 +170,8 @@ module Oxidized
     def yield_node_output(node_name)
       with_lock do
         node = find { |n| n.name == node_name }
-        output = node.output.new
+        # The first entry in default will be picked for display
+        output = node.output[0].new
         raise Oxidized::NotSupported unless output.respond_to? :fetch
         yield node, output
       end

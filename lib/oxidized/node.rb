@@ -149,11 +149,13 @@ module Oxidized
     end
 
     def resolve_output opt
-      output = resolve_key :output, opt, Oxidized.config.output.default
-      if not Oxidized.mgr.output[output]
-        Oxidized.mgr.add_output output or raise MethodNotFound, "#{output} not found for node #{ip}"
+      outputs = resolve_key :output, opt, Oxidized.config.output.default
+      outputs.split(/\s*,\s*/).map do |output|
+        if not Oxidized.mgr.output[output]
+          Oxidized.mgr.add_output output or raise MethodNotFound, "#{output} not found for node #{ip}"
+        end
+        Oxidized.mgr.output[output]
       end
-      Oxidized.mgr.output[output]
     end
 
     def resolve_model opt
@@ -231,11 +233,13 @@ module Oxidized
     end
 
     def is_git? opt
-      (opt[:output] || Oxidized.config.output.default) == 'git'
+      outputs = (opt[:output] || Oxidized.config.output.default)
+      outputs.split(/\s*,\s*/).map.include?('git')
     end
 
     def is_gitcrypt? opt
-      (opt[:output] || Oxidized.config.output.default) == 'gitcrypt'
+      outputs = (opt[:output] || Oxidized.config.output.default)
+      outputs.split(/\s*,\s*/).map.include?('gitcrypt')
     end
 
   end
