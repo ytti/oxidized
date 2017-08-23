@@ -9,7 +9,7 @@ Oxidized is a network device configuration backup tool. It's a RANCID replacemen
 * automatically adds/removes threads to meet configured retrieval interval
 * restful API to move node immediately to head-of-queue (GET/POST /node/next/[NODE])
   * syslog udp+file example to catch config change event (ios/junos) and trigger config fetch
-  * will signal ios/junos user who made change, which output modules can use (via POST)
+  * optional mention of commit user and message (via PUT)
   * The git output module uses this info - 'git blame' will for each line show who made the change and when
 * restful API to reload list of nodes (GET /reload)
 * restful API to fetch configurations (/node/fetch/[NODE] or /node/fetch/group/[NODE])
@@ -31,6 +31,7 @@ Oxidized is a network device configuration backup tool. It's a RANCID replacemen
     * [Debugging](#debugging)
     * [Privileged mode](#privileged-mode)
     * [Disabling SSH exec channels](#disabling-ssh-exec-channels)
+    * [RESTful API](#restful-api)
     * [Source: CSV](#source-csv)
     * [Source: SQL](#source-sql)
       * [Source: SQLite](#source-sqlite)
@@ -469,6 +470,50 @@ variable.
 ```
 vars:
   ssh_no_exec: true
+```
+
+### RESTful API
+
+* Reload list of nodes, returns nothing
+
+```GET /node/reload```
+
+Example cURL request:
+
+```
+curl -X GET "http://127.0.0.1:8888/node/reload"
+```
+
+* Put node in front of queue and pull configuration
+
+```PUT /node/next/node.name.local```
+
+To add a commit message and a username if committing a changed configuration, simply put a JSON file into your request:
+
+```
+{
+  "user" : "Foo Bar",
+  "from" : "foo@bar.tld",
+  "msg" : "Your message here"
+}
+```
+
+Example request with cURL:
+
+```
+curl -X PUT -d '{"user":"Foo Bar","from":"foo@bar.tld","msg":"Your message here"}' "http://127.0.0.1:8888/node/next/node.name.local?format=json"
+```
+
+* Get node version information
+
+```
+GET /node/version?node_full=node.name.local
+```
+
+Example cURL request:
+
+```
+curl -X GET "http://127.0.0.1:8888/node/version?node_full=node.name.local&format=json"
 ```
 
 ### Source: CSV
