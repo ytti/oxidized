@@ -55,6 +55,8 @@ Oxidized is a network device configuration backup tool. It's a RANCID replacemen
 
  * A10 Networks
    * [ACOS](lib/oxidized/model/acos.rb)
+ * Accedian Performance Elements (NIDs)
+   * [AEN](lib/oxidized/model/aen.rb)
  * Alcatel-Lucent
    * [AOS](lib/oxidized/model/aos.rb)
    * [AOS7](lib/oxidized/model/aos7.rb)
