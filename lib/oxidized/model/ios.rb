@@ -115,13 +115,14 @@ class IOS < Oxidized::Model
     comment cfg
   end
 
-  cmd 'show users | exclude (con 0|speedtest*|oxidized*|10.10.72.6)' do |cfg|
-    comment cfg
-  end
+#  cmd 'show users | exclude (con 0|speedtest*|oxidized*|10.10.72.6)' do |cfg|
+#    comment cfg
+#  end
 
   cmd 'show running-config' do |cfg|
     cfg = cfg.each_line.to_a[3..-1]
     cfg = cfg.reject { |line| line.match /^ntp clock-period / }.join
+    cfg = cfg.reject { |line| line.match /^Last configuration change / }.join
     cfg.gsub! /^Current configuration : [^\n]*\n/, ''
     cfg.gsub! /^\ tunnel\ mpls\ traffic-eng\ bandwidth[^\n]*\n*(
                   (?:\ [^\n]*\n*)*
