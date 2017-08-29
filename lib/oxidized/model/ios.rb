@@ -115,7 +115,7 @@ class IOS < Oxidized::Model
     comment cfg
   end
 
-  cmd 'show users' do |cfg|
+  cmd 'show users | exclude (con 0|speedtest*|oxidized*|10.10.72.6)' do |cfg|
     comment cfg
   end
 
