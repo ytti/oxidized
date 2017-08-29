@@ -115,6 +115,10 @@ class IOS < Oxidized::Model
     comment cfg
   end
 
+  cmd 'show users' do |cfg|
+    comment cfg
+  end
+
   cmd 'show running-config' do |cfg|
     cfg = cfg.each_line.to_a[3..-1]
     cfg = cfg.reject { |line| line.match /^ntp clock-period / }.join
