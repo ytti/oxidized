@@ -26,7 +26,7 @@ class SGOS < Oxidized::Model
     cfg
   end
 
-  cmd 'configuration expanded noprompts with-keyrings unencrypted' do |cfg|
+  cmd 'show configuration expanded noprompts with-keyrings unencrypted' do |cfg|
     cfg.gsub! /^(!- Local time).*/,""
     cfg.gsub! /^(archive-configuration encrypted-password).*/, ""
     cfg.gsub! /^(download encrypted-password).*/, ""
