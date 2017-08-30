@@ -33,10 +33,6 @@ class SGOS < Oxidized::Model
     cfg
   end
 
-  cmd 'show configuration expanded noprompts' do |cfg|
-    cfg
-  end
-
   cfg :telnet, :ssh do
     # preferred way to handle additional passwords
     if vars :enable
