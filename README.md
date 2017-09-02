@@ -104,6 +104,7 @@ Oxidized is a network device configuration backup tool. It's a RANCID replacemen
  * Coriant (former Tellabs)
    * [TMOS (8800)](lib/oxidized/model/corianttmos.rb)
    * [8600](lib/oxidized/model/coriant8600.rb)
+   * [Groove](lib/oxidized/model/coriantgroove.rb)
  * Cumulus
    * [Linux](lib/oxidized/model/cumulus.rb)
  * DataCom
