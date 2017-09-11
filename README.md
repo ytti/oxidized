@@ -61,6 +61,7 @@ Oxidized is a network device configuration backup tool. It's a RANCID replacemen
    * [AOS](lib/oxidized/model/aos.rb)
    * [AOS7](lib/oxidized/model/aos7.rb)
    * [ISAM](lib/oxidized/model/isam.rb)
+   * [SR OS (Formerly TiMOS)](lib/oxidized/model/timos.rb)
    * Wireless
  * Alvarion
    * [BreezeACCESS](lib/oxidized/model/alvarion.rb)
