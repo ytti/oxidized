@@ -45,6 +45,9 @@ class Aireos < Oxidized::Model
     cfg.each_line do |line|
       next if line.match /^\s*$/
       next if line.match /rogue (adhoc|client) (alert|Unknown) [\da-f]{2}:/
+      next if line.match /interface nat-address management set \d+.\d+.\d+.\d+/
+      next if line.match /^flexconnect office-extend.+/
+      next if line.match /^ap hotspot venue type 0 0 OEAP-.+/
       line = line[1..-1] if line[0] == "\r"
       out << line.strip
     end

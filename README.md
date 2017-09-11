@@ -94,6 +94,7 @@ Oxidized is a network device configuration backup tool. It's a RANCID replacemen
    * [ASA](lib/oxidized/model/asa.rb)
    * [AsyncOS](lib/oxidized/model/asyncos.rb)
    * [CatOS](lib/oxidized/model/catos.rb)
+   * [FireLinuxOS](lib/oxidized/model/firelinuxos.rb)
    * [IOS](lib/oxidized/model/ios.rb)
    * [IOSXR](lib/oxidized/model/iosxr.rb)
    * [NGA](lib/oxidized/model/cisconga.rb)
@@ -176,6 +177,8 @@ Oxidized is a network device configuration backup tool. It's a RANCID replacemen
    * [Quanta / VxWorks 6.6 (1.1.0.8)](lib/oxidized/model/quantaos.rb)
  * Siklu
    * [EtherHaul](lib/oxidized/model/siklu.rb)
+ * SonicWALL
+   * [SonicOS](lib/oxidized/model/sonicos.rb)
  * Supermicro
    * [Supermicro](lib/oxidized/model/supermicro.rb)
  * Trango Systems
