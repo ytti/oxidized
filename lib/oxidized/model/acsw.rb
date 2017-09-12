@@ -49,7 +49,7 @@ class ACSW < Oxidized::Model
   end
 
   cfg :telnet do
-    username /^(.*login: )/
+    username /.*login:/
     password /^Password:/
   end
 
