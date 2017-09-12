@@ -619,7 +619,7 @@ output:
     repo: "/var/lib/oxidized/devices.git"
 ```
 
-And for groups repositories:
+For a single repositories per group:
 
 ``` yaml
 output:
@@ -655,6 +655,42 @@ output:
     single_repo: true
     repo: "/var/lib/oxidized/devices.git"
 
+```
+
+For a single repositories per device:
+
+```yaml
+output:
+  default: git
+  git:
+    user: Oxidized
+    email: o@example.com
+    individual_repo: true
+    repo: "/var/lib/oxidized/git-repos/default.git"
+```
+
+Oxidized will create a folder for each group in the same directory as the `default.git`. When no group is provided, the folder default will be created. It will create one repository per device. For example:
+
+```csv
+host1:ios:first
+host2:nxos:second
+host3:fortios:nill
+```
+
+This will generate the following folders/repositories:
+
+```bash
+$ ls /var/lib/oxidized/git-repos
+default first second
+
+$ ls /var/lib/oxidized/git-repos/default
+host3.git
+
+$ ls /var/lib/oxidized/git-repos/first
+host1.git
+
+$ ls /var/lib/oxidized/git-repos/second
+host2.git
 ```
 
 ### Output: Git-Crypt

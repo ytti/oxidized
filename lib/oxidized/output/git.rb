@@ -148,6 +148,9 @@ class Git < Output
       path = "#{group}/#{node.name}"
     end
 
+    if group and @cfg.individual_repo?
+      path = "#{node.name}"
+    end
     [repo, path]
   end
 
@@ -159,11 +162,17 @@ class Git < Output
         file = File.join @opt[:group], file
       else
         repo = if repo.is_a?(::String)
-                 File.join File.dirname(repo), @opt[:group] + '.git'
+                 if(@cfg.individual_repo?)
+                   File.join File.dirname(repo), @opt[:group], @opt[:name] + '.git'
+                 else
+                   File.join File.dirname(repo), @opt[:group] + '.git'
+                 end
                else
                  repo[@opt[:group]]
                end
       end
+    elsif(@cfg.individual_repo?)
+      repo = File.join File.dirname(repo), '/default/', @opt[:name] + '.git'
     end
 
     begin
