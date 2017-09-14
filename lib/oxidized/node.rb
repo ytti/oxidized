@@ -6,7 +6,7 @@ module Oxidized
   class ModelNotFound  < OxidizedError; end
   class Node
     attr_reader :name, :ip, :model, :input, :output, :group, :auth, :prompt, :vars, :last, :repo
-    attr_accessor :running, :user, :msg, :from, :stats, :retry
+    attr_accessor :running, :user, :email, :msg, :from, :stats, :retry
     alias :running? :running
 
     def initialize opt
@@ -121,7 +121,7 @@ module Oxidized
     end
 
     def reset
-      @user = @msg = @from = nil
+      @user = @email = @msg = @from = nil
       @retry = 0
     end
 
