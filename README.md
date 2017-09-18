@@ -181,6 +181,8 @@ Oxidized is a network device configuration backup tool. It's a RANCID replacemen
    * [EtherHaul](lib/oxidized/model/siklu.rb)
  * Supermicro
    * [Supermicro](lib/oxidized/model/supermicro.rb)
+ * Symantec
+   * [Blue Coat ProxySG / Security Gateway OS (SGOS)](lib/oxidized/model/sgos.rb)
  * Trango Systems
    * [Trango](lib/oxidized/model/trango.rb)
  * TPLink
