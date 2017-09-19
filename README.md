@@ -962,6 +962,7 @@ This hook configures the repository `remote` and _push_ the code when the specif
   * `password`: password for repository auth.
   * `publickey`: publickey for repository auth.
   * `privatekey`: privatekey for repository auth.
+  * `secure`: whether the ssl certificate of the remote repository should be verified. Default: true
 
 When using groups repositories, each group must have its own `remote` in the `remote_repo` config.
 
