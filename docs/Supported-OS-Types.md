@@ -128,7 +128,8 @@
  * Siklu
    * [EtherHaul](lib/oxidized/model/siklu.rb)
  * Supermicro
-   * [Supermicro](lib/oxidized/model/supermicro.rb)
+   * [Supermicro](lib/oxidized/model/supermicro.rb): Known to work with the Supermicro SSE-G2252.
+   * [Supermicro2](lib/oxidized/model/supermicro2.rb): Known to work with the Supermicro SSE-G48-TG4.
  * Symantec
    * [Blue Coat ProxySG / Security Gateway OS (SGOS)](lib/oxidized/model/sgos.rb)
  * Trango Systems
