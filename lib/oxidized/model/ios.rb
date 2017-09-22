@@ -140,7 +140,6 @@ class IOS < Oxidized::Model
     end
     post_login 'terminal length 0'
     post_login 'terminal width 0'
-    post_login 'terminal exec prompt no-timestamp'
     pre_logout 'exit'
   end
 
