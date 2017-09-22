@@ -51,7 +51,6 @@ class GithubRepo < Oxidized::Hook
     else
       if cfg.has_key?('publickey') && cfg.has_key?('privatekey')
         log "Using ssh auth with key", :debug
-        log "passphrase = #{ENV['OXIDIZED_SSH_PASSPHRASE']}", :debug
         Rugged::Credentials::SshKey.new(username: 'git', publickey: File.expand_path(cfg.publickey), privatekey: File.expand_path(cfg.privatekey), passphrase: ENV["OXIDIZED_SSH_PASSPHRASE"])
       else
         log "Using ssh auth with agentforwarding", :debug
