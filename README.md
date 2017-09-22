@@ -963,6 +963,8 @@ This hook configures the repository `remote` and _push_ the code when the specif
   * `publickey`: publickey for repository auth.
   * `privatekey`: privatekey for repository auth.
 
+Use an environment variable `OXIDIZED_SSH_PASSPHRASE` if your key has a passphrase
+
 When using groups repositories, each group must have its own `remote` in the `remote_repo` config.
 
 ``` yaml
