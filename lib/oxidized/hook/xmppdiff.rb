@@ -12,30 +12,48 @@ class XMPPDiff < Oxidized::Hook
   def run_hook(ctx)
     if ctx.node
       if ctx.event.to_s == "post_store"
+        begin
+          Timeout::timeout(15) do
+            gitoutput = ctx.node.output.new
+            diff = gitoutput.get_diff ctx.node, ctx.node.group, ctx.commitref, nil
 
-        log "Connecting to XMPP"
-        client = Jabber::Client.new(Jabber::JID.new(cfg.jid))
-        client.connect
-        client.auth(cfg.password)
+            interesting = diff[:patch].lines.to_a[4..-1].any? { |line|
+              ["+", "-"].include?(line[0]) and not ["#", "!"].include?(line[1])
+            }
+            interesting &&= diff[:patch].lines.to_a[5..-1].any? { |line| line[0] == '-' }
+            interesting &&= diff[:patch].lines.to_a[5..-1].any? { |line| line[0] == '+' }
 
-        log "Connected"
+            if interesting
+              log "Connecting to XMPP"
+              client = Jabber::Client.new(Jabber::JID.new(cfg.jid))
+              client.connect
+              sleep 1
+              client.auth(cfg.password)
+              sleep 1
 
-        m = Jabber::MUC::SimpleMUCClient.new(client)
-        m.join(cfg.channel + "/" + cfg.nick)
+              log "Connected"
 
-        log "Joined"
+              m = Jabber::MUC::SimpleMUCClient.new(client)
+              m.join(cfg.channel + "/" + cfg.nick)
 
-        gitoutput = ctx.node.output.new
-        diff = gitoutput.get_diff ctx.node, ctx.node.group, ctx.commitref, nil
-        title = "#{ctx.node.name.to_s} #{ctx.node.group.to_s} #{ctx.node.model.class.name.to_s.downcase}"
-        log "Posting diff as snippet to #{cfg.channel}"
+              log "Joined"
 
-        m.say(title)
-        m.say(diff[:patch].lines.to_a[4..-1].join)
+              title = "#{ctx.node.name.to_s} #{ctx.node.group.to_s} #{ctx.node.model.class.name.to_s.downcase}"
+              log "Posting diff as snippet to #{cfg.channel}"
 
-        client.close
+              m.say(title + "\n\n" + diff[:patch].lines.to_a[4..-1].join)
 
-        log "Finished"
+              sleep 1
+
+              client.close
+
+              log "Finished"
+
+            end
+          end
+        rescue Timeout::Error
+          log "timed out"
+        end
       end
     end
   end
