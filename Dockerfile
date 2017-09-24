@@ -18,6 +18,7 @@ RUN gem install oxidized-web --no-ri --no-rdoc
 # dependencies for hooks
 RUN gem install aws-sdk
 RUN gem install slack-api
+RUN gem install xmpp4r
 
 RUN rm -rf /tmp/oxidized
 
