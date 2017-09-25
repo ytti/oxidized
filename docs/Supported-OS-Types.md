@@ -1,7 +1,6 @@
 # Supported OS types
  * Vendor
    * OS model
-
  * A10 Networks
    * [ACOS](lib/oxidized/model/acos.rb)
  * Accedian Performance Elements (NIDs)

@@ -1,6 +1,6 @@
 # Oxidized [![Build Status](https://travis-ci.org/Shopify/oxidized.svg)](https://travis-ci.org/Shopify/oxidized) [![Gem Version](https://badge.fury.io/rb/oxidized.svg)](http://badge.fury.io/rb/oxidized) [![Join the chat at https://gitter.im/oxidized/Lobby](https://badges.gitter.im/oxidized/Lobby.svg)](https://gitter.im/oxidized/Lobby?utm_source=badge&utm_medium=badge&utm_campaign=pr-badge&utm_content=badge)
 
-** Is your company using Oxidized and has Ruby developers on staff? I'd love help from an extra maintainer!**
+> Is your company using Oxidized and has Ruby developers on staff? I'd love help from an extra maintainer!
 
 [WANTED: MAINTAINER](#help-needed)
 
@@ -8,7 +8,7 @@ Oxidized is a network device configuration backup tool. It's a RANCID replacemen
 
 * Automatically adds/removes threads to meet configured retrieval interval
 * Restful API to move node immediately to head-of-queue (GET/POST /node/next/[NODE])
-  * Syslog udp+file example to catch config change event (ios/junos) and trigger config fetch
+* Syslog udp+file example to catch config change event (ios/junos) and trigger config fetch
   * Will signal ios/junos user who made change, which output modules can use (via POST)
   * The git output module uses this info - 'git blame' will for each line show who made the change and when
 * Restful API to reload list of nodes (GET /reload)
@@ -32,13 +32,13 @@ Oxidized is a network device configuration backup tool. It's a RANCID replacemen
     * [Debugging](docs/Configuration.md#debugging)
     * [Privileged mode](docs/Configuration.md#privileged-mode)
     * [Disabling SSH exec channels](docs/Configuration.md#disabling-ssh-exec-channels)
-    * Sources:
+    * [Sources:](docs/Configuration.md#source)
         * [Source: CSV](docs/Configuration.md#source-csv)
         * [Source: SQL](docs/Configuration.md#source-sql)
         * [Source: SQLite](docs/Configuration.md#source-sqlite)
         * [Source: Mysql](docs/Configuration.md#source-mysql)
         * [Source: HTTP](docs/Configuration.md#source-http)
-    * Outputs:
+    * [Outputs:](docs/Configuration.md#output)
         * [Output: GIT](docs/Configuration.md#output-git)
         * [Output: GIT-Crypt](docs/Configuration.md#output-git-crypt)
         * [Output: HTTP](docs/Configuration.md#output-http)
@@ -46,6 +46,7 @@ Oxidized is a network device configuration backup tool. It's a RANCID replacemen
         * [Output types](docs/Configuration.md#output-types)
     * [Advanced Configuration](docs/Configuration.md#advanced-configuration)
     * [Advanced Group Configuration](docs/Configuration.md#advanced-group-configuration)
+    * [Hooks](docs/Configuration.md#hooks)
 5. [Ruby API](docs/Ruby-API.md#ruby-api)
     * [Input](docs/Ruby-API.md#input)
     * [Output](docs/Ruby-API.md#output)
@@ -64,7 +65,7 @@ gem install oxidized-script oxidized-web # if you don't install oxidized-web, ma
 ```
 
 ## CentOS, Oracle Linux, Red Hat Linux
-On CentOS 6 / RHEL 6, install Ruby greater than 1.9.3 (for Ruby 2.1.2 installation instructions see [Installing Ruby 2.1.2 using RVM](#installing-ruby-2.1.2-using-rvm)), then install Oxidized dependencies
+On CentOS 6 / RHEL 6, install Ruby greater than 1.9.3 (for Ruby 2.1.2 installation instructions see [Installing Ruby 2.1.2 using RVM](#installing-ruby-212-using-rvm)), then install Oxidized dependencies
 
 ```shell
 yum install cmake sqlite-devel openssl-devel libssh2-devel
@@ -130,7 +131,7 @@ docker run --rm -v /etc/oxidized:/root/.config/oxidized -p 8888:8888/tcp -t oxid
 ```
 If the RESTful API and Web Interface are enabled, on the docker host running the container
 edit /etc/oxidized/config and modify 'rest: 127.0.0.1:8888' by 'rest: 0.0.0.0:8888'
-this will bind port 8888 to all interfaces then expose port out. (Issue #445)
+this will bind port 8888 to all interfaces then expose port out. [Issue #445](https://github.com/ytti/oxidized/issues/445)
 
 You can also use docker-compose to launch oxidized container:
 ```
@@ -147,7 +148,7 @@ oxidized:
     - /etc/oxidized:/root/.config/oxidized
 ```
 
-create the `/etc/oxidized/router.db`
+create the `/etc/oxidized/router.db` [See CSV Source for further info](docs/Configuration.md#source-csv)
 
 ```
 vim /etc/oxidized/router.db
@@ -207,7 +208,7 @@ It is recommended practice to run Oxidized using its own username.  This usernam
 useradd oxidized
 ```
 
-> It is recommended not to run Oxidized as root.
+> It is recommended __not__ to run Oxidized as root.
 
 To initialize a default configuration in your home directory ```~/.config/oxidized/config```, simply run ```oxidized``` once. If you don't further configure anything from the output and source sections, it'll extend the examples on a subsequent ```oxidized``` execution. This is useful to see what options for a specific source or output backend are available.
 
@@ -228,7 +229,7 @@ $ tree -L 1 /etc/oxidized
 
 ## Source
 
-Oxidized supports [CSV](docs/Configuration.md#source-csv),  [SQLite](docs/Configuration.md#source-sqlite), [MySQL](docs/Configuration.md#source-mysql) and [HTTP](docs/Configuration.md#source-http) as source backends. The CSV backend reads nodes from a rancid compatible router.db file. The SQLite and MySQL backends will fire queries against a database and map certain fields to model items. The HTTP backend will fire queries against a http/https url. Take a look at the [Configuration](docs/Configuration.md#cookbook) for more details.
+Oxidized supports [CSV](docs/Configuration.md#source-csv),  [SQLite](docs/Configuration.md#source-sqlite), [MySQL](docs/Configuration.md#source-mysql) and [HTTP](docs/Configuration.md#source-http) as source backends. The CSV backend reads nodes from a rancid compatible router.db file. The SQLite and MySQL backends will fire queries against a database and map certain fields to model items. The HTTP backend will fire queries against a http/https url. Take a look at the [Configuration](docs/Configuration.md) for more details.
 
 ## Outputs
 
@@ -282,15 +283,15 @@ The init script assumes that you have a used named 'oxidized' and that oxidized 
 /usr/local/bin
 ```
 
-1.)Copy init script from extra/ folder to /etc/init.d/oxidized
-2.)Setup /var/run/
+1. Copy init script from extra/ folder to /etc/init.d/oxidized
+2. Setup /var/run/
 
 ```
 mkdir /var/run/oxidized
 chown oxidized:oxidized /var/run/oxidized
 ```
 
-3.)Make oxidized start on boot
+3. Make oxidized start on boot
 
 ```
 update-rc.d oxidized defaults

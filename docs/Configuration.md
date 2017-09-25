@@ -59,6 +59,23 @@ vars:
   ssh_no_exec: true
 ```
 
+### SSH Proxy Command
+
+Oxidized can `ssh` through a proxy as well. To do so we just need to set `ssh_proxy` variable.
+
+```
+...
+map:
+  name: 0
+  model: 1
+vars_map:
+  enable: 2
+  ssh_proxy: 3
+...
+```
+
+## Source
+
 ### Source: CSV
 
 One line per device, colon seperated. If `ip` isn't present, a DNS lookup will be done against `name`.  For large installations, setting `ip` will dramatically reduce startup time.
@@ -79,20 +96,12 @@ source:
       enable: 5
 ```
 
-### SSH Proxy Command
-
-Oxidized can `ssh` through a proxy as well. To do so we just need to set `ssh_proxy` variable.
+Example csv `/var/lib/oxidized/router.db`:
 
 ```
-...
-map:
-  name: 0
-  model: 1
-vars_map:
-  enable: 2
-  ssh_proxy: 3
-...
+rtr01.local,192.168.1.1,ios,oxidized,5uP3R53cR3T,T0p53cR3t
 ```
+
 ### Source: SQL
  Oxidized uses the `sequel` ruby gem. You can use a variety of databases that aren't explicitly listed. For more information visit https://github.com/jeremyevans/sequel Make sure you have the correct adapter!
 ### Source: MYSQL
@@ -176,6 +185,8 @@ source:
     secure: false
 ```
 
+## Output
+
 ### Output: File
 
 Parent directory needs to be created manually, one file per device, with most recent running config.
@@ -189,7 +200,6 @@ output:
 ### Output: Git
 
 This uses the rugged/libgit2 interface. So you should remember that normal Git hooks will not be executed.
-
 
 For a single repositories for all devices:
 
