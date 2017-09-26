@@ -11,11 +11,11 @@ class GithubRepo < Oxidized::Hook
 
     fetch_and_merge_remote(repo)
 
-    remote.push([repo.head.name], credentials: credentials)
+    remote.push([repo.head.name], credentials: credentials, certificate_check: certificate_validation)
   end
 
   def fetch_and_merge_remote(repo)
-    result = repo.fetch('origin', [repo.head.name], credentials: credentials)
+    result = repo.fetch('origin', [repo.head.name], credentials: credentials, certificate_check: certificate_validation)
     log result.inspect, :debug
 
     unless result[:total_deltas] > 0
@@ -43,6 +43,10 @@ class GithubRepo < Oxidized::Hook
   end
 
   private
+
+  def certificate_validation
+    lambda { |valid, host| cfg.has_key? 'secure' and cfg.secure == false ? true : valid }
+  end
 
   def credentials
     @credentials ||= if cfg.has_key?('username') && cfg.has_key?('password')
