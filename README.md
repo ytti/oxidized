@@ -32,21 +32,21 @@ Oxidized is a network device configuration backup tool. It's a RANCID replacemen
     * [Debugging](docs/Configuration.md#debugging)
     * [Privileged mode](docs/Configuration.md#privileged-mode)
     * [Disabling SSH exec channels](docs/Configuration.md#disabling-ssh-exec-channels)
-    * [Sources:](docs/Configuration.md#source)
-        * [Source: CSV](docs/Configuration.md#source-csv)
-        * [Source: SQL](docs/Configuration.md#source-sql)
-        * [Source: SQLite](docs/Configuration.md#source-sqlite)
-        * [Source: Mysql](docs/Configuration.md#source-mysql)
-        * [Source: HTTP](docs/Configuration.md#source-http)
-    * [Outputs:](docs/Configuration.md#output)
-        * [Output: GIT](docs/Configuration.md#output-git)
-        * [Output: GIT-Crypt](docs/Configuration.md#output-git-crypt)
-        * [Output: HTTP](docs/Configuration.md#output-http)
-        * [Output: File](docs/Configuration.md#output-file)
-        * [Output types](docs/Configuration.md#output-types)
+    * [Sources:](docs/Sources.md)
+        * [Source: CSV](docs/Sources.md#source-csv)
+        * [Source: SQL](docs/Sources.md#source-sql)
+        * [Source: SQLite](docs/Sources.md#source-sqlite)
+        * [Source: Mysql](docs/Sources.md#source-mysql)
+        * [Source: HTTP](docs/Sources.md#source-http)
+    * [Outputs:](docs/Outputs.md)
+        * [Output: GIT](docs/Outputs.md#output-git)
+        * [Output: GIT-Crypt](docs/Outputs.md#output-git-crypt)
+        * [Output: HTTP](docs/Outputs.md#output-http)
+        * [Output: File](docs/Outputs.md#output-file)
+        * [Output types](docs/Outputs.md#output-types)
     * [Advanced Configuration](docs/Configuration.md#advanced-configuration)
     * [Advanced Group Configuration](docs/Configuration.md#advanced-group-configuration)
-    * [Hooks](docs/Configuration.md#hooks)
+    * [Hooks](docs/Hooks.md)
 5. [Ruby API](docs/Ruby-API.md#ruby-api)
     * [Input](docs/Ruby-API.md#input)
     * [Output](docs/Ruby-API.md#output)
@@ -200,7 +200,7 @@ rvm use --default 2.1.2
 ```
 
 # Configuration
-Oxidized configuration is in YAML format. Configuration files are subsequently sourced from ```/etc/oxidized/config``` then ```~/.config/oxidized/config```. The hashes will be merged, this might be useful for storing source information in a system wide file and  user specific configuration in the home directory (to only include a staff specific username and password). Eg. if many users are using ```oxs```, see [Oxidized::Script](https://github.com/ytti/oxidized-script).
+Oxidized configuration is in YAML format. Configuration files are subsequently sourced from `/etc/oxidized/config` then `~/.config/oxidized/config`. The hashes will be merged, this might be useful for storing source information in a system wide file and  user specific configuration in the home directory (to only include a staff specific username and password). Eg. if many users are using `oxs`, see [Oxidized::Script](https://github.com/ytti/oxidized-script).
 
 It is recommended practice to run Oxidized using its own username.  This username can be added using standard command-line tools:
 
@@ -210,7 +210,7 @@ useradd oxidized
 
 > It is recommended __not__ to run Oxidized as root.
 
-To initialize a default configuration in your home directory ```~/.config/oxidized/config```, simply run ```oxidized``` once. If you don't further configure anything from the output and source sections, it'll extend the examples on a subsequent ```oxidized``` execution. This is useful to see what options for a specific source or output backend are available.
+To initialize a default configuration in your home directory `~/.config/oxidized/config`, simply run `oxidized` once. If you don't further configure anything from the output and source sections, it'll extend the examples on a subsequent `oxidized` execution. This is useful to see what options for a specific source or output backend are available.
 
 You can set the env variable `OXIDIZED_HOME` to change its home directory.
 
@@ -233,11 +233,11 @@ Oxidized supports [CSV](docs/Configuration.md#source-csv),  [SQLite](docs/Config
 
 ## Outputs
 
-Possible outputs are either [File](docs/Configuration.md#output-file), [GIT](docs/Configuration.md#output-git), [GIT-Crypt](docs/Configuration.md#output-git-crypt) and [HTT](docs/Configuration.md#output-http). The file backend takes a destination directory as argument and will keep a file per device, with most recent running version of a device. The GIT backend (recommended) will initialize an empty GIT repository in the specified path and create a new commit on every configuration change. The GIT-Crypt backend will also initialize a GIT repository but every configuration push to it will be encrypted on the fly by using ```git-crypt``` tool. Take a look at the [Configuration](docs/Configuration.md) for more details.
+Possible outputs are either [File](docs/Configuration.md#output-file), [GIT](docs/Configuration.md#output-git), [GIT-Crypt](docs/Configuration.md#output-git-crypt) and [HTT](docs/Configuration.md#output-http). The file backend takes a destination directory as argument and will keep a file per device, with most recent running version of a device. The GIT backend (recommended) will initialize an empty GIT repository in the specified path and create a new commit on every configuration change. The GIT-Crypt backend will also initialize a GIT repository but every configuration push to it will be encrypted on the fly by using `git-crypt` tool. Take a look at the [Configuration](docs/Configuration.md) for more details.
 
 Maps define how to map a model's fields to model [model fields](https://github.com/ytti/oxidized/tree/master/lib/oxidized/model). Most of the settings should be self explanatory, log is ignored if `use_syslog`(requires Ruby >= 2.0) is set to `true`.
 
-First create the directory where the CSV ```output``` is going to store device configs and start Oxidized once.
+First create the directory where the CSV `output` is going to store device configs and start Oxidized once.
 ```
 mkdir -p ~/.config/oxidized/configs
 oxidized
@@ -259,7 +259,7 @@ source:
       model: 1
 ```
 
-Now lets create a file based device database (you might want to switch to SQLite later on). Put your routers in ```~/.config/oxidized/router.db``` (file format is compatible with rancid). Simply add an item per line:
+Now lets create a file based device database (you might want to switch to SQLite later on). Put your routers in `~/.config/oxidized/router.db` (file format is compatible with rancid). Simply add an item per line:
 
 ```
 router01.example.com:ios
@@ -267,7 +267,7 @@ switch01.example.com:procurve
 router02.example.com:ios
 ```
 
-Run ```oxidized``` again to take the first backups.
+Run `oxidized` again to take the first backups.
 
 # Extra
 
