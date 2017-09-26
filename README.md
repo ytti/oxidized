@@ -807,6 +807,7 @@ Below is an advanced example configuration. You will be able to (optionally) ove
 username: oxidized
 password: S3cr3tx
 model: junos
+#interval in seconds
 interval: 3600
 log: ~/.config/oxidized/log
 debug: false
