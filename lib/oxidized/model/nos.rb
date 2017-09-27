@@ -2,7 +2,7 @@ class NOS < Oxidized::Model
 
   # Brocade Network Operating System
 
-  prompt /^(?:\e\[..h)?[\w.-]+(\([\w.-]+\))*# $/
+  prompt /^(?:\e\[..h)?[\w.-]+(\([\w.-]+\))?# $/
   comment  '! '
 
   cmd :all do |cfg|
