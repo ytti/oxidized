@@ -32,6 +32,7 @@
    * [NOS (Network Operating System)](lib/oxidized/model/nos.rb)
    * [Vyatta](lib/oxidized/model/vyatta.rb)
    * [6910](lib/oxidized/model/br6910.rb)
+   * [SLX-OS](lib/oxidized/model/slxos.rb)
  * Casa
    * [Casa](lib/oxidized/model/casa.rb)
  * Check Point
