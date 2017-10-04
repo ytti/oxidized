@@ -3,13 +3,6 @@ class SLXOS < Oxidized::Model
   prompt /^.*[>#]\s?$/i
   comment  '! '
 
-
-  #cmd :all do |cfg|
-    # sometimes ironware inserts arbitrary whitespace after commands are
-    # issued on the CLI, from run to run.  this normalises the output.
-  #  cfg.each_line.to_a[1..-2].drop_while { |e| e.match /^\s+$/ }.join
-  #end
-
   cmd 'show version' do |cfg|
     cfg.gsub! /(^((.*)[Ss]ystem uptime(.*))$)/, '' #remove unwanted line system uptime
     cfg.gsub! /[Uu]p\s?[Tt]ime is .*/,''
@@ -19,15 +12,9 @@ class SLXOS < Oxidized::Model
 
   cmd 'show chassis' do |cfg|
     cfg.encode!("UTF-8", :invalid => :replace, :undef => :replace) #sometimes ironware returns broken encoding
-    #cfg.gsub! /(^((.*)Current temp(.*))$)/, '' #remove unwanted lines current temperature
 	cfg.gsub! /.*Power Usage.*/, '' #remove unwanted lines power usage
 	cfg.gsub! /Time A(live|wake).*/, '' #remove unwanted lines time alive/awake
-    #cfg.gsub! /Speed = [A-Z-]{2,6} \(\d{2,3}\%\)/, '' #remove unwanted lines Speed Fans
-    #cfg.gsub! /current speed is [A-Z]{2,6} \(\d{2,3}\%\)/, ''
-    #cfg.gsub! /Fan \d* - STATUS: OK \D*\d*./, '' # Fix for ADX Fan speed reporting
-    #cfg.gsub! /\d* deg C/, '' # Fix for ADX temperature reporting
     cfg.gsub! /([\[]*)1([\]]*)<->([\[]*)2([\]]*)(<->([\[]*)3([\]]*))*/, ''
-    #cfg.gsub! /\d{2}\.\d deg-C/, 'XX.X deg-C'
 
     comment cfg
   end
