@@ -4,7 +4,7 @@ class SLXOS < Oxidized::Model
   comment  '! '
 
   cmd 'show version' do |cfg|
-    cfg.gsub! /(^((.*)[Ss]ystem uptime(.*))$)/, '' #remove unwanted line system uptime
+    cfg.gsub! /(^((.*)[Ss]ystem [Uu]ptime(.*))$)/, '' #remove unwanted line system uptime
     cfg.gsub! /[Uu]p\s?[Tt]ime is .*/,''
 
     comment cfg
