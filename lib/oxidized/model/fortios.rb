@@ -47,7 +47,7 @@ class FortiOS < Oxidized::Model
 
 cfg << cmd('end') if @vdom_enabled
 
-    cfg << cmd('show')
+    cfg << cmd('show full-configuration')
     cfg.join "\n"
   end
 
