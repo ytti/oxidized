@@ -9,6 +9,7 @@
 /test/tmp/
 /test/version_tmp/
 /tmp/
+.idea/
 
 # Used by dotenv library to load environment variables.
 # .env

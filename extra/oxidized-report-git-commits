@@ -58,4 +58,4 @@ echo "Git repo: ${OX_REPO_NAME}"
 echo "Git commit ID: ${OX_REPO_COMMITREF}"
 echo ""
 
-git --bare --git-dir="${OX_REPO_NAME}" diff --no-color "${OX_REPO_COMMITREF}~1..${OX_REPO_COMMITREF}"
+git --bare --git-dir="${OX_REPO_NAME}" show --pretty='' --no-color "${OX_REPO_COMMITREF}"

@@ -126,8 +126,8 @@ class IOS < Oxidized::Model
   end
 
   cfg :telnet do
-    username /^Username:/
-    password /^Password:/
+    username /^Username:/i
+    password /^Password:/i
   end
 
   cfg :telnet, :ssh do

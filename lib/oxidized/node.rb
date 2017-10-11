@@ -6,8 +6,9 @@ module Oxidized
   class ModelNotFound  < OxidizedError; end
   class Node
     attr_reader :name, :ip, :model, :input, :output, :group, :auth, :prompt, :vars, :last, :repo
-    attr_accessor :running, :user, :msg, :from, :stats, :retry
+    attr_accessor :running, :user, :email, :msg, :from, :stats, :retry
     alias :running? :running
+
     def initialize opt
       Oxidized.logger.debug 'resolving DNS for %s...' % opt[:name]
       # remove the prefix if an IP Address is provided with one as IPAddr converts it to a network address.
@@ -120,7 +121,7 @@ module Oxidized
     end
 
     def reset
-      @user = @msg = @from = nil
+      @user = @email = @msg = @from = nil
       @retry = 0
     end
 
@@ -217,6 +218,7 @@ module Oxidized
       end
 
       #model
+      # FIXME: warning: instance variable @model not initialized
       if Oxidized.config.models.has_key?(@model.class.name.to_s.downcase)
         if Oxidized.config.models[@model.class.name.to_s.downcase].has_key?(key_str)
           value = Oxidized.config.models[@model.class.name.to_s.downcase][key_str]
