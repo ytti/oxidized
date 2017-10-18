@@ -48,9 +48,6 @@ class ASA < Oxidized::Model
     comment cfg
   end
 
-  cmd 'more system:running-config' do |cfg|
-     cfg = cfg.each_line.to_a[3..-1].join
-     cfg.gsub! /^: [^\n]*\n/, ''
   post do
     if @is_multiple_context
       multiple_context
