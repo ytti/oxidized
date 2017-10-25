@@ -26,6 +26,7 @@ class IOS < Oxidized::Model
 
   cmd :secret do |cfg|
     cfg.gsub! /^(snmp-server community).*/, '\\1 <configuration removed>'
+    cfg.gsub! /^(snmp-server host).*/, '\\1 <configuration removed>'
     cfg.gsub! /^(username \S+ privilege \d+) (\S+).*/, '\\1 <secret hidden>'
     cfg.gsub! /^(username \S+ password \d) (\S+)/, '\\1 <secret hidden>'
     cfg.gsub! /^(username \S+ secret \d) (\S+)/, '\\1 <secret hidden>'
