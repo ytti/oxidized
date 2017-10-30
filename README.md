@@ -47,7 +47,8 @@ Oxidized is a network device configuration backup tool. It's a RANCID replacemen
     * [Advanced Configuration](docs/Configuration.md#advanced-configuration)
     * [Advanced Group Configuration](docs/Configuration.md#advanced-group-configuration)
     * [Hooks](docs/Hooks.md)
-5. [Ruby API](docs/Ruby-API.md#ruby-api)
+5. [Help](#help)
+6. [Ruby API](docs/Ruby-API.md#ruby-api)
     * [Input](docs/Ruby-API.md#input)
     * [Output](docs/Ruby-API.md#output)
     * [Source](docs/Ruby-API.md#source)
@@ -296,6 +297,14 @@ chown oxidized:oxidized /var/run/oxidized
 ```
 update-rc.d oxidized defaults
 ```
+
+# Help
+
+If you need help with Oxidized then we have a few methods you can use to get in touch.
+
+  - [Gitter](https://gitter.im/oxidized/Lobby?utm_source=badge&utm_medium=badge&utm_campaign=pr-badge&utm_content=badge) - You can join the Lobby on gitter to chat to other Oxidized users.
+  - [GitHub](https://github.com/ytti/oxidized/) - For help and requests for code changes / updates.
+  - [Forum](https://community.librenms.org/c/help/oxidized) - A user forum run by [LibreNMS](https://github.com/librenms/librenms) where you can ask for help and support.
 
 # Help Needed
 
