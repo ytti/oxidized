@@ -12,7 +12,8 @@ module Oxidized
         @source = Oxidized.config.source.default
         Oxidized.mgr.add_source @source
         Oxidized.logger.info "lib/oxidized/nodes.rb: Loading nodes"
-        Oxidized.mgr.source[@source].new.load.each do |node|
+        nodes = Oxidized.mgr.source[@source].new.load node_want
+        nodes.each do |node|
           # we want to load specific node(s), not all of them
           next unless node_want? node_want, node
           begin
