@@ -141,3 +141,28 @@ hooks:
 ```
 
 Note the channel name must be in quotes.
+
+## Hook type: xmppdiff
+
+The `xmppdiff` hook posts config diffs to a [XMPP](https://en.wikipedia.org/wiki/XMPP) chatroom of your choice. It only triggers for `post_store` events.
+
+You will need to manually install the `xmpp4r` gem on your system:
+
+```
+gem install xmpp4r
+```
+
+Configuration example:
+
+``` yaml
+hooks:
+  slack:
+    type: xmppdiff
+    events: [post_store]
+    jid: "user@server.tld/resource"
+    password: "password"
+    channel: "room@server.tld"
+    nick: "nickname"
+```
+
+Note the channel name must be in quotes.
