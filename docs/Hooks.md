@@ -169,7 +169,7 @@ Configuration example:
 
 ``` yaml
 hooks:
-  slack:
+  xmpp:
     type: xmppdiff
     events: [post_store]
     jid: "user@server.tld/resource"
