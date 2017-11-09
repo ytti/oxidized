@@ -36,6 +36,7 @@ class IOSXR < Oxidized::Model
   cfg :telnet, :ssh do
     post_login 'terminal length 0'
     post_login 'terminal width 0'
+    post_login 'terminal exec prompt no-timestamp'
     if vars :enable
       post_login do
         send "enable\n"

@@ -32,7 +32,10 @@ class Cumulus < Oxidized::Model
     
     cfg += add_comment 'IP Routes'
     cfg += cmd 'netstat -rn'
-
+    
+    cfg += add_comment 'SNMP settings'
+    cfg += cmd 'cat /etc/snmp/snmpd.conf'
+    
     cfg += add_comment 'QUAGGA DAEMONS'
     cfg += cmd 'cat /etc/quagga/daemons'
     
@@ -48,21 +51,30 @@ class Cumulus < Oxidized::Model
     cfg += add_comment 'QUAGGA OSPF6'
     cfg += cmd 'cat /etc/quagga/ospf6d.conf'
     
+    cfg += add_comment 'QUAGGA CONF'
+    cfg += cmd 'cat /etc/quagga/Quagga.conf'
+    
     cfg += add_comment 'MOTD'
     cfg += cmd 'cat /etc/motd'
     
     cfg += add_comment 'PASSWD'
     cfg += cmd 'cat /etc/passwd'
     
-    cfg += add_comment ' SWITCHD'
+    cfg += add_comment 'SWITCHD'
     cfg += cmd 'cat /etc/cumulus/switchd.conf'
     
+    cfg += add_comment 'PORTS'
+    cfg += cmd 'cat /etc/cumulus/ports.conf'
+    
+    cfg += add_comment 'TRAFFIC'
+    cfg += cmd 'cat /etc/cumulus/datapath/traffic.conf'
+   	
     cfg += add_comment 'ACL'
     cfg += cmd 'iptables -L -n'
     
     cfg += add_comment 'VERSION'
     cfg += cmd 'cat /etc/cumulus/etc.replace/os-release'
-
+    
     cfg += add_comment 'License'
     cfg += cmd 'cl-license'
     

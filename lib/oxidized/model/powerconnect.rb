@@ -13,6 +13,11 @@ class PowerConnect < Oxidized::Model
     cfg.each_line.to_a[1..-3].join
   end
 
+  cmd :secret do |cfg|
+    cfg.gsub! /^username (\S+) password \S+ (.*)/, 'username \1 password <hidden> \2'
+    cfg
+  end
+
   cmd 'show version' do |cfg|
     if (@stackable.nil?)
       @stackable = true if cfg.match /(U|u)nit\s/
@@ -67,6 +72,7 @@ class PowerConnect < Oxidized::Model
       end
       out << line.strip
     end
+    out = out.select { |line| not line[/Up\sTime/] }
     out = comment out.join "\n"
     out << "\n"
   end

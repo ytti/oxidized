@@ -13,7 +13,11 @@ class SlackDiff < Oxidized::Hook
     if ctx.node
       if ctx.event.to_s == "post_store"
         log "Connecting to slack"
-        client = Slack::Client.new token: cfg.token
+        Slack.configure do |config|
+           config.token = cfg.token
+           config.proxy = cfg.proxy if cfg.has_key?('proxy')
+        end
+        client = Slack::Client.new
         client.auth_test
         log "Connected"
         # diff snippet - default

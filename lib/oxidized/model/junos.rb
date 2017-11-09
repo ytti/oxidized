@@ -8,6 +8,7 @@ class JunOS < Oxidized::Model
 
   cmd :all do |cfg|
     cfg = cfg.lines.to_a[1..-2].join if screenscrape
+    cfg.gsub!(/  scale-subscriber (\s+)(\d+)/,'  scale-subscriber                <count>')
     cfg.lines.map { |line| line.rstrip }.join("\n") + "\n"
   end
 
@@ -36,6 +37,8 @@ class JunOS < Oxidized::Model
   end
 
   cmd('show chassis hardware') { |cfg| comment cfg }
+  cmd('show system license') { |cfg| comment cfg }
+  cmd('show system license keys') { |cfg| comment cfg }
 
   cfg :telnet do
     username(/^login:/)

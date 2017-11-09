@@ -1,12 +1,16 @@
 #For debian 8 put it in /lib/systemd/system/
+#For RHEL / CentOS 7 put it in /etc/systemd/system/
 #and call it with systemctl start oxidized.service
 
 [Unit]
 Description=Oxidized - Network Device Configuration Backup Tool
+After=network-online.target multi-user.target
+Wants=network-online.target
 
 [Service]
 ExecStart=/usr/local/bin/oxidized
 User=oxidized
+KillSignal=SIGINT
 
 [Install]
 WantedBy=multi-user.target

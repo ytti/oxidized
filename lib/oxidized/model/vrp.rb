@@ -4,6 +4,12 @@ class VRP < Oxidized::Model
   prompt /^(<[\w.-]+>)$/
   comment '# '
 
+  cmd :secret do |cfg|
+    cfg.gsub! /(pin verify (?:auto|)).*/, '\\1 <PIN hidden>'
+    cfg.gsub! /(%\^%#.*%\^%#)/, '<secret hidden>'
+    cfg
+  end
+
   cmd :all do |cfg|
     cfg.each_line.to_a[1..-2].join
   end

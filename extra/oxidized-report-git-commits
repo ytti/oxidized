@@ -17,64 +17,45 @@
 # See the License for the specific language governing permissions and
 # limitations under the License.
 #
+# 20170615 - Andre Sencioles <asenci@gmail.com>
+#            Removed requirement for Git working directory
+#            Check job status
+#
+#
 # usage: add the following hook to the oxidized config file:
 # 
 # hooks:
 #  email_output:
 #    type: exec
 #    events: [post_store, node_fail]
-#    cmd: '/home/oxidized/extra/oxidized-report-git-commits ~/gitdir/ | mail -s "Oxidized updates for ${OX_NODE_NAME}" update-recipient@example.com'
+#    cmd: '/home/oxidized/extra/oxidized-report-git-commits | mail -s "Oxidized updates for ${OX_NODE_NAME}" update-recipient@example.com'
 #    async: true
 #    timeout: 120
 # 
 #
-# The script takes a single argument, namely a git working directory name,
-# e.g.  "~/gitdir/".  This is only used as a staging directory and should
-# not be set to be the same as the git repo directory.
-#
 
-PATH=${PATH}:/usr/local/bin:/usr/local/sbin
-export PATH
+echo "Node name: ${OX_NODE_NAME}"
+echo "Group name: ${OX_NODE_GROUP}"
+echo "Job status: ${OX_JOB_STATUS}"
+echo "Job time: ${OX_JOB_TIME}"
 
-gitdir=$1
+if [ "${OX_EVENT}" = "node_fail" ]; then
+    echo 'Job failed'
+    exit 64
+fi
 
-if [ X${OX_REPO_COMMITREF} = "X" ]; then
-	echo \$OX_REPO_COMMITREF not set
+if [ -z "${OX_REPO_COMMITREF}" ]; then
+	echo '$OX_REPO_COMMITREF not set'
 	exit 64
 fi
 
-if [ X${OX_REPO_NAME} = "X" ]; then
-	echo \$OX_REPO_NAME not set
+if [ -z "${OX_REPO_NAME}" ]; then
+	echo '$OX_REPO_NAME not set'
 	exit 64
 fi
 	
-if [ ! -d ${gitdir}/.git ]; then
-	git clone -q ${OX_REPO_NAME} ${gitdir}
-
-	ret=$?
-	if [ X"${ret}" != X0 ] && [ X"${ret}" != X1 ]; then
-		echo git clone failed: aborting.
-		exit 128
-	fi
-fi
-
-cd ${gitdir}
-
-git pull -q > /dev/null 2>&1 
-ret=$?
-if [ X"${ret}" != X0 ] && [ X"${ret}" != X1 ]; then
-	echo git pull failed: aborting.
-	exit 128
-fi
-
-# Git is probably working at this stage, so safe to emit more info
-
-echo "Node name: ${OX_NODE_NAME}"
-echo "Group Name: ${OX_NODE_GROUP}"
-echo "Job Time: ${OX_JOB_TIME}"
-echo "Git Commit ID: ${OX_REPO_COMMITREF}"
-echo "Git Repo: ${OX_REPO_NAME}"
-echo "Local working dir: ${gitdir}"
+echo "Git repo: ${OX_REPO_NAME}"
+echo "Git commit ID: ${OX_REPO_COMMITREF}"
 echo ""
 
-git diff --no-color ${OX_REPO_COMMITREF}~1..${OX_REPO_COMMITREF}
+git --bare --git-dir="${OX_REPO_NAME}" show --pretty='' --no-color "${OX_REPO_COMMITREF}"

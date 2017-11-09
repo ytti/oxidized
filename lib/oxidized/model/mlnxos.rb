@@ -13,6 +13,10 @@ class MLNXOS < Oxidized::Model
     cfg.gsub! /\[\?1h=\r/, '' # Pager Handling
     cfg.gsub! /\r\[K/,'' # Pager Handling
     cfg.gsub! /\s/, '' # Linebreak Handling
+    cfg.gsub! /^CPU\ load\ averages\:\s.+/, '' # Omit constantly changing CPU info
+    cfg.gsub! /^System\ memory\:\s.+/, '' # Omit constantly changing memory info
+    cfg.gsub! /^Uptime\:\s.+/, '' # Omit constantly changing uptime info
+    cfg.gsub! /.+Generated\ at\s\d+.+/, '' # Omit constantly changing generation time info
     cfg = cfg.lines.to_a[2..-3].join
   end
 
@@ -38,6 +42,6 @@ class MLNXOS < Oxidized::Model
 
   cfg :ssh do
     password /^Password:\s*/
-    pre_logout 'exit'
+    pre_logout "\nexit"
   end
 end

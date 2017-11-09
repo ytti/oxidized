@@ -8,6 +8,8 @@ class Alvarion < Oxidized::Model
   end
 
 
-  cfg :tftp {}
+  cfg :tftp do
+
+  end
 
 end

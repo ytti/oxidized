@@ -15,6 +15,7 @@ class Dlink < Oxidized::Model
   end
 
   cmd 'show switch' do |cfg|
+    cfg.gsub! /^System\ Uptime\s.+/, '' # Omit constantly changing uptime info
     comment cfg
   end
 

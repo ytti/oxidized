@@ -34,6 +34,8 @@ class IronWare < Oxidized::Model
     cfg.gsub! /(^((.*)Current temp(.*))$)/, '' #remove unwanted lines current temperature
     cfg.gsub! /Speed = [A-Z-]{2,6} \(\d{2,3}\%\)/, '' #remove unwanted lines Speed Fans
     cfg.gsub! /current speed is [A-Z]{2,6} \(\d{2,3}\%\)/, ''
+    cfg.gsub! /Fan \d* - STATUS: OK \D*\d*./, '' # Fix for ADX Fan speed reporting
+    cfg.gsub! /\d* deg C/, '' # Fix for ADX temperature reporting
     cfg.gsub! /([\[]*)1([\]]*)<->([\[]*)2([\]]*)(<->([\[]*)3([\]]*))*/, ''
     cfg.gsub! /\d{2}\.\d deg-C/, 'XX.X deg-C'
     if cfg.include? "TEMPERATURE"
@@ -50,6 +52,7 @@ class IronWare < Oxidized::Model
   end
 
   cmd 'show flash' do |cfg|
+    cfg.gsub! /(\d+) bytes/, '' # Fix for ADX flash size
     comment cfg
   end
 
@@ -67,7 +70,7 @@ class IronWare < Oxidized::Model
     # match expected prompts on both older and newer
     # versions of IronWare
     username /^(Please Enter Login Name|Username):/
-    password /^(Please Enter )Password:/
+    password /^(Please Enter Password ?|Password):/
   end
 
   #handle pager with enable
