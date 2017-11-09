@@ -140,6 +140,19 @@ hooks:
     channel: "#network-changes"
 ```
 
+Optionally you can disable snippets and post a formatted message, for instance linking to a commit in a git repo. Named parameters `%{node}`, `%{group}`, `%{model}` and `%{commitref}` are available.
+
+``` yaml
+hooks:
+  slack:
+    type: slackdiff
+    events: [post_store]
+    token: SLACK_BOT_TOKEN
+    channel: "#network-changes"
+    diff: false
+    message: "%{node} %{group} %{model} updated https://git.intranet/network-changes/commit/%{commitref}"
+```
+
 Note the channel name must be in quotes.
 
 ## Hook type: xmppdiff
