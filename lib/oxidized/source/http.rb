@@ -15,7 +15,7 @@ class HTTP < Source
   require "uri"
   require "json"
 
-  def load node=nil
+  def load node_want=nil
     nodes = []
     uri = URI.parse(@cfg.url)
     http = Net::HTTP.new(uri.host, uri.port)
@@ -29,8 +29,8 @@ class HTTP < Source
     end
 
     req_uri = uri.request_uri
-    if node
-      req_uri = "#{req_uri}/#{node}"
+    if node_want
+      req_uri = "#{req_uri}/#{node_want}"
     end
     request = Net::HTTP::Get.new(req_uri, headers)
     if (@cfg.user? && @cfg.pass?)

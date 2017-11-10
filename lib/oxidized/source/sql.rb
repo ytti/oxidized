@@ -18,11 +18,12 @@ class SQL < Source
     end
   end
 
-  def load
+  def load node_want=nil
     nodes = []
     db = connect
     query = db[@cfg.table.to_sym]
     query = query.with_sql(@cfg.query) if @cfg.query?
+    query = qeury.where(@cfg.map.name.to_sym node_want)
     query.each do |node|
       # map node parameters
       keys = {}
