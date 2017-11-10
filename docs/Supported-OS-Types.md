@@ -76,6 +76,8 @@
    * [XOS](/lib/oxidized/model/xos.rb)
  * F5
    * [TMOS](/lib/oxidized/model/tmos.rb)
+ * Fiberstore
+   * [S3800](/lib/oxidized/model/gcombnps.rb)
  * Force10
    * [DNOS](/lib/oxidized/model/dnos.rb)
    * [FTOS](/lib/oxidized/model/ftos.rb)
@@ -83,6 +85,8 @@
    * [FortiOS](/lib/oxidized/model/fortios.rb)
  * Fujitsu
    * [PRIMERGY Blade switch 1/10Gbe](/lib/oxidized/model/fujitsupy.rb)
+ * GCOM Technologies
+   * [Broadband Network Platform Software](/lib/oxidized/model/gcombnps.rb)
  * Hatteras
    * [Hatteras](/lib/oxidized/model/hatteras.rb)
  * Hirschmann
