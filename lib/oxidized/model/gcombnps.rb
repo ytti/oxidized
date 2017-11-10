@@ -35,17 +35,17 @@ class GcomBNPS < Oxidized::Model
   end
 
   cmd 'show interface sfp' do |cfg|
-    cfg = cfg.each_line.to_a
+    out = []
+    cfg.each_line do |line|
+      next if line.match /^  Temperature/
+      next if line.match /^  Voltage\(V\)/
+      next if line.match /^  Bias Current\(mA\)/
+      next if line.match /^  RX Power\(dBM\)/
+      next if line.match /^  TX Power\(dBM\)/
+      out << line
+    end
 
-    cfg = cfg
-      .reject { |line| line.match /^  Temperature/ }
-      .reject { |line| line.match /^  Voltage\(V\)/ }
-      .reject { |line| line.match /^  Bias Current\(mA\)/ }
-      .reject { |line| line.match /^  RX Power\(dBM\)/ }
-      .reject { |line| line.match /^  TX Power\(dBM\)/ }
-
-    comment cfg.join
-
+    comment out.join
   end
 
 
@@ -54,13 +54,14 @@ class GcomBNPS < Oxidized::Model
   end
 
   cmd 'show system' do |cfg|
-    cfg = cfg.each_line.to_a
+    out = []
+    cfg.each_line do |line|
+      next if line.match /^system run time        :/
+      next if line.match /^switch temperature     :/
+      out << line
+    end
 
-    cfg = cfg
-      .reject { |line| line.match /^system run time        :/ }
-      .reject { |line| line.match /^switch temperature     :/ }
-
-    comment cfg.join
+    comment out.join
   end
 
   cfg :telnet do
@@ -82,5 +83,3 @@ class GcomBNPS < Oxidized::Model
 
 end
 
-# vim: set noai ts=2 sw=2:
-# vim: set expandtab:
