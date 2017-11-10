@@ -15,6 +15,8 @@
    * [BreezeACCESS](/lib/oxidized/model/alvarion.rb)
  * APC
    * [AOS](/lib/oxidized/model/apc_aos.rb)
+ * Arbor Networks
+   * [ArbOS](/lib/oxidized/model/arbos.rb)
  * Arista
    * [EOS](/lib/oxidized/model/eos.rb)
  * Arris
