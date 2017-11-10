@@ -1,8 +1,8 @@
 class Comware < Oxidized::Model
   # HP (A-series)/H3C/3Com Comware
   
-  # sometimes the prompt might have a leading nul
-  prompt /^\0*(<[\w.-]+>)$/
+  # sometimes the prompt might have a leading nul or trailing ASCII Bell (^G)
+  prompt /^\0*(<[\w.-]+>).?$/
   comment '# '
 
   # example how to handle pager
@@ -42,6 +42,10 @@ class Comware < Oxidized::Model
     end
 
     post_login 'screen-length disable'
+    # optionally you can add into system-view:
+    # user-interface vty 0 4
+    #  screen-length 0
+    #
     post_login 'undo terminal monitor'
     pre_logout 'quit'
   end
