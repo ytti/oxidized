@@ -42,10 +42,6 @@ class Comware < Oxidized::Model
     end
 
     post_login 'screen-length disable'
-    # optionally you can add into system-view:
-    # user-interface vty 0 4
-    #  screen-length 0
-    #
     post_login 'undo terminal monitor'
     pre_logout 'quit'
   end
