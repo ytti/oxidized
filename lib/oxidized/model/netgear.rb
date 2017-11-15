@@ -1,7 +1,7 @@
 class Netgear < Oxidized::Model
 
   comment '!'
-  prompt /^(\([\w-]+\)\s[#>])$/
+  prompt /^(\([\w\-.]+\)\s[#>])$/
 
   cmd :secret do |cfg|
     cfg.gsub!(/password (\S+)/, 'password <hidden>')
