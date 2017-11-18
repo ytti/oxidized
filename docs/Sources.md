@@ -92,7 +92,7 @@ Since this is an SQL query, you can also provide a more advanced query to assist
 In this example we limit the nodes to two "POPs" of `mypop1` and `mypop2`. We also require the nodes to have the `enabled` boolean set to `True`.
 
 ```sql
-query: "SELECT * FROM nodes WHERE pop ('mypop1','mypop2') AND enabled = True"
+query: "SELECT * FROM nodes WHERE pop IN ('mypop1','mypop2') AND enabled = True"
 ```
 The order of the nodes returned will influence the order that nodes are fetched by oxidized. You can use standard SQL `ORDER BY` clauses to influence the node order.
 
