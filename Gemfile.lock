@@ -1,7 +1,7 @@
 PATH
   remote: .
   specs:
-    oxidized (0.20.0)
+    oxidized (0.21.0)
       asetus (~> 0.1)
       net-ssh (~> 3.0.2)
       net-telnet (~> 0)
