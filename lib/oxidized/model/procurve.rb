@@ -21,6 +21,11 @@ class Procurve < Oxidized::Model
     ""
   end
 
+  expect /Enter switch number/ do
+    send "\n"
+    ""
+  end
+
   cmd :all do |cfg|
     cfg = cfg.each_line.to_a[1..-2].join
     cfg = cfg.gsub /^\r/, ''
