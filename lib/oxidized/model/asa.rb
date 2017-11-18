@@ -25,10 +25,16 @@ class ASA < Oxidized::Model
     @is_multiple_context = cfg.include? 'multiple'
   end
 
+  # check for failover environment
+  cmd 'show failover' do |cfg|
+    @is_failover_environment = cfg.include? 'Failover On'
+  end
+
   cmd 'show version' do |cfg|
     # avoid commits due to uptime / ixo-router01 up 2 mins 28 secs / ixo-router01 up 1 days 2 hours
     cfg = cfg.each_line.select { |line| not line.match /(\s+up\s+\d+\s+)|(.*days.*)/ }
     cfg = cfg.join
+    cfg.gsub! /(Configuration last modified by) (\S+) at (\d+:\d+)(:\d+\.\d+) (.*)/, '\1 \2 \3 \5'
     comment cfg
   end
 
@@ -36,7 +42,19 @@ class ASA < Oxidized::Model
     comment cfg
   end
 
+  #
+  # Capture failover items if we are Failover On
+  #
   post do
+     if @is_failover_environment
+        comment collect_failover_info
+     end
+  end
+
+  post do
+    #
+    # Determine configuration gathering for contexts
+    #
     if @is_multiple_context
       multiple_context
     else
@@ -98,4 +116,13 @@ class ASA < Oxidized::Model
       end
   end
 
+  # Called when the device has failover on
+  def collect_failover_info
+      out = "----------========== [Failover Information] ==========----------\n"
+      out << cmd('show failover state')
+      out << cmd('show failover history')
+      out << "------------------- [Failover Mate Inventory] -----------------\n"
+      out << cmd('failover exec mate show inventory')
+      out
+  end
 end
