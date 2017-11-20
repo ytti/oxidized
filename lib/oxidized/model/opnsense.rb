@@ -1,4 +1,4 @@
-class PfSense < Oxidized::Model
+class OpnSense < Oxidized::Model
 
   # minimum required permissions: "System: Shell account access"
   # must enable SSH and password-based SSH access
