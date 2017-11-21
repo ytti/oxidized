@@ -117,6 +117,7 @@
    * [OneOS](/lib/oxidized/model/oneos.rb)
  * Opengear
    * [Opengear](/lib/oxidized/model/opengear.rb)
+ * [OPNsense](/lib/oxidized/model/opnsense.rb)
  * Palo Alto
    * [PANOS](/lib/oxidized/model/panos.rb)
  * [PLANET SG/SGS Switches](/lib/oxidized/model/planet.rb)
