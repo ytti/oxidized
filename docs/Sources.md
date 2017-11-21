@@ -23,7 +23,7 @@ source:
 Example csv `/var/lib/oxidized/router.db`:
 
 ```
-rtr01.local,192.168.1.1,ios,oxidized,5uP3R53cR3T,T0p53cR3t
+rtr01.local:192.168.1.1:ios:oxidized:5uP3R53cR3T:T0p53cR3t
 ```
 
 ### Source: SQL
