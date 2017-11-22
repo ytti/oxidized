@@ -26,6 +26,31 @@ Example csv `/var/lib/oxidized/router.db`:
 rtr01.local:192.168.1.1:ios:oxidized:5uP3R53cR3T:T0p53cR3t
 ```
 
+If you would like to use a GPG encrypted file as the source then you can use the following example:
+
+```yaml
+source:
+  default: csv
+  csv:
+    file: ~/.config/oxidized/router.db
+    delimiter: !ruby/regexp /:/
+    gpg: true
+    gpg_password: 'password'
+    map:
+      name: 0
+      model: 1
+```
+
+> Please note, if you are running GPG v2 then you will be prompted for your gpg password on start up, if you use GPG >= 2.1 then you can add the following config to stop that behaviour:
+
+> Within `~/.gnupg/gpg-agent.conf`
+
+> `allow-loopback-pinentry`
+
+> and within: `~/.gnupg/gpg.conf`
+
+> `pinentry-mode loopback`
+
 ### Source: SQL
  Oxidized uses the `sequel` ruby gem. You can use a variety of databases that aren't explicitly listed. For more information visit https://github.com/jeremyevans/sequel Make sure you have the correct adapter!
 ### Source: MYSQL
