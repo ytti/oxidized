@@ -21,7 +21,7 @@ class CSV < Source
   def load
     nodes = []
     file = File.expand_path(@cfg.file)
-    if @cfg.gpg?
+    file = if @cfg.gpg?
       crypto = GPGME::Crypto.new password: @cfg.gpg_password
       file = crypto.decrypt(File.open(file)).to_s
     else
