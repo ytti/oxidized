@@ -115,7 +115,23 @@ class IOS < Oxidized::Model
     comment cfg
   end
 
+  cmd 'show running-config view full' do |cfg|
+    @running_full_config_rbac = process_running_config(cfg)
+  end
+
   cmd 'show running-config' do |cfg|
+    # if running-config view full returned actual output and
+    # not the 3-line "Invalid input detected....", accept it.
+    if @running_full_config_rbac.lines.count > 5
+      ""
+    else
+      cfg
+    end
+  end
+
+  # add an intermediate method to process running config
+  # in order to control running-config variations
+  def process_running_config cfg
     cfg = cfg.each_line.to_a[3..-1]
     cfg = cfg.reject { |line| line.match /^ntp clock-period / }.join
     cfg.gsub! /^Current configuration : [^\n]*\n/, ''
