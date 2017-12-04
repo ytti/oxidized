@@ -26,6 +26,7 @@ OX_NODE_IP
 OX_NODE_FROM
 OX_NODE_MSG
 OX_NODE_GROUP
+OX_NODE_MODEL
 OX_JOB_STATUS
 OX_JOB_TIME
 OX_REPO_COMMITREF
@@ -138,6 +139,44 @@ hooks:
     events: [post_store]
     token: SLACK_BOT_TOKEN
     channel: "#network-changes"
+```
+
+Optionally you can disable snippets and post a formatted message, for instance linking to a commit in a git repo. Named parameters `%{node}`, `%{group}`, `%{model}` and `%{commitref}` are available.
+
+``` yaml
+hooks:
+  slack:
+    type: slackdiff
+    events: [post_store]
+    token: SLACK_BOT_TOKEN
+    channel: "#network-changes"
+    diff: false
+    message: "%{node} %{group} %{model} updated https://git.intranet/network-changes/commit/%{commitref}"
+```
+
+Note the channel name must be in quotes.
+
+## Hook type: xmppdiff
+
+The `xmppdiff` hook posts config diffs to a [XMPP](https://en.wikipedia.org/wiki/XMPP) chatroom of your choice. It only triggers for `post_store` events.
+
+You will need to manually install the `xmpp4r` gem on your system:
+
+```
+gem install xmpp4r
+```
+
+Configuration example:
+
+``` yaml
+hooks:
+  xmpp:
+    type: xmppdiff
+    events: [post_store]
+    jid: "user@server.tld/resource"
+    password: "password"
+    channel: "room@server.tld"
+    nick: "nickname"
 ```
 
 Note the channel name must be in quotes.

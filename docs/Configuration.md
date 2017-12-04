@@ -83,7 +83,7 @@ Below is an advanced example configuration. You will be able to (optionally) ove
 username: oxidized
 password: S3cr3tx
 model: junos
-interval: 3600
+interval: 3600 #interval in seconds
 log: ~/.config/oxidized/log
 debug: false
 threads: 30
