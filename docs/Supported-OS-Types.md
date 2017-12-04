@@ -27,11 +27,12 @@
    * [VOSS (VSP Operating System Software)](/lib/oxidized/model/voss.rb)
    * [BOSS (Baystack Operating System Software)](/lib/oxidized/model/boss.rb)
  * Brocade
-   * [FabricOS](/lib/oxidized/model/fabricos.rb)
-   * [Ironware](/lib/oxidized/model/ironware.rb)
-   * [NOS (Network Operating System)](/lib/oxidized/model/nos.rb)
-   * [Vyatta](/lib/oxidized/model/vyatta.rb)
-   * [6910](/lib/oxidized/model/br6910.rb)
+   * [FabricOS](lib/oxidized/model/fabricos.rb)
+   * [Ironware](lib/oxidized/model/ironware.rb)
+   * [NOS (Network Operating System)](lib/oxidized/model/nos.rb)
+   * [Vyatta](lib/oxidized/model/vyatta.rb)
+   * [6910](lib/oxidized/model/br6910.rb)
+   * [SLX-OS](lib/oxidized/model/slxos.rb)
  * Casa
    * [Casa](/lib/oxidized/model/casa.rb)
  * Check Point
