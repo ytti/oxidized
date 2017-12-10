@@ -18,6 +18,12 @@ class FortiOS < Oxidized::Model
     cfg.gsub! /(set (?:passwd|password|secondary-secret|rsso-secret|psksecret|secret|key ENC)).*/, '\\1 <configuration removed>'
     cfg.gsub! /(set private-key).*-+END ENCRYPTED PRIVATE KEY-*"$/m , '\\1 <configuration removed>'
     cfg.gsub! /(IPS Malicious URL Database).*/, '\\1 <configuration removed>'
+    cfg.gsub! /.*(APP-DB).*/, '\\1 <configuration removed>'
+    cfg
+  end
+
+  cmd :reduce do |cfg|
+    cfg.gsub! /(Cluster uptime).*/, '\\1 <configuration removed>'
     cfg
   end
 

@@ -91,6 +91,13 @@ module Oxidized
           out = instance_exec Oxidized::String.new(out), string, &all_block
         end
       end
+
+      if vars :reduce_churn
+        self.class.cmds[:reduce].each do |all_block|
+          out = instance_exec Oxidized::String.new(out), string, &all_block
+        end
+      end
+
       out = instance_exec Oxidized::String.new(out), &block if block
       process_cmd_output out, string
     end
