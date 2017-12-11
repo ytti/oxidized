@@ -19,7 +19,7 @@ class FortiOS < Oxidized::Model
     cfg.gsub! /(set private-key).*-+END ENCRYPTED PRIVATE KEY-*"$/m , '\\1 <configuration removed>'
     cfg.gsub! /(set ca ).*-+END CERTIFICATE-*"$/m , '\\1 <configuration removed>'
     cfg.gsub! /(set csr ).*-+END CERTIFICATE REQUEST-*"$/m , '\\1 <configuration removed>'
-    cfg.gsub! /(IPS Malicious URL Database).*/, '\\1 <configuration removed>'
+    cfg.gsub! /(Virus-DB|Extended DB|IPS-DB|IPS-ETDB|APP-DB|INDUSTRIAL-DB|Botnet DB|IPS Malicious URL Database).*/, '\\1 <configuration removed>'
     cfg.gsub! /(Cluster uptime:).*/, '\\1 <configuration removed>'
     cfg
   end
