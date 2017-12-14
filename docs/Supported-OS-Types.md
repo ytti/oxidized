@@ -11,6 +11,8 @@
    * [ISAM](/lib/oxidized/model/isam.rb)
    * [SR OS (Formerly TiMOS)](/lib/oxidized/model/timos.rb)
    * Wireless
+ * Allied Telesis
+   * [Alliedware Plus](/lib/oxidized/model/awplus.rb)
  * Alvarion
    * [BreezeACCESS](/lib/oxidized/model/alvarion.rb)
  * APC
