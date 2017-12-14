@@ -68,6 +68,7 @@ module Oxidized
         with_lock do
           n = del node
           n.user = opt['user']
+          n.email = opt['email']
           n.msg  = opt['msg']
           n.from = opt['from']
           # set last job to nil so that the node is picked for immediate update
