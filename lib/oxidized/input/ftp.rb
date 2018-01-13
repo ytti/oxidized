@@ -1,17 +1,11 @@
 module Oxidized
   require 'net/ftp'
   require 'timeout'
-  require_relative 'cli'
-
+  require 'oxidized/input/cli'
   class FTP < Input
     RescueFail = {
-      :debug => [
-        #Net::SSH::Disconnect,
-      ],
-      :warn => [
-        #RuntimeError,
-        #Net::SSH::AuthenticationFailed,
-      ],
+      :debug => [],
+      :warn => [],
     }
     include Input::CLI
 
@@ -30,15 +24,6 @@ module Oxidized
     def cmd file
       Oxidized.logger.debug "FTP: #{file} @ #{@node.name}"
       @ftp.getbinaryfile file, nil
-    end
-
-    # meh not sure if this is the best way, but perhaps better than not implementing send
-    def send my_proc
-      my_proc.call
-    end
-
-    def output
-      ""
     end
 
     private
