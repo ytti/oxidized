@@ -4,7 +4,7 @@ class ZyNOS < Oxidized::Model
 
   comment  '! '
 
-  cmd 'config'
+  cmd 'config-0'
 
   cfg :ftp do
   end
