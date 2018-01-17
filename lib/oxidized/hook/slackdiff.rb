@@ -30,14 +30,16 @@ class SlackDiff < Oxidized::Hook
         if diffenable == true
           gitoutput = ctx.node.output.new
           diff = gitoutput.get_diff ctx.node, ctx.node.group, ctx.commitref, nil
-          title = "#{ctx.node.name.to_s} #{ctx.node.group.to_s} #{ctx.node.model.class.name.to_s.downcase}"
-          log "Posting diff as snippet to #{cfg.channel}"
-          client.files_upload(channels: cfg.channel, as_user: true,
-                              content: diff[:patch].lines.to_a[4..-1].join,
-                              filetype: "diff",
-                              title: title,
-                              filename: "change"
-                             )
+          unless diff == "no diffs"
+            title = "#{ctx.node.name.to_s} #{ctx.node.group.to_s} #{ctx.node.model.class.name.to_s.downcase}"
+            log "Posting diff as snippet to #{cfg.channel}"
+            client.files_upload(channels: cfg.channel, as_user: true,
+                                content: diff[:patch].lines.to_a[4..-1].join,
+                                filetype: "diff",
+                                title: title,
+                                filename: "change"
+                               )
+          end
         end
         # message custom formatted - optional
         if cfg.has_key?('message') == true
