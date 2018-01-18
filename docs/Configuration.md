@@ -14,6 +14,8 @@ input:
   debug: true
   ssh:
     secure: false
+  ftp:
+    passive: true
 ```
 
 ### Privileged mode
