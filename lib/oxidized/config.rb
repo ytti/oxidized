@@ -37,6 +37,7 @@ module Oxidized
       asetus.default.input.default    = 'ssh, telnet'
       asetus.default.input.debug      = false # or String for session log file
       asetus.default.input.ssh.secure = false # complain about changed certs
+      asetus.default.input.ftp.passive= true  # ftp passive mode
 
       asetus.default.output.default = 'file'  # file, git
       asetus.default.source.default = 'csv'   # csv, sql

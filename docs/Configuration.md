@@ -74,6 +74,15 @@ vars_map:
 ...
 ```
 
+### FTP Passive Mode
+
+Oxidized uses ftp passive mode by default. Some devices require passive mode to be disabled. To do so, we can set `input.ftp.passive` to false
+```
+input:
+  ftp:
+    passive: false
+```
+
 ### Advanced Configuration
 
 Below is an advanced example configuration. You will be able to (optionally) override options per device. The router.db format used is `hostname:model:username:password:enable_password`. Hostname and model will be the only required options, all others override the global configuration sections.
