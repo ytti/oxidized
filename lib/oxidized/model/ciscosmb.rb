@@ -24,6 +24,10 @@ class CiscoSMB < Oxidized::Model
     comment cfg
   end
   
+  cmd 'show system' do |cfg|
+    comment cfg
+  end
+  
   cmd 'show bootvar' do |cfg|
     comment cfg
   end
