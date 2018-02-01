@@ -28,12 +28,8 @@ Privilege Level | Types of commands at this privilege level
 ----------------|-------------------------------------------
 0|Display basic system information.
 3|Display configuration or status.
-13|Configure features except for login accounts, SNMP user accounts, the authentication
-method sequence and authorization settings, multiple logins, administrator and enable
-passwords, and configuration information display.
-14|Configure login accounts, SNMP user accounts, the authentication method sequence and
-authorization settings, multiple logins, and administrator and enable passwords, and display
-configuration information.
+13|Configure features except for login accounts, SNMP user accounts, the authentication method sequence and authorization settings, multiple logins, administrator and enable passwords, and configuration information display.
+14|Configure login accounts, SNMP user accounts, the authentication method sequence and authorization settings, multiple logins, and administrator and enable passwords, and display configuration information.
 
 
 Oxidized can now retrieve your configuration!
