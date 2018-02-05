@@ -11,6 +11,7 @@ Use the table below for more information on the Vendor/Model caveats.
 
 Vendor          | Model           |Updated
 ----------------|-----------------|----------------
+Arista|[EOS](EOS.md)|05 Feb 2018
 Huawei|[VRP](VRP-Huawei.md)|17 Nov 2017
 Juniper|[MX/QFX/EX/SRX/J Series](JunOS.md)|18 Jan 2018
 Xyzel|[XGS4600 Series](XGS4600-Zyxel.md)|23 Jan 2018

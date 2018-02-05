@@ -80,7 +80,11 @@ module Oxidized
     private
 
     def is_cycle_finished?
-      @jobs_done > 0 && @jobs_done % @nodes.count == 0
+      if @jobs_done > @nodes.count
+        true
+      else
+        @jobs_done > 0 && @jobs_done % @nodes.count == 0
+      end
     end
 
     def run_done_hook
