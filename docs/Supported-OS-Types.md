@@ -60,6 +60,8 @@
    * [TMOS (8800)](/lib/oxidized/model/corianttmos.rb)
    * [8600](/lib/oxidized/model/coriant8600.rb)
    * [Groove](/lib/oxidized/model/coriantgroove.rb)
+ * Comnet
+   * [Swithes](/lib/oxidized/model/comnet.rb)
  * Cumulus
    * [Linux](/lib/oxidized/model/cumulus.rb)
  * DataCom
