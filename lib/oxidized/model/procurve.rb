@@ -47,6 +47,10 @@ class Procurve < Oxidized::Model
     comment cfg
   end
 
+  cmd 'show system power-supply' do |cfg|
+    comment cfg
+  end
+
   cmd 'show interfaces transceiver' do |cfg|
     comment cfg
   end
