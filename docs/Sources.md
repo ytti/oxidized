@@ -23,8 +23,33 @@ source:
 Example csv `/var/lib/oxidized/router.db`:
 
 ```
-rtr01.local,192.168.1.1,ios,oxidized,5uP3R53cR3T,T0p53cR3t
+rtr01.local:192.168.1.1:ios:oxidized:5uP3R53cR3T:T0p53cR3t
 ```
+
+If you would like to use a GPG encrypted file as the source then you can use the following example:
+
+```yaml
+source:
+  default: csv
+  csv:
+    file: ~/.config/oxidized/router.db
+    delimiter: !ruby/regexp /:/
+    gpg: true
+    gpg_password: 'password'
+    map:
+      name: 0
+      model: 1
+```
+
+> Please note, if you are running GPG v2 then you will be prompted for your gpg password on start up, if you use GPG >= 2.1 then you can add the following config to stop that behaviour:
+
+> Within `~/.gnupg/gpg-agent.conf`
+
+> `allow-loopback-pinentry`
+
+> and within: `~/.gnupg/gpg.conf`
+
+> `pinentry-mode loopback`
 
 ### Source: SQL
  Oxidized uses the `sequel` ruby gem. You can use a variety of databases that aren't explicitly listed. For more information visit https://github.com/jeremyevans/sequel Make sure you have the correct adapter!
@@ -61,8 +86,8 @@ source:
   default: sql
   sql:
     adapter: sqlite
-    database: "/var/lib/oxidized/devices.db"
-    table: devices
+    database: "/var/lib/oxidized/nodes.db"
+    table: nodes
     map:
       name: fqdn
       model: model
@@ -71,6 +96,36 @@ source:
     vars_map:
       enable: enable
 ```
+
+### Custom SQL Query Support
+
+You may also implement a custom SQL query to retreive the nodelist using  SQL syntax with the `query:` configuration parameter under the `sql:` stanza.
+
+
+#### Custom SQL Query Examples
+
+You may have a table named `nodes` which contains a boolean to indicate if the nodes should be enabled (fetched via oxidized). This can be used in the custom SQL query to avoid fetching from known impacted nodes.
+
+In your configuration, you would add the `query:` parameter and specify the SQL query. Make sure to put this within the `sql:` configuration section.
+
+```sql
+query: "SELECT * FROM nodes WHERE enabled = True"
+```
+
+Since this is an SQL query, you can also provide a more advanced query to assist in more complicated oxidized deployments. The exact deployment is up to you on how you design your database and oxidized fetchers.
+
+In this example we limit the nodes to two "POPs" of `mypop1` and `mypop2`. We also require the nodes to have the `enabled` boolean set to `True`.
+
+```sql
+query: "SELECT * FROM nodes WHERE pop IN ('mypop1','mypop2') AND enabled = True"
+```
+The order of the nodes returned will influence the order that nodes are fetched by oxidized. You can use standard SQL `ORDER BY` clauses to influence the node order.
+
+You should always test your SQL query before using it in the oxidized configuration as there is no syntax or error checking performed before sending it to the database engine.
+
+Consult your database documentation for more information on query language and table optimization.
+
+
 
 ### Source: HTTP
 

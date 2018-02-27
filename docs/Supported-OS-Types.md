@@ -11,6 +11,8 @@
    * [ISAM](/lib/oxidized/model/isam.rb)
    * [SR OS (Formerly TiMOS)](/lib/oxidized/model/timos.rb)
    * Wireless
+ * Allied Telesis
+   * [Alliedware Plus](/lib/oxidized/model/awplus.rb)
  * Alvarion
    * [BreezeACCESS](/lib/oxidized/model/alvarion.rb)
  * APC
@@ -29,11 +31,12 @@
    * [VOSS (VSP Operating System Software)](/lib/oxidized/model/voss.rb)
    * [BOSS (Baystack Operating System Software)](/lib/oxidized/model/boss.rb)
  * Brocade
-   * [FabricOS](/lib/oxidized/model/fabricos.rb)
-   * [Ironware](/lib/oxidized/model/ironware.rb)
-   * [NOS (Network Operating System)](/lib/oxidized/model/nos.rb)
-   * [Vyatta](/lib/oxidized/model/vyatta.rb)
-   * [6910](/lib/oxidized/model/br6910.rb)
+   * [FabricOS](lib/oxidized/model/fabricos.rb)
+   * [Ironware](lib/oxidized/model/ironware.rb)
+   * [NOS (Network Operating System)](lib/oxidized/model/nos.rb)
+   * [Vyatta](lib/oxidized/model/vyatta.rb)
+   * [6910](lib/oxidized/model/br6910.rb)
+   * [SLX-OS](lib/oxidized/model/slxos.rb)
  * Casa
    * [Casa](/lib/oxidized/model/casa.rb)
  * Check Point
@@ -78,6 +81,8 @@
    * [XOS](/lib/oxidized/model/xos.rb)
  * F5
    * [TMOS](/lib/oxidized/model/tmos.rb)
+ * Fiberstore
+   * [S3800](/lib/oxidized/model/gcombnps.rb)
  * Force10
    * [DNOS](/lib/oxidized/model/dnos.rb)
    * [FTOS](/lib/oxidized/model/ftos.rb)
@@ -85,6 +90,8 @@
    * [FortiOS](/lib/oxidized/model/fortios.rb)
  * Fujitsu
    * [PRIMERGY Blade switch 1/10Gbe](/lib/oxidized/model/fujitsupy.rb)
+ * GCOM Technologies
+   * [Broadband Network Platform Software](/lib/oxidized/model/gcombnps.rb)
  * Hatteras
    * [Hatteras](/lib/oxidized/model/hatteras.rb)
  * Hirschmann
@@ -119,6 +126,7 @@
    * [OneOS](/lib/oxidized/model/oneos.rb)
  * Opengear
    * [Opengear](/lib/oxidized/model/opengear.rb)
+ * [OPNsense](/lib/oxidized/model/opnsense.rb)
  * Palo Alto
    * [PANOS](/lib/oxidized/model/panos.rb)
  * [PLANET SG/SGS Switches](/lib/oxidized/model/planet.rb)
