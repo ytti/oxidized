@@ -133,6 +133,8 @@
    * [Quanta / VxWorks 6.6 (1.1.0.8)](/lib/oxidized/model/quantaos.rb)
  * Siklu
    * [EtherHaul](/lib/oxidized/model/siklu.rb)
+ * SNR
+   * [SNR](/lib/oxidized/model/snr.rb)
  * Supermicro
    * [Supermicro](/lib/oxidized/model/supermicro.rb)
  * Symantec
