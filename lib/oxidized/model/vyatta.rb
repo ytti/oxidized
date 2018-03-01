@@ -13,7 +13,7 @@ class Vyatta < Oxidized::Model
     cfg
   end
 
-  cmd 'show configuration | no-more'
+  cmd 'show configuration commands | no-more'
 
   cfg :telnet do
     username  /login:\s/
