@@ -83,6 +83,7 @@ module Oxidized
       Oxidized.logger.debug "lib/oxidized/model/model.rb Executing #{string}"
       out = @input.cmd(string)
       return false unless out
+      out = out.b
       self.class.cmds[:all].each do |all_block|
         out = instance_exec Oxidized::String.new(out), string, &all_block
       end
