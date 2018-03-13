@@ -109,38 +109,42 @@ gem build *.gemspec
 gem install pkg/*.gem
 ```
 
-## Running with Docker
+### Running with Docker
 
-clone git repo:
+Currently, Docker Hub automatcally builds the master branch as [oxidized/oxidized](https://hub.docker.com/r/oxidized/oxidized/), you can make use of this container or build your own.
+
+To build your own, clone git repo:
 
 ```shell
 git clone https://github.com/ytti/oxidized
 ```
 
-build container locally:
+Then, build the container locally (requires docker 17.05.0-ce or higher):
 
 ```shell
 docker build -q -t oxidized/oxidized:latest oxidized/
 ```
 
-create config directory in main system:
+Once you've built the container (or chosen to make use of the automatically built container in Docker Hub, which will be downloaded for you by docker on the first `run` command had you not built it), proceed as follows:
+
+Create a configuration directory in the host system:
 
 ```shell
 mkdir /etc/oxidized
 ```
 
-run container the first time:
-_Note: this step in only needed for creating Oxidized's configuration file and can be skipped if you already have it
+Run the container for the first time to initialize the config:
+
+_Note: this step in only required for creating the Oxidized configuration file and can be skipped if you already have one._
 
 ```shell
 docker run --rm -v /etc/oxidized:/root/.config/oxidized -p 8888:8888/tcp -t oxidized/oxidized:latest oxidized
 ```
 
 If the RESTful API and Web Interface are enabled, on the docker host running the container
-edit /etc/oxidized/config and modify 'rest: 127.0.0.1:8888' by 'rest: 0.0.0.0:8888'
-this will bind port 8888 to all interfaces then expose port out. [Issue #445](https://github.com/ytti/oxidized/issues/445)
+edit `/etc/oxidized/config` and modify `rest: 127.0.0.1:8888` to `rest: 0.0.0.0:8888`. This will bind port 8888 to all interfaces, and expose the port so that it could be accessed externally. [(Issue #445)](https://github.com/ytti/oxidized/issues/445)
 
-You can also use docker-compose to launch oxidized container:
+Alternatively, you can use docker-compose to launch the oxidized container:
 
 ```yaml
 # docker-compose.yml
@@ -156,13 +160,13 @@ oxidized:
     - /etc/oxidized:/root/.config/oxidized
 ```
 
-create the `/etc/oxidized/router.db` [See CSV Source for further info](docs/Configuration.md#source-csv)
+Create the `/etc/oxidized/router.db` (see [CSV Source](docs/Sources.md#source-csv) for futher info):
 
 ```shell
 vim /etc/oxidized/router.db
 ```
 
-run container again:
+Run container again to start oxidized with your configuration:
 
 ```shell
 docker run -v /etc/oxidized:/root/.config/oxidized -p 8888:8888/tcp -t oxidized/oxidized:latest
@@ -174,19 +178,19 @@ Puma 2.13.4 starting...
 * Listening on tcp://0.0.0.0:8888
 ```
 
-If you want to have the config automatically reloaded (e.g. when using a http source that changes)
+If you want to have the config automatically reloaded (e.g. when using a http source that changes):
 
 ```shell
 docker run -v /etc/oxidized:/root/.config/oxidized -p 8888:8888/tcp -e CONFIG_RELOAD_INTERVAL=3600 -t oxidized/oxidized:latest
 ```
 
-If you need to use an internal CA (e.g. to connect to an private github instance)
+If you need to use an internal CA (e.g. to connect to an private github instance):
 
 ```shell
 docker run -v /etc/oxidized:/root/.config/oxidized -v /path/to/MY-CA.crt:/usr/local/share/ca-certificates/MY-CA.crt -p 8888:8888/tcp -e UPDATE_CA_CERTIFICATES=true -t oxidized/oxidized:latest
 ```
 
-## Installing Ruby 2.1.2 using RVM
+### Installing Ruby 2.1.2 using RVM
 
 Install Ruby 2.1.2 build dependencies
 
@@ -271,7 +275,7 @@ source:
 
 Now lets create a file based device database (you might want to switch to SQLite later on). Put your routers in `~/.config/oxidized/router.db` (file format is compatible with rancid). Simply add an item per line:
 
-```
+```text
 router01.example.com:ios
 switch01.example.com:procurve
 router02.example.com:ios
@@ -285,7 +289,7 @@ Run `oxidized` again to take the first backups.
 
 The init script assumes that you have a used named 'oxidized' and that oxidized is in one of the following paths:
 
-```
+```text
 /sbin
 /bin
 /usr/sbin
