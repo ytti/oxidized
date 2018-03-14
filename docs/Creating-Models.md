@@ -1,4 +1,4 @@
-# Extending and Customizing Oxidized Models
+# Creating and Extending Oxidized Models
 
 Oxidized supports a growing list of [operating system types](Supported-OS-Types.md). Out of the box, most model implementations collect configuration data. Some implementations also include a conservative set of additional commands that collect basic device information (device make and model, software version, licensing information, ...) which are appended to the configuration as comments.
 
@@ -11,7 +11,7 @@ The example below can be used to extend the `JunOS` model to collect the output 
 Create the file `~/.config/oxidized/model/junos.rb` with the following contents:
 
 ```ruby
-require 'oxidized/mode/junos.rb'
+require 'oxidized/model/junos.rb'
 
 
 class JunOS
@@ -35,7 +35,7 @@ Intuitively, it is also possible to:
 
 ## Advanced features
 
-The loosely-coupled architecture of Oxidized allows for easy extensibility in more advanced use cases as well. 
+The loosely-coupled architecture of Oxidized allows for easy extensibility in more advanced use cases as well.
 
 The example below extends the functionality of the `JunOS` model further to collect `display set` formatted configuration from the device, and utilizes the multi-output functionality of the `git` output to place the returned configuration in a separate file within a git repository.
 
@@ -50,7 +50,7 @@ output:
 Then, `~/.config/oxidized/model/junos.rb` is adapted as following:
 
 ```ruby
-require 'oxidized/mode/junos.rb'
+require 'oxidized/model/junos.rb'
 
 
 class JunOS

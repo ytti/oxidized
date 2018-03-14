@@ -48,7 +48,7 @@ Oxidized is a network device configuration backup tool. It's a RANCID replacemen
     * [Advanced Configuration](docs/Configuration.md#advanced-configuration)
     * [Advanced Group Configuration](docs/Configuration.md#advanced-group-configuration)
     * [Hooks](docs/Hooks.md)
-5. [Extending Models](docs/Extending-Models.md)
+5. [Creating and Extending Models](docs/Creating-Models.md)
 6. [Help](#help)
 7. [Ruby API](docs/Ruby-API.md#ruby-api)
     * [Input](docs/Ruby-API.md#input)
