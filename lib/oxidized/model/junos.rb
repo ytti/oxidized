@@ -13,7 +13,9 @@ class JunOS < Oxidized::Model
   end
 
   cmd :secret do |cfg|
-    cfg.gsub!(/encrypted-password (\S+).*/, '<secret removed>')
+    cfg.gsub!(/encrypted-password (\S+).*/, 'encrypted-password <secret removed>')
+    cfg.gsub!(/pre-shared-key ascii-text (\S+).*/, 'pre-shared-key ascii-text <secret removed>')
+    cfg.gsub!(/authentication-key (\S+).*/, 'authentication-key <secret removed>')
     cfg.gsub!(/community (\S+) {/, 'community <hidden> {')
     cfg
   end
