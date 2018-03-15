@@ -14,7 +14,7 @@ class PowerConnect < Oxidized::Model
   end
 
   cmd :secret do |cfg|
-    cfg.gsub! /^username (\S+) password \S+ (.*)/, 'username \1 password <hidden> \2'
+    cfg.gsub! /^(username \S+ password (?:encrypted )?)\S+(.*)/, '\1<hidden>\2'
     cfg
   end
 
