@@ -1,4 +1,4 @@
-# Creating and Extending Oxidized Models
+# Creating and Extending Models
 
 Oxidized supports a growing list of [operating system types](Supported-OS-Types.md). Out of the box, most model implementations collect configuration data. Some implementations also include a conservative set of additional commands that collect basic device information (device make and model, software version, licensing information, ...) which are appended to the configuration as comments.
 

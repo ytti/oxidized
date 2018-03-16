@@ -1,22 +1,26 @@
 # Oxidized [![Build Status](https://travis-ci.org/Shopify/oxidized.svg)](https://travis-ci.org/Shopify/oxidized) [![Gem Version](https://badge.fury.io/rb/oxidized.svg)](http://badge.fury.io/rb/oxidized) [![Join the chat at https://gitter.im/oxidized/Lobby](https://badges.gitter.im/oxidized/Lobby.svg)](https://gitter.im/oxidized/Lobby?utm_source=badge&utm_medium=badge&utm_campaign=pr-badge&utm_content=badge)
 
-> Is your company using Oxidized and has Ruby developers on staff? I'd love help from an extra maintainer!
-
-[WANTED: MAINTAINER](#help-needed)
-
 Oxidized is a network device configuration backup tool. It's a RANCID replacement!
 
+Light and extensible, Oxidized supports over 90 operating system types.
+
+Feature highlights:
+
 * Automatically adds/removes threads to meet configured retrieval interval
-* Restful API to move node immediately to head-of-queue (GET/POST /node/next/[NODE])
-* Syslog udp+file example to catch config change event (ios/junos) and trigger config fetch
-  * Will signal ios/junos user who made change, which output modules can use (via POST)
-  * The git output module uses this info - 'git blame' will for each line show who made the change and when
+* Restful API to a move node immediately to head-of-queue (GET/POST /node/next/[NODE])
+* Syslog udp+file example to catch config change events (IOS/JunOS) and trigger a config fetch
+  * Will signal which IOS/JunOS user made the change, can then be used by output modules (via POST)
+  * The `git` output module uses this info - 'git blame' will show who changed each line, and when
 * Restful API to reload list of nodes (GET /reload)
 * Restful API to fetch configurations (/node/fetch/[NODE] or /node/fetch/group/[NODE])
 * Restful API to show list of nodes (GET /nodes)
 * Restful API to show list of version for a node (/node/version[NODE]) and diffs
 
-[Youtube Video: Oxidized TREX 2014 presentation](http://youtu.be/kBQ_CTUuqeU#t=3h)
+Check out the [Oxidized TREX 2014 presentation](http://youtu.be/kBQ_CTUuqeU#t=3h) video on YouTube!
+
+> :warning: [Maintainer Wanted!](#help-needed) :warning:
+>
+> Is your company using Oxidized and has Ruby developers on staff? I'd love help from an extra maintainer!
 
 ## Index
 
