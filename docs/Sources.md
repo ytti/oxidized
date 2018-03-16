@@ -2,7 +2,7 @@
 
 ## Source: CSV
 
-One line per device, colon seperated. If `ip` isn't present, a DNS lookup will be done against `name`.  For large installations, setting `ip` will dramatically reduce startup time.
+One line per device, colon separated. If `ip` isn't present, a DNS lookup will be done against `name`.  For large installations, setting `ip` will dramatically reduce startup time.
 
 ```yaml
 source:
@@ -105,7 +105,7 @@ source:
 
 ## Custom SQL Query Support
 
-You may also implement a custom SQL query to retreive the nodelist using  SQL syntax with the `query:` configuration parameter under the `sql:` stanza.
+You may also implement a custom SQL query to retrieve the nodelist using  SQL syntax with the `query:` configuration parameter under the `sql:` stanza.
 
 ### Custom SQL Query Examples
 

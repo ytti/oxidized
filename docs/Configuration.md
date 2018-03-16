@@ -54,7 +54,7 @@ The above strips out snmp community strings from your saved configs.
 
 ## Disabling SSH exec channels
 
-Oxidized uses exec channels to make information extraction simpler, but there are some situations where this doesn't work well, e.g. configuring devices.  This feature can be turned off by setting the `ssh_no_exec`
+Oxidized uses exec channels to make information extraction simpler, but there are some situations where this doesn't work well, e.g. configuring devices. This feature can be turned off by setting the `ssh_no_exec`
 variable.
 
 ```yaml

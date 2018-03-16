@@ -1,7 +1,7 @@
 Cisco WLC Configuration
 =======================
 
-Create a user with read-write privilege :
+Create a user with read-write privilege:
 
 ```text
 mgmtuser add oxidized **** read-write
