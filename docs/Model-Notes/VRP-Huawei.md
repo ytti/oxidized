@@ -19,7 +19,7 @@ The commands Oxidized executes are:
 3. display device
 4. display current-configuration all
 
-Command 2 and 3 can be executed without issues, but 1 and 4 are only available for higher level users. Instead of making Oxidized a read/write user on your device, lower the priviledge-level for commands 1 and 4:
+Command 2 and 3 can be executed without issues, but 1 and 4 are only available for higher level users. Instead of making Oxidized a read/write user on your device, lower the privilege-level for commands 1 and 4:
 
 ```text
     <HUAWEI> system-view

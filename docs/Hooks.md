@@ -11,7 +11,7 @@ Following configuration keys need to be defined for all hooks:
 
 ### Events
 
-* `node_success`: triggered when configuration is succesfully pulled from a node and right before storing the configuration.
+* `node_success`: triggered when configuration is successfully pulled from a node and right before storing the configuration.
 * `node_fail`: triggered after `retries` amount of failed node pulls.
 * `post_store`: triggered after node configuration is stored (this is executed only when the configuration has changed).
 * `nodes_done`: triggered after finished fetching all nodes.
@@ -62,7 +62,7 @@ hooks:
 
 ### Hook type: githubrepo
 
-This hook configures the repository `remote` and _push_ the code when the specified event is triggerd. If the `username` and `password` are not provided, the `Rugged::Credentials::SshKeyFromAgent` will be used.
+This hook configures the repository `remote` and _push_ the code when the specified event is triggered. If the `username` and `password` are not provided, the `Rugged::Credentials::SshKeyFromAgent` will be used.
 
 `githubrepo` hook recognizes following configuration keys:
 

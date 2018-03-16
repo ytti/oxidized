@@ -116,7 +116,7 @@ gem install pkg/*.gem
 
 ### Running with Docker
 
-Currently, Docker Hub automatcally builds the master branch as [oxidized/oxidized](https://hub.docker.com/r/oxidized/oxidized/), you can make use of this container or build your own.
+Currently, Docker Hub automatically builds the master branch as [oxidized/oxidized](https://hub.docker.com/r/oxidized/oxidized/), you can make use of this container or build your own.
 
 To build your own, clone git repo:
 
@@ -165,7 +165,7 @@ oxidized:
     - /etc/oxidized:/root/.config/oxidized
 ```
 
-Create the `/etc/oxidized/router.db` (see [CSV Source](docs/Sources.md#source-csv) for futher info):
+Create the `/etc/oxidized/router.db` (see [CSV Source](docs/Sources.md#source-csv) for further info):
 
 ```shell
 vim /etc/oxidized/router.db
