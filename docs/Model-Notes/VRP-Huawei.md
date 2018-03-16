@@ -30,4 +30,6 @@ Command 2 and 3 can be executed without issues, but 1 and 4 are only available f
 
 Oxidized can now retrieve your configuration!
 
+Caveat: Some versions of VRP default to appending a timestamp prior to the output of each `display` command, which will lead to superfluous updates. The configuration statement `timestamp disable` can be used to disable this functionality. (Issue #1218)
+
 Back to [Model-Notes](README.md)
