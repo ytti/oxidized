@@ -5,6 +5,7 @@ class DNOS  < Oxidized::Model
   comment  '! '
 
   cmd :all do |cfg|
+    cfg.gsub! /^% Invalid input detected at '\^' marker\.$|^\s+\^$/, ''
     cfg.each_line.to_a[2..-2].join
   end
 
@@ -19,6 +20,14 @@ class DNOS  < Oxidized::Model
   end
 
   cmd 'show inventory media' do |cfg|
+    comment cfg
+  end
+
+  cmd 'show version' do |cfg|
+    comment cfg
+  end
+
+  cmd 'show system' do |cfg|
     comment cfg
   end
 
