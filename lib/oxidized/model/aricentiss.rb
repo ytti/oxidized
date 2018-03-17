@@ -8,7 +8,7 @@ class AricentISS < Oxidized::Model
   prompt (/^(\e\[27m)?[ \r]*\w+# ?$/)
 
   cfg :ssh do
-    post_login 'no cli pagignation'
+    post_login 'no cli pagination'
     pre_logout 'exit'
   end
 
