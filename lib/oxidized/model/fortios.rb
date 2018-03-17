@@ -15,9 +15,12 @@ class FortiOS < Oxidized::Model
   end
 
   cmd :secret do |cfg|
-    cfg.gsub! /(set (?:passwd|password|secondary-secret|rsso-secret|psksecret|secret|key ENC)).*/, '\\1 <configuration removed>'
+    cfg.gsub! /(set (?:passwd|password|psksecret|secret|key|group-password|secondary-secret|tertiary-secret|auth-password-l1|auth-password-l2|rsso|history0|history1|inter-controller-key ENC)).*/, '\\1 <configuration removed>'
     cfg.gsub! /(set private-key).*-+END ENCRYPTED PRIVATE KEY-*"$/m , '\\1 <configuration removed>'
-    cfg.gsub! /(IPS Malicious URL Database).*/, '\\1 <configuration removed>'
+    cfg.gsub! /(set ca ).*-+END CERTIFICATE-*"$/m , '\\1 <configuration removed>'
+    cfg.gsub! /(set csr ).*-+END CERTIFICATE REQUEST-*"$/m , '\\1 <configuration removed>'
+    cfg.gsub! /(Virus-DB|Extended DB|IPS-DB|IPS-ETDB|APP-DB|INDUSTRIAL-DB|Botnet DB|IPS Malicious URL Database).*/, '\\1 <configuration removed>'
+    cfg.gsub! /(Cluster uptime:).*/, '\\1 <configuration removed>'
     cfg
   end
 
@@ -46,7 +49,7 @@ class FortiOS < Oxidized::Model
 
 cfg << cmd('end') if @vdom_enabled
 
-    cfg << cmd('show')
+    cfg << cmd('show full-configuration')
     cfg.join "\n"
   end
 

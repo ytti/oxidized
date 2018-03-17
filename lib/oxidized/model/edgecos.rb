@@ -1,4 +1,5 @@
-class Supermicro < Oxidized::Model
+class EdgeCOS < Oxidized::Model
+  
   comment  '! '
 
   cmd :secret do |cfg|
@@ -42,4 +43,5 @@ class Supermicro < Oxidized::Model
     post_login 'terminal length 0'
     pre_logout 'exit'
   end
+
 end

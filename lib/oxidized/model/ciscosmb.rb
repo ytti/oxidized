@@ -17,10 +17,15 @@ class CiscoSMB < Oxidized::Model
     cfg.gsub! /^(snmp-server community).*/, '\\1 <configuration removed>'
     cfg.gsub! /username (\S+) privilege (\d+) (\S+).*/, '<secret hidden>'
     cfg.gsub! /^(encrypted radius-server key).*/, '\\1 <configuration removed>'
+    cfg.gsub! /System Up Time.*/, ''
     cfg
   end
 
   cmd 'show version' do |cfg|
+    comment cfg
+  end
+  
+  cmd 'show system' do |cfg|
     comment cfg
   end
   

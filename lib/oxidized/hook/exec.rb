@@ -71,6 +71,7 @@ class Exec < Oxidized::Hook
         "OX_NODE_FROM" => ctx.node.from.to_s,
         "OX_NODE_MSG" => ctx.node.msg.to_s,
         "OX_NODE_GROUP" => ctx.node.group.to_s,
+        "OX_NODE_MODEL" => ctx.node.model.class.name,
         "OX_REPO_COMMITREF" => ctx.commitref.to_s,
         "OX_REPO_NAME" => ctx.node.repo.to_s,
       )

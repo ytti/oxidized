@@ -1,31 +1,37 @@
 # Hooks
+
 You can define arbitrary number of hooks that subscribe different events. The hook system is modular and different kind of hook types can be enabled.
 
 ## Configuration
+
 Following configuration keys need to be defined for all hooks:
 
-  * `events`: which events to subscribe. Needs to be an array. See below for the list of available events.
-  * `type`: what hook class to use. See below for the list of available hook types.
+* `events`: which events to subscribe. Needs to be an array. See below for the list of available events.
+* `type`: what hook class to use. See below for the list of available hook types.
 
 ### Events
-  * `node_success`: triggered when configuration is succesfully pulled from a node and right before storing the configuration.
-  * `node_fail`: triggered after `retries` amount of failed node pulls.
-  * `post_store`: triggered after node configuration is stored (this is executed only when the configuration has changed).
-  * `nodes_done`: triggered after finished fetching all nodes.
+
+* `node_success`: triggered when configuration is successfully pulled from a node and right before storing the configuration.
+* `node_fail`: triggered after `retries` amount of failed node pulls.
+* `post_store`: triggered after node configuration is stored (this is executed only when the configuration has changed).
+* `nodes_done`: triggered after finished fetching all nodes.
 
 ## Hook type: exec
+
 The `exec` hook type allows users to run an arbitrary shell command or a binary when triggered.
 
 The command is executed on a separate child process either in synchronous or asynchronous fashion. Non-zero exit values cause errors to be logged. STDOUT and STDERR are currently not collected.
 
 Command is executed with the following environment:
-```
+
+```text
 OX_EVENT
 OX_NODE_NAME
 OX_NODE_IP
 OX_NODE_FROM
 OX_NODE_MSG
 OX_NODE_GROUP
+OX_NODE_MODEL
 OX_JOB_STATUS
 OX_JOB_TIME
 OX_REPO_COMMITREF
@@ -34,13 +40,13 @@ OX_REPO_NAME
 
 Exec hook recognizes following configuration keys:
 
-  * `timeout`: hard timeout for the command execution. SIGTERM will be sent to the child process after the timeout has elapsed. Default: 60
-  * `async`: influences whether main thread will wait for the command execution. Set this true for long running commands so node pull is not blocked. Default: false
-  * `cmd`: command to run.
+* `timeout`: hard timeout for the command execution. SIGTERM will be sent to the child process after the timeout has elapsed. Default: 60
+* `async`: influences whether main thread will wait for the command execution. Set this true for long running commands so node pull is not blocked. Default: false
+* `cmd`: command to run.
 
+## exec hook configuration example
 
-## Hook configuration example
-```
+```yaml
 hooks:
   name_for_example_hook1:
     type: exec
@@ -54,21 +60,23 @@ hooks:
     timeout: 120
 ```
 
-### githubrepo
+### Hook type: githubrepo
 
-This hook configures the repository `remote` and _push_ the code when the specified event is triggerd. If the `username` and `password` are not provided, the `Rugged::Credentials::SshKeyFromAgent` will be used.
+This hook configures the repository `remote` and _push_ the code when the specified event is triggered. If the `username` and `password` are not provided, the `Rugged::Credentials::SshKeyFromAgent` will be used.
 
 `githubrepo` hook recognizes following configuration keys:
 
-  * `remote_repo`: the remote repository to be pushed to.
-  * `username`: username for repository auth.
-  * `password`: password for repository auth.
-  * `publickey`: publickey for repository auth.
-  * `privatekey`: privatekey for repository auth.
+* `remote_repo`: the remote repository to be pushed to.
+* `username`: username for repository auth.
+* `password`: password for repository auth.
+* `publickey`: publickey for repository auth.
+* `privatekey`: privatekey for repository auth.
+
+It is also possible to set the environment variable `OXIDIZED_SSH_PASSPHRASE` to a passphrase if your keypair requires it.
 
 When using groups repositories, each group must have its own `remote` in the `remote_repo` config.
 
-``` yaml
+```yaml
 hooks:
   push_to_remote:
     remote_repo:
@@ -77,10 +85,9 @@ hooks:
       firewalls: git@git.intranet:oxidized/firewalls.git
 ```
 
+## githubrepo hook configuration example
 
-## Hook configuration example
-
-``` yaml
+```yaml
 hooks:
   push_to_remote:
     type: githubrepo
@@ -96,14 +103,14 @@ The `awssns` hook publishes messages to AWS SNS topics. This allows you to notif
 
 Fields sent in the message:
 
-  * `event`: Event type (e.g. `node_success`)
-  * `group`: Group name
-  * `model`: Model name (e.g. `eos`)
-  * `node`: Device hostname
+* `event`: Event type (e.g. `node_success`)
+* `group`: Group name
+* `model`: Model name (e.g. `eos`)
+* `node`: Device hostname
 
-Configuration example:
+## awssns hook configuration example
 
-``` yaml
+```yaml
 hooks:
   hook_script:
     type: awssns
@@ -114,8 +121,8 @@ hooks:
 
 AWS SNS hook requires the following configuration keys:
 
-  * `region`: AWS Region name
-  * `topic_arn`: ASN Topic reference
+* `region`: AWS Region name
+* `topic_arn`: ASN Topic reference
 
 Your AWS credentials should be stored in `~/.aws/credentials`.
 
@@ -125,19 +132,57 @@ The `slackdiff` hook posts colorized config diffs to a [Slack](http://www.slack.
 
 You will need to manually install the `slack-api` gem on your system:
 
-```
+```shell
 gem install slack-api
 ```
 
-Configuration example:
+## slackdiff hook configuration example
 
-``` yaml
+```yaml
 hooks:
   slack:
     type: slackdiff
     events: [post_store]
     token: SLACK_BOT_TOKEN
     channel: "#network-changes"
+```
+
+Optionally you can disable snippets and post a formatted message, for instance linking to a commit in a git repo. Named parameters `%{node}`, `%{group}`, `%{model}` and `%{commitref}` are available.
+
+```yaml
+hooks:
+  slack:
+    type: slackdiff
+    events: [post_store]
+    token: SLACK_BOT_TOKEN
+    channel: "#network-changes"
+    diff: false
+    message: "%{node} %{group} %{model} updated https://git.intranet/network-changes/commit/%{commitref}"
+```
+
+Note the channel name must be in quotes.
+
+## Hook type: xmppdiff
+
+The `xmppdiff` hook posts config diffs to a [XMPP](https://en.wikipedia.org/wiki/XMPP) chatroom of your choice. It only triggers for `post_store` events.
+
+You will need to manually install the `xmpp4r` gem on your system:
+
+```shell
+gem install xmpp4r
+```
+
+## xmppdiff hook configuration example
+
+```yaml
+hooks:
+  xmpp:
+    type: xmppdiff
+    events: [post_store]
+    jid: "user@server.tld/resource"
+    password: "password"
+    channel: "room@server.tld"
+    nick: "nickname"
 ```
 
 Note the channel name must be in quotes.
