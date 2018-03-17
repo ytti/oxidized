@@ -7,3 +7,4 @@ Supermicro = EdgeCOS
 
 Oxidized.logger.warn "Using deprecated model supermicro, use edgecos instead."
 
+# Deprecated

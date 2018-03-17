@@ -10,7 +10,7 @@
   * [AOS](/lib/oxidized/model/aos.rb)
   * [AOS7](/lib/oxidized/model/aos7.rb)
   * [ISAM](/lib/oxidized/model/isam.rb)
-  * [SR OS (Formerly TiMOS)](/lib/oxidized/model/timos.rb)
+  * [SR OS (Formerly TiMOS)](/lib/oxidized/model/sros.rb)
   * Wireless
 * Allied Telesis
   * [Alliedware Plus](/lib/oxidized/model/awplus.rb)
@@ -122,7 +122,7 @@
 * Netonix
   * [WISP Switch (As Netonix)](/lib/oxidized/model/netonix.rb)
 * Nokia (formerly TiMetra, Alcatel, Alcatel-Lucent)
-  * [SR OS (TiMOS)](/lib/oxidized/model/timos.rb)
+  * [SR OS (TiMOS)](/lib/oxidized/model/sros.rb)
 * OneAccess
   * [OneOS](/lib/oxidized/model/oneos.rb)
 * Opengear
