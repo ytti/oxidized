@@ -141,8 +141,7 @@
 * Supermicro
   * [SSE-G2252, G2252P](/lib/oxidized/model/edgecos.rb)
   * [SSE-G48-TG4, G24-TG4](/lib/oxidized/model/aricentiss.rb)
-  * [SSE-X24S, X24SR, X3348S, X3348SR, X3348T,
-  * X3348TR](/lib/oxidized/model/aricentiss.rb)
+  * [SSE-X24S, X24SR, X3348S, X3348SR, X3348T, X3348TR](/lib/oxidized/model/aricentiss.rb)
   * [SBM-GEM-X2C, GEM-X2C+, GEM-X3S+, XEM-X10SM](/lib/oxidized/model/aricentiss.rb)
 * Symantec
   * [Blue Coat ProxySG / Security Gateway OS (SGOS)](/lib/oxidized/model/sgos.rb)
