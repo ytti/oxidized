@@ -8,7 +8,10 @@ class AricentISS < Oxidized::Model
   prompt (/^(\e\[27m)?[ \r]*\w+# ?$/)
 
   cfg :ssh do
+    # "pagination" was misspelled in some (earlier) versions (at least 1.0.16-9)
+    # 1.0.18-15 is known to include the corrected spelling
     post_login 'no cli pagination'
+    post_login 'no cli pagignation'
     pre_logout 'exit'
   end
 
