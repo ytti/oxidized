@@ -6,7 +6,7 @@
 
 class DCNOS < Oxidized::Model
 
-  comment '!'
+  comment '! '
 
   cmd 'show version' do |cfg|
     comment cfg
