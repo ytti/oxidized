@@ -1,5 +1,4 @@
 class ZyNOSCLI < Oxidized::Model
-
   # Used in Zyxel DSLAMs, such as SAM1316
 
   # Typical prompt "XGS4600#"
@@ -9,6 +8,9 @@ class ZyNOSCLI < Oxidized::Model
   cmd :all do |cfg|
     cfg.gsub! /^.*\e7/, ''
   end
+  cmd 'show stacking'
+
+  cmd 'show version'
 
   cmd 'show running-config'
 
@@ -31,5 +33,4 @@ class ZyNOSCLI < Oxidized::Model
     end
     pre_logout 'exit'
   end
-
 end
