@@ -1,24 +1,29 @@
 # Oxidized [![Build Status](https://travis-ci.org/Shopify/oxidized.svg)](https://travis-ci.org/Shopify/oxidized) [![Gem Version](https://badge.fury.io/rb/oxidized.svg)](http://badge.fury.io/rb/oxidized) [![Join the chat at https://gitter.im/oxidized/Lobby](https://badges.gitter.im/oxidized/Lobby.svg)](https://gitter.im/oxidized/Lobby?utm_source=badge&utm_medium=badge&utm_campaign=pr-badge&utm_content=badge)
 
-> Is your company using Oxidized and has Ruby developers on staff? I'd love help from an extra maintainer!
-
-[WANTED: MAINTAINER](#help-needed)
-
 Oxidized is a network device configuration backup tool. It's a RANCID replacement!
 
+Light and extensible, Oxidized supports over 90 operating system types.
+
+Feature highlights:
+
 * Automatically adds/removes threads to meet configured retrieval interval
-* Restful API to move node immediately to head-of-queue (GET/POST /node/next/[NODE])
-* Syslog udp+file example to catch config change event (ios/junos) and trigger config fetch
-  * Will signal ios/junos user who made change, which output modules can use (via POST)
-  * The git output module uses this info - 'git blame' will for each line show who made the change and when
+* Restful API to a move node immediately to head-of-queue (GET/POST /node/next/[NODE])
+* Syslog udp+file example to catch config change events (IOS/JunOS) and trigger a config fetch
+  * Will signal which IOS/JunOS user made the change, can then be used by output modules (via POST)
+  * The `git` output module uses this info - 'git blame' will show who changed each line, and when
 * Restful API to reload list of nodes (GET /reload)
 * Restful API to fetch configurations (/node/fetch/[NODE] or /node/fetch/group/[NODE])
 * Restful API to show list of nodes (GET /nodes)
 * Restful API to show list of version for a node (/node/version[NODE]) and diffs
 
-[Youtube Video: Oxidized TREX 2014 presentation](http://youtu.be/kBQ_CTUuqeU#t=3h)
+Check out the [Oxidized TREX 2014 presentation](http://youtu.be/kBQ_CTUuqeU#t=3h) video on YouTube!
 
-#### Index
+> :warning: [Maintainer Wanted!](#help-needed) :warning:
+>
+> Is your company using Oxidized and has Ruby developers on staff? I'd love help from an extra maintainer!
+
+## Index
+
 1. [Supported OS Types](docs/Supported-OS-Types.md)
 2. [Installation](#installation)
     * [Debian](#debian)
@@ -47,16 +52,18 @@ Oxidized is a network device configuration backup tool. It's a RANCID replacemen
     * [Advanced Configuration](docs/Configuration.md#advanced-configuration)
     * [Advanced Group Configuration](docs/Configuration.md#advanced-group-configuration)
     * [Hooks](docs/Hooks.md)
-5. [Help](#help)
-6. [Ruby API](docs/Ruby-API.md#ruby-api)
+5. [Creating and Extending Models](docs/Creating-Models.md)
+6. [Help](#help)
+7. [Ruby API](docs/Ruby-API.md#ruby-api)
     * [Input](docs/Ruby-API.md#input)
     * [Output](docs/Ruby-API.md#output)
     * [Source](docs/Ruby-API.md#source)
     * [Model](docs/Ruby-API.md#model)
 
-# Installation
+## Installation
 
-## Debian
+### Debian
+
 Install all required packages and gems.
 
 ```shell
@@ -65,7 +72,8 @@ gem install oxidized
 gem install oxidized-script oxidized-web # if you don't install oxidized-web, make sure you remove "rest" from your config
 ```
 
-## CentOS, Oracle Linux, Red Hat Linux
+### CentOS, Oracle Linux, Red Hat Linux
+
 On CentOS 6 / RHEL 6, install Ruby greater than 1.9.3 (for Ruby 2.1.2 installation instructions see [Installing Ruby 2.1.2 using RVM](#installing-ruby-212-using-rvm)), then install Oxidized dependencies
 
 ```shell
@@ -85,7 +93,8 @@ gem install oxidized
 gem install oxidized-script oxidized-web
 ```
 
-## FreeBSD
+### FreeBSD
+
 [Use RVM to install Ruby v2.1.2](#installing-ruby-2.1.2-using-rvm)
 
 Install all required packages and gems.
@@ -96,7 +105,8 @@ gem install oxidized
 gem install oxidized-script oxidized-web
 ```
 
-## Build from Git
+### Build from Git
+
 ```shell
 git clone https://github.com/ytti/oxidized.git
 cd oxidized/
@@ -104,38 +114,44 @@ gem build *.gemspec
 gem install pkg/*.gem
 ```
 
-# Running with Docker
+### Running with Docker
 
-clone git repo:
+Currently, Docker Hub automatically builds the master branch as [oxidized/oxidized](https://hub.docker.com/r/oxidized/oxidized/), you can make use of this container or build your own.
 
-```
+To build your own, clone git repo:
+
+```shell
 git clone https://github.com/ytti/oxidized
 ```
 
-build container locally:
+Then, build the container locally (requires docker 17.05.0-ce or higher):
 
-```
+```shell
 docker build -q -t oxidized/oxidized:latest oxidized/
 ```
 
-create config directory in main system:
+Once you've built the container (or chosen to make use of the automatically built container in Docker Hub, which will be downloaded for you by docker on the first `run` command had you not built it), proceed as follows:
 
-```
+Create a configuration directory in the host system:
+
+```shell
 mkdir /etc/oxidized
 ```
 
-run container the first time:
-_Note: this step in only needed for creating Oxidized's configuration file and can be skipped if you already have it
+Run the container for the first time to initialize the config:
 
-```
+_Note: this step in only required for creating the Oxidized configuration file and can be skipped if you already have one._
+
+```shell
 docker run --rm -v /etc/oxidized:/root/.config/oxidized -p 8888:8888/tcp -t oxidized/oxidized:latest oxidized
 ```
-If the RESTful API and Web Interface are enabled, on the docker host running the container
-edit /etc/oxidized/config and modify 'rest: 127.0.0.1:8888' by 'rest: 0.0.0.0:8888'
-this will bind port 8888 to all interfaces then expose port out. [Issue #445](https://github.com/ytti/oxidized/issues/445)
 
-You can also use docker-compose to launch oxidized container:
-```
+If the RESTful API and Web Interface are enabled, on the docker host running the container
+edit `/etc/oxidized/config` and modify `rest: 127.0.0.1:8888` to `rest: 0.0.0.0:8888`. This will bind port 8888 to all interfaces, and expose the port so that it could be accessed externally. [(Issue #445)](https://github.com/ytti/oxidized/issues/445)
+
+Alternatively, you can use docker-compose to launch the oxidized container:
+
+```yaml
 # docker-compose.yml
 # docker-compose file example for oxidized that will start along with docker daemon
 oxidized:
@@ -149,15 +165,15 @@ oxidized:
     - /etc/oxidized:/root/.config/oxidized
 ```
 
-create the `/etc/oxidized/router.db` [See CSV Source for further info](docs/Configuration.md#source-csv)
+Create the `/etc/oxidized/router.db` (see [CSV Source](docs/Sources.md#source-csv) for further info):
 
-```
+```shell
 vim /etc/oxidized/router.db
 ```
 
-run container again:
+Run container again to start oxidized with your configuration:
 
-```
+```shell
 docker run -v /etc/oxidized:/root/.config/oxidized -p 8888:8888/tcp -t oxidized/oxidized:latest
 oxidized[1]: Oxidized starting, running as pid 1
 oxidized[1]: Loaded 1 nodes
@@ -167,45 +183,49 @@ Puma 2.13.4 starting...
 * Listening on tcp://0.0.0.0:8888
 ```
 
-If you want to have the config automatically reloaded (e.g. when using a http source that changes)
+If you want to have the config automatically reloaded (e.g. when using a http source that changes):
 
-```
+```shell
 docker run -v /etc/oxidized:/root/.config/oxidized -p 8888:8888/tcp -e CONFIG_RELOAD_INTERVAL=3600 -t oxidized/oxidized:latest
 ```
 
-If you need to use an internal CA (e.g. to connect to an private github instance)
+If you need to use an internal CA (e.g. to connect to an private github instance):
 
-```
+```shell
 docker run -v /etc/oxidized:/root/.config/oxidized -v /path/to/MY-CA.crt:/usr/local/share/ca-certificates/MY-CA.crt -p 8888:8888/tcp -e UPDATE_CA_CERTIFICATES=true -t oxidized/oxidized:latest
 ```
 
-# Installing Ruby 2.1.2 using RVM
+### Installing Ruby 2.1.2 using RVM
 
 Install Ruby 2.1.2 build dependencies
-```
+
+```shell
 yum install curl gcc-c++ patch readline readline-devel zlib zlib-devel
 yum install libyaml-devel libffi-devel openssl-devel make cmake
 yum install bzip2 autoconf automake libtool bison iconv-devel libssh2-devel
 ```
 
 Install RVM
-```
+
+```shell
 curl -L get.rvm.io | bash -s stable
 ```
 
 Setup RVM environment and compile and install Ruby 2.1.2 and set it as default
-```
+
+```shell
 source /etc/profile.d/rvm.sh
 rvm install 2.1.2
 rvm use --default 2.1.2
 ```
 
-# Configuration
+## Configuration
+
 Oxidized configuration is in YAML format. Configuration files are subsequently sourced from `/etc/oxidized/config` then `~/.config/oxidized/config`. The hashes will be merged, this might be useful for storing source information in a system wide file and  user specific configuration in the home directory (to only include a staff specific username and password). Eg. if many users are using `oxs`, see [Oxidized::Script](https://github.com/ytti/oxidized-script).
 
 It is recommended practice to run Oxidized using its own username.  This username can be added using standard command-line tools:
 
-```
+```shell
 useradd oxidized
 ```
 
@@ -215,7 +235,7 @@ To initialize a default configuration in your home directory `~/.config/oxidized
 
 You can set the env variable `OXIDIZED_HOME` to change its home directory.
 
-```
+```shell
 OXIDIZED_HOME=/etc/oxidized
 
 $ tree -L 1 /etc/oxidized
@@ -239,14 +259,15 @@ Possible outputs are either [File](docs/Configuration.md#output-file), [GIT](doc
 Maps define how to map a model's fields to model [model fields](https://github.com/ytti/oxidized/tree/master/lib/oxidized/model). Most of the settings should be self explanatory, log is ignored if `use_syslog`(requires Ruby >= 2.0) is set to `true`.
 
 First create the directory where the CSV `output` is going to store device configs and start Oxidized once.
-```
+
+```shell
 mkdir -p ~/.config/oxidized/configs
 oxidized
 ```
 
 Now tell Oxidized where it finds a list of network devices to backup configuration from. You can either use CSV or SQLite as source. To create a CSV source add the following snippet:
 
-```
+```yaml
 source:
   default: csv
   csv:
@@ -259,7 +280,7 @@ source:
 
 Now lets create a file based device database (you might want to switch to SQLite later on). Put your routers in `~/.config/oxidized/router.db` (file format is compatible with rancid). Simply add an item per line:
 
-```
+```text
 router01.example.com:ios
 switch01.example.com:procurve
 router02.example.com:ios
@@ -267,13 +288,13 @@ router02.example.com:ios
 
 Run `oxidized` again to take the first backups.
 
-# Extra
+## Extra
 
-## Ubuntu SystemV init setup
+### Ubuntu SystemV init setup
 
 The init script assumes that you have a used named 'oxidized' and that oxidized is in one of the following paths:
 
-```
+```text
 /sbin
 /bin
 /usr/sbin
@@ -284,26 +305,26 @@ The init script assumes that you have a used named 'oxidized' and that oxidized 
 1. Copy init script from extra/ folder to /etc/init.d/oxidized
 2. Setup /var/run/
 
-```
+```shell
 mkdir /var/run/oxidized
 chown oxidized:oxidized /var/run/oxidized
 ```
 
 3. Make oxidized start on boot
 
-```
+```shell
 update-rc.d oxidized defaults
 ```
 
-# Help
+## Help
 
 If you need help with Oxidized then we have a few methods you can use to get in touch.
 
-  - [Gitter](https://gitter.im/oxidized/Lobby?utm_source=badge&utm_medium=badge&utm_campaign=pr-badge&utm_content=badge) - You can join the Lobby on gitter to chat to other Oxidized users.
-  - [GitHub](https://github.com/ytti/oxidized/) - For help and requests for code changes / updates.
-  - [Forum](https://community.librenms.org/c/help/oxidized) - A user forum run by [LibreNMS](https://github.com/librenms/librenms) where you can ask for help and support.
+* [Gitter](https://gitter.im/oxidized/Lobby?utm_source=badge&utm_medium=badge&utm_campaign=pr-badge&utm_content=badge) - You can join the Lobby on gitter to chat to other Oxidized users.
+* [GitHub](https://github.com/ytti/oxidized/) - For help and requests for code changes / updates.
+* [Forum](https://community.librenms.org/c/help/oxidized) - A user forum run by [LibreNMS](https://github.com/librenms/librenms) where you can ask for help and support.
 
-# Help Needed
+## Help Needed
 
 As things stand right now, `oxidized` is maintained by a single person. A great
 many [contributors](https://github.com/ytti/oxidized/graphs/contributors) have
@@ -338,12 +359,11 @@ Brian Anderson (from Rust fame) wrote an [excellent
 post](http://brson.github.io/2017/04/05/minimally-nice-maintainer) on what it
 means to be a maintainer.
 
-# License and Copyright
+## License and Copyright
 
           Copyright
           2013-2015 Saku Ytti <saku@ytti.fi>
           2013-2015 Samer Abdel-Hafez <sam@arahant.net>
-
 
 Licensed under the Apache License, Version 2.0 (the "License");
 you may not use this file except in compliance with the License.
