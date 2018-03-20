@@ -12,6 +12,14 @@ class DCNOS < Oxidized::Model
     comment cfg
   end
 
+  cmd 'show boot-files' do |cfg|
+    comment cfg
+  end
+
+  cmd 'show flash' do |cfg|
+    comment cfg
+  end
+
   cmd 'show running-config' do |cfg|
     cfg = cfg.each_line.to_a[1..-1]
   end
