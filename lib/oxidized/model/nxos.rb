@@ -22,6 +22,7 @@ class NXOS < Oxidized::Model
 
   cmd 'show running-config' do |cfg|
     cfg.gsub! /^!Time:[^\n]*\n/, ''
+    cfg
   end
 
   cfg :ssh, :telnet do
