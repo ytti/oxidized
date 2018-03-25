@@ -34,6 +34,6 @@ Gem::Specification.new do |s|
   s.add_development_dependency 'minitest', '~> 5.8'
   s.add_development_dependency 'mocha',    '~> 1.1'
   s.add_development_dependency 'git',      '~> 1'
-  s.add_development_dependency 'rubocop'   '~> 0.54'
-  s.add_development_dependency 'rails_best_practices' '~> 0.19'
+  s.add_development_dependency 'rubocop',  '~> 0.54'
+  s.add_development_dependency 'rails_best_practices', '~> 1.19'
 end

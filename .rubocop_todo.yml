@@ -6,7 +6,7 @@
 # Note that changes in the inspected code, or installation of new
 # versions of RuboCop, may require this file to be generated again.
 
-# Offense count: 4
+# Offense count: 5
 # Cop supports --auto-correct.
 # Configuration parameters: Include, TreatCommentsAsGroupSeparators.
 # Include: **/*.gemspec
@@ -440,7 +440,7 @@ Layout/TrailingBlankLines:
     - 'lib/oxidized/model/tplink.rb'
     - 'lib/oxidized/output/http.rb'
 
-# Offense count: 170
+# Offense count: 169
 # Cop supports --auto-correct.
 Layout/TrailingWhitespace:
   Enabled: false
@@ -479,11 +479,6 @@ Lint/HandleExceptions:
     - 'lib/oxidized/input/ssh.rb'
     - 'lib/oxidized/input/telnet.rb'
     - 'lib/oxidized/nodes.rb'
-
-# Offense count: 2
-Lint/ImplicitStringConcatenation:
-  Exclude:
-    - 'oxidized.gemspec'
 
 # Offense count: 2
 Lint/LiteralAsCondition:
