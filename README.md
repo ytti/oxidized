@@ -95,7 +95,7 @@ gem install oxidized-script oxidized-web
 
 ### FreeBSD
 
-[Use RVM to install Ruby v2.1.2](#installing-ruby-2.1.2-using-rvm), then install all required packages and gems:
+[Use RVM to install Ruby v2.1.2](#installing-ruby-212-using-rvm), then install all required packages and gems:
 
 ```shell
 pkg install cmake pkgconf
