@@ -4,10 +4,10 @@ class HPEBladeSystem < Oxidized::Model
   prompt /.*> /
   comment '# '
 
-  expect /^\s*--More--\s+.*$/ do |data, re|
-     send ' '
-     data.sub re, ''
-  end
+  #expect /^\s*--More--\s+.*$/ do |data, re|
+  #   send ' '
+  #   data.sub re, ''
+  #end
 
   cmd :all do |cfg|
     cfg = cfg.delete("\r").each_line.to_a[0..-1].map{|line|line.rstrip}.join("\n") + "\n"
@@ -40,6 +40,7 @@ class HPEBladeSystem < Oxidized::Model
   end
   
   cmd 'show network' do |cfg|
+    cfg.gsub! /Last Update:.*$/i, ''
     comment cfg
   end
 
@@ -78,6 +79,7 @@ class HPEBladeSystem < Oxidized::Model
   end
  
    cfg :telnet, :ssh do
+     post_login "set script mode on"
      pre_logout "exit"
    end
 end
