@@ -9,7 +9,7 @@ class DCNOS < Oxidized::Model
   comment '! '
 
   cmd 'show version' do |cfg|
-    cfg = cfg.gsub! /^(Uptime is ).*/, ''
+    cfg.gsub! /Uptime is.*/, ''
     comment cfg
   end
 
