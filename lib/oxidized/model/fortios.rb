@@ -15,18 +15,26 @@ class FortiOS < Oxidized::Model
   end
 
   cmd :secret do |cfg|
-    cfg.gsub! /(set (?:passwd|password|psksecret|secret|key|group-password|secondary-secret|tertiary-secret|auth-password-l1|auth-password-l2|rsso|history0|history1|inter-controller-key ENC|passphrase ENC|login-passwd ENC)).*/, '\\1 <configuration removed>'
+    # ENC indicated an encrypted password (Hash), so anything starting with set and ending in ENC followed by a string of characters .+ means that there must be at least one character present, which should be a little safter
+    cfg.gsub! /(set .+ ENC) .+/, '\\1 <configuration removed>'
+    # Any line starting with "set", containing a string that ends in "secret" also ends with a password or hash. 
+    cfg.gsub! /(set .*secret) .+/, '\\1 <configuration removed>'
+    # The above two simplify this line
+    #cfg.gsub! /(set (?:passwd|password|psksecret|secret|key|group-password|secondary-secret|tertiary-secret|auth-password-l1|auth-password-l2|rsso|history0|history1|inter-controller-key ENC|passphrase ENC|login-passwd ENC|auth-pwd ENC|ldap-pwd ENC|priv-pwd ENC|ldap-password ENC)).*/, '\\1 <configuration removed>'
+    # The remaining secrets to remove
+    cfg.gsub! /(set (?:passwd|password|key|group-password|auth-password-l1|auth-password-l2|rsso|history0|history1)) .+/, '\\1 <configuration removed>'
     cfg.gsub! /(set private-key).*-+END ENCRYPTED PRIVATE KEY-*"$/m , '\\1 <configuration removed>'
     cfg.gsub! /(set ca ).*-+END CERTIFICATE-*"$/m , '\\1 <configuration removed>'
     cfg.gsub! /(set csr ).*-+END CERTIFICATE REQUEST-*"$/m , '\\1 <configuration removed>'
-    cfg.gsub! /(Virus-DB|Extended DB|IPS-DB|IPS-ETDB|APP-DB|INDUSTRIAL-DB|Botnet DB|IPS Malicious URL Database).*/, '\\1 <configuration removed>'
-    cfg.gsub! /(Cluster uptime:).*/, '\\1 <configuration removed>'
+    #cfg.gsub! /(Virus-DB|Extended DB|IPS-DB|IPS-ETDB|APP-DB|INDUSTRIAL-DB|Botnet DB|IPS Malicious URL Database).*/, '\\1 <configuration removed>' #Not really secrets, Moved down to get system status
+    cfg.gsub! /(Cluster uptime:).*/, '\\1 <stripped>'
     cfg
   end
 
   cmd 'get system status' do |cfg|
     @vdom_enabled = cfg.include? 'Virtual domain configuration: enable'
     cfg.gsub!(/(System time: )(.*)/, '\1<stripped>\3')
+    cfg.gsub! /(Virus-DB|Extended DB|IPS-DB|IPS-ETDB|APP-DB|INDUSTRIAL-DB|Botnet DB|IPS Malicious URL Database).*/, '\\1 <db version stripped>'
     comment cfg
   end
 
