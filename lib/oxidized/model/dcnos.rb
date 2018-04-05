@@ -8,8 +8,12 @@ class DCNOS < Oxidized::Model
 
   comment '! '
 
+  cmd :all do |cfg|
+    cfg.each_line.to_a[1..-1].join
+  end
+
   cmd 'show version' do |cfg|
-    cfg = cfg.gsub! /^(Uptime is ).*/, ''
+    cfg.gsub! /\s(Uptime is).*/, ''
     comment cfg
   end
 
@@ -22,7 +26,6 @@ class DCNOS < Oxidized::Model
   end
 
   cmd 'show running-config' do |cfg|
-    cfg = cfg.each_line.to_a[1..-1].join
     cfg
   end
 
