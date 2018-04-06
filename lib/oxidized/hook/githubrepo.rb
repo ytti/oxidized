@@ -54,13 +54,13 @@ class GithubRepo < Oxidized::Hook
       end
 
       if cfg.has_key?('password')
-        log "Authenticating using username and password", :debug
+        log "Authenticating using username and password as '#{git_user}'", :debug
         Rugged::Credentials::UserPassword.new(username: git_user, password: cfg.password)
       elsif cfg.has_key?('publickey') && cfg.has_key?('privatekey')
-        log "Authenticating using ssh keys", :debug
+        log "Authenticating using ssh keys as '#{git_user}'", :debug
         Rugged::Credentials::SshKey.new(username: git_user, publickey: File.expand_path(cfg.publickey), privatekey: File.expand_path(cfg.privatekey), passphrase: ENV["OXIDIZED_SSH_PASSPHRASE"])
       else
-        log "Authenticating using ssh agent", :debug
+        log "Authenticating using ssh agent as '#{git_user}'", :debug
         Rugged::Credentials::SshKeyFromAgent.new(username: git_user)
       end
     end
