@@ -95,7 +95,7 @@ hooks:
 
 ### githubrepo hook configuration example
 
-Authenticate with the username `git` and a password:
+Authenticate with a username and a password:
 
 ```yaml
 hooks:
@@ -103,6 +103,7 @@ hooks:
     type: githubrepo
     events: [post_store]
     remote_repo: git@git.intranet:oxidized/test.git
+    username: user
     password: pass
 ```
 
