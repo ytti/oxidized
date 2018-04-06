@@ -32,6 +32,9 @@ COPY --from=libssh2-backport \
     /tmp/
 RUN dpkg -i /tmp/*.deb
 
+# dependencies for hooks
+RUN gem install aws-sdk slack-api xmpp4r
+
 # build and install oxidized
 COPY . /tmp/oxidized/
 WORKDIR /tmp/oxidized
@@ -41,9 +44,6 @@ RUN gem install oxidized-*.gem
 
 # web interface
 RUN gem install oxidized-web --no-ri --no-rdoc
-
-# dependencies for hooks
-RUN gem install aws-sdk slack-api xmpp4r
 
 # clean up
 WORKDIR /
