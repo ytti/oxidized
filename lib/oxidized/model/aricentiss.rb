@@ -5,7 +5,7 @@
 
 class AricentISS < Oxidized::Model
 
-  prompt (/^(\e\[27m)?[ \r]*\w+# ?$/)
+  prompt (/^(\e\[27m)?[ \r]*[\w-]+# ?$/)
 
   cfg :ssh do
     # "pagination" was misspelled in some (earlier) versions (at least 1.0.16-9)
