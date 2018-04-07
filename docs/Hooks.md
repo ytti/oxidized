@@ -9,7 +9,7 @@ Following configuration keys need to be defined for all hooks:
 * `events`: which events to subscribe. Needs to be an array. See below for the list of available events.
 * `type`: what hook class to use. See below for the list of available hook types.
 
-### Events
+## Events
 
 * `node_success`: triggered when configuration is successfully pulled from a node and right before storing the configuration.
 * `node_fail`: triggered after `retries` amount of failed node pulls.
@@ -44,7 +44,7 @@ Exec hook recognizes following configuration keys:
 * `async`: influences whether main thread will wait for the command execution. Set this true for long running commands so node pull is not blocked. Default: false
 * `cmd`: command to run.
 
-## exec hook configuration example
+### exec hook configuration example
 
 ```yaml
 hooks:
@@ -60,21 +60,29 @@ hooks:
     timeout: 120
 ```
 
-### Hook type: githubrepo
+## Hook type: githubrepo
 
-This hook configures the repository `remote` and _push_ the code when the specified event is triggered. If the `username` and `password` are not provided, the `Rugged::Credentials::SshKeyFromAgent` will be used.
+The `githubrepo` hook executes a `git push` to a configured `remote_repo` when the specified event is triggered.
 
-`githubrepo` hook recognizes following configuration keys:
+Several authentication methods are supported:
+
+* Provide a `password` for username + password authentication
+* Provide both a `publickey` and a `privatekey` for ssh key-based authentication
+* Don't provide any credentials for ssh-agent authentication
+
+The username will be set to the relevant part of the `remote_repo` URI, with a fallback to `git`. It is also possible to provide one by setting the `username` configuration key.
+
+For ssh key-based authentication, it is possible to set the environment variable `OXIDIZED_SSH_PASSPHRASE` to a passphrase if the private key requires it.
+
+`githubrepo` hook recognizes the following configuration keys:
 
 * `remote_repo`: the remote repository to be pushed to.
 * `username`: username for repository auth.
 * `password`: password for repository auth.
-* `publickey`: publickey for repository auth.
-* `privatekey`: privatekey for repository auth.
+* `publickey`: public key for repository auth.
+* `privatekey`: private key for repository auth.
 
-It is also possible to set the environment variable `OXIDIZED_SSH_PASSPHRASE` to a passphrase if your keypair requires it.
-
-When using groups repositories, each group must have its own `remote` in the `remote_repo` config.
+When using groups, each group must have a unique entry in the `remote_repo` config.
 
 ```yaml
 hooks:
@@ -85,7 +93,9 @@ hooks:
       firewalls: git@git.intranet:oxidized/firewalls.git
 ```
 
-## githubrepo hook configuration example
+### githubrepo hook configuration example
+
+Authenticate with a username and a password:
 
 ```yaml
 hooks:
@@ -95,6 +105,18 @@ hooks:
     remote_repo: git@git.intranet:oxidized/test.git
     username: user
     password: pass
+```
+
+Authenticate with the username `git` and an ssh key:
+
+```yaml
+hooks:
+  push_to_remote:
+    type: githubrepo
+    events: [post_store]
+    remote_repo: git@git.intranet:oxidized/test.git
+    publickey: /root/.ssh/id_rsa.pub
+    privatekey: /root/.ssh/id_rsa
 ```
 
 ## Hook type: awssns
@@ -108,7 +130,7 @@ Fields sent in the message:
 * `model`: Model name (e.g. `eos`)
 * `node`: Device hostname
 
-## awssns hook configuration example
+### awssns hook configuration example
 
 ```yaml
 hooks:
@@ -136,7 +158,7 @@ You will need to manually install the `slack-api` gem on your system:
 gem install slack-api
 ```
 
-## slackdiff hook configuration example
+### slackdiff hook configuration example
 
 ```yaml
 hooks:
@@ -172,7 +194,7 @@ You will need to manually install the `xmpp4r` gem on your system:
 gem install xmpp4r
 ```
 
-## xmppdiff hook configuration example
+### xmppdiff hook configuration example
 
 ```yaml
 hooks:

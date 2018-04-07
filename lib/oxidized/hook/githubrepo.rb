@@ -45,16 +45,23 @@ class GithubRepo < Oxidized::Hook
   private
 
   def credentials
-    @credentials ||= if cfg.has_key?('username') && cfg.has_key?('password')
-      log "Using https auth", :debug
-      Rugged::Credentials::UserPassword.new(username: cfg.username, password: cfg.password)
-    else
-      if cfg.has_key?('publickey') && cfg.has_key?('privatekey')
-        log "Using ssh auth with key", :debug
-        Rugged::Credentials::SshKey.new(username: 'git', publickey: File.expand_path(cfg.publickey), privatekey: File.expand_path(cfg.privatekey), passphrase: ENV["OXIDIZED_SSH_PASSPHRASE"])
+    Proc.new do |url, username_from_url, allowed_types|
+
+      if cfg.has_key?('username')
+        git_user = cfg.username
+      else 
+        git_user = username_from_url ? username_from_url : 'git'
+      end
+
+      if cfg.has_key?('password')
+        log "Authenticating using username and password as '#{git_user}'", :debug
+        Rugged::Credentials::UserPassword.new(username: git_user, password: cfg.password)
+      elsif cfg.has_key?('publickey') && cfg.has_key?('privatekey')
+        log "Authenticating using ssh keys as '#{git_user}'", :debug
+        Rugged::Credentials::SshKey.new(username: git_user, publickey: File.expand_path(cfg.publickey), privatekey: File.expand_path(cfg.privatekey), passphrase: ENV["OXIDIZED_SSH_PASSPHRASE"])
       else
-        log "Using ssh auth with agentforwarding", :debug
-        Rugged::Credentials::SshKeyFromAgent.new(username: 'git')
+        log "Authenticating using ssh agent as '#{git_user}'", :debug
+        Rugged::Credentials::SshKeyFromAgent.new(username: git_user)
       end
     end
   end
