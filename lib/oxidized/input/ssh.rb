@@ -123,6 +123,11 @@ module Oxidized
           cmd @node.auth[:username], password
           cmd @node.auth[:password]
         end
+      elsif @password
+        match = expect password, @node.prompt
+        if match == password
+          cmd @node.auth[:password]
+        end
       else
         expect @node.prompt
       end
