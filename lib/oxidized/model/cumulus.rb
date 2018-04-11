@@ -68,7 +68,7 @@ class Cumulus < Oxidized::Model
     
     cfg += add_comment 'TRAFFIC'
     cfg += cmd 'cat /etc/cumulus/datapath/traffic.conf'
-   	
+     
     cfg += add_comment 'ACL'
     cfg += cmd 'iptables -L -n'
     
