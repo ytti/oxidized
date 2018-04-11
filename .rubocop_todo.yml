@@ -882,21 +882,6 @@ Style/InfiniteLoop:
     - 'extra/syslog.rb'
     - 'lib/oxidized/core.rb'
 
-# Offense count: 10
-# Cop supports --auto-correct.
-# Configuration parameters: InverseMethods, InverseBlocks.
-Style/InverseMethods:
-  Exclude:
-    - 'lib/oxidized/model/aosw.rb'
-    - 'lib/oxidized/model/asa.rb'
-    - 'lib/oxidized/model/comware.rb'
-    - 'lib/oxidized/model/firewareos.rb'
-    - 'lib/oxidized/model/powerconnect.rb'
-    - 'lib/oxidized/model/procurve.rb'
-    - 'lib/oxidized/model/routeros.rb'
-    - 'lib/oxidized/model/vrp.rb'
-    - 'lib/oxidized/model/zhoneolt.rb'
-
 # Offense count: 1
 # Cop supports --auto-correct.
 Style/LineEndConcatenation:
