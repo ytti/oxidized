@@ -28,6 +28,7 @@ module Oxidized
       ssh_opts = {
                 :port => port.to_i,
                 :password => @node.auth[:password], :timeout => Oxidized.config.timeout,
+                :keepalive => true,
                 :paranoid => secure,
                 :auth_methods => %w(none publickey password keyboard-interactive),
                 :number_of_password_prompts => 0,
