@@ -24,7 +24,7 @@ describe Oxidized::SSH do
 
       model = mock()
       model.expects(:cfg).returns({'ssh' => []})
-      @node.expects(:model).returns(model)
+      @node.expects(:model).returns(model).at_least_once
 
       proxy = mock()
       Net::SSH::Proxy::Command.expects(:new).with("ssh test.com -W %h:%p").returns(proxy)
