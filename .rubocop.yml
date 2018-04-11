@@ -1,0 +1,12 @@
+inherit_from: 
+  - .rubocop_todo.yml
+
+AllCops:
+  Include:
+    - Rakefile
+
+StringLiterals:
+  Enabled: false
+
+LineLength:
+  Enabled: false

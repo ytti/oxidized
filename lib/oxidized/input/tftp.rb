@@ -28,14 +28,10 @@ module Oxidized
       config.rewind
       config.read
     end
-    
-    private
-    
-    def disconnect
+  
+    private def disconnect
       # TFTP uses UDP, there is no connection to close
-    ensure
       @log.close if Oxidized.config.input.debug?
     end
-
   end
 end
