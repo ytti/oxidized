@@ -1,5 +1,5 @@
 require 'minitest/autorun'
-require 'mocha/mini_test'
+require 'mocha/minitest'
 require 'oxidized'
 
 Oxidized.mgr = Oxidized::Manager.new
