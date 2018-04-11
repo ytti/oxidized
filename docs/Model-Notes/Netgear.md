@@ -38,9 +38,9 @@ The main differences are:
 
 Configuration for older/newer models: make sure you have defined variable 'enable':
 - `'true'` for newer models
-- `''` empty strgng: for older models
+- `''` empty string: for older models
 
-One possoble configuration:
+One possible configuration:
 - oxidized config
 ```
 source:
