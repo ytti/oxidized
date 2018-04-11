@@ -43,7 +43,7 @@ class HTTP < Source
         want_positions = want_position.split('.')
         keys[key.to_sym] = node_var_interpolate node.dig(*want_positions)
       end
-      keys[:model] = map_model keys[:model] if keys.key? :model
+      keys[:model] = map_model keys[:model] if keys.has_key? :model
 
       # map node specific vars
       vars = {}

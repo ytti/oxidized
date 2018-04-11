@@ -49,13 +49,13 @@ module Oxidized
       @model.merge! _model
     end
     def add_source _source
-      return nil if @source.key? _source
+      return nil if @source.has_key? _source
       _source = Manager.load Config::SourceDir, _source
       return false if _source.empty?
       @source.merge! _source
     end
     def add_hook _hook
-      return nil if @hook.key? _hook
+      return nil if @hook.has_key? _hook
       name = _hook
       _hook = Manager.load File.join(Config::Root, 'hook'), name
       _hook = Manager.load Config::HookDir, name if _hook.empty?
