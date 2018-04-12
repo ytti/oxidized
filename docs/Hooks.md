@@ -188,7 +188,7 @@ Note the channel name must be in quotes.
 
 The `ciscosparkdiff` hook posts config diffs to a [Cisco Spark](https://www.ciscospark.com/) space of your choice. It only triggers for `post_store` events.
 
-You will need to manually install the `cisco_spark` gem on your system (see [cisco_spark-ruby](https://github.com/NGMarmaduke/cisco_spark-ruby) and generate either a [Bot or OAUTH access key](https://developer.ciscospark.com/apps.html), and retrieve the [Spark Space ID](https://developer.ciscospark.com/endpoint-rooms-get.html)
+You will need to manually install the `cisco_spark` gem on your system (see [cisco_spark-ruby](https://github.com/NGMarmaduke/cisco_spark-ruby ) and generate either a [Bot or OAUTH access key](https://developer.ciscospark.com/apps.html), and retrieve the [Spark Space ID](https://developer.ciscospark.com/endpoint-rooms-get.html)
 
 ```shell
 gem install cisco_spark
@@ -213,8 +213,8 @@ hooks:
   ciscospark:
     type: ciscosparkdiff
     events: [post_store]
-    accesskey: [SPARK_BOT_API_OR_OAUTH_KEY](https://developer.ciscospark.com/apps.html)
-    space: [SPARK_SPACE_ID](https://developer.ciscospark.com/endpoint-rooms-get.html)
+    accesskey: SPARK_BOT_API_OR_OAUTH_KEY
+    space: SPARK_SPACE_ID
     diff: false
     message: "%{node} %{group} %{model} updated https://git.intranet/network-changes/commit/%{commitref}"
 ```
