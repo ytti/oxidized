@@ -2,8 +2,14 @@ require 'spec_helper'
 require 'oxidized/cli'
 
 describe Oxidized::CLI do
-  before { @original = ARGV }
-  after  { ARGV.replace @original }
+  before(:each) do 
+    @original = ARGV 
+    Oxidized.asetus = Asetus.new 
+  end
+  
+  after(:each) do
+    ARGV.replace @original
+  end
 
   %w[-v --version].each do |option|
     describe option do
