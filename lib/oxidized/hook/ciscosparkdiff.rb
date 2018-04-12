@@ -22,7 +22,6 @@ class CiscoSparkDiff < Oxidized::Hook
          client = CiscoSpark::Room.new(id: space)
          client.fetch
          log "Connected"
-        # diff snippet - default
         diffenable = true
         if cfg.has_key?('diff') == true
           if cfg.diff == false
@@ -34,12 +33,10 @@ class CiscoSparkDiff < Oxidized::Hook
           diff = gitoutput.get_diff ctx.node, ctx.node.group, ctx.commitref, nil
           title = "#{ctx.node.name.to_s}"
           log "Posting diff as snippet to #{cfg.space}"
-          message = CiscoSpark::Message.new(text: 'Device ' + title + ' modified:' + "\n" + diff[:patch].lines.to_a[4..-1].join
-                )
+          message = CiscoSpark::Message.new(text: 'Device ' + title + ' modified:' + "\n" + diff[:patch].lines.to_a[4..-1].join)
           room = CiscoSpark::Room.new(id: space)
           room.send_message(message)
         end
-        # message custom formatted - optional
         if cfg.has_key?('message') == true
           log cfg.message
           msg = cfg.message % {:node => ctx.node.name.to_s, :group => ctx.node.group.to_s, :commitref => ctx.commitref, :model => ctx.node.model.class.name.to_s.downcase}
