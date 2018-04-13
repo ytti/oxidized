@@ -32,7 +32,7 @@ describe GithubRepo do
   describe "#fetch_and_merge_remote" do
     before(:each) do
       Oxidized.config.hooks.github_repo_hook.remote_repo = 'git@github.com:username/foo.git'
-      Rugged::Credentials::SshKeyFromAgent.expects(:new).with(username: 'git').returns(credentials)
+      Proc.expects(:new).returns(credentials)
       repo_head.expects(:name).returns('refs/heads/master')
       gr.cfg = Oxidized.config.hooks.github_repo_hook
     end
@@ -89,6 +89,7 @@ describe GithubRepo do
     end
 
     before do
+      Proc.expects(:new).returns(credentials)
       repo_head.expects(:name).twice.returns('refs/heads/master')
       repo.expects(:head).twice.returns(repo_head)
       repo.expects(:path).returns('/foo.git')
@@ -108,14 +109,14 @@ describe GithubRepo do
         Oxidized.config.hooks.github_repo_hook.remote_repo = 'https://github.com/username/foo.git'
         Oxidized.config.hooks.github_repo_hook.username = 'username'
         Oxidized.config.hooks.github_repo_hook.password = 'password'
-        Rugged::Credentials::UserPassword.expects(:new).with(username: 'username', password: 'password').returns(credentials)
+        Proc.expects(:new).returns(credentials)
         gr.cfg = Oxidized.config.hooks.github_repo_hook
         gr.run_hook(ctx).must_equal true
       end
 
       it "will push to the remote repository using ssh" do
         Oxidized.config.hooks.github_repo_hook.remote_repo = 'git@github.com:username/foo.git'
-        Rugged::Credentials::SshKeyFromAgent.expects(:new).with(username: 'git').returns(credentials)
+        Proc.expects(:new).returns(credentials)
         gr.cfg = Oxidized.config.hooks.github_repo_hook
         gr.run_hook(ctx).must_equal true
       end
@@ -125,7 +126,7 @@ describe GithubRepo do
       let(:group) { 'ggrroouupp' }
 
       before do
-        Rugged::Credentials::SshKeyFromAgent.expects(:new).with(username: 'git').returns(credentials)
+        Proc.expects(:new).returns(credentials)
         Rugged::Repository.expects(:new).with(repository).returns(repo)
 
         repo.expects(:remotes).twice.returns(remotes)

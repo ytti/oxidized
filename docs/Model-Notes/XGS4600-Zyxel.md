@@ -36,5 +36,4 @@ Privilege Level | Types of commands at this privilege level
 
 Oxidized can now retrieve your configuration!
 
-
 Back to [Model-Notes](README.md)
