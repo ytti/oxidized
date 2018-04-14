@@ -2,6 +2,8 @@ class TMOS < Oxidized::Model
 
   comment  '# '
 
+  prompt /^.*Sync|Pending.*#/
+
   cmd :secret do |cfg|
     cfg.gsub!(/^([\s\t]*)secret \S+/, '\1secret <secret removed>')
     cfg.gsub!(/^([\s\t]*\S*)password \S+/, '\1password <secret removed>')
@@ -46,7 +48,11 @@ class TMOS < Oxidized::Model
   cmd('cat /config/partitions/*/bigip.conf') { |cfg| comment cfg }
 
   cfg :ssh do
-    exec true  # don't run shell, run each command in exec channel
+    post_login '/run util bash'
+    pre_logout do
+      send "exit\r\n"
+      send "quit\r\n"
+    end
   end
 
 end
