@@ -27,7 +27,7 @@ class SQL < Source
       # map node parameters
       keys = {}
       @cfg.map.each { |key, sql_column| keys[key.to_sym] = node_var_interpolate node[sql_column.to_sym] }
-      keys[:model] = map_model keys[:model] if keys.key? :model
+      keys[:model] = map_model keys[:model] if keys.has_key? :model
 
       # map node specific vars
       vars = {}
