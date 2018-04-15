@@ -269,7 +269,6 @@ Layout/MultilineBlockLayout:
 # SupportedStyles: symmetrical, new_line, same_line
 Layout/MultilineMethodCallBraceLayout:
   Exclude:
-    - 'lib/oxidized/hook/slackdiff.rb'
     - 'lib/oxidized/output/git.rb'
 
 # Offense count: 14
@@ -387,7 +386,6 @@ Layout/SpaceInsideBlockBraces:
 # SupportedStylesForEmptyBraces: space, no_space
 Layout/SpaceInsideHashLiteralBraces:
   Exclude:
-    - 'lib/oxidized/hook/slackdiff.rb'
     - 'lib/oxidized/output/git.rb'
     - 'lib/oxidized/output/gitcrypt.rb'
     - 'lib/oxidized/output/http.rb'
@@ -503,7 +501,6 @@ Lint/ShadowingOuterLocalVariable:
 # Cop supports --auto-correct.
 Lint/StringConversionInInterpolation:
   Exclude:
-    - 'lib/oxidized/hook/slackdiff.rb'
     - 'lib/oxidized/hook/xmppdiff.rb'
 
 # Offense count: 10
@@ -701,12 +698,6 @@ Style/Alias:
 Style/AndOr:
   Enabled: false
 
-# Offense count: 1
-# Configuration parameters: AllowedChars.
-Style/AsciiComments:
-  Exclude:
-    - 'lib/oxidized/hook/slackdiff.rb'
-
 # Offense count: 4
 # Cop supports --auto-correct.
 # Configuration parameters: EnforcedStyle, ProceduralMethods, FunctionalMethods, IgnoredMethods.
@@ -823,7 +814,6 @@ Style/ExpandPathArguments:
 # SupportedStyles: format, sprintf, percent
 Style/FormatString:
   Exclude:
-    - 'lib/oxidized/hook/slackdiff.rb'
     - 'lib/oxidized/node.rb'
     - 'lib/oxidized/nodes.rb'
 
@@ -840,7 +830,6 @@ Style/FormatStringToken:
 Style/GuardClause:
   Exclude:
     - 'lib/oxidized/cli.rb'
-    - 'lib/oxidized/hook/slackdiff.rb'
     - 'lib/oxidized/hook/xmppdiff.rb'
     - 'lib/oxidized/input/cli.rb'
     - 'lib/oxidized/jobs.rb'
