@@ -414,16 +414,6 @@ Layout/SpaceInsideRangeLiteral:
   Exclude:
     - 'lib/oxidized/input/telnet.rb'
 
-# Offense count: 302
-# Cop supports --auto-correct.
-# Configuration parameters: IndentationWidth.
-Layout/Tab:
-  Exclude:
-    - 'lib/oxidized/model/asyncos.rb'
-    - 'lib/oxidized/model/ciscosma.rb'
-    - 'lib/oxidized/model/cumulus.rb'
-    - 'lib/oxidized/output/gitcrypt.rb'
-
 # Offense count: 8
 # Cop supports --auto-correct.
 # Configuration parameters: EnforcedStyle.
