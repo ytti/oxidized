@@ -15,7 +15,7 @@ class FirewareOS < Oxidized::Model
 
   cmd 'show sysinfo' do |cfg|
     # avoid commits due to uptime
-    cfg = cfg.each_line.select { |line| not line.match /(.*time.*)|(.*memory.*)|(.*cpu.*)/ }
+    cfg = cfg.each_line.reject { |line| line.match /(.*time.*)|(.*memory.*)|(.*cpu.*)/ }
     cfg = cfg.join
     comment cfg
   end

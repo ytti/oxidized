@@ -25,7 +25,7 @@ class VRP < Oxidized::Model
   end
 
   cmd 'display version' do |cfg|
-    cfg = cfg.each_line.select {|l| not l.match /uptime/ }.join
+    cfg = cfg.each_line.reject { |l| l.match /uptime/ }.join
     comment cfg
   end
 

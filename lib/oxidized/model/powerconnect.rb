@@ -22,7 +22,7 @@ class PowerConnect < Oxidized::Model
     if (@stackable.nil?)
       @stackable = true if cfg.match /(U|u)nit\s/
     end
-    cfg = cfg.split("\n").select { |line| not line[/Up\sTime/] }
+    cfg = cfg.split("\n").reject { |line| line[/Up\sTime/] }
     comment cfg.join("\n") + "\n"
   end
 
@@ -72,7 +72,7 @@ class PowerConnect < Oxidized::Model
       end
       out << line.strip
     end
-    out = out.select { |line| not line[/Up\sTime/] }
+    out = out.reject { |line| line[/Up\sTime/] }
     out = comment out.join "\n"
     out << "\n"
   end
