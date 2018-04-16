@@ -94,14 +94,6 @@ Layout/CommentIndentation:
     - 'lib/oxidized/model/planet.rb'
     - 'lib/oxidized/output/http.rb'
 
-# Offense count: 1
-# Cop supports --auto-correct.
-# Configuration parameters: EnforcedStyleAlignWith, AutoCorrect, Severity.
-# SupportedStylesAlignWith: start_of_line, def
-Layout/DefEndAlignment:
-  Exclude:
-    - 'lib/oxidized/hook/xmppdiff.rb'
-
 # Offense count: 3
 # Cop supports --auto-correct.
 Layout/ElseAlignment:
@@ -494,7 +486,6 @@ Lint/ShadowingOuterLocalVariable:
 Lint/StringConversionInInterpolation:
   Exclude:
     - 'lib/oxidized/hook/slackdiff.rb'
-    - 'lib/oxidized/hook/xmppdiff.rb'
 
 # Offense count: 10
 Lint/UnderscorePrefixedVariableName:
@@ -706,7 +697,6 @@ Style/AsciiComments:
 # IgnoredMethods: lambda, proc, it
 Style/BlockDelimiters:
   Exclude:
-    - 'lib/oxidized/hook/xmppdiff.rb'
     - 'lib/oxidized/model/aricentiss.rb'
     - 'lib/oxidized/model/hatteras.rb'
 
@@ -758,7 +748,6 @@ Style/ClassVars:
 # Cop supports --auto-correct.
 Style/ColonMethodCall:
   Exclude:
-    - 'lib/oxidized/hook/xmppdiff.rb'
     - 'lib/oxidized/input/ssh.rb'
     - 'lib/oxidized/input/telnet.rb'
 
@@ -831,7 +820,6 @@ Style/GuardClause:
   Exclude:
     - 'lib/oxidized/cli.rb'
     - 'lib/oxidized/hook/slackdiff.rb'
-    - 'lib/oxidized/hook/xmppdiff.rb'
     - 'lib/oxidized/input/cli.rb'
     - 'lib/oxidized/jobs.rb'
     - 'lib/oxidized/nodes.rb'
