@@ -1,15 +1,16 @@
 class Netgear < Oxidized::Model
 
   comment '!'
-  prompt /^(\([\w\-.]+\)\s[#>])$/
+  prompt /^(\([\w\s\-.]+\)\s[#>])$/
 
   cmd :secret do |cfg|
     cfg.gsub!(/password (\S+)/, 'password <hidden>')
+    cfg.gsub!(/encrypted (\S+)/, 'encrypted <hidden>')
     cfg
   end
 
   cfg :telnet do
-    username /^User:/
+    username /^(User:|Applying Interface configuration, please wait ...)/
   end
 
   cfg :telnet, :ssh do
