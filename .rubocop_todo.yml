@@ -216,7 +216,6 @@ Layout/FirstParameterIndentation:
 # SupportedStyles: special_inside_parentheses, consistent, align_braces
 Layout/IndentHash:
   Exclude:
-    - 'lib/oxidized/hook/awssns.rb'
     - 'lib/oxidized/hook/githubrepo.rb'
     - 'lib/oxidized/input/ssh.rb'
     - 'lib/oxidized/output/http.rb'
@@ -692,7 +691,6 @@ Style/BlockDelimiters:
 # SupportedStyles: braces, no_braces, context_dependent
 Style/BracesAroundHashParameters:
   Exclude:
-    - 'lib/oxidized/hook/awssns.rb'
     - 'lib/oxidized/hook/githubrepo.rb'
     - 'lib/oxidized/input/telnet.rb'
     - 'lib/oxidized/model/procurve.rb'
