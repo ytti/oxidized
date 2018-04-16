@@ -94,14 +94,6 @@ Layout/CommentIndentation:
     - 'lib/oxidized/model/planet.rb'
     - 'lib/oxidized/output/http.rb'
 
-# Offense count: 1
-# Cop supports --auto-correct.
-# Configuration parameters: EnforcedStyleAlignWith, AutoCorrect, Severity.
-# SupportedStylesAlignWith: start_of_line, def
-Layout/DefEndAlignment:
-  Exclude:
-    - 'lib/oxidized/hook/xmppdiff.rb'
-
 # Offense count: 3
 # Cop supports --auto-correct.
 Layout/ElseAlignment:
@@ -412,16 +404,6 @@ Layout/SpaceInsideRangeLiteral:
   Exclude:
     - 'lib/oxidized/input/telnet.rb'
 
-# Offense count: 302
-# Cop supports --auto-correct.
-# Configuration parameters: IndentationWidth.
-Layout/Tab:
-  Exclude:
-    - 'lib/oxidized/model/asyncos.rb'
-    - 'lib/oxidized/model/ciscosma.rb'
-    - 'lib/oxidized/model/cumulus.rb'
-    - 'lib/oxidized/output/gitcrypt.rb'
-
 # Offense count: 8
 # Cop supports --auto-correct.
 # Configuration parameters: EnforcedStyle.
@@ -496,12 +478,6 @@ Lint/ShadowingOuterLocalVariable:
   Exclude:
     - 'lib/oxidized/model/fortios.rb'
     - 'lib/oxidized/model/planet.rb'
-
-# Offense count: 4
-# Cop supports --auto-correct.
-Lint/StringConversionInInterpolation:
-  Exclude:
-    - 'lib/oxidized/hook/xmppdiff.rb'
 
 # Offense count: 10
 Lint/UnderscorePrefixedVariableName:
@@ -707,7 +683,6 @@ Style/AndOr:
 # IgnoredMethods: lambda, proc, it
 Style/BlockDelimiters:
   Exclude:
-    - 'lib/oxidized/hook/xmppdiff.rb'
     - 'lib/oxidized/model/aricentiss.rb'
     - 'lib/oxidized/model/hatteras.rb'
 
@@ -759,7 +734,6 @@ Style/ClassVars:
 # Cop supports --auto-correct.
 Style/ColonMethodCall:
   Exclude:
-    - 'lib/oxidized/hook/xmppdiff.rb'
     - 'lib/oxidized/input/ssh.rb'
     - 'lib/oxidized/input/telnet.rb'
 
@@ -830,7 +804,6 @@ Style/FormatStringToken:
 Style/GuardClause:
   Exclude:
     - 'lib/oxidized/cli.rb'
-    - 'lib/oxidized/hook/xmppdiff.rb'
     - 'lib/oxidized/input/cli.rb'
     - 'lib/oxidized/jobs.rb'
     - 'lib/oxidized/nodes.rb'
@@ -870,21 +843,6 @@ Style/InfiniteLoop:
   Exclude:
     - 'extra/syslog.rb'
     - 'lib/oxidized/core.rb'
-
-# Offense count: 10
-# Cop supports --auto-correct.
-# Configuration parameters: InverseMethods, InverseBlocks.
-Style/InverseMethods:
-  Exclude:
-    - 'lib/oxidized/model/aosw.rb'
-    - 'lib/oxidized/model/asa.rb'
-    - 'lib/oxidized/model/comware.rb'
-    - 'lib/oxidized/model/firewareos.rb'
-    - 'lib/oxidized/model/powerconnect.rb'
-    - 'lib/oxidized/model/procurve.rb'
-    - 'lib/oxidized/model/routeros.rb'
-    - 'lib/oxidized/model/vrp.rb'
-    - 'lib/oxidized/model/zhoneolt.rb'
 
 # Offense count: 1
 # Cop supports --auto-correct.
@@ -1021,17 +979,6 @@ Style/PerlBackrefs:
     - 'lib/oxidized/model/ios.rb'
     - 'lib/oxidized/model/junos.rb'
     - 'lib/oxidized/model/powerconnect.rb'
-
-# Offense count: 5
-# Cop supports --auto-correct.
-# Configuration parameters: EnforcedStyle.
-# SupportedStyles: short, verbose
-Style/PreferredHashMethods:
-  Exclude:
-    - 'lib/oxidized/manager.rb'
-    - 'lib/oxidized/source/csv.rb'
-    - 'lib/oxidized/source/http.rb'
-    - 'lib/oxidized/source/sql.rb'
 
 # Offense count: 1
 # Cop supports --auto-correct.
