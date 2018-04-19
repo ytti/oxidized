@@ -29,16 +29,6 @@ Layout/AccessModifierIndentation:
   Exclude:
     - 'lib/oxidized/output/gitcrypt.rb'
 
-# Offense count: 2
-# Cop supports --auto-correct.
-# Configuration parameters: EnforcedHashRocketStyle, EnforcedColonStyle, EnforcedLastArgumentHashStyle.
-# SupportedHashRocketStyles: key, separator, table
-# SupportedColonStyles: key, separator, table
-# SupportedLastArgumentHashStyles: always_inspect, always_ignore, ignore_implicit, ignore_explicit
-Layout/AlignHash:
-  Exclude:
-    - 'spec/input/ssh_spec.rb'
-
 # Offense count: 4
 # Cop supports --auto-correct.
 # Configuration parameters: EnforcedStyle, IndentationWidth.
@@ -150,8 +140,6 @@ Layout/EmptyLinesAroundBlockBody:
     - 'lib/oxidized/model/audiocodes.rb'
     - 'lib/oxidized/model/ciscosma.rb'
     - 'lib/oxidized/model/tplink.rb'
-    - 'spec/input/ssh_spec.rb'
-    - 'spec/node_spec.rb'
 
 # Offense count: 158
 # Cop supports --auto-correct.
@@ -220,8 +208,6 @@ Layout/IndentHash:
     - 'lib/oxidized/hook/githubrepo.rb'
     - 'lib/oxidized/input/ssh.rb'
     - 'lib/oxidized/output/http.rb'
-    - 'spec/githubrepo_spec.rb'
-    - 'spec/node_spec.rb'
 
 # Offense count: 21
 # Cop supports --auto-correct.
@@ -381,8 +367,6 @@ Layout/SpaceInsideHashLiteralBraces:
     - 'lib/oxidized/output/git.rb'
     - 'lib/oxidized/output/gitcrypt.rb'
     - 'lib/oxidized/output/http.rb'
-    - 'spec/githubrepo_spec.rb'
-    - 'spec/input/ssh_spec.rb'
 
 # Offense count: 9
 # Cop supports --auto-correct.
@@ -697,9 +681,6 @@ Style/BracesAroundHashParameters:
     - 'lib/oxidized/input/telnet.rb'
     - 'lib/oxidized/model/procurve.rb'
     - 'lib/oxidized/output/http.rb'
-    - 'spec/githubrepo_spec.rb'
-    - 'spec/input/ssh_spec.rb'
-    - 'spec/node_spec.rb'
 
 # Offense count: 3
 Style/CaseEquality:
@@ -850,13 +831,6 @@ Style/LineEndConcatenation:
   Exclude:
     - 'lib/oxidized/hook.rb'
 
-# Offense count: 9
-# Cop supports --auto-correct.
-Style/MethodCallWithoutArgsParentheses:
-  Exclude:
-    - 'spec/githubrepo_spec.rb'
-    - 'spec/input/ssh_spec.rb'
-
 # Offense count: 131
 # Cop supports --auto-correct.
 # Configuration parameters: EnforcedStyle.
@@ -968,7 +942,6 @@ Style/PercentLiteralDelimiters:
     - 'lib/oxidized/config.rb'
     - 'lib/oxidized/input/ssh.rb'
     - 'oxidized.gemspec'
-    - 'spec/nodes_spec.rb'
 
 # Offense count: 22
 # Cop supports --auto-correct.
@@ -1134,7 +1107,6 @@ Style/TrailingUnderscoreVariable:
   Exclude:
     - 'lib/oxidized/node.rb'
     - 'lib/oxidized/output/git.rb'
-    - 'spec/node_spec.rb'
 
 # Offense count: 3
 # Cop supports --auto-correct.
