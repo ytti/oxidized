@@ -163,3 +163,4 @@
   * [Zhone (OLT and MX)](/lib/oxidized/model/zhoneolt.rb)
 * Zyxel
   * [ZyNOS](/lib/oxidized/model/zynos.rb)
+  * [NDMS](/lib/oxidized/model/ndms.rb)
