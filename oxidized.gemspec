@@ -34,6 +34,12 @@ Gem::Specification.new do |s|
   s.add_development_dependency 'minitest', '~> 5.8'
   s.add_development_dependency 'mocha',    '~> 1.1'
   s.add_development_dependency 'git',      '~> 1'
-  s.add_development_dependency 'rubocop',  '~> 0.54'
   s.add_development_dependency 'rails_best_practices', '~> 1.19'
+
+  if defined?(RUBY_VERSION) && RUBY_VERSION < '2.1'
+    s.add_development_dependency 'rubocop',  '~> 0.50.0'
+  else
+    s.add_development_dependency 'rubocop',  '~> 0.55'
+  end
+
 end
