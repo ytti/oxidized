@@ -14,6 +14,9 @@ LineLength:
 Style/PreferredHashMethods:
   EnforcedStyle: verbose
 
+Style/Not:
+  Enabled: false
+
 AllCops:
   Exclude:
     - 'vendor/**/*'
