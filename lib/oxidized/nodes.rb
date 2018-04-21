@@ -6,7 +6,7 @@ module Oxidized
   class Nodes < Array
     attr_accessor :source, :jobs
     alias :put :unshift
-    def load node_want=nil
+    def load node_want = nil
       with_lock do
         new = []
         @source = Oxidized.config.source.default
@@ -42,7 +42,6 @@ module Oxidized
       end
     end
 
-
     def list
       with_lock do
         map { |e| e.serialize }
@@ -63,7 +62,7 @@ module Oxidized
     end
 
     # @param node [String] name of the node moved into the head of array
-    def next node, opt={}
+    def next node, opt = {}
       if waiting.find_node_index(node)
         with_lock do
           n = del node
@@ -113,10 +112,10 @@ module Oxidized
 
     private
 
-    def initialize opts={}
+    def initialize opts = {}
       super()
       node = opts.delete :node
-      @mutex= Mutex.new  # we compete for the nodes with webapi thread
+      @mutex = Mutex.new # we compete for the nodes with webapi thread
       if nodes = opts.delete(:nodes)
         replace nodes
       else
@@ -129,7 +128,7 @@ module Oxidized
     end
 
     def find_index node
-      index { |e| e.name == node or e.ip == node}
+      index { |e| e.name == node or e.ip == node }
     end
 
     # @param node node which is removed from nodes list
@@ -162,7 +161,7 @@ module Oxidized
             node.stats = old[i].stats
             node.last  = old[i].last
           end
-        rescue  Oxidized::NodeNotFound
+        rescue Oxidized::NodeNotFound
         end
       end
       sort_by! { |x| x.last.nil? ? Time.new(0) : x.last.end }

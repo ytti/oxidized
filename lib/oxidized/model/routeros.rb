@@ -18,8 +18,8 @@ class RouterOS < Oxidized::Model
     run_cmd = vars(:remove_secret) ? '/export hide-sensitive' : '/export'
     cmd run_cmd do |cfg|
       cfg.gsub! /\x1B\[([0-9]{1,3}((;[0-9]{1,3})*)?)?[m|K]/, '' # strip ANSI colours
-      cfg.gsub! /\\\r\n\s+/, ''   # strip new line
-      cfg.gsub! /# inactive time\r\n/, ''   # Remove time based system comment
+      cfg.gsub! /\\\r\n\s+/, '' # strip new line
+      cfg.gsub! /# inactive time\r\n/, '' # Remove time based system comment
       cfg = cfg.split("\n").reject { |line| line[/^\#\s\w{3}\/\d{2}\/\d{4}.*$/] }
       cfg.join("\n") + "\n"
     end

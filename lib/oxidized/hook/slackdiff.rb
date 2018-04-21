@@ -14,8 +14,8 @@ class SlackDiff < Oxidized::Hook
     return unless ctx.event.to_s == "post_store"
     log "Connecting to slack"
     Slack.configure do |config|
-       config.token = cfg.token
-       config.proxy = cfg.proxy if cfg.has_key?('proxy')
+      config.token = cfg.token
+      config.proxy = cfg.proxy if cfg.has_key?('proxy')
     end
     client = Slack::Client.new
     client.auth_test
@@ -46,7 +46,7 @@ class SlackDiff < Oxidized::Hook
       msg = format(cfg.message, :node => ctx.node.name.to_s, :group => ctx.node.group.to_s, :commitref => ctx.commitref, :model => ctx.node.model.class.name.to_s.downcase)
       log msg
       log "Posting message to #{cfg.channel}"
-      client.chat_postMessage(channel: cfg.channel, text: msg,  as_user: true)
+      client.chat_postMessage(channel: cfg.channel, text: msg, as_user: true)
     end
     log "Finished"
   end

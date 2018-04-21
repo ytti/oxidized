@@ -1,8 +1,7 @@
 class PanOS < Oxidized::Model
-
   # PaloAlto PAN-OS model #
 
-  comment  '! '
+  comment '! '
 
   prompt /^[\w.\@:\(\)-]+>\s?$/
 

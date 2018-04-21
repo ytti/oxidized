@@ -7,29 +7,34 @@ module Oxidized
 
     class << self
       def inherited klass
-        klass.instance_variable_set '@cmd',   Hash.new { |h,k| h[k] = [] }
-        klass.instance_variable_set '@cfg',   Hash.new { |h,k| h[k] = [] }
-        klass.instance_variable_set '@procs', Hash.new { |h,k| h[k] = [] }
+        klass.instance_variable_set '@cmd',   Hash.new { |h, k| h[k] = [] }
+        klass.instance_variable_set '@cfg',   Hash.new { |h, k| h[k] = [] }
+        klass.instance_variable_set '@procs', Hash.new { |h, k| h[k] = [] }
         klass.instance_variable_set '@expect', []
         klass.instance_variable_set '@comment', nil
         klass.instance_variable_set '@prompt', nil
       end
-      def comment _comment='# '
+
+      def comment _comment = '# '
         return @comment if @comment
         @comment = block_given? ? yield : _comment
       end
-      def prompt _prompt=nil
+
+      def prompt _prompt = nil
         @prompt or @prompt = _prompt
       end
+
       def cfg *methods, &block
         [methods].flatten.each do |method|
           @cfg[method.to_s] << block
         end
       end
+
       def cfgs
         @cfg
       end
-      def cmd _cmd=nil, &block
+
+      def cmd _cmd = nil, &block
         if _cmd.class == Symbol
           @cmd[_cmd] << block
         else
@@ -37,12 +42,15 @@ module Oxidized
         end
         Oxidized.logger.debug "lib/oxidized/model/model.rb Added #{_cmd} to the commands list"
       end
+
       def cmds
         @cmd
       end
+
       def expect re, &block
         @expect << [re, block]
       end
+
       def expects
         @expect
       end
@@ -166,6 +174,5 @@ module Oxidized
       output.set_cmd(name)
       output
     end
-
   end
 end

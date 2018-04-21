@@ -23,5 +23,4 @@ class AwsSns < Oxidized::Hook
       message: message.to_json
     )
   end
-
 end

@@ -18,7 +18,7 @@ class ZhoneOLT < Oxidized::Model
   end
 
   cmd :all do |cfg|
-    cfg.each_line.to_a[1..-2].map{|line|line.delete("\r").rstrip}.join("\n") + "\n"
+    cfg.each_line.to_a[1..-2].map { |line| line.delete("\r").rstrip }.join("\n") + "\n"
   end
 
   cmd 'swversion' do |cfg|

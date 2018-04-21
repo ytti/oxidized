@@ -1,5 +1,4 @@
 class Enterasys < Oxidized::Model
-
   # Enterasys B3/C3 models #
 
   prompt /^.+\w\(su\)->\s?$/
@@ -7,7 +6,7 @@ class Enterasys < Oxidized::Model
   comment  '!'
 
   cmd :all do |cfg|
-     cfg.each_line.to_a[2..-3].map{|line|line.delete("\r").rstrip}.join("\n") + "\n"
+    cfg.each_line.to_a[2..-3].map { |line| line.delete("\r").rstrip }.join("\n") + "\n"
   end
 
   cmd 'show system hardware' do |cfg|
@@ -26,5 +25,4 @@ class Enterasys < Oxidized::Model
   cfg :ssh do
     pre_logout 'exit'
   end
-
 end

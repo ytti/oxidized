@@ -1,12 +1,11 @@
 class PowerConnect < Oxidized::Model
-
   prompt /^([\w\s.@-]+[#>]\s?)$/ # allow spaces in hostname..dell does not limit it.. #
 
-  comment  '! '
+  comment '! '
 
   expect /^\s*--More--\s+.*$/ do |data, re|
-     send ' '
-     data.sub re, ''
+    send ' '
+    data.sub re, ''
   end
 
   cmd :all do |cfg|
@@ -52,7 +51,6 @@ class PowerConnect < Oxidized::Model
     post_login "terminal length 0"
     pre_logout "logout"
     pre_logout "exit"
-    
   end
 
   def clean cfg
@@ -76,5 +74,4 @@ class PowerConnect < Oxidized::Model
     out = comment out.join "\n"
     out << "\n"
   end
-
 end

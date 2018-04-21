@@ -6,10 +6,10 @@ module Oxidized
     require 'asetus'
 
     class Config
-      Root      = Root = ENV['OXIDIZED_HOME'] || File.join(ENV['HOME'], '.config', 'oxidized')
+      Root = Root = ENV['OXIDIZED_HOME'] || File.join(ENV['HOME'], '.config', 'oxidized')
     end
 
-    CFGS = Asetus.new :name=>'oxidized', :load=>false, :key_to_s=>true
+    CFGS = Asetus.new :name => 'oxidized', :load => false, :key_to_s => true
     CFGS.default.rest = '127.0.0.1:8888'
 
     begin
@@ -28,13 +28,13 @@ module Oxidized
     PATH = URI(restcfg).path
 
     class << self
-      def next opt={}, host=HOST, port=PORT
+      def next opt = {}, host = HOST, port = PORT
         web = new host, port
         web.next opt
       end
     end
 
-    def initialize host=HOST, port=PORT
+    def initialize host = HOST, port = PORT
       @web = Net::HTTP.new host, port
     end
 
@@ -42,6 +42,5 @@ module Oxidized
       data = JSON.dump opt
       @web.put PATH + '/node/next/' + opt[:name].to_s, data
     end
-
   end
 end

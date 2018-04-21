@@ -1,10 +1,9 @@
 class Procurve < Oxidized::Model
-
   # some models start lines with \r
   # previous command is repeated followed by "\eE", which sometimes ends up on last line
   prompt /^\r?([\w.-]+# )$/
 
-  comment  '! '
+  comment '! '
 
   # replace next line control sequence with a new line
   expect /(\e\[1M\e\[\??\d+(;\d+)*[A-Za-z]\e\[1L)|(\eE)/ do |data, re|
@@ -87,5 +86,4 @@ class Procurve < Oxidized::Model
   cfg :ssh do
     pty_options({ chars_wide: 1000 })
   end
-
 end

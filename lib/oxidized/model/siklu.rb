@@ -1,5 +1,4 @@
 class Siklu < Oxidized::Model
-
   # Siklu EtherHaul #
 
   prompt /^[\w-]+>$/
@@ -15,5 +14,4 @@ class Siklu < Oxidized::Model
   cfg :ssh do
     pre_logout 'exit'
   end
-
 end

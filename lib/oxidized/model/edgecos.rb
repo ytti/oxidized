@@ -1,6 +1,5 @@
 class EdgeCOS < Oxidized::Model
-  
-  comment  '! '
+  comment '! '
 
   cmd :secret do |cfg|
     cfg.gsub!(/password \d+ (\S+).*/, '<secret removed>')
@@ -9,7 +8,7 @@ class EdgeCOS < Oxidized::Model
   end
 
   cmd :all do |cfg|
-     cfg.each_line.to_a[2..-2].join
+    cfg.each_line.to_a[2..-2].join
   end
 
   cmd 'show running-config'
@@ -43,5 +42,4 @@ class EdgeCOS < Oxidized::Model
     post_login 'terminal length 0'
     pre_logout 'exit'
   end
-
 end

@@ -1,5 +1,4 @@
 class ASA < Oxidized::Model
-
   # Cisco ASA model #
   # Only SSH supported for the sake of security
 
@@ -54,48 +53,47 @@ class ASA < Oxidized::Model
     post_login 'terminal pager 0'
     pre_logout 'exit'
   end
-  
+
   def single_context
-      # Single context mode
-      cmd 'more system:running-config' do |cfg|
-        cfg = cfg.each_line.to_a[3..-1].join
-        cfg.gsub! /^: [^\n]*\n/, ''
-        # backup any xml referenced in the configuration.
-        anyconnect_profiles = cfg.scan(Regexp.new('(\sdisk0:/.+\.xml)')).flatten
-        anyconnect_profiles.each do |profile|
-            cfg << (comment profile + "\n" )
-            cmd ("more" + profile) do |xml|
-              cfg << (comment xml)
-            end
+    # Single context mode
+    cmd 'more system:running-config' do |cfg|
+      cfg = cfg.each_line.to_a[3..-1].join
+      cfg.gsub! /^: [^\n]*\n/, ''
+      # backup any xml referenced in the configuration.
+      anyconnect_profiles = cfg.scan(Regexp.new('(\sdisk0:/.+\.xml)')).flatten
+      anyconnect_profiles.each do |profile|
+        cfg << (comment profile + "\n")
+        cmd ("more" + profile) do |xml|
+          cfg << (comment xml)
         end
-        # if DAP is enabled, also backup dap.xml
-        if cfg.rindex(/dynamic-access-policy-record\s(?!DfltAccessPolicy)/)
-            cfg << (comment "disk0:/dap.xml\n")
-            cmd "more disk0:/dap.xml" do |xml|
-              cfg << (comment xml)
-            end
-        end
-        cfg
       end
+      # if DAP is enabled, also backup dap.xml
+      if cfg.rindex(/dynamic-access-policy-record\s(?!DfltAccessPolicy)/)
+        cfg << (comment "disk0:/dap.xml\n")
+        cmd "more disk0:/dap.xml" do |xml|
+          cfg << (comment xml)
+        end
+      end
+      cfg
+    end
   end
 
   def multiple_context
-      # Multiple context mode
-      cmd 'changeto system' do |cfg|
-        cmd 'show running-config' do |systemcfg|
-          allcfg = "\n\n" + systemcfg + "\n\n"
-          contexts = systemcfg.scan(/^context (\S+)$/)
-          files = systemcfg.scan(/config-url (\S+)$/)
-          contexts.each_with_index do |cont, i|
-            allcfg = allcfg + "\n\n----------========== [ CONTEXT " + cont.join(" ") + " FILE " + files[i].join(" ") + " ] ==========----------\n\n"
-            cmd "more " + files[i].join(" ") do |cfgcontext|
-              allcfg = allcfg + "\n\n" + cfgcontext
-            end
+    # Multiple context mode
+    cmd 'changeto system' do |cfg|
+      cmd 'show running-config' do |systemcfg|
+        allcfg = "\n\n" + systemcfg + "\n\n"
+        contexts = systemcfg.scan(/^context (\S+)$/)
+        files = systemcfg.scan(/config-url (\S+)$/)
+        contexts.each_with_index do |cont, i|
+          allcfg = allcfg + "\n\n----------========== [ CONTEXT " + cont.join(" ") + " FILE " + files[i].join(" ") + " ] ==========----------\n\n"
+          cmd "more " + files[i].join(" ") do |cfgcontext|
+            allcfg = allcfg + "\n\n" + cfgcontext
           end
-          cfg = allcfg
         end
-        cfg
+        cfg = allcfg
       end
+      cfg
+    end
   end
-
 end
