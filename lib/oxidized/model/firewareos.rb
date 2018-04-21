@@ -1,5 +1,4 @@
 class FirewareOS < Oxidized::Model
-
   prompt /^\[?\w*\]?\w*?(<\w*>)?(#|>)\s*$/
   comment  '-- '
 
@@ -25,6 +24,4 @@ class FirewareOS < Oxidized::Model
   cfg :ssh do
     pre_logout 'exit'
   end
-
 end
-

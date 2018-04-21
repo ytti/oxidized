@@ -8,9 +8,9 @@ module Oxidized
       Process.daemon if @opts[:daemonize]
       write_pid
       begin
-        Oxidized.logger.info "Oxidized starting, running as pid #{$$}"
+        Oxidized.logger.info "Oxidized starting, running as pid #{$PROCESS_ID}"
         Oxidized.new
-      rescue => error
+      rescue StandardError => error
         crash error
         raise
       end
@@ -27,7 +27,7 @@ module Oxidized
       @pidfile = File.expand_path(Oxidized.config.pid)
     end
 
-    def crash error
+    def crash(error)
       Oxidized.logger.fatal "Oxidized crashed, crashfile written in #{Config::Crash}"
       open Config::Crash, 'w' do |file|
         file.puts '-' * 50
@@ -40,7 +40,7 @@ module Oxidized
     end
 
     def parse_opts
-      opts = Slop.new(:help=>true) do
+      opts = Slop.new(help: true) do
         on 'd', 'debug', 'turn on debugging'
         on 'daemonize',  'Daemonize/fork the process'
         on 'v', 'version', 'show version' do
@@ -51,9 +51,7 @@ module Oxidized
       [opts.parse!, opts]
     end
 
-    def pidfile
-      @pidfile
-    end
+    attr_reader :pidfile
 
     def pidfile?
       !!pidfile
@@ -62,8 +60,8 @@ module Oxidized
     def write_pid
       if pidfile?
         begin
-          File.open(pidfile, ::File::CREAT | ::File::EXCL | ::File::WRONLY){|f| f.write("#{Process.pid}") }
-          at_exit { File.delete(pidfile) if File.exists?(pidfile) }
+          File.open(pidfile, ::File::CREAT | ::File::EXCL | ::File::WRONLY) { |f| f.write(Process.pid.to_s) }
+          at_exit { File.delete(pidfile) if File.exist?(pidfile) }
         rescue Errno::EEXIST
           check_pid
           retry
@@ -84,7 +82,7 @@ module Oxidized
     end
 
     def pid_status(pidfile)
-      return :exited unless File.exists?(pidfile)
+      return :exited unless File.exist?(pidfile)
       pid = ::File.read(pidfile).to_i
       return :dead if pid == 0
       Process.kill(0, pid)

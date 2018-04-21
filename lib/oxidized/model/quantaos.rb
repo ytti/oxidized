@@ -1,13 +1,12 @@
 class QuantaOS < Oxidized::Model
-
   prompt /^\((\w|\S)+\) (>|#)$/
   comment '! '
-  
+
   cmd 'show run' do |cfg|
     cfg.each_line.select do |line|
-      not line.match /^!.*$/ and
-      not line.match /^\((\w|\S)+\) (>|#)$/ and
-      not line.match /^show run$/
+      (not line.match /^!.*$/) &&
+        (not line.match /^\((\w|\S)+\) (>|#)$/) &&
+        (not line.match /^show run$/)
     end.join
   end
 
@@ -31,5 +30,4 @@ class QuantaOS < Oxidized::Model
       send "n\n"
     end
   end
-
 end

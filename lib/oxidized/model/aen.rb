@@ -16,5 +16,4 @@ class AEN < Oxidized::Model
   cfg :ssh do
     pre_logout 'exit'
   end
-
 end

@@ -1,5 +1,4 @@
 class NDMS < Oxidized::Model
-
   # Pull config from Zyxel Keenetic devices from version NDMS >= 2.0
 
   comment  '! '

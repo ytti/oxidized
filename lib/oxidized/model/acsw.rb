@@ -1,5 +1,4 @@
 class ACSW < Oxidized::Model
-
   prompt /([\w.@()\/\\-]+[#>]\s?)/
   comment  '! '
 
@@ -25,16 +24,13 @@ class ACSW < Oxidized::Model
     cfg
   end
 
-
   cmd 'show version' do |cfg|
     comment cfg
   end
 
-
- cmd 'show inventory' do |cfg|
-   comment cfg
- end
-
+  cmd 'show inventory' do |cfg|
+    comment cfg
+  end
 
   cmd 'show running-config' do |cfg|
     cfg = cfg.each_line.to_a[3..-1]
@@ -63,5 +59,4 @@ class ACSW < Oxidized::Model
     post_login 'terminal length 0'
     pre_logout 'exit'
   end
-
 end

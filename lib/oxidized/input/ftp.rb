@@ -5,37 +5,37 @@ module Oxidized
 
   class FTP < Input
     RescueFail = {
-      :debug => [
-        #Net::SSH::Disconnect,
+      debug: [
+        # Net::SSH::Disconnect,
       ],
-      :warn => [
-        #RuntimeError,
-        #Net::SSH::AuthenticationFailed,
-      ],
-    }
+      warn: [
+        # RuntimeError,
+        # Net::SSH::AuthenticationFailed,
+      ]
+    }.freeze
     include Input::CLI
 
-    def connect node
-      @node       = node
+    def connect(node)
+      @node = node
       @node.model.cfg['ftp'].each { |cb| instance_exec(&cb) }
       @log = File.open(Oxidized::Config::Log + "/#{@node.ip}-ftp", 'w') if Oxidized.config.input.debug?
       @ftp = Net::FTP.new(@node.ip)
       @ftp.passive = Oxidized.config.input.ftp.passive
-      @ftp.login  @node.auth[:username], @node.auth[:password]
+      @ftp.login @node.auth[:username], @node.auth[:password]
       connected?
     end
 
     def connected?
-      @ftp and not @ftp.closed?
+      @ftp && (not @ftp.closed?)
     end
 
-    def cmd file
+    def cmd(file)
       Oxidized.logger.debug "FTP: #{file} @ #{@node.name}"
       @ftp.getbinaryfile file, nil
     end
 
     # meh not sure if this is the best way, but perhaps better than not implementing send
-    def send my_proc
+    def send(my_proc)
       my_proc.call
     end
 
@@ -47,10 +47,9 @@ module Oxidized
 
     def disconnect
       @ftp.close
-    #rescue Errno::ECONNRESET, IOError
+    # rescue Errno::ECONNRESET, IOError
     ensure
       @log.close if Oxidized.config.input.debug?
     end
-
   end
 end

@@ -70,8 +70,8 @@ describe GithubRepo do
         repo_head.expects(:target).returns("our_target")
         merge_index.expects(:write_tree).with(repo).returns("tree")
         merge_index.expects(:conflicts?).returns(false)
-        Rugged::Commit.expects(:create).with(repo, 
-                                             parents: ["our_target", "their_target"],
+        Rugged::Commit.expects(:create).with(repo,
+                                             parents: %w[our_target their_target],
                                              tree: "tree",
                                              message: "Merge remote-tracking branch 'origin/master'",
                                              update_ref: "HEAD").returns(1)

@@ -1,8 +1,7 @@
-class ScreenOS  < Oxidized::Model
-
+class ScreenOS < Oxidized::Model
   # Netscreen ScreenOS model #
 
-  comment  '! '
+  comment '! '
 
   prompt /^[\w.:\(\)-]+->\s?$/
 
@@ -10,7 +9,7 @@ class ScreenOS  < Oxidized::Model
     cfg.each_line.to_a[2..-2].join
   end
 
-  cmd :secret do |cfg| 
+  cmd :secret do |cfg|
     cfg.gsub! /^(set admin name) .*|^(set admin password) .*/, '\\1 <removed>'
     cfg.gsub! /^(set admin user .* password) .* (.*)/, '\\1 <removed> \\2'
     cfg.gsub! /(secret|password|preshare) .*/, '\\1 <secret hidden>'
@@ -41,5 +40,4 @@ class ScreenOS  < Oxidized::Model
       send "n"
     end
   end
-
 end

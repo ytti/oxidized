@@ -15,37 +15,35 @@ class Exec < Oxidized::Hook
                                            @timeout > 0
     end
 
-    if cfg.has_key? "async"
-      @async = !!cfg.async
-    end
+    @async = !!cfg.async if cfg.has_key? "async"
 
     if cfg.has_key? "cmd"
       @cmd = cfg.cmd
       raise "invalid cmd value" unless @cmd.is_a?(String) || @cmd.is_a?(Array)
     end
-
   rescue RuntimeError => e
     raise ArgumentError,
-      "#{self.class.name}: configuration invalid: #{e.message}"
+          "#{self.class.name}: configuration invalid: #{e.message}"
   end
 
-  def run_hook ctx
+  def run_hook(ctx)
     env = make_env ctx
     log "Execute: #{@cmd.inspect}", :debug
     th = Thread.new do
       begin
         run_cmd! env
-      rescue => e
+      rescue StandardError => e
         raise e unless @async
       end
     end
     th.join unless @async
   end
 
-  def run_cmd! env
-    pid, status = nil, nil
+  def run_cmd!(env)
+    pid = nil
+    status = nil
     Timeout.timeout(@timeout) do
-      pid = spawn env, @cmd , :unsetenv_others => true
+      pid = spawn env, @cmd, unsetenv_others: true
       pid, status = wait2 pid
       unless status.exitstatus.zero?
         msg = "#{@cmd.inspect} failed with exit value #{status.exitstatus}"
@@ -60,7 +58,7 @@ class Exec < Oxidized::Hook
     raise TimeoutError, msg
   end
 
-  def make_env ctx
+  def make_env(ctx)
     env = {
       "OX_EVENT" => ctx.event.to_s
     }
@@ -73,14 +71,12 @@ class Exec < Oxidized::Hook
         "OX_NODE_GROUP" => ctx.node.group.to_s,
         "OX_NODE_MODEL" => ctx.node.model.class.name,
         "OX_REPO_COMMITREF" => ctx.commitref.to_s,
-        "OX_REPO_NAME" => ctx.node.repo.to_s,
+        "OX_REPO_NAME" => ctx.node.repo.to_s
       )
     end
     if ctx.job
-      env.merge!(
-        "OX_JOB_STATUS" => ctx.job.status.to_s,
-        "OX_JOB_TIME" => ctx.job.time.to_s,
-      )
+      env["OX_JOB_STATUS"] = ctx.job.status.to_s
+      env["OX_JOB_TIME"] = ctx.job.time.to_s
     end
     env
   end

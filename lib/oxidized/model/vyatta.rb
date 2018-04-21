@@ -1,7 +1,6 @@
 class Vyatta < Oxidized::Model
-
   # Brocade Vyatta / VyOS model #
-  
+
   prompt /\@.*?\:~\$\s/
 
   cmd :all do |cfg|
@@ -27,5 +26,4 @@ class Vyatta < Oxidized::Model
   cfg :telnet, :ssh do
     pre_logout 'exit'
   end
-
 end

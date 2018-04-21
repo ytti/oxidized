@@ -1,6 +1,6 @@
 module Oxidized
   class << self
-    def new *args
+    def new(*args)
       Core.new args
     end
   end
@@ -8,12 +8,12 @@ module Oxidized
   class Core
     class NoNodesFound < OxidizedError; end
 
-    def initialize args
+    def initialize(_args)
       Oxidized.mgr = Manager.new
       Oxidized.Hooks = HookManager.from_config(Oxidized.config)
-      nodes        = Nodes.new
-      raise NoNodesFound, 'source returns no usable nodes' if nodes.size == 0
-      @worker      = Worker.new nodes
+      nodes = Nodes.new
+      raise NoNodesFound, 'source returns no usable nodes' if nodes.empty?
+      @worker = Worker.new nodes
       trap('HUP') { nodes.load }
       if Oxidized.config.rest?
         begin
@@ -22,7 +22,7 @@ module Oxidized
           raise OxidizedError, 'oxidized-web not found: sudo gem install oxidized-web - \
           or disable web support by setting "rest: false" in your configuration'
         end
-        @rest        = API::Web.new nodes, Oxidized.config.rest
+        @rest = API::Web.new nodes, Oxidized.config.rest
         @rest.run
       end
       run
@@ -32,7 +32,7 @@ module Oxidized
 
     def run
       Oxidized.logger.debug "lib/oxidized/core.rb: Starting the worker..."
-      while true
+      loop do
         @worker.work
         sleep Config::Sleep
       end

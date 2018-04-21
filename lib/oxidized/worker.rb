@@ -2,7 +2,7 @@ module Oxidized
   require 'oxidized/job'
   require 'oxidized/jobs'
   class Worker
-    def initialize nodes
+    def initialize(nodes)
       @jobs_done  = 0
       @nodes      = nodes
       @jobs       = Jobs.new(Oxidized.config.threads, Oxidized.config.interval, @nodes)
@@ -12,7 +12,7 @@ module Oxidized
 
     def work
       ended = []
-      @jobs.delete_if { |job| ended << job if not job.alive? }
+      @jobs.delete_if { |job| ended << job unless job.alive? }
       ended.each      { |job| process job }
       @jobs.work
 
@@ -36,7 +36,7 @@ module Oxidized
       Oxidized.logger.debug("lib/oxidized/worker.rb: #{@jobs.size} jobs running in parallel") unless @jobs.empty?
     end
 
-    def process job
+    def process(job)
       node = job.node
       node.last = job
       node.stats.add job
@@ -45,18 +45,18 @@ module Oxidized
       @jobs_done += 1 # needed for worker_done event
 
       if job.status == :success
-        Oxidized.Hooks.handle :node_success, :node => node,
-                                             :job => job
+        Oxidized.Hooks.handle :node_success, node: node,
+                                             job: job
         msg = "update #{node.name}"
         msg += " from #{node.from}" if node.from
         msg += " with message '#{node.msg}'" if node.msg
         output = node.output.new
         if output.store node.name, job.config,
-                              :msg => msg, :email => node.email, :user => node.user, :group => node.group
+                        msg: msg, email: node.email, user: node.user, group: node.group
           Oxidized.logger.info "Configuration updated for #{node.group}/#{node.name}"
-          Oxidized.Hooks.handle :post_store, :node => node,
-                                             :job => job,
-                                             :commitref => output.commitref
+          Oxidized.Hooks.handle :post_store, node: node,
+                                             job: job,
+                                             commitref: output.commitref
         end
         node.reset
       else
@@ -68,8 +68,8 @@ module Oxidized
         else
           msg += ", retries exhausted, giving up"
           node.retry = 0
-          Oxidized.Hooks.handle :node_fail, :node => node,
-                                            :job => job
+          Oxidized.Hooks.handle :node_fail, node: node,
+                                            job: job
         end
         Oxidized.logger.warn msg
       end
@@ -86,7 +86,7 @@ module Oxidized
     def run_done_hook
       Oxidized.logger.debug "lib/oxidized/worker.rb: Running :nodes_done hook"
       Oxidized.Hooks.handle :nodes_done
-    rescue => e
+    rescue StandardError => e
       # swallow the hook erros and continue as normal
       Oxidized.logger.error "lib/oxidized/worker.rb: #{e.message}"
     ensure

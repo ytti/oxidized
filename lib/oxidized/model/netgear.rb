@@ -1,5 +1,4 @@
 class Netgear < Oxidized::Model
-
   comment '!'
   prompt /^(\([\w\s\-.]+\)\s[#>])$/
 
@@ -37,5 +36,4 @@ class Netgear < Oxidized::Model
   cmd 'show running-config' do |cfg|
     cfg.gsub! /^(!.*Time).*$/, '\1'
   end
-
 end

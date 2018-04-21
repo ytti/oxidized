@@ -2,11 +2,11 @@ module Oxidized
   require 'net/telnet'
   require 'oxidized/input/cli'
   class Telnet < Input
-    RescueFail = {}
+    RescueFail = {}.freeze
     include Input::CLI
     attr_reader :telnet
 
-    def connect node
+    def connect(node)
       @node    = node
       @timeout = Oxidized.config.timeout
       @node.model.cfg['telnet'].each { |cb| instance_exec(&cb) }
@@ -18,8 +18,8 @@ module Oxidized
               'Model'   => @node.model }
       opt['Output_log'] = Oxidized::Config::Log + "/#{@node.ip}-telnet" if Oxidized.config.input.debug?
 
-      @telnet  = Net::Telnet.new opt
-      if @node.auth[:username] and @node.auth[:username].length > 0
+      @telnet = Net::Telnet.new opt
+      if @node.auth[:username] && !@node.auth[:username].empty?
         expect username
         @telnet.puts @node.auth[:username]
       end
@@ -28,22 +28,25 @@ module Oxidized
       begin
         expect @node.prompt
       rescue Timeout::Error
-        raise PromptUndetect, [ 'unable to detect prompt:', @node.prompt ].join(' ')
+        raise PromptUndetect, ['unable to detect prompt:', @node.prompt].join(' ')
       end
     end
 
     def connected?
-      @telnet and not @telnet.sock.closed?
+      @telnet && (not @telnet.sock.closed?)
     end
 
-    def cmd cmd, expect=@node.prompt
+    def cmd(cmd, expect = @node.prompt)
       Oxidized.logger.debug "Telnet: #{cmd} @#{@node.name}"
       args = { 'String' => cmd }
-      args.merge!({ 'Match' => expect, 'Timeout' => @timeout }) if expect
+      if expect
+        args['Match'] = expect
+        args['Timeout'] = @timeout
+      end
       @telnet.cmd args
     end
 
-    def send data
+    def send(data)
       @telnet.write data
     end
 
@@ -53,21 +56,17 @@ module Oxidized
 
     private
 
-    def expect re
+    def expect(re)
       @telnet.waitfor 'Match' => re, 'Timeout' => @timeout
     end
 
     def disconnect
-      begin
-        disconnect_cli
-        @telnet.close
-      rescue Errno::ECONNRESET
-      end
+      disconnect_cli
+      @telnet.close
+    rescue Errno::ECONNRESET
     end
-
   end
 end
-
 
 class Net::Telnet
   ## FIXME: we just need 'line = model.expects line' to handle pager
@@ -80,13 +79,13 @@ class Net::Telnet
     fail_eof = @options["FailEOF"]
     model    = @options["Model"]
 
-    if options.kind_of?(Hash)
+    if options.is_a?(Hash)
       prompt   = if options.has_key?("Match")
                    options["Match"]
                  elsif options.has_key?("Prompt")
                    options["Prompt"]
                  elsif options.has_key?("String")
-                   Regexp.new( Regexp.quote(options["String"]) )
+                   Regexp.new(Regexp.quote(options["String"]))
                  end
       time_out = options["Timeout"]  if options.has_key?("Timeout")
       waittime = options["Waittime"] if options.has_key?("Waittime")
@@ -95,15 +94,13 @@ class Net::Telnet
       prompt = options
     end
 
-    if time_out == false
-      time_out = nil
-    end
+    time_out = nil if time_out == false
 
     line = ''
     buf = ''
     rest = ''
-    until(prompt === line and not IO::select([@sock], nil, nil, waittime))
-      unless IO::select([@sock], nil, nil, time_out)
+    until (prompt === line) && (not IO.select([@sock], nil, nil, waittime))
+      unless IO.select([@sock], nil, nil, time_out)
         raise TimeoutError, "timed out while waiting for more data"
       end
       begin
@@ -114,30 +111,30 @@ class Net::Telnet
           c = rest + c
           if Integer(c.rindex(/#{IAC}#{SE}/no) || 0) <
              Integer(c.rindex(/#{IAC}#{SB}/no) || 0)
-            buf = preprocess(c[0 ... c.rindex(/#{IAC}#{SB}/no)])
-            rest = c[c.rindex(/#{IAC}#{SB}/no) .. -1]
+            buf = preprocess(c[0...c.rindex(/#{IAC}#{SB}/no)])
+            rest = c[c.rindex(/#{IAC}#{SB}/no)..-1]
           elsif pt = c.rindex(/#{IAC}[^#{IAC}#{AO}#{AYT}#{DM}#{IP}#{NOP}]?\z/no) ||
                      c.rindex(/\r\z/no)
-            buf = preprocess(c[0 ... pt])
-            rest = c[pt .. -1]
+            buf = preprocess(c[0...pt])
+            rest = c[pt..-1]
           else
             buf = preprocess(c)
             rest = ''
           end
-       else
-         # Not Telnetmode.
-         #
-         # We cannot use preprocess() on this data, because that
-         # method makes some Telnetmode-specific assumptions.
-         buf = rest + c
-         rest = ''
-         unless @options["Binmode"]
-           if pt = buf.rindex(/\r\z/no)
-             buf = buf[0 ... pt]
-             rest = buf[pt .. -1]
-           end
-           buf.gsub!(/#{EOL}/no, "\n")
-         end
+        else
+          # Not Telnetmode.
+          #
+          # We cannot use preprocess() on this data, because that
+          # method makes some Telnetmode-specific assumptions.
+          buf = rest + c
+          rest = ''
+          unless @options["Binmode"]
+            if pt = buf.rindex(/\r\z/no)
+              buf = buf[0...pt]
+              rest = buf[pt..-1]
+            end
+            buf.gsub!(/#{EOL}/no, "\n")
+          end
         end
         @log.print(buf) if @options.has_key?("Output_log")
         line += buf

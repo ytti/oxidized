@@ -16,7 +16,7 @@ class Boss < Oxidized::Model
     data.sub re, ''
   end
 
-  # Handle the Failed retries since last login 
+  # Handle the Failed retries since last login
   # no known way to disable other than to implement radius authentication
   expect /Press ENTER to continue/ do |data, re|
     send "\n"
@@ -29,13 +29,13 @@ class Boss < Oxidized::Model
     send "c"
     data.sub re, ''
   end
- 
+
   # needed for proper formatting
   cmd('') { |cfg| comment "#{cfg}\n" }
 
   # Do a sys-info and check and see if it supports stack
   cmd 'show sys-info' do |cfg|
-    @stack = true if cfg.match /Stack/
+    @stack = true if cfg =~ /Stack/
     cfg.gsub! /(^((.*)sysUpTime(.*))$)/, 'removed sysUpTime'
     cfg.gsub! /(^((.*)sysNtpTime(.*))$)/, 'removed sysNtpTime'
     cfg.gsub! /(^((.*)sysRtcTime(.*))$)/, 'removed sysNtpTime'
@@ -43,7 +43,7 @@ class Boss < Oxidized::Model
     cfg.gsub! /\d{4}-\d{2}-\d{2} \d{2}:\d{2}:\d{2} .*/, ''
     comment "#{cfg}\n"
   end
-  
+
   # if a stack then collect the stacking information
   cmd 'show stack-info' do |cfg|
     if @stack
@@ -72,5 +72,4 @@ class Boss < Oxidized::Model
     post_login 'terminal length 0'
     post_login 'terminal width 132'
   end
-
 end

@@ -1,5 +1,4 @@
 class SAOS < Oxidized::Model
-
   # Ciena SAOS switch
   # used for 6.x devices
 

@@ -6,30 +6,35 @@ module Oxidized
     include Oxidized::Config::Vars
 
     class << self
-      def inherited klass
-        klass.instance_variable_set '@cmd',   Hash.new { |h,k| h[k] = [] }
-        klass.instance_variable_set '@cfg',   Hash.new { |h,k| h[k] = [] }
-        klass.instance_variable_set '@procs', Hash.new { |h,k| h[k] = [] }
+      def inherited(klass)
+        klass.instance_variable_set '@cmd',   Hash.new { |h, k| h[k] = [] }
+        klass.instance_variable_set '@cfg',   Hash.new { |h, k| h[k] = [] }
+        klass.instance_variable_set '@procs', Hash.new { |h, k| h[k] = [] }
         klass.instance_variable_set '@expect', []
         klass.instance_variable_set '@comment', nil
         klass.instance_variable_set '@prompt', nil
       end
-      def comment _comment='# '
+
+      def comment(_comment = '# ')
         return @comment if @comment
         @comment = block_given? ? yield : _comment
       end
-      def prompt _prompt=nil
-        @prompt or @prompt = _prompt
+
+      def prompt(_prompt = nil)
+        @prompt || (@prompt = _prompt)
       end
-      def cfg *methods, &block
+
+      def cfg(*methods, &block)
         [methods].flatten.each do |method|
           @cfg[method.to_s] << block
         end
       end
+
       def cfgs
         @cfg
       end
-      def cmd _cmd=nil, &block
+
+      def cmd(_cmd = nil, &block)
         if _cmd.class == Symbol
           @cmd[_cmd] << block
         else
@@ -37,12 +42,15 @@ module Oxidized
         end
         Oxidized.logger.debug "lib/oxidized/model/model.rb Added #{_cmd} to the commands list"
       end
+
       def cmds
         @cmd
       end
-      def expect re, &block
+
+      def expect(re, &block)
         @expect << [re, block]
       end
+
       def expects
         @expect
       end
@@ -54,7 +62,7 @@ module Oxidized
       # @since 0.0.39
       # @yield expects block which should return [String]
       # @return [void]
-      def pre &block
+      def pre(&block)
         @procs[:pre] << block
       end
 
@@ -65,21 +73,19 @@ module Oxidized
       # @since 0.0.39
       # @yield expects block which should return [String]
       # @return [void]
-      def post &block
+      def post(&block)
         @procs[:post] << block
       end
 
       # @author Saku Ytti <saku@ytti.fi>
       # @since 0.0.39
       # @return [Hash] hash proc procs :pre+:post to be prepended/postfixed to output
-      def procs
-        @procs
-      end
+      attr_reader :procs
     end
 
     attr_accessor :input, :node
 
-    def cmd string, &block
+    def cmd(string, &block)
       Oxidized.logger.debug "lib/oxidized/model/model.rb Executing #{string}"
       out = @input.cmd(string)
       return false unless out
@@ -99,11 +105,11 @@ module Oxidized
       @input.output
     end
 
-    def send data
+    def send(data)
       @input.send data
     end
 
-    def expect re, &block
+    def expect(re, &block)
       self.class.expect re, &block
     end
 
@@ -115,15 +121,14 @@ module Oxidized
       self.class.prompt
     end
 
-    def expects data
+    def expects(data)
       self.class.expects.each do |re, cb|
-        if data.match re
-          if cb.arity == 2
-            data = instance_exec [data, re], &cb
-          else
-            data = instance_exec data, &cb
-          end
-        end
+        next unless data.match re
+        data = if cb.arity == 2
+                 instance_exec [data, re], &cb
+               else
+                 instance_exec data, &cb
+               end
       end
       data
     end
@@ -146,7 +151,7 @@ module Oxidized
       outputs
     end
 
-    def comment _comment
+    def comment(_comment)
       data = ''
       _comment.each_line do |line|
         data << self.class.comment << line
@@ -160,12 +165,11 @@ module Oxidized
 
     private
 
-    def process_cmd_output output, name
+    def process_cmd_output(output, name)
       output = Oxidized::String.new output if ::String === output
       output = Oxidized::String.new '' unless Oxidized::String === output
       output.set_cmd(name)
       output
     end
-
   end
 end
