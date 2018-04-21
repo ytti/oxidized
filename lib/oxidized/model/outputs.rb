@@ -5,15 +5,15 @@ module Oxidized
         type_to_str(nil)
       end
 
-      def type_to_str want_type
+      def type_to_str(want_type)
         type(want_type).map { |out| out }.join
       end
 
-      def << output
+      def <<(output)
         @outputs << output
       end
 
-      def unshift output
+      def unshift(output)
         @outputs.unshift output
       end
 
@@ -21,12 +21,12 @@ module Oxidized
         @outputs
       end
 
-      def type type
+      def type(type)
         @outputs.select { |out| out.type == type }
       end
 
       def types
-        @outputs.map { |out| out.type }.uniq.compact
+        @outputs.map(&:type).uniq.compact
       end
 
       private

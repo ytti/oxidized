@@ -32,14 +32,14 @@ module Oxidized
     Root = File.join ENV['HOME'], '.config', 'oxidized'
   end
 
-  CFGS = Asetus.new :name => 'oxidized', :load => false, :key_to_s => true
+  CFGS = Asetus.new name: 'oxidized', load: false, key_to_s: true
   CFGS.default.syslogd.port        = 514
   CFGS.default.syslogd.file        = 'messages'
   CFGS.default.syslogd.resolve     = true
 
   begin
     CFGS.load
-  rescue => error
+  rescue StandardError => error
     raise InvalidConfig, "Error loading config: #{error.message}"
   ensure
     CFG = CFGS.cfg # convenienence, instead of Config.cfg.password, CFG.password
@@ -48,23 +48,23 @@ module Oxidized
   class SyslogMonitor
     NAME_MAP = {
       /(.*)\.ip\.tdc\.net/ => '\1',
-      /(.*)\.ip\.fi/       => '\1',
-    }
+      /(.*)\.ip\.fi/       => '\1'
+    }.freeze
     MSG = {
-      :ios   => /%SYS-(SW[0-9]+-)?5-CONFIG_I:/,
-      :junos => 'UI_COMMIT:',
-      :eos   => /%SYS-5-CONFIG_I:/,
-      :nxos  => /%VSHD-5-VSHD_SYSLOG_CONFIG_I:/,
-    }
+      ios: /%SYS-(SW[0-9]+-)?5-CONFIG_I:/,
+      junos: 'UI_COMMIT:',
+      eos: /%SYS-5-CONFIG_I:/,
+      nxos: /%VSHD-5-VSHD_SYSLOG_CONFIG_I:/
+    }.freeze
 
     class << self
-      def udp port = Oxidized::CFG.syslogd.port, listen = 0
+      def udp(port = Oxidized::CFG.syslogd.port, listen = 0)
         io = UDPSocket.new
         io.bind listen, port
         new io, :udp
       end
 
-      def file syslog_file = Oxidized::CFG.syslogd.file
+      def file(syslog_file = Oxidized::CFG.syslogd.file)
         io = open syslog_file, 'r'
         io.seek 0, IO::SEEK_END
         new io, :file
@@ -73,33 +73,33 @@ module Oxidized
 
     private
 
-    def initialize io, mode = :udp
+    def initialize(io, mode = :udp)
       @mode = mode
       run io
     end
 
-    def rest opt
+    def rest(opt)
       Oxidized::RestClient.next opt
     end
 
-    def ios ip, log, i
+    def ios(ip, log, i)
       # TODO: we need to fetch 'ip/name' in mode == :file here
       user = log[i + 5]
       from = log[-1][1..-2]
-      rest(:user => user, :from => from, :model => 'ios', :ip => ip,
-           :name => getname(ip))
+      rest(user: user, from: from, model: 'ios', ip: ip,
+           name: getname(ip))
     end
 
-    def jnpr ip, log, i
+    def jnpr(ip, log, i)
       # TODO: we need to fetch 'ip/name' in mode == :file here
       user = log[i + 2][1..-2]
       msg  = log[(i + 6)..-1].join(' ')[10..-2]
       msg  = nil if msg == 'none'
-      rest(:user => user, :msg => msg, :model => 'jnpr', :ip => ip,
-           :name => getname(ip))
+      rest(user: user, msg: msg, model: 'jnpr', ip: ip,
+           name: getname(ip))
     end
 
-    def handle_log log, ip
+    def handle_log(log, ip)
       log = log.to_s.split ' '
       if i = log.find_index { |e| e.match(MSG[:ios]) }
         ios ip, log,  i
@@ -108,10 +108,11 @@ module Oxidized
       end
     end
 
-    def run io
-      while true
+    def run(io)
+      loop do
         log = select [io]
-        log, ip = log.first.first, nil
+        log = log.first.first
+        ip = nil
         if @mode == :udp
           log, ip = log.recvfrom_nonblock 2000
           ip = ip.last
@@ -127,11 +128,15 @@ module Oxidized
       end
     end
 
-    def getname ip
+    def getname(ip)
       if Oxidized::CFG.syslogd.resolve == false
         ip
       else
-        name = (Resolv.getname ip.to_s rescue ip)
+        name = (begin
+                  Resolv.getname ip.to_s
+                rescue StandardError
+                  ip
+                end)
         NAME_MAP.each { |re, sub| name.sub! re, sub }
         name
       end

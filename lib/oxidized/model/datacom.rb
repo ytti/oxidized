@@ -19,9 +19,7 @@ class DataCom < Oxidized::Model
     comment cfg
   end
 
-  cmd 'show running-config' do |cfg|
-    cfg.cut_head
-  end
+  cmd 'show running-config', &:cut_head
 
   cfg :ssh do
     password /^Password:\s$/

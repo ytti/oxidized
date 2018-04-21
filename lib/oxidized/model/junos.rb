@@ -8,7 +8,7 @@ class JunOS < Oxidized::Model
   cmd :all do |cfg|
     cfg = cfg.lines.to_a[1..-2].join if screenscrape
     cfg.gsub!(/  scale-subscriber (\s+)(\d+)/, '  scale-subscriber                <count>')
-    cfg.lines.map { |line| line.rstrip }.join("\n") + "\n"
+    cfg.lines.map(&:rstrip).join("\n") + "\n"
   end
 
   cmd :secret do |cfg|
@@ -23,7 +23,7 @@ class JunOS < Oxidized::Model
   cmd 'show configuration | display omit'
 
   cmd 'show version' do |cfg|
-    @model = $1 if cfg.match(/^Model: (\S+)/)
+    @model = Regexp.last_match(1) if cfg =~ /^Model: (\S+)/
     comment cfg
   end
 

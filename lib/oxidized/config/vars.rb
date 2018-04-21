@@ -1,7 +1,7 @@
 module Oxidized::Config::Vars
   # convenience method for accessing node, group or global level user variables
   # nil values will be ignored
-  def vars name
+  def vars(name)
     r = @node.vars[name] unless @node.vars.nil?
     if Oxidized.config.groups.has_key?(@node.group)
       if Oxidized.config.groups[@node.group].vars.has_key?(name.to_s)

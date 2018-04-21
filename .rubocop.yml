@@ -1,5 +1,6 @@
 inherit_from: .rubocop_todo.yml
 
+
 AllCops:
   Include:
     - Rakefile
@@ -15,6 +16,9 @@ Style/PreferredHashMethods:
   EnforcedStyle: verbose
 
 Style/Not:
+  Enabled: false
+
+Style/Proc:
   Enabled: false
 
 AllCops:

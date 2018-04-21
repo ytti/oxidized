@@ -84,6 +84,6 @@ class Procurve < Oxidized::Model
   end
 
   cfg :ssh do
-    pty_options({ chars_wide: 1000 })
+    pty_options(chars_wide: 1000)
   end
 end

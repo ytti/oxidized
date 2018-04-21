@@ -6,11 +6,11 @@ module Oxidized
     Root      = ENV['OXIDIZED_HOME'] || File.join(ENV['HOME'], '.config', 'oxidized')
     Crash     = File.join Root, 'crash'
     Log       = File.join Root, 'logs'
-    InputDir  = File.join Directory, %w(lib oxidized input)
-    OutputDir = File.join Directory, %w(lib oxidized output)
-    ModelDir  = File.join Directory, %w(lib oxidized model)
-    SourceDir = File.join Directory, %w(lib oxidized source)
-    HookDir   = File.join Directory, %w(lib oxidized hook)
+    InputDir  = File.join Directory, %w[lib oxidized input]
+    OutputDir = File.join Directory, %w[lib oxidized output]
+    ModelDir  = File.join Directory, %w[lib oxidized model]
+    SourceDir = File.join Directory, %w[lib oxidized source]
+    HookDir   = File.join Directory, %w[lib oxidized hook]
     Sleep     = 1
 
     def self.load(cmd_opts = {})
@@ -44,12 +44,12 @@ module Oxidized
 
       asetus.default.model_map = {
         'cisco'   => 'ios',
-        'juniper' => 'junos',
+        'juniper' => 'junos'
       }
 
       begin
         asetus.load # load system+user configs, merge to Config.cfg
-      rescue => error
+      rescue StandardError => error
         raise InvalidConfig, "Error loading config: #{error.message}"
       end
 

@@ -17,18 +17,17 @@ module Oxidized
     require "net/http"
     require "uri"
     require "json"
-    def store node, outputs, opt = {}
+    def store(node, outputs, opt = {})
       @commitref = nil
       json = JSON.pretty_generate(
-        {
-          'msg' => opt[:msg],
-          'user' => opt[:user],
-          'email' => opt[:email],
-          'group' => opt[:group],
-          'node' => node,
-          'config' => outputs.to_cfg,
-          # actually we need to also iterate outputs, for other types like in gitlab. But most people don't use 'type' functionality.
-        }
+        'msg' => opt[:msg],
+        'user' => opt[:user],
+        'email' => opt[:email],
+        'group' => opt[:group],
+        'node' => node,
+        'config' => outputs.to_cfg,
+        # actually we need to also iterate outputs, for other types like in gitlab. But most people don't use 'type' functionality.
+
       )
       uri = URI.parse @cfg.url
       http = Net::HTTP.new uri.host, uri.port
