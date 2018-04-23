@@ -219,19 +219,19 @@ module Oxidized
         end
       end
 
-      Oxidized.logger.debug "node.rb: resolving node key '#{key}', with passed global value of '" + (is_key_masked ? "#{masked_value}" : "#{value}") + "' and node value '" + (is_key_masked ? "#{masked_value}" : "#{opt[key_sym]}") + "'"
+      Oxidized.logger.debug "node.rb: resolving node key '#{key}', with passed global value of '" + (is_key_masked ? masked_value.to_s : value.to_s) + "' and node value '" + (is_key_masked ? masked_value.to_s : opt[key_sym].to_s) + "'"
 
       #global
       if not value and Oxidized.config.has_key?(key_str)
         value = Oxidized.config[key_str]
-        Oxidized.logger.debug "node.rb: setting node key '#{key}' to value '" + (is_key_masked ? "#{masked_value}" : "#{value}") + "' from global"
+        Oxidized.logger.debug "node.rb: setting node key '#{key}' to value '" + (is_key_masked ? masked_value.to_s : value.to_s) + "' from global"
       end
 
       #group
       if Oxidized.config.groups.has_key?(@group)
         if Oxidized.config.groups[@group].has_key?(key_str)
           value = Oxidized.config.groups[@group][key_str]
-          Oxidized.logger.debug "node.rb: setting node key '#{key}' to value '" + (is_key_masked ? "#{masked_value}" : "#{value}") + "' from group"
+          Oxidized.logger.debug "node.rb: setting node key '#{key}' to value '" + (is_key_masked ? masked_value.to_s : value.to_s) + "' from group"
         end
       end
 
@@ -240,13 +240,13 @@ module Oxidized
       if Oxidized.config.models.has_key?(@model.class.name.to_s.downcase)
         if Oxidized.config.models[@model.class.name.to_s.downcase].has_key?(key_str)
           value = Oxidized.config.models[@model.class.name.to_s.downcase][key_str]
-          Oxidized.logger.debug "node.rb: setting node key '#{key}' to value '" + (is_key_masked ? "#{masked_value}" : "#{value}") + "' from model"
+          Oxidized.logger.debug "node.rb: setting node key '#{key}' to value '" + (is_key_masked ? masked_value.to_s : value.to_s) + "' from model"
         end
       end
 
       #node
       value = opt[key_sym] || value
-      Oxidized.logger.debug "node.rb: returning node key '#{key}' with value '" + (is_key_masked ? "#{masked_value}" : "#{value}") + "'"
+      Oxidized.logger.debug "node.rb: returning node key '#{key}' with value '" + (is_key_masked ? masked_value.to_s : value.to_s) + "'"
       value
     end
 
