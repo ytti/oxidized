@@ -499,7 +499,7 @@ Lint/Void:
 
 # Offense count: 60
 Metrics/AbcSize:
-  Max: 84
+  Max: 88
 
 # Offense count: 15
 # Configuration parameters: CountComments, ExcludedMethods.
