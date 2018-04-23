@@ -28,7 +28,10 @@ module Oxidized
       asetus.default.retries       = 3
       asetus.default.prompt        = /^([\w.@-]+[#>]\s?)$/
       asetus.default.rest          = '127.0.0.1:8888' # or false to disable
-      asetus.default.next_adds_job = false            # if true, /next adds job, so device is fetched immmeiately
+      asetus.default.next_adds_job = false            # if true, /next adds job, so device is fetched immediately
+      asetus.default.mask_sensitive= true             # True to mask sensitive configuration fields from log output/display
+      asetus.default.mask_fields   = /^(password)$/i  # Our default regexp of configuration fields to mask
+      asetus.default.mask_value    = '*' * 8          # What we mask the sensitive configuration fields with
       asetus.default.vars          = {}               # could be 'enable'=>'enablePW'
       asetus.default.groups        = {}               # group level configuration
       asetus.default.models        = {}               # model level configuration
