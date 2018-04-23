@@ -18,6 +18,29 @@ input:
     secure: false
 ```
 
+## Password Masking in Debug Logs
+
+By default Oxidized will no longer log cleartext passwords in debug logs. This is designed to prevent Oxidized debug logs from containing all of your node authentication information. This makes submitting [GitHub issues for oxidized](https://github.com/ytti/oxidized/issues) and sharing debug logs easier and safer for everyone.
+
+NOTE - This only applies to the configuration of Oxidized itself - NOT any fetched device configurations. Model-specific code is used for model-specific configuration sanitization (see Removing secrets below).
+
+The value for `password` will instead be logged as `********`.
+
+These settings can be controlled by the global section in the Oxidized configuration file.
+
+```yaml
+..(other global configuration)...
+mask_value: "<Redacted by Security Directive 1234>"
+```
+
+If you need to log authentication information in your debug logs you can make the following adjustments:
+
+```yaml
+..(other global configuration)...
+mask_sensitive: false
+```
+
+
 ## Privileged mode
 
 To start privileged mode before pulling the configuration, Oxidized needs to send the enable command. You can globally enable this, by adding the following snippet to the global section of the configuration file.
