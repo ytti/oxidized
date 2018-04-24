@@ -6,7 +6,7 @@ There are several models available with CLI management via telnet (port 60000), 
 ```
 Connected to 192.168.3.201.
 
-(GS748Tv4) 
+(GS748Tv4)
 Applying Interface configuration, please wait ...admin
 Password:********
 (GS748Tv4) >enable
@@ -42,7 +42,7 @@ Configuration for older/newer models: make sure you have defined variable 'enabl
 
 One possible configuration:
 - oxidized config
-```
+```yaml
 source:
   default: csv
   csv:
@@ -64,3 +64,5 @@ switchNewFW:netgear:admin:adminpw:true:60000
 ```
 
 [Reference](https://github.com/ytti/oxidized/pull/1268)
+
+Back to [Model-Notes](README.md)
