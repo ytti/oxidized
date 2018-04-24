@@ -1,6 +1,6 @@
 # Hooks
 
-You can define arbitrary number of hooks that subscribe different events. The hook system is modular and different kind of hook types can be enabled.
+You can define an arbitrary number of hooks that subscribe to different events. The hook system is modular and different kind of hook types can be enabled.
 
 ## Configuration
 
@@ -38,10 +38,10 @@ OX_REPO_COMMITREF
 OX_REPO_NAME
 ```
 
-Exec hook recognizes following configuration keys:
+Exec hook recognizes the following configuration keys:
 
-* `timeout`: hard timeout for the command execution. SIGTERM will be sent to the child process after the timeout has elapsed. Default: 60
-* `async`: influences whether main thread will wait for the command execution. Set this true for long running commands so node pull is not blocked. Default: false
+* `timeout`: hard timeout (in seconds) for the command execution. SIGTERM will be sent to the child process after the timeout has elapsed. Default: `60`
+* `async`: Execute the command in an asynchronous fashion. The main thread by default will wait for the hook command execution to complete. Set this to `true` for long running commands so node configuration pulls are not blocked. Default: `false`
 * `cmd`: command to run.
 
 ### exec hook configuration example
@@ -79,8 +79,8 @@ For ssh key-based authentication, it is possible to set the environment variable
 * `remote_repo`: the remote repository to be pushed to.
 * `username`: username for repository auth.
 * `password`: password for repository auth.
-* `publickey`: public key for repository auth.
-* `privatekey`: private key for repository auth.
+* `publickey`: public key file path for repository auth.
+* `privatekey`: private key file path for repository auth.
 
 When using groups, each group must have a unique entry in the `remote_repo` config.
 
@@ -95,7 +95,7 @@ hooks:
 
 ### githubrepo hook configuration example
 
-Authenticate with a username and a password:
+Authenticate with a username and a password without groups in use:
 
 ```yaml
 hooks:
@@ -130,6 +130,11 @@ Fields sent in the message:
 * `model`: Model name (e.g. `eos`)
 * `node`: Device hostname
 
+
+The AWS SNS hook requires the following configuration keys:
+
+* `region`: AWS Region name
+* `topic_arn`: ASN Topic reference
 ### awssns hook configuration example
 
 ```yaml
@@ -140,11 +145,6 @@ hooks:
     region: us-east-1
     topic_arn: arn:aws:sns:us-east-1:1234567:oxidized-test-backup_events
 ```
-
-AWS SNS hook requires the following configuration keys:
-
-* `region`: AWS Region name
-* `topic_arn`: ASN Topic reference
 
 Your AWS credentials should be stored in `~/.aws/credentials`.
 
