@@ -100,7 +100,7 @@ module Oxidized
         ch.on_data do |_ch, data|
           if Oxidized.config.input.debug?
             @log.print data
-            @log.fsync
+            @log.flush
           end
           @output << data
           @output = @node.model.expects @output
