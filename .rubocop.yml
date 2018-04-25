@@ -17,7 +17,7 @@ Style/PreferredHashMethods:
 Style/Not:
   Enabled: false
 
-# comply with @ytti's exacting specifications 
+# comply with @ytti's exacting specifications
 Style/CommandLiteral:
   EnforcedStyle: percent_x
 
