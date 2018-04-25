@@ -34,10 +34,11 @@ module Oxidized
       asetus.default.models        = {}               # model level configuration
       asetus.default.pid           = File.join(Oxidized::Config::Root, 'pid')
 
-      asetus.default.input.default    = 'ssh, telnet'
-      asetus.default.input.debug      = false # or String for session log file
-      asetus.default.input.ssh.secure = false # complain about changed certs
-      asetus.default.input.ftp.passive = true # ftp passive mode
+      asetus.default.input.default      = 'ssh, telnet'
+      asetus.default.input.debug        = false # or String for session log file
+      asetus.default.input.ssh.secure   = false # complain about changed certs
+      asetus.default.input.ftp.passive  = true  # ftp passive mode
+      asetus.default.input.utf8_encoded = true  # configuration is utf8 encoded or ascii-8bit
 
       asetus.default.output.default = 'file'  # file, git
       asetus.default.source.default = 'csv'   # csv, sql
