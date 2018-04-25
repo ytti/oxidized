@@ -27,6 +27,9 @@ Style/FormatString:
 Style/FormatStringToken:
   EnforcedStyle: unannotated
 
+Style/RescueModifier:
+  Enabled: false
+
 # Do not attempt to police vendored code, and exclude special cases
 AllCops:
   Exclude:
