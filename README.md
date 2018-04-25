@@ -119,8 +119,7 @@ pkg install rubygem-oxidized rubygem-oxidized-script rubygem-oxidized-web
 ```shell
 git clone https://github.com/ytti/oxidized.git
 cd oxidized/
-gem build *.gemspec
-gem install pkg/*.gem
+rake install
 ```
 
 ### Running with Docker
