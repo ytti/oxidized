@@ -1,6 +1,5 @@
 class EdgeSwitch < Oxidized::Model
-
-# Ubiquiti EdgeSwitch #
+  # Ubiquiti EdgeSwitch #
 
   comment '!'
 
@@ -28,5 +27,4 @@ class EdgeSwitch < Oxidized::Model
     pre_logout 'quit'
     pre_logout 'n'
   end
-
 end

@@ -1,7 +1,6 @@
 class CoriantTmos < Oxidized::Model
-
   comment '# '
-  
+
   prompt /^[^\s#]+#\s$/
 
   cmd 'show node extensive' do |cfg|
@@ -21,5 +20,4 @@ class CoriantTmos < Oxidized::Model
     pre_logout 'exit'
     post_login 'enable config terminal length 0'
   end
-  
 end

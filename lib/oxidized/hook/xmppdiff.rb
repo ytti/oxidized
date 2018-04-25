@@ -30,25 +30,25 @@ class XMPPDiff < Oxidized::Hook
           sleep 1
           client.auth(cfg.password)
           sleep 1
-  
+
           log "Connected"
-  
+
           m = Jabber::MUC::SimpleMUCClient.new(client)
           m.join(cfg.channel + "/" + cfg.nick)
-  
+
           log "Joined"
-  
+
           title = "#{ctx.node.name} #{ctx.node.group} #{ctx.node.model.class.name.to_s.downcase}"
           log "Posting diff as snippet to #{cfg.channel}"
-  
+
           m.say(title + "\n\n" + diff[:patch].lines.to_a[4..-1].join)
-  
+
           sleep 1
-  
+
           client.close
-  
+
           log "Finished"
-  
+
         end
       end
     rescue Timeout::Error

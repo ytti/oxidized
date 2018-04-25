@@ -1,5 +1,4 @@
-class DNOS  < Oxidized::Model
-
+class DNOS < Oxidized::Model
   # Force10 DNOS model #
 
   comment  '! '
@@ -9,7 +8,7 @@ class DNOS  < Oxidized::Model
     cfg.each_line.to_a[2..-2].join
   end
 
-  cmd :secret do |cfg| 
+  cmd :secret do |cfg|
     cfg.gsub! /^(snmp-server community).*/, '\\1 <configuration removed>'
     cfg.gsub! /secret (\d+) (\S+).*/, '<secret hidden>'
     cfg
@@ -51,7 +50,6 @@ class DNOS  < Oxidized::Model
     post_login 'terminal length 0'
     post_login 'terminal width 0'
     pre_logout 'exit'
-    pre_logout 'exit'    
+    pre_logout 'exit'
   end
-
 end

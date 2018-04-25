@@ -22,7 +22,7 @@ module Oxidized
       if @cfg.empty?
         Oxidized.asetus.user.output.gitcrypt.user  = 'Oxidized'
         Oxidized.asetus.user.output.gitcrypt.email = 'o@example.com'
-        Oxidized.asetus.user.output.gitcrypt.repo  =  File.join(Config::Root, 'oxidized.git')
+        Oxidized.asetus.user.output.gitcrypt.repo = File.join(Config::Root, 'oxidized.git')
         Oxidized.asetus.save :user
         raise NoConfig, 'no output git config, edit ~/.config/oxidized/config'
       end
@@ -60,13 +60,13 @@ module Oxidized
       end
     end
 
-    def store file, outputs, opt={}
+    def store file, outputs, opt = {}
       @msg   = opt[:msg]
       @user  = (opt[:user]  or @cfg.user)
       @email = (opt[:email] or @cfg.email)
       @opt   = opt
       @commitref = nil
-      repo   = @cfg.repo
+      repo = @cfg.repo
 
       outputs.types.each do |type|
         type_cfg = ''
@@ -85,7 +85,6 @@ module Oxidized
 
       update repo, file, outputs.to_cfg
     end
-
 
     def fetch node, group
       begin
@@ -115,7 +114,7 @@ module Oxidized
         unlock repo
         walker = repo.log.path(path)
         i = -1
-        tab  = []
+        tab = []
         walker.each do |commit|
           hash = {}
           hash[:date] = commit.date.to_s
@@ -131,7 +130,7 @@ module Oxidized
       end
     end
 
-    #give the blob of a specific revision
+    # give the blob of a specific revision
     def get_version node, group, oid
       begin
         repo, path = yield_repo_and_path(node, group)
@@ -145,7 +144,7 @@ module Oxidized
       end
     end
 
-    #give a hash with the patch of a diff between 2 revision and the stats (added and deleted lines)
+    # give a hash with the patch of a diff between 2 revision and the stats (added and deleted lines)
     def get_diff node, group, oid1, oid2
       begin
         diff_commits = nil
@@ -160,15 +159,15 @@ module Oxidized
           stats = [diff.stats[:files][node.name][:insertions], diff.stats[:files][node.name][:deletions]]
           diff.each do |patch|
             if /#{node.name}\s+/.match(patch.patch.to_s.lines.first)
-              diff_commits = {:patch => patch.patch.to_s, :stat => stats}
+              diff_commits = { :patch => patch.patch.to_s, :stat => stats }
               break
             end
           end
         else
           stat = commit.parents[0].diff(commit).stats
-          stat = [stat[:files][node.name][:insertions],stat[:files][node.name][:deletions]]
+          stat = [stat[:files][node.name][:insertions], stat[:files][node.name][:deletions]]
           patch = commit.parents[0].diff(commit).patch
-          diff_commits = {:patch => patch, :stat => stat}
+          diff_commits = { :patch => patch, :stat => stat }
         end
         lock repo
         diff_commits
@@ -199,10 +198,10 @@ module Oxidized
           file = File.join @opt[:group], file
         else
           repo = if repo.is_a?(::String)
-            File.join File.dirname(repo), @opt[:group] + '.git'
-          else
-            repo[@opt[:group]]
-          end
+                   File.join File.dirname(repo), @opt[:group] + '.git'
+                 else
+                   repo[@opt[:group]]
+                 end
         end
       end
 
