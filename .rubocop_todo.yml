@@ -6,14 +6,6 @@
 # Note that changes in the inspected code, or installation of new
 # versions of RuboCop, may require this file to be generated again.
 
-# Offense count: 5
-# Cop supports --auto-correct.
-# Configuration parameters: Include, TreatCommentsAsGroupSeparators.
-# Include: **/*.gemspec
-Gemspec/OrderedDependencies:
-  Exclude:
-    - 'oxidized.gemspec'
-
 # Offense count: 1
 # Configuration parameters: Include.
 # Include: **/*.gemspec
@@ -362,18 +354,11 @@ Style/EmptyMethod:
   Exclude:
     - 'lib/oxidized/hook.rb'
 
-# Offense count: 1
-# Cop supports --auto-correct.
-Style/Encoding:
-  Exclude:
-    - 'oxidized.gemspec'
-
 # Offense count: 2
 # Cop supports --auto-correct.
 Style/ExpandPathArguments:
   Exclude:
     - 'bin/console'
-    - 'oxidized.gemspec'
 
 # Offense count: 6
 # Cop supports --auto-correct.
@@ -548,7 +533,6 @@ Style/PercentLiteralDelimiters:
   Exclude:
     - 'lib/oxidized/config.rb'
     - 'lib/oxidized/input/ssh.rb'
-    - 'oxidized.gemspec'
 
 # Offense count: 22
 # Cop supports --auto-correct.

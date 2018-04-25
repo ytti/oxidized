@@ -4,7 +4,7 @@
 
 In case a model plugin doesn't work correctly (ios, procurve, etc.), you can enable live debugging of SSH/Telnet sessions. Just add a `debug` option containing the value true to the `input` section. The log files will be created depending on the parent directory of the logfile option.
 
-The following example will log an active ssh/telnet session `/home/oxidized/.config/oxidized/log/<IP-Adress>-<PROTOCOL>`. The file will be truncated on each consecutive ssh/telnet session, so you need to put a `tailf` or `tail -f` on that file!
+The following example will log an active ssh/telnet session `/home/oxidized/.config/oxidized/log/<IP-Address>-<PROTOCOL>`. The file will be truncated on each consecutive ssh/telnet session, so you need to put a `tailf` or `tail -f` on that file!
 
 ```yaml
 log: /home/oxidized/.config/oxidized/log
@@ -29,18 +29,18 @@ vars:
 
 ## Removing secrets
 
-To strip out secrets from configurations before storing them, Oxidized needs the the remove_secrets flag. You can globally enable this by adding the following snippet to the global sections of the configuration file.
+To strip out secrets from configurations before storing them, Oxidized needs the `remove_secret` flag. You can globally enable this by adding the following snippet to the global section of the configuration file.
 
 ```yaml
 vars:
   remove_secret: true
 ```
 
-Device models can contain substitution filters to remove potentially sensitive data from configs.
+Device models that contain substitution filters to remove sensitive data will now be run on any fetched configuration.
 
 As a partial example from ios.rb:
 
-```yaml
+```ruby
   cmd :secret do |cfg|
     cfg.gsub! /^(snmp-server community).*/, '\\1 <configuration removed>'
     (...)
@@ -64,7 +64,11 @@ vars:
 
 ## SSH Proxy Command
 
-Oxidized can `ssh` through a proxy as well. To do so we just need to set `ssh_proxy` variable.
+Oxidized can `ssh` through a proxy as well. To do so we just need to set `ssh_proxy` variable with the proxy host information.
+
+This can be provided on a per-node basis by mapping the proper fields from your source.
+
+An example for a `csv` input source that maps the 4th field as the `ssh_proxy` value.
 
 ```yaml
 ...
@@ -79,7 +83,7 @@ vars_map:
 
 ## FTP Passive Mode
 
-Oxidized uses ftp passive mode by default. Some devices require passive mode to be disabled. To do so, we can set `input.ftp.passive` to false
+Oxidized uses ftp passive mode by default. Some devices require passive mode to be disabled. To do so, we can set `input.ftp.passive` to false - this will make use of FTP active mode.
 
 ```yaml
 input:
@@ -192,10 +196,12 @@ rest: 10.0.0.1:8000/oxidized
 
 ## Triggered backups
 
-A node can be moved to head-of-queue via the REST API `GET/POST /node/next/[NODE]`.
+A node can be moved to head-of-queue via the REST API `GET/POST /node/next/[NODE]`. This can be useful to immediately schedule a fetch of the configuration after some other event such as a syslog message indicating a configuration update on the device.
 
-In the default configuration this node will be processed when the next job worker becomes available, it could take some time if existing backups are in progress. To execute moved jobs immediately a new job can be added:
+In the default configuration this node will be processed when the next job worker becomes available, it could take some time if existing backups are in progress. To execute moved jobs immediately a new job can be added automatically:
 
 ```yaml
 next_adds_job: true
 ```
+
+This will allow for a more timely fetch of the device configuration.
