@@ -1,6 +1,6 @@
 module Oxidized
   VERSION = '0.21.0'
-  VERSION_FULL = '0.21.0-175-gcc22060'
+  VERSION_FULL = '0.21.0-180-g9691008'
   def self.version_set
     Oxidized.send(:remove_const, :VERSION_FULL)
     const_set(:VERSION_FULL, %x(git describe --tags).chop)

@@ -1,7 +1,6 @@
 lib = File.expand_path('lib', __dir__)
 $LOAD_PATH.unshift(lib) unless $LOAD_PATH.include?(lib)
 require 'oxidized/version'
-Oxidized.version_set
 
 Gem::Specification.new do |s|
   s.name              = 'oxidized'
