@@ -44,7 +44,7 @@ module Oxidized
         on 'd', 'debug', 'turn on debugging'
         on 'daemonize',  'Daemonize/fork the process'
         on 'v', 'version', 'show version' do
-          puts Oxidized::VERSION
+          puts Oxidized::VERSION_FULL
           Kernel.exit
         end
       end
