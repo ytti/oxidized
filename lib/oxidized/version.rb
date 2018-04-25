@@ -4,7 +4,7 @@ module Oxidized
   def self.version_set
     version_full = %x(git describe --tags).chop rescue ""
     version      = %x(git describe --tags --abbrev=0).chop rescue ""
-    if [version, version_full].none? &:empty?
+    if [version, version_full].none?(&:empty?)
       Oxidized.send(:remove_const, :VERSION)
       Oxidized.send(:remove_const, :VERSION_FULL)
       const_set(:VERSION, version)
