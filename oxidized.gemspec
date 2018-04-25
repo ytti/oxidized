@@ -14,7 +14,7 @@ Gem::Specification.new do |s|
   s.summary           = 'feeble attempt at rancid'
   s.description       = 'software to fetch configuration from network devices and store them'
   s.rubyforge_project = s.name
-  s.files             = `git ls-files -z`.split("\x0").reject { |f| f.match(%r{^(test|spec|features)/}) }
+  s.files             = %x(git ls-files -z).split("\x0").reject { |f| f.match(%r{^(test|spec|features)/}) }
   s.executables       = %w[oxidized]
   s.require_path      = 'lib'
 
