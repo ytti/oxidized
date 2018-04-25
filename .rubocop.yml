@@ -17,6 +17,17 @@ Style/PreferredHashMethods:
 Style/Not:
   Enabled: false
 
+# comply with @ytti's exacting specifications 
+Style/CommandLiteral:
+  EnforcedStyle: percent_x
+
+Style/FormatString:
+  EnforcedStyle: percent
+
+Style/FormatStringToken:
+  EnforcedStyle: unannotated
+
+# Do not attempt to police vendored code, and exclude special cases
 AllCops:
   Exclude:
     - 'vendor/**/*'
