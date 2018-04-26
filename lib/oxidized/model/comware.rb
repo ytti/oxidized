@@ -5,11 +5,11 @@ class Comware < Oxidized::Model
   prompt /^\0*(<[\w.-]+>).?$/
   comment '# '
 
-  # example how to handle pager
-  # expect /^\s*---- More ----$/ do |data, re|
-  #  send ' '
-  #  data.sub re, ''
-  # end
+  #example how to handle pager
+  expect /^\s*---- More ----$/ do |data, re|
+    send ' '
+    data.sub re, ''
+   end
 
   cmd :all do |cfg|
     # cfg.gsub! /^.*\e\[42D/, ''        # example how to handle pager
