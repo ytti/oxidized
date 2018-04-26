@@ -5,11 +5,11 @@ class Comware < Oxidized::Model
   prompt /^\0*(<[\w.-]+>).?$/
   comment '# '
 
-  # example how to handle pager
-  # expect /^\s*---- More ----$/ do |data, re|
-  #  send ' '
-  #  data.sub re, ''
-  # end
+  #example how to handle pager
+  expect /^\s*---- More ----$/ do |data, re|
+    send ' '
+    data.sub re, ''
+   end
 
   cmd :all do |cfg|
     # cfg.gsub! /^.*\e\[42D/, ''        # example how to handle pager
@@ -25,7 +25,7 @@ class Comware < Oxidized::Model
   end
 
   cfg :telnet do
-    username /^Username:$/
+    username /^(Username:|login:)$/
     password /^Password:$/
   end
 
@@ -43,6 +43,7 @@ class Comware < Oxidized::Model
 
     post_login 'screen-length disable'
     post_login 'undo terminal monitor'
+    pre_logout 'undo screen-length disable'
     pre_logout 'quit'
   end
 
@@ -56,6 +57,14 @@ class Comware < Oxidized::Model
   end
 
   cmd 'display current-configuration' do |cfg|
+    cfg
+  end
+
+  cmd 'display arp' do |cfg|
+    cfg
+  end
+  
+  cmd 'display mac-address' do |cfg|
     cfg
   end
 end
