@@ -59,4 +59,12 @@ class Comware < Oxidized::Model
   cmd 'display current-configuration' do |cfg|
     cfg
   end
+
+  cmd 'display arp' do |cfg|
+    cfg
+  end
+  
+  cmd 'display mac-address' do |cfg|
+    cfg
+  end
 end
