@@ -40,7 +40,7 @@ COPY . /tmp/oxidized/
 WORKDIR /tmp/oxidized
 
 # docker automated build gets shallow copy, but non-shallow copy cannot be unshallowed
-RUN git --fetch unshallow || true
+RUN git fetch --unshallow || true
 RUN rake install
 
 # web interface
