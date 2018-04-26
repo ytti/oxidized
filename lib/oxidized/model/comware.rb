@@ -25,7 +25,7 @@ class Comware < Oxidized::Model
   end
 
   cfg :telnet do
-    username /^Username:$/
+    username /^(Username:|login:)$/
     password /^Password:$/
   end
 
@@ -43,6 +43,7 @@ class Comware < Oxidized::Model
 
     post_login 'screen-length disable'
     post_login 'undo terminal monitor'
+    pre_logout 'undo screen-length disable'
     pre_logout 'quit'
   end
 
