@@ -57,6 +57,7 @@ Check out the [Oxidized TREX 2014 presentation](http://youtu.be/kBQ_CTUuqeU#t=3h
       * [Hook: awssns](docs/Hooks.md#hook-type-awssns)
       * [Hook: slackdiff](docs/Hooks.md#hook-type-slackdiff)
       * [Hook: xmppdiff](docs/Hooks.md#hook-type-xmppdiff)
+      * [Hook: ciscosparkdiff](docs/Hooks.md#hook-type-ciscosparkdiff)
 5. [Creating and Extending Models](docs/Creating-Models.md)
 6. [Help](#help)
 7. [Ruby API](docs/Ruby-API.md#ruby-api)

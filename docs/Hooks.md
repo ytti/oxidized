@@ -184,6 +184,43 @@ hooks:
 
 Note the channel name must be in quotes.
 
+## Hook type: ciscosparkdiff
+
+The `ciscosparkdiff` hook posts config diffs to a [Cisco Spark](https://www.ciscospark.com/) space of your choice. It only triggers for `post_store` events.
+
+You will need to manually install the `cisco_spark` gem on your system (see [cisco_spark-ruby](https://github.com/NGMarmaduke/cisco_spark-ruby)) and generate either a [Bot or OAUTH access key](https://developer.ciscospark.com/apps.html), and retrieve the [Spark Space ID](https://developer.ciscospark.com/endpoint-rooms-get.html)
+
+```shell
+gem install cisco_spark
+```
+
+### ciscosparkdiff hook configuration example
+
+```yaml
+hooks:
+  ciscospark:
+    type: ciscosparkdiff
+    events: [post_store]
+    accesskey: SPARK_BOT_API_OR_OAUTH_KEY
+    space: SPARK_SPACE_ID
+    diff: true
+```
+
+Optionally you can disable snippets and post a formatted message, for instance linking to a commit in a git repo. Named parameters `%{node}`, `%{group}`, `%{model}` and `%{commitref}` are available.
+
+```yaml
+hooks:
+  ciscospark:
+    type: ciscosparkdiff
+    events: [post_store]
+    accesskey: SPARK_BOT_API_OR_OAUTH_KEY
+    space: SPARK_SPACE_ID
+    diff: false
+    message: "%{node} %{group} %{model} updated https://git.intranet/network-changes/commit/%{commitref}"
+```
+
+Note the space and access tokens must be in quotes.
+
 ## Hook type: xmppdiff
 
 The `xmppdiff` hook posts config diffs to a [XMPP](https://en.wikipedia.org/wiki/XMPP) chatroom of your choice. It only triggers for `post_store` events.
