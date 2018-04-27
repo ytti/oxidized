@@ -26,11 +26,12 @@ module Oxidized
       port = vars(:ssh_port) || 22
 
       ssh_opts = {
-        :port => port.to_i,
-        :password => @node.auth[:password], :timeout => Oxidized.config.timeout,
-        :paranoid => secure,
-        :auth_methods => %w(none publickey password keyboard-interactive),
-        :number_of_password_prompts => 0,
+        port:         port.to_i,
+        paranoid:     secure,
+        keepalive:    true,
+        auth_methods: %w(none publickey password keyboard-interactive),
+        password:     @node.auth[:password], :timeout => Oxidized.config.timeout,
+        number_of_password_prompts: 0,
       }
 
       if proxy_host = vars(:ssh_proxy)
