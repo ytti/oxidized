@@ -18,7 +18,7 @@ module Oxidized
       end
     end
 
-    def load node_want=nill
+    def load node_want = nil
       nodes = []
       db = connect
       query = db[@cfg.table.to_sym]

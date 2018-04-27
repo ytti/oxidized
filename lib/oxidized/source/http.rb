@@ -15,7 +15,7 @@ module Oxidized
     require "uri"
     require "json"
 
-    def load node_want=nil
+    def load node_want = nil
       nodes = []
       uri = URI.parse(@cfg.url)
       http = Net::HTTP.new(uri.host, uri.port)
