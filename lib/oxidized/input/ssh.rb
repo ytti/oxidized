@@ -29,10 +29,13 @@ module Oxidized
         port:         port.to_i,
         paranoid:     secure,
         keepalive:    true,
-        auth_methods: %w(none publickey password keyboard-interactive),
         password:     @node.auth[:password], :timeout => Oxidized.config.timeout,
         number_of_password_prompts: 0,
       }
+
+      auth_methods = vars(:auth_methods) || %w(none publickey password)
+      ssh_opts[:auth_methods] = auth_methods
+      Oxidized.logger.info "AUTH METHODS::#{auth_methods}"
 
       if proxy_host = vars(:ssh_proxy)
         proxy_command =  "ssh "

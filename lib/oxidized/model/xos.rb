@@ -26,7 +26,10 @@ class XOS < Oxidized::Model
     comment cfg.each_line.reject { |line| line.match /Time:/ or line.match /boot/i }.join
   end
 
-  cmd 'show configuration'
+  cmd 'show configuration' do |cfg|
+    cfg = cfg.each_line.reject { |line| line.match /^#(\s[\w]+\s)(Configuration generated)/ }.join
+    cfg
+  end
 
   cmd 'show policy detail' do |cfg|
     comment cfg
