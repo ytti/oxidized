@@ -5,7 +5,6 @@
 # Developed against SNR S2950-24G 7.0.3.5
 
 class DCNOS < Oxidized::Model
-
   comment '! '
 
   cmd :all do |cfg|
@@ -44,5 +43,4 @@ class DCNOS < Oxidized::Model
     post_login 'terminal length 0'
     pre_logout 'exit'
   end
-
 end

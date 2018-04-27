@@ -1,5 +1,4 @@
 class Edgeos < Oxidized::Model
-
   # EdgeOS #
 
   prompt /\@.*?\:~\$\s/
@@ -27,5 +26,4 @@ class Edgeos < Oxidized::Model
   cfg :telnet, :ssh do
     pre_logout 'exit'
   end
-
 end

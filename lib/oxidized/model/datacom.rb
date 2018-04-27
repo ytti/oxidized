@@ -1,5 +1,4 @@
 class DataCom < Oxidized::Model
-
   comment '! '
 
   expect /^--More--\s+$/ do |data, re|
@@ -34,5 +33,4 @@ class DataCom < Oxidized::Model
     password /^Password:\s$/
     pre_logout 'exit'
   end
-
 end

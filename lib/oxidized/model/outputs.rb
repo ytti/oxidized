@@ -1,7 +1,6 @@
 module Oxidized
   class Model
     class Outputs
-
       def to_cfg
         type_to_str(nil)
       end
@@ -23,7 +22,7 @@ module Oxidized
       end
 
       def type type
-        @outputs.select { |out| out.type==type }
+        @outputs.select { |out| out.type == type }
       end
 
       def types
@@ -35,7 +34,6 @@ module Oxidized
       def initialize
         @outputs = []
       end
-
     end
   end
 end

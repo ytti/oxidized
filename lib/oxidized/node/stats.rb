@@ -18,7 +18,7 @@ module Oxidized
 
       # @param [Symbol] status stats for specific status
       # @return [Hash,Array] Hash of stats for every status or Array of stats for specific status
-      def get status=nil
+      def get status = nil
         status ? @stats[status] : @stats
       end
 
@@ -27,7 +27,6 @@ module Oxidized
       def initialize
         @stats = {}
       end
-
     end
   end
 end

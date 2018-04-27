@@ -11,13 +11,12 @@ module Oxidized
     end
 
     def node_var_interpolate var
-       case var
-       when "nil"   then nil
-       when "false" then false
-       when "true"  then true
-       else var
-       end
+      case var
+      when "nil"   then nil
+      when "false" then false
+      when "true"  then true
+      else var
+      end
     end
-
   end
 end

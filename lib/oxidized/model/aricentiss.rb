@@ -4,7 +4,6 @@
 # 0               SSE-G48-TG4   (P2-01)           1.0.16-9
 
 class AricentISS < Oxidized::Model
-
   prompt (/^(\e\[27m)?[ \r]*[\w-]+# ?$/)
 
   cfg :ssh do
@@ -49,5 +48,4 @@ class AricentISS < Oxidized::Model
       l
     }.join.gsub(/ +$/, '')
   end
-  
 end

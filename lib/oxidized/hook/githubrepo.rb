@@ -35,21 +35,20 @@ class GithubRepo < Oxidized::Hook
     end
 
     Rugged::Commit.create(repo, {
-      parents: [repo.head.target, their_branch.target],
-      tree: merge_index.write_tree(repo),
-      message: "Merge remote-tracking branch '#{their_branch.name}'",
-      update_ref: "HEAD"
-    })
+                            parents: [repo.head.target, their_branch.target],
+                            tree: merge_index.write_tree(repo),
+                            message: "Merge remote-tracking branch '#{their_branch.name}'",
+                            update_ref: "HEAD"
+                          })
   end
 
   private
 
   def credentials
     Proc.new do |url, username_from_url, allowed_types|
-
       if cfg.has_key?('username')
         git_user = cfg.username
-      else 
+      else
         git_user = username_from_url ? username_from_url : 'git'
       end
 

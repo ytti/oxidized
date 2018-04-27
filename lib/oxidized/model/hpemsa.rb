@@ -1,5 +1,4 @@
 class HpeMsa < Oxidized::Model
-
   prompt /^#\s?$/
 
   cmd 'show configuration'
@@ -8,6 +7,4 @@ class HpeMsa < Oxidized::Model
     post_login 'set cli-parameters pager disabled'
     pre_logout 'exit'
   end
-
 end
-

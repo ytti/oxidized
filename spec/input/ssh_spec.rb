@@ -14,23 +14,27 @@ describe Oxidized::SSH do
                                model: 'junos',
                                username: 'alma',
                                password: 'armud',
-                               vars: {ssh_proxy: 'test.com'})
-
+                               vars: { ssh_proxy: 'test.com' })
   end
 
   describe "#connect" do
     it "should use proxy command when proxy host given" do
       ssh = Oxidized::SSH.new
 
-      model = mock()
-      model.expects(:cfg).returns({'ssh' => []})
+      model = mock
+      model.expects(:cfg).returns('ssh' => [])
       @node.expects(:model).returns(model).at_least_once
 
-      proxy = mock()
+      proxy = mock
       Net::SSH::Proxy::Command.expects(:new).with("ssh test.com -W %h:%p").returns(proxy)
-      Net::SSH.expects(:start).with('93.184.216.34', 'alma', {:port => 22, :password => 'armud', :timeout => Oxidized.config.timeout,
-                                    :paranoid => Oxidized.config.input.ssh.secure, :auth_methods => ['none', 'publickey', 'password', 'keyboard-interactive'],
-                                    :number_of_password_prompts => 0, :proxy => proxy})
+      Net::SSH.expects(:start).with('93.184.216.34', 'alma',  port:      22,
+                                                              timeout:   Oxidized.config.timeout,
+                                                              paranoid:  Oxidized.config.input.ssh.secure,
+                                                              keepalive: true,
+                                                              proxy:     proxy,
+                                                              password: 'armud',
+                                                              number_of_password_prompts: 0,
+                                                              auth_methods: ['none', 'publickey', 'password', 'keyboard-interactive'])
 
       ssh.instance_variable_set("@exec", true)
       ssh.connect(@node)

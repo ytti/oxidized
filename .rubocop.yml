@@ -14,6 +14,23 @@ LineLength:
 Style/PreferredHashMethods:
   EnforcedStyle: verbose
 
+Style/Not:
+  Enabled: false
+
+# comply with @ytti's exacting specifications
+Style/CommandLiteral:
+  EnforcedStyle: percent_x
+
+Style/FormatString:
+  EnforcedStyle: percent
+
+Style/FormatStringToken:
+  EnforcedStyle: unannotated
+
+Style/RescueModifier:
+  Enabled: false
+
+# Do not attempt to police vendored code, and exclude special cases
 AllCops:
   Exclude:
     - 'vendor/**/*'
