@@ -62,6 +62,15 @@ vars:
   ssh_no_exec: true
 ```
 
+## SSH Auth Methods
+
+By default, Oxidized registers the following auth methods: `none`, `publickey` and `password`. However you can configure this globally, by groups, models or nodes.
+
+```
+vars:
+    auth_methods: none, publickey, password, keyboard-interactive
+```
+
 ## SSH Proxy Command
 
 Oxidized can `ssh` through a proxy as well. To do so we just need to set `ssh_proxy` variable with the proxy host information.
