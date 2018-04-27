@@ -33,7 +33,7 @@ COPY --from=libssh2-backport \
 RUN dpkg -i /tmp/*.deb
 
 # dependencies for hooks
-RUN gem install aws-sdk slack-api xmpp4r
+RUN gem install aws-sdk slack-api xmpp4r cisco_spark
 
 # build and install oxidized
 COPY . /tmp/oxidized/

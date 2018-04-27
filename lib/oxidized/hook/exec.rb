@@ -52,11 +52,11 @@ class Exec < Oxidized::Hook
         raise msg
       end
     end
-  rescue TimeoutError
+  rescue Timeout::Error
     kill "TERM", pid
     msg = "#{@cmd} timed out"
     log msg, :error
-    raise TimeoutError, msg
+    raise Timeout::Error, msg
   end
 
   def make_env ctx
