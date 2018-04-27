@@ -15,8 +15,8 @@ class CiscoSparkDiff < Oxidized::Hook
     return unless ctx.event.to_s == "post_store"
     log "Connecting to Cisco Spark"
     CiscoSpark.configure do |config|
-       config.api_key = cfg.accesskey
-       config.proxy = cfg.proxy if cfg.has_key?('proxy')
+      config.api_key = cfg.accesskey
+      config.proxy = cfg.proxy if cfg.has_key?('proxy')
     end
     space = cfg.space
     client = CiscoSpark::Room.new(id: space)
@@ -39,10 +39,10 @@ class CiscoSparkDiff < Oxidized::Hook
     end
     if cfg.has_key?('message') == true
       log cfg.message
-      msg = format(cfg.message, :node => ctx.node.name.to_s, :group => ctx.node.group.to_s, :commitref => ctx.commitref, :model => ctx.node.model.class.name.to_s.downcase)
+      msg = cfg.message % { :node => ctx.node.name.to_s, :group => ctx.node.group.to_s, :commitref => ctx.commitref, :model => ctx.node.model.class.name.to_s.downcase }
       log msg
       log "Posting message to #{cfg.space}"
-      client.chat_postMessage(channel: cfg.channel, text: msg,  as_user: true)
+      client.chat_postMessage(channel: cfg.channel, text: msg, as_user: true)
     end
     log "Finished"
   end
