@@ -18,7 +18,7 @@ module Oxidized
       require 'gpgme' if @cfg.gpg?
     end
 
-    def load node_want = nil
+    def load _node_want = nil
       nodes = []
       file = File.expand_path(@cfg.file)
       file = if @cfg.gpg?
