@@ -1,5 +1,4 @@
 class EOS < Oxidized::Model
-
   # Arista EOS model #
 
   prompt /^.+[#>]\s?$/
@@ -7,15 +6,15 @@ class EOS < Oxidized::Model
   comment  '! '
 
   cmd :all do |cfg|
-     cfg.each_line.to_a[1..-2].join
+    cfg.each_line.to_a[1..-2].join
   end
 
   cmd :secret do |cfg|
-     cfg.gsub! /^(snmp-server community).*/, '\\1 <configuration removed>'
-     cfg.gsub! /username (\S+) privilege (\d+) (\S+).*/, '<secret hidden>'
-     cfg.gsub! /^(enable secret).*/, '\\1 <configuration removed>'
-     cfg.gsub! /^(tacacs-server key \d+).*/, '\\1 <configuration removed>'
-     cfg
+    cfg.gsub! /^(snmp-server community).*/, '\\1 <configuration removed>'
+    cfg.gsub! /username (\S+) privilege (\d+) (\S+).*/, '<secret hidden>'
+    cfg.gsub! /^(enable secret).*/, '\\1 <configuration removed>'
+    cfg.gsub! /^(tacacs-server key \d+).*/, '\\1 <configuration removed>'
+    cfg
   end
 
   cmd 'show inventory | no-more' do |cfg|
@@ -41,5 +40,4 @@ class EOS < Oxidized::Model
     end
     pre_logout 'exit'
   end
-
 end

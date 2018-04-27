@@ -6,18 +6,18 @@ class GcomBNPS < Oxidized::Model
   #  - S5330 (aka Fiberstore S3800)
 
   prompt /^\r?([\w.@()-]+?(\(1-16 chars\))?[#>:]\s?)$/ # also match SSH password promt (post_login commands are sent after the first prompt)
-  comment  '! '
+  comment '! '
 
-# alternative to handle the SSH login, but this breaks telnet
-#  expect /^Password\(1-16 chars\):/ do |data|
-#      send @node.auth[:password] + "\n"
-#      ''
-#  end
+  # alternative to handle the SSH login, but this breaks telnet
+  #  expect /^Password\(1-16 chars\):/ do |data|
+  #      send @node.auth[:password] + "\n"
+  #      ''
+  #  end
 
   # handle pager (can't be disabled?)
   expect /^\.\.\.\.press ENTER to next line, CTRL_C to quit, other key to next page\.\.\.\.$/ do |data, re|
-   send ' '
-   data.sub re, ''
+    send ' '
+    data.sub re, ''
   end
 
   cmd :all do |cfg|
@@ -47,7 +47,6 @@ class GcomBNPS < Oxidized::Model
 
     comment out.join
   end
-
 
   cmd 'show version' do |cfg|
     comment cfg
@@ -80,6 +79,4 @@ class GcomBNPS < Oxidized::Model
   cfg :telnet, :ssh do
     pre_logout 'exit'
   end
-
 end
-
