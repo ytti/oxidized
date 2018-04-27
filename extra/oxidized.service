@@ -10,7 +10,7 @@ Wants=network-online.target
 [Service]
 ExecStart=/usr/local/bin/oxidized
 User=oxidized
-KillSignal=SIGINT
+KillSignal=SIGKILL
 
 [Install]
 WantedBy=multi-user.target

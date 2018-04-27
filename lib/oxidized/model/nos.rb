@@ -1,5 +1,4 @@
 class NOS < Oxidized::Model
-
   # Brocade Network Operating System
 
   prompt /^(?:\e\[..h)?[\w.-]+# $/
@@ -38,8 +37,7 @@ class NOS < Oxidized::Model
 
   cfg :telnet, :ssh do
     post_login 'terminal length 0'
-    #post_login 'terminal width 0'
+    # post_login 'terminal width 0'
     pre_logout 'exit'
   end
-
 end

@@ -1,5 +1,4 @@
 class NXOS < Oxidized::Model
-
   prompt /^(\r?[\w.@_()-]+[#]\s?)$/
   comment '! '
 
@@ -10,7 +9,7 @@ class NXOS < Oxidized::Model
     cfg.gsub! /^(radius-server key).*/, '\\1 <secret hidden>'
     cfg
   end
-  
+
   cmd 'show version' do |cfg|
     cfg = cfg.each_line.take_while { |line| not line.match(/uptime/i) }
     comment cfg.join ""
@@ -18,10 +17,11 @@ class NXOS < Oxidized::Model
 
   cmd 'show inventory' do |cfg|
     comment cfg
-  end 
+  end
 
   cmd 'show running-config' do |cfg|
     cfg.gsub! /^!Time:[^\n]*\n/, ''
+    cfg
   end
 
   cfg :ssh, :telnet do

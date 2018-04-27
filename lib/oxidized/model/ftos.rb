@@ -1,5 +1,4 @@
-class FTOS  < Oxidized::Model
-
+class FTOS < Oxidized::Model
   # Force10 FTOS model #
 
   comment  '! '
@@ -8,7 +7,7 @@ class FTOS  < Oxidized::Model
     cfg.each_line.to_a[2..-2].join
   end
 
-  cmd :secret do |cfg| 
+  cmd :secret do |cfg|
     cfg.gsub! /^(snmp-server community).*/, '\\1 <configuration removed>'
     cfg.gsub! /secret (\d+) (\S+).*/, '<secret hidden>'
     cfg
@@ -45,5 +44,4 @@ class FTOS  < Oxidized::Model
     end
     pre_logout 'exit'
   end
-
 end

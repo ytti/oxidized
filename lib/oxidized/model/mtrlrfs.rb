@@ -1,5 +1,4 @@
 class Mtrlrfs < Oxidized::Model
-
   # Motorola RFS/Extreme WM
 
   comment  '# '
@@ -7,7 +6,7 @@ class Mtrlrfs < Oxidized::Model
   cmd :all do |cfg|
     # xos inserts leading \r characters and other trailing white space.
     # this deletes extraneous \r and trailing white space.
-    cfg.each_line.to_a[1..-2].map{|line|line.delete("\r").rstrip}.join("\n") + "\n"
+    cfg.each_line.to_a[1..-2].map { |line| line.delete("\r").rstrip }.join("\n") + "\n"
   end
 
   cmd 'show version' do |cfg|
@@ -32,6 +31,4 @@ class Mtrlrfs < Oxidized::Model
       send "n\n"
     end
   end
-
 end
-

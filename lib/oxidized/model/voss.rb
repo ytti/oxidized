@@ -10,7 +10,7 @@ class Voss < Oxidized::Model
 
   # needed for proper formatting after post_login
   cmd('') { |cfg| comment "#{cfg}\n" }
-  
+
   # Get sys-info and remove information that changes such has temperature and power
   cmd 'show sys-info' do |cfg|
     cfg.gsub! /(^((.*)SysUpTime(.*))$)/, 'removed SysUpTime'
@@ -38,5 +38,4 @@ class Voss < Oxidized::Model
     post_login 'enable'
     post_login 'terminal more disable'
   end
-
 end

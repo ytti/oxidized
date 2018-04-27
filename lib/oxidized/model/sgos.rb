@@ -1,5 +1,4 @@
 class SGOS < Oxidized::Model
-
   comment '!- '
   prompt /\w+>|#/
 
@@ -20,14 +19,14 @@ class SGOS < Oxidized::Model
     comment cfg
   end
 
-   cmd :secret do |cfg|
+  cmd :secret do |cfg|
     cfg.gsub! /^(security hashed-enable-password).*/, '\\1 <secret hidden>'
     cfg.gsub! /^(security hashed-password).*/, '\\1 <secret hidden>'
     cfg
   end
 
   cmd 'show configuration expanded noprompts with-keyrings unencrypted' do |cfg|
-    cfg.gsub! /^(!- Local time).*/,""
+    cfg.gsub! /^(!- Local time).*/, ""
     cfg.gsub! /^(archive-configuration encrypted-password).*/, ""
     cfg.gsub! /^(download encrypted-password).*/, ""
     cfg
