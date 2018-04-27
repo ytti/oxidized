@@ -25,7 +25,7 @@ module Oxidized
       query = query.with_sql(@cfg.query) if @cfg.query?
 
       if node_want
-        query = query.where(@cfg.map.name.to_sym=>node_want)
+        query = query.where(@cfg.map.name.to_sym => node_want)
       end
 
       query.each do |node|
