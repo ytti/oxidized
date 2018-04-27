@@ -24,7 +24,7 @@ input:
 ## SSH/TelNet
 
 Below is the table from the XGS4600 CLI Reference Guide (Version 3.79~4.50 Edition 1, 07/2017)
-Take this table with a pink of salt, level 3 will not allow _show running-config_!
+Take this table with a pinch of salt, level 3 will not allow _show running-config_!
 
 Privilege Level | Types of commands at this privilege level
 ----------------|-------------------------------------------
