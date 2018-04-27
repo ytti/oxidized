@@ -1,4 +1,4 @@
-# Oxidized [![Build Status](https://travis-ci.org/ytti/oxidized.svg)](https://travis-ci.org/ytti/oxidized) [![Gem Version](https://badge.fury.io/rb/oxidized.svg)](http://badge.fury.io/rb/oxidized) [![Join the chat at https://gitter.im/oxidized/Lobby](https://badges.gitter.im/oxidized/Lobby.svg)](https://gitter.im/oxidized/Lobby?utm_source=badge&utm_medium=badge&utm_campaign=pr-badge&utm_content=badge)
+# Oxidized [![Build Status](https://travis-ci.org/ytti/oxidized.svg)](https://travis-ci.org/ytti/oxidized) [![codecov.io](https://codecov.io/gh/ytti/oxidized/coverage.svg?branch=master)](https://codecov.io/gh/ytti/oxidized?branch=master) [![Gem Version](https://badge.fury.io/rb/oxidized.svg)](http://badge.fury.io/rb/oxidized) [![Join the chat at https://gitter.im/oxidized/Lobby](https://badges.gitter.im/oxidized/Lobby.svg)](https://gitter.im/oxidized/Lobby?utm_source=badge&utm_medium=badge&utm_campaign=pr-badge&utm_content=badge)
 
 Oxidized is a network device configuration backup tool. It's a RANCID replacement!
 
@@ -80,7 +80,7 @@ gem install oxidized-script oxidized-web # if you don't install oxidized-web, ma
 
 ### CentOS, Oracle Linux, Red Hat Linux
 
-On CentOS 6 / RHEL 6, install Ruby greater than 1.9.3 (for Ruby 2.1.2 installation instructions see [Installing Ruby 2.1.2 using RVM](#installing-ruby-212-using-rvm)), then install Oxidized dependencies
+On CentOS 6 / RHEL 6, install Ruby 2.0 or greater (for Ruby 2.1.2 installation instructions see [Installing Ruby 2.1.2 using RVM](#installing-ruby-212-using-rvm)), then install Oxidized dependencies
 
 ```shell
 yum install cmake sqlite-devel openssl-devel libssh2-devel
@@ -120,8 +120,8 @@ pkg install rubygem-oxidized rubygem-oxidized-script rubygem-oxidized-web
 ```shell
 git clone https://github.com/ytti/oxidized.git
 cd oxidized/
-gem build *.gemspec
-gem install pkg/*.gem
+gem install bundler
+rake install
 ```
 
 ### Running with Docker

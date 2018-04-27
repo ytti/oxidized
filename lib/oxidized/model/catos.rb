@@ -1,5 +1,4 @@
 class Catos < Oxidized::Model
-
   prompt /^[\w.@-]+>\s?(\(enable\) )?$/
   comment '# '
 
@@ -39,5 +38,4 @@ class Catos < Oxidized::Model
     end
     pre_logout 'exit'
   end
-
 end

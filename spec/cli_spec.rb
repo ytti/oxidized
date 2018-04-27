@@ -2,11 +2,11 @@ require 'spec_helper'
 require 'oxidized/cli'
 
 describe Oxidized::CLI do
-  before(:each) do 
-    @original = ARGV 
-    Oxidized.asetus = Asetus.new 
+  before(:each) do
+    @original = ARGV
+    Oxidized.asetus = Asetus.new
   end
-  
+
   after(:each) do
     ARGV.replace @original
   end
@@ -21,7 +21,7 @@ describe Oxidized::CLI do
         File.expects(:expand_path)
         Kernel.expects(:exit)
 
-        assert_output("#{Oxidized::VERSION}\n") { Oxidized::CLI.new }
+        assert_output("#{Oxidized::VERSION_FULL}\n") { Oxidized::CLI.new }
       end
     end
   end

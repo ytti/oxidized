@@ -11,9 +11,9 @@ module Oxidized
     def initialize args
       Oxidized.mgr = Manager.new
       Oxidized.Hooks = HookManager.from_config(Oxidized.config)
-      nodes        = Nodes.new
+      nodes = Nodes.new
       raise NoNodesFound, 'source returns no usable nodes' if nodes.size == 0
-      @worker      = Worker.new nodes
+      @worker = Worker.new nodes
       trap('HUP') { nodes.load }
       if Oxidized.config.rest?
         begin
@@ -22,7 +22,7 @@ module Oxidized
           raise OxidizedError, 'oxidized-web not found: sudo gem install oxidized-web - \
           or disable web support by setting "rest: false" in your configuration'
         end
-        @rest        = API::Web.new nodes, Oxidized.config.rest
+        @rest = API::Web.new nodes, Oxidized.config.rest
         @rest.run
       end
       run

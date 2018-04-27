@@ -3,11 +3,11 @@ require 'rugged'
 require 'oxidized/hook/githubrepo'
 
 describe GithubRepo do
-  let(:credentials) { mock() }
-  let(:remote) { mock() }
-  let(:remotes) { mock() }
-  let(:repo_head) { mock() }
-  let(:repo) { mock() }
+  let(:credentials) { mock }
+  let(:remote) { mock }
+  let(:remotes) { mock }
+  let(:repo_head) { mock }
+  let(:repo) { mock }
   let(:gr) { GithubRepo.new }
 
   before do
@@ -44,15 +44,15 @@ describe GithubRepo do
       gr.fetch_and_merge_remote(repo).must_equal nil
     end
     describe "when there is update considering conflicts" do
-      let(:merge_index) { mock() }
-      let(:their_branch) { mock() }
+      let(:merge_index) { mock }
+      let(:their_branch) { mock }
 
       before(:each) do
-        repo.expects(:fetch).with('origin', ['refs/heads/master'], credentials: credentials).returns({total_deltas: 1})
+        repo.expects(:fetch).with('origin', ['refs/heads/master'], credentials: credentials).returns(total_deltas: 1)
         their_branch.expects(:target_id).returns(1)
         repo_head.expects(:target_id).returns(2)
         repo.expects(:merge_commits).with(2, 1).returns(merge_index)
-        repo.expects(:branches).returns({"origin/master" => their_branch})
+        repo.expects(:branches).returns("origin/master" => their_branch)
       end
 
       it "should not try merging when there's conflict" do
@@ -70,12 +70,11 @@ describe GithubRepo do
         repo_head.expects(:target).returns("our_target")
         merge_index.expects(:write_tree).with(repo).returns("tree")
         merge_index.expects(:conflicts?).returns(false)
-        Rugged::Commit.expects(:create).with(repo, {
-          parents: ["our_target", "their_target"],
-          tree: "tree",
-          message: "Merge remote-tracking branch 'origin/master'",
-          update_ref: "HEAD"
-        }).returns(1)
+        Rugged::Commit.expects(:create).with(repo,
+                                             parents: ["our_target", "their_target"],
+                                             tree: "tree",
+                                             message: "Merge remote-tracking branch 'origin/master'",
+                                             update_ref: "HEAD").returns(1)
         gr.fetch_and_merge_remote(repo).must_equal 1
       end
     end
@@ -101,7 +100,7 @@ describe GithubRepo do
         Oxidized.config.output.git.repo = '/foo.git'
         remote.expects(:url).returns('https://github.com/username/foo.git')
         remote.expects(:push).with(['refs/heads/master'], credentials: credentials).returns(true)
-        repo.expects(:remotes).returns({'origin' => remote})
+        repo.expects(:remotes).returns('origin' => remote)
         Rugged::Repository.expects(:new).with('/foo.git').returns(repo)
       end
 

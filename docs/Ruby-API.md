@@ -6,7 +6,7 @@ The following objects exist in Oxidized.
 
 * gets config from nodes
 * must implement 'connect', 'get', 'cmd'
-* 'ssh', 'telnet, ftp, and tftp' implemented
+* 'ssh', 'telnet', 'ftp', and 'tftp' implemented
 
 ## Output
 
@@ -18,12 +18,12 @@ The following objects exist in Oxidized.
 
 * gets list of nodes to poll
 * must implement 'load'
-* source can have 'name', 'model', 'group', 'username', 'password', 'input', 'output', 'prompt'
-  * name - name of the devices
-  * model - model to use ios/junos/xyz, model is loaded dynamically when needed (Also default in config file)
-  * input - method to acquire config, loaded dynamically as needed (Also default in config file)
-  * output - method to store config, loaded dynamically as needed (Also default in config file)
-  * prompt - prompt used for node (Also default in config file, can be specified in model too)
+* source can have 'name', 'model', 'group', 'username', 'password', 'input', 'output', 'prompt' for each device.
+  * `name` - name of the device
+  * `model` - model to use ('ios', 'junos', etc).The model is loaded dynamically by the first node of that model type. (Also default in config file)
+  * `input` - method to acquire config, loaded dynamically as needed (Also default in config file)
+  * `output` - method to store config, loaded dynamically as needed (Also default in config file)
+  * `prompt` - prompt used for node (Also default in config file, can be specified in model too)
 * 'sql', 'csv' and 'http' (supports any format with single entry per line, like router.db)
 
 ## Model
@@ -116,16 +116,20 @@ the password prompt. If not specified, the default of `/^Password/` is used.
 #### `post_login`
 
 Used inside `cfg` invocations to specify commands to run once Oxidized has
-logged in to the switch. Takes one argument that is either a block (taking zero
+logged in to the device. Takes one argument that is either a block (taking zero
 parameters) or a string containing a command to execute.
+
+This allows `post_login` to be used for any model-specific items prior to running the regular commands. This could include disabling the output pager or timestamp outputs that would cause constant differences.
 
 #### `pre_logout`
 
 Used to specify commands to run before Oxidized closes the connection to the
-switch. Takes one argument that is either a block (taking zero parameters) or a
+device. Takes one argument that is either a block (taking zero parameters) or a
 string containing a command to execute.
+
+This allows `pre_logout` to be used to 'undo' any changes that may have been needed via `post_login` (restore pager output, etc.)
 
 #### `send`
 
 Usually used inside `expect` or blocks passed to `post_login`/`pre_logout`.
-Takes a single parameter: a string to be sent to the switch.
+Takes a single parameter: a string to be sent to the device.

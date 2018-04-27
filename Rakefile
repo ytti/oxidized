@@ -1,5 +1,6 @@
 require 'bundler/gem_tasks'
 require 'rake/testtask'
+require_relative 'lib/oxidized/version'
 
 gemspec = eval(File.read(Dir['*.gemspec'].first))
 file    = [gemspec.name, gemspec.version].join('-') + '.gem'
@@ -29,6 +30,12 @@ task :test do
     t.warning = true
     t.verbose = true
   end
+end
+
+task :build => :version_set
+task :version_set do
+  Oxidized.version_set
+  Bundler::GemHelper.instance.gemspec.version = Oxidized::VERSION
 end
 
 ## desc 'Install gem'

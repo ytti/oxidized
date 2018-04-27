@@ -23,7 +23,7 @@ LABEL maintainer="Samer Abdel-Hafez <sam@arahant.net>"
 
 # set up dependencies for the build process
 RUN apt-get -yq update && \
-    apt-get -yq install ruby2.3 ruby2.3-dev libsqlite3-dev libssl-dev pkg-config make cmake libssh2-1-dev git g++ libffi-dev
+    apt-get -yq install ruby2.3 ruby2.3-dev libsqlite3-dev libssl-dev pkg-config make cmake libssh2-1-dev git g++ libffi-dev ruby-bundler
 
 # upgrade libssh2 to self-built backport from stage 1
 COPY --from=libssh2-backport \
@@ -39,8 +39,9 @@ RUN gem install aws-sdk slack-api xmpp4r cisco_spark
 COPY . /tmp/oxidized/
 WORKDIR /tmp/oxidized
 
-RUN gem build oxidized.gemspec
-RUN gem install oxidized-*.gem
+# docker automated build gets shallow copy, but non-shallow copy cannot be unshallowed
+RUN git fetch --unshallow || true
+RUN rake install
 
 # web interface
 RUN gem install oxidized-web --no-ri --no-rdoc
@@ -49,7 +50,7 @@ RUN gem install oxidized-web --no-ri --no-rdoc
 WORKDIR /
 RUN rm -rf /tmp/oxidized
 RUN rm /tmp/*.deb
-RUN apt-get -yq --purge autoremove ruby-dev pkg-config make cmake
+RUN apt-get -yq --purge autoremove ruby-dev pkg-config make cmake ruby-bundler
 
 # add runit services
 ADD extra/oxidized.runit /etc/service/oxidized/run
