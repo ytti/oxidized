@@ -4,15 +4,16 @@ module Oxidized
   class Oxidized::NotSupported < OxidizedError; end
   class Oxidized::NodeNotFound < OxidizedError; end
   class Nodes < Array
-    attr_accessor :source
+    attr_accessor :source, :jobs
     alias :put :unshift
-    def load node_want=nil
+    def load node_want = nil
       with_lock do
         new = []
         @source = Oxidized.config.source.default
         Oxidized.mgr.add_source @source
         Oxidized.logger.info "lib/oxidized/nodes.rb: Loading nodes"
-        Oxidized.mgr.source[@source].new.load.each do |node|
+        nodes = Oxidized.mgr.source[@source].new.load node_want
+        nodes.each do |node|
           # we want to load specific node(s), not all of them
           next unless node_want? node_want, node
           begin
@@ -42,7 +43,6 @@ module Oxidized
       end
     end
 
-
     def list
       with_lock do
         map { |e| e.serialize }
@@ -63,16 +63,18 @@ module Oxidized
     end
 
     # @param node [String] name of the node moved into the head of array
-    def next node, opt={}
+    def next node, opt = {}
       if waiting.find_node_index(node)
         with_lock do
           n = del node
           n.user = opt['user']
+          n.email = opt['email']
           n.msg  = opt['msg']
           n.from = opt['from']
           # set last job to nil so that the node is picked for immediate update
           n.last = nil
           put n
+          jobs.want += 1 if Oxidized.config.next_adds_job?
         end
       end
     end
@@ -111,10 +113,10 @@ module Oxidized
 
     private
 
-    def initialize opts={}
+    def initialize opts = {}
       super()
       node = opts.delete :node
-      @mutex= Mutex.new  # we compete for the nodes with webapi thread
+      @mutex = Mutex.new # we compete for the nodes with webapi thread
       if nodes = opts.delete(:nodes)
         replace nodes
       else
@@ -127,7 +129,7 @@ module Oxidized
     end
 
     def find_index node
-      index { |e| e.name == node or e.ip == node}
+      index { |e| e.name == node or e.ip == node }
     end
 
     # @param node node which is removed from nodes list
@@ -160,7 +162,7 @@ module Oxidized
             node.stats = old[i].stats
             node.last  = old[i].last
           end
-        rescue  Oxidized::NodeNotFound
+        rescue Oxidized::NodeNotFound
         end
       end
       sort_by! { |x| x.last.nil? ? Time.new(0) : x.last.end }

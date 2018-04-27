@@ -6,8 +6,9 @@ module Oxidized
   class ModelNotFound  < OxidizedError; end
   class Node
     attr_reader :name, :ip, :model, :input, :output, :group, :auth, :prompt, :vars, :last, :repo
-    attr_accessor :running, :user, :msg, :from, :stats, :retry
+    attr_accessor :running, :user, :email, :msg, :from, :stats, :retry
     alias :running? :running
+
     def initialize opt
       Oxidized.logger.debug 'resolving DNS for %s...' % opt[:name]
       # remove the prefix if an IP Address is provided with one as IPAddr converts it to a network address.
@@ -39,7 +40,7 @@ module Oxidized
         cfg_name = input.to_s.split('::').last.downcase
         next unless @model.cfg[cfg_name] and not @model.cfg[cfg_name].empty?
         @model.input = input = input.new
-        if config=run_input(input)
+        if config = run_input(input)
           Oxidized.logger.debug "lib/oxidized/node.rb: #{input.class.name} ran for #{name} successfully"
           status = :success
           break
@@ -55,7 +56,7 @@ module Oxidized
     def run_input input
       rescue_fail = {}
       [input.class::RescueFail, input.class.superclass::RescueFail].each do |hash|
-        hash.each do |level,errors|
+        hash.each do |level, errors|
           errors.each do |err|
             rescue_fail[err] = level
           end
@@ -64,9 +65,9 @@ module Oxidized
       begin
         input.connect(self) and input.get
       rescue *rescue_fail.keys => err
-        resc  = ''
+        resc = ''
         if not level = rescue_fail[err.class]
-          resc  = err.class.ancestors.find{|e|rescue_fail.keys.include? e}
+          resc  = err.class.ancestors.find { |e| rescue_fail.keys.include? e }
           level = rescue_fail[resc]
           resc  = " (rescued #{resc})"
         end
@@ -121,7 +122,7 @@ module Oxidized
     end
 
     def reset
-      @user = @msg = @from = nil
+      @user = @email = @msg = @from = nil
       @retry = 0
     end
 
@@ -167,35 +168,49 @@ module Oxidized
     end
 
     def resolve_repo opt
-      return unless is_git? opt
+      if is_git? opt
+        remote_repo = Oxidized.config.output.git.repo
 
-      remote_repo = Oxidized.config.output.git.repo
-
-      if remote_repo.is_a?(::String)
-        if Oxidized.config.output.git.single_repo? || @group.nil?
-          remote_repo
+        if remote_repo.is_a?(::String)
+          if Oxidized.config.output.git.single_repo? || @group.nil?
+            remote_repo
+          else
+            File.join(File.dirname(remote_repo), @group + '.git')
+          end
         else
-          File.join(File.dirname(remote_repo), @group + '.git')
+          remote_repo[@group]
+        end
+      elsif is_gitcrypt? opt
+        remote_repo = Oxidized.config.output.gitcrypt.repo
+
+        if remote_repo.is_a?(::String)
+          if Oxidized.config.output.gitcrypt.single_repo? || @group.nil?
+            remote_repo
+          else
+            File.join(File.dirname(remote_repo), @group + '.git')
+          end
+        else
+          remote_repo[@group]
         end
       else
-        remote_repo[@group]
+        return
       end
     end
 
-    def resolve_key key, opt, global=nil
+    def resolve_key key, opt, global = nil
       # resolve key, first get global, then get group then get node config
       key_sym = key.to_sym
       key_str = key.to_s
       value   = global
       Oxidized.logger.debug "node.rb: resolving node key '#{key}', with passed global value of '#{value}' and node value '#{opt[key_sym]}'"
 
-      #global
+      # global
       if not value and Oxidized.config.has_key?(key_str)
         value = Oxidized.config[key_str]
         Oxidized.logger.debug "node.rb: setting node key '#{key}' to value '#{value}' from global"
       end
 
-      #group
+      # group
       if Oxidized.config.groups.has_key?(@group)
         if Oxidized.config.groups[@group].has_key?(key_str)
           value = Oxidized.config.groups[@group][key_str]
@@ -203,7 +218,16 @@ module Oxidized
         end
       end
 
-      #node
+      # model
+      # FIXME: warning: instance variable @model not initialized
+      if Oxidized.config.models.has_key?(@model.class.name.to_s.downcase)
+        if Oxidized.config.models[@model.class.name.to_s.downcase].has_key?(key_str)
+          value = Oxidized.config.models[@model.class.name.to_s.downcase][key_str]
+          Oxidized.logger.debug "node.rb: setting node key '#{key}' to value '#{value}' from model"
+        end
+      end
+
+      # node
       value = opt[key_sym] || value
       Oxidized.logger.debug "node.rb: returning node key '#{key}' with value '#{value}'"
       value
@@ -213,5 +237,8 @@ module Oxidized
       (opt[:output] || Oxidized.config.output.default) == 'git'
     end
 
+    def is_gitcrypt? opt
+      (opt[:output] || Oxidized.config.output.default) == 'gitcrypt'
+    end
   end
 end

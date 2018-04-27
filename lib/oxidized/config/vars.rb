@@ -8,8 +8,12 @@ module Oxidized::Config::Vars
         r ||= Oxidized.config.groups[@node.group].vars[name.to_s]
       end
     end
+    if Oxidized.config.models.has_key?(@node.model.class.name.to_s.downcase)
+      if Oxidized.config.models[@node.model.class.name.to_s.downcase].vars.has_key?(name.to_s)
+        r ||= Oxidized.config.models[@node.model.class.name.to_s.downcase].vars[name.to_s]
+      end
+    end
     r ||= Oxidized.config.vars[name.to_s] if Oxidized.config.vars.has_key?(name.to_s)
     r
   end
 end
-

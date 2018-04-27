@@ -1,14 +1,15 @@
-class DNOS  < Oxidized::Model
-
+class DNOS < Oxidized::Model
   # Force10 DNOS model #
 
   comment  '! '
 
   cmd :all do |cfg|
+    cfg.gsub! /^% Invalid input detected at '\^' marker\.$|^\s+\^$/, ''
+    cfg.gsub! /^Dell Networking OS uptime is\s.+/, '' # Omit constantly changing uptime info
     cfg.each_line.to_a[2..-2].join
   end
 
-  cmd :secret do |cfg| 
+  cmd :secret do |cfg|
     cfg.gsub! /^(snmp-server community).*/, '\\1 <configuration removed>'
     cfg.gsub! /secret (\d+) (\S+).*/, '<secret hidden>'
     cfg
@@ -19,6 +20,10 @@ class DNOS  < Oxidized::Model
   end
 
   cmd 'show inventory media' do |cfg|
+    comment cfg
+  end
+
+  cmd 'show version' do |cfg|
     comment cfg
   end
 
@@ -42,7 +47,6 @@ class DNOS  < Oxidized::Model
     post_login 'terminal length 0'
     post_login 'terminal width 0'
     pre_logout 'exit'
-    pre_logout 'exit'    
+    pre_logout 'exit'
   end
-
 end

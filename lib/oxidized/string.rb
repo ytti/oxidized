@@ -15,11 +15,11 @@ module Oxidized
 
     # sets @cmd and @name unless @name is already set
     def set_cmd command
-      @cmd  = command
+      @cmd = command
       @name ||= @cmd.strip.gsub(/\s+/, '_')
     end
 
-    def initialize str=''
+    def initialize str = ''
       super
       if str.class == Oxidized::String
         @cmd  = str.cmd
@@ -27,6 +27,5 @@ module Oxidized
         @type = str.type
       end
     end
-
   end
 end

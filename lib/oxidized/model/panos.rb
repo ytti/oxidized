@@ -1,8 +1,7 @@
 class PanOS < Oxidized::Model
-
   # PaloAlto PAN-OS model #
 
-  comment  '! '
+  comment '! '
 
   prompt /^[\w.\@:\(\)-]+>\s?$/
 
@@ -28,6 +27,6 @@ class PanOS < Oxidized::Model
 
   cfg :ssh do
     post_login 'set cli pager off'
-    pre_logout 'exit'
+    pre_logout 'quit'
   end
 end

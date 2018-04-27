@@ -23,10 +23,9 @@ class Exec < Oxidized::Hook
       @cmd = cfg.cmd
       raise "invalid cmd value" unless @cmd.is_a?(String) || @cmd.is_a?(Array)
     end
-
   rescue RuntimeError => e
     raise ArgumentError,
-      "#{self.class.name}: configuration invalid: #{e.message}"
+          "#{self.class.name}: configuration invalid: #{e.message}"
   end
 
   def run_hook ctx
@@ -45,7 +44,7 @@ class Exec < Oxidized::Hook
   def run_cmd! env
     pid, status = nil, nil
     Timeout.timeout(@timeout) do
-      pid = spawn env, @cmd , :unsetenv_others => true
+      pid = spawn env, @cmd, :unsetenv_others => true
       pid, status = wait2 pid
       unless status.exitstatus.zero?
         msg = "#{@cmd.inspect} failed with exit value #{status.exitstatus}"
@@ -67,10 +66,11 @@ class Exec < Oxidized::Hook
     if ctx.node
       env.merge!(
         "OX_NODE_NAME" => ctx.node.name.to_s,
+        "OX_NODE_IP" => ctx.node.ip.to_s,
         "OX_NODE_FROM" => ctx.node.from.to_s,
         "OX_NODE_MSG" => ctx.node.msg.to_s,
         "OX_NODE_GROUP" => ctx.node.group.to_s,
-        "OX_EVENT" => ctx.event.to_s,
+        "OX_NODE_MODEL" => ctx.node.model.class.name,
         "OX_REPO_COMMITREF" => ctx.commitref.to_s,
         "OX_REPO_NAME" => ctx.node.repo.to_s,
       )

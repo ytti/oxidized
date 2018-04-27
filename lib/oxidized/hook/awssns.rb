@@ -19,9 +19,8 @@ class AwsSns < Oxidized::Hook
         :node => ctx.node.name.to_s
       )
     end
-    topic.publish({
+    topic.publish(
       message: message.to_json
-    })
+    )
   end
-
 end

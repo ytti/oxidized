@@ -1,8 +1,7 @@
 class MasterOS < Oxidized::Model
-
   # MRV MasterOS model #
 
-comment '!'
+  comment '!'
 
   cmd :secret do |cfg|
     cfg.gsub! /^(snmp-server community).*/, '\\1 <configuration removed>'
@@ -43,5 +42,4 @@ comment '!'
     end
     pre_logout 'exit'
   end
-
 end

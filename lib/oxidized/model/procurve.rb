@@ -1,10 +1,14 @@
 class Procurve < Oxidized::Model
-
-  # some models start lines with \r 
+  # some models start lines with \r
   # previous command is repeated followed by "\eE", which sometimes ends up on last line
-  prompt /^\r?([\w -]+\eE)?([\w.-]+# )$/
+  prompt /^\r?([\w.-]+# )$/
 
-  comment  '! '
+  comment '! '
+
+  # replace next line control sequence with a new line
+  expect /(\e\[1M\e\[\??\d+(;\d+)*[A-Za-z]\e\[1L)|(\eE)/ do |data, re|
+    data.gsub re, "\n"
+  end
 
   # replace all used vt100 control sequences
   expect /\e\[\??\d+(;\d+)*[A-Za-z]/ do |data, re|
@@ -16,8 +20,13 @@ class Procurve < Oxidized::Model
     ""
   end
 
+  expect /Enter switch number/ do
+    send "\n"
+    ""
+  end
+
   cmd :all do |cfg|
-    cfg = cfg.each_line.to_a[1..-3].join
+    cfg = cfg.each_line.to_a[1..-2].join
     cfg = cfg.gsub /^\r/, ''
   end
 
@@ -25,10 +34,27 @@ class Procurve < Oxidized::Model
     cfg.gsub! /^(snmp-server community).*/, '\\1 <configuration removed>'
     cfg.gsub! /^(snmp-server host).*/, '\\1 <configuration removed>'
     cfg.gsub! /^(radius-server host).*/, '\\1 <configuration removed>'
+    cfg.gsub! /^(radius-server key).*/, '\\1 <configuration removed>'
     cfg
   end
 
   cmd 'show version' do |cfg|
+    comment cfg
+  end
+
+  cmd 'show modules' do |cfg|
+    comment cfg
+  end
+
+  cmd 'show system power-supply' do |cfg|
+    comment cfg
+  end
+
+  cmd 'show interfaces transceiver' do |cfg|
+    comment cfg
+  end
+
+  cmd 'show flash' do |cfg|
     comment cfg
   end
 
@@ -40,7 +66,7 @@ class Procurve < Oxidized::Model
 
   # not supported on all models
   cmd 'show system information' do |cfg|
-    cfg = cfg.each_line.select { |line| not line.match /(.*CPU.*)|(.*Up Time.*)|(.*Total.*)|(.*Free.*)|(.*Lowest.*)|(.*Missed.*)/ }
+    cfg = cfg.each_line.reject { |line| line.match /(.*CPU.*)|(.*Up Time.*)|(.*Total.*)|(.*Free.*)|(.*Lowest.*)|(.*Missed.*)/ }
     cfg = cfg.join
     comment cfg
   end
@@ -60,5 +86,4 @@ class Procurve < Oxidized::Model
   cfg :ssh do
     pty_options({ chars_wide: 1000 })
   end
-
 end
