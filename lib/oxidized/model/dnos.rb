@@ -5,6 +5,7 @@ class DNOS < Oxidized::Model
 
   cmd :all do |cfg|
     cfg.gsub! /^% Invalid input detected at '\^' marker\.$|^\s+\^$/, ''
+    cfg.gsub! /^Dell Networking OS uptime is\s.+/, '' # Omit constantly changing uptime info
     cfg.each_line.to_a[2..-2].join
   end
 
@@ -23,10 +24,6 @@ class DNOS < Oxidized::Model
   end
 
   cmd 'show version' do |cfg|
-    comment cfg
-  end
-
-  cmd 'show system' do |cfg|
     comment cfg
   end
 
