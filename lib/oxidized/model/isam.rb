@@ -1,6 +1,6 @@
 class ISAM < Oxidized::Model
-  #Alcatel ISAM 7302/7330 FTTN
-  
+  # Alcatel ISAM 7302/7330 FTTN
+
   prompt /^([\w.:@-]+>#\s)$/
   comment '# '
 
@@ -8,7 +8,7 @@ class ISAM < Oxidized::Model
     cfg.each_line.to_a[1..-2].join
   end
 
-  cfg :telnet do 
+  cfg :telnet do
     username /^login:\s*/
     password /^password:\s*/
   end
@@ -19,7 +19,7 @@ class ISAM < Oxidized::Model
     post_login 'environment inhibit-alarms print no-more'
     pre_logout 'logout'
   end
-  
+
   cmd 'show software-mngt oswp detail' do |cfg|
     comment cfg
   end
@@ -31,5 +31,4 @@ class ISAM < Oxidized::Model
   cmd 'info configure flat' do |cfg|
     cfg
   end
-
 end

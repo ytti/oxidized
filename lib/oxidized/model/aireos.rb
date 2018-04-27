@@ -1,17 +1,16 @@
 class Aireos < Oxidized::Model
-
   # AireOS (at least I think that is what it's called, hard to find data)
   # Used in Cisco WLC 5500
 
-  comment  '# '     ## this complains too, can't find real comment char
+  comment '# ' # this complains too, can't find real comment char
   prompt /^\([^\)]+\)\s>/
 
   cmd :all do |cfg|
     cfg.each_line.to_a[1..-2].join
   end
 
-  ##show sysinfo?
-  ##show switchconfig?
+  # show sysinfo?
+  # show switchconfig?
 
   cmd 'show udi' do |cfg|
     cfg = comment clean cfg
@@ -51,5 +50,4 @@ class Aireos < Oxidized::Model
     out = out.join "\n"
     out << "\n"
   end
-
 end

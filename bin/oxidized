@@ -1,6 +1,5 @@
 #!/usr/bin/env ruby
 
-
 # FIX ME, killing oxidized needs -9
 trap("INT") { exit } # sinatra will otherwise steal this from us
 

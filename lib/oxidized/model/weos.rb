@@ -1,6 +1,5 @@
 class WEOS < Oxidized::Model
-
-  #Westell WEOS, works with Westell 8178G, Westell 8266G
+  # Westell WEOS, works with Westell 8178G, Westell 8266G
 
   prompt /^(\s[\w.@-]+[#>]\s?)$/
 
@@ -18,5 +17,4 @@ class WEOS < Oxidized::Model
     post_login 'cli more disable'
     pre_logout 'logout'
   end
-
 end
