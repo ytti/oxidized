@@ -1,5 +1,4 @@
 class ASA < Oxidized::Model
-
   # Cisco ASA model #
   # Only SSH supported for the sake of security
 
@@ -13,15 +12,21 @@ class ASA < Oxidized::Model
   cmd :secret do |cfg|
     cfg.gsub! /enable password (\S+) (.*)/, 'enable password <secret hidden> \2'
     cfg.gsub! /username (\S+) password (\S+) (.*)/, 'username \1 password <secret hidden> \3'
-    cfg.gsub! /ikev2 pre-shared-key (\S+)/, 'ikev2 pre-shared-key <secret hidden>'
-    cfg.gsub! /ikev2 (remote|local)-authentication pre-shared-key (\S+)/, 'ikev2 \1-authentication pre-shared-key <secret hidden>'
+    cfg.gsub! /(ikev[12] ((remote|local)-authentication )?pre-shared-key) (\S+)/, '\1 <secret hidden>'
     cfg.gsub! /^(aaa-server TACACS\+? \(\S+\) host.*\n\skey) \S+$/mi, '\1 <secret hidden>'
+    cfg.gsub! /ldap-login-password (\S+)/, 'ldap-login-password <secret hidden>'
+    cfg.gsub! /^snmp-server host (.*) community (\S+)/, 'snmp-server host \1 community <secret hidden>'
     cfg
+  end
+
+  # check for multiple contexts
+  cmd 'show mode' do |cfg|
+    @is_multiple_context = cfg.include? 'multiple'
   end
 
   cmd 'show version' do |cfg|
     # avoid commits due to uptime / ixo-router01 up 2 mins 28 secs / ixo-router01 up 1 days 2 hours
-    cfg = cfg.each_line.select { |line| not line.match /(\s+up\s+\d+\s+)|(.*days.*)/ }
+    cfg = cfg.each_line.reject { |line| line.match /(\s+up\s+\d+\s+)|(.*days.*)/ }
     cfg = cfg.join
     comment cfg
   end
@@ -30,25 +35,12 @@ class ASA < Oxidized::Model
     comment cfg
   end
 
-  cmd 'more system:running-config' do |cfg|
-    cfg = cfg.each_line.to_a[3..-1].join
-    cfg.gsub! /^: [^\n]*\n/, ''
-    # backup any xml referenced in the configuration.
-    anyconnect_profiles = cfg.scan(Regexp.new('(\sdisk0:/.+\.xml)')).flatten
-    anyconnect_profiles.each do |profile|
-  	  cfg << (comment profile + "\n" )
-   	  cmd ("more" + profile) do |xml|
-	      cfg << (comment xml)
-	    end
+  post do
+    if @is_multiple_context
+      multiple_context
+    else
+      single_context
     end
-    # if DAP is enabled, also backup dap.xml
-    if cfg.rindex(/dynamic-access-policy-record\s(?!DfltAccessPolicy)/)
-   	  cfg << (comment "disk0:/dap.xml\n")
-      cmd "more disk0:/dap.xml" do |xml|
-        cfg << (comment xml)
-      end
-    end
-    cfg
   end
 
   cfg :ssh do
@@ -62,4 +54,46 @@ class ASA < Oxidized::Model
     pre_logout 'exit'
   end
 
+  def single_context
+    # Single context mode
+    cmd 'more system:running-config' do |cfg|
+      cfg = cfg.each_line.to_a[3..-1].join
+      cfg.gsub! /^: [^\n]*\n/, ''
+      # backup any xml referenced in the configuration.
+      anyconnect_profiles = cfg.scan(Regexp.new('(\sdisk0:/.+\.xml)')).flatten
+      anyconnect_profiles.each do |profile|
+        cfg << (comment profile + "\n")
+        cmd ("more" + profile) do |xml|
+          cfg << (comment xml)
+        end
+      end
+      # if DAP is enabled, also backup dap.xml
+      if cfg.rindex(/dynamic-access-policy-record\s(?!DfltAccessPolicy)/)
+        cfg << (comment "disk0:/dap.xml\n")
+        cmd "more disk0:/dap.xml" do |xml|
+          cfg << (comment xml)
+        end
+      end
+      cfg
+    end
+  end
+
+  def multiple_context
+    # Multiple context mode
+    cmd 'changeto system' do |cfg|
+      cmd 'show running-config' do |systemcfg|
+        allcfg = "\n\n" + systemcfg + "\n\n"
+        contexts = systemcfg.scan(/^context (\S+)$/)
+        files = systemcfg.scan(/config-url (\S+)$/)
+        contexts.each_with_index do |cont, i|
+          allcfg = allcfg + "\n\n----------========== [ CONTEXT " + cont.join(" ") + " FILE " + files[i].join(" ") + " ] ==========----------\n\n"
+          cmd "more " + files[i].join(" ") do |cfgcontext|
+            allcfg = allcfg + "\n\n" + cfgcontext
+          end
+        end
+        cfg = allcfg
+      end
+      cfg
+    end
+  end
 end

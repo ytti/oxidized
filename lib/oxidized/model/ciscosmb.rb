@@ -1,6 +1,5 @@
 class CiscoSMB < Oxidized::Model
-
-  # Cisco Small Business 200, 300, 500, and ESW2 series switches
+  # Cisco Small Business 300, 500, and ESW2 series switches
   # http://www.cisco.com/c/en/us/support/switches/small-business-300-series-managed-switches/products-release-notes-list.html
 
   prompt /^\r?([\w.@()-]+[#>]\s?)$/
@@ -16,10 +15,20 @@ class CiscoSMB < Oxidized::Model
   cmd :secret do |cfg|
     cfg.gsub! /^(snmp-server community).*/, '\\1 <configuration removed>'
     cfg.gsub! /username (\S+) privilege (\d+) (\S+).*/, '<secret hidden>'
+    cfg.gsub! /^(encrypted radius-server key).*/, '\\1 <configuration removed>'
+    cfg.gsub! /System Up Time.*/, ''
     cfg
   end
 
   cmd 'show version' do |cfg|
+    comment cfg
+  end
+
+  cmd 'show system' do |cfg|
+    comment cfg
+  end
+
+  cmd 'show bootvar' do |cfg|
     comment cfg
   end
 
@@ -39,8 +48,7 @@ class CiscoSMB < Oxidized::Model
     post_login 'terminal datadump' # Disable pager
     post_login 'terminal width 0'
     post_login 'terminal len 0'
-    pre_logout 'exit' #exit returns to previous priv level, no way to quit from exec(#)
+    pre_logout 'exit' # exit returns to previous priv level, no way to quit from exec(#)
     pre_logout 'exit'
   end
-
 end

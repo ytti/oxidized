@@ -1,9 +1,8 @@
 class IPOS < Oxidized::Model
-
   # Ericsson SSR (IPOS)
   # Redback SE (SEOS)
 
-  prompt /^([\[\]\w.@-]+[#>]\s?)$/
+  prompt /^([\[\]\w.@-]+[#:>]\s?)$/
   comment '! '
 
   cmd 'show chassis' do |cfg|
@@ -52,10 +51,15 @@ class IPOS < Oxidized::Model
 
   cfg :telnet, :ssh do
     post_login 'terminal length 0'
+    if vars :enable
+      post_login do
+        cmd "enable"
+        cmd vars(:enable)
+      end
+    end
     pre_logout do
       send "exit\n"
       send "n\n"
     end
   end
-
 end

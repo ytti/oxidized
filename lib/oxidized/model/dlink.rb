@@ -11,10 +11,11 @@ class Dlink < Oxidized::Model
   end
 
   cmd :all do |cfg|
-    cfg.each_line.to_a[2..-2].map{|line|line.delete("\r").rstrip}.join("\n") + "\n"
+    cfg.each_line.to_a[2..-2].map { |line| line.delete("\r").rstrip }.join("\n") + "\n"
   end
 
   cmd 'show switch' do |cfg|
+    cfg.gsub! /^System\ Uptime\s.+/, '' # Omit constantly changing uptime info
     comment cfg
   end
 
