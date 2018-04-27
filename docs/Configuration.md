@@ -214,3 +214,13 @@ next_adds_job: true
 ```
 
 This will allow for a more timely fetch of the device configuration.
+
+## Disabling DNS resolution
+
+In some instances it might not be desirable to attempt to resolve names of nodes. One such use case is when nodes are accessed through an SSH proxy, where the remote end resolves the names differently than the host on which Oxidized runs would.
+
+Names can instead be passed verbatim to the input:
+
+```yaml
+resolve_dns: false
+```
