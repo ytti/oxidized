@@ -102,7 +102,7 @@ class Net::Telnet
     rest = ''
     until prompt === line and not IO::select([@sock], nil, nil, waittime)
       unless IO::select([@sock], nil, nil, time_out)
-        raise TimeoutError, "timed out while waiting for more data"
+        raise Timeout::Error, "timed out while waiting for more data"
       end
       begin
         c = @sock.readpartial(1024 * 1024)
