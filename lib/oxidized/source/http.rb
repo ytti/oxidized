@@ -15,7 +15,7 @@ module Oxidized
     require "uri"
     require "json"
 
-    def load
+    def load node_want = nil
       nodes = []
       uri = URI.parse(@cfg.url)
       http = Net::HTTP.new(uri.host, uri.port)
@@ -28,7 +28,11 @@ module Oxidized
         headers[header] = value
       end
 
-      request = Net::HTTP::Get.new(uri.request_uri, headers)
+      req_uri = uri.request_uri
+      if node_want
+        req_uri = "#{req_uri}/#{node_want}"
+      end
+      request = Net::HTTP::Get.new(req_uri, headers)
       if (@cfg.user? && @cfg.pass?)
         request.basic_auth(@cfg.user, @cfg.pass)
       end
