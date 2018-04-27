@@ -34,7 +34,7 @@ describe Oxidized::SSH do
                                                               proxy:     proxy,
                                                               password: 'armud',
                                                               number_of_password_prompts: 0,
-                                                              auth_methods: ['none', 'publickey', 'password'])
+                                                              auth_methods: %w[none publickey password])
 
       ssh.instance_variable_set("@exec", true)
       ssh.connect(@node)
