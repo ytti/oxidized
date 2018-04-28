@@ -3,7 +3,7 @@ class AEN < Oxidized::Model
 
   comment '# '
 
-  prompt /^([-\w.\/:?\[\]\(\)]+:\s?)$/
+  prompt /^([-\w.\/:?\[\]()]+:\s?)$/
 
   cmd 'configuration generate-script module all' do |cfg|
     cfg

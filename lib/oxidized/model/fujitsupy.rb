@@ -1,5 +1,5 @@
 class FujitsuPY < Oxidized::Model
-  prompt /^(\([\w.-]*\)\s#|^\S+\#\s)$/
+  prompt /^(\([\w.-]*\)\s#|^\S+#\s)$/
   comment  '! '
 
   cmd :all do |cfg|
@@ -16,7 +16,7 @@ class FujitsuPY < Oxidized::Model
   cmd 'show system information' do |cfg|
     cfg.gsub! /^Current-time : [\w\s:]*$/, ''
     cfg.gsub! /^(\s{33}\^)$/, ''
-    cfg.gsub! /^(\% Invalid input detected at '\^' marker.)$/, ''
+    cfg.gsub! /^(% Invalid input detected at '\^' marker.)$/, ''
     comment cfg
   end
 

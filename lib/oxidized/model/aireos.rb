@@ -3,7 +3,7 @@ class Aireos < Oxidized::Model
   # Used in Cisco WLC 5500
 
   comment '# ' # this complains too, can't find real comment char
-  prompt /^\([^\)]+\)\s>/
+  prompt /^\([^)]+\)\s>/
 
   cmd :all do |cfg|
     cfg.each_line.to_a[1..-2].join

@@ -36,11 +36,11 @@ class ACSW < Oxidized::Model
     cfg = cfg.each_line.to_a[3..-1]
     cfg = cfg.reject { |line| line.match /^ntp clock-period / }.join
     cfg.gsub! /^Current configuration : [^\n]*\n/, ''
-    cfg.gsub! /^\ tunnel\ mpls\ traffic-eng\ bandwidth[^\n]*\n*(
-                  (?:\ [^\n]*\n*)*
-                  tunnel\ mpls\ traffic-eng\ auto-bw)/mx, '\1'
-    cfg.gsub! /^([\s\t\!]*Last configuration change ).*/, ''
-    cfg.gsub! /^([\s\t\!]*NVRAM config last ).*/, ''
+    cfg.gsub! /^ tunnel mpls traffic-eng bandwidth[^\n]*\n*(
+                  (?: [^\n]*\n*)*
+                  tunnel mpls traffic-eng auto-bw)/mx, '\1'
+    cfg.gsub! /^([\s\t!]*Last configuration change ).*/, ''
+    cfg.gsub! /^([\s\t!]*NVRAM config last ).*/, ''
     cfg
   end
 

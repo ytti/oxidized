@@ -1,7 +1,7 @@
 class Edgeos < Oxidized::Model
   # EdgeOS #
 
-  prompt /\@.*?\:~\$\s/
+  prompt /@.*?:~\$\s/
 
   cmd :all do |cfg|
     cfg = cfg.lines.to_a[1..-2].join

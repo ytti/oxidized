@@ -36,9 +36,9 @@ class CiscoSMB < Oxidized::Model
     cfg = cfg.each_line.to_a[0..-1].join
     cfg.gsub! /^Current configuration : [^\n]*\n/, ''
     cfg.sub! /^(ntp clock-period).*/, '! \1'
-    cfg.gsub! /^\ tunnel\ mpls\ traffic-eng\ bandwidth[^\n]*\n*(
-                  (?:\ [^\n]*\n*)*
-                  tunnel\ mpls\ traffic-eng\ auto-bw)/mx, '\1'
+    cfg.gsub! /^ tunnel mpls traffic-eng bandwidth[^\n]*\n*(
+                  (?: [^\n]*\n*)*
+                  tunnel mpls traffic-eng auto-bw)/mx, '\1'
     cfg
   end
 
