@@ -1,5 +1,5 @@
 class Hirschmann < Oxidized::Model
-  prompt /^[(\w\s\w)]+\s[>|#]+?$/
+  prompt /^[(\w\s)]+\s[>|#]+?$/
 
   comment '## '
 
