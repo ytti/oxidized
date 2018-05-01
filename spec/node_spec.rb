@@ -41,6 +41,28 @@ describe Oxidized::Node do
       status, = @node.run
       status.must_equal :success
     end
+    it 'should record the success' do
+      stub_oxidized_ssh
+
+      before_successes = @node.stats.get(:success_count)
+      j = Oxidized::Job.new @node
+      j.join
+      @node.stats.add j
+      after_successes = @node.stats.get(:success_count)
+      successes = after_successes - before_successes
+      successes.must_equal 1
+    end
+    it 'should record a failure' do
+      stub_oxidized_ssh_fail
+
+      before_fails = @node.stats.get(:failure_count)
+      j = Oxidized::Job.new @node
+      j.join
+      @node.stats.add j
+      after_fails = @node.stats.get(:failure_count)
+      fails = after_fails - before_fails
+      fails.must_equal 1
+    end
   end
 
   describe '#repo' do
