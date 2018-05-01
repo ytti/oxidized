@@ -127,6 +127,7 @@
   * [OneOS](/lib/oxidized/model/oneos.rb)
 * Opengear
   * [Opengear](/lib/oxidized/model/opengear.rb)
+* [OpenWRT](/lib/oxidized/model/openwrt.rb)
 * [OPNsense](/lib/oxidized/model/opnsense.rb)
 * Palo Alto
   * [PANOS](/lib/oxidized/model/panos.rb)

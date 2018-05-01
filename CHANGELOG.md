@@ -1,5 +1,9 @@
 # Changelog
 
+## Master
+
+* FEATURE: openwrt model (@z00nx)
+
 ## 0.21.0
 
 * FEATURE: routeros include system history (@InsaneSplash)
