@@ -18,7 +18,7 @@ Following configuration keys need to be defined for all hooks:
 
 ## Hook type: exec
 
-The `exec` hook type allows users to run an arbitrary shell command or a binary when triggered.
+The `exec` hook type allows users to run an arbitrary shell command or a binary when triggered. The config diff may optionally be piped to standard input of such command.
 
 The command is executed on a separate child process either in synchronous or asynchronous fashion. Non-zero exit values cause errors to be logged. STDOUT and STDERR are currently not collected.
 
@@ -43,6 +43,7 @@ Exec hook recognizes the following configuration keys:
 * `timeout`: hard timeout (in seconds) for the command execution. SIGTERM will be sent to the child process after the timeout has elapsed. Default: `60`
 * `async`: Execute the command in an asynchronous fashion. The main thread by default will wait for the hook command execution to complete. Set this to `true` for long running commands so node configuration pulls are not blocked. Default: `false`
 * `cmd`: command to run.
+* `diff`: Pipe the config diff to STDIN of the command being executed. Only applies to post\_store events. Default: `false`
 
 ### exec hook configuration example
 
@@ -57,6 +58,13 @@ hooks:
     events: [post_store, node_fail]
     cmd: 'echo "Doing long running stuff for $OX_NODE_NAME" >> /tmp/ox_node_stuff.log; sleep 60'
     async: true
+    timeout: 120
+  name_for_example_hook_with_pipe:
+    type: exec
+    events: [post_store]
+    cmd: 'cat /dev/stdin >> /tmp/test_diff.txt'
+    async: true
+    diff: true
     timeout: 120
 ```
 
