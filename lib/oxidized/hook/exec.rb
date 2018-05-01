@@ -5,6 +5,7 @@ class Exec < Oxidized::Hook
     super
     @timeout = 60
     @async = false
+    @diff = false
   end
 
   def validate_cfg!
@@ -19,6 +20,10 @@ class Exec < Oxidized::Hook
       @async = !!cfg.async
     end
 
+    if cfg.has_key? "diff"
+      @diff = !!cfg.diff
+    end
+
     if cfg.has_key? "cmd"
       @cmd = cfg.cmd
       raise "invalid cmd value" unless @cmd.is_a?(String) || @cmd.is_a?(Array)
@@ -30,10 +35,18 @@ class Exec < Oxidized::Hook
 
   def run_hook ctx
     env = make_env ctx
+    diffdata = nil
     log "Execute: #{@cmd.inspect}", :debug
+    if @diff && ctx.node && ctx.event.to_s == "post_store"
+      diffoutput = ctx.node.output.new
+      if diffoutput.respond_to?('get_diff')
+        diffraw = diffoutput.get_diff ctx.node, ctx.node.group, ctx.commitref, nil
+        diffdata = diffraw[:patch].lines.to_a[4..-1].join
+      end
+    end
     th = Thread.new do
       begin
-        run_cmd! env
+        run_cmd! env, diffdata
       rescue => e
         raise e unless @async
       end
@@ -41,10 +54,19 @@ class Exec < Oxidized::Hook
     th.join unless @async
   end
 
-  def run_cmd! env
+  def run_cmd! env, diffdata
     pid, status = nil, nil
     Timeout.timeout(@timeout) do
-      pid = spawn env, @cmd, :unsetenv_others => true
+      if diffdata
+        IO.popen env, @cmd, "r+", :unsetenv_others => true do |phandle|
+          pid = phandle.pid
+          phandle.puts diffdata
+          phandle.close_write
+          puts phandle.gets
+        end
+      else
+        pid = spawn env, @cmd, :unsetenv_others => true
+      end
       pid, status = wait2 pid
       unless status.exitstatus.zero?
         msg = "#{@cmd.inspect} failed with exit value #{status.exitstatus}"
