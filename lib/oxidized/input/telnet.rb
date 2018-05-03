@@ -10,15 +10,15 @@ module Oxidized
       @node    = node
       @timeout = Oxidized.config.timeout
       @node.model.cfg['telnet'].each { |cb| instance_exec(&cb) }
+      @log = File.open(Oxidized::Config::Log + "/#{@node.ip}-telnet", 'w') if Oxidized.config.input.debug?
       port = vars(:telnet_port) || 23
 
-      opt = { 'Host'    => @node.ip,
-              'Port'    => port.to_i,
-              'Timeout' => @timeout,
-              'Model'   => @node.model }
-      opt['Output_log'] = Oxidized::Config::Log + "/#{@node.ip}-telnet" if Oxidized.config.input.debug?
+      telnet_opts = { 'Host'    => @node.ip,
+                      'Port'    => port.to_i,
+                      'Timeout' => @timeout,
+                      'Model'   => @node.model }
 
-      @telnet = Net::Telnet.new opt
+      @telnet = Net::Telnet.new telnet_opts
       if @node.auth[:username] and @node.auth[:username].length > 0
         expect username
         @telnet.puts @node.auth[:username]
@@ -62,6 +62,9 @@ module Oxidized
         disconnect_cli
         @telnet.close
       rescue Errno::ECONNRESET
+      ensure
+        @log.close if Oxidized.config.input.debug?
+        (@telnet.close rescue true) unless @telnet.closed?
       end
     end
   end
@@ -137,7 +140,10 @@ class Net::Telnet
             buf.gsub!(/#{EOL}/no, "\n")
           end
         end
-        @log.print(buf) if @options.has_key?("Output_log")
+        if Oxidized.config.input.debug?
+          @log.print buf
+          @log.flush
+        end
         line += buf
         line = model.expects line
         line = yield line if block_given?
