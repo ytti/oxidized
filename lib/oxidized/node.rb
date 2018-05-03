@@ -125,6 +125,10 @@ module Oxidized
       @retry = 0
     end
 
+    def is_lockedout?
+      Oxidized.logger.debug "node.rb: Checking for lockout on node [%s] %s/%s" % [self.name, Oxidized.config.lockout_directory, self.ip]
+      File.exist?(File.join(Oxidized.config.lockout_directory, self.ip))
+    end
     private
 
     def resolve_prompt opt
