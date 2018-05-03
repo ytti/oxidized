@@ -42,9 +42,9 @@ module Oxidized
       node.stats.add job
       @jobs.duration job.time
       node.running = false
-      @jobs_done += 1 # needed for worker_done event
 
       if job.status == :success
+        @jobs_done += 1 # needed for :nodes_done hook
         Oxidized.Hooks.handle :node_success, :node => node,
                                              :job => job
         msg = "update #{node.name}"
@@ -59,6 +59,8 @@ module Oxidized
                                              :commitref => output.commitref
         end
         node.reset
+      elsif job.status == :locked
+          @jobs_done += 1
       else
         msg = "#{node.name} status #{job.status}"
         if node.retry < Oxidized.config.retries
@@ -66,6 +68,11 @@ module Oxidized
           msg += ", retry attempt #{node.retry}"
           @nodes.next node.name
         else
+          # Only increment the @jobs_done when we give up retries for a node (or success).
+          # As it would otherwise cause @jobs_done to be incremented with generic retries.
+          # This would cause :nodes_done hook to desync from running at the end of the nodelist and
+          # be fired when the @jobs_done > @nodes.count (could be mid-cycle on the next cycle).
+          @jobs_done += 1
           msg += ", retries exhausted, giving up"
           node.retry = 0
           Oxidized.Hooks.handle :node_fail, :node => node,
