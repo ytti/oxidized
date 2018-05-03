@@ -214,3 +214,35 @@ next_adds_job: true
 ```
 
 This will allow for a more timely fetch of the device configuration.
+
+
+## Node Lockout / Node Skip
+
+Sometimes it is helpful to temporarily prevent oxidized from polling a node without reloading the node source list or restarting the oxidized process.
+
+This can be accomplished by creating a lockfile with the node IP address as the filename in the `lockout_directory`. By default this is `~/.config/oxidized/lockout`. The contents of the file are not used by oxidized - just the existence of the file with the IP address of a node will prevent the node from being polled.
+
+This allows oxidized to skip polling of any nodes that may be down for an extended period of time or otherwise syncronized with external systems to prevent polling by having these systems create the lockout file.
+
+Example with linux/unix environments for a node with an IP address of `192.168.1.15` (as the oxidized user):
+
+```shell
+$ touch ~/.config/oxidized/lockout/192.168.1.15
+```
+
+The directory of the lockfiles can be adjusted within the global configuration section in your oxidized configuration file. As an example, to change the lockfile location to `/other/directory/name`:
+
+```yaml
+lockout_directory: /other/directory/name
+```
+
+Care should be taken to make sure that you only set the `lockout_directory` to a location where the permissions prevent unwanted lockfiles from being created or lockfiles from being removed.
+
+When you are ready to resume normal polling on the node - simply remove the lock file (as the oxidized user):
+
+```shell
+$ rm ~/.config/oxidized/lockout/192.168.1.15
+```
+
+The node will then be polled as normal during the next polling cycle.
+

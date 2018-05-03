@@ -40,6 +40,9 @@ module Oxidized
       asetus.default.input.ftp.passive  = true  # ftp passive mode
       asetus.default.input.utf8_encoded = true  # configuration is utf8 encoded or ascii-8bit
 
+      # Where we check for locks on a device by IP address
+      asetus.default.lockout_directory  = File.join(Oxidized::Config::Root, 'lockout')
+
       asetus.default.output.default = 'file'  # file, git
       asetus.default.source.default = 'csv'   # csv, sql
 

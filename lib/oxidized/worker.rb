@@ -59,6 +59,8 @@ module Oxidized
                                              :commitref => output.commitref
         end
         node.reset
+      elsif job.status == :locked
+          @jobs_done += 1
       else
         msg = "#{node.name} status #{job.status}"
         if node.retry < Oxidized.config.retries
