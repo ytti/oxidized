@@ -117,19 +117,13 @@ module Oxidized
     # some models have SSH auth or terminal auth based on version of code
     # if SSH is configured for terminal auth, we'll still try to detect prompt
     def login
-      if @username
-        match = expect username, @node.prompt
-        if match == username
-          cmd @node.auth[:username], password
-          cmd @node.auth[:password]
-        end
-      elsif @password
-        match = expect password, @node.prompt
-        if match == password
-          cmd @node.auth[:password]
-        end
-      else
-        expect @node.prompt
+      match_re = [ @node.prompt ]
+      match_re << @username if @username
+      match_re << @password if @password
+      until (match=expect(match_re)) == @node.prompt
+        cmd(@node.auth[:username], nil) if match == @username
+        cmd(@node.auth[:password], nil) if match == @password
+        match_re.delete match
       end
     end
 
