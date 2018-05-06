@@ -5,6 +5,12 @@ class PfSense < Oxidized::Model
     cfg.each_line.to_a[1..-1].join
   end
 
+  cmd :secret do |cfg|
+    cfg.gsub! /(\s+<bcrypt-hash>)[^<]+(<\/bcrypt-hash>)/, '\\1<secret hidden>\\2'
+    cfg.gsub! /(\s+<password>)[^<]+(<\/password>)/, '\\1<secret hidden>\\2'
+    cfg
+  end
+
   cmd 'cat /cf/conf/config.xml' do |cfg|
     cfg.gsub! /\s<revision>\s*<time>\d*<\/time>\s*.*\s*.*\s*<\/revision>/, ''
     cfg.gsub! /\s<last_rule_upd_time>\d*<\/last_rule_upd_time>/, ''
