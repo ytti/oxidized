@@ -13,9 +13,7 @@ module Oxidized
       @node = node  
       @node.model.cfg['panos_http'].each { |cb| instance_exec(&cb) }  
       @log = File.open(Oxidized::Config::Log + "/#{@node.ip}-panos-http", 'w') if Oxidized.config.input.debug?  
-      # Don't use @node.ip here, because this will make Net::HTTP not send a  
-      # correct HOST header.  
-      @http = Net::HTTP.new(@node.name, vars(:https_port) || 443)
+      @http = Net::HTTP.new(@node.ip, vars(:https_port) || 443)
       @http.use_ssl = true  
       # TODO make this configurable, this is not desirable for every environment
       @http.verify_mode = OpenSSL::SSL::VERIFY_NONE
