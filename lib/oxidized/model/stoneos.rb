@@ -1,25 +1,19 @@
-class Stoneos < Oxidized::Model
-#Hillstone Networks StoneOS software
+class StoneOS < Oxidized::Model
+  # Hillstone Networks StoneOS software
 
   prompt /^\r?[\w.()-]+[#>](\s)?$/
   comment '# '
-  
+
   expect /^\s.*--More--.*$/ do |data, re|
-   send ' '
-   data.sub re, ''
+    send ' '
+    data.sub re, ''
   end
- 
+
   cmd :all do |cfg|
-    cfg = cfg.lines.to_a[1..-2].join
+    cfg.each_line.to_a[1..-2].join
   end
 
-  cmd :secret do |cfg|
-    cfg
-  end
-
-  cmd 'show configuration running' do |cfg|
-    cfg
-  end
+  cmd 'show configuration running'
 
   cmd 'show version' do |cfg|
     comment cfg
