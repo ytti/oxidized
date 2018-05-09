@@ -35,7 +35,7 @@ module Oxidized
 
       auth_methods = vars(:auth_methods) || %w(none publickey password)
       ssh_opts[:auth_methods] = auth_methods
-      Oxidized.logger.info "AUTH METHODS::#{auth_methods}"
+      Oxidized.logger.debug "AUTH METHODS::#{auth_methods}"
 
       if proxy_host = vars(:ssh_proxy)
         proxy_command =  "ssh "
