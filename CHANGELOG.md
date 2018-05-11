@@ -2,6 +2,7 @@
 
 ## Master
 
+* FEATURE: add enable to procurve model (@khobbits)
 * FEATURE: stoneos model (@macaty)
 * FEATURE: openwrt model (@z00nx)
 
