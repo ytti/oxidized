@@ -2,6 +2,7 @@
 
 ## Master
 
+* FEATURE: stoneos model (@macaty)
 * FEATURE: openwrt model (@z00nx)
 
 ## 0.21.0

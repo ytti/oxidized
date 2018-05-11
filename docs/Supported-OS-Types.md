@@ -95,6 +95,8 @@
   * [Broadband Network Platform Software](/lib/oxidized/model/gcombnps.rb)
 * Hatteras
   * [Hatteras](/lib/oxidized/model/hatteras.rb)
+* Hillstone Networks
+  * [StoneOS](/lib/oxidized/model/stoneos.rb)
 * Hirschmann
   * [HiOS](/lib/oxidized/model/hirschmann.rb)
 * HP
