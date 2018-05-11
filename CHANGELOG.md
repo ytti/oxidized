@@ -2,6 +2,7 @@
 
 ## Master
 
+* FEATURE: add enable to procurve model (@khobbits)
 * FEATURE: openwrt model (@z00nx)
 
 ## 0.21.0
