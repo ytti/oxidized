@@ -8,7 +8,7 @@ class DCNOS < Oxidized::Model
   comment '! '
 
   cmd :all do |cfg|
-    cfg.each_line.to_a[1..-1].join
+    cfg.cut_head
   end
 
   cmd 'show version' do |cfg|

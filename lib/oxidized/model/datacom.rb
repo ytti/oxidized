@@ -7,8 +7,7 @@ class DataCom < Oxidized::Model
   end
 
   cmd :all do |cfg|
-    cfg.each_line.to_a[1..-2].join
-    cfg.cut_head.cut_tail
+    cfg.cut_head.cut_head.cut_tail.cut_tail
   end
 
   cmd 'show firmware' do |cfg|
