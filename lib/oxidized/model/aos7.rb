@@ -6,7 +6,7 @@ class AOS7 < Oxidized::Model
 
   cmd :all do |cfg, cmdstring|
     new_cfg = comment "COMMAND: #{cmdstring}\n"
-    new_cfg << cfg.cut_head.cut_tail
+    new_cfg << cfg.cut_both
   end
 
   cmd 'show system' do |cfg|

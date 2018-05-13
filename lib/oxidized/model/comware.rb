@@ -15,7 +15,7 @@ class Comware < Oxidized::Model
     # cfg.gsub! /^.*\e\[42D/, ''        # example how to handle pager
     # skip rogue ^M
     cfg = cfg.gsub /\r/, ''
-    cfg.cut_head.cut_tail
+    cfg.cut_both
   end
 
   cmd :secret do |cfg|

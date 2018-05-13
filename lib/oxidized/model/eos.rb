@@ -6,7 +6,7 @@ class EOS < Oxidized::Model
   comment  '! '
 
   cmd :all do |cfg|
-    cfg.cut_head.cut_tail
+    cfg.cut_both
   end
 
   cmd :secret do |cfg|

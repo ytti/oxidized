@@ -17,7 +17,7 @@ class Hatteras < Oxidized::Model
   end
 
   cmd :all do |cfg|
-    cfg.cut_head.cut_tail
+    cfg.cut_both
   end
 
   cmd "show switch\r" do |cfg|

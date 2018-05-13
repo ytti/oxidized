@@ -8,7 +8,7 @@ class Cumulus < Oxidized::Model
   end
 
   cmd :all do |cfg|
-    cfg.cut_head.cut_tail
+    cfg.cut_both
   end
 
   # show the persistent configuration

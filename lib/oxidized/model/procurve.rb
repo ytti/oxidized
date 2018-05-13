@@ -26,7 +26,7 @@ class Procurve < Oxidized::Model
   end
 
   cmd :all do |cfg|
-    cfg = cfg.cut_head.cut_tail
+    cfg = cfg.cut_both
     cfg = cfg.gsub /^\r/, ''
   end
 

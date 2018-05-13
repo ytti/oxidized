@@ -3,7 +3,7 @@ class FujitsuPY < Oxidized::Model
   comment  '! '
 
   cmd :all do |cfg|
-    cfg.cut_head.cut_tail
+    cfg.cut_both
   end
 
   # 1Gbe switch

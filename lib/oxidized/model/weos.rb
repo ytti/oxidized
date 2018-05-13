@@ -4,7 +4,7 @@ class WEOS < Oxidized::Model
   prompt /^(\s[\w.@-]+[#>]\s?)$/
 
   cmd :all do |cfg|
-    cfg.cut_head.cut_tail
+    cfg.cut_both
   end
 
   cmd 'show running-config' do |cfg|

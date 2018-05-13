@@ -13,7 +13,7 @@ class AOSW < Oxidized::Model
   prompt /^\(?.+\)?\s[#>]/
 
   cmd :all do |cfg|
-    cfg.cut_head.cut_tail
+    cfg.cut_both
   end
 
   cmd :secret do |cfg|

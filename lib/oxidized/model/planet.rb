@@ -18,7 +18,7 @@ class Planet < Oxidized::Model
   cmd :all do |cfg|
     # cfg.gsub! /\cH+\s{8}/, ''         # example how to handle pager
     # cfg.gsub! /\cH+/, ''              # example how to handle pager
-    cfg.cut_head.cut_tail
+    cfg.cut_both
   end
 
   cmd :secret do |cfg|

@@ -2,7 +2,7 @@ class Netonix < Oxidized::Model
   prompt /^[\w\s.@_\/:-]+#/
 
   cmd :all do |cfg|
-    cfg.cut_head.cut_tail
+    cfg.cut_both
   end
 
   cmd 'cat config.json;echo'

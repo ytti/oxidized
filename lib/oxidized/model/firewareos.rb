@@ -3,7 +3,7 @@ class FirewareOS < Oxidized::Model
   comment  '-- '
 
   cmd :all do |cfg|
-    cfg.cut_head.cut_tail
+    cfg.cut_both
   end
 
   # Handle Logon Disclaimer added in XTM 11.9.3

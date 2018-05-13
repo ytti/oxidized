@@ -6,7 +6,7 @@ class Aireos < Oxidized::Model
   prompt /^\([^\)]+\)\s>/
 
   cmd :all do |cfg|
-    cfg.cut_head.cut_tail
+    cfg.cut_both
   end
 
   # show sysinfo?

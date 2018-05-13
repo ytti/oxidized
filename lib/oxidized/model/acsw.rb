@@ -4,7 +4,7 @@ class ACSW < Oxidized::Model
 
   cmd :all do |cfg|
     cfg.gsub! /^% Invalid input detected at '\^' marker\.$|^\s+\^$/, ''
-    cfg.cut_head.cut_tail
+    cfg.cut_both
   end
 
   cmd :secret do |cfg|

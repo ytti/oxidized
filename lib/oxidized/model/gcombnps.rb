@@ -22,7 +22,7 @@ class GcomBNPS < Oxidized::Model
 
   cmd :all do |cfg|
     cfg = cfg.gsub " \e[73D\e[K", '' # remove garbage remaining from the pager
-    cfg.cut_head.cut_tail
+    cfg.cut_both
   end
 
   cmd :secret do |cfg|
