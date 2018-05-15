@@ -1,7 +1,7 @@
 class HPEBladeVCModul < Oxidized::Model
   # HPE Virtual Connect Module
   
-  prompt /^->/  
+  prompt /^->/
   comment '### '
   
   cmd :all do |cfg|
