@@ -1,0 +1,20 @@
+class HPEBladeVCModul < Oxidized::Model
+  # HPE Virtual Connect Module
+  prompt /^->/  
+  comment '# '
+  
+  cmd :all do |cfg|
+    cfg = cfg.each_line.to_a[1..-2].join
+    cfg = cfg.gsub /^\r/, ''
+  end
+  
+  cmd 'show config'
+  
+  cfg :telnet do
+    username /\slogin:/
+    password /^Password: /
+  end
+  cfg :ssh do
+    pre_logout "exit"
+  end
+end
