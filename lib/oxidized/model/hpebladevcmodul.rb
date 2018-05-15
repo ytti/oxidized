@@ -1,7 +1,8 @@
 class HPEBladeVCModul < Oxidized::Model
   # HPE Virtual Connect Module
+  
   prompt /^->/  
-  comment '# '
+  comment '### '
   
   cmd :all do |cfg|
     cfg = cfg.each_line.to_a[1..-2].join
