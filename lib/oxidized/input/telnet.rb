@@ -16,7 +16,8 @@ module Oxidized
       telnet_opts = { 'Host'    => @node.ip,
                       'Port'    => port.to_i,
                       'Timeout' => @timeout,
-                      'Model'   => @node.model }
+                      'Model'   => @node.model,
+                      'Log'     => @log }
 
       @telnet = Net::Telnet.new telnet_opts
       if @node.auth[:username] and @node.auth[:username].length > 0
@@ -64,7 +65,7 @@ module Oxidized
       rescue Errno::ECONNRESET
       ensure
         @log.close if Oxidized.config.input.debug?
-        (@telnet.close rescue true) unless @telnet.closed?
+        (@telnet.close rescue true) unless @telnet.sock.closed?
       end
     end
   end
@@ -80,6 +81,7 @@ class Net::Telnet
     waittime = @options["Waittime"]
     fail_eof = @options["FailEOF"]
     model    = @options["Model"]
+    @log     = @options["Log"]
 
     if options.kind_of?(Hash)
       prompt   = if options.has_key?("Match")
