@@ -65,7 +65,7 @@ module Oxidized
       rescue Errno::ECONNRESET
       ensure
         @log.close if Oxidized.config.input.debug?
-        (@telnet.close rescue true) unless @telnet.closed?
+        (@telnet.close rescue true) unless @telnet.sock.closed?
       end
     end
   end
