@@ -14,7 +14,7 @@ class FortiOS < Oxidized::Model
   end
 
   cmd :secret do |cfg|
-    cfg.gsub! /(set (?:passwd|password|psksecret|secret|key|group-password|secondary-secret|tertiary-secret|auth-password-l1|auth-password-l2|rsso|history0|history1|inter-controller-key ENC|passphrase ENC|login-passwd ENC)).*/, '\\1 <configuration removed>'
+    cfg.gsub! /(set (?:passwd|password|psksecret|secret|key|group-password|secondary-secret|tertiary-secret|auth-password-l1|auth-password-l2|rsso|history0|history1|inter-controller-key ENC|passphrase ENC|login-passwd ENC|auth-pwd ENC|priv-pwd ENC)).*/, '\\1 <configuration removed>'
     cfg.gsub! /(set private-key).*-+END ENCRYPTED PRIVATE KEY-*"$/m, '\\1 <configuration removed>'
     cfg.gsub! /(set ca ).*-+END CERTIFICATE-*"$/m, '\\1 <configuration removed>'
     cfg.gsub! /(set csr ).*-+END CERTIFICATE REQUEST-*"$/m, '\\1 <configuration removed>'
