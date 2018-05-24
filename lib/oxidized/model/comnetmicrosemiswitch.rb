@@ -1,4 +1,4 @@
-class Comnet < Oxidized::Model
+class ComnetMicrosemiSwitch < Oxidized::Model
 
   prompt /^\r?([\w.@()-]+[#>]\s?)$/
   comment  '! '
