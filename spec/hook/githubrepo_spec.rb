@@ -3,11 +3,11 @@ require 'rugged'
 require 'oxidized/hook/githubrepo'
 
 describe GithubRepo do
-  let(:credentials) { mock() }
-  let(:remote) { mock() }
-  let(:remotes) { mock() }
-  let(:repo_head) { mock() }
-  let(:repo) { mock() }
+  let(:credentials) { mock }
+  let(:remote) { mock }
+  let(:remotes) { mock }
+  let(:repo_head) { mock }
+  let(:repo) { mock }
   let(:gr) { GithubRepo.new }
 
   before do
@@ -32,7 +32,7 @@ describe GithubRepo do
   describe "#fetch_and_merge_remote" do
     before(:each) do
       Oxidized.config.hooks.github_repo_hook.remote_repo = 'git@github.com:username/foo.git'
-      Rugged::Credentials::SshKeyFromAgent.expects(:new).with(username: 'git').returns(credentials)
+      Proc.expects(:new).returns(credentials)
       repo_head.expects(:name).returns('refs/heads/master')
       gr.cfg = Oxidized.config.hooks.github_repo_hook
     end
@@ -44,15 +44,15 @@ describe GithubRepo do
       gr.fetch_and_merge_remote(repo).must_equal nil
     end
     describe "when there is update considering conflicts" do
-      let(:merge_index) { mock() }
-      let(:their_branch) { mock() }
+      let(:merge_index) { mock }
+      let(:their_branch) { mock }
 
       before(:each) do
-        repo.expects(:fetch).with('origin', ['refs/heads/master'], credentials: credentials).returns({total_deltas: 1})
+        repo.expects(:fetch).with('origin', ['refs/heads/master'], credentials: credentials).returns(total_deltas: 1)
         their_branch.expects(:target_id).returns(1)
         repo_head.expects(:target_id).returns(2)
         repo.expects(:merge_commits).with(2, 1).returns(merge_index)
-        repo.expects(:branches).returns({"origin/master" => their_branch})
+        repo.expects(:branches).returns("origin/master" => their_branch)
       end
 
       it "should not try merging when there's conflict" do
@@ -70,12 +70,11 @@ describe GithubRepo do
         repo_head.expects(:target).returns("our_target")
         merge_index.expects(:write_tree).with(repo).returns("tree")
         merge_index.expects(:conflicts?).returns(false)
-        Rugged::Commit.expects(:create).with(repo, {
-          parents: ["our_target", "their_target"],
-          tree: "tree",
-          message: "Merge remote-tracking branch 'origin/master'",
-          update_ref: "HEAD"
-        }).returns(1)
+        Rugged::Commit.expects(:create).with(repo,
+                                             parents: ["our_target", "their_target"],
+                                             tree: "tree",
+                                             message: "Merge remote-tracking branch 'origin/master'",
+                                             update_ref: "HEAD").returns(1)
         gr.fetch_and_merge_remote(repo).must_equal 1
       end
     end
@@ -89,6 +88,7 @@ describe GithubRepo do
     end
 
     before do
+      Proc.expects(:new).returns(credentials)
       repo_head.expects(:name).twice.returns('refs/heads/master')
       repo.expects(:head).twice.returns(repo_head)
       repo.expects(:path).returns('/foo.git')
@@ -100,7 +100,7 @@ describe GithubRepo do
         Oxidized.config.output.git.repo = '/foo.git'
         remote.expects(:url).returns('https://github.com/username/foo.git')
         remote.expects(:push).with(['refs/heads/master'], credentials: credentials).returns(true)
-        repo.expects(:remotes).returns({'origin' => remote})
+        repo.expects(:remotes).returns('origin' => remote)
         Rugged::Repository.expects(:new).with('/foo.git').returns(repo)
       end
 
@@ -108,14 +108,14 @@ describe GithubRepo do
         Oxidized.config.hooks.github_repo_hook.remote_repo = 'https://github.com/username/foo.git'
         Oxidized.config.hooks.github_repo_hook.username = 'username'
         Oxidized.config.hooks.github_repo_hook.password = 'password'
-        Rugged::Credentials::UserPassword.expects(:new).with(username: 'username', password: 'password').returns(credentials)
+        Proc.expects(:new).returns(credentials)
         gr.cfg = Oxidized.config.hooks.github_repo_hook
         gr.run_hook(ctx).must_equal true
       end
 
       it "will push to the remote repository using ssh" do
         Oxidized.config.hooks.github_repo_hook.remote_repo = 'git@github.com:username/foo.git'
-        Rugged::Credentials::SshKeyFromAgent.expects(:new).with(username: 'git').returns(credentials)
+        Proc.expects(:new).returns(credentials)
         gr.cfg = Oxidized.config.hooks.github_repo_hook
         gr.run_hook(ctx).must_equal true
       end
@@ -125,7 +125,7 @@ describe GithubRepo do
       let(:group) { 'ggrroouupp' }
 
       before do
-        Rugged::Credentials::SshKeyFromAgent.expects(:new).with(username: 'git').returns(credentials)
+        Proc.expects(:new).returns(credentials)
         Rugged::Repository.expects(:new).with(repository).returns(repo)
 
         repo.expects(:remotes).twice.returns(remotes)

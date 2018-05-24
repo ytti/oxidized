@@ -24,20 +24,24 @@ module Oxidized
       secure = Oxidized.config.input.ssh.secure
       @log = File.open(Oxidized::Config::Log + "/#{@node.ip}-ssh", 'w') if Oxidized.config.input.debug?
       port = vars(:ssh_port) || 22
-      
+
       ssh_opts = {
-                :port => port.to_i,
-                :password => @node.auth[:password], :timeout => Oxidized.config.timeout,
-                :paranoid => secure,
-                :auth_methods => %w(none publickey password keyboard-interactive),
-                :number_of_password_prompts => 0,
-        }
+        port:         port.to_i,
+        paranoid:     secure,
+        keepalive:    true,
+        password:     @node.auth[:password], :timeout => Oxidized.config.timeout,
+        number_of_password_prompts: 0,
+      }
+
+      auth_methods = vars(:auth_methods) || %w(none publickey password)
+      ssh_opts[:auth_methods] = auth_methods
+      Oxidized.logger.debug "AUTH METHODS::#{auth_methods}"
 
       if proxy_host = vars(:ssh_proxy)
         proxy_command =  "ssh "
         proxy_command += "-o StrictHostKeyChecking=no " unless secure
         proxy_command += "#{proxy_host} -W %h:%p"
-        proxy =  Net::SSH::Proxy::Command.new(proxy_command)
+        proxy = Net::SSH::Proxy::Command.new(proxy_command)
         ssh_opts[:proxy] = proxy
       end
 
@@ -52,7 +56,7 @@ module Oxidized
         begin
           login
         rescue Timeout::Error
-          raise PromptUndetect, [ @output, 'not matching configured prompt', @node.prompt ].join(' ')
+          raise PromptUndetect, [@output, 'not matching configured prompt', @node.prompt].join(' ')
         end
       end
       connected?
@@ -62,7 +66,7 @@ module Oxidized
       @ssh and not @ssh.closed?
     end
 
-    def cmd cmd, expect=node.prompt
+    def cmd cmd, expect = node.prompt
       Oxidized.logger.debug "lib/oxidized/input/ssh.rb #{cmd} @ #{node.name} with expect: #{expect.inspect}"
       if @exec
         @ssh.exec! cmd
@@ -100,7 +104,7 @@ module Oxidized
         ch.on_data do |_ch, data|
           if Oxidized.config.input.debug?
             @log.print data
-            @log.fsync
+            @log.flush
           end
           @output << data
           @output = @node.model.expects @output
@@ -117,19 +121,18 @@ module Oxidized
     # some models have SSH auth or terminal auth based on version of code
     # if SSH is configured for terminal auth, we'll still try to detect prompt
     def login
-      if @username
-        match = expect username, @node.prompt
-        if match == username
-          cmd @node.auth[:username], password
-          cmd @node.auth[:password]
-        end
-      else
-        expect @node.prompt
+      match_re = [@node.prompt]
+      match_re << @username if @username
+      match_re << @password if @password
+      until (match = expect(match_re)) == @node.prompt
+        cmd(@node.auth[:username], nil) if match == @username
+        cmd(@node.auth[:password], nil) if match == @password
+        match_re.delete match
       end
     end
 
-    def exec state=nil
-      state == nil ? @exec : (@exec=state) unless vars :ssh_no_exec
+    def exec state = nil
+      state == nil ? @exec : (@exec = state) unless vars :ssh_no_exec
     end
 
     def cmd_shell(cmd, expect_re)
@@ -152,6 +155,5 @@ module Oxidized
         end
       end
     end
-
   end
 end

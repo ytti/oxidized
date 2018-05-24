@@ -1,5 +1,4 @@
 class NetScaler < Oxidized::Model
-
   prompt /^\>\s*$/
   comment '# '
 
@@ -20,5 +19,4 @@ class NetScaler < Oxidized::Model
   cfg :ssh do
     pre_logout 'exit'
   end
-
 end

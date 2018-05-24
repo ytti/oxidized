@@ -1,8 +1,8 @@
 class Trango < Oxidized::Model
   # take a Trangolink sysinfo output and turn it into a configuration file
-  
+
   prompt /^#>\s?/
-  comment  '# '
+  comment '# '
 
   cmd 'sysinfo' do |cfg|
     out = []
@@ -47,16 +47,15 @@ class Trango < Oxidized::Model
       end
       if line.match /\[IP\] (\S+) \[Subnet Mask\] (\S+) \[Gateway\] (\S+)/
         out << "ipconfig " + Regexp.last_match[1] + ' ' +
-                              Regexp.last_match[2] + ' ' +
-                              Regexp.last_match[3]
+               Regexp.last_match[2] + ' ' +
+               Regexp.last_match[3]
       end
-    end 
+    end
     comments.push(*out).join "\n"
-  end 
+  end
 
   cfg :telnet do
     password /Password:/
     pre_logout 'exit'
   end
- 
 end

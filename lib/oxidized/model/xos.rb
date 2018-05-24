@@ -1,5 +1,4 @@
 class XOS < Oxidized::Model
-
   # Extreme Networks XOS
 
   prompt /^*?[\w .-]+# $/
@@ -8,7 +7,7 @@ class XOS < Oxidized::Model
   cmd :all do |cfg|
     # xos inserts leading \r characters and other trailing white space.
     # this deletes extraneous \r and trailing white space.
-    cfg.each_line.to_a[1..-2].map{|line|line.delete("\r").rstrip}.join("\n") + "\n"
+    cfg.each_line.to_a[1..-2].map { |line| line.delete("\r").rstrip }.join("\n") + "\n"
   end
 
   cmd 'show version' do |cfg|
@@ -23,11 +22,14 @@ class XOS < Oxidized::Model
     comment cfg
   end
 
-  cmd 'show switch'do |cfg|
+  cmd 'show switch' do |cfg|
     comment cfg.each_line.reject { |line| line.match /Time:/ or line.match /boot/i }.join
   end
 
-  cmd 'show configuration'
+  cmd 'show configuration' do |cfg|
+    cfg = cfg.each_line.reject { |line| line.match /^#(\s[\w]+\s)(Configuration generated)/ }.join
+    cfg
+  end
 
   cmd 'show policy detail' do |cfg|
     comment cfg
@@ -45,5 +47,4 @@ class XOS < Oxidized::Model
       send "n\n"
     end
   end
-
 end
