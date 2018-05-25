@@ -64,7 +64,7 @@
   * [8600](/lib/oxidized/model/coriant8600.rb)
   * [Groove](/lib/oxidized/model/coriantgroove.rb)
 * ComNet
-  * [ComNet Microsemi Switch](/lib/oxidized/model/comnetmicrosemiswitch.rb)
+  * [ComNet Microsemi Switch](/lib/oxidized/model/comnetms.rb)
 * Cumulus
   * [Linux](/lib/oxidized/model/cumulus.rb)
 * DataCom
