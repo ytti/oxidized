@@ -1,9 +1,8 @@
-class ARBOS  < Oxidized::Model
-
+class ARBOS < Oxidized::Model
   # Arbor OS model #
 
   prompt /^[\S\s]+\n([\w.@-]+[:\/#>]+)\s?$/
-  comment  '# '
+  comment '# '
 
   cmd 'system hardware' do |cfg|
     cfg.gsub! /^Boot\ time\:\s.+/, '' # Remove boot timer

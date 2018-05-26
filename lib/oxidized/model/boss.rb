@@ -1,5 +1,5 @@
 class Boss < Oxidized::Model
-  # Avaya Baystack Operating System Software(BOSS)
+  # Extreme Baystack Operating System Software(BOSS)
   # Created by danielcoxman@gmail.com
   # May 15, 2017
   # This was tested on ers3510, ers5530, ers4850, ers5952
@@ -16,7 +16,7 @@ class Boss < Oxidized::Model
     data.sub re, ''
   end
 
-  # Handle the Failed retries since last login 
+  # Handle the Failed retries since last login
   # no known way to disable other than to implement radius authentication
   expect /Press ENTER to continue/ do |data, re|
     send "\n"
@@ -28,8 +28,10 @@ class Boss < Oxidized::Model
   expect /ommand Line Interface\.\.\./ do |data, re|
     send "c"
     data.sub re, ''
+    send "\n"
+    data.sub re, ''
   end
- 
+
   # needed for proper formatting
   cmd('') { |cfg| comment "#{cfg}\n" }
 
@@ -43,7 +45,7 @@ class Boss < Oxidized::Model
     cfg.gsub! /\d{4}-\d{2}-\d{2} \d{2}:\d{2}:\d{2} .*/, ''
     comment "#{cfg}\n"
   end
-  
+
   # if a stack then collect the stacking information
   cmd 'show stack-info' do |cfg|
     if @stack
@@ -72,5 +74,4 @@ class Boss < Oxidized::Model
     post_login 'terminal length 0'
     post_login 'terminal width 132'
   end
-
 end

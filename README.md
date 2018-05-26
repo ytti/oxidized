@@ -1,4 +1,4 @@
-# Oxidized [![Build Status](https://travis-ci.org/Shopify/oxidized.svg)](https://travis-ci.org/Shopify/oxidized) [![Gem Version](https://badge.fury.io/rb/oxidized.svg)](http://badge.fury.io/rb/oxidized) [![Join the chat at https://gitter.im/oxidized/Lobby](https://badges.gitter.im/oxidized/Lobby.svg)](https://gitter.im/oxidized/Lobby?utm_source=badge&utm_medium=badge&utm_campaign=pr-badge&utm_content=badge)
+# Oxidized [![Build Status](https://api.travis-ci.com/ytti/oxidized.svg)](https://travis-ci.com/ytti/oxidized) [![codecov.io](https://codecov.io/gh/ytti/oxidized/coverage.svg?branch=master)](https://codecov.io/gh/ytti/oxidized?branch=master) [![Gem Version](https://badge.fury.io/rb/oxidized.svg)](http://badge.fury.io/rb/oxidized) [![Join the chat at https://gitter.im/oxidized/Lobby](https://badges.gitter.im/oxidized/Lobby.svg)](https://gitter.im/oxidized/Lobby?utm_source=badge&utm_medium=badge&utm_campaign=pr-badge&utm_content=badge)
 
 Oxidized is a network device configuration backup tool. It's a RANCID replacement!
 
@@ -37,21 +37,27 @@ Check out the [Oxidized TREX 2014 presentation](http://youtu.be/kBQ_CTUuqeU#t=3h
     * [Debugging](docs/Configuration.md#debugging)
     * [Privileged mode](docs/Configuration.md#privileged-mode)
     * [Disabling SSH exec channels](docs/Configuration.md#disabling-ssh-exec-channels)
-    * [Sources:](docs/Sources.md)
-        * [Source: CSV](docs/Sources.md#source-csv)
-        * [Source: SQL](docs/Sources.md#source-sql)
-        * [Source: SQLite](docs/Sources.md#source-sqlite)
-        * [Source: Mysql](docs/Sources.md#source-mysql)
-        * [Source: HTTP](docs/Sources.md#source-http)
-    * [Outputs:](docs/Outputs.md)
-        * [Output: GIT](docs/Outputs.md#output-git)
-        * [Output: GIT-Crypt](docs/Outputs.md#output-git-crypt)
-        * [Output: HTTP](docs/Outputs.md#output-http)
-        * [Output: File](docs/Outputs.md#output-file)
-        * [Output types](docs/Outputs.md#output-types)
+    * [Sources](docs/Sources.md)
+      * [Source: CSV](docs/Sources.md#source-csv)
+      * [Source: SQL](docs/Sources.md#source-sql)
+      * [Source: SQLite](docs/Sources.md#source-sqlite)
+      * [Source: Mysql](docs/Sources.md#source-mysql)
+      * [Source: HTTP](docs/Sources.md#source-http)
+    * [Outputs](docs/Outputs.md)
+      * [Output: GIT](docs/Outputs.md#output-git)
+      * [Output: GIT-Crypt](docs/Outputs.md#output-git-crypt)
+      * [Output: HTTP](docs/Outputs.md#output-http)
+      * [Output: File](docs/Outputs.md#output-file)
+      * [Output types](docs/Outputs.md#output-types)
     * [Advanced Configuration](docs/Configuration.md#advanced-configuration)
     * [Advanced Group Configuration](docs/Configuration.md#advanced-group-configuration)
     * [Hooks](docs/Hooks.md)
+      * [Hook: exec](docs/Hooks.md#hook-type-exec)
+      * [Hook: githubrepo](docs/Hooks.md#hook-type-githubrepo)
+      * [Hook: awssns](docs/Hooks.md#hook-type-awssns)
+      * [Hook: slackdiff](docs/Hooks.md#hook-type-slackdiff)
+      * [Hook: xmppdiff](docs/Hooks.md#hook-type-xmppdiff)
+      * [Hook: ciscosparkdiff](docs/Hooks.md#hook-type-ciscosparkdiff)
 5. [Creating and Extending Models](docs/Creating-Models.md)
 6. [Help](#help)
 7. [Ruby API](docs/Ruby-API.md#ruby-api)
@@ -74,7 +80,7 @@ gem install oxidized-script oxidized-web # if you don't install oxidized-web, ma
 
 ### CentOS, Oracle Linux, Red Hat Linux
 
-On CentOS 6 / RHEL 6, install Ruby greater than 1.9.3 (for Ruby 2.1.2 installation instructions see [Installing Ruby 2.1.2 using RVM](#installing-ruby-212-using-rvm)), then install Oxidized dependencies
+On CentOS 6 / RHEL 6, install Ruby 2.0 or greater (for Ruby 2.1.2 installation instructions see [Installing Ruby 2.1.2 using RVM](#installing-ruby-212-using-rvm)), then install Oxidized dependencies
 
 ```shell
 yum install cmake sqlite-devel openssl-devel libssh2-devel
@@ -114,8 +120,8 @@ pkg install rubygem-oxidized rubygem-oxidized-script rubygem-oxidized-web
 ```shell
 git clone https://github.com/ytti/oxidized.git
 cd oxidized/
-gem build *.gemspec
-gem install pkg/*.gem
+gem install bundler
+rake install
 ```
 
 ### Running with Docker

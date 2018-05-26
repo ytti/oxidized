@@ -1,5 +1,12 @@
 # Changelog
 
+## Master
+
+* FEATURE: comnet model (@jaylik)
+* FEATURE: add enable to procurve model (@khobbits)
+* FEATURE: stoneos model (@macaty)
+* FEATURE: openwrt model (@z00nx)
+
 ## 0.21.0
 
 * FEATURE: routeros include system history (@InsaneSplash)

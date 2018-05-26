@@ -1,5 +1,4 @@
 class IPOS < Oxidized::Model
-
   # Ericsson SSR (IPOS)
   # Redback SE (SEOS)
 
@@ -54,7 +53,7 @@ class IPOS < Oxidized::Model
     post_login 'terminal length 0'
     if vars :enable
       post_login do
-        cmd "enable" 
+        cmd "enable"
         cmd vars(:enable)
       end
     end
@@ -63,5 +62,4 @@ class IPOS < Oxidized::Model
       send "n\n"
     end
   end
-
 end
