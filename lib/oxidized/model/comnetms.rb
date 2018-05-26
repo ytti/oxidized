@@ -1,19 +1,19 @@
-class ComnetMicrosemiSwitch < Oxidized::Model
-
+class ComnetMS < Oxidized::Model
+  # Comnet Microsemi Switch
   prompt /^\r?([\w.@()-]+[#>]\s?)$/
   comment  '! '
 
   cmd :all do |cfg|
     cfg.each_line.to_a[1..-2].join
   end
-  
+
   cmd 'show running-config' do |cfg|
     cfg.gsub! "\n\r", "\n"
     cfg.gsub! /^[\r\n\s]*Building configuration\.\.\.\n/, ''
     cfg.gsub! /^end\n/, ''
     cfg
   end
-  
+
   cmd 'show version' do |cfg|
     cfg.gsub! "\n\r", "\n"
     cfg.gsub! /^MEMORY\s*:.*\n/, ''
@@ -40,5 +40,4 @@ class ComnetMicrosemiSwitch < Oxidized::Model
     post_login 'terminal width 0'
     pre_logout 'exit'
   end
-
 end
