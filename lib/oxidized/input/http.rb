@@ -33,7 +33,6 @@ module Oxidized
     end
 
     def disconnect
-    ensure
       @log.close if Oxidized.config.input.debug?
     end
   end
