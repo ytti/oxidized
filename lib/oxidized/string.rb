@@ -16,7 +16,7 @@ module Oxidized
     # sets @cmd and @name unless @name is already set
     def set_cmd command
       @cmd = command
-      @name ||= @cmd.strip.gsub(/\s+/, '_')
+      @name ||= @cmd.to_s.strip.gsub(/\s+/, '_')   # what to do when command is proc? #to_s seems ghetto
     end
 
     def initialize str = ''
