@@ -27,7 +27,7 @@ class XOS < Oxidized::Model
   end
 
   cmd 'show configuration' do |cfg|
-    cfg = cfg.each_line.reject { |line| line.match /^#(\s[\w]+\s)(Configuration generated)/ }.join
+    cfg = cfg.each_line.reject { |line| line.match /^#(\s[\w -]+\s)(Configuration generated)/ }.join
     cfg
   end
 
