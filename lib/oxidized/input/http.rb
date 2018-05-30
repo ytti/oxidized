@@ -22,8 +22,8 @@ module Oxidized
       login
     end
 
-    def cmd cb
-      instance_exec(&cb)
+    def cmd callback
+      instance_exec(&callback)
     end
 
     private
@@ -36,6 +36,5 @@ module Oxidized
     ensure
       @log.close if Oxidized.config.input.debug?
     end
-
   end
 end
