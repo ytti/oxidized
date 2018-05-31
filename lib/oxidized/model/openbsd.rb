@@ -28,7 +28,7 @@ class Openbsd < Oxidized::Model
     cfg += cmd('cat /etc/hosts')
 
     cfg += add_comment('INTERFACE FILES')
-    cfg += cmd('tail +n 1 /etc/hostname.*')
+    cfg += cmd('tail -n +1 /etc/hostname.*')
 
     cfg += add_comment('RESOLV.CONF FILE')
     cfg += cmd('cat /etc/resolv.conf')
