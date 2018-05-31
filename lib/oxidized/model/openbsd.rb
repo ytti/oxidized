@@ -1,5 +1,4 @@
 class Openbsd < Oxidized::Model
-
   # OpenBSD with custom promp, like user@hostname:~$
   # you can edit the one that your user uses, with root would be /root/.profile using the next PS1 def
   # export PS1="\033[32m\u@\h\033[00m:\033[36m\w\033[00m$ "
@@ -62,6 +61,7 @@ class Openbsd < Oxidized::Model
 
     cfg += add_comment('PASSWD FILE')
     cfg += cmd('cat /etc/passwd')
+
   end
 
   cfg :telnet do
@@ -72,5 +72,4 @@ class Openbsd < Oxidized::Model
   cfg :telnet, :ssh do
     pre_logout 'exit'
   end
-
 end
