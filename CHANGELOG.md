@@ -2,6 +2,7 @@
 
 ## Master
 
+* FEATURE: openbsd model (@amarti2038)
 * FEATURE: comnet model (@jaylik)
 * FEATURE: add enable to procurve model (@khobbits)
 * FEATURE: stoneos model (@macaty)
