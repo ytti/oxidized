@@ -22,46 +22,46 @@ class Openbsd < Oxidized::Model
 
   # Issue the show commands
   pre do
-    cfg = add_comment 'HOSTNAME FILE'
-    cfg + cmd 'cat /etc/myname'
+    cfg = add_comment('HOSTNAME FILE')
+    cfg = cfg + cmd('cat /etc/myname')
   
-    cfg + add_comment 'HOSTS FILE'
-    cfg + cmd 'cat /etc/hosts'
+    cfg = cfg + add_comment('HOSTS FILE')
+    cfg = cfg + cmd('cat /etc/hosts')
   
-    cfg + add_comment 'INTERFACE FILES'
-    cfg + cmd 'tail +n 1 /etc/hostname.*'
+    cfg = cfg + add_comment('INTERFACE FILES')
+    cfg = cfg + cmd('tail +n 1 /etc/hostname.*')
   
-    cfg + add_comment 'RESOLV.CONF FILE'
-    cfg + cmd 'cat /etc/resolv.conf'
+    cfg = cfg + add_comment('RESOLV.CONF FILE')
+    cfg = cfg + cmd('cat /etc/resolv.conf')
   
-    cfg + add_comment 'NTP.CONF FILE'
-    cfg + cmd 'cat /etc/ntp.conf'
+    cfg = cfg + add_comment('NTP.CONF FILE')
+    cfg = cfg + cmd('cat /etc/ntp.conf')
   
-    cfg + add_comment 'IP ROUTES PER ROUTING DOMAIN'
-    cfg + add_small_comment 'Routing Domain 0'
-    cfg + cmd 'route -T0 exec netstat -rn'
-    cfg + add_small_comment 'Routing Domain 1'
-    cfg + cmd 'route -T1 exec netstat -rn'
-    cfg + add_small_comment 'Routing Domain 2'
-    cfg + cmd 'route -T2 exec netstat -rn'
-    cfg + add_small_comment 'Routing Domain 3'
-    cfg + cmd 'route -T3 exec netstat -rn'
-    cfg + add_small_comment 'Routing Domain 4'
-    cfg + cmd 'route -T4 exec netstat -rn'
-    cfg + add_small_comment 'Routing Domain 5'
-    cfg + cmd 'route -T5 exec netstat -rn'
+    cfg = cfg + add_comment('IP ROUTES PER ROUTING DOMAIN')
+    cfg = cfg + add_small_comment('Routing Domain 0')
+    cfg = cfg + cmd('route -T0 exec netstat -rn')
+    cfg = cfg + add_small_comment('Routing Domain 1')
+    cfg = cfg + cmd('route -T1 exec netstat -rn')
+    cfg = cfg + add_small_comment('Routing Domain 2')
+    cfg = cfg + cmd('route -T2 exec netstat -rn')
+    cfg = cfg + add_small_comment('Routing Domain 3')
+    cfg = cfg + cmd('route -T3 exec netstat -rn')
+    cfg = cfg + add_small_comment('Routing Domain 4')
+    cfg = cfg + cmd('route -T4 exec netstat -rn')
+    cfg = cfg + add_small_comment('Routing Domain 5')
+    cfg = cfg + cmd('route -T5 exec netstat -rn')
   
-    cfg + add_comment 'SNMP FILE'
-    cfg + cmd 'cat /etc/snmpd.conf'
+    cfg = cfg + add_comment('SNMP FILE')
+    cfg = cfg + cmd('cat /etc/snmpd.conf')
 
-    cfg + add_comment 'PF FILE'
-    cfg + cmd 'cat /etc/pf.conf'
+    cfg = cfg + add_comment('PF FILE')
+    cfg = cfg + cmd('cat /etc/pf.conf')
 
-    cfg + add_comment 'MOTD FILE'
-    cfg + cmd 'cat /etc/motd'
+    cfg = cfg + add_comment('MOTD FILE')
+    cfg = cfg + cmd('cat /etc/motd')
 
-    cfg + add_comment 'PASSWD FILE'
-    cfg + cmd 'cat /etc/passwd'
+    cfg = cfg + add_comment('PASSWD FILE')
+    cfg = cfg + cmd('cat /etc/passwd')
 
   end
 
