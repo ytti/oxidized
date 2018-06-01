@@ -17,6 +17,7 @@ class JunOS < Oxidized::Model
     cfg.gsub!(/pre-shared-key hexadecimal (\S+).*/, 'pre-shared-key hexadecimal <secret removed>')
     cfg.gsub!(/authentication-key (\S+).*/, 'authentication-key <secret removed>')
     cfg.gsub!(/community (\S+) {/, 'community <hidden> {')
+    cfg.gsub!(/ "\$\d\$\S+; ## SECRET-DATA/, ' <secret removed>;')
     cfg
   end
 
