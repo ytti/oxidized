@@ -61,6 +61,8 @@ class Openbsd < Oxidized::Model
 
     cfg += add_comment('PASSWD FILE')
     cfg += cmd('cat /etc/passwd')
+
+    cfg += add_small_comment('END')
   end
 
   cfg :telnet do
