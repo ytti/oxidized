@@ -1,4 +1,9 @@
-# Oxidized [![Build Status](https://api.travis-ci.com/ytti/oxidized.svg)](https://travis-ci.com/ytti/oxidized) [![codecov.io](https://codecov.io/gh/ytti/oxidized/coverage.svg?branch=master)](https://codecov.io/gh/ytti/oxidized?branch=master) [![Gem Version](https://badge.fury.io/rb/oxidized.svg)](http://badge.fury.io/rb/oxidized) [![Join the chat at https://gitter.im/oxidized/Lobby](https://badges.gitter.im/oxidized/Lobby.svg)](https://gitter.im/oxidized/Lobby?utm_source=badge&utm_medium=badge&utm_campaign=pr-badge&utm_content=badge)
+# Oxidized
+[![Build Status](https://api.travis-ci.com/ytti/oxidized.svg)](https://travis-ci.com/ytti/oxidized)
+[![codecov.io](https://codecov.io/gh/ytti/oxidized/coverage.svg?branch=master)](https://codecov.io/gh/ytti/oxidized?branch=master)
+[![Code Climate](https://codeclimate.com/github/ytti/oxidized/badges/gpa.svg)](https://codeclimate.com/github/ytti/oxidized)
+[![Gem Version](https://badge.fury.io/rb/oxidized.svg)](http://badge.fury.io/rb/oxidized)
+[![Join the chat at https://gitter.im/oxidized/Lobby](https://badges.gitter.im/oxidized/Lobby.svg)](https://gitter.im/oxidized/Lobby?utm_source=badge&utm_medium=badge&utm_campaign=pr-badge&utm_content=badge)
 
 Oxidized is a network device configuration backup tool. It's a RANCID replacement!
 
