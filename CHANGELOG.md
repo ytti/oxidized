@@ -4,6 +4,7 @@
 
 * BUGFIX: model edgecos does not trigger falsepositives due to uptime and memory utilization
 * BUGFIX: Use SECRET-DATA hints for hiding secrets in JunOS (@Zmegolaz)
+* FEATURE: add frr support to cumulus model (@User4574 / @bobthebutcher)
 
 ## 0.22.0
 
