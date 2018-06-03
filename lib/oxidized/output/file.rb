@@ -21,15 +21,15 @@ module Oxidized
       if opt[:group]
         file = File.join File.dirname(file), opt[:group]
       end
-      FileUtils.mkdir_p file
-      file = File.join file, node
+      file = File.join file, name(node)
+      FileUtils.mkdir_p File.dirname(file)
       open(file, 'w') { |fh| fh.write outputs.to_cfg }
       @commitref = file
     end
 
     def fetch node, group
       cfg_dir   = File.expand_path @cfg.directory
-      node_name = node.name
+      node_name = name(node)
 
       if group # group is explicitly defined by user
         cfg_dir = File.join File.dirname(cfg_dir), group
