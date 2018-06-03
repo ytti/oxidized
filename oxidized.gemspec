@@ -39,5 +39,5 @@ Gem::Specification.new do |s|
   s.add_development_dependency 'pry',      '~> 0'
   s.add_development_dependency 'rails_best_practices', '~> 1.19'
   s.add_development_dependency 'rake',     '~> 10.0'
-  s.add_development_dependency 'rubocop',  '~> 0.55.0'
+  s.add_development_dependency 'rubocop',  '~> 0.56.0'
 end
