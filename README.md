@@ -1,4 +1,9 @@
-# Oxidized [![Build Status](https://api.travis-ci.com/ytti/oxidized.svg)](https://travis-ci.com/ytti/oxidized) [![codecov.io](https://codecov.io/gh/ytti/oxidized/coverage.svg?branch=master)](https://codecov.io/gh/ytti/oxidized?branch=master) [![Gem Version](https://badge.fury.io/rb/oxidized.svg)](http://badge.fury.io/rb/oxidized) [![Join the chat at https://gitter.im/oxidized/Lobby](https://badges.gitter.im/oxidized/Lobby.svg)](https://gitter.im/oxidized/Lobby?utm_source=badge&utm_medium=badge&utm_campaign=pr-badge&utm_content=badge)
+# Oxidized
+[![Build Status](https://api.travis-ci.com/ytti/oxidized.svg)](https://travis-ci.com/ytti/oxidized)
+[![codecov.io](https://codecov.io/gh/ytti/oxidized/coverage.svg?branch=master)](https://codecov.io/gh/ytti/oxidized?branch=master)
+[![Code Climate](https://codeclimate.com/github/ytti/oxidized/badges/gpa.svg)](https://codeclimate.com/github/ytti/oxidized)
+[![Gem Version](https://badge.fury.io/rb/oxidized.svg)](http://badge.fury.io/rb/oxidized)
+[![Join the chat at https://gitter.im/oxidized/Lobby](https://badges.gitter.im/oxidized/Lobby.svg)](https://gitter.im/oxidized/Lobby?utm_source=badge&utm_medium=badge&utm_campaign=pr-badge&utm_content=badge)
 
 Oxidized is a network device configuration backup tool. It's a RANCID replacement!
 
@@ -73,7 +78,7 @@ Check out the [Oxidized TREX 2014 presentation](http://youtu.be/kBQ_CTUuqeU#t=3h
 Install all required packages and gems.
 
 ```shell
-apt-get install ruby ruby-dev libsqlite3-dev libssl-dev pkg-config cmake libssh2-1-dev
+apt-get install ruby ruby-dev libsqlite3-dev libssl-dev pkg-config cmake libssh2-1-dev libicu-dev
 gem install oxidized
 gem install oxidized-script oxidized-web # if you don't install oxidized-web, make sure you remove "rest" from your config
 ```
@@ -83,13 +88,13 @@ gem install oxidized-script oxidized-web # if you don't install oxidized-web, ma
 On CentOS 6 / RHEL 6, install Ruby 2.0 or greater (for Ruby 2.1.2 installation instructions see [Installing Ruby 2.1.2 using RVM](#installing-ruby-212-using-rvm)), then install Oxidized dependencies
 
 ```shell
-yum install cmake sqlite-devel openssl-devel libssh2-devel
+yum install cmake sqlite-devel openssl-devel libssh2-devel libicu-devel
 ```
 
 RHEL 7 / CentOS 7 will work out of the box with the following package list:
 
 ```shell
-yum install cmake sqlite-devel openssl-devel libssh2-devel ruby gcc ruby-devel
+yum install cmake sqlite-devel openssl-devel libssh2-devel ruby gcc ruby-devel libicu-devel
 ```
 
 Now let's install oxidized via Rubygems:
