@@ -46,7 +46,7 @@ class XOS < Oxidized::Model
       match = data.match /^disable clipaging session\n\*?[\w .-]+(:\d+)? # $/m
       next if match
       cmd 'disable clipaging'
-    end 
+    end
 
     pre_logout do
       send "exit\n"
