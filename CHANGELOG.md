@@ -1,5 +1,9 @@
 # Changelog
 
+## Master
+
+* BUGFIX: model edgecos does not trigger falsepositives due to uptime and memory utilization
+
 ## 0.22.0
 
 * FEATURE: openbsd model (@amarti2038)

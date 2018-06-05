@@ -76,6 +76,8 @@
   * [AOSW](/lib/oxidized/model/aosw.rb)
 * D-Link
   * [D-Link](/lib/oxidized/model/dlink.rb)
+* EdgeCore
+ * [ES3528M](/lib/oxidized/model/edgecos.rb)
 * Ericsson/Redback
   * [IPOS (former SEOS)](/lib/oxidized/model/ipos.rb)
 * Extreme Networks
