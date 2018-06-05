@@ -14,6 +14,7 @@ class EdgeCOS < Oxidized::Model
   cmd 'show running-config'
 
   cmd 'show system' do |cfg|
+    cfg.gsub! /^\s*System Up Time\s*:.*\n/i, ''
     comment cfg
   end
 
