@@ -1,5 +1,9 @@
 # Changelog
 
+## Master
+
+* BUGFIX: xos model deos not modify config on legacy Extreme Networks devices (sq9mev)
+
 ## 0.22.0
 
 * FEATURE: openbsd model (@amarti2038)
