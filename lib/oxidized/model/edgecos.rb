@@ -13,15 +13,8 @@ class EdgeCOS < Oxidized::Model
 
   cmd 'show running-config'
 
-  cmd 'show access-list tcam-utilization' do |cfg|
-    comment cfg
-  end
-
-  cmd 'show memory' do |cfg|
-    comment cfg
-  end
-
   cmd 'show system' do |cfg|
+    cfg.gsub! /^\s*System Up Time\s*:.*\n/i, ''
     comment cfg
   end
 
