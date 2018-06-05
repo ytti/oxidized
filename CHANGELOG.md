@@ -3,6 +3,7 @@
 ## Master
 
 * BUGFIX: xos model deos not modify config on legacy Extreme Networks devices (sq9mev)
+* BUGFIX: model edgecos does not trigger falsepositives due to uptime and memory utilization
 
 ## 0.22.0
 
