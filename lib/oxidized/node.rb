@@ -19,9 +19,9 @@ module Oxidized
       @ip           ||= Resolv.new.getaddress(@name) if Oxidized.config.resolve_dns?
       @ip           ||= @name
       @group          = opt[:group]
+      @model          = resolve_model opt
       @input          = resolve_input opt
       @output         = resolve_output opt
-      @model          = resolve_model opt
       @auth           = resolve_auth opt
       @prompt         = resolve_prompt opt
       @vars           = opt[:vars]
@@ -219,7 +219,6 @@ module Oxidized
       end
 
       # model
-      # FIXME: warning: instance variable @model not initialized
       if Oxidized.config.models.has_key?(@model.class.name.to_s.downcase)
         if Oxidized.config.models[@model.class.name.to_s.downcase].has_key?(key_str)
           value = Oxidized.config.models[@model.class.name.to_s.downcase][key_str]
