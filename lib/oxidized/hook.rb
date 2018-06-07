@@ -37,7 +37,7 @@ module Oxidized
               "unknown event #{event}, available: #{Events.join ','}"
       end
 
-      Oxidized.mgr.add_hook hook_type
+      Oxidized.mgr.add_hook(hook_type) or raise("cannot load hook '#{hook_type}', not found")
       begin
         hook = Oxidized.mgr.hook.fetch(hook_type).new
       rescue KeyError

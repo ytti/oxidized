@@ -17,49 +17,48 @@ module Oxidized
         i = klass.new
         i.setup if i.respond_to? :setup
         { file => klass }
+      rescue LoadError
+        false
       end
     end
 
-    attr_reader :input, :output, :model, :source, :hook
+    attr_reader :input, :output, :source, :model, :hook
     def initialize
       @input  = {}
       @output = {}
-      @model  = {}
       @source = {}
-      @hook = {}
+      @model  = {}
+      @hook   = {}
     end
 
     def add_input name
-      @input.merge! Manager.load(Config::InputDir, name)
+      loader @input, Config::InputDir, "input", name
     end
 
     def add_output name
-      @output.merge! Manager.load(Config::OutputDir, name)
+      loader @output, Config::OutputDir, "output", name
     end
 
     def add_source name
-      return nil if @source.has_key? name
-      @source.merge! Manager.load(Config::SourceDir, name)
+      loader @source, Config::SourceDir, "source", name
     end
 
     def add_model name
-      @model.merge! local_load("model", name) ||
-                    Manager.load(Config::ModelDir, name)
+      loader @model, Config::ModelDir, "model", name
     end
 
     def add_hook name
-      return nil if @hook.has_key? name
-      @model.merge! local_load("hook", name) ||
-                    Manager.load(Config::HookDir, name)
+      loader @hook, Config::HookDir, "hook", name
     end
 
     private
 
-    # try to load locally defined file, instead of upstream provided
-    def local_load dir, name
-      dir = File.join(Config::Root, dir)
-      return false unless File.exist? File.join(dir, name + ".rb")
-      Manager.load dir, name
+    # if local version of file exists, load it, else load global - return falsy value if nothing loaded
+    def loader hash, global_dir, local_dir, name
+      dir = File.join(Config::Root, local_dir)
+      map = Manager.load(dir, name) if File.exist? File.join(dir, name + ".rb")
+      map = Manager.load(global_dir, name) unless map
+      hash.merge!(map) if map
     end
   end
 end
