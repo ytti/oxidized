@@ -15,9 +15,9 @@ module Oxidized
       ip_addr, _ = opt[:ip].to_s.split("/")
       Oxidized.logger.debug 'IPADDR %s' % ip_addr.to_s
       @name           = opt[:name]
-      @ip             = @name unless Oxidized.config.resolve_dns?
-      @ip           ||= IPAddr.new(ip_addr).to_s rescue nil
-      @ip           ||= Resolv.new.getaddress @name
+      @ip             = IPAddr.new(ip_addr).to_s rescue nil
+      @ip           ||= Resolv.new.getaddress(@name) if Oxidized.config.resolve_dns?
+      @ip           ||= @name
       @group          = opt[:group]
       @input          = resolve_input opt
       @output         = resolve_output opt
