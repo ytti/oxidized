@@ -56,10 +56,10 @@ module Oxidized
     private
 
     # try to load locally defined file, instead of upstream provided
-    def local_load dir, file
+    def local_load dir, name
       dir = File.join(Config::Root, dir)
-      return false unless File.exist? File.join(dir, file)
-      Manager.load dir, file
+      return false unless File.exist? File.join(dir, name + ".rb")
+      Manager.load dir, name
     end
   end
 end
