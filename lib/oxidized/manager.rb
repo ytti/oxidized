@@ -6,23 +6,20 @@ module Oxidized
   class Manager
     class << self
       def load dir, file
-        begin
-          require File.join dir, file + '.rb'
-          klass = nil
-          [Oxidized, Object].each do |mod|
-            klass = mod.constants.find { |const| const.to_s.downcase == file.downcase }
-            klass = mod.constants.find { |const| const.to_s.downcase == 'oxidized' + file.downcase } unless klass
-            klass = mod.const_get klass if klass
-            break if klass
-          end
-          i = klass.new
-          i.setup if i.respond_to? :setup
-          { file => klass }
-        rescue LoadError
-          {}
+        require File.join dir, file + '.rb'
+        klass = nil
+        [Oxidized, Object].each do |mod|
+          klass = mod.constants.find { |const| const.to_s.downcase == file.downcase }
+          klass = mod.constants.find { |const| const.to_s.downcase == 'oxidized' + file.downcase } unless klass
+          klass = mod.const_get klass if klass
+          break if klass
         end
+        i = klass.new
+        i.setup if i.respond_to? :setup
+        { file => klass }
       end
     end
+
     attr_reader :input, :output, :model, :source, :hook
     def initialize
       @input  = {}
@@ -32,40 +29,37 @@ module Oxidized
       @hook = {}
     end
 
-    def add_input method
-      method = Manager.load Config::InputDir, method
-      return false if method.empty?
-      @input.merge! method
+    def add_input name
+      @input.merge! Manager.load(Config::InputDir, name)
     end
 
-    def add_output method
-      method = Manager.load Config::OutputDir, method
-      return false if method.empty?
-      @output.merge! method
+    def add_output name
+      @output.merge! Manager.load(Config::OutputDir, name)
     end
 
-    def add_model _model
-      name = _model
-      _model = Manager.load File.join(Config::Root, 'model'), name
-      _model = Manager.load Config::ModelDir, name if _model.empty?
-      return false if _model.empty?
-      @model.merge! _model
+    def add_source name
+      return nil if @source.has_key? name
+      @source.merge Manager.load(Config::SourceDir, name)
     end
 
-    def add_source _source
-      return nil if @source.has_key? _source
-      _source = Manager.load Config::SourceDir, _source
-      return false if _source.empty?
-      @source.merge! _source
+    def add_model name
+      @model.merge! local_load("model", name) ||
+                    Manager.load(Config::ModelDir, name)
     end
 
-    def add_hook _hook
-      return nil if @hook.has_key? _hook
-      name = _hook
-      _hook = Manager.load File.join(Config::Root, 'hook'), name
-      _hook = Manager.load Config::HookDir, name if _hook.empty?
-      return false if _hook.empty?
-      @hook.merge! _hook
+    def add_hook name
+      return nil if @hook.has_key? name
+      @model.merge! local_load("hook", name) ||
+                    Manager.load(Config::HookDir, name)
+    end
+
+    private
+
+    # try to load locally defined file, instead of upstream provided
+    def local_load dir, file
+      dir = File.join(Config::Root, dir)
+      return false unless File.exist? File.join(dir, file)
+      Manager.load dir, file
     end
   end
 end
