@@ -94,7 +94,7 @@ yum install cmake sqlite-devel openssl-devel libssh2-devel libicu-devel
 RHEL 7 / CentOS 7 will work out of the box with the following package list:
 
 ```shell
-yum install cmake sqlite-devel openssl-devel libssh2-devel ruby gcc ruby-devel libicu-devel
+yum install cmake sqlite-devel openssl-devel libssh2-devel ruby gcc ruby-devel libicu-devel gcc-c++
 ```
 
 Now let's install oxidized via Rubygems:
