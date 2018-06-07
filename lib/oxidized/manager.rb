@@ -39,7 +39,7 @@ module Oxidized
 
     def add_source name
       return nil if @source.has_key? name
-      @source.merge Manager.load(Config::SourceDir, name)
+      @source.merge! Manager.load(Config::SourceDir, name)
     end
 
     def add_model name
