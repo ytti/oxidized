@@ -3,6 +3,7 @@
 ## Master
 
 * BUGFIX: model edgecos does not trigger falsepositives due to uptime and memory utilization
+* BUGFIX: Use SECRET-DATA hints for hiding secrets in JunOS (@Zmegolaz)
 
 ## 0.22.0
 
@@ -20,7 +21,6 @@
 * FEATURE: ssh key passphrase (@wk)
 * FEATURE: cisco spark hook (@rgnv)
 * BUGFIX: models procurve, br6910, vyos, fortios, edgeos, vyatta, junos, powerconnect, supermicro, fortios, firewareos, aricentiss, dnos, nxos, hpbladesystem, netgear, xos, boss, opengear, pfsense, asyncos
-* BUGFIX: Use SECRET-DATA hints for hiding secrets in JunOS (@Zmegolaz)
 
 ## 0.21.0
 
