@@ -3,6 +3,7 @@
 ## Master
 
 * BUGFIX: model edgecos does not trigger falsepositives due to uptime and memory utilization
+* BUGFIX: Use SECRET-DATA hints for hiding secrets in JunOS (@Zmegolaz)
 
 ## 0.22.0
 
