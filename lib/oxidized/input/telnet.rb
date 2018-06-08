@@ -20,14 +20,8 @@ module Oxidized
                       'Log'     => @log }
 
       @telnet = Net::Telnet.new telnet_opts
-      if @node.auth[:username] and @node.auth[:username].length > 0
-        expect username
-        @telnet.puts @node.auth[:username]
-      end
-      expect password
-      @telnet.puts @node.auth[:password]
       begin
-        expect @node.prompt
+        login
       rescue Timeout::Error
         raise PromptUndetect, ['unable to detect prompt:', @node.prompt].join(' ')
       end

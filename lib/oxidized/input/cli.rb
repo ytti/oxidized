@@ -51,6 +51,17 @@ module Oxidized
       def password re = /^Password/
         @password or @password = re
       end
+
+      def login
+        match_re = [@node.prompt]
+        match_re << @username if @username
+        match_re << @password if @password
+        until (match = expect(match_re)) == @node.prompt
+          cmd(@node.auth[:username], nil) if match == @username
+          cmd(@node.auth[:password], nil) if match == @password
+          match_re.delete match
+        end
+      end
     end
   end
 end

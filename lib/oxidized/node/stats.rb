@@ -14,11 +14,7 @@ module Oxidized
         @stats[job.status] ||= []
         @stats[job.status].shift if @stats[job.status].size > MAX_STAT
         @stats[job.status].push stat
-        if job.status.equal? :success
-          @stats[:success_count] += 1
-        else
-          @stats[:failure_count] += 1
-        end
+        @stats[:counter][job.status] += 1
       end
 
       # @param [Symbol] status stats for specific status
@@ -27,12 +23,23 @@ module Oxidized
         status ? @stats[status] : @stats
       end
 
+      def get_counter counter = nil
+        counter ? @stats[:counter][counter] : @stats[:counter]
+      end
+
+      def successes
+        @stats[:counter][:success]
+      end
+
+      def failures
+        @stats[:counter].reduce(0) { |m, h| h[0] == :success ? m : m + h[1] }
+      end
+
       private
 
       def initialize
         @stats = {}
-        @stats[:success_count] = 0
-        @stats[:failure_count] = 0
+        @stats[:counter] = Hash.new 0
       end
     end
   end

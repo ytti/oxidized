@@ -2,10 +2,24 @@
 
 ## Master
 
+* BUGFIX: model edgecos does not trigger falsepositives due to uptime and memory utilization
+
+## 0.22.0
+
+* FEATURE: openbsd model (@amarti2038)
 * FEATURE: comnet model (@jaylik)
-* FEATURE: add enable to procurve model (@khobbits)
 * FEATURE: stoneos model (@macaty)
 * FEATURE: openwrt model (@z00nx)
+* FEATURE: arbos model (@jsynack)
+* FEATURE: ndms model (@yuri-zubov)
+* FEATURE: openwert model (@z00nx)
+* FEATURE: stoneos model (@macaty)
+* FEATURE: comnetms model (@jaylik)
+* FEATURE: openbsd model (@amarti2038)
+* FEATURE: cambium model
+* FEATURE: ssh key passphrase (@wk)
+* FEATURE: cisco spark hook (@rgnv)
+* BUGFIX: models procurve, br6910, vyos, fortios, edgeos, vyatta, junos, powerconnect, supermicro, fortios, firewareos, aricentiss, dnos, nxos, hpbladesystem, netgear, xos, boss, opengear, pfsense, asyncos
 * BUGFIX: Use SECRET-DATA hints for hiding secrets in JunOS (@Zmegolaz)
 
 ## 0.21.0
