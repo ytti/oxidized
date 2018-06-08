@@ -49,7 +49,7 @@ class GithubRepo < Oxidized::Hook
       if cfg.has_key?('username')
         git_user = cfg.username
       else
-        git_user = username_from_url ? username_from_url : 'git'
+        git_user = username_from_url || 'git'
       end
 
       if cfg.has_key?('password')
