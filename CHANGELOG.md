@@ -6,6 +6,7 @@
 * FEATURE: add enable to procurve model (@khobbits)
 * FEATURE: stoneos model (@macaty)
 * FEATURE: openwrt model (@z00nx)
+* BUGFIX: Use SECRET-DATA hints for hiding secrets in JunOS (@Zmegolaz)
 
 ## 0.21.0
 
