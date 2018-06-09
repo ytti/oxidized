@@ -22,7 +22,7 @@ class IOSXR < Oxidized::Model
     comment cfg
   end
 
-  cmd 'show running-config' do |cfg|
+  cmd 'show running-config formal' do |cfg|
     cfg = cfg.each_line.to_a[3..-1].join
     cfg
   end
