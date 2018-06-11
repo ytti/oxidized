@@ -13,6 +13,11 @@ class Cumulus < Oxidized::Model
 
   # show the persistent configuration
   pre do
+    # Set FRR or Quagga in config
+    routing_daemon = vars(:cumulus_routing_daemon) ? vars(:cumulus_routing_daemon).downcase : 'quagga'
+    routing_conf_file = routing_daemon == 'frr' ? 'frr.conf' : 'Quagga.conf'
+    routing_daemon_shout = routing_daemon.upcase
+
     cfg = add_comment 'THE HOSTNAME'
     cfg += cmd 'cat /etc/hostname'
 
@@ -34,23 +39,23 @@ class Cumulus < Oxidized::Model
     cfg += add_comment 'SNMP settings'
     cfg += cmd 'cat /etc/snmp/snmpd.conf'
 
-    cfg += add_comment 'QUAGGA DAEMONS'
-    cfg += cmd 'cat /etc/quagga/daemons'
+    cfg += add_comment "#{routing_daemon_shout} DAEMONS"
+    cfg += cmd "cat /etc/#{routing_daemon}/daemons"
 
-    cfg += add_comment 'QUAGGA ZEBRA'
-    cfg += cmd 'cat /etc/quagga/zebra.conf'
+    cfg += add_comment "#{routing_daemon_shout} ZEBRA"
+    cfg += cmd "cat /etc/#{routing_daemon}/zebra.conf"
 
-    cfg += add_comment 'QUAGGA BGP'
-    cfg += cmd 'cat /etc/quagga/bgpd.conf'
+    cfg += add_comment "#{routing_daemon_shout} BGP"
+    cfg += cmd "cat /etc/#{routing_daemon}/bgpd.conf"
 
-    cfg += add_comment 'QUAGGA OSPF'
-    cfg += cmd 'cat /etc/quagga/ospfd.conf'
+    cfg += add_comment "#{routing_daemon_shout} OSPF"
+    cfg += cmd "cat /etc/#{routing_daemon}/ospfd.conf"
 
-    cfg += add_comment 'QUAGGA OSPF6'
-    cfg += cmd 'cat /etc/quagga/ospf6d.conf'
+    cfg += add_comment "#{routing_daemon_shout} OSPF6"
+    cfg += cmd "cat /etc/#{routing_daemon}/ospf6d.conf"
 
-    cfg += add_comment 'QUAGGA CONF'
-    cfg += cmd 'cat /etc/quagga/Quagga.conf'
+    cfg += add_comment "#{routing_daemon_shout} CONF"
+    cfg += cmd "cat /etc/#{routing_daemon}/#{routing_conf_file}"
 
     cfg += add_comment 'MOTD'
     cfg += cmd 'cat /etc/motd'
