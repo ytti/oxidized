@@ -15,16 +15,22 @@ vars:
   cumulus_routing_daemon: frr
 ```
 
+Alternatively map a column for the  `cumulus_routing_daemon` variable.
 ```yaml
-groups:
-  cumulus-new:
-    cumulus_routing_daemon: frr
+source:
+  csv:
+    map:
+      name: 0
+      ip: 1
+      model: 2
+      group: 3
+    vars_map: 
+      cumulus_routing_daemon: 4
 ```
 
-```yaml
-models: 
-  cumulus-new: 
-    cumulus_routing_daemon: frr
+And set the `cumulus_routing_daemon` variable in the `router.db` file.
+```
+cumulus1:192.168.121.134:cumulus:cumulus:frr
 ```
 
 The default variable is `quagga` so existing installations continue to operate without 
