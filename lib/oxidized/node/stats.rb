@@ -1,6 +1,7 @@
 module Oxidized
   class Node
     class Stats
+      attr_accessor :mtime
       MAX_STAT = 10
 
       # @param [Job] job job whose information add to stats
@@ -35,9 +36,14 @@ module Oxidized
         @stats[:counter].reduce(0) { |m, h| h[0] == :success ? m : m + h[1] }
       end
 
+      def update_mtime
+        @mtime = Time.now.utc
+      end
+
       private
 
       def initialize
+        @mtime = "unknown"
         @stats = {}
         @stats[:counter] = Hash.new 0
       end

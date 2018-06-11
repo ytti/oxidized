@@ -95,6 +95,7 @@ module Oxidized
         :model     => @model.class.to_s,
         :last      => nil,
         :vars      => @vars,
+        :mtime     => @stats.mtime,
       }
       h[:full_name] = [@group, @name].join('/') if @group
       if @last
@@ -124,6 +125,10 @@ module Oxidized
     def reset
       @user = @email = @msg = @from = nil
       @retry = 0
+    end
+
+    def modified
+      @stats.update_mtime
     end
 
     private
