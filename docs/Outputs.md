@@ -133,6 +133,7 @@ Please note that user list is only updated once at creation.
 The HTTP output will POST a config to the specified HTTP URL. Basic username/password authentication is supported.
 
 Example HTTP output configuration:
+
 ```yaml
 output:
   default: http
