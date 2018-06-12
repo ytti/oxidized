@@ -44,7 +44,7 @@ module Oxidized
         # map node parameters
         keys = {}
         @cfg.map.each do |key, want_position|
-          keys[key.to_sym] = node_var_interpolate string_navigate(node, want_positon)
+          keys[key.to_sym] = node_var_interpolate string_navigate(node, want_position)
         end
         keys[:model] = map_model keys[:model] if keys.has_key? :model
 
