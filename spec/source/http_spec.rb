@@ -16,10 +16,10 @@ describe Oxidized::HTTP do
       http.class.must_equal Oxidized::HTTP
       http.send(:string_navigate, h1, "jotain.2").must_equal "jotain"
     end
-    it "should be able to navigate hash/array combination" do
+    it "should be able to navigate multilevel-hash" do
       Oxidized::HTTP.new.send(:string_navigate, h1, "jotain.2").must_equal "jotain"
     end
-    it "should be able to navigate multilevel-hash" do
+    it "should be able to navigate hash/array combination" do
       Oxidized::HTTP.new.send(:string_navigate, h1, "inventory[0].ip").must_equal "10.10.10.10"
     end
     it "should return nil on non-existing string key" do
