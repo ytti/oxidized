@@ -1,6 +1,7 @@
 module Oxidized
   class Node
     class Stats
+      attr_reader :mtimes
       MAX_STAT = 10
 
       # @param [Job] job job whose information add to stats
@@ -33,10 +34,6 @@ module Oxidized
 
       def failures
         @stats[:counter].reduce(0) { |m, h| h[0] == :success ? m : m + h[1] }
-      end
-
-      def mtimes
-        @mtimes
       end
 
       def mtime
