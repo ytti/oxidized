@@ -45,7 +45,7 @@ module Oxidized
 
       def update_mtime
         @mtimes.push Time.now.utc
-        @mtimes.shift if @mtimes.size > MAX_STAT
+        @mtimes.shift
       end
 
       private
