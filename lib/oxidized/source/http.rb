@@ -44,14 +44,14 @@ module Oxidized
         # map node parameters
         keys = {}
         @cfg.map.each do |key, want_position|
-          keys[key.to_sym] = node_var_interpolate string_navigate(node, want_positons)
+          keys[key.to_sym] = node_var_interpolate string_navigate(node, want_positon)
         end
         keys[:model] = map_model keys[:model] if keys.has_key? :model
 
         # map node specific vars
         vars = {}
         @cfg.vars_map.each do |key, want_position|
-          vars[key.to_sym] = node_var_interpolate string_navigate(node, want_positions)
+          vars[key.to_sym] = node_var_interpolate string_navigate(node, want_position)
         end
         keys[:vars] = vars unless vars.empty?
 
@@ -60,7 +60,7 @@ module Oxidized
       nodes
     end
 
-    #private
+    private
 
     def string_navigate object, wants
       wants.split(".").map do |want|
