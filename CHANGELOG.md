@@ -4,6 +4,7 @@
 
 * FEATURE: add frr support to cumulus model (@User4574 / @bobthebutcher)
 * FEATURE: honour MAX_STAT in mtime, to store last N mtime
+* FEATURE: congiurable stats history size
 
 ## 0.23.0
 
