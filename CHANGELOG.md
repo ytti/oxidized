@@ -2,9 +2,16 @@
 
 ## Master
 
-* BUGFIX: model edgecos does not trigger falsepositives due to uptime and memory utilization
-* BUGFIX: Use SECRET-DATA hints for hiding secrets in JunOS (@Zmegolaz)
 * FEATURE: add frr support to cumulus model (@User4574 / @bobthebutcher)
+
+## 0.23.0
+
+* FEATURE: support arbitrary user/password/prompt detection in telnet, same behaviour as ssh
+* FEATURE: manager refactor, support local loading of input, output, source, not just model and hook
+* FEATURE: store modification time in node stats
+* BUGFIX: model edgecos does not trigger falsepositives due to uptime and memory utilization (@sq9mev)
+* BUGFIX: Use SECRET-DATA hints for hiding secrets in JunOS (@Zmegolaz)
+* BUGFIX: comware (@adamboutcher)
 
 ## 0.22.0
 
