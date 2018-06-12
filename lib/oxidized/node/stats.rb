@@ -13,7 +13,7 @@ module Oxidized
           :time   => job.time,
         }
         @stats[job.status] ||= []
-        @stats[job.status].shift if @stats[job.status].size > MAX_STAT
+        @stats[job.status].shift if @stats[job.status].size > @history_size
         @stats[job.status].push stat
         @stats[:counter][job.status] += 1
       end
@@ -48,7 +48,8 @@ module Oxidized
       private
 
       def initialize
-        @mtimes = Array.new(MAX_STAT, "unknown")
+        @history_size = Oxidized.config.stats.history_size? || MAX_STAT
+        @mtimes = Array.new(@history_size, "unknown")
         @stats  = {}
         @stats[:counter] = Hash.new 0
       end

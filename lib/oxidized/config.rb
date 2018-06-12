@@ -35,6 +35,7 @@ module Oxidized
       asetus.default.models        = {}               # model level configuration
       asetus.default.pid           = File.join(Oxidized::Config::Root, 'pid')
 
+      asetus.default.stats.history_size = 10
       asetus.default.input.default      = 'ssh, telnet'
       asetus.default.input.debug        = false # or String for session log file
       asetus.default.input.ssh.secure   = false # complain about changed certs
