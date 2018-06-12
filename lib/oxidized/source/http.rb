@@ -44,16 +44,14 @@ module Oxidized
         # map node parameters
         keys = {}
         @cfg.map.each do |key, want_position|
-          want_positions = want_position.split('.')
-          keys[key.to_sym] = node_var_interpolate node.dig(*want_positions)
+          keys[key.to_sym] = node_var_interpolate string_navigate(node, want_positons)
         end
         keys[:model] = map_model keys[:model] if keys.has_key? :model
 
         # map node specific vars
         vars = {}
         @cfg.vars_map.each do |key, want_position|
-          want_positions = want_position.split('.')
-          vars[key.to_sym] = node_var_interpolate node.dig(*want_positions)
+          vars[key.to_sym] = node_var_interpolate string_navigate(node, want_positions)
         end
         keys[:vars] = vars unless vars.empty?
 
@@ -61,20 +59,17 @@ module Oxidized
       end
       nodes
     end
-  end
-end
 
-if RUBY_VERSION < '2.3'
-  class Hash
-    def dig(key, *rest)
-      value = self[key]
-      if value.nil? || rest.empty?
-        value
-      elsif value.respond_to?(:dig)
-        value.dig(*rest)
-      else # foo.bar.baz (bar exist but is not hash)
-        return nil
+    #private
+
+    def string_navigate object, wants
+      wants.split(".").map do |want|
+        head, match, _tail = want.partition(/\[\d+\]/)
+        match.empty? ? head : [head, match[1..-2].to_i]
+      end.flatten.each do |want|
+        object = object[want] if object.respond_to? :each
       end
+      object
     end
   end
 end
