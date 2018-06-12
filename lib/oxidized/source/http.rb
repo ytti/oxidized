@@ -39,6 +39,7 @@ module Oxidized
 
       response = http.request(request)
       data = JSON.parse(response.body)
+      data = string_navigate(data, @cfg.hosts_location) if @cfg.hosts_location?
       data.each do |node|
         next if node.empty?
         # map node parameters
