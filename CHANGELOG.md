@@ -30,6 +30,7 @@
 * FEATURE: cambium model
 * FEATURE: ssh key passphrase (@wk)
 * FEATURE: cisco spark hook (@rgnv)
+* FEATURE: added support for setting ssh auth methods (@laf)
 * BUGFIX: models procurve, br6910, vyos, fortios, edgeos, vyatta, junos, powerconnect, supermicro, fortios, firewareos, aricentiss, dnos, nxos, hpbladesystem, netgear, xos, boss, opengear, pfsense, asyncos
 
 ## 0.21.0

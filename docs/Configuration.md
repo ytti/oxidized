@@ -66,9 +66,9 @@ vars:
 
 By default, Oxidized registers the following auth methods: `none`, `publickey` and `password`. However you can configure this globally, by groups, models or nodes.
 
-```
+```yaml
 vars:
-    auth_methods: none, publickey, password, keyboard-interactive
+    auth_methods: [ "none", "publickey", "password", "keyboard-interactive" ]
 ```
 
 ## SSH Proxy Command
