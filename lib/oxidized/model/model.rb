@@ -26,7 +26,7 @@ module Oxidized
 
       def cfg *methods, &block
         [methods].flatten.each do |method|
-          @cfg[method.to_s] << block
+          @cfg[method.to_s].unshift block
         end
       end
 
