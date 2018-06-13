@@ -36,9 +36,9 @@ module Oxidized
 
       def cmd _cmd = nil, &block
         if _cmd.class == Symbol
-          @cmd[_cmd] << block
+          @cmd[_cmd].unshift block
         else
-          @cmd[:cmd] << [_cmd, block]
+          @cmd[:cmd].unshift [_cmd, block]
         end
         Oxidized.logger.debug "lib/oxidized/model/model.rb Added #{_cmd} to the commands list"
       end
@@ -48,7 +48,7 @@ module Oxidized
       end
 
       def expect re, &block
-        @expect << [re, block]
+        @expect.unshift [re, block]
       end
 
       def expects
@@ -63,7 +63,7 @@ module Oxidized
       # @yield expects block which should return [String]
       # @return [void]
       def pre &block
-        @procs[:pre] << block
+        @procs[:pre].unshift block
       end
 
       # calls the block at the end of the model, adding the output of the block
@@ -74,7 +74,7 @@ module Oxidized
       # @yield expects block which should return [String]
       # @return [void]
       def post &block
-        @procs[:post] << block
+        @procs[:post].unshift block
       end
 
       # @author Saku Ytti <saku@ytti.fi>
