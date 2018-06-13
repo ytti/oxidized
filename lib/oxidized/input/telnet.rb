@@ -82,34 +82,30 @@ class Net::Telnet
       rest = ""
       buf  = ""
       loop do
-        begin
-          c = @sock.readpartial(1024 * 1024)
-          @output = c
-          c = rest + c
+        c = @sock.readpartial(1024 * 1024)
+        @output = c
+        c = rest + c
 
-          if Integer(c.rindex(/#{IAC}#{SE}/no) || 0) <
-             Integer(c.rindex(/#{IAC}#{SB}/no) || 0)
-            buf = preprocess(c[0...c.rindex(/#{IAC}#{SB}/no)])
-            rest = c[c.rindex(/#{IAC}#{SB}/no)..-1]
-          elsif pt = c.rindex(/#{IAC}[^#{IAC}#{AO}#{AYT}#{DM}#{IP}#{NOP}]?\z/no) ||
-                     c.rindex(/\r\z/no)
-            buf = preprocess(c[0...pt])
-            rest = c[pt..-1]
-          else
-            buf = preprocess(c)
-            rest = ''
-          end
-          if Oxidized.config.input.debug?
-            @log.print buf
-            @log.flush
-          end
-          line += buf
-          line = model.expects line
-          match = expects.find { |re| line.match re }
-          return match if match
-        rescue EOFError # End of file reached
-          return false
+        if Integer(c.rindex(/#{IAC}#{SE}/no) || 0) <
+           Integer(c.rindex(/#{IAC}#{SB}/no) || 0)
+          buf = preprocess(c[0...c.rindex(/#{IAC}#{SB}/no)])
+          rest = c[c.rindex(/#{IAC}#{SB}/no)..-1]
+        elsif pt = c.rindex(/#{IAC}[^#{IAC}#{AO}#{AYT}#{DM}#{IP}#{NOP}]?\z/no) ||
+                   c.rindex(/\r\z/no)
+          buf = preprocess(c[0...pt])
+          rest = c[pt..-1]
+        else
+          buf = preprocess(c)
+          rest = ''
         end
+        if Oxidized.config.input.debug?
+          @log.print buf
+          @log.flush
+        end
+        line += buf
+        line = model.expects line
+        match = expects.find { |re| line.match re }
+        return match if match
       end
     end
   end
