@@ -5,6 +5,7 @@
 * FEATURE: add frr support to cumulus model (@User4574 / @bobthebutcher)
 * FEATURE: honour MAX_STAT in mtime, to store last N mtime
 * FEATURE: configurable stats history size
+* FEATURE: model callback enhancements for customizing existing models (@ytti)
 * BUGFIX: model ciscosmb
 
 ## 0.23.0
