@@ -50,7 +50,7 @@ module Oxidized
     private
 
     def expect re
-      @telnet._oxidized_expect expect: re, timeout: @timeout
+      @telnet.oxidized_expect expect: re, timeout: @timeout
     end
 
     def disconnect
@@ -70,7 +70,7 @@ class Net::Telnet
   ## how to do this, without redefining the whole damn thing
   ## FIXME: we also need output (not sure I'm going to support this)
   attr_reader :output
-  def _oxi_expct(options) # :yield: recvdata
+  def oxidized_expect(options) # :yield: recvdata
     waittime = @options["Waittime"]
     fail_eof = @options["FailEOF"]
     model    = @options["Model"]
