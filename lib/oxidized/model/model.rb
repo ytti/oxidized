@@ -36,7 +36,7 @@ module Oxidized
 
       def cmd _cmd = nil, **args, &block
         if _cmd.class == Symbol
-          args[:clear] ? @cmd[_cmd].push(block) : @cmd[_cmd]=[block]
+          args[:clear] ? @cmd[_cmd]=[block] : @cmd[_cmd].push(block)
         else
           @cmd[:cmd] << [_cmd, block]
         end
