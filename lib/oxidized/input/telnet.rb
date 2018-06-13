@@ -71,16 +71,16 @@ class Net::Telnet
   ## FIXME: we also need output (not sure I'm going to support this)
   attr_reader :output
   def oxidized_expect(options) # :yield: recvdata
-    waittime = @options["Waittime"]
-    fail_eof = @options["FailEOF"]
     model    = @options["Model"]
     @log     = @options["Log"]
 
     expects  = [options[:expect]].flatten
-    time_out = options[:timeout] || @options["Timeout"] || Oxidized.config.timeout?
+    time_out = options[:timeout] || @options["Timeout"] || Oxidized.config.timeout?
 
     Timeout::timeout(time_out) do
-      line, rest, buf = '', '', ''
+      line = ""
+      rest = ""
+      buf  = ""
       loop do
         begin
           c = @sock.readpartial(1024 * 1024)
@@ -105,7 +105,7 @@ class Net::Telnet
           end
           line += buf
           line = model.expects line
-          match = expects.find { |re| line.match re }
+          match = expects.find { |re| line.match re }
           return match if match
         rescue EOFError # End of file reached
           return false
