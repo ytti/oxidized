@@ -30,6 +30,9 @@ Style/FormatStringToken:
 Style/RescueModifier:
   Enabled: false
 
+Style/MultilineBlockChain:
+  Enabled: false
+
 # Do not attempt to police vendored code, and exclude special cases
 AllCops:
   Exclude:
