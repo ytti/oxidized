@@ -34,11 +34,11 @@ module Oxidized
         @cfg
       end
 
-      def cmd _cmd = nil, &block
+      def cmd _cmd = nil, **args, &block
         if _cmd.class == Symbol
-          @cmd[_cmd].unshift block
+          args[:clear] ? @cmd[_cmd].push(block) : @cmd[_cmd]=[block]
         else
-          @cmd[:cmd].unshift [_cmd, block]
+          @cmd[:cmd] << [_cmd, block]
         end
         Oxidized.logger.debug "lib/oxidized/model/model.rb Added #{_cmd} to the commands list"
       end
