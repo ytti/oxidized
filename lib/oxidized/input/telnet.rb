@@ -31,9 +31,10 @@ module Oxidized
       @telnet and not @telnet.sock.closed?
     end
 
-    def cmd cmd, expect = @node.prompt
-      Oxidized.logger.debug "Telnet: #{cmd} @#{@node.name}"
-      args = { 'String' => cmd }
+    def cmd cmd_str, expect = @node.prompt
+      return send(cmd_str) unless expect
+      Oxidized.logger.debug "Telnet: #{cmd_str} @#{@node.name}"
+      args = { 'String' => cmd_str }
       args.merge!({ 'Match' => expect, 'Timeout' => @timeout }) if expect
       @telnet.cmd args
     end
