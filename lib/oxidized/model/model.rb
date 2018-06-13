@@ -86,7 +86,7 @@ module Oxidized
 
       private
 
-      def process_args_block(args, block, target)
+      def process_args_block(target, args, block)
         args[:clean] ? target = [block] : target.push(block)
       end
     end
