@@ -87,7 +87,12 @@ module Oxidized
       private
 
       def process_args_block(target, args, block)
-        args[:clean] ? target = [block] : target.push(block)
+        if args[:clean]
+          target = [block]
+        else
+          method = args[:prepend] ? :unshift : :push
+          target.send(method, block)
+        end
       end
     end
 
