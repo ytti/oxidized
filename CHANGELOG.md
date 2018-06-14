@@ -1,6 +1,10 @@
 # Changelog
 
-## 024.0
+## Master
+
+* BUGFIX: model edgecos
+
+## 0.24.0
 
 * FEATURE: add frr support to cumulus model (@User4574 / @bobthebutcher)
 * FEATURE: honour MAX_STAT in mtime, to store last N mtime
