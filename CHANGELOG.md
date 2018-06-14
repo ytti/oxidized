@@ -6,7 +6,7 @@
 * FEATURE: honour MAX_STAT in mtime, to store last N mtime
 * FEATURE: configurable stats history size
 * FEATURE: model callback enhancements for customizing existing models (@ytti)
-* BUGFIX: model ciscosmb
+* BUGFIX: models ciscosmb, dlink
 
 ## 0.23.0
 
