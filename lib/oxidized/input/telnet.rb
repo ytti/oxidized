@@ -36,8 +36,7 @@ module Oxidized
       Oxidized.logger.debug "Telnet: #{cmd_str} @#{@node.name}"
       args = { 'String'  => cmd_str,
                'Match'   => expect,
-               'Timeout' => @timeout
-      }
+               'Timeout' => @timeout }
       @telnet.cmd args
     end
 
