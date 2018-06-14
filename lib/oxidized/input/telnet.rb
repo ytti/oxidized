@@ -25,6 +25,7 @@ module Oxidized
       rescue Timeout::Error
         raise PromptUndetect, ['unable to detect prompt:', @node.prompt].join(' ')
       end
+      connected?
     end
 
     def connected?
