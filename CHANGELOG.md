@@ -2,7 +2,7 @@
 
 ## Master
 
-* BUGFIX: model edgecos
+* BUGFIX: model edgecos, ciscosmb
 
 ## 0.24.0
 
