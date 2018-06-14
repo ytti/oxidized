@@ -34,8 +34,10 @@ module Oxidized
     def cmd cmd_str, expect = @node.prompt
       return send(cmd_str + "\n") unless expect
       Oxidized.logger.debug "Telnet: #{cmd_str} @#{@node.name}"
-      args = { 'String' => cmd_str }
-      args.merge!({ 'Match' => expect, 'Timeout' => @timeout }) if expect
+      args = { 'String'  => cmd_str,
+               'Match'   => expect,
+               'Timeout' => @timeout
+      }
       @telnet.cmd args
     end
 
