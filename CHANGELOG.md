@@ -3,6 +3,7 @@
 ## Master
 
 * BUGFIX: model edgecos, ciscosmb
+* MISC: bump Dockerfile phusion/baseimage:0.10.0 -> 0.10.1
 
 ## 0.24.0
 

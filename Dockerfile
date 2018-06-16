@@ -18,7 +18,7 @@ ENV DEB_BUILD_OPTIONS nocheck
 RUN dpkg-buildpackage -b
 
 # -- stage 2: build the actual oxidized container
-FROM phusion/baseimage:0.10.0
+FROM phusion/baseimage:0.10.1
 LABEL maintainer="Samer Abdel-Hafez <sam@arahant.net>"
 
 # set up dependencies for the build process
