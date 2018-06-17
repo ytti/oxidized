@@ -164,3 +164,19 @@ Resets the existing block, allowing the user to completely override its contents
 
 Ensures that the contents of the block are prepended, rather than appended (the
 default) to an existing block.
+
+### `String` convenience methods
+
+Since configuration processing tasks are occasionally similar across models,
+Oxidized provides an extended [`String`](/lib/oxidized/string.rb) class with the
+intention of providing convenience methods and eliminating code duplication.
+
+#### `cut_tail`
+
+Returns a multi-line string without the last line, or an empty string if only a
+single line was present.
+
+#### `cut_head`
+
+Returns a multi-line string without the first line, or an empty string if only a
+single line was present.
