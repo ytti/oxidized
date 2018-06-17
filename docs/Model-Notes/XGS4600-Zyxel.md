@@ -1,5 +1,4 @@
-ZynOS Configuration
-===================
+# ZynOS Configuration
 
 ## FTP
 

@@ -13,7 +13,6 @@
 * FEATURE: model callback enhancements for customizing existing models (@ytti)
 * BUGFIX: models ciscosmb, dlink
 
-
 ## 0.23.0
 
 * FEATURE: support arbitrary user/password/prompt detection in telnet, same behaviour as ssh

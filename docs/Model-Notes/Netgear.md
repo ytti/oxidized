@@ -1,9 +1,8 @@
-Netgear Configuration
-=====================
+# Netgear Configuration
 
 There are several models available with CLI management via telnet (port 60000), but they all behave like one of the following:
 
-### Older models:
+## Older models
 
 ```text
 Connected to 192.168.3.201.
@@ -19,7 +18,7 @@ Password:
 (GS748Tv4) #show running-config
 ```
 
-### Newer models:
+## Newer models
 
 ```text
 Connected to 172.0.3.203.
@@ -47,7 +46,7 @@ Configuration for older/newer models: make sure you have defined variable 'enabl
 
 One possible configuration:
 
-### oxidized config
+## oxidized config
 
 ```yaml
 source:
@@ -65,7 +64,7 @@ source:
       telnet_port: 5
 ```
 
-### router.db
+## router.db
 
 ```text
 switchOldFW:netgear:admin:adminpw::60000
