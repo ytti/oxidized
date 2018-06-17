@@ -180,3 +180,8 @@ single line was present.
 
 Returns a multi-line string without the first line, or an empty string if only a
 single line was present.
+
+#### `cut_both`
+
+Returns a multi-line string without the first and last lines, or an empty string
+if fewer than three lines were present.
