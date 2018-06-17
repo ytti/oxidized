@@ -1,5 +1,4 @@
-Cisco WLC Configuration
-=======================
+# Cisco WLC Configuration
 
 Create a user with read-write privilege:
 

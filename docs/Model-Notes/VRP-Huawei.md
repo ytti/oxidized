@@ -1,5 +1,4 @@
-Huawei VRP Configuration
-========================
+# Huawei VRP Configuration
 
 Create a user with no privileges
 
