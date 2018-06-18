@@ -38,6 +38,9 @@ class Comware < Oxidized::Model
         send "_cmdline-mode on\n"
         send "y\n"
         send vars(:comware_cmdline) + "\n"
+        send "xtd-cli-mode on\n"
+        send "y\n"
+        send vars(:comware_cmdline) + "\n"
       end
     end
 

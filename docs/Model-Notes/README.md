@@ -1,5 +1,4 @@
-Model Notes
-===========
+# Model Notes
 
 This directory contains implementation notes and caveats to assist you in your oxidized deployment.
 
@@ -11,6 +10,7 @@ Vendor          | Model           |Updated
 AireOS|[AireOS](AireOS.md)|29 Nov 2017
 Arbor Networks|[ArbOS](ArbOS.md)|27 Feb 2018
 Arista|[EOS](EOS.md)|05 Feb 2018
+Cumulus|[Cumulus](Cumulus.md)|11 Jun 2018
 Huawei|[VRP](VRP-Huawei.md)|17 Nov 2017
 Juniper|[MX/QFX/EX/SRX/J Series](JunOS.md)|18 Jan 2018
 Netgear|[Netgear](Netgear.md)|11 Apr 2018

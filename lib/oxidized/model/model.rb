@@ -24,9 +24,9 @@ module Oxidized
         @prompt or @prompt = _prompt
       end
 
-      def cfg *methods, &block
+      def cfg *methods, **args, &block
         [methods].flatten.each do |method|
-          @cfg[method.to_s] << block
+          process_args_block(@cfg[method.to_s], args, block)
         end
       end
 
@@ -34,11 +34,11 @@ module Oxidized
         @cfg
       end
 
-      def cmd _cmd = nil, &block
+      def cmd _cmd = nil, **args, &block
         if _cmd.class == Symbol
-          @cmd[_cmd] << block
+          process_args_block(@cmd[_cmd], args, block)
         else
-          @cmd[:cmd] << [_cmd, block]
+          process_args_block(@cmd[:cmd], args, [_cmd, block])
         end
         Oxidized.logger.debug "lib/oxidized/model/model.rb Added #{_cmd} to the commands list"
       end
@@ -47,8 +47,8 @@ module Oxidized
         @cmd
       end
 
-      def expect re, &block
-        @expect << [re, block]
+      def expect re, **args, &block
+        process_args_block(@expect, args, [re, block])
       end
 
       def expects
@@ -62,8 +62,8 @@ module Oxidized
       # @since 0.0.39
       # @yield expects block which should return [String]
       # @return [void]
-      def pre &block
-        @procs[:pre] << block
+      def pre **args, &block
+        process_args_block(@procs[:pre], args, block)
       end
 
       # calls the block at the end of the model, adding the output of the block
@@ -73,8 +73,8 @@ module Oxidized
       # @since 0.0.39
       # @yield expects block which should return [String]
       # @return [void]
-      def post &block
-        @procs[:post] << block
+      def post **args, &block
+        process_args_block(@procs[:post], args, block)
       end
 
       # @author Saku Ytti <saku@ytti.fi>
@@ -82,6 +82,17 @@ module Oxidized
       # @return [Hash] hash proc procs :pre+:post to be prepended/postfixed to output
       def procs
         @procs
+      end
+
+      private
+
+      def process_args_block(target, args, block)
+        if args[:clear]
+          target.replace([block])
+        else
+          method = args[:prepend] ? :unshift : :push
+          target.send(method, block)
+        end
       end
     end
 

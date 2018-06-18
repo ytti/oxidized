@@ -10,7 +10,7 @@ module Oxidized
       with_lock do
         new = []
         @source = Oxidized.config.source.default
-        Oxidized.mgr.add_source @source
+        Oxidized.mgr.add_source(@source) or raise(MethodNotFound, "cannot load node source '#{@source}', not found")
         Oxidized.logger.info "lib/oxidized/nodes.rb: Loading nodes"
         nodes = Oxidized.mgr.source[@source].new.load node_want
         nodes.each do |node|

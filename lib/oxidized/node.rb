@@ -15,13 +15,13 @@ module Oxidized
       ip_addr, _ = opt[:ip].to_s.split("/")
       Oxidized.logger.debug 'IPADDR %s' % ip_addr.to_s
       @name           = opt[:name]
-      @ip             = @name unless Oxidized.config.resolve_dns?
-      @ip           ||= IPAddr.new(ip_addr).to_s rescue nil
-      @ip           ||= Resolv.new.getaddress @name
+      @ip             = IPAddr.new(ip_addr).to_s rescue nil
+      @ip           ||= Resolv.new.getaddress(@name) if Oxidized.config.resolve_dns?
+      @ip           ||= @name
       @group          = opt[:group]
+      @model          = resolve_model opt
       @input          = resolve_input opt
       @output         = resolve_output opt
-      @model          = resolve_model opt
       @auth           = resolve_auth opt
       @prompt         = resolve_prompt opt
       @vars           = opt[:vars]
@@ -95,6 +95,7 @@ module Oxidized
         :model     => @model.class.to_s,
         :last      => nil,
         :vars      => @vars,
+        :mtime     => @stats.mtime,
       }
       h[:full_name] = [@group, @name].join('/') if @group
       if @last
@@ -124,6 +125,10 @@ module Oxidized
     def reset
       @user = @email = @msg = @from = nil
       @retry = 0
+    end
+
+    def modified
+      @stats.update_mtime
     end
 
     private
@@ -219,7 +224,6 @@ module Oxidized
       end
 
       # model
-      # FIXME: warning: instance variable @model not initialized
       if Oxidized.config.models.has_key?(@model.class.name.to_s.downcase)
         if Oxidized.config.models[@model.class.name.to_s.downcase].has_key?(key_str)
           value = Oxidized.config.models[@model.class.name.to_s.downcase][key_str]

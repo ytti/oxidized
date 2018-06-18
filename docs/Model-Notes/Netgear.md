@@ -1,9 +1,10 @@
-Netgear Configuration
-=====================
+# Netgear Configuration
 
 There are several models available with CLI management via telnet (port 60000), but they all behave like one of the following:
-- older models:
-```
+
+## Older models
+
+```text
 Connected to 192.168.3.201.
 
 (GS748Tv4)
@@ -17,8 +18,9 @@ Password:
 (GS748Tv4) #show running-config
 ```
 
-- newer models:
-```
+## Newer models
+
+```text
 Connected to 172.0.3.203.
 
 User:admin
@@ -31,17 +33,21 @@ Password:********
 ```
 
 The main differences are:
-- the prompt for username is different (looks quite strange for older models)
-- enable password
-  - the older model prompts for enable password and it expects empty string
-  - the newer model does not prompt for enable password at all
+
+* the prompt for username is different (looks quite strange for older models)
+* enable password
+  * the older model prompts for enable password and it expects empty string
+  * the newer model does not prompt for enable password at all
 
 Configuration for older/newer models: make sure you have defined variable 'enable':
-- `'true'` for newer models
-- `''` empty string: for older models
+
+* `'true'` for newer models
+* `''` empty string: for older models
 
 One possible configuration:
-- oxidized config
+
+## oxidized config
+
 ```yaml
 source:
   default: csv
@@ -57,8 +63,10 @@ source:
       enable: 4
       telnet_port: 5
 ```
-- router.db
-```
+
+## router.db
+
+```text
 switchOldFW:netgear:admin:adminpw::60000
 switchNewFW:netgear:admin:adminpw:true:60000
 ```

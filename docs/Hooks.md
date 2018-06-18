@@ -130,11 +130,11 @@ Fields sent in the message:
 * `model`: Model name (e.g. `eos`)
 * `node`: Device hostname
 
-
 The AWS SNS hook requires the following configuration keys:
 
 * `region`: AWS Region name
 * `topic_arn`: ASN Topic reference
+
 ### awssns hook configuration example
 
 ```yaml

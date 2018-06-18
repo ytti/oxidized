@@ -1,5 +1,4 @@
-JunOS Configuration
-===================
+# JunOS Configuration
 
 Create login class cfg-view
 

@@ -3,6 +3,25 @@
 ## Master
 
 * BUGFIX: xos model deos not modify config on legacy Extreme Networks devices (sq9mev)
+* BUGFIX: model edgecos, ciscosmb
+* MISC: bump Dockerfile phusion/baseimage:0.10.0 -> 0.10.1
+
+## 0.24.0
+
+* FEATURE: add frr support to cumulus model (@User4574 / @bobthebutcher)
+* FEATURE: honour MAX_STAT in mtime, to store last N mtime
+* FEATURE: configurable stats history size
+* FEATURE: model callback enhancements for customizing existing models (@ytti)
+* BUGFIX: models ciscosmb, dlink
+
+## 0.23.0
+
+* FEATURE: support arbitrary user/password/prompt detection in telnet, same behaviour as ssh
+* FEATURE: manager refactor, support local loading of input, output, source, not just model and hook
+* FEATURE: store modification time in node stats
+* BUGFIX: model edgecos does not trigger false positives due to uptime and memory utilization (@sq9mev)
+* BUGFIX: Use SECRET-DATA hints for hiding secrets in JunOS (@Zmegolaz)
+* BUGFIX: comware (@adamboutcher)
 
 ## 0.22.0
 
@@ -19,6 +38,7 @@
 * FEATURE: cambium model
 * FEATURE: ssh key passphrase (@wk)
 * FEATURE: cisco spark hook (@rgnv)
+* FEATURE: added support for setting ssh auth methods (@laf)
 * BUGFIX: models procurve, br6910, vyos, fortios, edgeos, vyatta, junos, powerconnect, supermicro, fortios, firewareos, aricentiss, dnos, nxos, hpbladesystem, netgear, xos, boss, opengear, pfsense, asyncos
 
 ## 0.21.0
