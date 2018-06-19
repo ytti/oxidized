@@ -2,6 +2,7 @@
 
 ## Master
 
+* BUGFIX: xos model should not modify config on legacy Extreme Networks devices (sq9mev)
 * BUGFIX: model edgecos, ciscosmb
 * MISC: bump Dockerfile phusion/baseimage:0.10.0 -> 0.10.1
 

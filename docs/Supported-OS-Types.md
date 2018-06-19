@@ -84,6 +84,7 @@
   * [Enterasys](/lib/oxidized/model/enterasys.rb)
   * [WM](/lib/oxidized/model/mtrlrfs.rb)
   * [XOS](/lib/oxidized/model/xos.rb)
+  * [ExtremeWare](/lib/oxidized/model/xos.rb)
 * F5
   * [TMOS](/lib/oxidized/model/tmos.rb)
 * Fiberstore
