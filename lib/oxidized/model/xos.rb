@@ -15,7 +15,7 @@ class XOS < Oxidized::Model
   end
 
   cmd 'show diagnostics' do |cfg|
-    comment cfg.each_line.reject { |line| line.match /Type/ }.join
+    comment cfg.each_line.reject { |line| line.match /Type \d+:/ }.join
   end
 
   cmd 'show licenses' do |cfg|
