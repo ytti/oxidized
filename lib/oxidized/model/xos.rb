@@ -15,7 +15,7 @@ class XOS < Oxidized::Model
   end
 
   cmd 'show diagnostics' do |cfg|
-	  comment cfg.each_line.reject { |line| line.match /Type/ }.join
+    comment cfg.each_line.reject { |line| line.match /Type/ }.join
   end
 
   cmd 'show licenses' do |cfg|
@@ -23,7 +23,7 @@ class XOS < Oxidized::Model
   end
 
   cmd 'show switch' do |cfg|
-	  comment cfg.each_line.reject { |line| line.match /Time:/ or line.match /boot/i or line.match /Temperature:/ }.join
+    comment cfg.each_line.reject { |line| line.match /Time:/ or line.match /boot/i or line.match /Temperature:/ }.join
   end
 
   cmd 'show configuration' do |cfg|
