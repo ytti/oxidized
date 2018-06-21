@@ -180,7 +180,7 @@ module Oxidized
 
     def update_repo repo, file, data, msg, user, email
       oid_old = repo.blob_at(repo.head.target_id, file)
-      return false if not oid_old || oid_old.content == data
+      return false if oid_old and oid_old.content == data
 
       oid = repo.write data, :blob
       index = repo.index
