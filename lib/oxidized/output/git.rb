@@ -186,7 +186,6 @@ module Oxidized
       index = repo.index
       #index.read_tree repo.head.target.tree unless repo.empty?
       index.add :path => file, :oid => oid, :mode => 0100644
-      tree_new = index.write_tree repo
 
       repo.config['user.name']  = user
       repo.config['user.email'] = email
