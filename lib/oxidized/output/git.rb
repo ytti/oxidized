@@ -179,26 +179,25 @@ module Oxidized
     end
 
     def update_repo repo, file, data, msg, user, email
+      oid_old = repo.blob_at(repo.head.target_id, file)
+      return false if not oid_old || oid_old.content == data
+
       oid = repo.write data, :blob
       index = repo.index
-      index.read_tree repo.head.target.tree unless repo.empty?
-
-      tree_old = index.write_tree repo
+      #index.read_tree repo.head.target.tree unless repo.empty?
       index.add :path => file, :oid => oid, :mode => 0100644
       tree_new = index.write_tree repo
 
-      if tree_old != tree_new
-        repo.config['user.name']  = user
-        repo.config['user.email'] = email
-        @commitref = Rugged::Commit.create(repo,
-                                           :tree       => index.write_tree(repo),
-                                           :message    => msg,
-                                           :parents    => repo.empty? ? [] : [repo.head.target].compact,
-                                           :update_ref => 'HEAD',)
+      repo.config['user.name']  = user
+      repo.config['user.email'] = email
+      @commitref = Rugged::Commit.create(repo,
+                                         :tree       => index.write_tree(repo),
+                                         :message    => msg,
+                                         :parents    => repo.empty? ? [] : [repo.head.target].compact,
+                                         :update_ref => 'HEAD',)
 
-        index.write
-        true
-      end
+      index.write
+      true
     end
   end
 end
