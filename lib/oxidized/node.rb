@@ -223,7 +223,7 @@ module Oxidized
       value
     end
 
-    def git_type
+    def git_type opt
       type = opt[:output] || Oxidized.config.output.default
       return nil unless type[0..2] == "git"
       type

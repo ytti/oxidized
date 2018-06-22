@@ -118,6 +118,7 @@ module Oxidized
     end
 
     def make_ssh_opts
+      secure = Oxidized.config.input.ssh.secure?
       ssh_opts = {
         port:         (vars(:ssh_port) || 22).to_i,
         paranoid:     secure,
@@ -131,7 +132,7 @@ module Oxidized
 
       if proxy_host = vars(:ssh_proxy)
         proxy_command =  "ssh "
-        proxy_command += "-o StrictHostKeyChecking=no " unless Oxidized.config.input.ssh.secure?
+        proxy_command += "-o StrictHostKeyChecking=no " unless secure
         proxy_command += "#{proxy_host} -W %h:%p"
         proxy = Net::SSH::Proxy::Command.new(proxy_command)
         ssh_opts[:proxy] = proxy
