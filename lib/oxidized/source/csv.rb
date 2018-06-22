@@ -20,7 +20,7 @@ module Oxidized
 
     def load _node_want = nil
       nodes = []
-      get_file.each_line do |line|
+      open_file.each_line do |line|
         next if line.match(/^\s*#/)
         data = line.chomp.split(@cfg.delimiter, -1)
         next if data.empty?
@@ -45,7 +45,7 @@ module Oxidized
 
     private
 
-    def get_file
+    def open_file
       file = File.expand_path(@cfg.file)
       if @cfg.gpg?
         crypto = GPGME::Crypto.new password: @cfg.gpg_password
