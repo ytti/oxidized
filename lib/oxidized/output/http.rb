@@ -14,28 +14,19 @@ module Oxidized
         raise NoConfig, 'no output http config, edit ~/.config/oxidized/config'
       end
     end
+
     require "net/http"
     require "uri"
     require "json"
+
     def store node, outputs, opt = {}
       @commitref = nil
-      json = JSON.pretty_generate(
-        {
-          'msg' => opt[:msg],
-          'user' => opt[:user],
-          'email' => opt[:email],
-          'group' => opt[:group],
-          'node' => node,
-          'config' => outputs.to_cfg,
-          # actually we need to also iterate outputs, for other types like in gitlab. But most people don't use 'type' functionality.
-        }
-      )
       uri = URI.parse @cfg.url
       http = Net::HTTP.new uri.host, uri.port
       # http.use_ssl = true if uri.scheme = 'https'
       req = Net::HTTP::Post.new(uri.request_uri, initheader = { 'Content-Type' => 'application/json' })
       req.basic_auth @cfg.user, @cfg.password
-      req.body = json
+      req.body = generate_json(node, outputs, opt)
       response = http.request req
 
       case response.code.to_i
@@ -49,6 +40,22 @@ module Oxidized
         p [:server_problems]
         Oxidized.logger.info "Configuration http backup for #{node} failed status: #{response.body}"
       end
+    end
+
+    private
+
+    def generate_json node, outputs, opt
+      JSON.pretty_generate(
+        {
+          'msg'    => opt[:msg],
+          'user'   => opt[:user],
+          'email'  => opt[:email],
+          'group'  => opt[:group],
+          'node'   => node,
+          'config' => outputs.to_cfg,
+          # actually we need to also iterate outputs, for other types like in gitlab. But most people don't use 'type' functionality.
+        }
+      )
     end
   end
 end
