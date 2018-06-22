@@ -45,9 +45,10 @@ module Oxidized
         ssh_opts[:proxy] = proxy
       end
 
-      ssh_opts[:keys] = vars(:ssh_keys).is_a?(Array) ? vars(:ssh_keys) : [vars(:ssh_keys)] if vars(:ssh_keys)
-      ssh_opts[:kex]  = vars(:ssh_kex).split(/,\s*/) if vars(:ssh_kex)
+      ssh_opts[:keys]       = [vars(:ssh_keys)].flatten if vars(:ssh_keys)
+      ssh_opts[:kex]        = vars(:ssh_kex).split(/,\s*/) if vars(:ssh_kex)
       ssh_opts[:encryption] = vars(:ssh_encryption).split(/,\s*/) if vars(:ssh_encryption)
+      ssh_opts[:verbose]    = Logger::DEBUG if Oxidized.config.input.debug?
 
       Oxidized.logger.debug "lib/oxidized/input/ssh.rb: Connecting to #{@node.name}"
       @ssh = Net::SSH.start(@node.ip, @node.auth[:username], ssh_opts)
