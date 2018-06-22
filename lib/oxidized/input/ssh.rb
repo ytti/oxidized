@@ -118,9 +118,8 @@ module Oxidized
     end
 
     def get_ssh_opts
-      port = vars(:ssh_port) || 22
       ssh_opts = {
-        port:         port.to_i,
+        port:         (vars(:ssh_port) || 22).to_i,
         paranoid:     secure,
         keepalive:    true,
         password:     @node.auth[:password], timeout: Oxidized.config.timeout,
