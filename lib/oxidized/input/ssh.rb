@@ -122,8 +122,7 @@ module Oxidized
         port:         (vars(:ssh_port) || 22).to_i,
         paranoid:     secure,
         keepalive:    true,
-        password:     @node.auth[:password], timeout: Oxidized.config.timeout,
-                                             number_of_password_prompts: 0
+        password:     @node.auth[:password], timeout: Oxidized.config.timeout, number_of_password_prompts: 0
       }
 
       auth_methods = vars(:auth_methods) || %w(none publickey password)
