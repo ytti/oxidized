@@ -228,6 +228,5 @@ module Oxidized
       return nil unless type[0..2] == "git"
       type
     end
-
   end
 end

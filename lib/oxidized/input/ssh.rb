@@ -24,7 +24,7 @@ module Oxidized
       @log = File.open(Oxidized::Config::Log + "/#{@node.ip}-ssh", 'w') if Oxidized.config.input.debug?
 
       Oxidized.logger.debug "lib/oxidized/input/ssh.rb: Connecting to #{@node.name}"
-      @ssh = Net::SSH.start(@node.ip, @node.auth[:username], get_ssh_opts)
+      @ssh = Net::SSH.start(@node.ip, @node.auth[:username], make_ssh_opts)
       unless @exec
         shell_open @ssh
         begin
@@ -117,13 +117,13 @@ module Oxidized
       end
     end
 
-    def get_ssh_opts
+    def make_ssh_opts
       ssh_opts = {
         port:         (vars(:ssh_port) || 22).to_i,
         paranoid:     secure,
         keepalive:    true,
         password:     @node.auth[:password], timeout: Oxidized.config.timeout,
-                      number_of_password_prompts: 0
+                                             number_of_password_prompts: 0
       }
 
       auth_methods = vars(:auth_methods) || %w(none publickey password)

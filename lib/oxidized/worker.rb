@@ -36,7 +36,6 @@ module Oxidized
       Oxidized.logger.debug("lib/oxidized/worker.rb: #{@jobs.size} jobs running in parallel") unless @jobs.empty?
     end
 
-
     def process job
       node = job.node
       node.last = job
