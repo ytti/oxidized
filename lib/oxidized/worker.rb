@@ -29,7 +29,7 @@ module Oxidized
         node = @nodes.get
         node.running? ? next : node.running = true
         @jobs.push Job.new node
-        Oxidized.logger.debug "lib/oxidized/worker.rb: Added #{node.name} to the job queue"
+        Oxidized.logger.debug "lib/oxidized/worker.rb: Added #{node.group}/#{node.name} to the job queue"
       end
 
       run_done_hook if is_cycle_finished?
@@ -48,7 +48,7 @@ module Oxidized
         process_failure node, job
       end
     rescue NodeNotFound
-      Oxidized.logger.warn "#{node.name} not found, removed while collecting?"
+      Oxidized.logger.warn "#{node.group}/#{node.name} not found, removed while collecting?"
     end
 
     private
@@ -57,7 +57,7 @@ module Oxidized
       @jobs_done += 1 # needed for :nodes_done hook
       Oxidized.Hooks.handle :node_success, node: node,
                                            job: job
-      msg = "update #{node.name}"
+      msg = "update #{node.group}/#{node.name}"
       msg += " from #{node.from}" if node.from
       msg += " with message '#{node.msg}'" if node.msg
       output = node.output.new
@@ -73,7 +73,7 @@ module Oxidized
     end
 
     def process_failure node, job
-      msg = "#{node.name} status #{job.status}"
+      msg = "#{node.group}/#{node.name} status #{job.status}"
       if node.retry < Oxidized.config.retries
         node.retry += 1
         msg += ", retry attempt #{node.retry}"
