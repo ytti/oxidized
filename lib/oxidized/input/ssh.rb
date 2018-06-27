@@ -123,7 +123,6 @@ module Oxidized
         port:         (vars(:ssh_port) || 22).to_i,
         paranoid:     secure,
         keepalive:    true,
-        logger:       Oxidized.logger,
         password:     @node.auth[:password],
         timeout:      Oxidized.config.timeout,
         number_of_password_prompts: 0
@@ -144,7 +143,11 @@ module Oxidized
       ssh_opts[:keys]       = [vars(:ssh_keys)].flatten if vars(:ssh_keys)
       ssh_opts[:kex]        = vars(:ssh_kex).split(/,\s*/) if vars(:ssh_kex)
       ssh_opts[:encryption] = vars(:ssh_encryption).split(/,\s*/) if vars(:ssh_encryption)
-      ssh_opts[:verbose]    = Logger::DEBUG if Oxidized.config.input.debug?
+
+      if Oxidized.config.input.debug?
+        ssh_opts[:logger]  = Oxidized.logger
+        ssh_opts[:verbose] = Logger::DEBUG
+      end
 
       ssh_opts
     end
