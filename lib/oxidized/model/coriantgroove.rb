@@ -22,7 +22,7 @@ class CoriantGroove < Oxidized::Model
   end
 
   cfg :ssh do
-    post_login 'set -f cli-config cli-columns 65535'
+    post_login 'set -f cli-config cli-columns 4000'
     pre_logout 'quit -f'
   end
 end
