@@ -1,5 +1,4 @@
-Model Notes
-===========
+# Model Notes
 
 This directory contains implementation notes and caveats to assist you in your oxidized deployment.
 

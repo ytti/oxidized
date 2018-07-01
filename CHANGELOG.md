@@ -2,6 +2,13 @@
 
 ## Master
 
+* BUGFIX: netgear telnet password prompt not detected
+* BUGFIX: xos model should not modify config on legacy Extreme Networks devices (sq9mev)
+* BUGFIX: model edgecos, ciscosmb
+* MISC: bump Dockerfile phusion/baseimage:0.10.0 -> 0.10.1
+
+## 0.24.0
+
 * FEATURE: add frr support to cumulus model (@User4574 / @bobthebutcher)
 * FEATURE: honour MAX_STAT in mtime, to store last N mtime
 * FEATURE: configurable stats history size

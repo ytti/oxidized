@@ -1,5 +1,4 @@
-Arista EOS Configuration
-========================
+# Arista EOS Configuration
 
 By default, EOS requires the `keyboard-interactive` SSH authentication method for a successful SSH login. To add support for this method to your Oxidized configuration, see the [SSH Auth Methods](../Configuration.md#ssh-auth-methods) directive.
 

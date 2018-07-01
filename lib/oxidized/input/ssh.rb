@@ -21,36 +21,10 @@ module Oxidized
       @output      = ''
       @pty_options = { term: "vt100" }
       @node.model.cfg['ssh'].each { |cb| instance_exec(&cb) }
-      secure = Oxidized.config.input.ssh.secure
       @log = File.open(Oxidized::Config::Log + "/#{@node.ip}-ssh", 'w') if Oxidized.config.input.debug?
-      port = vars(:ssh_port) || 22
-
-      ssh_opts = {
-        port:         port.to_i,
-        paranoid:     secure,
-        keepalive:    true,
-        password:     @node.auth[:password], :timeout => Oxidized.config.timeout,
-        number_of_password_prompts: 0,
-      }
-
-      auth_methods = vars(:auth_methods) || %w(none publickey password)
-      ssh_opts[:auth_methods] = auth_methods
-      Oxidized.logger.debug "AUTH METHODS::#{auth_methods}"
-
-      if proxy_host = vars(:ssh_proxy)
-        proxy_command =  "ssh "
-        proxy_command += "-o StrictHostKeyChecking=no " unless secure
-        proxy_command += "#{proxy_host} -W %h:%p"
-        proxy = Net::SSH::Proxy::Command.new(proxy_command)
-        ssh_opts[:proxy] = proxy
-      end
-
-      ssh_opts[:keys] = vars(:ssh_keys).is_a?(Array) ? vars(:ssh_keys) : [vars(:ssh_keys)] if vars(:ssh_keys)
-      ssh_opts[:kex]  = vars(:ssh_kex).split(/,\s*/) if vars(:ssh_kex)
-      ssh_opts[:encryption] = vars(:ssh_encryption).split(/,\s*/) if vars(:ssh_encryption)
 
       Oxidized.logger.debug "lib/oxidized/input/ssh.rb: Connecting to #{@node.name}"
-      @ssh = Net::SSH.start(@node.ip, @node.auth[:username], ssh_opts)
+      @ssh = Net::SSH.start(@node.ip, @node.auth[:username], make_ssh_opts)
       unless @exec
         shell_open @ssh
         begin
@@ -141,6 +115,41 @@ module Oxidized
           true
         end
       end
+    end
+
+    def make_ssh_opts
+      secure = Oxidized.config.input.ssh.secure?
+      ssh_opts = {
+        port:         (vars(:ssh_port) || 22).to_i,
+        paranoid:     secure,
+        keepalive:    true,
+        password:     @node.auth[:password],
+        timeout:      Oxidized.config.timeout,
+        number_of_password_prompts: 0
+      }
+
+      auth_methods = vars(:auth_methods) || %w(none publickey password)
+      ssh_opts[:auth_methods] = auth_methods
+      Oxidized.logger.debug "AUTH METHODS::#{auth_methods}"
+
+      if proxy_host = vars(:ssh_proxy)
+        proxy_command =  "ssh "
+        proxy_command += "-o StrictHostKeyChecking=no " unless secure
+        proxy_command += "#{proxy_host} -W %h:%p"
+        proxy = Net::SSH::Proxy::Command.new(proxy_command)
+        ssh_opts[:proxy] = proxy
+      end
+
+      ssh_opts[:keys]       = [vars(:ssh_keys)].flatten if vars(:ssh_keys)
+      ssh_opts[:kex]        = vars(:ssh_kex).split(/,\s*/) if vars(:ssh_kex)
+      ssh_opts[:encryption] = vars(:ssh_encryption).split(/,\s*/) if vars(:ssh_encryption)
+
+      if Oxidized.config.input.debug?
+        ssh_opts[:logger]  = Oxidized.logger
+        ssh_opts[:verbose] = Logger::DEBUG
+      end
+
+      ssh_opts
     end
   end
 end

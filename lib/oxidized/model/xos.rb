@@ -27,7 +27,7 @@ class XOS < Oxidized::Model
   end
 
   cmd 'show configuration' do |cfg|
-    cfg = cfg.each_line.reject { |line| line.match /^#(\s[\w]+\s)(Configuration generated)/ }.join
+    cfg = cfg.each_line.reject { |line| line.match /^#(\s[\w -]+\s)(Configuration generated)/ }.join
     cfg
   end
 
@@ -41,7 +41,13 @@ class XOS < Oxidized::Model
   end
 
   cfg :telnet, :ssh do
-    post_login 'disable clipaging'
+    post_login do
+      data = cmd 'disable clipaging session'
+      match = data.match /^disable clipaging session\n\*?[\w .-]+(:\d+)? # $/m
+      next if match
+      cmd 'disable clipaging'
+    end
+
     pre_logout do
       send "exit\n"
       send "n\n"

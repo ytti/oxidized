@@ -173,32 +173,18 @@ module Oxidized
     end
 
     def resolve_repo opt
-      if is_git? opt
-        remote_repo = Oxidized.config.output.git.repo
+      type = git_type opt
+      return nil unless type
 
-        if remote_repo.is_a?(::String)
-          if Oxidized.config.output.git.single_repo? || @group.nil?
-            remote_repo
-          else
-            File.join(File.dirname(remote_repo), @group + '.git')
-          end
+      remote_repo = Oxidized.config.output.send(type).repo
+      if remote_repo.is_a?(::String)
+        if Oxidized.config.output.send(type).single_repo? || @group.nil?
+          remote_repo
         else
-          remote_repo[@group]
-        end
-      elsif is_gitcrypt? opt
-        remote_repo = Oxidized.config.output.gitcrypt.repo
-
-        if remote_repo.is_a?(::String)
-          if Oxidized.config.output.gitcrypt.single_repo? || @group.nil?
-            remote_repo
-          else
-            File.join(File.dirname(remote_repo), @group + '.git')
-          end
-        else
-          remote_repo[@group]
+          File.join(File.dirname(remote_repo), @group + '.git')
         end
       else
-        return
+        remote_repo[@group]
       end
     end
 
@@ -237,12 +223,10 @@ module Oxidized
       value
     end
 
-    def is_git? opt
-      (opt[:output] || Oxidized.config.output.default) == 'git'
-    end
-
-    def is_gitcrypt? opt
-      (opt[:output] || Oxidized.config.output.default) == 'gitcrypt'
+    def git_type opt
+      type = opt[:output] || Oxidized.config.output.default
+      return nil unless type[0..2] == "git"
+      type
     end
   end
 end
