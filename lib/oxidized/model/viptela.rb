@@ -26,5 +26,4 @@ class Viptela < Oxidized::Model
     post_login 'paginate false'
     pre_logout 'exit'
   end
-
 end
