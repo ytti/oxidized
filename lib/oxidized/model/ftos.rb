@@ -9,7 +9,8 @@ class FTOS < Oxidized::Model
 
   cmd :secret do |cfg|
     cfg.gsub! /^(snmp-server community).*/, '\\1 <configuration removed>'
-    cfg.gsub! /secret (\d+) (\S+).*/, '<secret hidden>'
+    cfg.gsub! /(secret \d* {0,1})\S+(.*)/, '\\1<secret hidden>\\2'
+    cfg.gsub! /(password \d+) \S+(.*)/, '\\1 <hash hidden>\\2'
     cfg
   end
 
