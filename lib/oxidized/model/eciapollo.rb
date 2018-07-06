@@ -1,4 +1,4 @@
-# ECI Telecom Apollo 
+# ECI Telecom Apollo
 # Tested on OPT9608 systems via SSH and telnet
 
 class ECIapollo < Oxidized::Model
@@ -28,8 +28,7 @@ class ECIapollo < Oxidized::Model
 
   cmd('show version')           { |cfg| comment cfg }
   cmd('show system licenses')   { |cfg| comment cfg }
-  cmd('show configuration' )    { |cfg| comment cfg }
-  cmd('show configuration | display-set' ) { |cfg| cfg }
+  cmd('show configuration')     { |cfg| comment cfg }
+  cmd('show configuration | display-set') { |cfg| cfg }
   cmd('show chassis inventory') { |cfg| comment cfg }
-
 end
