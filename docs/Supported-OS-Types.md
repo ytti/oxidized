@@ -76,6 +76,8 @@
   * [AOSW](/lib/oxidized/model/aosw.rb)
 * D-Link
   * [D-Link](/lib/oxidized/model/dlink.rb)
+* ECI Telecom
+  * [ECIapollo](/lib/oxidized/model/eciapollo.rb)
 * EdgeCore
   * [ES3528M](/lib/oxidized/model/edgecos.rb)
 * Ericsson/Redback
