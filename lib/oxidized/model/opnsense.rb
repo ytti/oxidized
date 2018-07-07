@@ -3,7 +3,7 @@ class OpnSense < Oxidized::Model
   # must enable SSH and password-based SSH access
 
   cmd :all do |cfg|
-    cfg.each_line.to_a[1..-1].join
+    cfg.cut_head
   end
 
   cmd 'cat /conf/config.xml' do |cfg|

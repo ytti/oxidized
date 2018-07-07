@@ -18,8 +18,7 @@ class C4CMTS < Oxidized::Model
 
   cmd 'show environment' do |cfg|
     cfg.gsub! /\s+[\-\d]+\s+C\s+[\(\s\d]+\s+\F\)/, ''	# remove temperature readings
-    cfg.each_line.to_a[1..-2].join
-    comment cfg
+    comment cfg.cut_both
   end
 
   cmd 'show version' do |cfg|
@@ -29,8 +28,7 @@ class C4CMTS < Oxidized::Model
   end
 
   cmd 'show running-config' do |cfg|
-    cfg = cfg.each_line.to_a[1..-2].join
-    cfg
+    cfg.cut_both
   end
 
   cfg :telnet do

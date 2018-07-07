@@ -11,7 +11,7 @@ class NDMS < Oxidized::Model
   end
 
   cmd 'show running-config' do |cfg|
-    cfg = cfg.each_line.to_a[1..-2]
+    cfg = cfg.cut_both
     cfg = cfg.reject { |line| line.match /(clock date|checksum)/ }.join
     cfg
   end

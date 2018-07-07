@@ -16,7 +16,7 @@ class AWPlus < Oxidized::Model
     cfg.gsub! /\e\[K/, ''         # example how to handle pager - cleareol EL0
     cfg.gsub! /\e\[7m\e\[m/, ''   # example how to handle pager - Reverse SGR7
     cfg.gsub! /\r/, '' # Filters rogue ^M - see issue #415
-    cfg.each_line.to_a[1..-2].join
+    cfg.cut_both
   end
 
   # Remove passwords from config file.
