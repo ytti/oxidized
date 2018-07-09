@@ -1,5 +1,5 @@
 class Hpvc < Oxidized::Model
-  # HPE Moonshot Switch / HP Virtual Connect Linux 
+  # HPE Moonshot Switch / HP Virtual Connect Linux
   # sometimes the prompt might have a leading nul or trailing ASCII Bell (^G)
   prompt /^\0*(\([\w.-]+\)).?[>#]$/
   comment '# '
