@@ -31,8 +31,10 @@ class TPLink < Oxidized::Model
   end
 
   cmd 'show system-info' do |cfg|
-    cfg.gsub! /^ System\ Time\s.+/, '' # Omit constantly changing time info
+    cfg = cfg.each_line.to_a[1..-3].join
+    cfg.gsub! /^ System\ Time\s.+/, '' # Omit constantly changing uptime info
     cfg.gsub! /^ Running\ Time\s.+/, '' # Omit constantly changing uptime info
+    cfg.gsub! /^\S+/, ''
     comment cfg
   end
 
