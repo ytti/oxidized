@@ -1,4 +1,10 @@
 #For debian 8 put it in /lib/systemd/system/
+#To set OXIDIZED_HOME instead of the default:
+# ~${oxidized_user}/.config/oxidized in debian 8, then uncomment
+#(and modify as required) the "Environment" variable below so
+#systemd sets the correct environment. Tested only on Debian 8.8.
+#YMMV otherwise.
+#
 #For RHEL / CentOS 7 put it in /etc/systemd/system/
 #and call it with systemctl start oxidized.service
 
@@ -11,6 +17,7 @@ Wants=network-online.target
 ExecStart=/usr/local/bin/oxidized
 User=oxidized
 KillSignal=SIGKILL
+#Environment="OXIDIZED_HOME=/etc/oxidized"
 
 [Install]
 WantedBy=multi-user.target
