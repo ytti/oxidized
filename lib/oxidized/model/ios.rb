@@ -132,9 +132,11 @@ class IOS < Oxidized::Model
 
   cfg :telnet, :ssh do
     # preferred way to handle additional passwords
-    if vars :enable
-      post_login do
-        send "enable\n"
+    post_login do
+      if vars(:enable) == true
+        cmd "enable"
+      elsif vars(:enable)
+        cmd "enable", /^[pP]assword:/
         cmd vars(:enable)
       end
     end
