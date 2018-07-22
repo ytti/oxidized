@@ -26,7 +26,7 @@ class Procurve < Oxidized::Model
   end
 
   cmd :all do |cfg|
-    cfg = cfg.each_line.to_a[1..-2].join
+    cfg = cfg.cut_both
     cfg = cfg.gsub /^\r/, ''
   end
 
@@ -79,6 +79,13 @@ class Procurve < Oxidized::Model
   end
 
   cfg :telnet, :ssh do
+    # preferred way to handle additional passwords
+    if vars :enable
+      post_login do
+        send "enable\n"
+        cmd vars(:enable)
+      end
+    end
     post_login 'no page'
     pre_logout "logout\ny\nn"
   end

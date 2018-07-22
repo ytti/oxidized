@@ -1,5 +1,5 @@
 class Boss < Oxidized::Model
-  # Avaya Baystack Operating System Software(BOSS)
+  # Extreme Baystack Operating System Software(BOSS)
   # Created by danielcoxman@gmail.com
   # May 15, 2017
   # This was tested on ers3510, ers5530, ers4850, ers5952
@@ -27,6 +27,8 @@ class Boss < Oxidized::Model
   # to disable them menu on BOSS the configuration parameter is "cmd-interface cli"
   expect /ommand Line Interface\.\.\./ do |data, re|
     send "c"
+    data.sub re, ''
+    send "\n"
     data.sub re, ''
   end
 

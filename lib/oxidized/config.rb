@@ -20,6 +20,7 @@ module Oxidized
       asetus.default.username      = 'username'
       asetus.default.password      = 'password'
       asetus.default.model         = 'junos'
+      asetus.default.resolve_dns   = true # if false, don't resolve DNS to IP
       asetus.default.interval      = 3600
       asetus.default.use_syslog    = false
       asetus.default.debug         = false
@@ -34,6 +35,7 @@ module Oxidized
       asetus.default.models        = {}               # model level configuration
       asetus.default.pid           = File.join(Oxidized::Config::Root, 'pid')
 
+      asetus.default.stats.history_size = 10
       asetus.default.input.default      = 'ssh, telnet'
       asetus.default.input.debug        = false # or String for session log file
       asetus.default.input.ssh.secure   = false # complain about changed certs

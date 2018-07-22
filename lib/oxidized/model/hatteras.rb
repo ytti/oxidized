@@ -17,7 +17,7 @@ class Hatteras < Oxidized::Model
   end
 
   cmd :all do |cfg|
-    cfg.each_line.to_a[1..-2].join
+    cfg.cut_both
   end
 
   cmd "show switch\r" do |cfg|

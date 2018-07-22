@@ -10,18 +10,16 @@ class Netgear < Oxidized::Model
 
   cfg :telnet do
     username /^(User:|Applying Interface configuration, please wait ...)/
+    password /^Password:/i
   end
 
   cfg :telnet, :ssh do
-    if vars :enable
-      post_login do
-        send "enable\n"
-        # Interpret enable: true as meaning we won't be prompted for a password
-        unless vars(:enable).is_a? TrueClass
-          expect /[pP]assword:\s?$/
-          send vars(:enable) + "\n"
-        end
-        expect /^.+[#]$/
+    post_login do
+      if vars(:enable) == true
+        cmd "enable"
+      elsif vars(:enable)
+        cmd "enable", /[pP]assword:\s?$/
+        cmd vars(:enable)
       end
     end
     post_login 'terminal length 0'

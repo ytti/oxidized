@@ -17,6 +17,42 @@ module Oxidized
 
     def load node_want = nil
       nodes = []
+      data = JSON.parse(read_http(node_want))
+      data = string_navigate(data, @cfg.hosts_location) if @cfg.hosts_location?
+      data.each do |node|
+        next if node.empty?
+        # map node parameters
+        keys = {}
+        @cfg.map.each do |key, want_position|
+          keys[key.to_sym] = node_var_interpolate string_navigate(node, want_position)
+        end
+        keys[:model] = map_model keys[:model] if keys.has_key? :model
+
+        # map node specific vars
+        vars = {}
+        @cfg.vars_map.each do |key, want_position|
+          vars[key.to_sym] = node_var_interpolate string_navigate(node, want_position)
+        end
+        keys[:vars] = vars unless vars.empty?
+
+        nodes << keys
+      end
+      nodes
+    end
+
+    private
+
+    def string_navigate object, wants
+      wants.split(".").map do |want|
+        head, match, _tail = want.partition(/\[\d+\]/)
+        match.empty? ? head : [head, match[1..-2].to_i]
+      end.flatten.each do |want|
+        object = object[want] if object.respond_to? :each
+      end
+      object
+    end
+
+    def read_http node_want
       uri = URI.parse(@cfg.url)
       http = Net::HTTP.new(uri.host, uri.port)
       http.use_ssl = true if uri.scheme == 'https'
@@ -36,45 +72,7 @@ module Oxidized
       if (@cfg.user? && @cfg.pass?)
         request.basic_auth(@cfg.user, @cfg.pass)
       end
-
-      response = http.request(request)
-      data = JSON.parse(response.body)
-      data.each do |node|
-        next if node.empty?
-        # map node parameters
-        keys = {}
-        @cfg.map.each do |key, want_position|
-          want_positions = want_position.split('.')
-          keys[key.to_sym] = node_var_interpolate node.dig(*want_positions)
-        end
-        keys[:model] = map_model keys[:model] if keys.has_key? :model
-
-        # map node specific vars
-        vars = {}
-        @cfg.vars_map.each do |key, want_position|
-          want_positions = want_position.split('.')
-          vars[key.to_sym] = node_var_interpolate node.dig(*want_positions)
-        end
-        keys[:vars] = vars unless vars.empty?
-
-        nodes << keys
-      end
-      nodes
-    end
-  end
-end
-
-if RUBY_VERSION < '2.3'
-  class Hash
-    def dig(key, *rest)
-      value = self[key]
-      if value.nil? || rest.empty?
-        value
-      elsif value.respond_to?(:dig)
-        value.dig(*rest)
-      else # foo.bar.baz (bar exist but is not hash)
-        return nil
-      end
+      http.request(request).body
     end
   end
 end

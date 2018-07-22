@@ -16,11 +16,12 @@ module Oxidized
       Oxidized.logger.debug 'IPADDR %s' % ip_addr.to_s
       @name           = opt[:name]
       @ip             = IPAddr.new(ip_addr).to_s rescue nil
-      @ip           ||= Resolv.new.getaddress @name
+      @ip           ||= Resolv.new.getaddress(@name) if Oxidized.config.resolve_dns?
+      @ip           ||= @name
       @group          = opt[:group]
+      @model          = resolve_model opt
       @input          = resolve_input opt
       @output         = resolve_output opt
-      @model          = resolve_model opt
       @auth           = resolve_auth opt
       @prompt         = resolve_prompt opt
       @vars           = opt[:vars]
@@ -94,6 +95,7 @@ module Oxidized
         :model     => @model.class.to_s,
         :last      => nil,
         :vars      => @vars,
+        :mtime     => @stats.mtime,
       }
       h[:full_name] = [@group, @name].join('/') if @group
       if @last
@@ -123,6 +125,10 @@ module Oxidized
     def reset
       @user = @email = @msg = @from = nil
       @retry = 0
+    end
+
+    def modified
+      @stats.update_mtime
     end
 
     private
@@ -167,32 +173,18 @@ module Oxidized
     end
 
     def resolve_repo opt
-      if is_git? opt
-        remote_repo = Oxidized.config.output.git.repo
+      type = git_type opt
+      return nil unless type
 
-        if remote_repo.is_a?(::String)
-          if Oxidized.config.output.git.single_repo? || @group.nil?
-            remote_repo
-          else
-            File.join(File.dirname(remote_repo), @group + '.git')
-          end
+      remote_repo = Oxidized.config.output.send(type).repo
+      if remote_repo.is_a?(::String)
+        if Oxidized.config.output.send(type).single_repo? || @group.nil?
+          remote_repo
         else
-          remote_repo[@group]
-        end
-      elsif is_gitcrypt? opt
-        remote_repo = Oxidized.config.output.gitcrypt.repo
-
-        if remote_repo.is_a?(::String)
-          if Oxidized.config.output.gitcrypt.single_repo? || @group.nil?
-            remote_repo
-          else
-            File.join(File.dirname(remote_repo), @group + '.git')
-          end
-        else
-          remote_repo[@group]
+          File.join(File.dirname(remote_repo), @group + '.git')
         end
       else
-        return
+        remote_repo[@group]
       end
     end
 
@@ -218,7 +210,6 @@ module Oxidized
       end
 
       # model
-      # FIXME: warning: instance variable @model not initialized
       if Oxidized.config.models.has_key?(@model.class.name.to_s.downcase)
         if Oxidized.config.models[@model.class.name.to_s.downcase].has_key?(key_str)
           value = Oxidized.config.models[@model.class.name.to_s.downcase][key_str]
@@ -232,12 +223,10 @@ module Oxidized
       value
     end
 
-    def is_git? opt
-      (opt[:output] || Oxidized.config.output.default) == 'git'
-    end
-
-    def is_gitcrypt? opt
-      (opt[:output] || Oxidized.config.output.default) == 'gitcrypt'
+    def git_type opt
+      type = opt[:output] || Oxidized.config.output.default
+      return nil unless type[0..2] == "git"
+      type
     end
   end
 end

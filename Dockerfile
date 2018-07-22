@@ -18,12 +18,12 @@ ENV DEB_BUILD_OPTIONS nocheck
 RUN dpkg-buildpackage -b
 
 # -- stage 2: build the actual oxidized container
-FROM phusion/baseimage:0.10.0
+FROM phusion/baseimage:0.10.1
 LABEL maintainer="Samer Abdel-Hafez <sam@arahant.net>"
 
 # set up dependencies for the build process
 RUN apt-get -yq update && \
-    apt-get -yq install ruby2.3 ruby2.3-dev libsqlite3-dev libssl-dev pkg-config make cmake libssh2-1-dev git g++ libffi-dev ruby-bundler
+    apt-get -yq install ruby2.3 ruby2.3-dev libsqlite3-dev libssl-dev pkg-config make cmake libssh2-1-dev git g++ libffi-dev ruby-bundler libicu-dev
 
 # upgrade libssh2 to self-built backport from stage 1
 COPY --from=libssh2-backport \

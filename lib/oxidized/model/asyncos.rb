@@ -1,6 +1,6 @@
 class AsyncOS < Oxidized::Model
-  # ESA prompt "(mail.example.com)> "
-  prompt /^\r*([(][\w. ]+[)][#>]\s+)$/
+  # ESA prompt "(mail.example.com)> " or "mail.example.com> "
+  prompt /^\r*([(]?[\w. ]+[)]?[#>]\s+)$/
   comment '! '
 
   # Select passphrase display option

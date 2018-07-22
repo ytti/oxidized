@@ -76,3 +76,27 @@ end
 ```
 
 The output of the `show configuration | display set` command is marked with a new arbitrary alternative output type, `junos-set`.  The `git` output will use the output type to create a new subdirectory by the same name. In this subdirectory, the `git` output will create files with the name `<devicename>--set` that will contain the output of this command for each device.
+
+## Monkey-patching blocks in existing models
+
+In addition to adding new commands and blocks to existing models, Oxidized offers convenience methods for monkey-patching existing commands and blocks within existing models.
+
+When defining a monkey-patched block, two boolean arguments can be passed as part of the block definition:
+
+* `clear: true`, which resets the existing block, allowing the user to completely override its contents.
+* `prepend: true`, which ensures that the contents of the block are prepended, rather than appended (the default) to an existing block.
+
+This functionality is supported for `cfg`, `cmd`, `pre`, `post`, and `expect` blocks.
+
+Examples:
+
+```ruby
+cmd :secret clear: true do
+  ... "(new code for secret removal which replaces the existing :secret definition in the model)" ...
+end
+```
+
+```ruby
+cmd :ssh do prepend: true do
+  ... "(code that should run first, before any code in the existing :ssh definition in the model)" ...
+end

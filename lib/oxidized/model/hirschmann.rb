@@ -10,7 +10,7 @@ class Hirschmann < Oxidized::Model
   end
 
   cmd :all do |cfg|
-    cfg.each_line.to_a[1..-2].join
+    cfg.cut_both
   end
 
   cmd 'show sysinfo' do |cfg|

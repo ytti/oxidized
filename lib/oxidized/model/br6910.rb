@@ -1,4 +1,3 @@
-
 class BR6910 < Oxidized::Model
   prompt /^([\w.@()-]+[#>]\s?)$/
   comment '! '

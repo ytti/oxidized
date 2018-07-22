@@ -26,8 +26,8 @@ class Dlink < Oxidized::Model
   cmd 'show config current'
 
   cfg :telnet do
-    username /\r*username:/
-    password /\r*password:/
+    username /\r*[Uu]ser[Nn]ame:/
+    password /\r*[Pp]ass[Ww]ord:/
   end
 
   cfg :telnet, :ssh do
