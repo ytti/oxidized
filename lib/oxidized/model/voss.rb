@@ -14,10 +14,10 @@ class Voss < Oxidized::Model
   # Get sys-info and remove information that changes such has temperature and power
   cmd 'show sys-info' do |cfg|
     cfg.gsub! /(^((.*)SysUpTime(.*))$)/, 'removed SysUpTime'
-    cfg.gsub! /^((.*)Temperature Info \:(.*\r?\n){4})/, 'removed Temperature Info and 3 more lines'
-    cfg.gsub! /(^((.*)AmbientTemperature(.*)\:(.*))$)/, 'removed AmbientTemperature'
-    cfg.gsub! /(^((.*)Temperature(.*)\:(.*))$)/, 'removed Temperature'
-    cfg.gsub! /(^((.*)Total Power Usage(.*)\:(.*))$)/, 'removed Total Power Usage'
+    cfg.gsub! /^((.*)Temperature Info :(.*\r?\n){4})/, 'removed Temperature Info and 3 more lines'
+    cfg.gsub! /(^((.*)AmbientTemperature(.*):(.*))$)/, 'removed AmbientTemperature'
+    cfg.gsub! /(^((.*)Temperature(.*):(.*))$)/, 'removed Temperature'
+    cfg.gsub! /(^((.*)Total Power Usage(.*):(.*))$)/, 'removed Total Power Usage'
     comment "#{cfg}\n"
   end
 

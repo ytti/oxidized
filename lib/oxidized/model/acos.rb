@@ -4,7 +4,7 @@ class ACOS < Oxidized::Model
   comment  '! '
 
   # ACOS prompt changes depending on the state of the device
-  prompt /^([-\w.\/:?\[\]\(\)]+[#>]\s?)$/
+  prompt /^([-\w.\/:?\[\]()]+[#>]\s?)$/
 
   cmd :secret do |cfg|
     cfg.gsub!(/community read encrypted (\S+)/, 'community read encrypted <hidden>') # snmp

@@ -97,7 +97,7 @@ class IOS < Oxidized::Model
         comments << "CPU:#{slave} #{cpu}#{cpuxtra}#{slaveslot}";
       end
 
-      if line.match /^System image file is "([^\"]*)"$/
+      if line.match /^System image file is "([^"]*)"$/
         comments << "Image: #{$1}"
       end
     end
@@ -119,9 +119,9 @@ class IOS < Oxidized::Model
     cfg = cfg.each_line.to_a[3..-1]
     cfg = cfg.reject { |line| line.match /^ntp clock-period / }.join
     cfg.gsub! /^Current configuration : [^\n]*\n/, ''
-    cfg.gsub! /^\ tunnel\ mpls\ traffic-eng\ bandwidth[^\n]*\n*(
-                  (?:\ [^\n]*\n*)*
-                  tunnel\ mpls\ traffic-eng\ auto-bw)/mx, '\1'
+    cfg.gsub! /^ tunnel mpls traffic-eng bandwidth[^\n]*\n*(
+                  (?: [^\n]*\n*)*
+                  tunnel mpls traffic-eng auto-bw)/mx, '\1'
     cfg
   end
 

@@ -6,7 +6,7 @@ class SROS < Oxidized::Model
 
   comment  '# '
 
-  prompt /^([-\w\.:>\*]+\s?[#>]\s?)$/
+  prompt /^([-\w.:>*]+\s?[#>]\s?)$/
 
   cmd :all do |cfg, cmdstring|
     new_cfg = comment "COMMAND: #{cmdstring}\n"
