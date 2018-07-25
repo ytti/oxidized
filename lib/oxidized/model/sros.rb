@@ -27,9 +27,10 @@ class SROS < Oxidized::Model
   #
   cmd 'show system information' do |cfg|
     #
-    # Strip uptime.
+    # Strip uptime & last save.
     #
     cfg.sub! /^System Up Time.*\n/, ''
+    cfg.sub! /^Time Last Saved.*\n/, ''
     cfg.gsub! /# Finished .*/, ''
     cfg.gsub! /# Generated .*/, ''
     comment cfg
