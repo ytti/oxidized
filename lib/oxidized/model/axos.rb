@@ -1,8 +1,13 @@
-class AXOS < Oxidized::Model
+class AxOS < Oxidized::Model
   prompt /([\w.@()-]+[#]\s?)$/
   comment '! '
+
   cmd 'show running-config | nomore' do |cfg|
-    cfg
+    cfg.cut_head
+  end
+
+  cmd :all do |cfg|
+    cfg.cut_tail
   end
 
   cfg :ssh do
