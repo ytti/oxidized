@@ -1,5 +1,5 @@
 class AxOS < Oxidized::Model
-  prompt /([\w.@()-]+[#]\s?)$/
+  prompt /(\x1b\[\?7h)?([\w.@()-]+[#]\s?)$/
   comment '! '
 
   cmd 'show running-config | nomore' do |cfg|
