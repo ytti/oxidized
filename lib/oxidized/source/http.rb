@@ -1,4 +1,5 @@
 module Oxidized
+  require 'openssl'
   class HTTP < Source
     def initialize
       @cfg = Oxidized.config.source.http
