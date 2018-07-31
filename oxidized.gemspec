@@ -24,7 +24,7 @@ Gem::Specification.new do |s|
   s.add_runtime_dependency 'slop',    '~> 3.5'
 
   if defined?(RUBY_VERSION) && RUBY_VERSION > '2.3'
-    s.add_runtime_dependency 'net-telnet', '~> 0'
+    s.add_runtime_dependency 'net-telnet', '~> 0.1.1'
   end
 
   s.add_development_dependency 'simplecov'
