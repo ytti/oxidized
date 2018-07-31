@@ -38,6 +38,8 @@
   * [Vyatta](/lib/oxidized/model/vyatta.rb)
   * [6910](/lib/oxidized/model/br6910.rb)
   * [SLX-OS](/lib/oxidized/model/slxos.rb)
+* Calix
+  * [AXOS](/lib/oxidized/model/axos.rb)
 * Casa
   * [Casa](/lib/oxidized/model/casa.rb)
 * Check Point
