@@ -35,6 +35,9 @@ RUN dpkg -i /tmp/*.deb
 # dependencies for hooks
 RUN gem install aws-sdk slack-api xmpp4r cisco_spark
 
+# dependencies for sources
+RUN gem install gpgme sequel
+
 # build and install oxidized
 COPY . /tmp/oxidized/
 WORKDIR /tmp/oxidized
