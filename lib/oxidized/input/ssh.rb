@@ -122,7 +122,7 @@ module Oxidized
       ssh_opts = {
         port:         (vars(:ssh_port) || 22).to_i,
         paranoid:     secure,
-        keepalive:    vars(:ssh_keepalive) || true,
+        keepalive:    vars(:ssh_no_keepalive) ? false : true,
         password:     @node.auth[:password],
         timeout:      Oxidized.config.timeout,
         number_of_password_prompts: 0
