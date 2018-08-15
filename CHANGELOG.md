@@ -9,6 +9,7 @@
 * MISC: Added verbiage to set OXIDIZED_HOME correctly under Debian 8.8 w/systemd
 * FEATURE: add viptela model (@bobthebutcher)
 * FEATURE: add ECI Telecom Appolo platform bij arien.vijn@linklight.nl
+* FEATURE: ssh keepalive now configurable per node with ssh_keepalive boolean
 * MISC: add gpgme and sequel gems to Dockerfile for sources
 
 ## 0.24.0
