@@ -10,6 +10,7 @@
 * FEATURE: add viptela model (@bobthebutcher)
 * FEATURE: add ECI Telecom Appolo platform bij arien.vijn@linklight.nl
 * MISC: add gpgme and sequel gems to Dockerfile for sources
+* BUGFIX: model openbsd
 
 ## 0.24.0
 
