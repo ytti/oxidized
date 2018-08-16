@@ -39,9 +39,6 @@ class Openbsd < Oxidized::Model
     cfg += add_comment('INTERFACE FILES')
     cfg += cmd('tail -n +1 /etc/hostname.*')
 
-    cfg += add_comment('RESOLV.CONF FILE')
-    cfg += cmd('cat /etc/resolv.conf')
-
     cfg += add_comment('SNMP FILE')
     cfg += cmd('cat /etc/snmpd.conf')
 
