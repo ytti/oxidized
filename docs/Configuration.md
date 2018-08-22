@@ -62,13 +62,22 @@ vars:
   ssh_no_exec: true
 ```
 
+## Disabling SSH keepalives
+
+Oxidized SSH input makes use of SSH keepalives to prevent timeouts from slower devices and to quickly tear down stale sessions in larger deployments. There have been reports of SSH keepalives breaking compatibility with certain OS types. They can be disabled using the `ssh_no_keepalive` variable on a per-node basis (by specifying it in the source) or configured application-wide.
+
+```yaml
+vars:
+  ssh_no_keepalive: true
+```
+
 ## SSH Auth Methods
 
 By default, Oxidized registers the following auth methods: `none`, `publickey` and `password`. However you can configure this globally, by groups, models or nodes.
 
 ```yaml
 vars:
-    auth_methods: [ "none", "publickey", "password", "keyboard-interactive" ]
+  auth_methods: [ "none", "publickey", "password", "keyboard-interactive" ]
 ```
 
 ## SSH Proxy Command
