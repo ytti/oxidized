@@ -42,7 +42,7 @@ class TMOS < Oxidized::Model
     comment cfg
   end
 
-  cmd('cat /config/partitions/*/bigip.conf') { |cfg| comment cfg }
+  cmd('cd /config/partitions/; for i in *; do echo "##CONFIG OF PARTITION \"$i\"##"; cat $i/bigip*.conf; done ; cd ~;') { |cfg| comment cfg }
 
   cfg :ssh do
     exec true # don't run shell, run each command in exec channel
