@@ -74,8 +74,18 @@ module Oxidized
         Oxidized.logger.send(level, '%s raised %s%s with msg "%s"' % [self.ip, err.class, resc, err.message])
         return false
       rescue => err
-        file = Oxidized::Config::Crash + '.' + self.ip.to_s
-        open file, 'w' do |fh|
+        if Oxidized.config.crashfile_hostnames
+          crashfile = File.join(Oxidized.config.crash_dir, self.name)
+        else
+          crashfile = File.join(Oxidized.config.crash_dir, self.ip.to_s)
+        end
+        crashdir = Oxidized.config_crash_dir
+
+        unless File.directory?(crashdir)
+          FileUtils.mkdir_p(crashdir)
+        end
+
+        open crashfile, 'w' do |fh|
           fh.puts Time.now.utc
           fh.puts err.message + ' [' + err.class.to_s + ']'
           fh.puts '-' * 50
