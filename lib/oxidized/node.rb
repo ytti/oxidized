@@ -74,7 +74,6 @@ module Oxidized
         Oxidized.logger.send(level, '%s raised %s%s with msg "%s"' % [self.ip, err.class, resc, err.message])
         return false
       rescue => err
-
         crashdir  = Oxidized.config.crash.directory
         crashfile = Oxidized.config.crash.hostnames? ? self.name : self.ip.to_s
         FileUtils.mkdir_p(crashdir) unless File.directory?(crashdir)
