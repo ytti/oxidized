@@ -3,8 +3,7 @@ class Comtrol < Oxidized::Model
 
   # Typical prompt "<hostname>#"
   prompt /([#>]\s?)$/
-  comment  '! '
-
+  comment '! '
 
   # how to handle pager
   expect /--More--+\s$/ do |data, re|
@@ -12,12 +11,10 @@ class Comtrol < Oxidized::Model
     data.sub re, ''
   end
 
-
-
   cmd :all do |cfg|
     cfg.gsub! /^.*\e7/, ''
   end
- 
+
   cmd 'show version'
 
   cmd 'show running-config'
