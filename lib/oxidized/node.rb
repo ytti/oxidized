@@ -84,7 +84,7 @@ module Oxidized
           fh.puts '-' * 50
           fh.puts err.backtrace
         end
-        Oxidized.logger.error '%s raised %s with msg "%s", %s saved' % [self.ip, err.class, err.message, file]
+        Oxidized.logger.error '%s raised %s with msg "%s", %s saved' % [self.ip, err.class, err.message, crashfile]
         return false
       end
     end
