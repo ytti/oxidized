@@ -5,16 +5,19 @@ class Comtrol < Oxidized::Model
   prompt /([#>]\s?)$/
   comment '! '
 
+
   # how to handle pager
   expect /--More--+\s$/ do |data, re|
     send ' '
     data.sub re, ''
   end
 
+
+
   cmd :all do |cfg|
     cfg.gsub! /^.*\e7/, ''
   end
-
+ 
   cmd 'show version'
 
   cmd 'show running-config'
