@@ -12,6 +12,7 @@ class XMPPDiff < Oxidized::Hook
   def run_hook(ctx)
     return unless ctx.node
     return unless ctx.event.to_s == "post_store"
+
     begin
       Timeout.timeout(15) do
         gitoutput = ctx.node.output.new

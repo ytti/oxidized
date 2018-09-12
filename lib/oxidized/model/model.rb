@@ -17,6 +17,7 @@ module Oxidized
 
       def comment _comment = '# '
         return @comment if @comment
+
         @comment = block_given? ? yield : _comment
       end
 
@@ -102,6 +103,7 @@ module Oxidized
       Oxidized.logger.debug "lib/oxidized/model/model.rb Executing #{string}"
       out = @input.cmd(string)
       return false unless out
+
       out = out.b unless Oxidized.config.input.utf8_encoded?
       self.class.cmds[:all].each do |all_block|
         out = instance_exec Oxidized::String.new(out), string, &all_block
@@ -155,6 +157,7 @@ module Oxidized
       self.class.cmds[:cmd].each do |command, block|
         out = cmd command, &block
         return false unless out
+
         outputs << out
       end
       procs[:pre].each do |pre_proc|

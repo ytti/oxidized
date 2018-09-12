@@ -21,6 +21,7 @@ module Oxidized
       data = string_navigate(data, @cfg.hosts_location) if @cfg.hosts_location?
       data.each do |node|
         next if node.empty?
+
         # map node parameters
         keys = {}
         @cfg.map.each do |key, want_position|
