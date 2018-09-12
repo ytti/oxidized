@@ -4,7 +4,7 @@ module Oxidized
     begin
       require 'git'
     rescue LoadError
-      raise OxidizedError, 'git not found: sudo gem install ruby-git'
+      raise OxidizedError, 'git not found: sudo gem install git'
     end
 
     attr_reader :commitref
