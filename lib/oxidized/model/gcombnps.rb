@@ -42,6 +42,7 @@ class GcomBNPS < Oxidized::Model
       next if line.match /^  Bias Current\(mA\)/
       next if line.match /^  RX Power\(dBM\)/
       next if line.match /^  TX Power\(dBM\)/
+
       out << line
     end
 
@@ -57,6 +58,7 @@ class GcomBNPS < Oxidized::Model
     cfg.each_line do |line|
       next if line.match /^system run time        :/
       next if line.match /^switch temperature     :/
+
       out << line
     end
 

@@ -28,6 +28,7 @@ module Oxidized
         # shift nodes and get the next node
         node = @nodes.get
         node.running? ? next : node.running = true
+
         @jobs.push Job.new node
         Oxidized.logger.debug "lib/oxidized/worker.rb: Added #{node.group}/#{node.name} to the job queue"
       end

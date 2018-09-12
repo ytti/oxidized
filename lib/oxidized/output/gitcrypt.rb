@@ -99,6 +99,7 @@ module Oxidized
         else
           File.read path
         end
+
         lock repo
       rescue
         'node not found'

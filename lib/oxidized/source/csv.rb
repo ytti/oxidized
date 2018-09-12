@@ -22,8 +22,10 @@ module Oxidized
       nodes = []
       open_file.each_line do |line|
         next if line.match(/^\s*#/)
+
         data = line.chomp.split(@cfg.delimiter, -1)
         next if data.empty?
+
         # map node parameters
         keys = {}
         @cfg.map.each do |key, position|

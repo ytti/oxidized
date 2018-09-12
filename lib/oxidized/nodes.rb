@@ -16,6 +16,7 @@ module Oxidized
         nodes.each do |node|
           # we want to load specific node(s), not all of them
           next unless node_want? node_want, node
+
           begin
             _node = Node.new node
             new.push _node
@@ -32,6 +33,7 @@ module Oxidized
 
     def node_want? node_want, node
       return true unless node_want
+
       node_want_ip = (IPAddr.new(node_want) rescue false)
       name_is_ip   = (IPAddr.new(node[:name]) rescue false)
       if name_is_ip and node_want_ip == node[:name]
@@ -173,6 +175,7 @@ module Oxidized
         node = find { |n| n.name == node_name }
         output = node.output.new
         raise Oxidized::NotSupported unless output.respond_to? :fetch
+
         yield node, output
       end
     end
