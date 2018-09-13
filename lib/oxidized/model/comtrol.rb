@@ -10,8 +10,7 @@ class Comtrol < Oxidized::Model
     send ' '
     data.sub re, ''
   end
-<<<<<<< HEAD
-  
+
   cmd 'show version' do |cfg|
     comment cfg
   end
@@ -20,17 +19,6 @@ class Comtrol < Oxidized::Model
     cfg
   end
 
-=======
-
-  cmd :all do |cfg|
-    cfg.gsub! /^.*\e7/, ''
-  end
-
-  cmd 'show version'
-
-  cmd 'show running-config'
-
->>>>>>> b64def6743003d57698a1faa790408b48bc49a26
   cfg :telnet do
     username /^User name:/i
     password /^Password:/i
@@ -50,8 +38,4 @@ class Comtrol < Oxidized::Model
     end
     pre_logout 'exit'
   end
-<<<<<<< HEAD
 end
-=======
-end
->>>>>>> b64def6743003d57698a1faa790408b48bc49a26
