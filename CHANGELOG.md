@@ -12,6 +12,7 @@
 * FEATURE: ssh keepalive now configurable per node with ssh_no_keepalive boolean
 * FEATURE: add Comtrol model (@RobbFromIT)
 * MISC: add gpgme and sequel gems to Dockerfile for sources
+* MISC: eos model removes user secrets and BGP secrets
 
 ## 0.24.0
 
