@@ -34,6 +34,7 @@ module Oxidized
 
     def cmd cmd_str, expect = @node.prompt
       return send(cmd_str + "\n") unless expect
+
       Oxidized.logger.debug "Telnet: #{cmd_str} @#{@node.name}"
       args = { 'String'  => cmd_str,
                'Match'   => expect,

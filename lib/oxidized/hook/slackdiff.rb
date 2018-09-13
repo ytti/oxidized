@@ -12,6 +12,7 @@ class SlackDiff < Oxidized::Hook
   def run_hook(ctx)
     return unless ctx.node
     return unless ctx.event.to_s == "post_store"
+
     log "Connecting to slack"
     Slack.configure do |config|
       config.token = cfg.token

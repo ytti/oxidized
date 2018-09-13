@@ -85,8 +85,10 @@ module Oxidized
 
     def pid_status(pidfile)
       return :exited unless File.exists?(pidfile)
+
       pid = ::File.read(pidfile).to_i
       return :dead if pid == 0
+
       Process.kill(0, pid)
       :running
     rescue Errno::ESRCH

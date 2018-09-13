@@ -35,6 +35,9 @@ module Oxidized
       asetus.default.models        = {}               # model level configuration
       asetus.default.pid           = File.join(Oxidized::Config::Root, 'pid')
 
+      asetus.default.crash.directory = File.join(Oxidized::Config::Root, 'crashes')
+      asetus.default.crash.hostnames = false
+
       asetus.default.stats.history_size = 10
       asetus.default.input.default      = 'ssh, telnet'
       asetus.default.input.debug        = false # or String for session log file
