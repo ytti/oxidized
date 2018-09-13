@@ -1,26 +1,23 @@
 class Comtrol < Oxidized::Model
-  # Used in Comtrol Industrial Switches, such as ES8510
+  # Used in Comtrol Industrial Switches, such as RocketLinx ES8510
 
   # Typical prompt "<hostname>#"
   prompt /([#>]\s?)$/
-  comment  '! '
-
+  comment '! '
 
   # how to handle pager
   expect /--More--+\s$/ do |data, re|
     send ' '
     data.sub re, ''
   end
-
-
-
-  cmd :all do |cfg|
-    cfg.gsub! /^.*\e7/, ''
+  
+  cmd 'show version' do |cfg|
+    comment cfg
   end
- 
-  cmd 'show version'
 
-  cmd 'show running-config'
+  cmd 'show running-config' do |cfg|
+    cfg
+  end
 
   cfg :telnet do
     username /^User name:/i
