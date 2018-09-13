@@ -15,6 +15,7 @@ class EOS < Oxidized::Model
     cfg.gsub! /username (\S+) role (\S+).*/, '<secret hidden>'
     cfg.gsub! /^(enable secret).*/, '\\1 <configuration removed>'
     cfg.gsub! /^(tacacs-server key \d+).*/, '\\1 <configuration removed>'
+    cfg.gsub /neighbor (\S+) password \d+ (\S+).*/, '\\1 <bgp password hidden>'
     cfg
   end
 
