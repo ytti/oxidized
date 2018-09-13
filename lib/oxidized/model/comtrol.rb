@@ -1,5 +1,5 @@
 class Comtrol < Oxidized::Model
-  # Used in Comtrol Industrial Switches, such as ES8510
+  # Used in Comtrol Industrial Switches, such as RocketLinx ES8510
 
   # Typical prompt "<hostname>#"
   prompt /([#>]\s?)$/
