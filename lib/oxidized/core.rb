@@ -13,6 +13,7 @@ module Oxidized
       Oxidized.Hooks = HookManager.from_config(Oxidized.config)
       nodes = Nodes.new
       raise NoNodesFound, 'source returns no usable nodes' if nodes.size == 0
+
       @worker = Worker.new nodes
       trap('HUP') { nodes.load }
       if Oxidized.config.rest?
