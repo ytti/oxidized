@@ -10,8 +10,8 @@
 * FEATURE: add viptela model (@bobthebutcher)
 * FEATURE: add ECI Telecom Appolo platform bij arien.vijn@linklight.nl
 * FEATURE: ssh keepalive now configurable per node with ssh_no_keepalive boolean
-* MISC: add gpgme and sequel gems to Dockerfile for sources
 * FEATURE: add Comtrol model (@RobbFromIT)
+* MISC: add gpgme and sequel gems to Dockerfile for sources
 
 ## 0.24.0
 
