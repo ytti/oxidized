@@ -2,15 +2,19 @@
 
 ## Master
 
-* BUGFIX: netgear telnet password prompt not detected
-* BUGFIX: xos model should not modify config on legacy Extreme Networks devices (sq9mev)
-* BUGFIX: model edgecos, ciscosmb
-* MISC: bump Dockerfile phusion/baseimage:0.10.0 -> 0.10.1
-* MISC: Added verbiage to set OXIDIZED_HOME correctly under Debian 8.8 w/systemd
 * FEATURE: add viptela model (@bobthebutcher)
 * FEATURE: add ECI Telecom Appolo platform bij arien.vijn@linklight.nl
+* FEATURE: ssh keepalive now configurable per node with ssh_no_keepalive boolean
+* FEATURE: add Comtrol model (@RobbFromIT)
+* BUGFIX: netgear telnet password prompt not detected
+* BUGFIX: xos model should not modify config on legacy Extreme Networks devices (@sq9mev)
+* BUGFIX: model edgecos, ciscosmb, openbsd
+* MISC: bump Dockerfile phusion/baseimage:0.10.0 -> 0.10.1
+* MISC: Added verbiage to set OXIDIZED_HOME correctly under Debian 8.8 w/systemd
 * MISC: add gpgme and sequel gems to Dockerfile for sources
-* BUGFIX: model openbsd
+* MISC: eos model removes user secrets and BGP secrets (@yzguy)
+* MISC: add secret filtering to netscaler (@shepherdjay)
+* MISC: capture ZebOS configuration for TMOS model (@yzguy)
 
 ## 0.24.0
 

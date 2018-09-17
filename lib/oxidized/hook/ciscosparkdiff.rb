@@ -13,6 +13,7 @@ class CiscoSparkDiff < Oxidized::Hook
   def run_hook(ctx)
     return unless ctx.node
     return unless ctx.event.to_s == "post_store"
+
     log "Connecting to Cisco Spark"
     CiscoSpark.configure do |config|
       config.api_key = cfg.accesskey
