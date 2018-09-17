@@ -42,7 +42,7 @@ class TMOS < Oxidized::Model
     comment cfg
   end
 
-  cmd('cat /config/zebos/*/ZebOS.conf') { |cfg| comment cfg }
+  cmd('[ -d "/config/zebos" ] && cat /config/zebos/*/ZebOS.conf') { |cfg| comment cfg }
 
   cmd('cat /config/partitions/*/bigip.conf') { |cfg| comment cfg }
 
