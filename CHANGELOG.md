@@ -9,7 +9,7 @@
 * BUGFIX: netgear telnet password prompt not detected
 * BUGFIX: xos model should not modify config on legacy Extreme Networks devices (@sq9mev)
 * BUGFIX: model edgecos, ciscosmb, openbsd
-* MISC: bump Dockerfile phusion/baseimage:0.10.0 -> 0.10.1
+* MISC: bump Dockerfile phusion/baseimage:0.10.0 -> 0.11, revert to one-stage build
 * MISC: Added verbiage to set OXIDIZED_HOME correctly under Debian 8.8 w/systemd
 * MISC: add gpgme and sequel gems to Dockerfile for sources
 * MISC: eos model removes user secrets and BGP secrets (@yzguy)
