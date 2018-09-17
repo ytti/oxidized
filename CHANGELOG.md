@@ -14,6 +14,7 @@
 * MISC: add gpgme and sequel gems to Dockerfile for sources
 * MISC: eos model removes user secrets and BGP secrets (@yzguy)
 * MISC: add secret filtering to netscaler (@shepherdjay)
+* MISC: capture ZebOS configuration for TMOS model (@yzguy)
 
 ## 0.24.0
 
