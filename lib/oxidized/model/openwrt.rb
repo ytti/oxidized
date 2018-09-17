@@ -62,6 +62,7 @@ class OpenWrt < Oxidized::Model
     end
     @mtdpartitions.scan(/(\w+):\s+\w+\s+\w+\s+"(.*)"/).each do |partition, name|
       next unless vars(:openwrt_backup_partitions) && partitions_to_backup.include?(name)
+
       Oxidized.logger.debug "Exporting partition - #{name}(#{partition})"
       cfg << comment("#### Partition: #{name} /dev/#{partition} #####")
       cfg << comment("Decode using 'echo -en <data> | gzip -dc > #{name}'")

@@ -39,6 +39,7 @@ module Oxidized
         # don't try input if model is missing config block, we may need strong config to class_name map
         cfg_name = input.to_s.split('::').last.downcase
         next unless @model.cfg[cfg_name] and not @model.cfg[cfg_name].empty?
+
         @model.input = input = input.new
         if config = run_input(input)
           Oxidized.logger.debug "lib/oxidized/node.rb: #{input.class.name} ran for #{name} successfully"
@@ -74,14 +75,17 @@ module Oxidized
         Oxidized.logger.send(level, '%s raised %s%s with msg "%s"' % [self.ip, err.class, resc, err.message])
         return false
       rescue => err
-        file = Oxidized::Config::Crash + '.' + self.ip.to_s
-        open file, 'w' do |fh|
+        crashdir  = Oxidized.config.crash.directory
+        crashfile = Oxidized.config.crash.hostnames? ? self.name : self.ip.to_s
+        FileUtils.mkdir_p(crashdir) unless File.directory?(crashdir)
+
+        open File.join(crashdir, crashfile), 'w' do |fh|
           fh.puts Time.now.utc
           fh.puts err.message + ' [' + err.class.to_s + ']'
           fh.puts '-' * 50
           fh.puts err.backtrace
         end
-        Oxidized.logger.error '%s raised %s with msg "%s", %s saved' % [self.ip, err.class, err.message, file]
+        Oxidized.logger.error '%s raised %s with msg "%s", %s saved' % [self.ip, err.class, err.message, crashfile]
         return false
       end
     end
@@ -226,6 +230,7 @@ module Oxidized
     def git_type opt
       type = opt[:output] || Oxidized.config.output.default
       return nil unless type[0..2] == "git"
+
       type
     end
   end

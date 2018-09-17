@@ -125,6 +125,9 @@ threads: 30
 timeout: 20
 retries: 3
 prompt: !ruby/regexp /^([\w.@-]+[#>]\s?)$/
+crash:
+  directory: ~/.config/oxidized/crashes
+  hostnames: false
 vars:
   enable: S3cr3tx
 groups: {}

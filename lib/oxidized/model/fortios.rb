@@ -20,7 +20,7 @@ class FortiOS < Oxidized::Model
     # A number of other statements also contains sensitive strings
     cfg.gsub! /(set (?:passwd|password|key|group-password|auth-password-l1|auth-password-l2|rsso|history0|history1)) .+/, '\\1 <configuration removed>'
     cfg.gsub! /(set md5-key [0-9]+) .+/, '\\1 <configuration removed>'
-    cfg.gsub! /(set private-key ).*?-+END ENCRYPTED PRIVATE KEY-*"$/m, '\\1<configuration removed>'
+    cfg.gsub! /(set private-key ).*?-+END (ENCRYPTED|RSA) PRIVATE KEY-*"$/m, '\\1<configuration removed>'
     cfg.gsub! /(set ca ).*?-+END CERTIFICATE-*"$/m, '\\1<configuration removed>'
     cfg.gsub! /(set csr ).*?-+END CERTIFICATE REQUEST-*"$/m, '\\1<configuration removed>'
     cfg.gsub! /(Cluster uptime:).*/, '\\1 <stripped>'

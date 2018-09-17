@@ -63,6 +63,7 @@ class AOSW < Oxidized::Model
     cfg.each_line do |line|
       next if line.match /^controller config \d+$/
       next if line.match /^Building Configuration/
+
       out << line.strip
     end
     out = out.join "\n"
@@ -106,6 +107,7 @@ class AOSW < Oxidized::Model
       next if line.match /(Tachometers|Temperatures|Voltages)/
       next if line.match /((Card|CPU) Temperature|Chassis Fan|VMON1[0-9])/
       next if line.match /[0-9]+\s+(RPMS?|m?V|C)/i
+
       out << line.strip
     end
     out = comment out.join "\n"
