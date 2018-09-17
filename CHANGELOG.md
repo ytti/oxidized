@@ -11,6 +11,7 @@
 * FEATURE: add ECI Telecom Appolo platform bij arien.vijn@linklight.nl
 * FEATURE: ssh keepalive now configurable per node with ssh_no_keepalive boolean
 * MISC: add gpgme and sequel gems to Dockerfile for sources
+* MISC: add secret filtering to netscaler (@shepherdjay)
 
 ## 0.24.0
 
