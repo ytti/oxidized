@@ -4,7 +4,7 @@ LABEL maintainer="Samer Abdel-Hafez <sam@arahant.net>"
 
 # set up dependencies for the build process
 RUN apt-get -yq update && \
-    apt-get -yq install ruby2.3 ruby2.3-dev libsqlite3-dev libssl-dev pkg-config make cmake libssh2-1-dev git g++ libffi-dev ruby-bundler libicu-dev
+    apt-get -yq install ruby2.5 ruby2.5-dev libsqlite3-dev libssl-dev pkg-config make cmake libssh2-1-dev git g++ libffi-dev ruby-bundler libicu-dev
 
 # dependencies for hooks
 RUN gem install aws-sdk slack-api xmpp4r cisco_spark
