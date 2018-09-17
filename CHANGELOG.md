@@ -8,7 +8,7 @@
 * FEATURE: add Comtrol model (@RobbFromIT)
 * BUGFIX: netgear telnet password prompt not detected
 * BUGFIX: xos model should not modify config on legacy Extreme Networks devices (@sq9mev)
-* BUGFIX: model edgecos, ciscosmb
+* BUGFIX: model edgecos, ciscosmb, openbsd
 * MISC: bump Dockerfile phusion/baseimage:0.10.0 -> 0.10.1
 * MISC: Added verbiage to set OXIDIZED_HOME correctly under Debian 8.8 w/systemd
 * MISC: add gpgme and sequel gems to Dockerfile for sources
