@@ -11,13 +11,13 @@ class Comtrol < Oxidized::Model
     data.sub re, ''
   end
 
-  cmd :all do |cfg|
-    cfg.gsub! /^.*\e7/, ''
+  cmd 'show version' do |cfg|
+    comment cfg
   end
 
-  cmd 'show version'
-
-  cmd 'show running-config'
+  cmd 'show running-config' do |cfg|
+    cfg
+  end
 
   cfg :telnet do
     username /^User name:/i
