@@ -1,7 +1,6 @@
 class DellX < Oxidized::Model
-  
   # Used in Dell X-Series Switches
-  
+
   prompt /[#>]$/
 
   comment '! '
@@ -21,7 +20,7 @@ class DellX < Oxidized::Model
   end
 
   cmd 'show version' do |cfg|
-    if (@stackable.nil?)
+    if @stackable.nil?
       @stackable = true if cfg.match /(U|u)nit\s/
     end
     cfg = cfg.split("\n").reject { |line| line[/Up\sTime/] }
@@ -58,7 +57,7 @@ class DellX < Oxidized::Model
     skip_blocks = 0
     cfg.each_line do |line|
       # If this is a stackable switch we should skip this block of information
-      if (line.match /Up\sTime|Temperature|Power Suppl(ies|y)|Fans/i and @stackable == true)
+      if line.match /Up\sTime|Temperature|Power Suppl(ies|y)|Fans/i and @stackable == true
         skip_blocks = 1
         # Some switches have another empty line. This is identified by this line having a colon
         skip_blocks = 2 if line.match /:/
