@@ -6,6 +6,7 @@
 * FEATURE: add ECI Telecom Appolo platform bij arien.vijn@linklight.nl
 * FEATURE: ssh keepalive now configurable per node with ssh_no_keepalive boolean
 * FEATURE: add Comtrol model (@RobbFromIT)
+* FEATURE: add Dell X-series model (@RobbFromIT)
 * BUGFIX: netgear telnet password prompt not detected
 * BUGFIX: xos model should not modify config on legacy Extreme Networks devices (@sq9mev)
 * BUGFIX: model edgecos, ciscosmb, openbsd
