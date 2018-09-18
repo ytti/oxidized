@@ -89,8 +89,8 @@ class Cumulus < Oxidized::Model
 
   cfg :telnet, :ssh do
     post_login do
-      if vars(:enable) == true then
-        cmd "sudo su -", /^\[sudo] password/
+      if vars(:enable) == true
+        cmd "sudo su -", /^\[sudo\] password/
         cmd vars(:password)
       elsif vars(:enable)
         cmd "su -", /^Password:/
