@@ -15,6 +15,7 @@
 * MISC: eos model removes user secrets and BGP secrets (@yzguy)
 * MISC: add secret filtering to netscaler (@shepherdjay)
 * MISC: capture ZebOS configuration for TMOS model (@yzguy)
+* FEATURE: add privilege escalation to the cumulus model (@user4574)
 
 ## 0.24.0
 
