@@ -91,7 +91,7 @@ class Cumulus < Oxidized::Model
     post_login do
       if vars(:enable) == true
         cmd "sudo su -", /^\[sudo\] password/
-        cmd vars(:password)
+        cmd @node.auth[:password]
       elsif vars(:enable)
         cmd "su -", /^Password:/
         cmd vars(:enable)
