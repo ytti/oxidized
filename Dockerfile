@@ -4,13 +4,13 @@ LABEL maintainer="Samer Abdel-Hafez <sam@arahant.net>"
 
 # set up dependencies for the build process
 RUN apt-get -yq update && \
-    apt-get -yq install ruby2.5 ruby2.5-dev libsqlite3-dev libssl-dev pkg-config make cmake libssh2-1-dev git g++ libffi-dev ruby-bundler libicu60 libicu-dev
+    apt-get -yq install ruby2.5 ruby2.5-dev libssl1.1 libssl-dev pkg-config make cmake libssh2-1 libssh2-1-dev git g++ libffi-dev ruby-bundler libicu60 libicu-dev libsqlite3-0 libsqlite3-dev libmysqlclient20 libmysqlclient-dev
 
 # dependencies for hooks
-RUN gem install aws-sdk slack-api xmpp4r cisco_spark
+RUN gem install aws-sdk slack-api xmpp4r cisco_spark --no-ri --no-rdoc
 
 # dependencies for sources
-RUN gem install gpgme sequel
+RUN gem install gpgme sequel sqlite3 mysql2 --no-ri --no-rdoc
 
 # build and install oxidized
 COPY . /tmp/oxidized/
@@ -26,7 +26,7 @@ RUN gem install oxidized-web --no-ri --no-rdoc
 # clean up
 WORKDIR /
 RUN rm -rf /tmp/oxidized
-RUN apt-get -yq --purge autoremove ruby-dev pkg-config make cmake ruby-bundler
+RUN apt-get -yq --purge autoremove ruby-dev pkg-config make cmake ruby-bundler libssl-dev libssh2-1-dev libicu-dev libsqlite3-dev libmysqlclient-dev
 
 # add runit services
 ADD extra/oxidized.runit /etc/service/oxidized/run
