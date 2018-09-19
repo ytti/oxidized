@@ -78,6 +78,7 @@
 * DELL
   * [PowerConnect](/lib/oxidized/model/powerconnect.rb)
   * [AOSW](/lib/oxidized/model/aosw.rb)
+  * [DellX](/lib/oxidized/model/dellx.rb)
 * D-Link
   * [D-Link](/lib/oxidized/model/dlink.rb)
 * ECI Telecom
