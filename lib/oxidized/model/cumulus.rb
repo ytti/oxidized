@@ -88,6 +88,19 @@ class Cumulus < Oxidized::Model
   end
 
   cfg :telnet, :ssh do
+    post_login do
+      if vars(:enable) == true
+        cmd "sudo su -", /^\[sudo\] password/
+        cmd @node.auth[:password]
+      elsif vars(:enable)
+        cmd "su -", /^Password:/
+        cmd vars(:enable)
+      end
+    end
+
+    pre_logout do
+      cmd "exit" if vars(:enable)
+    end
     pre_logout 'exit'
   end
 end

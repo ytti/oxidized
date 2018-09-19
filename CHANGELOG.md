@@ -7,10 +7,12 @@
 * FEATURE: ssh keepalive now configurable per node with ssh_no_keepalive boolean
 * FEATURE: add Comtrol model (@RobbFromIT)
 * FEATURE: add Dell X-series model (@RobbFromIT)
+* FEATURE: add privilege escalation to the cumulus model (@user4574)
 * BUGFIX: netgear telnet password prompt not detected
 * BUGFIX: xos model should not modify config on legacy Extreme Networks devices (@sq9mev)
 * BUGFIX: model edgecos, ciscosmb, openbsd
 * MISC: bump Dockerfile phusion/baseimage:0.10.0 -> 0.11, revert to one-stage build
+* MISC: add sqlite3 and mysql2 drivers for sequel to Dockerfile
 * MISC: Added verbiage to set OXIDIZED_HOME correctly under Debian 8.8 w/systemd
 * MISC: add gpgme and sequel gems to Dockerfile for sources
 * MISC: eos model removes user secrets and BGP secrets (@yzguy)
