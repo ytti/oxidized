@@ -1,6 +1,6 @@
 class HPEBladeVCModul < Oxidized::Model
   # HPE Virtual Connect Module
-  prompt /^->/ 
+  prompt /^->/
   comment '### '
   cmd :all do |cfg|
     cfg.cut_head.cut_tail
@@ -13,8 +13,8 @@ class HPEBladeVCModul < Oxidized::Model
   end
   cmd 'show config'
   cfg :telnet do
-    username /\slogin:/ 
-    password /^Password: / 
+    username /\slogin:/
+    password /^Password: /
   end
   cfg :ssh do
     pre_logout "exit"
