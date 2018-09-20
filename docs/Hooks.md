@@ -184,6 +184,18 @@ hooks:
 
 Note the channel name must be in quotes.
 
+An HTTPS proxy can optionally be specified if needed to reach the Slack API endpoint.
+
+```yaml
+hooks:
+  slack:
+    type: slackdiff
+    events: [post_store]
+    token: SLACK_BOT_TOKEN
+    channel: "#network-changes"
+    proxy: http://myproxy:8080
+```
+
 ## Hook type: ciscosparkdiff
 
 The `ciscosparkdiff` hook posts config diffs to a [Cisco Spark](https://www.ciscospark.com/) space of your choice. It only triggers for `post_store` events.
@@ -220,6 +232,19 @@ hooks:
 ```
 
 Note the space and access tokens must be in quotes.
+
+An HTTPS proxy can optionally be specified if needed to reach the Spark API endpoint.
+
+```yaml
+hooks:
+  ciscospark:
+    type: ciscosparkdiff
+    events: [post_store]
+    accesskey: SPARK_BOT_API_OR_OAUTH_KEY
+    space: SPARK_SPACE_ID
+    diff: true
+    proxy: http://myproxy:8080
+```
 
 ## Hook type: xmppdiff
 
