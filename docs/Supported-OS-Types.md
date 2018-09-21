@@ -115,6 +115,7 @@
   * [Comware (HP A-series, H3C, 3Com)](/lib/oxidized/model/comware.rb)
   * [Procurve](/lib/oxidized/model/procurve.rb)
   * [BladeSystem (Onboard Administrator)](/lib/oxidized/model/hpebladesystem.rb)
+  * [BladeSystem (Virtual-Connect Modul)](/lib/oxidized/model/hpebladevcmodul.rb)
   * [MSA](/lib/oxidized/model/hpemsa.rb)
 * Huawei
   * [VRP](/lib/oxidized/model/vrp.rb)
