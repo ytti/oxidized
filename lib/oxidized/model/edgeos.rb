@@ -20,7 +20,7 @@ class Edgeos < Oxidized::Model
     cfg.gsub! /^Uptime:\s.+/, ''
     comment cfg
   end
- 
+
   cmd 'show configuration commands | no-more'
 
   cfg :telnet do
