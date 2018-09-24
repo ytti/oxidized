@@ -2,7 +2,7 @@ class Comware < Oxidized::Model
   # HP (A-series)/H3C/3Com Comware
 
   # sometimes the prompt might have a leading nul or trailing ASCII Bell (^G)
-  prompt /^\0*(<[\w.-]+>).?$/
+  prompt /^\0*(<[\w\s.-]+>|Accounting completed successfully\.).?$/  
   comment '# '
 
   # example how to handle pager
@@ -44,6 +44,7 @@ class Comware < Oxidized::Model
       end
     end
 
+    post-login ''
     post_login 'screen-length disable'
     post_login 'undo terminal monitor'
     pre_logout 'quit'
