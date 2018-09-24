@@ -186,6 +186,8 @@ map:
 
 For model specific credentials
 
+You can add 'username: nil' if the device only expects a Password at prompt. 
+
 ```yaml
 models:
   junos:
@@ -199,6 +201,9 @@ models:
   apc_aos:
     username: apc
     password: password
+  cisco:
+    username: nil
+    password: pass
 ```
 
 ## RESTful API and Web Interface
