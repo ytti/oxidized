@@ -46,7 +46,7 @@ class Procurve < Oxidized::Model
     comment cfg
   end
 
-  cmd 'show system power-supply' do |cfg|
+  cmd 'show system power-supply | in Power|Not P|Model|---' do |cfg|
     comment cfg
   end
 
