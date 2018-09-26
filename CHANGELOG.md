@@ -2,6 +2,7 @@
 
 ## Master
 
+* FEATURE: add HPE virtual connect modul model (@STetzel)
 * FEATURE: add viptela model (@bobthebutcher)
 * FEATURE: add ECI Telecom Appolo platform bij arien.vijn@linklight.nl
 * FEATURE: ssh keepalive now configurable per node with ssh_no_keepalive boolean
