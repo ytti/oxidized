@@ -1,5 +1,5 @@
 class PowerConnect < Oxidized::Model
-  prompt /^([\w\s.@-]+[#>]\s?)$/ # allow spaces in hostname..dell does not limit it.. #
+  prompt /^([\w\s.@-]+(\(\S*\))?[#>]\s?)$/ # allow spaces in hostname..dell does not limit it.. #
 
   comment '! '
 
