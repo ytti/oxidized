@@ -35,7 +35,7 @@ class Procurve < Oxidized::Model
     cfg.gsub! /^(snmp-server host).*/, '\\1 <configuration removed>'
     cfg.gsub! /^(radius-server host).*/, '\\1 <configuration removed>'
     cfg.gsub! /^(radius-server key).*/, '\\1 <configuration removed>'
-    cfg.gsub! /(^\s+((\d+\s+){2}|\d+\s+)\w+\s+((\w+\s+){2}|\w+\s+)(AC\s+\S+|\s+))\s+\d+/, '\\1'
+    cfg.gsub! /^(\s+((\d+\s+){2}|\d+\s+)\w+\s+(\w+\s+(Powered|Present)|Powered)\s+(AC\s+\S+|\s+)).*/, '\\1'
     cfg
   end
 
