@@ -184,7 +184,7 @@ hooks:
 
 Note the channel name must be in quotes.
 
-An HTTPS proxy can optionally be specified if needed to reach the Slack API endpoint.
+A proxy can optionally be specified if needed to reach the Slack API endpoint.
 
 ```yaml
 hooks:
@@ -233,7 +233,7 @@ hooks:
 
 Note the space and access tokens must be in quotes.
 
-An HTTPS proxy can optionally be specified if needed to reach the Spark API endpoint.
+A proxy can optionally be specified if needed to reach the Spark API endpoint.
 
 ```yaml
 hooks:
