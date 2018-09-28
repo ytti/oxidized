@@ -1,7 +1,7 @@
 class Procurve < Oxidized::Model
   # some models start lines with \r
   # previous command is repeated followed by "\eE", which sometimes ends up on last line
-  prompt /^\r?([\w.-]+# )$/
+  prompt /^\r?([\w\s.-]+# )$/
 
   comment '! '
 
