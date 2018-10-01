@@ -146,6 +146,7 @@ module Oxidized
       ssh_opts[:kex]        = vars(:ssh_kex).split(/,\s*/) if vars(:ssh_kex)
       ssh_opts[:encryption] = vars(:ssh_encryption).split(/,\s*/) if vars(:ssh_encryption)
       ssh_opts[:host_key]   = vars(:ssh_host_key).split(/,\s*/) if vars(:ssh_host_key)
+      ssh_opts[:hmac]       = vars(:ssh_hmac).split(/,\s*/) if vars(:ssh_hmac)
 
       if Oxidized.config.input.debug?
         ssh_opts[:logger]  = Oxidized.logger

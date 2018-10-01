@@ -101,9 +101,9 @@ vars_map:
 
 ## SSH enabling legacy algorithms
 
-When connecting to older firmware over SSH, it is sometimes necessary to enable legacy/disabled settings like KexAlgorithms, HostKeyAlgorithms or the Encryption.
+When connecting to older firmware over SSH, it is sometimes necessary to enable legacy/disabled settings like KexAlgorithms, HostKeyAlgorithms, MAC or the Encryption.
 
-These settings can be provided on a per-node basis by mapping the ssh_kex, ssh_host_key and the ssh_encryption fields from you source.
+These settings can be provided on a per-node basis by mapping the ssh_kex, ssh_host_key, ssh_hmac and the ssh_encryption fields from you source.
 
 ```yaml
 ...
@@ -114,7 +114,8 @@ vars_map:
   enable: 2
   ssh_kex: 3
   ssh_host_key: 4
-  ssh_encryption: 5
+  ssh_hmac: 5
+  ssh_encryption: 6
 ...
 ```
 
