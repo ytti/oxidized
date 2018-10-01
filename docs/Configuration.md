@@ -99,6 +99,25 @@ vars_map:
 ...
 ```
 
+## SSH enabling legacy algorithms
+
+When connecting to older firmware over SSH, it is sometimes necessary to enable legacy/disabled settings like KexAlgorithms, HostKeyAlgorithms or the Encryption.
+
+These settings can be provided on a per-node basis by mapping the ssh_kex, ssh_host_key and the ssh_encryption fields from you source.
+
+```yaml
+...
+map:
+  name: 0
+  model: 1
+vars_map:
+  enable: 2
+  ssh_kex: 3
+  ssh_host_key: 4
+  ssh_encryption: 5
+...
+```
+
 ## FTP Passive Mode
 
 Oxidized uses ftp passive mode by default. Some devices require passive mode to be disabled. To do so, we can set `input.ftp.passive` to false - this will make use of FTP active mode.
@@ -186,7 +205,7 @@ map:
 
 For model specific credentials
 
-You can add 'username: nil' if the device only expects a Password at prompt. 
+You can add 'username: nil' if the device only expects a Password at prompt.
 
 ```yaml
 models:
