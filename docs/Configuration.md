@@ -82,11 +82,11 @@ vars:
 
 ## SSH Proxy Command
 
-Oxidized can `ssh` through a proxy as well. To do so we just need to set `ssh_proxy` variable with the proxy host information.
+Oxidized can `ssh` through a proxy as well. To do so we just need to set `ssh_proxy` variable with the proxy host information and optionally set the `ssh_proxy_port` with the SSH port if it is not listening no port 22.
 
 This can be provided on a per-node basis by mapping the proper fields from your source.
 
-An example for a `csv` input source that maps the 4th field as the `ssh_proxy` value.
+An example for a `csv` input source that maps the 4th field as the `ssh_proxy` value and the 5th field as `ssh_proxy_port`.
 
 ```yaml
 ...
@@ -96,6 +96,7 @@ map:
 vars_map:
   enable: 2
   ssh_proxy: 3
+  ssh_proxy_port: 4
 ...
 ```
 
