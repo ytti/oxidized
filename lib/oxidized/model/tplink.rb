@@ -18,6 +18,8 @@ class TPLink < Oxidized::Model
   end
 
   cmd :all do |cfg|
+    # remove unwanted paging line
+    cfg.gsub! /Press any key to contine.*/, ''
     # normalize linefeeds
     cfg.gsub! /(\r|\r\n|\n\r)/, "\n"
     # remove empty lines
