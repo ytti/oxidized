@@ -6,6 +6,8 @@
   * [ACOS](/lib/oxidized/model/acos.rb)
 * Accedian Performance Elements (NIDs)
   * [AEN](/lib/oxidized/model/aen.rb)
+* Adtran
+  * [Total Access (AOS)](/lib/oxidized/model/adtran.rb)
 * Alcatel-Lucent
   * [AOS](/lib/oxidized/model/aos.rb)
   * [AOS7](/lib/oxidized/model/aos7.rb)
