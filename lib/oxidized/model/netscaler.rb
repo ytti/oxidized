@@ -15,10 +15,7 @@ class NetScaler < Oxidized::Model
   end
 
   cmd :secret do |cfg|
-    cfg.gsub! /(-password)\s\w+/, '\\1 <secret hidden>'
-    cfg.gsub! /(-keyValue)\s\w+/, '\\1 <secret hidden>'
-    cfg.gsub! /(-radKey)\s\w+/, '\\1 <secret hidden>'
-    cfg.gsub! /(-ldapBindDnPassword)\s\w+/, '\\1 <secret hidden>'
+    cfg.gsub! /\w+\s(-encrypted)/, '<secret hidden> \\1'
     cfg
   end
 
