@@ -16,6 +16,11 @@ class Edgeos < Oxidized::Model
     cfg
   end
 
+  cmd 'show version | no-more' do |cfg|
+    cfg.gsub! /^Uptime:\s.+/, ''
+    comment cfg
+  end
+
   cmd 'show configuration commands | no-more'
 
   cfg :telnet do
