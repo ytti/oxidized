@@ -1,13 +1,12 @@
-class ARBOS  < Oxidized::Model
-
+class ARBOS < Oxidized::Model
   # Arbor OS model #
 
   prompt /^[\S\s]+\n([\w.@-]+[:\/#>]+)\s?$/
-  comment  '# '
+  comment '# '
 
   cmd 'system hardware' do |cfg|
-    cfg.gsub! /^Boot\ time\:\s.+/, '' # Remove boot timer
-    cfg.gsub! /^Load\ averages\:\s.+/, '' # Remove CPU load info
+    cfg.gsub! /^Boot time:\s.+/, '' # Remove boot timer
+    cfg.gsub! /^Load averages:\s.+/, '' # Remove CPU load info
     cfg = cfg.each_line.to_a[2..-1].join
     comment cfg
   end

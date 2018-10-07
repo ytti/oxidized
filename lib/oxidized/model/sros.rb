@@ -1,5 +1,4 @@
 class SROS < Oxidized::Model
-
   #
   # Nokia SR OS (TiMOS) (formerly TiMetra, Alcatel, Alcatel-Lucent).
   # Used in 7705 SAR, 7210 SAS, 7450 ESS, 7750 SR, 7950 XRS, and NSP.
@@ -7,11 +6,11 @@ class SROS < Oxidized::Model
 
   comment  '# '
 
-  prompt /^([-\w\.:>\*]+\s?[#>]\s?)$/
+  prompt /^([-\w.:>*]+\s?[#>]\s?)$/
 
   cmd :all do |cfg, cmdstring|
     new_cfg = comment "COMMAND: #{cmdstring}\n"
-    new_cfg << cfg.each_line.to_a[1..-2].join
+    new_cfg << cfg.cut_both
   end
 
   #

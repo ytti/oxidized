@@ -14,7 +14,7 @@ output:
 
 This uses the rugged/libgit2 interface. So you should remember that normal Git hooks will not be executed.
 
-For a single repositories for all devices:
+For a single repository containing all devices:
 
 ```yaml
 output:
@@ -25,7 +25,7 @@ output:
     repo: "/var/lib/oxidized/devices.git"
 ```
 
-And for groups repositories:
+And for group-based repositories:
 
 ```yaml
 output:
@@ -68,7 +68,7 @@ output:
 This uses the gem git and system git-crypt interfaces. Have a look at [GIT-Crypt](https://www.agwa.name/projects/git-crypt/) documentation to know how to install it.
 Additionally to user and email informations, you have to provide the users ID that can be a key ID, a full fingerprint, an email address, or anything else that uniquely identifies a public key to GPG (see "HOW TO SPECIFY A USER ID" in the gpg man page).
 
-For a single repositories for all devices:
+For a single repository containing all devices:
 
 ```yaml
 output:
@@ -82,7 +82,7 @@ output:
       - "<user@example.com>"
 ```
 
-And for groups repositories:
+And for group-based repositories:
 
 ```yaml
 output:
@@ -130,7 +130,9 @@ Please note that user list is only updated once at creation.
 
 ## Output: Http
 
-POST a config to the specified URL
+The HTTP output will POST a config to the specified HTTP URL. Basic username/password authentication is supported.
+
+Example HTTP output configuration:
 
 ```yaml
 output:

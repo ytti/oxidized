@@ -1,17 +1,16 @@
 class AOS7 < Oxidized::Model
-
   # Alcatel-Lucent Operating System Version 7 (Linux based)
   # used in OmniSwitch 6900/10k
- 
+
   comment  '! '
 
   cmd :all do |cfg, cmdstring|
     new_cfg = comment "COMMAND: #{cmdstring}\n"
-    new_cfg << cfg.each_line.to_a[1..-2].join
+    new_cfg << cfg.cut_both
   end
 
   cmd 'show system' do |cfg|
-    cfg = cfg.each_line.find{|line|line.match 'Description'}
+    cfg = cfg.each_line.find { |line| line.match 'Description' }
     comment cfg.to_s.strip + "\n"
   end
 

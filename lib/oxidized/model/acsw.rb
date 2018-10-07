@@ -1,11 +1,10 @@
 class ACSW < Oxidized::Model
-
   prompt /([\w.@()\/\\-]+[#>]\s?)/
   comment  '! '
 
   cmd :all do |cfg|
     cfg.gsub! /^% Invalid input detected at '\^' marker\.$|^\s+\^$/, ''
-    cfg.each_line.to_a[1..-2].join
+    cfg.cut_both
   end
 
   cmd :secret do |cfg|
@@ -25,26 +24,23 @@ class ACSW < Oxidized::Model
     cfg
   end
 
-
   cmd 'show version' do |cfg|
     comment cfg
   end
 
-
- cmd 'show inventory' do |cfg|
-   comment cfg
- end
-
+  cmd 'show inventory' do |cfg|
+    comment cfg
+  end
 
   cmd 'show running-config' do |cfg|
     cfg = cfg.each_line.to_a[3..-1]
     cfg = cfg.reject { |line| line.match /^ntp clock-period / }.join
     cfg.gsub! /^Current configuration : [^\n]*\n/, ''
-    cfg.gsub! /^\ tunnel\ mpls\ traffic-eng\ bandwidth[^\n]*\n*(
-                  (?:\ [^\n]*\n*)*
-                  tunnel\ mpls\ traffic-eng\ auto-bw)/mx, '\1'
-    cfg.gsub! /^([\s\t\!]*Last configuration change ).*/, ''
-    cfg.gsub! /^([\s\t\!]*NVRAM config last ).*/, ''
+    cfg.gsub! /^ tunnel mpls traffic-eng bandwidth[^\n]*\n*(
+                  (?: [^\n]*\n*)*
+                  tunnel mpls traffic-eng auto-bw)/mx, '\1'
+    cfg.gsub! /^([\s\t!]*Last configuration change ).*/, ''
+    cfg.gsub! /^([\s\t!]*NVRAM config last ).*/, ''
     cfg
   end
 
@@ -63,5 +59,4 @@ class ACSW < Oxidized::Model
     post_login 'terminal length 0'
     pre_logout 'exit'
   end
-
 end

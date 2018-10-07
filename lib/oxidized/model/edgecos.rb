@@ -1,6 +1,5 @@
 class EdgeCOS < Oxidized::Model
-  
-  comment  '! '
+  comment '! '
 
   cmd :secret do |cfg|
     cfg.gsub!(/password \d+ (\S+).*/, '<secret removed>')
@@ -9,20 +8,14 @@ class EdgeCOS < Oxidized::Model
   end
 
   cmd :all do |cfg|
-     cfg.each_line.to_a[2..-2].join
+    cfg.each_line.to_a[2..-2].join
   end
 
   cmd 'show running-config'
 
-  cmd 'show access-list tcam-utilization' do |cfg|
-    comment cfg
-  end
-
-  cmd 'show memory' do |cfg|
-    comment cfg
-  end
-
   cmd 'show system' do |cfg|
+    cfg.gsub! /^\s*System Up Time\s*:.*\n/i, ''
+    cfg.gsub! /^\s*(Temperature \d*:).*\n/i, '\\1 <removed>'
     comment cfg
   end
 
@@ -43,5 +36,4 @@ class EdgeCOS < Oxidized::Model
     post_login 'terminal length 0'
     pre_logout 'exit'
   end
-
 end

@@ -10,6 +10,9 @@
 /test/version_tmp/
 /tmp/
 .idea/
+Gemfile.lock
+.ruby-version
+.sass-cache/
 
 # Used by dotenv library to load environment variables.
 # .env

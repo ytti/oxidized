@@ -6,23 +6,23 @@ class GcomBNPS < Oxidized::Model
   #  - S5330 (aka Fiberstore S3800)
 
   prompt /^\r?([\w.@()-]+?(\(1-16 chars\))?[#>:]\s?)$/ # also match SSH password promt (post_login commands are sent after the first prompt)
-  comment  '! '
+  comment '! '
 
-# alternative to handle the SSH login, but this breaks telnet
-#  expect /^Password\(1-16 chars\):/ do |data|
-#      send @node.auth[:password] + "\n"
-#      ''
-#  end
+  # alternative to handle the SSH login, but this breaks telnet
+  #  expect /^Password\(1-16 chars\):/ do |data|
+  #      send @node.auth[:password] + "\n"
+  #      ''
+  #  end
 
   # handle pager (can't be disabled?)
   expect /^\.\.\.\.press ENTER to next line, CTRL_C to quit, other key to next page\.\.\.\.$/ do |data, re|
-   send ' '
-   data.sub re, ''
+    send ' '
+    data.sub re, ''
   end
 
   cmd :all do |cfg|
     cfg = cfg.gsub " \e[73D\e[K", '' # remove garbage remaining from the pager
-    cfg.each_line.to_a[1..-2].join
+    cfg.cut_both
   end
 
   cmd :secret do |cfg|
@@ -42,12 +42,12 @@ class GcomBNPS < Oxidized::Model
       next if line.match /^  Bias Current\(mA\)/
       next if line.match /^  RX Power\(dBM\)/
       next if line.match /^  TX Power\(dBM\)/
+
       out << line
     end
 
     comment out.join
   end
-
 
   cmd 'show version' do |cfg|
     comment cfg
@@ -58,6 +58,7 @@ class GcomBNPS < Oxidized::Model
     cfg.each_line do |line|
       next if line.match /^system run time        :/
       next if line.match /^switch temperature     :/
+
       out << line
     end
 
@@ -80,6 +81,4 @@ class GcomBNPS < Oxidized::Model
   cfg :telnet, :ssh do
     pre_logout 'exit'
   end
-
 end
-

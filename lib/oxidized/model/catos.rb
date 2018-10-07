@@ -1,10 +1,9 @@
 class Catos < Oxidized::Model
-
   prompt /^[\w.@-]+>\s?(\(enable\) )?$/
   comment '# '
 
   cmd :all do |cfg|
-    cfg.each_line.to_a[1..-2].join
+    cfg.cut_both
   end
 
   cmd 'show system' do |cfg|
@@ -39,5 +38,4 @@ class Catos < Oxidized::Model
     end
     pre_logout 'exit'
   end
-
 end

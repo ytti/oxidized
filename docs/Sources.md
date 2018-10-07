@@ -59,6 +59,8 @@ pinentry-mode loopback
 
  Oxidized uses the `sequel` ruby gem. You can use a variety of databases that aren't explicitly listed. For more information visit https://github.com/jeremyevans/sequel Make sure you have the correct adapter!
 
+**NOTE** - Many database engines have reserved keywords that may conflict with Oxidized configuration field names (such as 'name', 'group', etc). Pay attention to any names that are used and observed proper quoting methods to avoid errors or unpredictable results.
+
 ## Source: MYSQL
 
 `sudo apt-get install libmysqlclient-dev`

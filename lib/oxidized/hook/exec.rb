@@ -23,10 +23,9 @@ class Exec < Oxidized::Hook
       @cmd = cfg.cmd
       raise "invalid cmd value" unless @cmd.is_a?(String) || @cmd.is_a?(Array)
     end
-
   rescue RuntimeError => e
     raise ArgumentError,
-      "#{self.class.name}: configuration invalid: #{e.message}"
+          "#{self.class.name}: configuration invalid: #{e.message}"
   end
 
   def run_hook ctx
@@ -45,7 +44,7 @@ class Exec < Oxidized::Hook
   def run_cmd! env
     pid, status = nil, nil
     Timeout.timeout(@timeout) do
-      pid = spawn env, @cmd , :unsetenv_others => true
+      pid = spawn env, @cmd, :unsetenv_others => true
       pid, status = wait2 pid
       unless status.exitstatus.zero?
         msg = "#{@cmd.inspect} failed with exit value #{status.exitstatus}"
@@ -53,11 +52,11 @@ class Exec < Oxidized::Hook
         raise msg
       end
     end
-  rescue TimeoutError
+  rescue Timeout::Error
     kill "TERM", pid
     msg = "#{@cmd} timed out"
     log msg, :error
-    raise TimeoutError, msg
+    raise Timeout::Error, msg
   end
 
   def make_env ctx

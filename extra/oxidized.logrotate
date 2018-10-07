@@ -1,0 +1,7 @@
+/var/log/oxidized/*.log {
+    weekly
+    rotate 3
+    size 10M
+    compress
+    delaycompress
+}

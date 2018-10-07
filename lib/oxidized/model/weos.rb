@@ -1,11 +1,10 @@
 class WEOS < Oxidized::Model
-
-  #Westell WEOS, works with Westell 8178G, Westell 8266G
+  # Westell WEOS, works with Westell 8178G, Westell 8266G
 
   prompt /^(\s[\w.@-]+[#>]\s?)$/
 
   cmd :all do |cfg|
-    cfg.each_line.to_a[1..-2].join
+    cfg.cut_both
   end
 
   cmd 'show running-config' do |cfg|
@@ -18,5 +17,4 @@ class WEOS < Oxidized::Model
     post_login 'cli more disable'
     pre_logout 'logout'
   end
-
 end

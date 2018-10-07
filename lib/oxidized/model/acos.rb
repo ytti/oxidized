@@ -3,8 +3,8 @@ class ACOS < Oxidized::Model
 
   comment  '! '
 
-  ##ACOS prompt changes depending on the state of the device
-  prompt /^([-\w.\/:?\[\]\(\)]+[#>]\s?)$/
+  # ACOS prompt changes depending on the state of the device
+  prompt /^([-\w.\/:?\[\]()]+[#>]\s?)$/
 
   cmd :secret do |cfg|
     cfg.gsub!(/community read encrypted (\S+)/, 'community read encrypted <hidden>') # snmp
@@ -30,19 +30,19 @@ class ACOS < Oxidized::Model
   end
 
   cmd 'show partition-config all' do |cfg|
-     cfg.gsub! /(Current configuration).*/, '\\1 <removed>'
-     cfg.gsub! /(Configuration last updated at).*/, '\\1 <removed>'
-     cfg.gsub! /(Configuration last saved at).*/, '\\1 <removed>'
-     cfg.gsub! /(Configuration last synchronized at).*/, '\\1 <removed>'
-     cfg
-  end  
+    cfg.gsub! /(Current configuration).*/, '\\1 <removed>'
+    cfg.gsub! /(Configuration last updated at).*/, '\\1 <removed>'
+    cfg.gsub! /(Configuration last saved at).*/, '\\1 <removed>'
+    cfg.gsub! /(Configuration last synchronized at).*/, '\\1 <removed>'
+    cfg
+  end
 
   cmd 'show running-config all-partitions' do |cfg|
-     cfg.gsub! /(Current configuration).*/, '\\1 <removed>'
-     cfg.gsub! /(Configuration last updated at).*/, '\\1 <removed>'
-     cfg.gsub! /(Configuration last saved at).*/, '\\1 <removed>'
-     cfg.gsub! /(Configuration last synchronized at).*/, '\\1 <removed>'
-     cfg
+    cfg.gsub! /(Current configuration).*/, '\\1 <removed>'
+    cfg.gsub! /(Configuration last updated at).*/, '\\1 <removed>'
+    cfg.gsub! /(Configuration last saved at).*/, '\\1 <removed>'
+    cfg.gsub! /(Configuration last synchronized at).*/, '\\1 <removed>'
+    cfg
   end
 
   cmd 'show aflex all-partitions' do |cfg|
@@ -50,7 +50,7 @@ class ACOS < Oxidized::Model
   end
 
   cmd 'show aflex all-partitions' do |cfg|
-    @partitions_aflex = cfg.lines.each_with_object({}) do |l,h|
+    @partitions_aflex = cfg.lines.each_with_object({}) do |l, h|
       h[$1] = [] if l.match /partition: (.+)/
       # only consider scripts that have passed syntax check
       h[h.keys.last] << $1 if l.match /^([\w-]+) +Check/
@@ -60,13 +60,13 @@ class ACOS < Oxidized::Model
 
   cmd :all do |cfg, cmdstring|
     new_cfg = comment "COMMAND: #{cmdstring}\n"
-    new_cfg << cfg.each_line.to_a[1..-2].join
+    new_cfg << cfg.cut_both
   end
 
   pre do
     unless @partitions_aflex.empty?
       out = []
-      @partitions_aflex.each do |partition,arules|
+      @partitions_aflex.each do |partition, arules|
         out << "! partition: #{partition}"
         arules.each do |name|
           cmd("show aflex #{name} partition #{partition}") do |cfg|
@@ -85,7 +85,7 @@ class ACOS < Oxidized::Model
     username  /login:/
     password  /^Password:/
   end
-  
+
   cfg :telnet, :ssh do
     # preferred way to handle additional passwords
     post_login do
@@ -98,5 +98,4 @@ class ACOS < Oxidized::Model
     post_login 'terminal width 0'
     pre_logout "exit\nexit\nY\r\n"
   end
-
 end

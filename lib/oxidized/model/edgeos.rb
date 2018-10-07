@@ -1,8 +1,7 @@
 class Edgeos < Oxidized::Model
-
   # EdgeOS #
 
-  prompt /\@.*?\:~\$\s/
+  prompt /@.*?:~\$\s/
 
   cmd :all do |cfg|
     cfg = cfg.lines.to_a[1..-2].join
@@ -27,5 +26,4 @@ class Edgeos < Oxidized::Model
   cfg :telnet, :ssh do
     pre_logout 'exit'
   end
-
 end

@@ -7,42 +7,51 @@ module Oxidized
 
     class << self
       def inherited klass
-        klass.instance_variable_set '@cmd',   Hash.new { |h,k| h[k] = [] }
-        klass.instance_variable_set '@cfg',   Hash.new { |h,k| h[k] = [] }
-        klass.instance_variable_set '@procs', Hash.new { |h,k| h[k] = [] }
+        klass.instance_variable_set '@cmd',   Hash.new { |h, k| h[k] = [] }
+        klass.instance_variable_set '@cfg',   Hash.new { |h, k| h[k] = [] }
+        klass.instance_variable_set '@procs', Hash.new { |h, k| h[k] = [] }
         klass.instance_variable_set '@expect', []
         klass.instance_variable_set '@comment', nil
         klass.instance_variable_set '@prompt', nil
       end
-      def comment _comment='# '
+
+      def comment _comment = '# '
         return @comment if @comment
+
         @comment = block_given? ? yield : _comment
       end
-      def prompt _prompt=nil
+
+      def prompt _prompt = nil
         @prompt or @prompt = _prompt
       end
-      def cfg *methods, &block
+
+      def cfg *methods, **args, &block
         [methods].flatten.each do |method|
-          @cfg[method.to_s] << block
+          process_args_block(@cfg[method.to_s], args, block)
         end
       end
+
       def cfgs
         @cfg
       end
-      def cmd _cmd=nil, &block
+
+      def cmd _cmd = nil, **args, &block
         if _cmd.class == Symbol
-          @cmd[_cmd] << block
+          process_args_block(@cmd[_cmd], args, block)
         else
-          @cmd[:cmd] << [_cmd, block]
+          process_args_block(@cmd[:cmd], args, [_cmd, block])
         end
         Oxidized.logger.debug "lib/oxidized/model/model.rb Added #{_cmd} to the commands list"
       end
+
       def cmds
         @cmd
       end
-      def expect re, &block
-        @expect << [re, block]
+
+      def expect re, **args, &block
+        process_args_block(@expect, args, [re, block])
       end
+
       def expects
         @expect
       end
@@ -54,8 +63,8 @@ module Oxidized
       # @since 0.0.39
       # @yield expects block which should return [String]
       # @return [void]
-      def pre &block
-        @procs[:pre] << block
+      def pre **args, &block
+        process_args_block(@procs[:pre], args, block)
       end
 
       # calls the block at the end of the model, adding the output of the block
@@ -65,8 +74,8 @@ module Oxidized
       # @since 0.0.39
       # @yield expects block which should return [String]
       # @return [void]
-      def post &block
-        @procs[:post] << block
+      def post **args, &block
+        process_args_block(@procs[:post], args, block)
       end
 
       # @author Saku Ytti <saku@ytti.fi>
@@ -74,6 +83,17 @@ module Oxidized
       # @return [Hash] hash proc procs :pre+:post to be prepended/postfixed to output
       def procs
         @procs
+      end
+
+      private
+
+      def process_args_block(target, args, block)
+        if args[:clear]
+          target.replace([block])
+        else
+          method = args[:prepend] ? :unshift : :push
+          target.send(method, block)
+        end
       end
     end
 
@@ -83,6 +103,8 @@ module Oxidized
       Oxidized.logger.debug "lib/oxidized/model/model.rb Executing #{string}"
       out = @input.cmd(string)
       return false unless out
+
+      out = out.b unless Oxidized.config.input.utf8_encoded?
       self.class.cmds[:all].each do |all_block|
         out = instance_exec Oxidized::String.new(out), string, &all_block
       end
@@ -135,6 +157,7 @@ module Oxidized
       self.class.cmds[:cmd].each do |command, block|
         out = cmd command, &block
         return false unless out
+
         outputs << out
       end
       procs[:pre].each do |pre_proc|
@@ -166,6 +189,5 @@ module Oxidized
       output.set_cmd(name)
       output
     end
-
   end
 end

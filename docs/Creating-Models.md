@@ -4,6 +4,8 @@ Oxidized supports a growing list of [operating system types](Supported-OS-Types.
 
 A user may wish to extend an existing model to collect the output of additional commands. Oxidized offers smart loading of models in order to facilitate this with ease, without the need to introduce changes to the upstream source code.
 
+This methodology allows local site changes to be preserved during Oxidized version updates / gem updates.
+
 ## Extending an existing model with a new command
 
 The example below can be used to extend the `JunOS` model to collect the output of `show interfaces diagnostics optics` and append the output to the configuration file as a comment. This command retrieves DOM information on pluggable optics present in a `JunOS`-powered chassis.
@@ -25,13 +27,16 @@ class JunOS
 end
 ```
 
-Due to smart loading, the user-supplied `~/.config/oxidized/model/junos.rb` file will take precedence over the model with the same name included in Oxidized. The code then uses `require` to load the included model, and extends the class defined therein with an additional command.
+Due to smart loading, the user-supplied `~/.config/oxidized/model/junos.rb` file will take precedence over the model with the same name included in the Oxidized distribution.
+
+The code then uses `require` to initially load the Oxidized-supplied model, and extends the class defined therein with an additional command.
 
 Intuitively, it is also possible to:
 
 * Completely re-define an existing model by creating a file in `~/.config/oxidized/model/` with the same name as an existing model, but not `require`-ing the upstream model file.
-* Create a named variation of an existing model, by creating a file with a new name (such as `~/.config/oxidized/model/junos-extra.rb`), Then `require` the original model and extend its base class as in the above example. The named variation can then be specified as an OS type for some devices but not others when defining sources.
+* Create a named variation of an existing model, by creating a file with a new name (such as `~/.config/oxidized/model/junos-extra.rb`), Then `require` the original model and extend its base class as in the above example. The named variation can then be specified as an OS type for specific devices that can benefit from the extra functionality. This allows for preservation of the base functionality for the default model types.
 * Create a completely new model, with a new name, for a new operating system type.
+* Testing/validation of an updated model from the [Oxidized GitHub repo models](https://github.com/ytti/oxidized/tree/master/lib/oxidized/model) by placing an updated model in the proper location without disrupting the gem-supplied model files.
 
 ## Advanced features
 
@@ -71,3 +76,27 @@ end
 ```
 
 The output of the `show configuration | display set` command is marked with a new arbitrary alternative output type, `junos-set`.  The `git` output will use the output type to create a new subdirectory by the same name. In this subdirectory, the `git` output will create files with the name `<devicename>--set` that will contain the output of this command for each device.
+
+## Monkey-patching blocks in existing models
+
+In addition to adding new commands and blocks to existing models, Oxidized offers convenience methods for monkey-patching existing commands and blocks within existing models.
+
+When defining a monkey-patched block, two boolean arguments can be passed as part of the block definition:
+
+* `clear: true`, which resets the existing block, allowing the user to completely override its contents.
+* `prepend: true`, which ensures that the contents of the block are prepended, rather than appended (the default) to an existing block.
+
+This functionality is supported for `cfg`, `cmd`, `pre`, `post`, and `expect` blocks.
+
+Examples:
+
+```ruby
+cmd :secret clear: true do
+  ... "(new code for secret removal which replaces the existing :secret definition in the model)" ...
+end
+```
+
+```ruby
+cmd :ssh do prepend: true do
+  ... "(code that should run first, before any code in the existing :ssh definition in the model)" ...
+end

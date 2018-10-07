@@ -6,7 +6,7 @@ The following objects exist in Oxidized.
 
 * gets config from nodes
 * must implement 'connect', 'get', 'cmd'
-* 'ssh', 'telnet, ftp, and tftp' implemented
+* 'ssh', 'telnet', 'ftp', and 'tftp' implemented
 
 ## Output
 
@@ -18,12 +18,12 @@ The following objects exist in Oxidized.
 
 * gets list of nodes to poll
 * must implement 'load'
-* source can have 'name', 'model', 'group', 'username', 'password', 'input', 'output', 'prompt'
-  * name - name of the devices
-  * model - model to use ios/junos/xyz, model is loaded dynamically when needed (Also default in config file)
-  * input - method to acquire config, loaded dynamically as needed (Also default in config file)
-  * output - method to store config, loaded dynamically as needed (Also default in config file)
-  * prompt - prompt used for node (Also default in config file, can be specified in model too)
+* source can have 'name', 'model', 'group', 'username', 'password', 'input', 'output', 'prompt' for each device.
+  * `name` - name of the device
+  * `model` - model to use ('ios', 'junos', etc).The model is loaded dynamically by the first node of that model type. (Also default in config file)
+  * `input` - method to acquire config, loaded dynamically as needed (Also default in config file)
+  * `output` - method to store config, loaded dynamically as needed (Also default in config file)
+  * `prompt` - prompt used for node (Also default in config file, can be specified in model too)
 * 'sql', 'csv' and 'http' (supports any format with single entry per line, like router.db)
 
 ## Model
@@ -42,6 +42,8 @@ it at least once is required for a model to work.
 
 The block may contain commands to change some behaviour for the given methods
 (e.g. calling `post_login` to disable the pager).
+
+Supports [monkey patching](#monkey-patching).
 
 #### `cmd`
 
@@ -75,6 +77,8 @@ string.
 Execution order is `:all`, `:secret`, and lastly the command specific block, if
 given.
 
+Supports [monkey patching](#monkey-patching).
+
 #### `comment`
 
 Called with a single string containing the string to prepend for comments in
@@ -99,6 +103,8 @@ The passed data is replaced by the return value of the block.
 `expect` can be used to, for example, strip escape sequences from output before
 it's further processed.
 
+Supports [monkey patching](#monkey-patching).
+
 ### At the second level
 
 The following methods are available:
@@ -116,16 +122,66 @@ the password prompt. If not specified, the default of `/^Password/` is used.
 #### `post_login`
 
 Used inside `cfg` invocations to specify commands to run once Oxidized has
-logged in to the switch. Takes one argument that is either a block (taking zero
+logged in to the device. Takes one argument that is either a block (taking zero
 parameters) or a string containing a command to execute.
+
+This allows `post_login` to be used for any model-specific items prior to
+running the regular commands. This could include disabling the output pager
+or timestamp outputs that would cause constant differences.
+
+Supports [monkey patching](#monkey-patching).
 
 #### `pre_logout`
 
 Used to specify commands to run before Oxidized closes the connection to the
-switch. Takes one argument that is either a block (taking zero parameters) or a
+device. Takes one argument that is either a block (taking zero parameters) or a
 string containing a command to execute.
+
+This allows `pre_logout` to be used to 'undo' any changes that may have been
+needed via `post_login` (restore pager output, etc.)
+
+Supports [monkey patching](#monkey-patching).
 
 #### `send`
 
 Usually used inside `expect` or blocks passed to `post_login`/`pre_logout`.
-Takes a single parameter: a string to be sent to the switch.
+Takes a single parameter: a string to be sent to the device.
+
+### Monkey patching
+
+Several model blocks accept behavior-modifying arguments that make monkey
+patching existing blocks easier. This is primarily useful when a user-supplied
+model aims to override or extend existing behavior of a model included in Oxidized.
+
+This functionality is supported by `cfg`, `cmd`, `pre_*`, `post_*`, and `expect`
+blocks.
+
+#### `clear: true`
+
+Resets the existing block, allowing the user to completely override its contents.
+
+#### `prepend: true`
+
+Ensures that the contents of the block are prepended, rather than appended (the
+default) to an existing block.
+
+### `String` convenience methods
+
+Since configuration processing tasks are occasionally similar across models,
+Oxidized provides an extended [`String`](/lib/oxidized/string.rb) class with the
+intention of providing convenience methods and eliminating code duplication.
+
+#### `cut_tail`
+
+Returns a multi-line string without the last line, or an empty string if only a
+single line was present.
+
+#### `cut_head`
+
+Returns a multi-line string without the first line, or an empty string if only a
+single line was present.
+
+#### `cut_both`
+
+Returns a multi-line string without the first and last lines, or an empty string
+if fewer than three lines were present.

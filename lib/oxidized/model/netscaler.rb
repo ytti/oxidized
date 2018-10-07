@@ -1,6 +1,5 @@
 class NetScaler < Oxidized::Model
-
-  prompt /^\>\s*$/
+  prompt /^>\s*$/
   comment '# '
 
   cmd :all do |cfg|
@@ -15,10 +14,17 @@ class NetScaler < Oxidized::Model
     comment cfg
   end
 
+  cmd :secret do |cfg|
+    cfg.gsub! /(-password)\s\w+/, '\\1 <secret hidden>'
+    cfg.gsub! /(-keyValue)\s\w+/, '\\1 <secret hidden>'
+    cfg.gsub! /(-radKey)\s\w+/, '\\1 <secret hidden>'
+    cfg.gsub! /(-ldapBindDnPassword)\s\w+/, '\\1 <secret hidden>'
+    cfg
+  end
+
   cmd 'show ns ns.conf'
 
   cfg :ssh do
     pre_logout 'exit'
   end
-
 end

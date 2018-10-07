@@ -1,8 +1,7 @@
 class OpenGear < Oxidized::Model
+  comment '# '
 
-  comment  '# '
-  
-  prompt /^(\$\s)?$/
+  prompt /^(\$\s)$/
 
   cmd :secret do |cfg|
     cfg.gsub!(/password (\S+)/, 'password <secret removed>')
@@ -15,7 +14,6 @@ class OpenGear < Oxidized::Model
   cmd 'config -g config'
 
   cfg :ssh do
-    exec true  # don't run shell, run each command in exec channel
+    exec true # don't run shell, run each command in exec channel
   end
-
 end

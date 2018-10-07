@@ -1,5 +1,59 @@
 # Changelog
 
+## Master
+
+* FEATURE: add viptela model (@bobthebutcher)
+* FEATURE: add ECI Telecom Appolo platform bij arien.vijn@linklight.nl
+* FEATURE: ssh keepalive now configurable per node with ssh_no_keepalive boolean
+* FEATURE: add Comtrol model (@RobbFromIT)
+* FEATURE: add Dell X-series model (@RobbFromIT)
+* FEATURE: add privilege escalation to the cumulus model (@user4574)
+* BUGFIX: netgear telnet password prompt not detected
+* BUGFIX: xos model should not modify config on legacy Extreme Networks devices (@sq9mev)
+* BUGFIX: model dlink, edgecos, ciscosmb, openbsd
+* MISC: bump Dockerfile phusion/baseimage:0.10.0 -> 0.11, revert to one-stage build
+* MISC: add sqlite3 and mysql2 drivers for sequel to Dockerfile
+* MISC: Added verbiage to set OXIDIZED_HOME correctly under Debian 8.8 w/systemd
+* MISC: add gpgme and sequel gems to Dockerfile for sources
+* MISC: eos model removes user secrets and BGP secrets (@yzguy)
+* MISC: add secret filtering to netscaler (@shepherdjay)
+* MISC: capture ZebOS configuration for TMOS model (@yzguy)
+
+## 0.24.0
+
+* FEATURE: add frr support to cumulus model (@User4574 / @bobthebutcher)
+* FEATURE: honour MAX_STAT in mtime, to store last N mtime
+* FEATURE: configurable stats history size
+* FEATURE: model callback enhancements for customizing existing models (@ytti)
+* BUGFIX: models ciscosmb, dlink
+
+## 0.23.0
+
+* FEATURE: support arbitrary user/password/prompt detection in telnet, same behaviour as ssh
+* FEATURE: manager refactor, support local loading of input, output, source, not just model and hook
+* FEATURE: store modification time in node stats
+* BUGFIX: model edgecos does not trigger false positives due to uptime and memory utilization (@sq9mev)
+* BUGFIX: Use SECRET-DATA hints for hiding secrets in JunOS (@Zmegolaz)
+* BUGFIX: comware (@adamboutcher)
+
+## 0.22.0
+
+* FEATURE: openbsd model (@amarti2038)
+* FEATURE: comnet model (@jaylik)
+* FEATURE: stoneos model (@macaty)
+* FEATURE: openwrt model (@z00nx)
+* FEATURE: arbos model (@jsynack)
+* FEATURE: ndms model (@yuri-zubov)
+* FEATURE: openwert model (@z00nx)
+* FEATURE: stoneos model (@macaty)
+* FEATURE: comnetms model (@jaylik)
+* FEATURE: openbsd model (@amarti2038)
+* FEATURE: cambium model
+* FEATURE: ssh key passphrase (@wk)
+* FEATURE: cisco spark hook (@rgnv)
+* FEATURE: added support for setting ssh auth methods (@laf)
+* BUGFIX: models procurve, br6910, vyos, fortios, edgeos, vyatta, junos, powerconnect, supermicro, fortios, firewareos, aricentiss, dnos, nxos, hpbladesystem, netgear, xos, boss, opengear, pfsense, asyncos
+
 ## 0.21.0
 
 * FEATURE: routeros include system history (@InsaneSplash)

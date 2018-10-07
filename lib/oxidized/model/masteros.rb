@@ -1,8 +1,7 @@
 class MasterOS < Oxidized::Model
-
   # MRV MasterOS model #
 
-comment '!'
+  comment '!'
 
   cmd :secret do |cfg|
     cfg.gsub! /^(snmp-server community).*/, '\\1 <configuration removed>'
@@ -11,13 +10,12 @@ comment '!'
   end
 
   cmd :all do |cfg|
-    cfg.each_line.to_a[1..-2].join
+    cfg.cut_both
     cfg.gsub /^(! Configuration ).*/, '!'
   end
 
   cmd 'show inventory' do |cfg|
-    cfg = cfg.each_line.to_a[0..-2].join
-    comment cfg
+    comment cfg.cut_tail
   end
 
   cmd 'show plugins' do |cfg|
@@ -43,5 +41,4 @@ comment '!'
     end
     pre_logout 'exit'
   end
-
 end

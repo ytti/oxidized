@@ -1,6 +1,6 @@
 # Hooks
 
-You can define arbitrary number of hooks that subscribe different events. The hook system is modular and different kind of hook types can be enabled.
+You can define an arbitrary number of hooks that subscribe to different events. The hook system is modular and different kind of hook types can be enabled.
 
 ## Configuration
 
@@ -9,7 +9,7 @@ Following configuration keys need to be defined for all hooks:
 * `events`: which events to subscribe. Needs to be an array. See below for the list of available events.
 * `type`: what hook class to use. See below for the list of available hook types.
 
-### Events
+## Events
 
 * `node_success`: triggered when configuration is successfully pulled from a node and right before storing the configuration.
 * `node_fail`: triggered after `retries` amount of failed node pulls.
@@ -38,13 +38,13 @@ OX_REPO_COMMITREF
 OX_REPO_NAME
 ```
 
-Exec hook recognizes following configuration keys:
+Exec hook recognizes the following configuration keys:
 
-* `timeout`: hard timeout for the command execution. SIGTERM will be sent to the child process after the timeout has elapsed. Default: 60
-* `async`: influences whether main thread will wait for the command execution. Set this true for long running commands so node pull is not blocked. Default: false
+* `timeout`: hard timeout (in seconds) for the command execution. SIGTERM will be sent to the child process after the timeout has elapsed. Default: `60`
+* `async`: Execute the command in an asynchronous fashion. The main thread by default will wait for the hook command execution to complete. Set this to `true` for long running commands so node configuration pulls are not blocked. Default: `false`
 * `cmd`: command to run.
 
-## exec hook configuration example
+### exec hook configuration example
 
 ```yaml
 hooks:
@@ -60,21 +60,29 @@ hooks:
     timeout: 120
 ```
 
-### Hook type: githubrepo
+## Hook type: githubrepo
 
-This hook configures the repository `remote` and _push_ the code when the specified event is triggered. If the `username` and `password` are not provided, the `Rugged::Credentials::SshKeyFromAgent` will be used.
+The `githubrepo` hook executes a `git push` to a configured `remote_repo` when the specified event is triggered.
 
-`githubrepo` hook recognizes following configuration keys:
+Several authentication methods are supported:
+
+* Provide a `password` for username + password authentication
+* Provide both a `publickey` and a `privatekey` for ssh key-based authentication
+* Don't provide any credentials for ssh-agent authentication
+
+The username will be set to the relevant part of the `remote_repo` URI, with a fallback to `git`. It is also possible to provide one by setting the `username` configuration key.
+
+For ssh key-based authentication, it is possible to set the environment variable `OXIDIZED_SSH_PASSPHRASE` to a passphrase if the private key requires it.
+
+`githubrepo` hook recognizes the following configuration keys:
 
 * `remote_repo`: the remote repository to be pushed to.
 * `username`: username for repository auth.
 * `password`: password for repository auth.
-* `publickey`: publickey for repository auth.
-* `privatekey`: privatekey for repository auth.
+* `publickey`: public key file path for repository auth.
+* `privatekey`: private key file path for repository auth.
 
-It is also possible to set the environment variable `OXIDIZED_SSH_PASSPHRASE` to a passphrase if your keypair requires it.
-
-When using groups repositories, each group must have its own `remote` in the `remote_repo` config.
+When using groups, each group must have a unique entry in the `remote_repo` config.
 
 ```yaml
 hooks:
@@ -85,7 +93,9 @@ hooks:
       firewalls: git@git.intranet:oxidized/firewalls.git
 ```
 
-## githubrepo hook configuration example
+### githubrepo hook configuration example
+
+Authenticate with a username and a password without groups in use:
 
 ```yaml
 hooks:
@@ -95,6 +105,18 @@ hooks:
     remote_repo: git@git.intranet:oxidized/test.git
     username: user
     password: pass
+```
+
+Authenticate with the username `git` and an ssh key:
+
+```yaml
+hooks:
+  push_to_remote:
+    type: githubrepo
+    events: [post_store]
+    remote_repo: git@git.intranet:oxidized/test.git
+    publickey: /root/.ssh/id_rsa.pub
+    privatekey: /root/.ssh/id_rsa
 ```
 
 ## Hook type: awssns
@@ -108,7 +130,12 @@ Fields sent in the message:
 * `model`: Model name (e.g. `eos`)
 * `node`: Device hostname
 
-## awssns hook configuration example
+The AWS SNS hook requires the following configuration keys:
+
+* `region`: AWS Region name
+* `topic_arn`: ASN Topic reference
+
+### awssns hook configuration example
 
 ```yaml
 hooks:
@@ -118,11 +145,6 @@ hooks:
     region: us-east-1
     topic_arn: arn:aws:sns:us-east-1:1234567:oxidized-test-backup_events
 ```
-
-AWS SNS hook requires the following configuration keys:
-
-* `region`: AWS Region name
-* `topic_arn`: ASN Topic reference
 
 Your AWS credentials should be stored in `~/.aws/credentials`.
 
@@ -136,7 +158,7 @@ You will need to manually install the `slack-api` gem on your system:
 gem install slack-api
 ```
 
-## slackdiff hook configuration example
+### slackdiff hook configuration example
 
 ```yaml
 hooks:
@@ -162,6 +184,43 @@ hooks:
 
 Note the channel name must be in quotes.
 
+## Hook type: ciscosparkdiff
+
+The `ciscosparkdiff` hook posts config diffs to a [Cisco Spark](https://www.ciscospark.com/) space of your choice. It only triggers for `post_store` events.
+
+You will need to manually install the `cisco_spark` gem on your system (see [cisco_spark-ruby](https://github.com/NGMarmaduke/cisco_spark-ruby)) and generate either a [Bot or OAUTH access key](https://developer.ciscospark.com/apps.html), and retrieve the [Spark Space ID](https://developer.ciscospark.com/endpoint-rooms-get.html)
+
+```shell
+gem install cisco_spark
+```
+
+### ciscosparkdiff hook configuration example
+
+```yaml
+hooks:
+  ciscospark:
+    type: ciscosparkdiff
+    events: [post_store]
+    accesskey: SPARK_BOT_API_OR_OAUTH_KEY
+    space: SPARK_SPACE_ID
+    diff: true
+```
+
+Optionally you can disable snippets and post a formatted message, for instance linking to a commit in a git repo. Named parameters `%{node}`, `%{group}`, `%{model}` and `%{commitref}` are available.
+
+```yaml
+hooks:
+  ciscospark:
+    type: ciscosparkdiff
+    events: [post_store]
+    accesskey: SPARK_BOT_API_OR_OAUTH_KEY
+    space: SPARK_SPACE_ID
+    diff: false
+    message: "%{node} %{group} %{model} updated https://git.intranet/network-changes/commit/%{commitref}"
+```
+
+Note the space and access tokens must be in quotes.
+
 ## Hook type: xmppdiff
 
 The `xmppdiff` hook posts config diffs to a [XMPP](https://en.wikipedia.org/wiki/XMPP) chatroom of your choice. It only triggers for `post_store` events.
@@ -172,7 +231,7 @@ You will need to manually install the `xmpp4r` gem on your system:
 gem install xmpp4r
 ```
 
-## xmppdiff hook configuration example
+### xmppdiff hook configuration example
 
 ```yaml
 hooks:

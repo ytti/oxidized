@@ -13,13 +13,18 @@ module Oxidized
       Oxidized::String.new each_line.to_a[1..-1].join
     end
 
-    # sets @cmd and @name unless @name is already set
-    def set_cmd command
-      @cmd  = command
-      @name ||= @cmd.strip.gsub(/\s+/, '_')
+    # @return [Oxidized::String] copy of self with first and last lines removed
+    def cut_both
+      Oxidized::String.new each_line.to_a[1..-2].join
     end
 
-    def initialize str=''
+    # sets @cmd and @name unless @name is already set
+    def set_cmd command
+      @cmd = command
+      @name ||= @cmd.to_s.strip.gsub(/\s+/, '_') # what to do when command is proc? #to_s seems ghetto
+    end
+
+    def initialize str = ''
       super
       if str.class == Oxidized::String
         @cmd  = str.cmd
@@ -27,6 +32,5 @@ module Oxidized
         @type = str.type
       end
     end
-
   end
 end

@@ -32,12 +32,14 @@
   * [VOSS (VSP Operating System Software)](/lib/oxidized/model/voss.rb)
   * [BOSS (Baystack Operating System Software)](/lib/oxidized/model/boss.rb)
 * Brocade
-  * [FabricOS](lib/oxidized/model/fabricos.rb)
-  * [Ironware](lib/oxidized/model/ironware.rb)
-  * [NOS (Network Operating System)](lib/oxidized/model/nos.rb)
-  * [Vyatta](lib/oxidized/model/vyatta.rb)
-  * [6910](lib/oxidized/model/br6910.rb)
-  * [SLX-OS](lib/oxidized/model/slxos.rb)
+  * [FabricOS](/lib/oxidized/model/fabricos.rb)
+  * [Ironware](/lib/oxidized/model/ironware.rb)
+  * [NOS (Network Operating System)](/lib/oxidized/model/nos.rb)
+  * [Vyatta](/lib/oxidized/model/vyatta.rb)
+  * [6910](/lib/oxidized/model/br6910.rb)
+  * [SLX-OS](/lib/oxidized/model/slxos.rb)
+* Calix
+  * [AXOS](/lib/oxidized/model/axos.rb)
 * Casa
   * [Casa](/lib/oxidized/model/casa.rb)
 * Check Point
@@ -63,6 +65,10 @@
   * [TMOS (8800)](/lib/oxidized/model/corianttmos.rb)
   * [8600](/lib/oxidized/model/coriant8600.rb)
   * [Groove](/lib/oxidized/model/coriantgroove.rb)
+* ComNet
+  * [ComNet Microsemi Switch](/lib/oxidized/model/comnetms.rb)
+* Comtrol
+  * [RocketLinx](/lib/oxidized/model/comtrol.rb)
 * Cumulus
   * [Linux](/lib/oxidized/model/cumulus.rb)
 * DataCom
@@ -72,14 +78,20 @@
 * DELL
   * [PowerConnect](/lib/oxidized/model/powerconnect.rb)
   * [AOSW](/lib/oxidized/model/aosw.rb)
+  * [DellX](/lib/oxidized/model/dellx.rb)
 * D-Link
   * [D-Link](/lib/oxidized/model/dlink.rb)
+* ECI Telecom
+  * [ECIapollo](/lib/oxidized/model/eciapollo.rb)
+* EdgeCore
+  * [ES3528M](/lib/oxidized/model/edgecos.rb)
 * Ericsson/Redback
   * [IPOS (former SEOS)](/lib/oxidized/model/ipos.rb)
 * Extreme Networks
   * [Enterasys](/lib/oxidized/model/enterasys.rb)
   * [WM](/lib/oxidized/model/mtrlrfs.rb)
   * [XOS](/lib/oxidized/model/xos.rb)
+  * [ExtremeWare](/lib/oxidized/model/xos.rb)
 * F5
   * [TMOS](/lib/oxidized/model/tmos.rb)
 * Fiberstore
@@ -95,12 +107,15 @@
   * [Broadband Network Platform Software](/lib/oxidized/model/gcombnps.rb)
 * Hatteras
   * [Hatteras](/lib/oxidized/model/hatteras.rb)
+* Hillstone Networks
+  * [StoneOS](/lib/oxidized/model/stoneos.rb)
 * Hirschmann
   * [HiOS](/lib/oxidized/model/hirschmann.rb)
 * HP
   * [Comware (HP A-series, H3C, 3Com)](/lib/oxidized/model/comware.rb)
   * [Procurve](/lib/oxidized/model/procurve.rb)
   * [BladeSystem (Onboard Administrator)](/lib/oxidized/model/hpebladesystem.rb)
+  * [BladeSystem (Virtual-Connect Modul)](/lib/oxidized/model/hpebladevcmodul.rb)
   * [MSA](/lib/oxidized/model/hpemsa.rb)
 * Huawei
   * [VRP](/lib/oxidized/model/vrp.rb)
@@ -125,8 +140,10 @@
   * [SR OS (TiMOS)](/lib/oxidized/model/sros.rb)
 * OneAccess
   * [OneOS](/lib/oxidized/model/oneos.rb)
+* [OpenBSD](/lib/oxidized/model/openbsd.rb)
 * Opengear
   * [Opengear](/lib/oxidized/model/opengear.rb)
+* [OpenWRT](/lib/oxidized/model/openwrt.rb)
 * [OPNsense](/lib/oxidized/model/opnsense.rb)
 * Palo Alto
   * [PANOS](/lib/oxidized/model/panos.rb)
@@ -138,6 +155,8 @@
   * [Quanta / VxWorks 6.6 (1.1.0.8)](/lib/oxidized/model/quantaos.rb)
 * Siklu
   * [EtherHaul](/lib/oxidized/model/siklu.rb)
+* SNR
+  * [SNR-S300G, S2xxx, S3xxx, S4xxx](/lib/oxidized/model/dcnos.rb)
 * Supermicro
   * [SSE-G2252, G2252P](/lib/oxidized/model/edgecos.rb)
   * [SSE-G48-TG4, G24-TG4](/lib/oxidized/model/aricentiss.rb)
@@ -161,3 +180,4 @@
   * [Zhone (OLT and MX)](/lib/oxidized/model/zhoneolt.rb)
 * Zyxel
   * [ZyNOS](/lib/oxidized/model/zynos.rb)
+  * [NDMS](/lib/oxidized/model/ndms.rb)

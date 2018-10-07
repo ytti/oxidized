@@ -1,23 +1,23 @@
 class Comware < Oxidized::Model
   # HP (A-series)/H3C/3Com Comware
-  
+
   # sometimes the prompt might have a leading nul or trailing ASCII Bell (^G)
   prompt /^\0*(<[\w.-]+>).?$/
   comment '# '
 
   # example how to handle pager
-  #expect /^\s*---- More ----$/ do |data, re|
+  # expect /^\s*---- More ----$/ do |data, re|
   #  send ' '
   #  data.sub re, ''
-  #end
+  # end
 
   cmd :all do |cfg|
-    #cfg.gsub! /^.*\e\[42D/, ''        # example how to handle pager
-    #skip rogue ^M
+    # cfg.gsub! /^.*\e\[42D/, ''        # example how to handle pager
+    # skip rogue ^M
     cfg = cfg.gsub /\r/, ''
-    cfg.each_line.to_a[1..-2].join
+    cfg.cut_both
   end
- 
+
   cmd :secret do |cfg|
     cfg.gsub! /^( snmp-agent community).*/, '\\1 <configuration removed>'
     cfg.gsub! /^( password hash).*/, '\\1 <configuration removed>'
@@ -38,6 +38,9 @@ class Comware < Oxidized::Model
         send "_cmdline-mode on\n"
         send "y\n"
         send vars(:comware_cmdline) + "\n"
+        send "xtd-cli-mode on\n"
+        send "y\n"
+        send vars(:comware_cmdline) + "\n"
       end
     end
 
@@ -47,7 +50,7 @@ class Comware < Oxidized::Model
   end
 
   cmd 'display version' do |cfg|
-    cfg = cfg.each_line.select {|l| not l.match /uptime/i }.join
+    cfg = cfg.each_line.reject { |l| l.match /uptime/i }.join
     comment cfg
   end
 

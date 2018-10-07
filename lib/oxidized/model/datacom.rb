@@ -1,5 +1,4 @@
 class DataCom < Oxidized::Model
-
   comment '! '
 
   expect /^--More--\s+$/ do |data, re|
@@ -8,8 +7,7 @@ class DataCom < Oxidized::Model
   end
 
   cmd :all do |cfg|
-    cfg.each_line.to_a[1..-2].join
-    cfg.cut_head.cut_tail
+    cfg.cut_head.cut_both.cut_tail
   end
 
   cmd 'show firmware' do |cfg|
@@ -34,5 +32,4 @@ class DataCom < Oxidized::Model
     password /^Password:\s$/
     pre_logout 'exit'
   end
-
 end

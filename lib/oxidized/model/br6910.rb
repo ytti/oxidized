@@ -1,8 +1,6 @@
-
 class BR6910 < Oxidized::Model
-
   prompt /^([\w.@()-]+[#>]\s?)$/
-  comment  '! '
+  comment '! '
 
   # not possible to disable paging prior to show running-config
   expect /^((.*)Others to exit ---(.*))$/ do |data, re|
@@ -20,7 +18,7 @@ class BR6910 < Oxidized::Model
     comment cfg
   end
 
-  # show flash is not possible on a brocade 6910, do dir instead 
+  # show flash is not possible on a brocade 6910, do dir instead
   # to see flash contents (includes config file names)
   cmd 'dir' do |cfg|
     comment cfg
@@ -36,10 +34,9 @@ class BR6910 < Oxidized::Model
     password /^Password:/
   end
 
-  # post login and post logout 
+  # post login and post logout
   cfg :telnet, :ssh do
     post_login ''
     pre_logout 'exit'
   end
-
 end

@@ -1,6 +1,6 @@
 class VRP < Oxidized::Model
   # Huawei VRP
-  
+
   prompt /^(<[\w.-]+>)$/
   comment '# '
 
@@ -11,21 +11,21 @@ class VRP < Oxidized::Model
   end
 
   cmd :all do |cfg|
-    cfg.each_line.to_a[1..-2].join
+    cfg.cut_both
   end
- 
+
   cfg :telnet do
     username /^Username:$/
     password /^Password:$/
   end
 
-  cfg :telnet, :ssh do 
+  cfg :telnet, :ssh do
     post_login 'screen-length 0 temporary'
     pre_logout 'quit'
   end
 
   cmd 'display version' do |cfg|
-    cfg = cfg.each_line.select {|l| not l.match /uptime/ }.join
+    cfg = cfg.each_line.reject { |l| l.match /uptime/ }.join
     comment cfg
   end
 
@@ -36,5 +36,4 @@ class VRP < Oxidized::Model
   cmd 'display current-configuration all' do |cfg|
     cfg
   end
-  
 end

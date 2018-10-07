@@ -1,24 +1,23 @@
 class PanOS < Oxidized::Model
-
   # PaloAlto PAN-OS model #
 
-  comment  '! '
+  comment '! '
 
-  prompt /^[\w.\@:\(\)-]+>\s?$/
+  prompt /^[\w.@:()-]+>\s?$/
 
   cmd :all do |cfg|
     cfg.each_line.to_a[2..-3].join
   end
 
   cmd 'show system info' do |cfg|
-    cfg.gsub! /^(up)?time:\ .*$/, ''
-    cfg.gsub! /^app-.*?:\ .*$/, ''
-    cfg.gsub! /^av-.*?:\ .*$/, ''
-    cfg.gsub! /^threat-.*?:\ .*$/, ''
-    cfg.gsub! /^wildfire-.*?:\ .*$/, ''
-    cfg.gsub! /^wf-private.*?:\ .*$/, ''
-    cfg.gsub! /^url-filtering.*?:\ .*$/, ''
-    cfg.gsub! /^global-.*?:\ .*$/, ''
+    cfg.gsub! /^(up)?time: .*$/, ''
+    cfg.gsub! /^app-.*?: .*$/, ''
+    cfg.gsub! /^av-.*?: .*$/, ''
+    cfg.gsub! /^threat-.*?: .*$/, ''
+    cfg.gsub! /^wildfire-.*?: .*$/, ''
+    cfg.gsub! /^wf-private.*?: .*$/, ''
+    cfg.gsub! /^url-filtering.*?: .*$/, ''
+    cfg.gsub! /^global-.*?: .*$/, ''
     comment cfg
   end
 

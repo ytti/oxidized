@@ -1,7 +1,7 @@
 class Dlink < Oxidized::Model
   # D-LINK Switches
 
-  prompt /^(\r*[\w.@():-]+[#>]\s?)$/
+  prompt /^(\r*[\w.@()\/:-]+[#>]\s?)$/
   comment '# '
 
   cmd :secret do |cfg|
@@ -11,11 +11,11 @@ class Dlink < Oxidized::Model
   end
 
   cmd :all do |cfg|
-    cfg.each_line.to_a[2..-2].map{|line|line.delete("\r").rstrip}.join("\n") + "\n"
+    cfg.each_line.to_a[2..-2].map { |line| line.delete("\r").rstrip }.join("\n") + "\n"
   end
 
   cmd 'show switch' do |cfg|
-    cfg.gsub! /^System\ Uptime\s.+/, '' # Omit constantly changing uptime info
+    cfg.gsub! /^System Uptime\s.+/, '' # Omit constantly changing uptime info
     comment cfg
   end
 
@@ -26,8 +26,8 @@ class Dlink < Oxidized::Model
   cmd 'show config current'
 
   cfg :telnet do
-    username /\r*username:/
-    password /\r*password:/
+    username /\r*[Uu]ser[Nn]ame:/
+    password /\r*[Pp]ass[Ww]ord:/
   end
 
   cfg :telnet, :ssh do

@@ -1,12 +1,11 @@
 class NOS < Oxidized::Model
-
   # Brocade Network Operating System
 
   prompt /^(?:\e\[..h)?[\w.-]+# $/
   comment  '! '
 
   cmd :all do |cfg|
-    cfg.each_line.to_a[1..-2].join
+    cfg.cut_both
   end
 
   cmd 'show version' do |cfg|
@@ -38,8 +37,7 @@ class NOS < Oxidized::Model
 
   cfg :telnet, :ssh do
     post_login 'terminal length 0'
-    #post_login 'terminal width 0'
+    # post_login 'terminal width 0'
     pre_logout 'exit'
   end
-
 end

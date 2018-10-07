@@ -1,5 +1,4 @@
 class TMOS < Oxidized::Model
-
   comment  '# '
 
   cmd :secret do |cfg|
@@ -43,10 +42,11 @@ class TMOS < Oxidized::Model
     comment cfg
   end
 
+  cmd('[ -d "/config/zebos" ] && cat /config/zebos/*/ZebOS.conf') { |cfg| comment cfg }
+
   cmd('cat /config/partitions/*/bigip.conf') { |cfg| comment cfg }
 
   cfg :ssh do
-    exec true  # don't run shell, run each command in exec channel
+    exec true # don't run shell, run each command in exec channel
   end
-
 end

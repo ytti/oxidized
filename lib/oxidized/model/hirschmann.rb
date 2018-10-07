@@ -1,17 +1,16 @@
 class Hirschmann < Oxidized::Model
+  prompt /^[(\w\s)]+\s[>|#]+?$/
 
-  prompt /^[\(\w\s\w\)]+\s[>|#]+?$/ 
- 
   comment '## '
- 
-  #Handle pager
+
+  # Handle pager
   expect /^--More--.*$/ do |data, re|
     send 'a'
     data.sub re, ''
   end
 
   cmd :all do |cfg|
-    cfg.each_line.to_a[1..-2].join
+    cfg.cut_both
   end
 
   cmd 'show sysinfo' do |cfg|
@@ -22,11 +21,11 @@ class Hirschmann < Oxidized::Model
     cfg.gsub! /^Average CPU Utilization.*\n/, ""
     comment cfg
   end
- 
+
   cmd 'show running-config' do |cfg|
-    cfg.gsub! /^users.*\n/, "" 
+    cfg.gsub! /^users.*\n/, ""
     cfg
-  end    
+  end
 
   cfg :telnet do
     username /^User:/
@@ -34,8 +33,7 @@ class Hirschmann < Oxidized::Model
   end
 
   cfg :telnet, :ssh do
-   post_login 'enable'
-   pre_logout 'logout'
+    post_login 'enable'
+    pre_logout 'logout'
   end
-
 end

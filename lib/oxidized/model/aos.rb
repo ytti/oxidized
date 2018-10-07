@@ -1,16 +1,15 @@
 class AOS < Oxidized::Model
-
   # Alcatel-Lucent Operating System
   # used in OmniSwitch
- 
+
   comment  '! '
 
   cmd :all do |cfg|
-    cfg.each_line.to_a[1..-2].join
+    cfg.cut_both
   end
 
   cmd 'show system' do |cfg|
-    cfg = cfg.each_line.find{|line|line.match 'Description'}
+    cfg = cfg.each_line.find { |line| line.match 'Description' }
     comment cfg.to_s.strip
   end
 
@@ -34,5 +33,4 @@ class AOS < Oxidized::Model
   cfg :telnet, :ssh do
     pre_logout 'exit'
   end
-
 end

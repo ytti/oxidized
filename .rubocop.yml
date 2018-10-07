@@ -1,0 +1,43 @@
+inherit_from: .rubocop_todo.yml
+
+AllCops:
+  Include:
+    - Rakefile
+
+StringLiterals:
+  Enabled: false
+
+LineLength:
+  Enabled: false
+
+# Stick to verbose until https://bugs.ruby-lang.org/issues/10177 is closed.
+Style/PreferredHashMethods:
+  EnforcedStyle: verbose
+
+Style/Not:
+  Enabled: false
+
+# comply with @ytti's exacting specifications
+Style/CommandLiteral:
+  EnforcedStyle: percent_x
+
+Style/FormatString:
+  EnforcedStyle: percent
+
+Style/FormatStringToken:
+  EnforcedStyle: unannotated
+
+Style/RescueModifier:
+  Enabled: false
+
+Style/MultilineBlockChain:
+  Enabled: false
+
+Style/SymbolProc:
+  Enabled: false
+
+# Do not attempt to police vendored code, and exclude special cases
+AllCops:
+  Exclude:
+    - 'vendor/**/*'
+    - 'lib/oxidized/input/tftp.rb'
