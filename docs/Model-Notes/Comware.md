@@ -10,4 +10,8 @@ info-center source default channel 1 log state off debug state off
 
 [Reference](https://github.com/ytti/oxidized/issues/1171)
 
+# 3Com 4200 series
+
+Their syntax and behaviour differs from other models. In order to back them up properly the vars _comware_4200_cmdline_ have to be set for these models.
+
 Back to [Model-Notes](README.md)

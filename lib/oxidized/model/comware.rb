@@ -21,6 +21,8 @@ class Comware < Oxidized::Model
   cmd :secret do |cfg|
     cfg.gsub! /^( snmp-agent community).*/, '\\1 <configuration removed>'
     cfg.gsub! /^( password hash).*/, '\\1 <configuration removed>'
+    cfg.gsub! /^( password simple).*/, '\\1 <configuration removed>'
+    cfg.gsub! /^( super password level 3 simple).*/, '\\1 <configuration removed>'
     cfg
   end
 
@@ -44,8 +46,28 @@ class Comware < Oxidized::Model
       end
     end
 
-    post_login 'screen-length disable'
-    post_login 'undo terminal monitor'
+    if vars :comware_4200_cmdline
+      # The 3Com 4200 (at least) series is different than other models:
+      # other syntax to disable paging, and it has to be done within the
+      # user interface.
+      post_login do
+        # enter system view
+        send "system-view\n"
+        # enter user interface
+        send "user-interface vty 0\n"
+        # disable paging
+        send "screen-length 0\n"
+        # leave user interface
+        send "quit\n"
+        # leave system view
+        send "quit\n"
+      end
+    else
+      # other models
+      post_login 'screen-length disable'
+      post_login 'undo terminal monitor'
+    end
+
     pre_logout 'quit'
   end
 
@@ -61,4 +83,8 @@ class Comware < Oxidized::Model
   cmd 'display current-configuration' do |cfg|
     cfg
   end
+
+  # somehow the 3Com 4200 needs a further call of a "display" action in
+  # order to return the current configuration
+  cmd 'display device'
 end
