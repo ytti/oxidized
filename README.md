@@ -78,6 +78,12 @@ Check out the [Oxidized TREX 2014 presentation](http://youtu.be/kBQ_CTUuqeU#t=3h
 
 Install all required packages and gems.
 
+If installing on UBuntu, enable Universe (required for libssh2-1-dev)
+
+```shell
+add-apt-repository universe
+```
+
 ```shell
 apt-get install ruby ruby-dev libsqlite3-dev libssl-dev pkg-config cmake libssh2-1-dev libicu-dev zlib1g-dev
 gem install oxidized
