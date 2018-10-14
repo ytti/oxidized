@@ -25,6 +25,7 @@ class CiscoSMB < Oxidized::Model
 
   cmd 'show system' do |cfg|
     cfg.gsub! /System Up Time.*\n/, ''
+    cfg.gsub! /Unit.*Up time(.*\n)*\n/, ''
     comment cfg
   end
 
