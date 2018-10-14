@@ -93,7 +93,7 @@ Finally, install the gems:
 
 ```shell
 gem install oxidized
-gem install oxidized-script oxidized-web # If you don't install oxidized-web, make "rest" is removed from your Oxidized config.
+gem install oxidized-script oxidized-web # If you don't install oxidized-web, ensure "rest" is removed from your Oxidized config.
 ```
 
 ### CentOS, Oracle Linux, Red Hat Linux
