@@ -32,7 +32,7 @@ Check out the [Oxidized TREX 2014 presentation](http://youtu.be/kBQ_CTUuqeU#t=3h
 
 1. [Supported OS Types](docs/Supported-OS-Types.md)
 2. [Installation](#installation)
-    * [Debian](#debian-and-ubuntu)
+    * [Debian and Ubuntu](#debian-and-ubuntu)
     * [CentOS, Oracle Linux, Red Hat Linux](#centos-oracle-linux-red-hat-linux)
     * [FreeBSD](#freebsd)
     * [Build from Git](#build-from-git)
