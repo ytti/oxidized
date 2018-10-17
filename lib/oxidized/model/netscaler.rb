@@ -51,7 +51,7 @@ class NetScaler < Oxidized::Model
       partitions.each do |part|
         allcfg = allcfg + "\n\n####################### [ partition " + part.join(" ") + " ] #######################\n\n"
         cmd "switch ns partition " + part.join(" ") + "; show ns ns.conf; switch ns partition default" do |cfgpartition|
-            allcfg = allcfg + cfgpartition
+          allcfg += cfgpartition
         end
       end
       allcfg
