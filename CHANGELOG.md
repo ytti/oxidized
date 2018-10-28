@@ -13,7 +13,7 @@
 * BUGFIX: netgear telnet password prompt not detected
 * BUGFIX: xos model should not modify config on legacy Extreme Networks devices (@sq9mev)
 * BUGFIX: model dlink, edgecos, ciscosmb, openbsd
-* BUGFIX: Hide potential secret set as 'lighttpd_ls_password' at pfSense systems
+* BUGFIX: hide 'lighttpd_ls_password' as potential secret in pfsense model (@dra)
 * MISC: bump Dockerfile phusion/baseimage:0.10.0 -> 0.11, revert to one-stage build
 * MISC: add sqlite3 and mysql2 drivers for sequel to Dockerfile
 * MISC: Added verbiage to set OXIDIZED_HOME correctly under Debian 8.8 w/systemd
