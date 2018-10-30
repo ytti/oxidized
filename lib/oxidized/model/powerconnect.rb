@@ -43,7 +43,7 @@ class PowerConnect < Oxidized::Model
     if vars :enable
       post_login do
         send "enable\n"
-        if :enable.instance_of?(String) then
+        if :enable.instance_of?(String)
           cmd vars(:enable)
         else
           Oxidized.logger.debug "lib/oxidized/model/powerconnect: No enable password."
