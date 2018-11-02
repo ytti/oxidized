@@ -40,14 +40,13 @@ class PowerConnect < Oxidized::Model
   end
 
   cfg :telnet, :ssh do
-    if vars :enable
-      post_login do
-        send "enable\n"
-        if :enable.instance_of?(String)
-          cmd vars(:enable)
-        else
-          Oxidized.logger.debug "lib/oxidized/model/powerconnect: No enable password."
-        end
+
+    post_login do
+      if vars(:enable) == true
+        cmd "enable"
+      elsif vars(:enable)
+        cmd "enable", /^[pP]assword:/
+        cmd vars(:enable)
       end
     end
 
