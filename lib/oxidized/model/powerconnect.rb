@@ -40,9 +40,12 @@ class PowerConnect < Oxidized::Model
   end
 
   cfg :telnet, :ssh do
-    if vars :enable
-      post_login do
-        send "enable\n"
+
+    post_login do
+      if vars(:enable) == true
+        cmd "enable"
+      elsif vars(:enable)
+        cmd "enable", /^[pP]assword:/
         cmd vars(:enable)
       end
     end
