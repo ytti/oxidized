@@ -1,5 +1,4 @@
 ---
 version: "2"
 exclude_patterns:
-  - lib/oxidized/model/*
   - lib/oxidized/output/gitcrypt.rb
