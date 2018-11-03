@@ -1,7 +1,4 @@
 ---
-engines:
-  duplication:
-    enabled: true
-    config:
-      exclude_paths:
-        - lib/oxidized/model/*
+version: "2"
+exclude_patterns:
+  - lib/oxidized/model/*
