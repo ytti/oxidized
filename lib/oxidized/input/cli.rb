@@ -62,6 +62,15 @@ module Oxidized
           match_re.delete match
         end
       end
+
+      def cmd_if command, arg, re = nil
+        if arg == true
+          cmd command
+        elsif arg
+          cmd command, re
+          cmd arg
+        end
+      end
     end
   end
 end
