@@ -81,6 +81,7 @@ For ssh key-based authentication, it is possible to set the environment variable
 * `password`: password for repository auth.
 * `publickey`: public key file path for repository auth.
 * `privatekey`: private key file path for repository auth.
+* `secure`: whether the ssl certificate of the remote repository should be verified. Default: true
 
 When using groups, each group must have a unique entry in the `remote_repo` config.
 

@@ -38,7 +38,7 @@ describe GithubRepo do
     end
 
     it "should not try to merge when there is no update in remote branch" do
-      repo.expects(:fetch).with('origin', ['refs/heads/master'], credentials: credentials).returns(Hash.new(0))
+      repo.expects(:fetch).with('origin', ['refs/heads/master'], credentials: credentials, certificate_check: certificate_validation).returns(Hash.new(0))
       repo.expects(:branches).never
       repo.expects(:head).returns(repo_head)
       gr.fetch_and_merge_remote(repo).must_equal nil
@@ -48,7 +48,7 @@ describe GithubRepo do
       let(:their_branch) { mock }
 
       before(:each) do
-        repo.expects(:fetch).with('origin', ['refs/heads/master'], credentials: credentials).returns(total_deltas: 1)
+        repo.expects(:fetch).with('origin', ['refs/heads/master'], credentials: credentials, certificate_check: certificate_validation).returns(total_deltas: 1)
         their_branch.expects(:target_id).returns(1)
         repo_head.expects(:target_id).returns(2)
         repo.expects(:merge_commits).with(2, 1).returns(merge_index)
@@ -92,14 +92,14 @@ describe GithubRepo do
       repo_head.expects(:name).twice.returns('refs/heads/master')
       repo.expects(:head).twice.returns(repo_head)
       repo.expects(:path).returns('/foo.git')
-      repo.expects(:fetch).with('origin', ['refs/heads/master'], credentials: credentials).returns(Hash.new(0))
+      repo.expects(:fetch).with('origin', ['refs/heads/master'], credentials: credentials, certificate_check: certificate_validation).returns(Hash.new(0))
     end
 
     describe 'when there is only one repository and no groups' do
       before do
         Oxidized.config.output.git.repo = '/foo.git'
         remote.expects(:url).returns('https://github.com/username/foo.git')
-        remote.expects(:push).with(['refs/heads/master'], credentials: credentials).returns(true)
+        remote.expects(:push).with(['refs/heads/master'], credentials: credentials, certificate_check: certificate_validation).returns(true)
         repo.expects(:remotes).returns('origin' => remote)
         Rugged::Repository.expects(:new).with('/foo.git').returns(repo)
       end
@@ -132,7 +132,7 @@ describe GithubRepo do
         remotes.expects(:[]).with('origin').returns(nil)
         remotes.expects(:create).with('origin', create_remote).returns(remote)
         remote.expects(:url).returns('url')
-        remote.expects(:push).with(['refs/heads/master'], credentials: credentials).returns(true)
+        remote.expects(:push).with(['refs/heads/master'], credentials: credentials, certificate_check: certificate_validation).returns(true)
       end
 
       describe 'and there are several repositories' do
