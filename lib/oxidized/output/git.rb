@@ -179,7 +179,7 @@ module Oxidized
     end
 
     def update_repo repo, file, data
-      oid_old = repo.blob_at(repo.head.target_id, file)
+      oid_old = repo.blob_at(repo.head.target_id, file) rescue nil
       return false if oid_old and oid_old.content == data
 
       oid = repo.write data, :blob
