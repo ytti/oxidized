@@ -9,7 +9,7 @@ class NOS < Oxidized::Model
   end
 
   cmd 'show version' do |cfg|
-    comment cfg
+    comment cfg.each_line.reject { |line| line.match /System Uptime/ }.join
   end
 
   cmd 'show inventory' do |cfg|
