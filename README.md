@@ -105,6 +105,13 @@ If you've installed Ruby 2.3 or greater via a 3rd party package rather than the 
 ```shell
 yum install make cmake which sqlite-devel openssl-devel libssh2-devel ruby gcc ruby-devel libicu-devel gcc-c++
 ```
+Then you have to install at least Ruby 2.3 for for the ruby requirements to work:
+
+```shell
+yum install centos-release-scl
+yum install rh-ruby22
+scl enable rh-ruby22 bash
+```
 
 Now let's install oxidized via Rubygems:
 
