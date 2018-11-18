@@ -3,8 +3,7 @@ class Firebrick < Oxidized::Model
   prompt /\x0a\x1b\x5b\x32\x4b\x0d.*>\s/
 
   cmd :all do |cfg|
-    # sometimes ironware inserts arbitrary whitespace after commands are
-    # issued on the CLI, from run to run.  this normalises the output.
+    # remove arbitrary whitespace after commands.
     cfg.each_line.to_a[1..-2].drop_while { |e| e.match /^\s+$/ }.join
   end
 
