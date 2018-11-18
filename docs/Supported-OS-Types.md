@@ -98,6 +98,8 @@
   * [TMOS](/lib/oxidized/model/tmos.rb)
 * Fiberstore
   * [S3800](/lib/oxidized/model/gcombnps.rb)
+* Firebrick
+  * [FBxxxx](/lib/oxidized/model/firebrick.rb)
 * Force10
   * [DNOS](/lib/oxidized/model/dnos.rb)
   * [FTOS](/lib/oxidized/model/ftos.rb)
