@@ -26,15 +26,21 @@ class IOS < Oxidized::Model
   cmd :secret do |cfg|
     cfg.gsub! /^(snmp-server community).*/, '\\1 <configuration removed>'
     cfg.gsub! /^(snmp-server host \S+( vrf \S+)?( version (1|2c|3))?)\s+\S+((\s+\S*)*)\s*/, '\\1 <secret hidden> \\5'
-    cfg.gsub! /^(username \S+ privilege \d+) (\S+).*/, '\\1 <secret hidden>'
-    cfg.gsub! /^(username \S+ password \d) (\S+)/, '\\1 <secret hidden>'
-    cfg.gsub! /^(username \S+ secret \d) (\S+)/, '\\1 <secret hidden>'
-    cfg.gsub! /^(enable (password|secret) \d) (\S+)/, '\\1 <secret hidden>'
+    cfg.gsub! /^(username .+ (password|secret) \d) .+/, '\\1 <secret hidden>'
+    cfg.gsub! /^(enable (password|secret)( level \d+)? \d) .+/, '\\1 <secret hidden>'
     cfg.gsub! /^(\s+(?:password|secret)) (?:\d )?\S+/, '\\1 <secret hidden>'
     cfg.gsub! /^(.*wpa-psk ascii \d) (\S+)/, '\\1 <secret hidden>'
     cfg.gsub! /^(.*key 7) (\d.+)/, '\\1 <secret hidden>'
-    cfg.gsub! /^(tacacs-server key \d) (\S+)/, '\\1 <secret hidden>'
+    cfg.gsub! /^(tacacs-server (.+ )?key) .+/, '\\1 <secret hidden>'
     cfg.gsub! /^(crypto isakmp key) (\S+) (.*)/, '\\1 <secret hidden> \\3'
+    cfg.gsub! /^(\s+ip ospf message-digest-key \d+ md5) .+/, '\\1 <secret hidden>'
+    cfg.gsub! /^(\s+ip ospf authentication-key) .+/, '\\1 <secret hidden>'
+    cfg.gsub! /^(\s+neighbor \S+ password) .+/, '\\1 <secret hidden>'
+    cfg.gsub! /^(\s+vrrp \d+ authentication text) .+/, '\\1 <secret hidden>'
+    cfg.gsub! /^(\s+standby \d+ authentication) .{1,8}$/, '\\1 <secret hidden>'
+    cfg.gsub! /^(\s+standby \d+ authentication md5 key-string) .+?( timeout \d+)?$/, '\\1 <secret hidden> \\2'
+    cfg.gsub! /^(\s+key-string) .+/, '\\1 <secret hidden>'
+    cfg.gsub! /^((tacacs|radius) server [^\n]+\n(\s+[^\n]+\n)*\s+key) [^\n]+$/m, '\1 <secret hidden>'
     cfg
   end
 
