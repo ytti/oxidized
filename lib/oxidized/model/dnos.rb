@@ -5,13 +5,15 @@ class DNOS < Oxidized::Model
 
   cmd :all do |cfg|
     cfg.gsub! /^% Invalid input detected at '\^' marker\.$|^\s+\^$/, ''
-    cfg.gsub! /^Dell(\sEMC)? Networking OS uptime is\s.+/, '' # Omit changing uptime info, account for branding
+    cfg.gsub! /(uptime is)(\s.+)/, '\\1 <removed>' # Omit changing uptime info
     cfg.each_line.to_a[2..-2].join
   end
 
   cmd :secret do |cfg|
     cfg.gsub! /^(snmp-server community).*/, '\\1 <configuration removed>'
     cfg.gsub! /secret (\d+) (\S+).*/, '<secret hidden>'
+    cfg.gsub! /password (\d+) (\S+).*/, '<secret hidden>'
+    cfg.gsub! /^(tacacs-server key \d+) (\S+).*/, '\\1 <secret hidden>'
     cfg
   end
 
