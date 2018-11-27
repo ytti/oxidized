@@ -14,6 +14,7 @@ class PowerConnect < Oxidized::Model
 
   cmd :secret do |cfg|
     cfg.gsub! /^(username \S+ password (?:encrypted )?)\S+(.*)/, '\1<hidden>\2'
+    cfg.gsub! /^(tacacs-server key) \S+/, '\\1 <secret hidden>'
     cfg
   end
 
