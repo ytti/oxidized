@@ -21,6 +21,7 @@
 * MISC: eos model removes user secrets and BGP secrets (@yzguy)
 * MISC: add secret filtering to netscaler (@shepherdjay)
 * MISC: capture ZebOS configuration for TMOS model (@yzguy)
+* MISC: additional secret filtering in ios model (@hexdump0x0200)
 
 ## 0.24.0
 
