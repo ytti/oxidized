@@ -9,7 +9,7 @@ class NOS < Oxidized::Model
   end
 
   cmd 'show version' do |cfg|
-    comment cfg
+    comment cfg.each_line.reject { |line| line.match /([Ss]ystem [Uu]p\s?[Tt]ime|[Uu]p\s?[Tt]ime is \d)/ }.join
   end
 
   cmd 'show inventory' do |cfg|
