@@ -20,6 +20,7 @@
 * MISC: eos model removes user secrets and BGP secrets (@yzguy)
 * MISC: add secret filtering to netscaler (@shepherdjay)
 * MISC: capture ZebOS configuration for TMOS model (@yzguy)
+* MISC: remove volatile uptime data in nos model (@f0rkz)
 
 ## 0.24.0
 
