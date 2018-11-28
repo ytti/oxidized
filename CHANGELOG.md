@@ -9,6 +9,7 @@
 * FEATURE: add Dell X-series model (@RobbFromIT)
 * FEATURE: add privilege escalation to the cumulus model (@user4574)
 * FEATURE: add adtran model (@CFUJoshWeepie)
+* FEATURE: add firebrick model (@lewisvive)
 * BUGFIX: netgear telnet password prompt not detected
 * BUGFIX: xos model should not modify config on legacy Extreme Networks devices (@sq9mev)
 * BUGFIX: model dlink, edgecos, ciscosmb, openbsd
@@ -20,6 +21,7 @@
 * MISC: eos model removes user secrets and BGP secrets (@yzguy)
 * MISC: add secret filtering to netscaler (@shepherdjay)
 * MISC: capture ZebOS configuration for TMOS model (@yzguy)
+* MISC: additional secret filters in ios, asa, procurve models (@hexdump0x0200)
 * MISC: remove volatile uptime data in nos model (@f0rkz)
 
 ## 0.24.0
