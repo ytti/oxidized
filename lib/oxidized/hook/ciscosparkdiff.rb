@@ -43,7 +43,9 @@ class CiscoSparkDiff < Oxidized::Hook
       msg = cfg.message % { :node => ctx.node.name.to_s, :group => ctx.node.group.to_s, :commitref => ctx.commitref, :model => ctx.node.model.class.name.to_s.downcase }
       log msg
       log "Posting message to #{cfg.space}"
-      client.chat_postMessage(channel: cfg.channel, text: msg, as_user: true)
+      message = CiscoSpark::Message.new(text: msg)
+      room = CiscoSpark::Room.new(id: space)
+      room.send_message(message)
     end
     log "Finished"
   end
