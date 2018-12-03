@@ -22,7 +22,7 @@ class CiscoSparkDiff < Oxidized::Hook
     room = CiscoSpark::Room.new(id: cfg.space)
     log "Connected"
 
-    if cfg.diff? ? cfg.diff : true
+    if cfg.has_key?("diff") ? cfg.diff : true
       gitoutput = ctx.node.output.new
       diff = gitoutput.get_diff ctx.node, ctx.node.group, ctx.commitref, nil
       title = ctx.node.name.to_s

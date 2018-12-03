@@ -21,7 +21,7 @@ class SlackDiff < Oxidized::Hook
     client = Slack::Client.new
     client.auth_test
     log "Connected"
-    if cfg.diff? ? cfg.diff : true
+    if cfg.has_key?("diff") ? cfg.diff : true
       gitoutput = ctx.node.output.new
       diff = gitoutput.get_diff ctx.node, ctx.node.group, ctx.commitref, nil
       unless diff == "no diffs"
