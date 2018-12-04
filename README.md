@@ -322,7 +322,7 @@ Run `oxidized` again to take the first backups.
 
 ### Ubuntu SystemV init setup
 
-The init script assumes that you have a used named 'oxidized' and that oxidized is in one of the following paths:
+The init script assumes that you have a user named 'oxidized' and that oxidized is in one of the following paths:
 
 ```text
 /sbin
