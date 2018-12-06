@@ -21,6 +21,7 @@ class CiscoSMB < Oxidized::Model
     cfg.gsub! /^(encrypted radius-server host .+ key) \S+(.*)/, '\\1 <secret hidden> \\2'
     cfg.gsub! /^(encrypted tacacs-server key).*/, '\\1 <secret hidden>'
     cfg.gsub! /^(encrypted tacacs-server host .+ key) \S+(.*)/, '\\1 <secret hidden> \\2'
+    cfg.gsub! /^(encrypted sntp authentication-key \d+ md5) .*/, '\\1 <secret hidden>'
     cfg
   end
 
