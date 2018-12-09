@@ -158,6 +158,8 @@ You will need to manually install the `slack-api` gem on your system:
 gem install slack-api
 ```
 
+The token parameter is a "legacy token" and is generated [Here](https://api.slack.com/custom-integrations/legacy-tokens).
+
 ### slackdiff hook configuration example
 
 ```yaml
