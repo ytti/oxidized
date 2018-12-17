@@ -5,7 +5,7 @@ module Oxidized
   class MethodNotFound < OxidizedError; end
   class ModelNotFound  < OxidizedError; end
   class Node
-    attr_reader :name, :ip, :model, :input, :output, :group, :auth, :prompt, :vars, :last, :repo
+    attr_reader :name, :ip, :model, :input, :output, :group, :auth, :prompt, :vars, :last, :repo, :info
     attr_accessor :running, :user, :email, :msg, :from, :stats, :retry
     alias :running? :running
 
@@ -28,6 +28,8 @@ module Oxidized
       @stats          = Stats.new
       @retry          = 0
       @repo           = resolve_repo opt
+
+      @info           = Hash.new
 
       # model instance needs to access node instance
       @model.node = self
@@ -109,6 +111,9 @@ module Oxidized
           :status => @last.status,
           :time   => @last.time,
         }
+      end
+      if @model.respond_to? :parse
+        h[:info] = @model.parse @output.new.fetch self, nil
       end
       h
     end

@@ -61,4 +61,31 @@ class Comware < Oxidized::Model
   cmd 'display current-configuration' do |cfg|
     cfg
   end
+
+  def parse output
+    info = {}
+
+    output.match(/# (3Com Corporation)/) do
+      info[:manufacturer] = $1
+    end
+
+    output.match(/# (Switch .+?) Software Version 3Com OS (V[0-9.a-z]+)/) do
+      info[:name] = $1
+      info[:version] = $2
+    end
+
+    output.match(/Switch .+? 48-Port with ([0-9]+) Processor/) do
+      info[:cores] = $1.to_i
+    end
+
+    output.match(/# ([0-9]+)M   bytes DRAM/) do
+      info[:ram] = $1.to_i * 1024 * 1024
+    end
+
+    output.match(/# ([0-9]+)M   bytes Flash Memory/) do
+      info[:hdd] = $1.to_i * 1024 * 1024
+    end
+
+    info
+  end
 end

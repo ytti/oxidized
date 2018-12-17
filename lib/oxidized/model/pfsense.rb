@@ -22,4 +22,14 @@ class PfSense < Oxidized::Model
     exec true
     pre_logout 'exit'
   end
+
+  def parse output
+    info = {}
+
+    output.match(/<pfsense>\s*<version>([0-9.]+)<\/version>/) do
+      info[:version] = $1
+    end
+
+    info
+  end
 end
