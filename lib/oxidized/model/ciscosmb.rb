@@ -15,7 +15,13 @@ class CiscoSMB < Oxidized::Model
   cmd :secret do |cfg|
     cfg.gsub! /^(snmp-server community).*/, '\\1 <configuration removed>'
     cfg.gsub! /username (\S+) privilege (\d+) (\S+).*/, '<secret hidden>'
+    cfg.gsub! /^(username \S+ password encrypted) \S+(.*)/, '\\1 <secret hidden> \\2'
+    cfg.gsub! /^(enable password level \d+ encrypted) \S+/, '\\1 <secret hidden>'
     cfg.gsub! /^(encrypted radius-server key).*/, '\\1 <configuration removed>'
+    cfg.gsub! /^(encrypted radius-server host .+ key) \S+(.*)/, '\\1 <secret hidden> \\2'
+    cfg.gsub! /^(encrypted tacacs-server key).*/, '\\1 <secret hidden>'
+    cfg.gsub! /^(encrypted tacacs-server host .+ key) \S+(.*)/, '\\1 <secret hidden> \\2'
+    cfg.gsub! /^(encrypted sntp authentication-key \d+ md5) .*/, '\\1 <secret hidden>'
     cfg
   end
 

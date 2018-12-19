@@ -1,7 +1,7 @@
 require 'cisco_spark'
 
 # defaults to posting a diff, if messageformat is supplied them a message will be posted too
-# diffenable defaults to true
+# diff defaults to true
 # Modified from slackdiff
 
 class CiscoSparkDiff < Oxidized::Hook
@@ -19,32 +19,25 @@ class CiscoSparkDiff < Oxidized::Hook
       config.api_key = cfg.accesskey
       config.proxy = cfg.proxy if cfg.has_key?('proxy')
     end
-    space = cfg.space
-    client = CiscoSpark::Room.new(id: space)
-    client.fetch
+    room = CiscoSpark::Room.new(id: cfg.space)
     log "Connected"
-    diffenable = true
-    if cfg.has_key?('diff') == true
-      if cfg.diff == false
-        diffenable = false
-      end
-    end
-    if diffenable == true
+
+    if cfg.has_key?("diff") ? cfg.diff : true
       gitoutput = ctx.node.output.new
       diff = gitoutput.get_diff ctx.node, ctx.node.group, ctx.commitref, nil
       title = ctx.node.name.to_s
       log "Posting diff as snippet to #{cfg.space}"
-      message = CiscoSpark::Message.new(text: 'Device ' + title + ' modified:' + "\n" + diff[:patch].lines.to_a[4..-1].join)
-      room = CiscoSpark::Room.new(id: space)
-      room.send_message(message)
+      room.send_message CiscoSpark::Message.new(text: 'Device ' + title + ' modified:' + "\n" + diff[:patch].lines.to_a[4..-1].join)
     end
-    if cfg.has_key?('message') == true
+
+    if cfg.message?
       log cfg.message
-      msg = cfg.message % { :node => ctx.node.name.to_s, :group => ctx.node.group.to_s, :commitref => ctx.commitref, :model => ctx.node.model.class.name.to_s.downcase }
+      msg = cfg.message % { node: ctx.node.name.to_s, group: ctx.node.group.to_s, commitref: ctx.commitref, model: ctx.node.model.class.name.to_s.downcase }
       log msg
       log "Posting message to #{cfg.space}"
-      client.chat_postMessage(channel: cfg.channel, text: msg, as_user: true)
+      room.send_message CiscoSpark::Message.new(text: msg)
     end
+
     log "Finished"
   end
 end

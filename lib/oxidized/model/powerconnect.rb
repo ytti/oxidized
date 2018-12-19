@@ -14,6 +14,7 @@ class PowerConnect < Oxidized::Model
 
   cmd :secret do |cfg|
     cfg.gsub! /^(username \S+ password (?:encrypted )?)\S+(.*)/, '\1<hidden>\2'
+    cfg.gsub! /^(tacacs-server key) \S+/, '\\1 <secret hidden>'
     cfg
   end
 
@@ -40,9 +41,11 @@ class PowerConnect < Oxidized::Model
   end
 
   cfg :telnet, :ssh do
-    if vars :enable
-      post_login do
-        send "enable\n"
+    post_login do
+      if vars(:enable) == true
+        cmd "enable"
+      elsif vars(:enable)
+        cmd "enable", /^[pP]assword:/
         cmd vars(:enable)
       end
     end
