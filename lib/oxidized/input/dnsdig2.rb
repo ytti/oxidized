@@ -8,22 +8,20 @@ module Oxidized
 
     # TFTP utilizes UDP, there is not a connection. We simply specify an IP and send/receive data.
     def connect node
-      @node       = node
+      @node = node
       Oxidized.logger.debug "DNSDIG: #{@node.name}"
       @log = File.open(Oxidized::Config::Log + "/#{@node.name}-dnsdig", 'w') if Oxidized.config.input.debug?
     end
 
-    def cmd zone
+    def cmd _zone
       nsserver = @node.auth[:username]
       cmdline = "/bin/dig +noall +answer @" + nsserver + " " + @node.name + " -t AXFR"
       Oxidized.logger.debug "DNSDIG: cmdline: #{cmdline}"
-      config, status = Open3.capture2(cmdline)
+      config, _status = Open3.capture2(cmdline)
       @output = config
     end
 
-    def output
-      @output
-    end
+    attr_reader :output
 
     private
 
