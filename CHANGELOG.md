@@ -2,6 +2,8 @@
 
 ## Master
 
+* FEATURE: Added possibility to pass root logs directory as environment variable (@Glorf)
+
 ## 0.25.0
 
 * FEATURE: add viptela model (@bobthebutcher)
