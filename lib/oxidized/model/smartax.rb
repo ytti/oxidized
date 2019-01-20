@@ -2,7 +2,7 @@ class SmartAX < Oxidized::Model
 
   prompt /^([\w.-]+[>#])$/
 
-  comment '#' 
+  comment '#'
 
   cfg :telnet do
     username /^>>User name:$/
@@ -10,12 +10,12 @@ class SmartAX < Oxidized::Model
   end
 
   cfg :ssh, :telnet do
-    post_login "enable" 
+    post_login "enable"
     post_login "undo interactive"
     post_login "undo smart"
     post_login "scroll"
     pre_logout "quit"
-  end 
+  end
 
   cmd 'display current-configuration'
 
