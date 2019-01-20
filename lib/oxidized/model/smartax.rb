@@ -1,5 +1,6 @@
 class SmartAX < Oxidized::Model
-
+  # Huawei SmartAX
+  
   prompt /^([\w.-]+[>#])$/
 
   comment '#'
