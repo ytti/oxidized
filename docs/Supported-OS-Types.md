@@ -122,6 +122,7 @@
   * [MSA](/lib/oxidized/model/hpemsa.rb)
 * Huawei
   * [VRP](/lib/oxidized/model/vrp.rb)
+  * [SmartAX series](/lib/oxidized/model/smartax.rb)
 * Juniper
   * [JunOS](/lib/oxidized/model/junos.rb)
   * [ScreenOS (Netscreen)](/lib/oxidized/model/screenos.rb)
