@@ -1,6 +1,5 @@
 class AudioCodesMP < Oxidized::Model
-   # AudioCodes MediaPack MP1xx and Mediant 1000 devices (firmware v4.xx, v5.xx, v6.xx)
-   # Created by pedjajks@gmail.com
+   # AudioCodes MediaPack MP1xx and Mediant 1000 devices (firmware v4.xx, v5.xx, v6.xx) by pedjajks@gmail.com
 
   # old prompt /(\/.*?>)/
   prompt /\/>|\/CONFiguration>/
