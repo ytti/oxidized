@@ -1,17 +1,13 @@
 class AudioCodesMP < Oxidized::Model
   # AudioCodes MediaPack MP1xx and Mediant 1000 devices (firmware v4.xx, v5.xx, v6.xx)
   # Created by pedjajks@gmail.com
-  # 2019 v3.0
 
-
-#   prompt /(\/.*?>)/
-   prompt /\/>|\/CONFiguration>/
+   # old prompt /(\/.*?>)/
+  prompt /\/>|\/CONFiguration>/
 
   comment ';'
 
   cmd 'cf get' do |cfg|
-    # remove Unnecessary Lines
-    # cfg.gsub! /^AutoUPDate SaveAndReset*/, ''
     cfg.gsub! /^cf get*/, ''
     cfg.gsub! /^SIP\/ SECurity.*/, ''
     cfg.gsub! /^SaveAndReset RestoreFactorySettings.*/, ''
@@ -20,7 +16,6 @@ class AudioCodesMP < Oxidized::Model
     cfg.gsub! /\/>.*/, ''
     cfg
   end
-
 
   cfg :ssh do
     username /^login as:\s$/
