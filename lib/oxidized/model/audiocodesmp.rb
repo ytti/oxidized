@@ -6,6 +6,7 @@ class AudioCodesMP < Oxidized::Model
   comment ';'
 
   cmd 'cf get' do |cfg|
+    cfg.gsub! /^AutoUPDate SaveAndReset.*/, ''
     cfg.gsub! /^cf get*/, ''
     cfg.gsub! /^SIP\/ SECurity.*/, ''
     cfg.gsub! /^SaveAndReset RestoreFactorySettings.*/, ''
@@ -18,6 +19,7 @@ class AudioCodesMP < Oxidized::Model
   cfg :ssh do
     username /^login as:\s$/
     password /^.+password:\s$/
+    post_login 'conf'
     pre_logout 'exit'
   end
 
