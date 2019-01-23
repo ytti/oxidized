@@ -12,6 +12,7 @@
 * FEATURE: add privilege escalation to the cumulus model (@user4574)
 * FEATURE: add adtran model (@CFUJoshWeepie)
 * FEATURE: add firebrick model (@lewisvive)
+* FEATURE: add huawei smartax model (@nyash)
 * BUGFIX: netgear telnet password prompt not detected
 * BUGFIX: xos model should not modify config on legacy Extreme Networks devices (@sq9mev)
 * BUGFIX: model dlink, edgecos, ciscosmb, openbsd
