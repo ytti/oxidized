@@ -19,5 +19,7 @@ class SmartAX < Oxidized::Model
 
   # 'display current-configuration' returns current configuration stored in memory
   # 'display saved-configuration'   returns configuration stored in the file system which is used upon reboot
-  cmd 'display current-configuration'
+  cmd 'display current-configuration' do |cfg|
+    cfg.cut_both
+  end
 end
