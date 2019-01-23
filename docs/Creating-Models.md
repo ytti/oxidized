@@ -117,8 +117,8 @@ Certain keys of the hash returned by `parse` methods have standard definitions:
 - `:version` firmware version
 - `:manufacturer` manufacturer of the switch
 - `:cores` CPU cores
-- `:ram` amount of RAM in MiB
-- `:hdd` amount of non volatile memory in MiB
+- `:ram` amount of RAM in bytes
+- `:hdd` amount of non volatile memory in bytes
 
 It should be taken care that the definition of these fields is respected to
 keep their contents useful. None of the fields is required, an empty hash is
