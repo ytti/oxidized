@@ -130,7 +130,7 @@ describe Oxidized::Node do
         # mock output class to always return a specific string
         node.instance_variable_set(:@output, Class.new {
           def fetch node, group
-            return "<pfsense><version>123.45<\/version>"
+            return "<pfsense><version>123.45</version>"
           end
         })
 
