@@ -100,3 +100,26 @@ end
 cmd :ssh do prepend: true do
   ... "(code that should run first, before any code in the existing :ssh definition in the model)" ...
 end
+```
+
+## Configuration parsing
+
+The configuration of models can be parsed and returned as additional
+field `info` when displaying a switch. To add support for this, create
+a `parse` method for the respective model, returning a hash of contents
+for the `info` field.
+
+Examples for parsing methods can be found in the models `pfsense` and `comware`:
+
+Certain keys of the hash returned by `parse` methods have standard definitions:
+
+- `:name` model name
+- `:version` firmware version
+- `:manufacturer` manufacturer of the switch
+- `:cores` CPU cores
+- `:ram` amount of RAM in MiB
+- `:hdd` amount of non volatile memory in MiB
+
+It should be taken care that the definition of these fields is respected to
+keep their contents useful. None of the fields is required, an empty hash is
+valid.
