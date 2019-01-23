@@ -29,7 +29,7 @@ module Oxidized
       @retry          = 0
       @repo           = resolve_repo opt
 
-      @info           = Hash.new
+      @info           = {}
 
       # model instance needs to access node instance
       @model.node = self

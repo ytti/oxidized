@@ -27,7 +27,7 @@ class PfSense < Oxidized::Model
     info = {}
 
     output.match(/<pfsense>\s*<version>([0-9.]+)<\/version>/) do
-      info[:version] = $1
+      info[:version] = Regexp.last_match(1)
     end
 
     info

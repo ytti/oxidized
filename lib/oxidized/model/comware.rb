@@ -66,24 +66,24 @@ class Comware < Oxidized::Model
     info = {}
 
     output.match(/# (3Com Corporation)/) do
-      info[:manufacturer] = $1
+      info[:manufacturer] = Regexp.last_match(1)
     end
 
     output.match(/# (Switch .+?) Software Version 3Com OS (V[0-9.a-z]+)/) do
-      info[:name] = $1
-      info[:version] = $2
+      info[:name] = Regexp.last_match(1)
+      info[:version] = Regexp.last_match(2)
     end
 
     output.match(/Switch .+? 48-Port with ([0-9]+) Processor/) do
-      info[:cores] = $1.to_i
+      info[:cores] = Regexp.last_match(1).to_i
     end
 
     output.match(/# ([0-9]+)M   bytes DRAM/) do
-      info[:ram] = $1.to_i * 1024 * 1024
+      info[:ram] = Regexp.last_match(1).to_i * 1024 * 1024
     end
 
     output.match(/# ([0-9]+)M   bytes Flash Memory/) do
-      info[:hdd] = $1.to_i * 1024 * 1024
+      info[:hdd] = Regexp.last_match(1).to_i * 1024 * 1024
     end
 
     info
