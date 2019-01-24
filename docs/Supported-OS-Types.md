@@ -16,6 +16,7 @@
   * Wireless
 * Allied Telesis
   * [Alliedware Plus](/lib/oxidized/model/awplus.rb)
+  * [AT-8000S, AT-8000GS series](/lib/oxidized/model/powerconnect.rb)
 * Alvarion
   * [BreezeACCESS](/lib/oxidized/model/alvarion.rb)
 * APC
@@ -172,6 +173,7 @@
   * [Trango](/lib/oxidized/model/trango.rb)
 * TPLink
   * [TPLink](/lib/oxidized/model/tplink.rb)
+  * [TL-SL5428](/lib/oxidized/model/edgecos.rb)
 * Ubiquiti
   * [AirOS](/lib/oxidized/model/airos.rb)
   * [Edgeos](/lib/oxidized/model/edgeos.rb)
