@@ -1,6 +1,7 @@
 # Changelog
 
 ## Master
+* FEATURE: add Audiocodes MediaPack MP-1xx and Mediant 1000 model (@pedjaj)
 
 ## 0.25.0
 
