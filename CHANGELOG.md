@@ -2,6 +2,7 @@
 
 ## Master
 
+* FEATURE: add raisecom RAX model (@vitalisator)
 * FEATURE: add huawei smartax model (@nyash)
 * MISC: prompt updates in siklu, netonix, netscaler models
 
