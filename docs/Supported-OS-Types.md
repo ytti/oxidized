@@ -174,6 +174,7 @@
 * TPLink
   * [TPLink](/lib/oxidized/model/tplink.rb)
   * [TL-SL5428](/lib/oxidized/model/edgecos.rb)
+  * [TL-SL3428](/lib/oxidized/model/powerconnect.rb)
 * Ubiquiti
   * [AirOS](/lib/oxidized/model/airos.rb)
   * [Edgeos](/lib/oxidized/model/edgeos.rb)
