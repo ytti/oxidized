@@ -1,5 +1,4 @@
 class TDRE < Oxidized::Model
-
   prompt /^>$/ 
   cmd "get -f"
 
@@ -14,9 +13,9 @@ class TDRE < Oxidized::Model
 
   cmd :all do |cfg|
     if ssh
-    cfg = cfg.lines.to_a[5..-4].join
+      cfg.lines.to_a[5..-4].join
     else
-    cfg = cfg.lines.to_a[1..-4].joim
+      cfg.lines.to_a[1..-4].join
     end
   end
 
@@ -26,7 +25,6 @@ class TDRE < Oxidized::Model
   end
 
   cfg :telnet, :ssh do
-    pre_logout "DISCONNECT\r" 
+    pre_logout "DISCONNECT\r"
   end
-
 end
