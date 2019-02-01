@@ -1,5 +1,5 @@
 class TDRE < Oxidized::Model
-  prompt /^>$/ 
+  prompt /^>$/
   cmd "get -f"
 
   def ssh
