@@ -156,6 +156,8 @@
 * [pfSense](/lib/oxidized/model/pfsense.rb)
 * Radware
   * [AlteonOS](/lib/oxidized/model/alteonos.rb)
+* Raisecom
+  * [Raisecom](/lib/oxidized/model/raisecom.rb)
 * Quanta
   * [Quanta / VxWorks 6.6 (1.1.0.8)](/lib/oxidized/model/quantaos.rb)
 * Siklu
