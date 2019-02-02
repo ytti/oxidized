@@ -1,4 +1,4 @@
-class GithubRepo < Oxidized::Hook
+class GithubRepo < Oxidized ::Hook
   def validate_cfg!
     raise KeyError, 'hook.remote_repo is required' unless cfg.has_key?('remote_repo')
   end
@@ -35,9 +35,9 @@ class GithubRepo < Oxidized::Hook
     end
 
     Rugged::Commit.create(repo, {
-                            parents: [repo.head.target, their_branch.target],
-                            tree: merge_index.write_tree(repo),
-                            message: "Merge remote-tracking branch '#{their_branch.name}'",
+                            parents:    [repo.head.target, their_branch.target],
+                            tree:       merge_index.write_tree(repo),
+                            message:    "Merge remote-tracking branch '#{their_branch.name}'",
                             update_ref: "HEAD"
                           })
   end

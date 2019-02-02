@@ -13,11 +13,13 @@ module Oxidized
       @log = File.open(Oxidized::Config::Log + "/#{@node.ip}-telnet", 'w') if Oxidized.config.input.debug?
       port = vars(:telnet_port) || 23
 
-      telnet_opts = { 'Host'    => @node.ip,
-                      'Port'    => port.to_i,
-                      'Timeout' => @timeout,
-                      'Model'   => @node.model,
-                      'Log'     => @log }
+      telnet_opts = {
+        'Host'    => @node.ip,
+        'Port'    => port.to_i,
+        'Timeout' => @timeout,
+        'Model'   => @node.model,
+        'Log'     => @log
+      }
 
       @telnet = Net::Telnet.new telnet_opts
       begin

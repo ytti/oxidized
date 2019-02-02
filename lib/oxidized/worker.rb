@@ -57,7 +57,7 @@ module Oxidized
     def process_success node, job
       @jobs_done += 1 # needed for :nodes_done hook
       Oxidized.Hooks.handle :node_success, node: node,
-                                           job: job
+                                           job:  job
       msg = "update #{node.group}/#{node.name}"
       msg += " from #{node.from}" if node.from
       msg += " with message '#{node.msg}'" if node.msg
@@ -66,8 +66,8 @@ module Oxidized
                       msg: msg, email: node.email, user: node.user, group: node.group
         node.modified
         Oxidized.logger.info "Configuration updated for #{node.group}/#{node.name}"
-        Oxidized.Hooks.handle :post_store, node: node,
-                                           job: job,
+        Oxidized.Hooks.handle :post_store, node:      node,
+                                           job:       job,
                                            commitref: output.commitref
       end
       node.reset
@@ -87,8 +87,8 @@ module Oxidized
         @jobs_done += 1
         msg += ", retries exhausted, giving up"
         node.retry = 0
-        Oxidized.Hooks.handle :node_fail, :node => node,
-                                          :job => job
+        Oxidized.Hooks.handle :node_fail, node: node,
+                                          job:  job
       end
       Oxidized.logger.warn msg
     end

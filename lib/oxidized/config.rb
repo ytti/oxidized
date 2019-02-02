@@ -49,8 +49,8 @@ module Oxidized
       asetus.default.source.default = 'csv'   # csv, sql
 
       asetus.default.model_map = {
-        'cisco'   => 'ios',
         'juniper' => 'junos',
+        'cisco'   => 'ios',
       }
 
       begin

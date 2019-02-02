@@ -4,10 +4,10 @@ module Oxidized
     include Oxidized::Config::Vars
 
     RescueFail = {
-      :debug => [
+      debug: [
         Errno::ECONNREFUSED,
       ],
-      :warn => [
+      warn:  [
         IOError,
         PromptUndetect,
         Timeout::Error,

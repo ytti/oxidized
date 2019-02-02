@@ -14,6 +14,10 @@ LineLength:
 Style/PreferredHashMethods:
   EnforcedStyle: verbose
 
+Layout/AlignHash:
+  EnforcedHashRocketStyle: table
+  EnforcedColonStyle: table
+
 Style/Not:
   Enabled: false
 

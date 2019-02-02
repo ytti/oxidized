@@ -5,10 +5,10 @@ module Oxidized
 
   class FTP < Input
     RescueFail = {
-      :debug => [
+      debug: [
         # Net::SSH::Disconnect,
       ],
-      :warn => [
+      warn:  [
         # RuntimeError,
         # Net::SSH::AuthenticationFailed,
       ],

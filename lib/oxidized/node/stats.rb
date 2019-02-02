@@ -8,9 +8,9 @@ module Oxidized
       # @return [void]
       def add job
         stat = {
-          :start  => job.start,
-          :end    => job.end,
-          :time   => job.time,
+          start: job.start,
+          end:   job.end,
+          time:  job.time,
         }
         @stats[job.status] ||= []
         @stats[job.status].shift if @stats[job.status].size > @history_size

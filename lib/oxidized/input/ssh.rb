@@ -5,10 +5,10 @@ module Oxidized
   require 'oxidized/input/cli'
   class SSH < Input
     RescueFail = {
-      :debug => [
+      debug: [
         Net::SSH::Disconnect,
       ],
-      :warn => [
+      warn:  [
         RuntimeError,
         Net::SSH::AuthenticationFailed,
       ],
@@ -122,12 +122,12 @@ module Oxidized
     def make_ssh_opts
       secure = Oxidized.config.input.ssh.secure?
       ssh_opts = {
-        port:         (vars(:ssh_port) || 22).to_i,
-        paranoid:     secure,
-        keepalive:    vars(:ssh_no_keepalive) ? false : true,
-        password:     @node.auth[:password],
-        timeout:      Oxidized.config.timeout,
-        number_of_password_prompts: 0
+        number_of_password_prompts: 0,
+        keepalive:                  vars(:ssh_no_keepalive) ? false : true,
+        paranoid:                   secure,
+        password:                   @node.auth[:password],
+        timeout:                    Oxidized.config.timeout,
+        port:                       (vars(:ssh_port) || 22).to_i,
       }
 
       auth_methods = vars(:auth_methods) || %w(none publickey password)
