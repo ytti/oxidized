@@ -4,7 +4,7 @@ LABEL maintainer="Samer Abdel-Hafez <sam@arahant.net>"
 
 # set up dependencies for the build process
 RUN apt-get -yq update \
-    && apt-get -yq --no-install-recommends install ruby2.5 ruby2.5-dev libssl1.1 libssl-dev pkg-config make cmake libssh2-1 libssh2-1-dev git g++ libffi-dev ruby-bundler libicu60 libicu-dev libsqlite3-0 libsqlite3-dev libmysqlclient20 libmysqlclient-dev \
+    && apt-get -yq install ruby2.5 ruby2.5-dev libssl1.1 libssl-dev pkg-config make cmake libssh2-1 libssh2-1-dev git g++ libffi-dev ruby-bundler libicu60 libicu-dev libsqlite3-0 libsqlite3-dev libmysqlclient20 libmysqlclient-dev \
     && apt-get clean \
     && rm -rf /var/lib/apt/lists/*
 
