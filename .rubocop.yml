@@ -46,17 +46,17 @@ Style/Documentation:
 Style/ParallelAssignment:
   Enabled: false
 
-Metrics/AbcSize:
-  Max: 28
-
-Metrics/MethodLength:
-  Max: 20
-
-Metrics/ClassLength:
-  Max: 140
-
-Metrics/CyclomaticComplexity:
-  Max: 7
+## Metrics/AbcSize:
+##   Max: 28
+## 
+## Metrics/MethodLength:
+##   Max: 20
+## 
+## Metrics/ClassLength:
+##   Max: 140
+## 
+## Metrics/CyclomaticComplexity:
+##   Max: 7
 # Do not attempt to police vendored code, and exclude special cases
 AllCops:
   Exclude:
