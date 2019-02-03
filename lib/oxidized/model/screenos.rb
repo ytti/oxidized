@@ -3,7 +3,7 @@ class ScreenOS < Oxidized::Model
 
   comment '! '
 
-  prompt /^[\w.:\(\)-]+->\s?$/
+  prompt /^[\w.:()-]+->\s?$/
 
   cmd :all do |cfg|
     cfg.each_line.to_a[2..-2].join
@@ -17,8 +17,8 @@ class ScreenOS < Oxidized::Model
   end
 
   cmd 'get system' do |cfg|
-    cfg.gsub! /^Date\ .*\n/, ''
-    cfg.gsub! /^Up\ .*\n/, ''
+    cfg.gsub! /^Date .*\n/, ''
+    cfg.gsub! /^Up .*\n/, ''
     cfg.gsub! /(current bw ).*/, '\\1 <removed>'
     comment cfg
   end

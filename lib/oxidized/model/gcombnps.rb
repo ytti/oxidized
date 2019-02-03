@@ -37,11 +37,12 @@ class GcomBNPS < Oxidized::Model
   cmd 'show interface sfp' do |cfg|
     out = []
     cfg.each_line do |line|
-      next if line.match /^  Temperature/
-      next if line.match /^  Voltage\(V\)/
-      next if line.match /^  Bias Current\(mA\)/
-      next if line.match /^  RX Power\(dBM\)/
-      next if line.match /^  TX Power\(dBM\)/
+      next if line =~ /^  Temperature/
+      next if line =~ /^  Voltage\(V\)/
+      next if line =~ /^  Bias Current\(mA\)/
+      next if line =~ /^  RX Power\(dBM\)/
+      next if line =~ /^  TX Power\(dBM\)/
+
       out << line
     end
 
@@ -55,8 +56,9 @@ class GcomBNPS < Oxidized::Model
   cmd 'show system' do |cfg|
     out = []
     cfg.each_line do |line|
-      next if line.match /^system run time        :/
-      next if line.match /^switch temperature     :/
+      next if line =~ /^system run time        :/
+      next if line =~ /^switch temperature     :/
+
       out << line
     end
 

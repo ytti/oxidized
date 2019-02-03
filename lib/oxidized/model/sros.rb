@@ -6,7 +6,7 @@ class SROS < Oxidized::Model
 
   comment  '# '
 
-  prompt /^([-\w\.:>\*]+\s?[#>]\s?)$/
+  prompt /^([-\w.:>*]+\s?[#>]\s?)$/
 
   cmd :all do |cfg, cmdstring|
     new_cfg = comment "COMMAND: #{cmdstring}\n"
@@ -51,7 +51,7 @@ class SROS < Oxidized::Model
     #
     # Strip carriage returns and backspaces.
     #
-    cfg.gsub! /\r/, ''
+    cfg.delete! "\r"
     cfg.gsub! /[\b][\b][\b]/, "\n"
     cfg.gsub! /# Finished .*/, ''
     cfg.gsub! /# Generated .*/, ''
@@ -74,7 +74,7 @@ class SROS < Oxidized::Model
     #
     # Strip carriage returns.
     #
-    cfg.gsub! /\r/, ''
+    cfg.delete! "\r"
     cfg.gsub! /# Finished .*/, ''
     cfg.gsub! /# Generated .*/, ''
     comment cfg
@@ -87,7 +87,7 @@ class SROS < Oxidized::Model
     #
     # Strip carriage returns.
     #
-    cfg.gsub! /\r/, ''
+    cfg.delete! "\r"
     cfg.gsub! /# Finished .*/, ''
     cfg.gsub! /# Generated .*/, ''
     comment cfg
@@ -100,7 +100,7 @@ class SROS < Oxidized::Model
     #
     # Strip carriage returns.
     #
-    cfg.gsub! /\r/, ''
+    cfg.delete! "\r"
     cfg.gsub! /# Finished .*/, ''
     cfg.gsub! /# Generated .*/, ''
   end

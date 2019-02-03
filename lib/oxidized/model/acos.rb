@@ -4,7 +4,7 @@ class ACOS < Oxidized::Model
   comment  '! '
 
   # ACOS prompt changes depending on the state of the device
-  prompt /^([-\w.\/:?\[\]\(\)]+[#>]\s?)$/
+  prompt /^([-\w.\/:?\[\]()]+[#>]\s?)$/
 
   cmd :secret do |cfg|
     cfg.gsub!(/community read encrypted (\S+)/, 'community read encrypted <hidden>') # snmp
@@ -51,9 +51,9 @@ class ACOS < Oxidized::Model
 
   cmd 'show aflex all-partitions' do |cfg|
     @partitions_aflex = cfg.lines.each_with_object({}) do |l, h|
-      h[$1] = [] if l.match /partition: (.+)/
+      h[Regexp.last_match(1)] = [] if l =~ /partition: (.+)/
       # only consider scripts that have passed syntax check
-      h[h.keys.last] << $1 if l.match /^([\w-]+) +Check/
+      h[h.keys.last] << Regexp.last_match(1) if l =~ /^([\w-]+) +Check/
     end
     ''
   end

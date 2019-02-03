@@ -11,12 +11,14 @@ class FTOS < Oxidized::Model
     cfg.gsub! /^(snmp-server community).*/, '\\1 <configuration removed>'
     cfg.gsub! /(secret \d* {0,1})\S+(.*)/, '\\1<secret hidden>\\2'
     cfg.gsub! /(password \d+) \S+(.*)/, '\\1 <hash hidden>\\2'
+    cfg.gsub! /(^snmp-server.*version \S+) \S+(.*)/, '\\1 <community removed>\\2'
+    cfg.gsub! /(^radius-server.*key \d )\S+/, '\\1<hash hidden>\\2'
     cfg
   end
 
   cmd 'show inventory' do |cfg|
     # Old versions of FTOS can occasionally return data that triggers encoding errors.
-    cfg.encode!("UTF-8", :invalid => :replace, :undef => :replace, :replace => "")
+    cfg.encode!("UTF-8", invalid: :replace, undef: :replace, replace: "")
     comment cfg
   end
 

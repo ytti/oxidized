@@ -18,6 +18,8 @@ class TPLink < Oxidized::Model
   end
 
   cmd :all do |cfg|
+    # remove unwanted paging line
+    cfg.gsub! /^Press any key to contin.*/, ''
     # normalize linefeeds
     cfg.gsub! /(\r|\r\n|\n\r)/, "\n"
     # remove empty lines
@@ -25,6 +27,8 @@ class TPLink < Oxidized::Model
   end
 
   cmd :secret do |cfg|
+    cfg.gsub! /^enable password (\S+)/, 'enable password <secret hidden>'
+    cfg.gsub! /^user (\S+) password (\S+) (.*)/, 'user \1 password <secret hidden> \3'
     cfg.gsub! /^(snmp-server community).*/, '\\1 <configuration removed>'
     cfg.gsub! /secret (\d+) (\S+).*/, '<secret hidden>'
     cfg

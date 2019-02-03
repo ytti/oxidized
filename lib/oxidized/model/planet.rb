@@ -33,8 +33,8 @@ class Planet < Oxidized::Model
 
   cmd 'show version' do |cfg|
     cfg.gsub! "\n\r", "\n"
-    @planetgs = true if cfg.match /^System Name\w*:\w*GS-.*$/
-    @planetsgs = true if cfg.match /SGS-(.*) Device, Compiled on .*$/
+    @planetgs = true if cfg =~ /^System Name\w*:\w*GS-.*$/
+    @planetsgs = true if cfg =~ /SGS-(.*) Device, Compiled on .*$/
 
     cfg = cfg.each_line.to_a[0...-2]
 
@@ -53,8 +53,8 @@ class Planet < Oxidized::Model
     cfg = cfg.reject { |line| line.match "Building configuration..." }
 
     if @planetsgs
-      cfg << cmd('show transceiver detail | include transceiver detail information|found|Type|length|Nominal|wavelength|Base information') do |cfg|
-        comment cfg
+      cfg << cmd('show transceiver detail | include transceiver detail information|found|Type|length|Nominal|wavelength|Base information') do |cfg_optic|
+        comment cfg_optic
       end
     end
 

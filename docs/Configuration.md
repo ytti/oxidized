@@ -62,22 +62,31 @@ vars:
   ssh_no_exec: true
 ```
 
+## Disabling SSH keepalives
+
+Oxidized SSH input makes use of SSH keepalives to prevent timeouts from slower devices and to quickly tear down stale sessions in larger deployments. There have been reports of SSH keepalives breaking compatibility with certain OS types. They can be disabled using the `ssh_no_keepalive` variable on a per-node basis (by specifying it in the source) or configured application-wide.
+
+```yaml
+vars:
+  ssh_no_keepalive: true
+```
+
 ## SSH Auth Methods
 
 By default, Oxidized registers the following auth methods: `none`, `publickey` and `password`. However you can configure this globally, by groups, models or nodes.
 
 ```yaml
 vars:
-    auth_methods: [ "none", "publickey", "password", "keyboard-interactive" ]
+  auth_methods: [ "none", "publickey", "password", "keyboard-interactive" ]
 ```
 
 ## SSH Proxy Command
 
-Oxidized can `ssh` through a proxy as well. To do so we just need to set `ssh_proxy` variable with the proxy host information.
+Oxidized can `ssh` through a proxy as well. To do so we just need to set `ssh_proxy` variable with the proxy host information and optionally set the `ssh_proxy_port` with the SSH port if it is not listening no port 22.
 
 This can be provided on a per-node basis by mapping the proper fields from your source.
 
-An example for a `csv` input source that maps the 4th field as the `ssh_proxy` value.
+An example for a `csv` input source that maps the 4th field as the `ssh_proxy` value and the 5th field as `ssh_proxy_port`.
 
 ```yaml
 ...
@@ -87,6 +96,27 @@ map:
 vars_map:
   enable: 2
   ssh_proxy: 3
+  ssh_proxy_port: 4
+...
+```
+
+## SSH enabling legacy algorithms
+
+When connecting to older firmware over SSH, it is sometimes necessary to enable legacy/disabled settings like KexAlgorithms, HostKeyAlgorithms, MAC or the Encryption.
+
+These settings can be provided on a per-node basis by mapping the ssh_kex, ssh_host_key, ssh_hmac and the ssh_encryption fields from you source.
+
+```yaml
+...
+map:
+  name: 0
+  model: 1
+vars_map:
+  enable: 2
+  ssh_kex: 3
+  ssh_host_key: 4
+  ssh_hmac: 5
+  ssh_encryption: 6
 ...
 ```
 
@@ -116,6 +146,9 @@ threads: 30
 timeout: 20
 retries: 3
 prompt: !ruby/regexp /^([\w.@-]+[#>]\s?)$/
+crash:
+  directory: ~/.config/oxidized/crashes
+  hostnames: false
 vars:
   enable: S3cr3tx
 groups: {}
@@ -174,6 +207,8 @@ map:
 
 For model specific credentials
 
+You can add 'username: nil' if the device only expects a Password at prompt.
+
 ```yaml
 models:
   junos:
@@ -187,6 +222,9 @@ models:
   apc_aos:
     username: apc
     password: password
+  cisco:
+    username: nil
+    password: pass
 ```
 
 ## RESTful API and Web Interface

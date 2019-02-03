@@ -4,7 +4,7 @@ class CiscoSMA < Oxidized::Model
   comment '! '
 
   # Select passphrase display option
-  expect /using loadconfig command\. \[Y\]\>/ do |data, re|
+  expect /using loadconfig command\. \[Y\]>/ do |data, re|
     send "y\n"
     data.sub re, ''
   end

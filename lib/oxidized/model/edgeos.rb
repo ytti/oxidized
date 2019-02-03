@@ -1,10 +1,10 @@
 class Edgeos < Oxidized::Model
   # EdgeOS #
 
-  prompt /\@.*?\:~\$\s/
+  prompt /@.*?:~\$\s/
 
   cmd :all do |cfg|
-    cfg = cfg.lines.to_a[1..-2].join
+    cfg.lines.to_a[1..-2].join
   end
 
   cmd :secret do |cfg|
@@ -14,6 +14,11 @@ class Edgeos < Oxidized::Model
     cfg.gsub! /pre-shared-secret (\S+).*/, 'pre-shared-secret <secret removed>'
     cfg.gsub! /community (\S+) {/, 'community <hidden> {'
     cfg
+  end
+
+  cmd 'show version | no-more' do |cfg|
+    cfg.gsub! /^Uptime:\s.+/, ''
+    comment cfg
   end
 
   cmd 'show configuration commands | no-more'

@@ -8,14 +8,20 @@ class CiscoSMB < Oxidized::Model
   cmd :all do |cfg|
     lines = cfg.each_line.to_a[1..-2]
     # Remove \r from beginning of response
-    lines[0].gsub!(/^\r.*?/, '') if lines.length > 0
+    lines[0].gsub!(/^\r.*?/, '') unless lines.empty?
     lines.join
   end
 
   cmd :secret do |cfg|
     cfg.gsub! /^(snmp-server community).*/, '\\1 <configuration removed>'
     cfg.gsub! /username (\S+) privilege (\d+) (\S+).*/, '<secret hidden>'
+    cfg.gsub! /^(username \S+ password encrypted) \S+(.*)/, '\\1 <secret hidden> \\2'
+    cfg.gsub! /^(enable password level \d+ encrypted) \S+/, '\\1 <secret hidden>'
     cfg.gsub! /^(encrypted radius-server key).*/, '\\1 <configuration removed>'
+    cfg.gsub! /^(encrypted radius-server host .+ key) \S+(.*)/, '\\1 <secret hidden> \\2'
+    cfg.gsub! /^(encrypted tacacs-server key).*/, '\\1 <secret hidden>'
+    cfg.gsub! /^(encrypted tacacs-server host .+ key) \S+(.*)/, '\\1 <secret hidden> \\2'
+    cfg.gsub! /^(encrypted sntp authentication-key \d+ md5) .*/, '\\1 <secret hidden>'
     cfg
   end
 
@@ -36,9 +42,9 @@ class CiscoSMB < Oxidized::Model
     cfg = cfg.each_line.to_a[0..-1].join
     cfg.gsub! /^Current configuration : [^\n]*\n/, ''
     cfg.sub! /^(ntp clock-period).*/, '! \1'
-    cfg.gsub! /^\ tunnel\ mpls\ traffic-eng\ bandwidth[^\n]*\n*(
-                  (?:\ [^\n]*\n*)*
-                  tunnel\ mpls\ traffic-eng\ auto-bw)/mx, '\1'
+    cfg.gsub! /^ tunnel mpls traffic-eng bandwidth[^\n]*\n*(
+                  (?: [^\n]*\n*)*
+                  tunnel mpls traffic-eng auto-bw)/mx, '\1'
     cfg
   end
 

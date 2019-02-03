@@ -35,13 +35,13 @@ class ALTEONOS < Oxidized::Model
   end
 
   # Answer for Dispay private keys
-  expect /^Display private keys\?\s?\[y\/n\]\: $/ do |data, re|
+  expect /^Display private keys\?\s?\[y\/n\]: $/ do |data, re|
     send "n\r"
     data.sub re, ''
   end
 
   # Answer for sync to peer on exit
-  expect /^Confirm Sync to Peer\s?\[y\/n\]\: $/ do |data, re|
+  expect /^Confirm Sync to Peer\s?\[y\/n\]: $/ do |data, re|
     send "n\r"
     data.sub re, ''
   end

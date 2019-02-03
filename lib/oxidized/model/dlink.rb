@@ -1,7 +1,7 @@
 class Dlink < Oxidized::Model
   # D-LINK Switches
 
-  prompt /^(\r*[\w.@():-]+[#>]\s?)$/
+  prompt /^(\r*[\w.@()\/:-]+[#>]\s?)$/
   comment '# '
 
   cmd :secret do |cfg|
@@ -15,7 +15,7 @@ class Dlink < Oxidized::Model
   end
 
   cmd 'show switch' do |cfg|
-    cfg.gsub! /^System\ Uptime\s.+/, '' # Omit constantly changing uptime info
+    cfg.gsub! /^System Uptime\s.+/, '' # Omit constantly changing uptime info
     comment cfg
   end
 
