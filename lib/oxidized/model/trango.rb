@@ -46,6 +46,7 @@ class Trango < Oxidized::Model
         end
       end
       next unless line =~ /\[IP\] (\S+) \[Subnet Mask\] (\S+) \[Gateway\] (\S+)/
+
       out << "ipconfig " + Regexp.last_match[1] + ' ' +
              Regexp.last_match[2] + ' ' +
              Regexp.last_match[3]

@@ -148,7 +148,7 @@ module Oxidized
         diff = repo.diff(commit_old, commit)
         stats = [diff.stats[:files][node.name][:insertions], diff.stats[:files][node.name][:deletions]]
         diff.each do |patch|
-          if /#{node.name}\s+/.match(patch.patch.to_s.lines.first)
+          if /#{node.name}\s+/ =~ patch.patch.to_s.lines.first
             diff_commits = { patch: patch.patch.to_s, stat: stats }
             break
           end

@@ -113,7 +113,7 @@ module Oxidized
         commit_old = repo.lookup(oid2)
         diff = repo.diff(commit_old, commit)
         diff.each do |patch|
-          if /#{node.name}\s+/.match(patch.to_s.lines.first)
+          if /#{node.name}\s+/ =~ patch.to_s.lines.first
             diff_commits = { patch: patch.to_s, stat: patch.stat }
             break
           end

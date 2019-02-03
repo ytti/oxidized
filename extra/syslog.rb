@@ -48,13 +48,13 @@ module Oxidized
   class SyslogMonitor
     NAME_MAP = {
       /(.*)\.ip\.tdc\.net/ => '\1',
-      /(.*)\.ip\.fi/ => '\1'
+      /(.*)\.ip\.fi/       => '\1'
     }.freeze
     MSG = {
-      ios: /%SYS-(SW[0-9]+-)?5-CONFIG_I:/,
+      ios:   /%SYS-(SW[0-9]+-)?5-CONFIG_I:/,
       junos: 'UI_COMMIT:',
-      eos: /%SYS-5-CONFIG_I:/,
-      nxos: /%VSHD-5-VSHD_SYSLOG_CONFIG_I:/
+      eos:   /%SYS-5-CONFIG_I:/,
+      nxos:  /%VSHD-5-VSHD_SYSLOG_CONFIG_I:/
     }.freeze
 
     class << self
