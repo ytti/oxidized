@@ -29,7 +29,7 @@ module Oxidized
 
     def crash error
       Oxidized.logger.fatal "Oxidized crashed, crashfile written in #{Config::Crash}"
-      open Config::Crash, 'w' do |file|
+      File.open Config::Crash, 'w' do |file|
         file.puts '-' * 50
         file.puts Time.now.utc
         file.puts error.message + ' [' + error.class.to_s + ']'
@@ -40,7 +40,7 @@ module Oxidized
     end
 
     def parse_opts
-      opts = Slop.new(:help => true) do
+      opts = Slop.new(help: true) do
         on 'd', 'debug', 'turn on debugging'
         on 'daemonize',  'Daemonize/fork the process'
         on 'show-exhaustive-config', 'output entire configuration, including defaults' do
@@ -65,34 +65,34 @@ module Oxidized
     end
 
     def write_pid
-      if pidfile?
-        begin
-          File.open(pidfile, ::File::CREAT | ::File::EXCL | ::File::WRONLY) { |f| f.write("#{Process.pid}") }
-          at_exit { File.delete(pidfile) if File.exists?(pidfile) }
-        rescue Errno::EEXIST
-          check_pid
-          retry
-        end
+      return unless pidfile?
+
+      begin
+        File.open(pidfile, ::File::CREAT | ::File::EXCL | ::File::WRONLY) { |f| f.write(Process.pid.to_s) }
+        at_exit { File.delete(pidfile) if File.exist?(pidfile) }
+      rescue Errno::EEXIST
+        check_pid
+        retry
       end
     end
 
     def check_pid
-      if pidfile?
-        case pid_status(pidfile)
-        when :running, :not_owned
-          puts "A server is already running. Check #{pidfile}"
-          exit(1)
-        when :dead
-          File.delete(pidfile)
-        end
+      return unless pidfile?
+
+      case pid_status(pidfile)
+      when :running, :not_owned
+        puts "A server is already running. Check #{pidfile}"
+        exit(1)
+      when :dead
+        File.delete(pidfile)
       end
     end
 
     def pid_status(pidfile)
-      return :exited unless File.exists?(pidfile)
+      return :exited unless File.exist?(pidfile)
 
       pid = ::File.read(pidfile).to_i
-      return :dead if pid == 0
+      return :dead if pid.zero?
 
       Process.kill(0, pid)
       :running
