@@ -9,7 +9,7 @@ module Oxidized
       Root = Root = ENV['OXIDIZED_HOME'] || File.join(ENV['HOME'], '.config', 'oxidized')
     end
 
-    CFGS = Asetus.new :name => 'oxidized', :load => false, :key_to_s => true
+    CFGS = Asetus.new name: 'oxidized', load: false, key_to_s: true
     CFGS.default.rest = '127.0.0.1:8888'
 
     begin
@@ -19,7 +19,7 @@ module Oxidized
     end
 
     restcfg = CFGS.cfg.rest
-    unless restcfg.match(/^http:\/\//)
+    unless restcfg =~ /^http:\/\//
       restcfg.insert(0, 'http://')
     end
 

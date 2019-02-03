@@ -21,7 +21,7 @@ module Oxidized
     def load(_node_want = nil)
       nodes = []
       open_file.each_line do |line|
-        next if line.match(/^\s*#/)
+        next if line =~ /^\s*#/
 
         data = line.chomp.split(@cfg.delimiter, -1)
         next if data.empty?

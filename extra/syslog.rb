@@ -32,7 +32,7 @@ module Oxidized
     Root = File.join ENV['HOME'], '.config', 'oxidized'
   end
 
-  CFGS = Asetus.new :name => 'oxidized', :load => false, :key_to_s => true
+  CFGS = Asetus.new name: 'oxidized', load: false, key_to_s: true
   CFGS.default.syslogd.port        = 514
   CFGS.default.syslogd.file        = 'messages'
   CFGS.default.syslogd.resolve     = true
@@ -51,10 +51,10 @@ module Oxidized
       /(.*)\.ip\.fi/       => '\1',
     }
     MSG = {
-      :ios   => /%SYS-(SW[0-9]+-)?5-CONFIG_I:/,
-      :junos => 'UI_COMMIT:',
-      :eos   => /%SYS-5-CONFIG_I:/,
-      :nxos  => /%VSHD-5-VSHD_SYSLOG_CONFIG_I:/,
+      ios: /%SYS-(SW[0-9]+-)?5-CONFIG_I:/,
+      junos: 'UI_COMMIT:',
+      eos: /%SYS-5-CONFIG_I:/,
+      nxos: /%VSHD-5-VSHD_SYSLOG_CONFIG_I:/,
     }
 
     class << self
@@ -86,8 +86,8 @@ module Oxidized
       # TODO: we need to fetch 'ip/name' in mode == :file here
       user = log[i + 5]
       from = log[-1][1..-2]
-      rest(:user => user, :from => from, :model => 'ios', :ip => ip,
-           :name => getname(ip))
+      rest(user: user, from: from, model: 'ios', ip: ip,
+           name: getname(ip))
     end
 
     def jnpr(ip, log, i)
@@ -95,8 +95,8 @@ module Oxidized
       user = log[i + 2][1..-2]
       msg  = log[(i + 6)..-1].join(' ')[10..-2]
       msg  = nil if msg == 'none'
-      rest(:user => user, :msg => msg, :model => 'jnpr', :ip => ip,
-           :name => getname(ip))
+      rest(user: user, msg: msg, model: 'jnpr', ip: ip,
+           name: getname(ip))
     end
 
     def handle_log(log, ip)
@@ -109,7 +109,7 @@ module Oxidized
     end
 
     def run(io)
-      while true
+      loop do
         log = select [io]
         log, ip = log.first.first, nil
         if @mode == :udp

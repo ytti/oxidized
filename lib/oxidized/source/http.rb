@@ -71,7 +71,7 @@ module Oxidized
         req_uri = "#{req_uri}/#{node_want}"
       end
       request = Net::HTTP::Get.new(req_uri, headers)
-      if (@cfg.user? && @cfg.pass?)
+      if @cfg.user? && @cfg.pass?
         request.basic_auth(@cfg.user, @cfg.pass)
       end
       http.request(request).body

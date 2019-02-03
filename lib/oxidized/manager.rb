@@ -9,7 +9,7 @@ module Oxidized
         require File.join dir, file + '.rb'
         klass = nil
         [Oxidized, Object].each do |mod|
-          klass   = mod.constants.find { |const| const.to_s.downcase == file.downcase }
+          klass   = mod.constants.find { |const| const.to_s.casecmp(file).zero? }
           klass ||= mod.constants.find { |const| const.to_s.downcase == 'oxidized' + file.downcase }
           klass   = mod.const_get klass if klass
           break if klass

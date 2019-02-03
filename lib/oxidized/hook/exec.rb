@@ -76,10 +76,8 @@ class Exec < Oxidized::Hook
       )
     end
     if ctx.job
-      env.merge!(
-        "OX_JOB_STATUS" => ctx.job.status.to_s,
-        "OX_JOB_TIME"   => ctx.job.time.to_s
-      )
+      env["OX_JOB_STATUS"] = ctx.job.status.to_s
+      env["OX_JOB_TIME"] = ctx.job.time.to_s
     end
     env
   end

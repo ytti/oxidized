@@ -4,7 +4,7 @@
 # 0               SSE-G48-TG4   (P2-01)           1.0.16-9
 
 class AricentISS < Oxidized::Model
-  prompt (/^(\e\[27m)?[ \r]*[\w-]+# ?$/)
+  prompt /^(\e\[27m)?[ \r]*[\w-]+# ?$/
 
   cfg :ssh do
     # "pagination" was misspelled in some (earlier) versions (at least 1.0.16-9)
@@ -34,9 +34,9 @@ class AricentISS < Oxidized::Model
   cmd 'show running-config' do |cfg|
     comment_next = 0
     cfg.each_line.map { |l|
-      next '' if l.match /^Building configuration/
+      next '' if l =~ /^Building configuration/
 
-      if l.match /^Switch ID.*Hardware Version.*Firmware Version/ then
+      if l =~ /^Switch ID.*Hardware Version.*Firmware Version/ then
         comment_next = 2
       end
 
