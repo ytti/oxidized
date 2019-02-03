@@ -2,7 +2,6 @@
 
 ## Master
 * FEATURE: add Audiocodes MediaPack MP-1xx and Mediant 1000 model (@pedjaj)
-
 * FEATURE: add raisecom RAX model (@vitalisator)
 * FEATURE: add huawei smartax model (@nyash)
 * MISC: prompt updates in siklu, netonix, netscaler models
