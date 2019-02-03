@@ -105,7 +105,7 @@ module Oxidized
     # give a hash with the patch of a diff between 2 revision and the stats (added and deleted lines)
     def get_diff(node, group, oid1, oid2)
       diff_commits = nil
-      repo, _ = yield_repo_and_path(node, group)
+      repo, = yield_repo_and_path(node, group)
       repo = Rugged::Repository.new repo
       commit = repo.lookup(oid1)
 

@@ -8,7 +8,7 @@ module Oxidized
   class Core
     class NoNodesFound < OxidizedError; end
 
-    def initialize(args)
+    def initialize(_args)
       Oxidized.mgr = Manager.new
       Oxidized.Hooks = HookManager.from_config(Oxidized.config)
       nodes = Nodes.new

@@ -12,7 +12,7 @@ module Oxidized
     include Input::CLI
 
     # TFTP utilizes UDP, there is not a connection. We simply specify an IP and send/receive data.
-    def connect node
+    def connect(node)
       @node = node
 
       @node.model.cfg['tftp'].each { |cb| instance_exec(&cb) }
@@ -20,7 +20,7 @@ module Oxidized
       @tftp = Net::TFTP.new @node.ip
     end
 
-    def cmd file
+    def cmd(file)
       Oxidized.logger.debug "TFTP: #{file} @ #{@node.name}"
       config = StringIO.new
       @tftp.getbinary file, config

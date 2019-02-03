@@ -113,7 +113,7 @@ class IOS < Oxidized::Model
 
   cmd 'show vtp status' do |cfg|
     cfg.gsub! /^$\n/, ''
-    cfg.gsub! /^/, 'VTP: ' if (!cfg.empty?)
+    cfg.gsub! /^/, 'VTP: ' unless (cfg.empty?)
     comment "#{cfg}\n"
   end
 

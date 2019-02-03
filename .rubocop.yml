@@ -61,4 +61,3 @@ Metrics/CyclomaticComplexity:
 AllCops:
   Exclude:
     - 'vendor/**/*'
-    - 'lib/oxidized/input/tftp.rb'

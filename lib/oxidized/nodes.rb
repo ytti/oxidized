@@ -5,7 +5,7 @@ module Oxidized
   class Oxidized::NodeNotFound < OxidizedError; end
   class Nodes < Array
     attr_accessor :source, :jobs
-    alias :put :unshift
+    alias put unshift
     def load(node_want = nil)
       with_lock do
         new = []

@@ -33,15 +33,15 @@ module Oxidized
       end
 
       def post_login(_post_login = nil, &block)
-        unless @exec
-          @post_login << [_post_login, block]
-        end
+        return if @exec
+
+        @post_login << [_post_login, block]
       end
 
       def pre_logout(_pre_logout = nil, &block)
-        unless @exec
-          @pre_logout << [_pre_logout, block]
-        end
+        return if @exec
+
+        @pre_logout << [_pre_logout, block]
       end
 
       def username(re = /^(Username|login)/)
