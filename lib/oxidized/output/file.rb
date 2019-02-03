@@ -9,11 +9,11 @@ module Oxidized
     end
 
     def setup
-      if @cfg.empty?
-        Oxidized.asetus.user.output.file.directory = File.join(Config::Root, 'configs')
-        Oxidized.asetus.save :user
-        raise NoConfig, 'no output file config, edit ~/.config/oxidized/config'
-      end
+      return unless @cfg.empty?
+
+      Oxidized.asetus.user.output.file.directory = File.join(Config::Root, 'configs')
+      Oxidized.asetus.save :user
+      raise NoConfig, 'no output file config, edit ~/.config/oxidized/config'
     end
 
     def store node, outputs, opt = {}
@@ -35,7 +35,7 @@ module Oxidized
         cfg_dir = File.join File.dirname(cfg_dir), group
         File.read File.join(cfg_dir, node_name)
       else
-        if File.exists? File.join(cfg_dir, node_name) # node configuration file is stored on base directory
+        if File.exist? File.join(cfg_dir, node_name) # node configuration file is stored on base directory
           File.read File.join(cfg_dir, node_name)
         else
           path = Dir.glob(File.join(File.dirname(cfg_dir), '**', node_name)).first # fetch node in all groups
@@ -46,12 +46,12 @@ module Oxidized
       return nil
     end
 
-    def version node, group
+    def version _node, _group
       # not supported
       []
     end
 
-    def get_version node, group, oid
+    def get_version _node, _group, _oid
       'not supported'
     end
   end
