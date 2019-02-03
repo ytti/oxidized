@@ -8,7 +8,7 @@ module Oxidized
       @max       = max
       # Set interval to 1 if interval is 0 (=disabled) so we don't break
       # the 'ceil' function
-      @interval  = interval == 0 ? 1 : interval
+      @interval  = interval.zero? ? 1 : interval
       @nodes     = nodes
       @last      = Time.now.utc
       @durations = Array.new @nodes.size, AVERAGE_DURATION
@@ -44,9 +44,9 @@ module Oxidized
       # and  b) we want less threads running than the total amount of nodes
       # and  c) there is more than MAX_INTER_JOB_GAP since last one was started
       # then we want one more thread (rationale is to fix hanging thread causing HOLB)
-      if @want <= size and @want < @nodes.size
-        @want += 1 if (Time.now.utc - @last) > MAX_INTER_JOB_GAP
-      end
+      return unless @want <= size && @want < @nodes.size
+
+      @want += 1 if (Time.now.utc - @last) > MAX_INTER_JOB_GAP
     end
   end
 end

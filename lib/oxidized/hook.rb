@@ -74,7 +74,7 @@ module Oxidized
 
     def cfg=(cfg)
       @cfg = cfg
-      validate_cfg! if self.respond_to? :validate_cfg!
+      validate_cfg! if respond_to? :validate_cfg!
     end
 
     def run_hook ctx

@@ -26,11 +26,11 @@ module Oxidized
 
     def initialize str = ''
       super
-      if str.class == Oxidized::String
-        @cmd  = str.cmd
-        @name = str.name
-        @type = str.type
-      end
+      return unless str.class == Oxidized::String
+
+      @cmd  = str.cmd
+      @name = str.name
+      @type = str.type
     end
   end
 end

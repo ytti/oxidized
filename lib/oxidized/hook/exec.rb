@@ -44,7 +44,7 @@ class Exec < Oxidized::Hook
   def run_cmd! env
     pid, status = nil, nil
     Timeout.timeout(@timeout) do
-      pid = spawn env, @cmd, :unsetenv_others => true
+      pid = spawn env, @cmd, unsetenv_others: true
       pid, status = wait2 pid
       unless status.exitstatus.zero?
         msg = "#{@cmd.inspect} failed with exit value #{status.exitstatus}"
@@ -72,13 +72,13 @@ class Exec < Oxidized::Hook
         "OX_NODE_GROUP"     => ctx.node.group.to_s,
         "OX_NODE_MODEL"     => ctx.node.model.class.name,
         "OX_REPO_COMMITREF" => ctx.commitref.to_s,
-        "OX_REPO_NAME"      => ctx.node.repo.to_s,
+        "OX_REPO_NAME"      => ctx.node.repo.to_s
       )
     end
     if ctx.job
       env.merge!(
         "OX_JOB_STATUS" => ctx.job.status.to_s,
-        "OX_JOB_TIME"   => ctx.job.time.to_s,
+        "OX_JOB_TIME"   => ctx.job.time.to_s
       )
     end
     env

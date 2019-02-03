@@ -6,9 +6,9 @@ module Oxidized
     end
 
     def setup
-      if @cfg.url.empty?
-        raise NoConfig, 'no source http url config, edit ~/.config/oxidized/config'
-      end
+      return unless @cfg.url.empty?
+
+      raise NoConfig, 'no source http url config, edit ~/.config/oxidized/config'
     end
 
     require "net/http"

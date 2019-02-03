@@ -26,7 +26,7 @@ module Oxidized
             Oxidized.logger.error "node %s is not resolvable, raised %s with message '%s'" % [node, err.class, err.message]
           end
         end
-        size == 0 ? replace(new) : update_nodes(new)
+        size.zero? ? replace(new) : update_nodes(new)
         Oxidized.logger.info "lib/oxidized/nodes.rb: Loaded #{size} nodes"
       end
     end
@@ -66,21 +66,21 @@ module Oxidized
 
     # @param node [String] name of the node moved into the head of array
     def next node, opt = {}
-      if waiting.find_node_index(node)
-        with_lock do
-          n = del node
-          n.user = opt['user']
-          n.email = opt['email']
-          n.msg  = opt['msg']
-          n.from = opt['from']
-          # set last job to nil so that the node is picked for immediate update
-          n.last = nil
-          put n
-          jobs.want += 1 if Oxidized.config.next_adds_job?
-        end
+      return unless waiting.find_node_index(node)
+
+      with_lock do
+        n = del node
+        n.user = opt['user']
+        n.email = opt['email']
+        n.msg  = opt['msg']
+        n.from = opt['from']
+        # set last job to nil so that the node is picked for immediate update
+        n.last = nil
+        put n
+        jobs.want += 1 if Oxidized.config.next_adds_job?
       end
     end
-    alias :top :next
+    alias top next
 
     # @return [String] node from the head of the array
     def get
@@ -142,12 +142,12 @@ module Oxidized
 
     # @return [Nodes] list of nodes running now
     def running
-      Nodes.new :nodes => select { |node| node.running? }
+      Nodes.new nodes: select { |node| node.running? }
     end
 
     # @return [Nodes] list of nodes waiting (not running)
     def waiting
-      Nodes.new :nodes => select { |node| not node.running? }
+      Nodes.new nodes: select { |node| not node.running? }
     end
 
     # walks list of new nodes, if old node contains same name, adds last and
@@ -156,7 +156,7 @@ module Oxidized
     # @todo can we trust name to be unique identifier, what about when groups are used?
     # @param [Array] nodes Array of nodes used to replace+update old
     def update_nodes nodes
-      old = self.dup
+      old = dup
       replace(nodes)
       each do |node|
         begin

@@ -59,14 +59,12 @@ module Oxidized
     end
 
     def disconnect
-      begin
-        disconnect_cli
-        @telnet.close
-      rescue Errno::ECONNRESET
-      ensure
-        @log.close if Oxidized.config.input.debug?
-        (@telnet.close rescue true) unless @telnet.sock.closed?
-      end
+      disconnect_cli
+      @telnet.close
+    rescue Errno::ECONNRESET
+    ensure
+      @log.close if Oxidized.config.input.debug?
+      (@telnet.close rescue true) unless @telnet.sock.closed?
     end
   end
 end

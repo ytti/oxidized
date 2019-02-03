@@ -9,9 +9,9 @@ module Oxidized
         require File.join dir, file + '.rb'
         klass = nil
         [Oxidized, Object].each do |mod|
-          klass = mod.constants.find { |const| const.to_s.downcase == file.downcase }
-          klass = mod.constants.find { |const| const.to_s.downcase == 'oxidized' + file.downcase } unless klass
-          klass = mod.const_get klass if klass
+          klass   = mod.constants.find { |const| const.to_s.downcase == file.downcase }
+          klass ||= mod.constants.find { |const| const.to_s.downcase == 'oxidized' + file.downcase }
+          klass   = mod.const_get klass if klass
           break if klass
         end
         i = klass.new
@@ -55,9 +55,9 @@ module Oxidized
 
     # if local version of file exists, load it, else load global - return falsy value if nothing loaded
     def loader hash, global_dir, local_dir, name
-      dir = File.join(Config::Root, local_dir)
-      map = Manager.load(dir, name) if File.exist? File.join(dir, name + ".rb")
-      map = Manager.load(global_dir, name) unless map
+      dir   = File.join(Config::Root, local_dir)
+      map   = Manager.load(dir, name) if File.exist? File.join(dir, name + ".rb")
+      map ||= Manager.load(global_dir, name)
       hash.merge!(map) if map
     end
   end

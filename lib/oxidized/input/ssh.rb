@@ -6,12 +6,12 @@ module Oxidized
   class SSH < Input
     RescueFail = {
       debug: [
-        Net::SSH::Disconnect,
+        Net::SSH::Disconnect
       ],
       warn:  [
         RuntimeError,
-        Net::SSH::AuthenticationFailed,
-      ],
+        Net::SSH::AuthenticationFailed
+      ]
     }
     include Input::CLI
     class NoShell < OxidizedError; end
@@ -83,7 +83,7 @@ module Oxidized
           @output << data
           @output = @node.model.expects @output
         end
-        ch.request_pty (@pty_options) do |_ch, success_pty|
+        ch.request_pty(@pty_options) do |_ch, success_pty|
           raise NoShell, "Can't get PTY" unless success_pty
 
           ch.send_channel_request 'shell' do |_ch, success_shell|
@@ -94,7 +94,7 @@ module Oxidized
     end
 
     def exec state = nil
-      state == nil ? @exec : (@exec = state) unless vars :ssh_no_exec
+      state.nil? ? @exec : (@exec = state) unless vars :ssh_no_exec
     end
 
     def cmd_shell(cmd, expect_re)
@@ -127,7 +127,7 @@ module Oxidized
         paranoid:                   secure,
         password:                   @node.auth[:password],
         timeout:                    Oxidized.config.timeout,
-        port:                       (vars(:ssh_port) || 22).to_i,
+        port:                       (vars(:ssh_port) || 22).to_i
       }
 
       auth_methods = vars(:auth_methods) || %w(none publickey password)

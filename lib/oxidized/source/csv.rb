@@ -53,7 +53,7 @@ module Oxidized
         crypto = GPGME::Crypto.new password: @cfg.gpg_password
         crypto.decrypt(File.open(file)).to_s
       else
-        open(file)
+        File.open(file)
       end
     end
   end

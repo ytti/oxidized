@@ -6,13 +6,13 @@ module Oxidized
     end
 
     def setup
-      if @cfg.empty?
-        CFGS.user.output.http.user = 'Oxidized'
-        CFGS.user.output.http.pasword = 'secret'
-        CFGS.user.output.http.url = 'http://localhost/web-api/oxidized'
-        CFGS.save :user
-        raise NoConfig, 'no output http config, edit ~/.config/oxidized/config'
-      end
+      return unless @cfg.empty?
+
+      CFGS.user.output.http.user = 'Oxidized'
+      CFGS.user.output.http.pasword = 'secret'
+      CFGS.user.output.http.url = 'http://localhost/web-api/oxidized'
+      CFGS.save :user
+      raise NoConfig, 'no output http config, edit ~/.config/oxidized/config'
     end
 
     require "net/http"
@@ -24,7 +24,7 @@ module Oxidized
       uri = URI.parse @cfg.url
       http = Net::HTTP.new uri.host, uri.port
       # http.use_ssl = true if uri.scheme = 'https'
-      req = Net::HTTP::Post.new(uri.request_uri, initheader = { 'Content-Type' => 'application/json' })
+      req = Net::HTTP::Post.new(uri.request_uri, 'Content-Type' => 'application/json')
       req.basic_auth @cfg.user, @cfg.password
       req.body = generate_json(node, outputs, opt)
       response = http.request req
@@ -46,15 +46,13 @@ module Oxidized
 
     def generate_json node, outputs, opt
       JSON.pretty_generate(
-        {
-          'msg'    => opt[:msg],
-          'user'   => opt[:user],
-          'email'  => opt[:email],
-          'group'  => opt[:group],
-          'node'   => node,
-          'config' => outputs.to_cfg
-          # actually we need to also iterate outputs, for other types like in gitlab. But most people don't use 'type' functionality.
-        }
+        'msg'    => opt[:msg],
+        'user'   => opt[:user],
+        'email'  => opt[:email],
+        'group'  => opt[:group],
+        'node'   => node,
+        'config' => outputs.to_cfg
+        # actually we need to also iterate outputs, for other types like in gitlab. But most people don't use 'type' functionality.
       )
     end
   end

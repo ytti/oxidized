@@ -5,7 +5,7 @@ module Oxidized
 
     RescueFail = {
       debug: [
-        Errno::ECONNREFUSED,
+        Errno::ECONNREFUSED
       ],
       warn:  [
         IOError,
@@ -15,8 +15,8 @@ module Oxidized
         Errno::EHOSTUNREACH,
         Errno::ENETUNREACH,
         Errno::EPIPE,
-        Errno::ETIMEDOUT,
-      ],
+        Errno::ETIMEDOUT
+      ]
     }
   end
 end

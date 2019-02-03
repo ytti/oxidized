@@ -10,7 +10,7 @@ module Oxidized
         stat = {
           start: job.start,
           end:   job.end,
-          time:  job.time,
+          time:  job.time
         }
         @stats[job.status] ||= []
         @stats[job.status].shift if @stats[job.status].size > @history_size

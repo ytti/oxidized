@@ -23,7 +23,7 @@ module Oxidized
       end
       FileUtils.mkdir_p file
       file = File.join file, node
-      open(file, 'w') { |fh| fh.write outputs.to_cfg }
+      File.open(file, 'w') { |fh| fh.write outputs.to_cfg }
       @commitref = file
     end
 

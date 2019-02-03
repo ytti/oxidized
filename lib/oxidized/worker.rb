@@ -12,7 +12,7 @@ module Oxidized
 
     def work
       ended = []
-      @jobs.delete_if { |job| ended << job if not job.alive? }
+      @jobs.delete_if { |job| ended << job unless job.alive? }
       ended.each      { |job| process job }
       @jobs.work
 
@@ -22,7 +22,7 @@ module Oxidized
         nextnode = @nodes.first
         unless nextnode.last.nil?
           # Set unobtainable value for 'last' if interval checking is disabled
-          last = Oxidized.config.interval == 0 ? Time.now.utc + 10 : nextnode.last.end
+          last = Oxidized.config.interval.zero? ? Time.now.utc + 10 : nextnode.last.end
           break if last + Oxidized.config.interval > Time.now.utc
         end
         # shift nodes and get the next node

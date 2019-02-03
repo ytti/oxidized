@@ -11,7 +11,7 @@ module Oxidized
       warn:  [
         # RuntimeError,
         # Net::SSH::AuthenticationFailed,
-      ],
+      ]
     }
     include Input::CLI
 

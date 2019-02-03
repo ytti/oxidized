@@ -72,42 +72,42 @@ module Oxidized
           level = rescue_fail[resc]
           resc  = " (rescued #{resc})"
         end
-        Oxidized.logger.send(level, '%s raised %s%s with msg "%s"' % [self.ip, err.class, resc, err.message])
+        Oxidized.logger.send(level, '%s raised %s%s with msg "%s"' % [ip, err.class, resc, err.message])
         return false
       rescue => err
         crashdir  = Oxidized.config.crash.directory
         crashfile = Oxidized.config.crash.hostnames? ? self.name : self.ip.to_s
         FileUtils.mkdir_p(crashdir) unless File.directory?(crashdir)
 
-        open File.join(crashdir, crashfile), 'w' do |fh|
+        File.open File.join(crashdir, crashfile), 'w' do |fh|
           fh.puts Time.now.utc
           fh.puts err.message + ' [' + err.class.to_s + ']'
           fh.puts '-' * 50
           fh.puts err.backtrace
         end
-        Oxidized.logger.error '%s raised %s with msg "%s", %s saved' % [self.ip, err.class, err.message, crashfile]
+        Oxidized.logger.error '%s raised %s with msg "%s", %s saved' % [ip, err.class, err.message, crashfile]
         return false
       end
     end
 
     def serialize
       h = {
-        :name      => @name,
-        :full_name => @name,
-        :ip        => @ip,
-        :group     => @group,
-        :model     => @model.class.to_s,
-        :last      => nil,
-        :vars      => @vars,
-        :mtime     => @stats.mtime,
+        name:      @name,
+        full_name: @name,
+        ip:        @ip,
+        group:     @group,
+        model:     @model.class.to_s,
+        last:      nil,
+        vars:      @vars,
+        mtime:     @stats.mtime
       }
       h[:full_name] = [@group, @name].join('/') if @group
       if @last
         h[:last] = {
-          :start  => @last.start,
-          :end    => @last.end,
-          :status => @last.status,
-          :time   => @last.time,
+          start:  @last.start,
+          end:    @last.end,
+          status: @last.status,
+          time:   @last.time
         }
       end
       h

@@ -72,7 +72,7 @@ module Oxidized
         type_cfg = ''
         type_repo = File.join(File.dirname(repo), type + '.git')
         outputs.type(type).each do |output|
-          (type_cfg << output; next) if not output.name
+          (type_cfg << output; next) unless output.name
           type_file = file + '--' + output.name
           if @cfg.type_as_directory?
             type_file = type + '/' + type_file
@@ -87,96 +87,84 @@ module Oxidized
     end
 
     def fetch node, group
-      begin
-        repo, path = yield_repo_and_path(node, group)
-        repo = Git.open repo
-        unlock repo
-        index = repo.index
-        # Empty repo ?
-        empty = File.exists? index.path
-        if empty
-          raise 'Empty git repo'
-        else
-          File.read path
-        end
+      repo, path = yield_repo_and_path(node, group)
+      repo = Git.open repo
+      unlock repo
+      index = repo.index
+      # Empty repo ?
+      raise 'Empty git repo' if File.exist?(index.path)
 
-        lock repo
-      rescue
-        'node not found'
-      end
+      File.read path
+      lock repo
+    rescue
+      'node not found'
     end
 
     # give a hash of all oid revision for the given node, and the date of the commit
     def version node, group
-      begin
-        repo, path = yield_repo_and_path(node, group)
+      repo, path = yield_repo_and_path(node, group)
 
-        repo = Git.open repo
-        unlock repo
-        walker = repo.log.path(path)
-        i = -1
-        tab = []
-        walker.each do |commit|
-          hash = {}
-          hash[:date] = commit.date.to_s
-          hash[:oid] = commit.objectish
-          hash[:author] = commit.author
-          hash[:message] = commit.message
-          tab[i += 1] = hash
-        end
-        walker.reset
-        tab
-      rescue
-        'node not found'
+      repo = Git.open repo
+      unlock repo
+      walker = repo.log.path(path)
+      i = -1
+      tab = []
+      walker.each do |commit|
+        hash = {}
+        hash[:date] = commit.date.to_s
+        hash[:oid] = commit.objectish
+        hash[:author] = commit.author
+        hash[:message] = commit.message
+        tab[i += 1] = hash
       end
+      walker.reset
+      tab
+    rescue
+      'node not found'
     end
 
     # give the blob of a specific revision
     def get_version node, group, oid
-      begin
-        repo, path = yield_repo_and_path(node, group)
-        repo = Git.open repo
-        unlock repo
-        repo.gtree(oid).files[path].contents
-      rescue
-        'version not found'
-      ensure
-        lock repo
-      end
+      repo, path = yield_repo_and_path(node, group)
+      repo = Git.open repo
+      unlock repo
+      repo.gtree(oid).files[path].contents
+    rescue
+      'version not found'
+    ensure
+      lock repo
     end
 
     # give a hash with the patch of a diff between 2 revision and the stats (added and deleted lines)
     def get_diff node, group, oid1, oid2
-      begin
-        diff_commits = nil
-        repo, path = yield_repo_and_path(node, group)
-        repo = Git.open repo
-        unlock repo
-        commit = repo.gcommit(oid1)
+      diff_commits = nil
+      repo, _path = yield_repo_and_path(node, group)
+      repo = Git.open repo
+      unlock repo
+      commit = repo.gcommit(oid1)
 
-        if oid2
-          commit_old = repo.gcommit(oid2)
-          diff = repo.diff(commit_old, commit)
-          stats = [diff.stats[:files][node.name][:insertions], diff.stats[:files][node.name][:deletions]]
-          diff.each do |patch|
-            if /#{node.name}\s+/.match(patch.patch.to_s.lines.first)
-              diff_commits = { :patch => patch.patch.to_s, :stat => stats }
-              break
-            end
+      if oid2
+        commit_old = repo.gcommit(oid2)
+        diff = repo.diff(commit_old, commit)
+        stats = [diff.stats[:files][node.name][:insertions], diff.stats[:files][node.name][:deletions]]
+        diff.each do |patch|
+          if /#{node.name}\s+/.match(patch.patch.to_s.lines.first)
+            diff_commits = { patch: patch.patch.to_s, stat: stats }
+            break
           end
-        else
-          stat = commit.parents[0].diff(commit).stats
-          stat = [stat[:files][node.name][:insertions], stat[:files][node.name][:deletions]]
-          patch = commit.parents[0].diff(commit).patch
-          diff_commits = { :patch => patch, :stat => stat }
         end
-        lock repo
-        diff_commits
-      rescue
-        'no diffs'
-      ensure
-        lock repo
+      else
+        stat = commit.parents[0].diff(commit).stats
+        stat = [stat[:files][node.name][:insertions], stat[:files][node.name][:deletions]]
+        patch = commit.parents[0].diff(commit).patch
+        diff_commits = { patch: patch, stat: stat }
       end
+      lock repo
+      diff_commits
+    rescue
+      'no diffs'
+    ensure
+      lock repo
     end
 
     private
