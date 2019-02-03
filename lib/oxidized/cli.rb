@@ -2,7 +2,7 @@ module Oxidized
   class CLI
     require 'slop'
     require 'oxidized'
-    require 'english'
+    require 'English'
 
     def run
       check_pid
