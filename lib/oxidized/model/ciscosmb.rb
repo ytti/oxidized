@@ -8,7 +8,7 @@ class CiscoSMB < Oxidized::Model
   cmd :all do |cfg|
     lines = cfg.each_line.to_a[1..-2]
     # Remove \r from beginning of response
-    lines[0].gsub!(/^\r.*?/, '') if lines.length > 0
+    lines[0].gsub!(/^\r.*?/, '') if !lines.empty?
     lines.join
   end
 

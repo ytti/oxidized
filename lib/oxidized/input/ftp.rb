@@ -12,7 +12,7 @@ module Oxidized
         # RuntimeError,
         # Net::SSH::AuthenticationFailed,
       ]
-    }
+    }.freeze
     include Input::CLI
 
     def connect(node)

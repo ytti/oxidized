@@ -81,7 +81,7 @@ class IOS < Oxidized::Model
         comments << "Memory: flash #{Regexp.last_match(1)}"
       end
 
-      if line.match /^(\d+[kK]) bytes of (Flash|ATA)?.*PCMCIA .*(slot|disk) ?(\d)/i
+      if line =~ /^(\d+[kK]) bytes of (Flash|ATA)?.*PCMCIA .*(slot|disk) ?(\d)/i
         comments << "Memory: pcmcia #{Regexp.last_match(2)} #{Regexp.last_match(3)}#{Regexp.last_match(4)} #{Regexp.last_match(1)}";
       end
 

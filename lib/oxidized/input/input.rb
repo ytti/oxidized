@@ -17,6 +17,6 @@ module Oxidized
         Errno::EPIPE,
         Errno::ETIMEDOUT
       ]
-    }
+    }.freeze
   end
 end

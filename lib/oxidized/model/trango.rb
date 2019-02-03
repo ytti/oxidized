@@ -45,11 +45,10 @@ class Trango < Oxidized::Model
           out << "speed $speed"
         end
       end
-      if line =~ /\[IP\] (\S+) \[Subnet Mask\] (\S+) \[Gateway\] (\S+)/
-        out << "ipconfig " + Regexp.last_match[1] + ' ' +
-               Regexp.last_match[2] + ' ' +
-               Regexp.last_match[3]
-      end
+      next unless line =~ /\[IP\] (\S+) \[Subnet Mask\] (\S+) \[Gateway\] (\S+)/
+      out << "ipconfig " + Regexp.last_match[1] + ' ' +
+             Regexp.last_match[2] + ' ' +
+             Regexp.last_match[3]
     end
     comments.push(*out).join "\n"
   end

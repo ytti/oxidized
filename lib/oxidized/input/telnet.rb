@@ -2,7 +2,7 @@ module Oxidized
   require 'net/telnet'
   require 'oxidized/input/cli'
   class Telnet < Input
-    RescueFail = {}
+    RescueFail = {}.freeze
     include Input::CLI
     attr_reader :telnet
 
@@ -80,7 +80,7 @@ class Net::Telnet
     expects  = [options[:expect]].flatten
     time_out = options[:timeout] || @options["Timeout"] || Oxidized.config.timeout?
 
-    Timeout::timeout(time_out) do
+    Timeout.timeout(time_out) do
       line = ""
       rest = ""
       buf  = ""

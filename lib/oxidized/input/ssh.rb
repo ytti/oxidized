@@ -12,7 +12,7 @@ module Oxidized
         RuntimeError,
         Net::SSH::AuthenticationFailed
       ]
-    }
+    }.freeze
     include Input::CLI
     class NoShell < OxidizedError; end
 
@@ -64,7 +64,7 @@ module Oxidized
     def disconnect
       disconnect_cli
       # if disconnect does not disconnect us, give up after timeout
-      Timeout::timeout(Oxidized.config.timeout) { @ssh.loop }
+      Timeout.timeout(Oxidized.config.timeout) { @ssh.loop }
     rescue Errno::ECONNRESET, Net::SSH::Disconnect, IOError
     ensure
       @log.close if Oxidized.config.input.debug?
@@ -106,7 +106,7 @@ module Oxidized
     def expect(*regexps)
       regexps = [regexps].flatten
       Oxidized.logger.debug "lib/oxidized/input/ssh.rb: expecting #{regexps.inspect} at #{node.name}"
-      Timeout::timeout(Oxidized.config.timeout) do
+      Timeout.timeout(Oxidized.config.timeout) do
         @ssh.loop(0.1) do
           sleep 0.1
           match = regexps.find { |regexp| @output.match regexp }

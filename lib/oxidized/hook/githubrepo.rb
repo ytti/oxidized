@@ -44,7 +44,7 @@ class GithubRepo < Oxidized::Hook
   private
 
   def credentials
-    Proc.new do |_url, username_from_url, _allowed_types|
+    proc do |_url, username_from_url, _allowed_types|
       if cfg.has_key?('username')
         git_user = cfg.username
       else

@@ -33,19 +33,19 @@ class AricentISS < Oxidized::Model
 
   cmd 'show running-config' do |cfg|
     comment_next = 0
-    cfg.each_line.map { |l|
+    cfg.each_line.map do |l|
       next '' if l =~ /^Building configuration/
 
-      if l =~ /^Switch ID.*Hardware Version.*Firmware Version/ then
+      if l =~ /^Switch ID.*Hardware Version.*Firmware Version/
         comment_next = 2
       end
 
-      if comment_next > 0 then
+      if comment_next > 0
         comment_next -= 1
         next comment(l)
       end
 
       l
-    }.join.gsub(/ +$/, '')
+    end.join.gsub(/ +$/, '')
   end
 end
