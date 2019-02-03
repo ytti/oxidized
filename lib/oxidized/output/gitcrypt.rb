@@ -62,8 +62,8 @@ module Oxidized
 
     def store file, outputs, opt = {}
       @msg   = opt[:msg]
-      @user  = (opt[:user]  or @cfg.user)
-      @email = (opt[:email] or @cfg.email)
+      @user  = (opt[:user]  || @cfg.user)
+      @email = (opt[:email] || @cfg.email)
       @opt   = opt
       @commitref = nil
       repo = @cfg.repo
@@ -172,7 +172,7 @@ module Oxidized
     def yield_repo_and_path(node, group)
       repo, path = node.repo, node.name
 
-      if group and @cfg.single_repo?
+      if group && @cfg.single_repo?
         path = "#{group}/#{node.name}"
       end
 

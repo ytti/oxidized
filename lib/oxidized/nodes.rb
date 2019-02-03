@@ -10,7 +10,7 @@ module Oxidized
       with_lock do
         new = []
         @source = Oxidized.config.source.default
-        Oxidized.mgr.add_source(@source) or raise(MethodNotFound, "cannot load node source '#{@source}', not found")
+        Oxidized.mgr.add_source(@source) || raise(MethodNotFound, "cannot load node source '#{@source}', not found")
         Oxidized.logger.info "lib/oxidized/nodes.rb: Loading nodes"
         nodes = Oxidized.mgr.source[@source].new.load node_want
         nodes.each do |node|
@@ -36,9 +36,9 @@ module Oxidized
 
       node_want_ip = (IPAddr.new(node_want) rescue false)
       name_is_ip   = (IPAddr.new(node[:name]) rescue false)
-      if name_is_ip and node_want_ip == node[:name]
+      if name_is_ip && (node_want_ip == node[:name])
         true
-      elsif node[:ip] and node_want_ip == node[:ip]
+      elsif node[:ip] && (node_want_ip == node[:ip])
         true
       elsif node_want.match node[:name]
         true unless name_is_ip
@@ -92,7 +92,7 @@ module Oxidized
     # @param node node whose index number in Nodes to find
     # @return [Fixnum] index number of node in Nodes
     def find_node_index node
-      find_index node or raise Oxidized::NodeNotFound, "unable to find '#{node}'"
+      find_index(node) || raise(Oxidized::NodeNotFound, "unable to find '#{node}'")
     end
 
     def version node_name, group

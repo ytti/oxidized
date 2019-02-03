@@ -26,7 +26,7 @@ module Oxidized
     end
 
     def connected?
-      @ftp and not @ftp.closed?
+      @ftp && (not @ftp.closed?)
     end
 
     def cmd file

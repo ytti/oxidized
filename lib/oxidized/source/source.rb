@@ -3,7 +3,7 @@ module Oxidized
     class NoConfig < OxidizedError; end
 
     def initialize
-      @map = (Oxidized.config.model_map or {})
+      @map = (Oxidized.config.model_map || {})
     end
 
     def map_model model

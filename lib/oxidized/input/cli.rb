@@ -45,11 +45,11 @@ module Oxidized
       end
 
       def username re = /^(Username|login)/
-        @username or @username = re
+        @username || (@username = re)
       end
 
       def password re = /^Password/
-        @password or @password = re
+        @password || (@password = re)
       end
 
       def login

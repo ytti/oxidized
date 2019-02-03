@@ -38,7 +38,7 @@ module Oxidized
       @input.each do |input|
         # don't try input if model is missing config block, we may need strong config to class_name map
         cfg_name = input.to_s.split('::').last.downcase
-        next unless @model.cfg[cfg_name] and not @model.cfg[cfg_name].empty?
+        next unless @model.cfg[cfg_name] && (not @model.cfg[cfg_name].empty?)
 
         @model.input = input = input.new
         if config = run_input(input)
@@ -64,7 +64,7 @@ module Oxidized
         end
       end
       begin
-        input.connect(self) and input.get
+        input.connect(self) && input.get
       rescue *rescue_fail.keys => err
         resc = ''
         if not level = rescue_fail[err.class]
@@ -153,7 +153,7 @@ module Oxidized
       inputs = resolve_key :input, opt, Oxidized.config.input.default
       inputs.split(/\s*,\s*/).map do |input|
         if not Oxidized.mgr.input[input]
-          Oxidized.mgr.add_input input or raise MethodNotFound, "#{input} not found for node #{ip}"
+          Oxidized.mgr.add_input(input) || raise(MethodNotFound, "#{input} not found for node #{ip}")
         end
         Oxidized.mgr.input[input]
       end
@@ -162,7 +162,7 @@ module Oxidized
     def resolve_output opt
       output = resolve_key :output, opt, Oxidized.config.output.default
       if not Oxidized.mgr.output[output]
-        Oxidized.mgr.add_output output or raise MethodNotFound, "#{output} not found for node #{ip}"
+        Oxidized.mgr.add_output(output) || raise(MethodNotFound, "#{output} not found for node #{ip}")
       end
       Oxidized.mgr.output[output]
     end
@@ -171,7 +171,7 @@ module Oxidized
       model = resolve_key :model, opt
       if not Oxidized.mgr.model[model]
         Oxidized.logger.debug "lib/oxidized/node.rb: Loading model #{model.inspect}"
-        Oxidized.mgr.add_model model or raise ModelNotFound, "#{model} not found for node #{ip}"
+        Oxidized.mgr.add_model(model) || raise(ModelNotFound, "#{model} not found for node #{ip}")
       end
       Oxidized.mgr.model[model].new
     end
@@ -200,7 +200,7 @@ module Oxidized
       Oxidized.logger.debug "node.rb: resolving node key '#{key}', with passed global value of '#{value}' and node value '#{opt[key_sym]}'"
 
       # global
-      if not value and Oxidized.config.has_key?(key_str)
+      if (not value) && Oxidized.config.has_key?(key_str)
         value = Oxidized.config[key_str]
         Oxidized.logger.debug "node.rb: setting node key '#{key}' to value '#{value}' from global"
       end

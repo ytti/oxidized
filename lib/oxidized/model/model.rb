@@ -22,7 +22,7 @@ module Oxidized
       end
 
       def prompt _prompt = nil
-        @prompt or @prompt = _prompt
+        @prompt || (@prompt = _prompt)
       end
 
       def cfg *methods, **args, &block

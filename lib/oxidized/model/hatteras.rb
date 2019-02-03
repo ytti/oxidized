@@ -22,16 +22,16 @@ class Hatteras < Oxidized::Model
 
   cmd "show switch\r" do |cfg|
     cfg = cfg.each_line.reject { |line|
-      line.match /Switch uptime|Switch temperature|Last reset reason/ or
-        line.match /TermCpuUtil|^\s+\^$|ERROR: Bad command/
+      line.match(/Switch uptime|Switch temperature|Last reset reason/) ||
+        line.match(/TermCpuUtil|^\s+\^$|ERROR: Bad command/)
     } .join
     comment cfg
   end
 
   cmd "show card\r" do |cfg|
     cfg = cfg.each_line.reject { |line|
-      line.match /Card uptime|Card temperature|Last reset reason/ or
-        line.match /TermCpuUtil|^\s+\^$|ERROR: Bad command/
+      line.match(/Card uptime|Card temperature|Last reset reason/) ||
+        line.match(/TermCpuUtil|^\s+\^$|ERROR: Bad command/)
     } .join
     comment cfg
   end

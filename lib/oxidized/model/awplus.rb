@@ -43,14 +43,14 @@ class AWPlus < Oxidized::Model
     comment cfg << "\n--------------------------------------------------------------------------------! \n \n"
     # Removes the following lines from "show system" in output file. This ensures oxidized diffs are meaningful.
     comment cfg.each_line.reject { |line|
-              line.match /^$\n/ or # Remove blank lines in "sh sys"
-                line.match /System Status\s*.*/ or
-                line.match /RAM\s*:.*/ or
-                line.match /Uptime\s*:.*/ or
-                line.match /Flash\s*:.*/ or
-                line.match /Current software\s*:.*/ or
-                line.match /Software version\s*:.*/ or
-                line.match /Build date\s*:.*/
+              line.match(/^$\n/) || # Remove blank lines in "sh sys"
+                line.match(/System Status\s*.*/) ||
+                line.match(/RAM\s*:.*/) ||
+                line.match(/Uptime\s*:.*/) ||
+                line.match(/Flash\s*:.*/) ||
+                line.match(/Current software\s*:.*/) ||
+                line.match(/Software version\s*:.*/) ||
+                line.match(/Build date\s*:.*/)
             } .join
   end
 

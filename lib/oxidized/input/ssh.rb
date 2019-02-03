@@ -37,7 +37,7 @@ module Oxidized
     end
 
     def connected?
-      @ssh and not @ssh.closed?
+      @ssh && (not @ssh.closed?)
     end
 
     def cmd cmd, expect = node.prompt
