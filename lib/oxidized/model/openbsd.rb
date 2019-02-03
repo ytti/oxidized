@@ -49,6 +49,7 @@ class Openbsd < Oxidized::Model
     cfg += cmd('cat /etc/passwd')
 
     cfg += add_small_comment('END')
+    cfg
   end
 
   cfg :telnet do

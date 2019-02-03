@@ -23,7 +23,7 @@ class Trango < Oxidized::Model
       out << "mir ".concat(Regexp.last_match[1]) if line =~ /\[Tx MIR\] (\d+) Kbps/
       if line =~ /\[Auto Rate Shift\] (on|off)/
         out << "autorateshift ".concat(Regexp.last_match[1])
-        out << "speed $speed" if Regexp.last_match[1].eql? 'off'
+        out << "speed #{speed}" if Regexp.last_match[1].eql? 'off'
       end
       next unless line =~ /\[IP\] (\S+) \[Subnet Mask\] (\S+) \[Gateway\] (\S+)/
 

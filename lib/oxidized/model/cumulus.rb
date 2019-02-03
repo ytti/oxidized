@@ -80,6 +80,8 @@ class Cumulus < Oxidized::Model
 
     cfg += add_comment 'License'
     cfg += cmd 'cl-license'
+
+    cfg
   end
 
   cfg :telnet do
