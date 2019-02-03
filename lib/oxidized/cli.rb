@@ -27,7 +27,7 @@ module Oxidized
       @pidfile = File.expand_path(Oxidized.config.pid)
     end
 
-    def crash error
+    def crash(error)
       Oxidized.logger.fatal "Oxidized crashed, crashfile written in #{Config::Crash}"
       File.open Config::Crash, 'w' do |file|
         file.puts '-' * 50

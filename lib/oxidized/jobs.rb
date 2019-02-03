@@ -4,7 +4,7 @@ module Oxidized
     MAX_INTER_JOB_GAP = 300 # add job if more than X from last job started
     attr_accessor :interval, :max, :want
 
-    def initialize max, interval, nodes
+    def initialize(max, interval, nodes)
       @max       = max
       # Set interval to 1 if interval is 0 (=disabled) so we don't break
       # the 'ceil' function
@@ -16,12 +16,12 @@ module Oxidized
       super()
     end
 
-    def push arg
+    def push(arg)
       @last = Time.now.utc
       super
     end
 
-    def duration last
+    def duration(last)
       if @durations.size > @nodes.size
         @durations.slice! @nodes.size...@durations.size
       elsif @durations.size < @nodes.size

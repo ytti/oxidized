@@ -1,6 +1,6 @@
 module Oxidized
   class << self
-    def new *args
+    def new(*args)
       Core.new args
     end
   end
@@ -8,7 +8,7 @@ module Oxidized
   class Core
     class NoNodesFound < OxidizedError; end
 
-    def initialize args
+    def initialize(args)
       Oxidized.mgr = Manager.new
       Oxidized.Hooks = HookManager.from_config(Oxidized.config)
       nodes = Nodes.new

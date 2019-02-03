@@ -19,7 +19,7 @@ module Oxidized
     require "uri"
     require "json"
 
-    def store node, outputs, opt = {}
+    def store(node, outputs, opt = {})
       @commitref = nil
       uri = URI.parse @cfg.url
       http = Net::HTTP.new uri.host, uri.port
@@ -44,7 +44,7 @@ module Oxidized
 
     private
 
-    def generate_json node, outputs, opt
+    def generate_json(node, outputs, opt)
       JSON.pretty_generate(
         'msg'    => opt[:msg],
         'user'   => opt[:user],

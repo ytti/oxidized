@@ -6,7 +6,7 @@ module Oxidized
     include Input::CLI
     attr_reader :telnet
 
-    def connect node
+    def connect(node)
       @node    = node
       @timeout = Oxidized.config.timeout
       @node.model.cfg['telnet'].each { |cb| instance_exec(&cb) }
@@ -34,7 +34,7 @@ module Oxidized
       @telnet && (not @telnet.sock.closed?)
     end
 
-    def cmd cmd_str, expect = @node.prompt
+    def cmd(cmd_str, expect = @node.prompt)
       return send(cmd_str + "\n") unless expect
 
       Oxidized.logger.debug "Telnet: #{cmd_str} @#{@node.name}"
@@ -44,7 +44,7 @@ module Oxidized
       @telnet.cmd args
     end
 
-    def send data
+    def send(data)
       @telnet.write data
     end
 
@@ -54,7 +54,7 @@ module Oxidized
 
     private
 
-    def expect re
+    def expect(re)
       @telnet.oxidized_expect expect: re, timeout: @timeout
     end
 

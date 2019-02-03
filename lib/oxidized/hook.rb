@@ -1,7 +1,7 @@
 module Oxidized
   class HookManager
     class << self
-      def from_config cfg
+      def from_config(cfg)
         mgr = new
         cfg.hooks.each do |name, h_cfg|
           h_cfg.events.each do |event|
@@ -31,7 +31,7 @@ module Oxidized
       @registered_hooks = Hash.new { |h, k| h[k] = [] }
     end
 
-    def register event, name, hook_type, cfg
+    def register(event, name, hook_type, cfg)
       unless Events.include? event
         raise ArgumentError,
               "unknown event #{event}, available: #{Events.join ','}"
@@ -50,7 +50,7 @@ module Oxidized
       Oxidized.logger.debug "Hook #{name.inspect} registered #{hook.class} for event #{event.inspect}"
     end
 
-    def handle event, ctx_params = {}
+    def handle(event, ctx_params = {})
       ctx = HookContext.new ctx_params
       ctx.event = event
 
@@ -77,7 +77,7 @@ module Oxidized
       validate_cfg! if respond_to? :validate_cfg!
     end
 
-    def run_hook ctx
+    def run_hook(ctx)
       raise NotImplementedError
     end
 

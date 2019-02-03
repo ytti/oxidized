@@ -16,7 +16,7 @@ module Oxidized
       raise NoConfig, 'no output file config, edit ~/.config/oxidized/config'
     end
 
-    def store node, outputs, opt = {}
+    def store(node, outputs, opt = {})
       file = File.expand_path @cfg.directory
       if opt[:group]
         file = File.join File.dirname(file), opt[:group]
@@ -27,7 +27,7 @@ module Oxidized
       @commitref = file
     end
 
-    def fetch node, group
+    def fetch(node, group)
       cfg_dir   = File.expand_path @cfg.directory
       node_name = node.name
 
@@ -46,12 +46,12 @@ module Oxidized
       return nil
     end
 
-    def version _node, _group
+    def version(_node, _group)
       # not supported
       []
     end
 
-    def get_version _node, _group, _oid
+    def get_version(_node, _group, _oid)
       'not supported'
     end
   end

@@ -31,7 +31,7 @@ module Oxidized
       end
     end
 
-    def store file, outputs, opt = {}
+    def store(file, outputs, opt = {})
       @msg   = opt[:msg]
       @user  = (opt[:user]  || @cfg.user)
       @email = (opt[:email] || @cfg.email)
@@ -57,7 +57,7 @@ module Oxidized
       update repo, file, outputs.to_cfg
     end
 
-    def fetch node, group
+    def fetch(node, group)
       repo, path = yield_repo_and_path(node, group)
       repo = Rugged::Repository.new repo
       index = repo.index
@@ -68,7 +68,7 @@ module Oxidized
     end
 
     # give a hash of all oid revision for the given node, and the date of the commit
-    def version node, group
+    def version(node, group)
       repo, path = yield_repo_and_path(node, group)
 
       repo = Rugged::Repository.new repo
@@ -94,7 +94,7 @@ module Oxidized
     end
 
     # give the blob of a specific revision
-    def get_version node, group, oid
+    def get_version(node, group, oid)
       repo, path = yield_repo_and_path(node, group)
       repo = Rugged::Repository.new repo
       repo.blob_at(oid, path).content
@@ -103,7 +103,7 @@ module Oxidized
     end
 
     # give a hash with the patch of a diff between 2 revision and the stats (added and deleted lines)
-    def get_diff node, group, oid1, oid2
+    def get_diff(node, group, oid1, oid2)
       diff_commits = nil
       repo, _ = yield_repo_and_path(node, group)
       repo = Rugged::Repository.new repo
@@ -142,7 +142,7 @@ module Oxidized
       [repo, path]
     end
 
-    def update repo, file, data
+    def update(repo, file, data)
       return if data.empty?
 
       if @opt[:group]
@@ -170,7 +170,7 @@ module Oxidized
       end
     end
 
-    def update_repo repo, file, data
+    def update_repo(repo, file, data)
       oid_old = repo.blob_at(repo.head.target_id, file) rescue nil
       return false if oid_old && (oid_old.content.b == data.b)
 

@@ -90,7 +90,7 @@ class AOSW < Oxidized::Model
     pre_logout 'exit'
   end
 
-  def rstrip_cfg cfg
+  def rstrip_cfg(cfg)
     out = []
     cfg.each_line do |line|
       out << line.rstrip
@@ -99,7 +99,7 @@ class AOSW < Oxidized::Model
     out << "\n"
   end
 
-  def clean cfg
+  def clean(cfg)
     out = []
     cfg.each_line do |line|
       # drop the temperature, fan speed and voltage, which change each run

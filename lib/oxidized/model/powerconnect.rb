@@ -56,7 +56,7 @@ class PowerConnect < Oxidized::Model
     pre_logout "exit"
   end
 
-  def clean cfg
+  def clean(cfg)
     out = []
     skip_blocks = 0
     cfg.each_line do |line|

@@ -28,7 +28,7 @@ class Exec < Oxidized::Hook
           "#{self.class.name}: configuration invalid: #{e.message}"
   end
 
-  def run_hook ctx
+  def run_hook(ctx)
     env = make_env ctx
     log "Execute: #{@cmd.inspect}", :debug
     th = Thread.new do
@@ -41,7 +41,7 @@ class Exec < Oxidized::Hook
     th.join unless @async
   end
 
-  def run_cmd! env
+  def run_cmd!(env)
     pid, status = nil, nil
     Timeout.timeout(@timeout) do
       pid = spawn env, @cmd, unsetenv_others: true
@@ -59,7 +59,7 @@ class Exec < Oxidized::Hook
     raise Timeout::Error, msg
   end
 
-  def make_env ctx
+  def make_env(ctx)
     env = {
       "OX_EVENT" => ctx.event.to_s
     }

@@ -18,7 +18,7 @@ module Oxidized
       require 'gpgme' if @cfg.gpg?
     end
 
-    def load _node_want = nil
+    def load(_node_want = nil)
       nodes = []
       open_file.each_line do |line|
         next if line.match(/^\s*#/)

@@ -6,7 +6,7 @@ module Oxidized
   class Nodes < Array
     attr_accessor :source, :jobs
     alias :put :unshift
-    def load node_want = nil
+    def load(node_want = nil)
       with_lock do
         new = []
         @source = Oxidized.config.source.default
@@ -31,7 +31,7 @@ module Oxidized
       end
     end
 
-    def node_want? node_want, node
+    def node_want?(node_want, node)
       return true unless node_want
 
       node_want_ip = (IPAddr.new(node_want) rescue false)
@@ -51,21 +51,21 @@ module Oxidized
       end
     end
 
-    def show node
+    def show(node)
       with_lock do
         i = find_node_index node
         self[i].serialize
       end
     end
 
-    def fetch node_name, group
+    def fetch(node_name, group)
       yield_node_output(node_name) do |node, output|
         output.fetch node, group
       end
     end
 
     # @param node [String] name of the node moved into the head of array
-    def next node, opt = {}
+    def next(node, opt = {})
       return unless waiting.find_node_index(node)
 
       with_lock do
@@ -91,23 +91,23 @@ module Oxidized
 
     # @param node node whose index number in Nodes to find
     # @return [Fixnum] index number of node in Nodes
-    def find_node_index node
+    def find_node_index(node)
       find_index(node) || raise(Oxidized::NodeNotFound, "unable to find '#{node}'")
     end
 
-    def version node_name, group
+    def version(node_name, group)
       yield_node_output(node_name) do |node, output|
         output.version node, group
       end
     end
 
-    def get_version node_name, group, oid
+    def get_version(node_name, group, oid)
       yield_node_output(node_name) do |node, output|
         output.get_version node, group, oid
       end
     end
 
-    def get_diff node_name, group, oid1, oid2
+    def get_diff(node_name, group, oid1, oid2)
       yield_node_output(node_name) do |node, output|
         output.get_diff node, group, oid1, oid2
       end
@@ -115,7 +115,7 @@ module Oxidized
 
     private
 
-    def initialize opts = {}
+    def initialize(opts = {})
       super()
       node = opts.delete :node
       @mutex = Mutex.new # we compete for the nodes with webapi thread
@@ -126,17 +126,17 @@ module Oxidized
       end
     end
 
-    def with_lock &block
+    def with_lock(&block)
       @mutex.synchronize(&block)
     end
 
-    def find_index node
+    def find_index(node)
       index { |e| [e.name, e.ip].include? node }
     end
 
     # @param node node which is removed from nodes list
     # @return [Node] deleted node
-    def del node
+    def del(node)
       delete_at find_node_index(node)
     end
 
@@ -155,7 +155,7 @@ module Oxidized
     #
     # @todo can we trust name to be unique identifier, what about when groups are used?
     # @param [Array] nodes Array of nodes used to replace+update old
-    def update_nodes nodes
+    def update_nodes(nodes)
       old = dup
       replace(nodes)
       each do |node|

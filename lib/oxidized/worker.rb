@@ -2,7 +2,7 @@ module Oxidized
   require 'oxidized/job'
   require 'oxidized/jobs'
   class Worker
-    def initialize nodes
+    def initialize(nodes)
       @jobs_done  = 0
       @nodes      = nodes
       @jobs       = Jobs.new(Oxidized.config.threads, Oxidized.config.interval, @nodes)
@@ -37,7 +37,7 @@ module Oxidized
       Oxidized.logger.debug("lib/oxidized/worker.rb: #{@jobs.size} jobs running in parallel") unless @jobs.empty?
     end
 
-    def process job
+    def process(job)
       node = job.node
       node.last = job
       node.stats.add job
@@ -54,7 +54,7 @@ module Oxidized
 
     private
 
-    def process_success node, job
+    def process_success(node, job)
       @jobs_done += 1 # needed for :nodes_done hook
       Oxidized.Hooks.handle :node_success, node: node,
                                            job:  job
@@ -73,7 +73,7 @@ module Oxidized
       node.reset
     end
 
-    def process_failure node, job
+    def process_failure(node, job)
       msg = "#{node.group}/#{node.name} status #{job.status}"
       if node.retry < Oxidized.config.retries
         node.retry += 1

@@ -28,17 +28,17 @@ module Oxidized
     PATH = URI(restcfg).path
 
     class << self
-      def next opt = {}, host = HOST, port = PORT
+      def next(opt = {}, host = HOST, port = PORT)
         web = new host, port
         web.next opt
       end
     end
 
-    def initialize host = HOST, port = PORT
+    def initialize(host = HOST, port = PORT)
       @web = Net::HTTP.new host, port
     end
 
-    def next opt
+    def next(opt)
       data = JSON.dump opt
       @web.put PATH + '/node/next/' + opt[:name].to_s, data
     end

@@ -15,7 +15,7 @@ module Oxidized
     }
     include Input::CLI
 
-    def connect node
+    def connect(node)
       @node = node
       @node.model.cfg['ftp'].each { |cb| instance_exec(&cb) }
       @log = File.open(Oxidized::Config::Log + "/#{@node.ip}-ftp", 'w') if Oxidized.config.input.debug?
@@ -29,13 +29,13 @@ module Oxidized
       @ftp && (not @ftp.closed?)
     end
 
-    def cmd file
+    def cmd(file)
       Oxidized.logger.debug "FTP: #{file} @ #{@node.name}"
       @ftp.getbinaryfile file, nil
     end
 
     # meh not sure if this is the best way, but perhaps better than not implementing send
-    def send my_proc
+    def send(my_proc)
       my_proc.call
     end
 

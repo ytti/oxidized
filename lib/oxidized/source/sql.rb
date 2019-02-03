@@ -18,7 +18,7 @@ module Oxidized
       raise NoConfig, 'no source sql config, edit ~/.config/oxidized/config'
     end
 
-    def load node_want = nil
+    def load(node_want = nil)
       nodes = []
       db = connect
       query = db[@cfg.table.to_sym]

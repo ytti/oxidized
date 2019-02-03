@@ -16,7 +16,7 @@ module Oxidized
     include Input::CLI
     class NoShell < OxidizedError; end
 
-    def connect node
+    def connect(node)
       @node        = node
       @output      = ''
       @pty_options = { term: "vt100" }
@@ -40,7 +40,7 @@ module Oxidized
       @ssh && (not @ssh.closed?)
     end
 
-    def cmd cmd, expect = node.prompt
+    def cmd(cmd, expect = node.prompt)
       Oxidized.logger.debug "lib/oxidized/input/ssh.rb #{cmd} @ #{node.name} with expect: #{expect.inspect}"
       if @exec
         @ssh.exec! cmd
@@ -49,7 +49,7 @@ module Oxidized
       end
     end
 
-    def send data
+    def send(data)
       @ses.send_data data
     end
 
@@ -57,7 +57,7 @@ module Oxidized
       @output
     end
 
-    def pty_options hash
+    def pty_options(hash)
       @pty_options = @pty_options.merge hash
     end
 
@@ -73,7 +73,7 @@ module Oxidized
       (@ssh.close rescue true) unless @ssh.closed?
     end
 
-    def shell_open ssh
+    def shell_open(ssh)
       @ses = ssh.open_channel do |ch|
         ch.on_data do |_ch, data|
           if Oxidized.config.input.debug?
@@ -93,7 +93,7 @@ module Oxidized
       end
     end
 
-    def exec state = nil
+    def exec(state = nil)
       state.nil? ? @exec : (@exec = state) unless vars :ssh_no_exec
     end
 
@@ -105,7 +105,7 @@ module Oxidized
       @output
     end
 
-    def expect *regexps
+    def expect(*regexps)
       regexps = [regexps].flatten
       Oxidized.logger.debug "lib/oxidized/input/ssh.rb: expecting #{regexps.inspect} at #{node.name}"
       Timeout::timeout(Oxidized.config.timeout) do

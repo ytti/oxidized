@@ -7,11 +7,11 @@ class Openbsd < Oxidized::Model
   comment '# '
 
   # Add a comment between files/configs
-  def add_comment comment
+  def add_comment(comment)
     "\n+++++++++++++++++++++++++++++++++++++++++ #{comment} ++++++++++++++++++++++++++++++++++++++++++++++\n"
   end
 
-  def add_small_comment comment
+  def add_small_comment(comment)
     "\n=============== #{comment} ===============\n"
   end
 

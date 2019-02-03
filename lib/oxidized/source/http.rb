@@ -16,7 +16,7 @@ module Oxidized
     require "uri"
     require "json"
 
-    def load node_want = nil
+    def load(node_want = nil)
       nodes = []
       data = JSON.parse(read_http(node_want))
       data = string_navigate(data, @cfg.hosts_location) if @cfg.hosts_location?
@@ -44,7 +44,7 @@ module Oxidized
 
     private
 
-    def string_navigate object, wants
+    def string_navigate(object, wants)
       wants.split(".").map do |want|
         head, match, _tail = want.partition(/\[\d+\]/)
         match.empty? ? head : [head, match[1..-2].to_i]
@@ -54,7 +54,7 @@ module Oxidized
       object
     end
 
-    def read_http node_want
+    def read_http(node_want)
       uri = URI.parse(@cfg.url)
       http = Net::HTTP.new(uri.host, uri.port)
       http.use_ssl = true if uri.scheme == 'https'

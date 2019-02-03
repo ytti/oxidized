@@ -36,7 +36,7 @@ module Oxidized
       end
     end
 
-    def crypt_init repo
+    def crypt_init(repo)
       repo.chdir do
         system(@gitcrypt_init)
         @cfg.users.each do |user|
@@ -48,19 +48,19 @@ module Oxidized
       end
     end
 
-    def lock repo
+    def lock(repo)
       repo.chdir do
         system(@gitcrypt_lock)
       end
     end
 
-    def unlock repo
+    def unlock(repo)
       repo.chdir do
         system(@gitcrypt_unlock)
       end
     end
 
-    def store file, outputs, opt = {}
+    def store(file, outputs, opt = {})
       @msg   = opt[:msg]
       @user  = (opt[:user]  || @cfg.user)
       @email = (opt[:email] || @cfg.email)
@@ -86,7 +86,7 @@ module Oxidized
       update repo, file, outputs.to_cfg
     end
 
-    def fetch node, group
+    def fetch(node, group)
       repo, path = yield_repo_and_path(node, group)
       repo = Git.open repo
       unlock repo
@@ -101,7 +101,7 @@ module Oxidized
     end
 
     # give a hash of all oid revision for the given node, and the date of the commit
-    def version node, group
+    def version(node, group)
       repo, path = yield_repo_and_path(node, group)
 
       repo = Git.open repo
@@ -124,7 +124,7 @@ module Oxidized
     end
 
     # give the blob of a specific revision
-    def get_version node, group, oid
+    def get_version(node, group, oid)
       repo, path = yield_repo_and_path(node, group)
       repo = Git.open repo
       unlock repo
@@ -136,7 +136,7 @@ module Oxidized
     end
 
     # give a hash with the patch of a diff between 2 revision and the stats (added and deleted lines)
-    def get_diff node, group, oid1, oid2
+    def get_diff(node, group, oid1, oid2)
       diff_commits = nil
       repo, _path = yield_repo_and_path(node, group)
       repo = Git.open repo
@@ -179,7 +179,7 @@ module Oxidized
       [repo, path]
     end
 
-    def update repo, file, data
+    def update(repo, file, data)
       return if data.empty?
 
       if @opt[:group]
@@ -208,7 +208,7 @@ module Oxidized
       end
     end
 
-    def update_repo repo, file, data, msg, user, email
+    def update_repo(repo, file, data, msg, user, email)
       grepo = Git.open repo
       grepo.config('user.name', user)
       grepo.config('user.email', email)

@@ -39,7 +39,7 @@ class Aireos < Oxidized::Model
     end
   end
 
-  def clean cfg
+  def clean(cfg)
     out = []
     cfg.each_line do |line|
       next if line.match /^\s*$/

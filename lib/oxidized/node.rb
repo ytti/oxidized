@@ -9,7 +9,7 @@ module Oxidized
     attr_accessor :running, :user, :email, :msg, :from, :stats, :retry
     alias :running? :running
 
-    def initialize opt
+    def initialize(opt)
       Oxidized.logger.debug 'resolving DNS for %s...' % opt[:name]
       # remove the prefix if an IP Address is provided with one as IPAddr converts it to a network address.
       ip_addr, _ = opt[:ip].to_s.split("/")
@@ -54,7 +54,7 @@ module Oxidized
       [status, config]
     end
 
-    def run_input input
+    def run_input(input)
       rescue_fail = {}
       [input.class::RescueFail, input.class.superclass::RescueFail].each do |hash|
         hash.each do |level, errors|
@@ -113,7 +113,7 @@ module Oxidized
       h
     end
 
-    def last= job
+    def last=(job)
       if job
         ostruct = OpenStruct.new
         ostruct.start  = job.start
@@ -137,11 +137,11 @@ module Oxidized
 
     private
 
-    def resolve_prompt opt
+    def resolve_prompt(opt)
       opt[:prompt] || @model.prompt || Oxidized.config.prompt
     end
 
-    def resolve_auth opt
+    def resolve_auth(opt)
       # Resolve configured username/password
       {
         username: resolve_key(:username, opt),
@@ -149,7 +149,7 @@ module Oxidized
       }
     end
 
-    def resolve_input opt
+    def resolve_input(opt)
       inputs = resolve_key :input, opt, Oxidized.config.input.default
       inputs.split(/\s*,\s*/).map do |input|
         if not Oxidized.mgr.input[input]
@@ -159,7 +159,7 @@ module Oxidized
       end
     end
 
-    def resolve_output opt
+    def resolve_output(opt)
       output = resolve_key :output, opt, Oxidized.config.output.default
       if not Oxidized.mgr.output[output]
         Oxidized.mgr.add_output(output) || raise(MethodNotFound, "#{output} not found for node #{ip}")
@@ -167,7 +167,7 @@ module Oxidized
       Oxidized.mgr.output[output]
     end
 
-    def resolve_model opt
+    def resolve_model(opt)
       model = resolve_key :model, opt
       if not Oxidized.mgr.model[model]
         Oxidized.logger.debug "lib/oxidized/node.rb: Loading model #{model.inspect}"
@@ -176,7 +176,7 @@ module Oxidized
       Oxidized.mgr.model[model].new
     end
 
-    def resolve_repo opt
+    def resolve_repo(opt)
       type = git_type opt
       return nil unless type
 
@@ -192,7 +192,7 @@ module Oxidized
       end
     end
 
-    def resolve_key key, opt, global = nil
+    def resolve_key(key, opt, global = nil)
       # resolve key, first get global, then get group then get node config
       key_sym = key.to_sym
       key_str = key.to_s
@@ -227,7 +227,7 @@ module Oxidized
       value
     end
 
-    def git_type opt
+    def git_type(opt)
       type = opt[:output] || Oxidized.config.output.default
       return nil unless type[0..2] == "git"
 
