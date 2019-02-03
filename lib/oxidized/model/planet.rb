@@ -53,8 +53,8 @@ class Planet < Oxidized::Model
     cfg = cfg.reject { |line| line.match "Building configuration..." }
 
     if @planetsgs
-      cfg << cmd('show transceiver detail | include transceiver detail information|found|Type|length|Nominal|wavelength|Base information') do |cfg|
-        comment cfg
+      cfg << cmd('show transceiver detail | include transceiver detail information|found|Type|length|Nominal|wavelength|Base information') do |cfg_optic|
+        comment cfg_optic
       end
     end
 
