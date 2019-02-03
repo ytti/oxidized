@@ -1,6 +1,8 @@
 # Changelog
 
 ## Master
+
+* FEATURE: add support for 3COM 4200 series (@bytemine)
 * FEATURE: add Audiocodes MediaPack MP-1xx and Mediant 1000 model (@pedjaj)
 * FEATURE: add raisecom RAX model (@vitalisator)
 * FEATURE: add huawei smartax model (@nyash)
