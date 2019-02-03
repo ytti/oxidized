@@ -19,12 +19,12 @@ module Oxidized
     # RegisteredHook is a container for a Hook instance
     class RegisteredHook < Struct.new(:name, :hook); end
 
-    Events = [
-      :node_success,
-      :node_fail,
-      :post_store,
-      :nodes_done
-    ]
+    Events = %i[
+      node_success
+      node_fail
+      post_store
+      nodes_done
+    ].freeze
     attr_reader :registered_hooks
 
     def initialize
@@ -58,7 +58,7 @@ module Oxidized
         begin
           r_hook.hook.run_hook ctx
         rescue => e
-          Oxidized.logger.error "Hook #{r_hook.name} (#{r_hook.hook}) failed " +
+          Oxidized.logger.error "Hook #{r_hook.name} (#{r_hook.hook}) failed " \
                                 "(#{e.inspect}) for event #{event.inspect}"
         end
       end
@@ -69,15 +69,14 @@ module Oxidized
   class Hook
     attr_reader :cfg
 
-    def initialize
-    end
+    def initialize; end
 
     def cfg=(cfg)
       @cfg = cfg
       validate_cfg! if respond_to? :validate_cfg!
     end
 
-    def run_hook(ctx)
+    def run_hook(_ctx)
       raise NotImplementedError
     end
 
