@@ -82,18 +82,18 @@ module Oxidized
       Oxidized::RestClient.next opt
     end
 
-    def ios(ip, log, i)
+    def ios(ip, log, index)
       # TODO: we need to fetch 'ip/name' in mode == :file here
-      user = log[i + 5]
+      user = log[index + 5]
       from = log[-1][1..-2]
       rest(user: user, from: from, model: 'ios', ip: ip,
            name: getname(ip))
     end
 
-    def jnpr(ip, log, i)
+    def jnpr(ip, log, index)
       # TODO: we need to fetch 'ip/name' in mode == :file here
-      user = log[i + 2][1..-2]
-      msg  = log[(i + 6)..-1].join(' ')[10..-2]
+      user = log[index + 2][1..-2]
+      msg  = log[(index + 6)..-1].join(' ')[10..-2]
       msg  = nil if msg == 'none'
       rest(user: user, msg: msg, model: 'jnpr', ip: ip,
            name: getname(ip))

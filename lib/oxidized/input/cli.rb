@@ -44,12 +44,12 @@ module Oxidized
         @pre_logout << [_pre_logout, block]
       end
 
-      def username(re = /^(Username|login)/)
-        @username || (@username = re)
+      def username(regex = /^(Username|login)/)
+        @username || (@username = regex)
       end
 
-      def password(re = /^Password/)
-        @password || (@password = re)
+      def password(regex = /^Password/)
+        @password || (@password = regex)
       end
 
       def login

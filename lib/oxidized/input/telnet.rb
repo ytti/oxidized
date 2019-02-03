@@ -54,8 +54,8 @@ module Oxidized
 
     private
 
-    def expect(re)
-      @telnet.oxidized_expect expect: re, timeout: @timeout
+    def expect(regex)
+      @telnet.oxidized_expect expect: regex, timeout: @timeout
     end
 
     def disconnect

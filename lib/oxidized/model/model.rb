@@ -48,8 +48,8 @@ module Oxidized
         @cmd
       end
 
-      def expect(re, **args, &block)
-        process_args_block(@expect, args, [re, block])
+      def expect(regex, **args, &block)
+        process_args_block(@expect, args, [regex, block])
       end
 
       def expects
@@ -123,8 +123,8 @@ module Oxidized
       @input.send data
     end
 
-    def expect(re, &block)
-      self.class.expect re, &block
+    def expect(regex, &block)
+      self.class.expect regex, &block
     end
 
     def cfg
