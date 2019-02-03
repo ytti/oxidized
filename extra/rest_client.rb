@@ -19,9 +19,7 @@ module Oxidized
     end
 
     restcfg = CFGS.cfg.rest
-    unless restcfg =~ /^http:\/\//
-      restcfg.insert(0, 'http://')
-    end
+    restcfg.insert(0, 'http://') unless restcfg =~ /^http:\/\//
 
     HOST = URI(restcfg).host
     PORT = URI(restcfg).port

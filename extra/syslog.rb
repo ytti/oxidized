@@ -65,7 +65,7 @@ module Oxidized
       end
 
       def file(syslog_file = Oxidized::CFG.syslogd.file)
-        io = open syslog_file, 'r'
+        io = File.open syslog_file, 'r'
         io.seek 0, IO::SEEK_END
         new io, :file
       end
@@ -101,9 +101,9 @@ module Oxidized
 
     def handle_log(log, ip)
       log = log.to_s.split ' '
-      if i = log.find_index { |e| e.match(MSG[:ios]) }
+      if (i = log.find_index { |e| e.match(MSG[:ios]) })
         ios ip, log,  i
-      elsif i = log.index(MSG[:junos])
+      elsif (i = log.index(MSG[:junos]))
         jnpr ip, log, i
       end
     end

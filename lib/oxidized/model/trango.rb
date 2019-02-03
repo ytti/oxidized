@@ -12,38 +12,18 @@ class Trango < Oxidized::Model
         out << "opmode " + Regexp.last_match[1]
         out << "defaultopmode " + Regexp.last_match[2]
       end
-      if line =~ /\[Tx Power\] ([\-\d]+) dBm/
-        out << "power " + Regexp.last_match[1]
-      end
-      if line =~ /\[Active Channel\] (\d+) (v|h)/
-        out << "freq " + Regexp.last_match[1] + ' ' + Regexp.last_match[2]
-      end
-      if line =~ /\[Peer ID\] ([A-F0-9]+)/
-        out << "peerid " + Regexp.last_match[1]
-      end
-      if line =~ /\[Unit Type\] (\S+)/
-        out << "utype " + Regexp.last_match[1]
-      end
-      if line =~ /\[(Hardware Version|Firmware Version|Model|S\/N)\] (\S+)/
-        comments << '# ' + Regexp.last_match[1] + ': ' + Regexp.last_match[2]
-      end
-      if line =~ /\[Remarks\] (\S+)/
-        out << "remarks " + Regexp.last_match[1]
-      end
-      if line =~ /\[RSSI LED\] (on|off)/
-        out << "rssiled " + Regexp.last_match[1]
-      end
-      if line =~ /\[Speed\] (\d+) Mbps/
-        speed = Regexp.last_match[1]
-      end
-      if line =~ /\[Tx MIR\] (\d+) Kbps/
-        out << "mir ".concat(Regexp.last_match[1])
-      end
+      out << "power " + Regexp.last_match[1] if line =~ /\[Tx Power\] ([\-\d]+) dBm/
+      out << "freq " + Regexp.last_match[1] + ' ' + Regexp.last_match[2] if line =~ /\[Active Channel\] (\d+) (v|h)/
+      out << "peerid " + Regexp.last_match[1] if line =~ /\[Peer ID\] ([A-F0-9]+)/
+      out << "utype " + Regexp.last_match[1] if line =~ /\[Unit Type\] (\S+)/
+      comments << '# ' + Regexp.last_match[1] + ': ' + Regexp.last_match[2] if line =~ /\[(Hardware Version|Firmware Version|Model|S\/N)\] (\S+)/
+      out << "remarks " + Regexp.last_match[1] if line =~ /\[Remarks\] (\S+)/
+      out << "rssiled " + Regexp.last_match[1] if line =~ /\[RSSI LED\] (on|off)/
+      speed = Regexp.last_match[1] if line =~ /\[Speed\] (\d+) Mbps/
+      out << "mir ".concat(Regexp.last_match[1]) if line =~ /\[Tx MIR\] (\d+) Kbps/
       if line =~ /\[Auto Rate Shift\] (on|off)/
         out << "autorateshift ".concat(Regexp.last_match[1])
-        if Regexp.last_match[1].eql? 'off'
-          out << "speed $speed"
-        end
+        out << "speed $speed" if Regexp.last_match[1].eql? 'off'
       end
       next unless line =~ /\[IP\] (\S+) \[Subnet Mask\] (\S+) \[Gateway\] (\S+)/
 

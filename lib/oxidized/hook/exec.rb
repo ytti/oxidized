@@ -15,9 +15,7 @@ class Exec < Oxidized::Hook
                                            @timeout > 0
     end
 
-    if cfg.has_key? "async"
-      @async = !!cfg.async
-    end
+    @async = !!cfg.async if cfg.has_key? "async"
 
     if cfg.has_key? "cmd"
       @cmd = cfg.cmd

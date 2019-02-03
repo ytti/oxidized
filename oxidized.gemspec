@@ -25,9 +25,7 @@ Gem::Specification.new do |s|
   s.add_runtime_dependency 'slop',    '~> 3.5'
 
   s.add_development_dependency 'simplecov'
-  if ENV['CI'] == 'true'
-    s.add_development_dependency 'codecov'
-  end
+  s.add_development_dependency 'codecov' if ENV['CI'] == 'true'
 
   s.add_development_dependency 'bundler',  '~> 1.10'
   s.add_development_dependency 'git',      '~> 1'

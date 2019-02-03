@@ -7,12 +7,12 @@ module Oxidized
 
     class << self
       def inherited(klass)
-        klass.instance_variable_set '@cmd',   Hash.new { |h, k| h[k] = [] }
-        klass.instance_variable_set '@cfg',   Hash.new { |h, k| h[k] = [] }
-        klass.instance_variable_set '@procs', Hash.new { |h, k| h[k] = [] }
-        klass.instance_variable_set '@expect', []
+        klass.instance_variable_set '@cmd',     (Hash.new { |h, k| h[k] = [] })
+        klass.instance_variable_set '@cfg',     (Hash.new { |h, k| h[k] = [] })
+        klass.instance_variable_set '@procs',   (Hash.new { |h, k| h[k] = [] })
+        klass.instance_variable_set '@expect',  []
         klass.instance_variable_set '@comment', nil
-        klass.instance_variable_set '@prompt', nil
+        klass.instance_variable_set '@prompt',  nil
       end
 
       def comment(_comment = '# ')
@@ -182,8 +182,8 @@ module Oxidized
     private
 
     def process_cmd_output(output, name)
-      output = Oxidized::String.new output if ::String === output
-      output = Oxidized::String.new '' unless Oxidized::String === output
+      output = Oxidized::String.new output if ::String == output.class
+      output = Oxidized::String.new '' unless Oxidized::String == output.class
       output.set_cmd(name)
       output
     end

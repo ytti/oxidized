@@ -18,9 +18,7 @@ module Oxidized
 
     def store(node, outputs, opt = {})
       file = File.expand_path @cfg.directory
-      if opt[:group]
-        file = File.join File.dirname(file), opt[:group]
-      end
+      file = File.join File.dirname(file), opt[:group] if opt[:group]
       FileUtils.mkdir_p file
       file = File.join file, node
       File.open(file, 'w') { |fh| fh.write outputs.to_cfg }
@@ -34,13 +32,11 @@ module Oxidized
       if group # group is explicitly defined by user
         cfg_dir = File.join File.dirname(cfg_dir), group
         File.read File.join(cfg_dir, node_name)
+      elsif File.exist? File.join(cfg_dir, node_name) # node configuration file is stored on base directory
+        File.read File.join(cfg_dir, node_name)
       else
-        if File.exist? File.join(cfg_dir, node_name) # node configuration file is stored on base directory
-          File.read File.join(cfg_dir, node_name)
-        else
-          path = Dir.glob(File.join(File.dirname(cfg_dir), '**', node_name)).first # fetch node in all groups
-          File.read path
-        end
+        path = Dir.glob(File.join(File.dirname(cfg_dir), '**', node_name)).first # fetch node in all groups
+        File.read path
       end
     rescue Errno::ENOENT
       return nil

@@ -36,9 +36,7 @@ class AricentISS < Oxidized::Model
     cfg.each_line.map do |l|
       next '' if l =~ /^Building configuration/
 
-      if l =~ /^Switch ID.*Hardware Version.*Firmware Version/
-        comment_next = 2
-      end
+      comment_next = 2 if l =~ /^Switch ID.*Hardware Version.*Firmware Version/
 
       if comment_next > 0
         comment_next -= 1

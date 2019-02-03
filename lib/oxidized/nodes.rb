@@ -119,7 +119,7 @@ module Oxidized
       super()
       node = opts.delete :node
       @mutex = Mutex.new # we compete for the nodes with webapi thread
-      if nodes = opts.delete(:nodes)
+      if (nodes = opts.delete(:nodes))
         replace nodes
       else
         load node
@@ -160,7 +160,7 @@ module Oxidized
       replace(nodes)
       each do |node|
         begin
-          if i = old.find_node_index(node.name)
+          if (i = old.find_node_index(node.name))
             node.stats = old[i].stats
             node.last  = old[i].last
           end

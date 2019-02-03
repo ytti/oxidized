@@ -41,7 +41,7 @@ module Oxidized
         next unless @model.cfg[cfg_name] && (not @model.cfg[cfg_name].empty?)
 
         @model.input = input = input.new
-        if config = run_input(input)
+        if (config = run_input(input))
           Oxidized.logger.debug "lib/oxidized/node.rb: #{input.class.name} ran for #{name} successfully"
           status = :success
           break
@@ -67,7 +67,7 @@ module Oxidized
         input.connect(self) && input.get
       rescue *rescue_fail.keys => err
         resc = ''
-        unless level = rescue_fail[err.class]
+        unless (level = rescue_fail[err.class])
           resc  = err.class.ancestors.find { |e| rescue_fail.has_key?(e) }
           level = rescue_fail[resc]
           resc  = " (rescued #{resc})"
@@ -152,18 +152,14 @@ module Oxidized
     def resolve_input(opt)
       inputs = resolve_key :input, opt, Oxidized.config.input.default
       inputs.split(/\s*,\s*/).map do |input|
-        unless Oxidized.mgr.input[input]
-          Oxidized.mgr.add_input(input) || raise(MethodNotFound, "#{input} not found for node #{ip}")
-        end
+        Oxidized.mgr.add_input(input) || raise(MethodNotFound, "#{input} not found for node #{ip}") unless Oxidized.mgr.input[input]
         Oxidized.mgr.input[input]
       end
     end
 
     def resolve_output(opt)
       output = resolve_key :output, opt, Oxidized.config.output.default
-      unless Oxidized.mgr.output[output]
-        Oxidized.mgr.add_output(output) || raise(MethodNotFound, "#{output} not found for node #{ip}")
-      end
+      Oxidized.mgr.add_output(output) || raise(MethodNotFound, "#{output} not found for node #{ip}") unless Oxidized.mgr.output[output]
       Oxidized.mgr.output[output]
     end
 

@@ -57,33 +57,19 @@ class IOS < Oxidized::Model
         slaveslot = ", slot #{Regexp.last_match(1)}";
       end
 
-      if line =~ /^Compiled (.*)$/
-        comments << "Image:#{slave} Compiled: #{Regexp.last_match(1)}"
-      end
+      comments << "Image:#{slave} Compiled: #{Regexp.last_match(1)}" if line =~ /^Compiled (.*)$/
 
-      if line =~ /^(?:Cisco )?IOS .* Software,? \(([A-Za-z0-9_-]*)\), .*Version\s+(.*)$/
-        comments << "Image:#{slave} Software: #{Regexp.last_match(1)}, #{Regexp.last_match(2)}"
-      end
+      comments << "Image:#{slave} Software: #{Regexp.last_match(1)}, #{Regexp.last_match(2)}" if line =~ /^(?:Cisco )?IOS .* Software,? \(([A-Za-z0-9_-]*)\), .*Version\s+(.*)$/
 
-      if line =~ /^ROM: (IOS \S+ )?(System )?Bootstrap.*(Version.*)$/
-        comments << "ROM Bootstrap: #{Regexp.last_match(3)}"
-      end
+      comments << "ROM Bootstrap: #{Regexp.last_match(3)}" if line =~ /^ROM: (IOS \S+ )?(System )?Bootstrap.*(Version.*)$/
 
-      if line =~ /^BOOTFLASH: .*(Version.*)$/
-        comments << "BOOTFLASH: #{Regexp.last_match(1)}"
-      end
+      comments << "BOOTFLASH: #{Regexp.last_match(1)}" if line =~ /^BOOTFLASH: .*(Version.*)$/
 
-      if line =~ /^(\d+[kK]) bytes of (non-volatile|NVRAM)/
-        comments << "Memory: nvram #{Regexp.last_match(1)}"
-      end
+      comments << "Memory: nvram #{Regexp.last_match(1)}" if line =~ /^(\d+[kK]) bytes of (non-volatile|NVRAM)/
 
-      if line =~ /^(\d+[kK]) bytes of (flash memory|flash internal|processor board System flash|ATA CompactFlash)/i
-        comments << "Memory: flash #{Regexp.last_match(1)}"
-      end
+      comments << "Memory: flash #{Regexp.last_match(1)}" if line =~ /^(\d+[kK]) bytes of (flash memory|flash internal|processor board System flash|ATA CompactFlash)/i
 
-      if line =~ /^(\d+[kK]) bytes of (Flash|ATA)?.*PCMCIA .*(slot|disk) ?(\d)/i
-        comments << "Memory: pcmcia #{Regexp.last_match(2)} #{Regexp.last_match(3)}#{Regexp.last_match(4)} #{Regexp.last_match(1)}";
-      end
+      comments << "Memory: pcmcia #{Regexp.last_match(2)} #{Regexp.last_match(3)}#{Regexp.last_match(4)} #{Regexp.last_match(1)}" if line =~ /^(\d+[kK]) bytes of (Flash|ATA)?.*PCMCIA .*(slot|disk) ?(\d)/i
 
       if line =~ /(\S+(?:\sseries)?)\s+(?:\((\S+)\)\s+processor|\(revision[^)]+\)).*\s+with (\S+k) bytes/i
         sproc = Regexp.last_match(1)
@@ -93,9 +79,7 @@ class IOS < Oxidized::Model
         comments << "Chassis type:#{slave} #{sproc}";
         comments << "Memory:#{slave} main #{mem}";
         # check the next two lines for more CPU info
-        if cfg.lines[i + 1] =~ /processor board id (\S+)/i
-          comments << "Processor ID: #{Regexp.last_match(1)}";
-        end
+        comments << "Processor ID: #{Regexp.last_match(1)}" if cfg.lines[i + 1] =~ /processor board id (\S+)/i
         if cfg.lines[i + 2] =~ /(cpu at |processor: |#{cpu} processor,)/i
           # change implementation to impl and prepend comma
           cpuxtra = cfg.lines[i + 2].gsub(/implementation/, 'impl').gsub(/^/, ', ').chomp;
@@ -103,9 +87,7 @@ class IOS < Oxidized::Model
         comments << "CPU:#{slave} #{cpu}#{cpuxtra}#{slaveslot}";
       end
 
-      if line =~ /^System image file is "([^"]*)"$/
-        comments << "Image: #{Regexp.last_match(1)}"
-      end
+      comments << "Image: #{Regexp.last_match(1)}" if line =~ /^System image file is "([^"]*)"$/
     end
     comments << "\n"
     comment comments.join "\n"

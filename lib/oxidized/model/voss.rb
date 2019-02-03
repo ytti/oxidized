@@ -23,9 +23,9 @@ class Voss < Oxidized::Model
 
   # more the config rather than doing a show run
   cmd 'more config.cfg' do |cfg|
-    cfg
     cfg.gsub! /^[^\s#>]+[#>]$/, ''
     cfg.gsub! /^more config.cfg/, '# more config.cfg'
+    cfg
   end
 
   cfg :telnet do

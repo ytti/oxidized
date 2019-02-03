@@ -84,9 +84,7 @@ class AOSW < Oxidized::Model
     end
     post_login 'no paging'
     post_login 'encrypt disable'
-    if vars :enable
-      pre_logout 'exit'
-    end
+    pre_logout 'exit' if vars :enable
     pre_logout 'exit'
   end
 

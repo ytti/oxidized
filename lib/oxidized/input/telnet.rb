@@ -73,7 +73,7 @@ class Net::Telnet
   ## how to do this, without redefining the whole damn thing
   ## FIXME: we also need output (not sure I'm going to support this)
   attr_reader :output
-  def oxidized_expect(options) # :yield: recvdata
+  def oxidized_expect(options)
     model    = @options["Model"]
     @log     = @options["Log"]
 
@@ -93,8 +93,8 @@ class Net::Telnet
            Integer(c.rindex(/#{IAC}#{SB}/no) || 0)
           buf = preprocess(c[0...c.rindex(/#{IAC}#{SB}/no)])
           rest = c[c.rindex(/#{IAC}#{SB}/no)..-1]
-        elsif pt = c.rindex(/#{IAC}[^#{IAC}#{AO}#{AYT}#{DM}#{IP}#{NOP}]?\z/no) ||
-                   c.rindex(/\r\z/no)
+        elsif (pt = c.rindex(/#{IAC}[^#{IAC}#{AO}#{AYT}#{DM}#{IP}#{NOP}]?\z/no) ||
+                   c.rindex(/\r\z/no))
           buf = preprocess(c[0...pt])
           rest = c[pt..-1]
         else
