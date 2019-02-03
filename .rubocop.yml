@@ -34,9 +34,6 @@ Style/FormatStringToken:
 Style/RescueModifier:
   Enabled: false
 
-Style/MultilineBlockChain:
-  Enabled: false
-
 Style/SymbolProc:
   Enabled: false
 

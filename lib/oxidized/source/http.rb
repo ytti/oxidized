@@ -45,10 +45,11 @@ module Oxidized
     private
 
     def string_navigate(object, wants)
-      wants.split(".").map do |want|
+      wants = wants.split(".").map do |want|
         head, match, _tail = want.partition(/\[\d+\]/)
         match.empty? ? head : [head, match[1..-2].to_i]
-      end.flatten.each do |want|
+      end
+      wants.flatten.each do |want|
         object = object[want] if object.respond_to? :each
       end
       object
