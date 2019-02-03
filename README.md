@@ -32,7 +32,7 @@ Check out the [Oxidized TREX 2014 presentation](http://youtu.be/kBQ_CTUuqeU#t=3h
 
 1. [Supported OS Types](docs/Supported-OS-Types.md)
 2. [Installation](#installation)
-    * [Debian](#debian)
+    * [Debian and Ubuntu](#debian-and-ubuntu)
     * [CentOS, Oracle Linux, Red Hat Linux](#centos-oracle-linux-red-hat-linux)
     * [FreeBSD](#freebsd)
     * [Build from Git](#build-from-git)
@@ -74,14 +74,26 @@ Check out the [Oxidized TREX 2014 presentation](http://youtu.be/kBQ_CTUuqeU#t=3h
 
 ## Installation
 
-### Debian
+### Debian and Ubuntu
 
-Install all required packages and gems.
+Debian "buster" or newer and Ubuntu 17.10 (artful) or newer are recommended. On Ubuntu, begin by enabling the `universe` 
+repository (required for libssh2-1-dev):
 
 ```shell
-apt-get install ruby ruby-dev libsqlite3-dev libssl-dev pkg-config cmake libssh2-1-dev libicu-dev zlib1g-dev
+add-apt-repository universe
+```
+
+Install the dependencies:
+
+```shell
+apt-get install ruby ruby-dev libsqlite3-dev libssl-dev pkg-config cmake libssh2-1-dev libicu-dev zlib1g-dev g++
+```
+
+Finally, install the gems:
+
+```shell
 gem install oxidized
-gem install oxidized-script oxidized-web # if you don't install oxidized-web, make sure you remove "rest" from your config
+gem install oxidized-script oxidized-web # If you don't install oxidized-web, ensure "rest" is removed from your Oxidized config.
 ```
 
 ### CentOS, Oracle Linux, Red Hat Linux
@@ -310,7 +322,7 @@ Run `oxidized` again to take the first backups.
 
 ### Ubuntu SystemV init setup
 
-The init script assumes that you have a used named 'oxidized' and that oxidized is in one of the following paths:
+The init script assumes that you have a user named 'oxidized' and that oxidized is in one of the following paths:
 
 ```text
 /sbin

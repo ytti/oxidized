@@ -3,7 +3,7 @@ class Cumulus < Oxidized::Model
   comment '# '
 
   # add a comment in the final conf
-  def add_comment comment
+  def add_comment(comment)
     "\n###### #{comment} ######\n"
   end
 
@@ -80,6 +80,8 @@ class Cumulus < Oxidized::Model
 
     cfg += add_comment 'License'
     cfg += cmd 'cl-license'
+
+    cfg
   end
 
   cfg :telnet do

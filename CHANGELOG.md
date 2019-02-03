@@ -2,16 +2,28 @@
 
 ## Master
 
+
 * FEATURE: add HPE virtual connect modul model (@STetzel)
+* FEATURE: add Audiocodes MediaPack MP-1xx and Mediant 1000 model (@pedjaj)
+* FEATURE: add raisecom RAX model (@vitalisator)
+* FEATURE: add huawei smartax model (@nyash)
+* MISC: prompt updates in siklu, netonix, netscaler models
+
+## 0.25.0
+
 * FEATURE: add viptela model (@bobthebutcher)
 * FEATURE: add ECI Telecom Appolo platform bij arien.vijn@linklight.nl
 * FEATURE: ssh keepalive now configurable per node with ssh_no_keepalive boolean
 * FEATURE: add Comtrol model (@RobbFromIT)
 * FEATURE: add Dell X-series model (@RobbFromIT)
 * FEATURE: add privilege escalation to the cumulus model (@user4574)
+* FEATURE: add adtran model (@CFUJoshWeepie)
+* FEATURE: add firebrick model (@lewisvive)
 * BUGFIX: netgear telnet password prompt not detected
 * BUGFIX: xos model should not modify config on legacy Extreme Networks devices (@sq9mev)
 * BUGFIX: model dlink, edgecos, ciscosmb, openbsd
+* BUGFIX: hide 'lighttpd_ls_password' as potential secret in pfsense model (@dra)
+* BUGFIX: ciscospark hook error when diff is set to false
 * MISC: bump Dockerfile phusion/baseimage:0.10.0 -> 0.11, revert to one-stage build
 * MISC: add sqlite3 and mysql2 drivers for sequel to Dockerfile
 * MISC: Added verbiage to set OXIDIZED_HOME correctly under Debian 8.8 w/systemd
@@ -19,6 +31,8 @@
 * MISC: eos model removes user secrets and BGP secrets (@yzguy)
 * MISC: add secret filtering to netscaler (@shepherdjay)
 * MISC: capture ZebOS configuration for TMOS model (@yzguy)
+* MISC: additional secret filters in ios, asa, procurve, ciscosmb models (@hexdump0x0200)
+* MISC: remove volatile uptime data in nos model (@f0rkz)
 
 ## 0.24.0
 

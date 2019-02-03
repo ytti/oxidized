@@ -168,6 +168,7 @@ hooks:
     token: SLACK_BOT_TOKEN
     channel: "#network-changes"
 ```
+The token parameter is a "legacy token" and is generated [Here](https://api.slack.com/custom-integrations/legacy-tokens).
 
 Optionally you can disable snippets and post a formatted message, for instance linking to a commit in a git repo. Named parameters `%{node}`, `%{group}`, `%{model}` and `%{commitref}` are available.
 
@@ -183,6 +184,18 @@ hooks:
 ```
 
 Note the channel name must be in quotes.
+
+A proxy can optionally be specified if needed to reach the Slack API endpoint.
+
+```yaml
+hooks:
+  slack:
+    type: slackdiff
+    events: [post_store]
+    token: SLACK_BOT_TOKEN
+    channel: "#network-changes"
+    proxy: http://myproxy:8080
+```
 
 ## Hook type: ciscosparkdiff
 
@@ -220,6 +233,19 @@ hooks:
 ```
 
 Note the space and access tokens must be in quotes.
+
+A proxy can optionally be specified if needed to reach the Spark API endpoint.
+
+```yaml
+hooks:
+  ciscospark:
+    type: ciscosparkdiff
+    events: [post_store]
+    accesskey: SPARK_BOT_API_OR_OAUTH_KEY
+    space: SPARK_SPACE_ID
+    diff: true
+    proxy: http://myproxy:8080
+```
 
 ## Hook type: xmppdiff
 
