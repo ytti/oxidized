@@ -2,7 +2,6 @@
 
 ## Master
 
-
 * FEATURE: add HPE virtual connect modul model (@STetzel)
 * FEATURE: add Audiocodes MediaPack MP-1xx and Mediant 1000 model (@pedjaj)
 * FEATURE: add raisecom RAX model (@vitalisator)
