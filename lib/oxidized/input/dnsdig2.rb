@@ -29,6 +29,5 @@ module Oxidized
     ensure
       @log.close if Oxidized.config.input.debug?
     end
-
   end
 end
