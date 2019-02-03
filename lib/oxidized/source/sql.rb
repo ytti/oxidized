@@ -7,26 +7,24 @@ module Oxidized
     end
 
     def setup
-      if @cfg.empty?
-        Oxidized.asetus.user.source.sql.adapter   = 'sqlite'
-        Oxidized.asetus.user.source.sql.database  = File.join(Config::Root, 'sqlite.db')
-        Oxidized.asetus.user.source.sql.table     = 'devices'
-        Oxidized.asetus.user.source.sql.map.name  = 'name'
-        Oxidized.asetus.user.source.sql.map.model = 'rancid'
-        Oxidized.asetus.save :user
-        raise NoConfig, 'no source sql config, edit ~/.config/oxidized/config'
-      end
+      return unless @cfg.empty?
+
+      Oxidized.asetus.user.source.sql.adapter   = 'sqlite'
+      Oxidized.asetus.user.source.sql.database  = File.join(Config::Root, 'sqlite.db')
+      Oxidized.asetus.user.source.sql.table     = 'devices'
+      Oxidized.asetus.user.source.sql.map.name  = 'name'
+      Oxidized.asetus.user.source.sql.map.model = 'rancid'
+      Oxidized.asetus.save :user
+      raise NoConfig, 'no source sql config, edit ~/.config/oxidized/config'
     end
 
-    def load node_want = nil
+    def load(node_want = nil)
       nodes = []
       db = connect
       query = db[@cfg.table.to_sym]
       query = query.with_sql(@cfg.query) if @cfg.query?
 
-      if node_want
-        query = query.where(@cfg.map.name.to_sym => node_want)
-      end
+      query = query.where(@cfg.map.name.to_sym => node_want) if node_want
 
       query.each do |node|
         # map node parameters
@@ -55,11 +53,11 @@ module Oxidized
     end
 
     def connect
-      Sequel.connect(:adapter  => @cfg.adapter,
-                     :host     => @cfg.host?,
-                     :user     => @cfg.user?,
-                     :password => @cfg.password?,
-                     :database => @cfg.database)
+      Sequel.connect(adapter:  @cfg.adapter,
+                     host:     @cfg.host?,
+                     user:     @cfg.user?,
+                     password: @cfg.password?,
+                     database: @cfg.database)
     rescue Sequel::AdapterNotFound => error
       raise OxidizedError, "SQL adapter gem not installed: " + error.message
     end

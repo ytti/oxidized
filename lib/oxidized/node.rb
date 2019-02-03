@@ -7,12 +7,12 @@ module Oxidized
   class Node
     attr_reader :name, :ip, :model, :input, :output, :group, :auth, :prompt, :vars, :last, :repo
     attr_accessor :running, :user, :email, :msg, :from, :stats, :retry
-    alias :running? :running
+    alias running? running
 
-    def initialize opt
+    def initialize(opt)
       Oxidized.logger.debug 'resolving DNS for %s...' % opt[:name]
       # remove the prefix if an IP Address is provided with one as IPAddr converts it to a network address.
-      ip_addr, _ = opt[:ip].to_s.split("/")
+      ip_addr, = opt[:ip].to_s.split("/")
       Oxidized.logger.debug 'IPADDR %s' % ip_addr.to_s
       @name           = opt[:name]
       @ip             = IPAddr.new(ip_addr).to_s rescue nil
@@ -38,10 +38,10 @@ module Oxidized
       @input.each do |input|
         # don't try input if model is missing config block, we may need strong config to class_name map
         cfg_name = input.to_s.split('::').last.downcase
-        next unless @model.cfg[cfg_name] and not @model.cfg[cfg_name].empty?
+        next unless @model.cfg[cfg_name] && (not @model.cfg[cfg_name].empty?)
 
         @model.input = input = input.new
-        if config = run_input(input)
+        if (config = run_input(input))
           Oxidized.logger.debug "lib/oxidized/node.rb: #{input.class.name} ran for #{name} successfully"
           status = :success
           break
@@ -54,7 +54,7 @@ module Oxidized
       [status, config]
     end
 
-    def run_input input
+    def run_input(input)
       rescue_fail = {}
       [input.class::RescueFail, input.class.superclass::RescueFail].each do |hash|
         hash.each do |level, errors|
@@ -64,56 +64,56 @@ module Oxidized
         end
       end
       begin
-        input.connect(self) and input.get
+        input.connect(self) && input.get
       rescue *rescue_fail.keys => err
         resc = ''
-        if not level = rescue_fail[err.class]
-          resc  = err.class.ancestors.find { |e| rescue_fail.keys.include? e }
+        unless (level = rescue_fail[err.class])
+          resc  = err.class.ancestors.find { |e| rescue_fail.has_key?(e) }
           level = rescue_fail[resc]
           resc  = " (rescued #{resc})"
         end
-        Oxidized.logger.send(level, '%s raised %s%s with msg "%s"' % [self.ip, err.class, resc, err.message])
+        Oxidized.logger.send(level, '%s raised %s%s with msg "%s"' % [ip, err.class, resc, err.message])
         return false
       rescue => err
         crashdir  = Oxidized.config.crash.directory
-        crashfile = Oxidized.config.crash.hostnames? ? self.name : self.ip.to_s
+        crashfile = Oxidized.config.crash.hostnames? ? name : ip.to_s
         FileUtils.mkdir_p(crashdir) unless File.directory?(crashdir)
 
-        open File.join(crashdir, crashfile), 'w' do |fh|
+        File.open File.join(crashdir, crashfile), 'w' do |fh|
           fh.puts Time.now.utc
           fh.puts err.message + ' [' + err.class.to_s + ']'
           fh.puts '-' * 50
           fh.puts err.backtrace
         end
-        Oxidized.logger.error '%s raised %s with msg "%s", %s saved' % [self.ip, err.class, err.message, crashfile]
+        Oxidized.logger.error '%s raised %s with msg "%s", %s saved' % [ip, err.class, err.message, crashfile]
         return false
       end
     end
 
     def serialize
       h = {
-        :name      => @name,
-        :full_name => @name,
-        :ip        => @ip,
-        :group     => @group,
-        :model     => @model.class.to_s,
-        :last      => nil,
-        :vars      => @vars,
-        :mtime     => @stats.mtime,
+        name:      @name,
+        full_name: @name,
+        ip:        @ip,
+        group:     @group,
+        model:     @model.class.to_s,
+        last:      nil,
+        vars:      @vars,
+        mtime:     @stats.mtime
       }
       h[:full_name] = [@group, @name].join('/') if @group
       if @last
         h[:last] = {
-          :start  => @last.start,
-          :end    => @last.end,
-          :status => @last.status,
-          :time   => @last.time,
+          start:  @last.start,
+          end:    @last.end,
+          status: @last.status,
+          time:   @last.time
         }
       end
       h
     end
 
-    def last= job
+    def last=(job)
       if job
         ostruct = OpenStruct.new
         ostruct.start  = job.start
@@ -137,46 +137,42 @@ module Oxidized
 
     private
 
-    def resolve_prompt opt
+    def resolve_prompt(opt)
       opt[:prompt] || @model.prompt || Oxidized.config.prompt
     end
 
-    def resolve_auth opt
+    def resolve_auth(opt)
       # Resolve configured username/password
       {
-        username:       resolve_key(:username, opt),
-        password:       resolve_key(:password, opt),
+        username: resolve_key(:username, opt),
+        password: resolve_key(:password, opt)
       }
     end
 
-    def resolve_input opt
+    def resolve_input(opt)
       inputs = resolve_key :input, opt, Oxidized.config.input.default
       inputs.split(/\s*,\s*/).map do |input|
-        if not Oxidized.mgr.input[input]
-          Oxidized.mgr.add_input input or raise MethodNotFound, "#{input} not found for node #{ip}"
-        end
+        Oxidized.mgr.add_input(input) || raise(MethodNotFound, "#{input} not found for node #{ip}") unless Oxidized.mgr.input[input]
         Oxidized.mgr.input[input]
       end
     end
 
-    def resolve_output opt
+    def resolve_output(opt)
       output = resolve_key :output, opt, Oxidized.config.output.default
-      if not Oxidized.mgr.output[output]
-        Oxidized.mgr.add_output output or raise MethodNotFound, "#{output} not found for node #{ip}"
-      end
+      Oxidized.mgr.add_output(output) || raise(MethodNotFound, "#{output} not found for node #{ip}") unless Oxidized.mgr.output[output]
       Oxidized.mgr.output[output]
     end
 
-    def resolve_model opt
+    def resolve_model(opt)
       model = resolve_key :model, opt
-      if not Oxidized.mgr.model[model]
+      unless Oxidized.mgr.model[model]
         Oxidized.logger.debug "lib/oxidized/node.rb: Loading model #{model.inspect}"
-        Oxidized.mgr.add_model model or raise ModelNotFound, "#{model} not found for node #{ip}"
+        Oxidized.mgr.add_model(model) || raise(ModelNotFound, "#{model} not found for node #{ip}")
       end
       Oxidized.mgr.model[model].new
     end
 
-    def resolve_repo opt
+    def resolve_repo(opt)
       type = git_type opt
       return nil unless type
 
@@ -192,7 +188,7 @@ module Oxidized
       end
     end
 
-    def resolve_key key, opt, global = nil
+    def resolve_key(key, opt, global = nil)
       # resolve key, first get global, then get group then get node config
       key_sym = key.to_sym
       key_str = key.to_s
@@ -200,7 +196,7 @@ module Oxidized
       Oxidized.logger.debug "node.rb: resolving node key '#{key}', with passed global value of '#{value}' and node value '#{opt[key_sym]}'"
 
       # global
-      if not value and Oxidized.config.has_key?(key_str)
+      if (not value) && Oxidized.config.has_key?(key_str)
         value = Oxidized.config[key_str]
         Oxidized.logger.debug "node.rb: setting node key '#{key}' to value '#{value}' from global"
       end
@@ -227,7 +223,7 @@ module Oxidized
       value
     end
 
-    def git_type opt
+    def git_type(opt)
       type = opt[:output] || Oxidized.config.output.default
       return nil unless type[0..2] == "git"
 

@@ -10,7 +10,7 @@ pending = false
 critical_nodes = []
 pending_nodes = []
 
-json = JSON.load(open("http://localhost:8888/nodes.json"))
+json = JSON.parse(open("http://localhost:8888/nodes.json"))
 json.each do |node|
   if not node['last'].nil?
     if node['last']['status'] != 'success'

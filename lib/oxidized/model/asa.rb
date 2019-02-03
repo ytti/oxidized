@@ -11,11 +11,17 @@ class ASA < Oxidized::Model
 
   cmd :secret do |cfg|
     cfg.gsub! /enable password (\S+) (.*)/, 'enable password <secret hidden> \2'
+    cfg.gsub! /^passwd (\S+) (.*)/, 'passwd <secret hidden> \2'
     cfg.gsub! /username (\S+) password (\S+) (.*)/, 'username \1 password <secret hidden> \3'
     cfg.gsub! /(ikev[12] ((remote|local)-authentication )?pre-shared-key) (\S+)/, '\1 <secret hidden>'
-    cfg.gsub! /^(aaa-server TACACS\+? \(\S+\) host.*\n\skey) \S+$/mi, '\1 <secret hidden>'
+    cfg.gsub! /^(aaa-server TACACS\+? \(\S+\) host[^\n]*\n(\s+[^\n]+\n)*\skey) \S+$/mi, '\1 <secret hidden>'
+    cfg.gsub! /^(aaa-server \S+ \(\S+\) host[^\n]*\n(\s+[^\n]+\n)*\s+key) \S+$/mi, '\1 <secret hidden>'
     cfg.gsub! /ldap-login-password (\S+)/, 'ldap-login-password <secret hidden>'
     cfg.gsub! /^snmp-server host (.*) community (\S+)/, 'snmp-server host \1 community <secret hidden>'
+    cfg.gsub! /^(failover key) .+/, '\1 <secret hidden>'
+    cfg.gsub! /^(\s+ospf message-digest-key \d+ md5) .+/, '\1 <secret hidden>'
+    cfg.gsub! /^(\s+ospf authentication-key) .+/, '\1 <secret hidden>'
+    cfg.gsub! /^(\s+neighbor \S+ password) .+/, '\1 <secret hidden>'
     cfg
   end
 
@@ -63,7 +69,7 @@ class ASA < Oxidized::Model
       anyconnect_profiles = cfg.scan(Regexp.new('(\sdisk0:/.+\.xml)')).flatten
       anyconnect_profiles.each do |profile|
         cfg << (comment profile + "\n")
-        cmd ("more" + profile) do |xml|
+        cmd("more" + profile) do |xml|
           cfg << (comment xml)
         end
       end

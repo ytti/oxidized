@@ -86,7 +86,7 @@ add-apt-repository universe
 Install the dependencies:
 
 ```shell
-apt-get install ruby ruby-dev libsqlite3-dev libssl-dev pkg-config cmake libssh2-1-dev libicu-dev zlib1g-dev
+apt-get install ruby ruby-dev libsqlite3-dev libssl-dev pkg-config cmake libssh2-1-dev libicu-dev zlib1g-dev g++
 ```
 
 Finally, install the gems:
@@ -322,7 +322,7 @@ Run `oxidized` again to take the first backups.
 
 ### Ubuntu SystemV init setup
 
-The init script assumes that you have a used named 'oxidized' and that oxidized is in one of the following paths:
+The init script assumes that you have a user named 'oxidized' and that oxidized is in one of the following paths:
 
 ```text
 /sbin
