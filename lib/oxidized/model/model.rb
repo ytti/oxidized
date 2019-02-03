@@ -81,9 +81,7 @@ module Oxidized
       # @author Saku Ytti <saku@ytti.fi>
       # @since 0.0.39
       # @return [Hash] hash proc procs :pre+:post to be prepended/postfixed to output
-      def procs
-        @procs
-      end
+      attr_reader :procs
 
       private
 

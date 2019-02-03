@@ -53,9 +53,7 @@ module Oxidized
       @ses.send_data data
     end
 
-    def output
-      @output
-    end
+    attr_reader :output
 
     def pty_options(hash)
       @pty_options = @pty_options.merge hash

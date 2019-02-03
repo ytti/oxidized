@@ -2,13 +2,14 @@ module Oxidized
   class CLI
     require 'slop'
     require 'oxidized'
+    require 'english'
 
     def run
       check_pid
       Process.daemon if @opts[:daemonize]
       write_pid
       begin
-        Oxidized.logger.info "Oxidized starting, running as pid #{$$}"
+        Oxidized.logger.info "Oxidized starting, running as pid #{$PROCESS_ID}"
         Oxidized.new
       rescue => error
         crash error
@@ -56,9 +57,7 @@ module Oxidized
       [opts.parse!, opts]
     end
 
-    def pidfile
-      @pidfile
-    end
+    attr_reader :pidfile
 
     def pidfile?
       !!pidfile
