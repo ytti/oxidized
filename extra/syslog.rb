@@ -82,29 +82,29 @@ module Oxidized
       Oxidized::RestClient.next opt
     end
 
-    def ios(ip, log, index)
+    def ios(ipaddr, log, index)
       # TODO: we need to fetch 'ip/name' in mode == :file here
       user = log[index + 5]
       from = log[-1][1..-2]
-      rest(user: user, from: from, model: 'ios', ip: ip,
-           name: getname(ip))
+      rest(user: user, from: from, model: 'ios', ip: ipaddr,
+           name: getname(ipaddr))
     end
 
-    def jnpr(ip, log, index)
+    def jnpr(ipaddr, log, index)
       # TODO: we need to fetch 'ip/name' in mode == :file here
       user = log[index + 2][1..-2]
       msg  = log[(index + 6)..-1].join(' ')[10..-2]
       msg  = nil if msg == 'none'
-      rest(user: user, msg: msg, model: 'jnpr', ip: ip,
-           name: getname(ip))
+      rest(user: user, msg: msg, model: 'jnpr', ip: ipaddr,
+           name: getname(ipaddr))
     end
 
-    def handle_log(log, ip)
+    def handle_log(log, ipaddr)
       log = log.to_s.split ' '
       if (i = log.find_index { |e| e.match(MSG[:ios]) })
-        ios ip, log,  i
+        ios ipaddr, log,  i
       elsif (i = log.index(MSG[:junos]))
-        jnpr ip, log, i
+        jnpr ipaddr, log, i
       end
     end
 
@@ -127,11 +127,11 @@ module Oxidized
       end
     end
 
-    def getname(ip)
+    def getname(ipaddr)
       if Oxidized::CFG.syslogd.resolve == false
-        ip
+        ipddr
       else
-        name = (Resolv.getname ip.to_s rescue ip)
+        name = (Resolv.getname ipaddr.to_s rescue ipadr)
         NAME_MAP.each { |re, sub| name.sub! re, sub }
         name
       end
