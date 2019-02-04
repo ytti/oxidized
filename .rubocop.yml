@@ -4,6 +4,12 @@ AllCops:
   Include:
     - Rakefile
 
+# Do not attempt to police vendored code, and exclude special cases
+AllCops:
+  #TargetRubyVersion: 2.0
+  Exclude:
+    - 'vendor/**/*'
+
 StringLiterals:
   Enabled: false
 
@@ -13,6 +19,10 @@ LineLength:
 # Stick to verbose until https://bugs.ruby-lang.org/issues/10177 is closed.
 Style/PreferredHashMethods:
   EnforcedStyle: verbose
+
+Layout/AlignHash:
+  EnforcedHashRocketStyle: table
+  EnforcedColonStyle: table
 
 Style/Not:
   Enabled: false
@@ -30,14 +40,23 @@ Style/FormatStringToken:
 Style/RescueModifier:
   Enabled: false
 
-Style/MultilineBlockChain:
-  Enabled: false
-
 Style/SymbolProc:
   Enabled: false
 
-# Do not attempt to police vendored code, and exclude special cases
-AllCops:
-  Exclude:
-    - 'vendor/**/*'
-    - 'lib/oxidized/input/tftp.rb'
+Style/Documentation:
+  Enabled: false
+
+Style/ParallelAssignment:
+  Enabled: false
+
+## Metrics/AbcSize:
+##   Max: 28
+## 
+## Metrics/MethodLength:
+##   Max: 20
+## 
+## Metrics/ClassLength:
+##   Max: 140
+## 
+## Metrics/CyclomaticComplexity:
+##   Max: 7

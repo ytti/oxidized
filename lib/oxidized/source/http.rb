@@ -6,9 +6,9 @@ module Oxidized
     end
 
     def setup
-      if @cfg.url.empty?
-        raise NoConfig, 'no source http url config, edit ~/.config/oxidized/config'
-      end
+      return unless @cfg.url.empty?
+
+      raise NoConfig, 'no source http url config, edit ~/.config/oxidized/config'
     end
 
     require "net/http"
@@ -16,7 +16,7 @@ module Oxidized
     require "uri"
     require "json"
 
-    def load node_want = nil
+    def load(node_want = nil)
       nodes = []
       data = JSON.parse(read_http(node_want))
       data = string_navigate(data, @cfg.hosts_location) if @cfg.hosts_location?
@@ -44,17 +44,18 @@ module Oxidized
 
     private
 
-    def string_navigate object, wants
-      wants.split(".").map do |want|
+    def string_navigate(object, wants)
+      wants = wants.split(".").map do |want|
         head, match, _tail = want.partition(/\[\d+\]/)
         match.empty? ? head : [head, match[1..-2].to_i]
-      end.flatten.each do |want|
+      end
+      wants.flatten.each do |want|
         object = object[want] if object.respond_to? :each
       end
       object
     end
 
-    def read_http node_want
+    def read_http(node_want)
       uri = URI.parse(@cfg.url)
       http = Net::HTTP.new(uri.host, uri.port)
       http.use_ssl = true if uri.scheme == 'https'
@@ -67,13 +68,9 @@ module Oxidized
       end
 
       req_uri = uri.request_uri
-      if node_want
-        req_uri = "#{req_uri}/#{node_want}"
-      end
+      req_uri = "#{req_uri}/#{node_want}" if node_want
       request = Net::HTTP::Get.new(req_uri, headers)
-      if (@cfg.user? && @cfg.pass?)
-        request.basic_auth(@cfg.user, @cfg.pass)
-      end
+      request.basic_auth(@cfg.user, @cfg.pass) if @cfg.user? && @cfg.pass?
       http.request(request).body
     end
   end

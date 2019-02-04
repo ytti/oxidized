@@ -28,6 +28,7 @@ class Procurve < Oxidized::Model
   cmd :all do |cfg|
     cfg = cfg.cut_both
     cfg = cfg.gsub /^\r/, ''
+    cfg
   end
 
   cmd :secret do |cfg|
@@ -93,6 +94,6 @@ class Procurve < Oxidized::Model
   end
 
   cfg :ssh do
-    pty_options({ chars_wide: 1000 })
+    pty_options(chars_wide: 1000)
   end
 end

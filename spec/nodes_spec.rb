@@ -7,12 +7,12 @@ describe Oxidized::Nodes do
     Oxidized.setup_logger
 
     opts = {
-      input: 'ssh',
-      output: 'git',
-      model: 'junos',
+      input:    'ssh',
+      output:   'git',
+      model:    'junos',
       username: 'alma',
       password: 'armud',
-      prompt: 'test_prompt'
+      prompt:   'test_prompt'
     }
 
     Oxidized::Node.any_instance.stubs(:resolve_repo)
