@@ -57,7 +57,7 @@ module Oxidized
       @registered_hooks[event].each do |r_hook|
         begin
           r_hook.hook.run_hook ctx
-        rescue => e
+        rescue StandardError => e
           Oxidized.logger.error "Hook #{r_hook.name} (#{r_hook.hook}) failed " \
                                 "(#{e.inspect}) for event #{event.inspect}"
         end

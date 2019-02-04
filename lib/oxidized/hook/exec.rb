@@ -32,7 +32,7 @@ class Exec < Oxidized::Hook
     th = Thread.new do
       begin
         run_cmd! env
-      rescue => e
+      rescue StandardError => e
         raise e unless @async
       end
     end

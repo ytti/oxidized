@@ -104,7 +104,7 @@ module Oxidized
     def run_done_hook
       Oxidized.logger.debug "lib/oxidized/worker.rb: Running :nodes_done hook"
       Oxidized.Hooks.handle :nodes_done
-    rescue => e
+    rescue StandardError => e
       # swallow the hook erros and continue as normal
       Oxidized.logger.error "lib/oxidized/worker.rb: #{e.message}"
     ensure
