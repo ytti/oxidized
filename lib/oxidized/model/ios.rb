@@ -53,8 +53,8 @@ class IOS < Oxidized::Model
       slaveslot = ''
 
       if line =~ /^Slave in slot (\d+) is running/
-        slave = " Slave:";
-        slaveslot = ", slot #{Regexp.last_match(1)}";
+        slave = " Slave:"
+        slaveslot = ", slot #{Regexp.last_match(1)}"
       end
 
       comments << "Image:#{slave} Compiled: #{Regexp.last_match(1)}" if line =~ /^Compiled (.*)$/
@@ -76,15 +76,15 @@ class IOS < Oxidized::Model
         cpu = Regexp.last_match(2)
         mem = Regexp.last_match(3)
         cpuxtra = ''
-        comments << "Chassis type:#{slave} #{sproc}";
-        comments << "Memory:#{slave} main #{mem}";
+        comments << "Chassis type:#{slave} #{sproc}"
+        comments << "Memory:#{slave} main #{mem}"
         # check the next two lines for more CPU info
         comments << "Processor ID: #{Regexp.last_match(1)}" if cfg.lines[i + 1] =~ /processor board id (\S+)/i
         if cfg.lines[i + 2] =~ /(cpu at |processor: |#{cpu} processor,)/i
           # change implementation to impl and prepend comma
-          cpuxtra = cfg.lines[i + 2].gsub(/implementation/, 'impl').gsub(/^/, ', ').chomp;
+          cpuxtra = cfg.lines[i + 2].gsub(/implementation/, 'impl').gsub(/^/, ', ').chomp
         end
-        comments << "CPU:#{slave} #{cpu}#{cpuxtra}#{slaveslot}";
+        comments << "CPU:#{slave} #{cpu}#{cpuxtra}#{slaveslot}"
       end
 
       comments << "Image: #{Regexp.last_match(1)}" if line =~ /^System image file is "([^"]*)"$/

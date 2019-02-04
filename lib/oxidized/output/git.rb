@@ -63,7 +63,7 @@ module Oxidized
       index = repo.index
       index.read_tree repo.head.target.tree unless repo.empty?
       repo.read(index.get(path)[:oid]).data
-    rescue
+    rescue StandardError
       'node not found'
     end
 
@@ -89,7 +89,7 @@ module Oxidized
       end
       walker.reset
       tab
-    rescue
+    rescue StandardError
       'node not found'
     end
 
@@ -98,7 +98,7 @@ module Oxidized
       repo, path = yield_repo_and_path(node, group)
       repo = Rugged::Repository.new repo
       repo.blob_at(oid, path).content
-    rescue
+    rescue StandardError
       'version not found'
     end
 
@@ -126,7 +126,7 @@ module Oxidized
       end
 
       diff_commits
-    rescue
+    rescue StandardError
       'no diffs'
     end
 
@@ -161,7 +161,7 @@ module Oxidized
       rescue Rugged::OSError, Rugged::RepositoryError => open_error
         begin
           Rugged::Repository.init_at repo, :bare
-        rescue => create_error
+        rescue StandardError => create_error
           raise GitError, "first '#{open_error.message}' was raised while opening git repo, then '#{create_error.message}' was while trying to create git repo"
         end
         retry

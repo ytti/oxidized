@@ -17,7 +17,7 @@ module Oxidized
     class HookContext < OpenStruct; end
 
     # RegisteredHook is a container for a Hook instance
-    class RegisteredHook < Struct.new(:name, :hook); end
+    RegisteredHook = Struct.new(:name, :hook)
 
     Events = %i[
       node_success
@@ -57,7 +57,7 @@ module Oxidized
       @registered_hooks[event].each do |r_hook|
         begin
           r_hook.hook.run_hook ctx
-        rescue => e
+        rescue StandardError => e
           Oxidized.logger.error "Hook #{r_hook.name} (#{r_hook.hook}) failed " \
                                 "(#{e.inspect}) for event #{event.inspect}"
         end

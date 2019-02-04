@@ -12,8 +12,8 @@ module Oxidized
     const_set(:VERSION, version)
     const_set(:VERSION_FULL, version_full)
     file = File.readlines(__FILE__)
-    file[1] = "  VERSION = '%s'\n" % VERSION
-    file[2] = "  VERSION_FULL = '%s'\n" % VERSION_FULL
+    file[1] = "  VERSION = '%s'.freeze\n" % VERSION
+    file[2] = "  VERSION_FULL = '%s'.freeze\n" % VERSION_FULL
     File.write(__FILE__, file.join)
   end
 end

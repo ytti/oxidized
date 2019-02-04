@@ -96,7 +96,7 @@ module Oxidized
 
       File.read path
       lock repo
-    rescue
+    rescue StandardError
       'node not found'
     end
 
@@ -119,7 +119,7 @@ module Oxidized
       end
       walker.reset
       tab
-    rescue
+    rescue StandardError
       'node not found'
     end
 
@@ -129,7 +129,7 @@ module Oxidized
       repo = Git.open repo
       unlock repo
       repo.gtree(oid).files[path].contents
-    rescue
+    rescue StandardError
       'version not found'
     ensure
       lock repo
@@ -161,7 +161,7 @@ module Oxidized
       end
       lock repo
       diff_commits
-    rescue
+    rescue StandardError
       'no diffs'
     ensure
       lock repo
@@ -199,7 +199,7 @@ module Oxidized
         begin
           grepo = Git.init repo
           crypt_init grepo
-        rescue => create_error
+        rescue StandardError => create_error
           raise GitCryptError, "first '#{open_error.message}' was raised while opening git repo, then '#{create_error.message}' was while trying to create git repo"
         end
         retry

@@ -39,7 +39,7 @@ module Oxidized
         File.read path
       end
     rescue Errno::ENOENT
-      return nil
+      nil
     end
 
     def version(_node, _group)
