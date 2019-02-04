@@ -15,14 +15,14 @@ module Oxidized
         klass.instance_variable_set '@prompt',  nil
       end
 
-      def comment(_comment = '# ')
+      def comment(str = '# ')
         return @comment if @comment
 
-        @comment = block_given? ? yield : _comment
+        @comment = block_given? ? yield : str
       end
 
-      def prompt(_prompt = nil)
-        @prompt || (@prompt = _prompt)
+      def prompt(regexp = nil)
+        @prompt || (@prompt = regxp)
       end
 
       def cfg(*methods, **args, &block)
@@ -35,13 +35,13 @@ module Oxidized
         @cfg
       end
 
-      def cmd(_cmd = nil, **args, &block)
-        if _cmd.class == Symbol
-          process_args_block(@cmd[_cmd], args, block)
+      def cmd(cmd_arg = nil, **args, &block)
+        if cmd_arg.class == Symbol
+          process_args_block(@cmd[cmd_arg], args, block)
         else
-          process_args_block(@cmd[:cmd], args, [_cmd, block])
+          process_args_block(@cmd[:cmd], args, [cmd_arg, block])
         end
-        Oxidized.logger.debug "lib/oxidized/model/model.rb Added #{_cmd} to the commands list"
+        Oxidized.logger.debug "lib/oxidized/model/model.rb Added #{cmd_arg} to the commands list"
       end
 
       def cmds
@@ -138,11 +138,7 @@ module Oxidized
     def expects(data)
       self.class.expects.each do |re, cb|
         if data.match re
-          if cb.arity == 2
-            data = instance_exec [data, re], &cb
-          else
-            data = instance_exec data, &cb
-          end
+          data = cb.arity == 2 ? instance_exec([data, re], &cb) : instance_exec(data, &cb)
         end
       end
       data
@@ -167,9 +163,9 @@ module Oxidized
       outputs
     end
 
-    def comment(_comment)
+    def comment(str)
       data = ''
-      _comment.each_line do |line|
+      str.each_line do |line|
         data << self.class.comment << line
       end
       data

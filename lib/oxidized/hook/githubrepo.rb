@@ -45,12 +45,7 @@ class GithubRepo < Oxidized::Hook
 
   def credentials
     Proc.new do |_url, username_from_url, _allowed_types|
-      if cfg.has_key?('username')
-        git_user = cfg.username
-      else
-        git_user = username_from_url || 'git'
-      end
-
+      git_user = cfg.has_key?('username') ? cfg.username : (username_from_url || 'git')
       if cfg.has_key?('password')
         log "Authenticating using username and password as '#{git_user}'", :debug
         Rugged::Credentials::UserPassword.new(username: git_user, password: cfg.password)

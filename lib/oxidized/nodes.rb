@@ -18,8 +18,8 @@ module Oxidized
           next unless node_want? node_want, node
 
           begin
-            _node = Node.new node
-            new.push _node
+            node_obj = Node.new node
+            new.push node_obj
           rescue ModelNotFound => err
             Oxidized.logger.error "node %s raised %s with message '%s'" % [node, err.class, err.message]
           rescue Resolv::ResolvError => err

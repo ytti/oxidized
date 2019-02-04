@@ -4,6 +4,12 @@ AllCops:
   Include:
     - Rakefile
 
+# Do not attempt to police vendored code, and exclude special cases
+AllCops:
+  #TargetRubyVersion: 2.0
+  Exclude:
+    - 'vendor/**/*'
+
 StringLiterals:
   Enabled: false
 
@@ -54,7 +60,3 @@ Style/ParallelAssignment:
 ## 
 ## Metrics/CyclomaticComplexity:
 ##   Max: 7
-# Do not attempt to police vendored code, and exclude special cases
-AllCops:
-  Exclude:
-    - 'vendor/**/*'
