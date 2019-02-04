@@ -144,6 +144,7 @@
   * [SR OS (TiMOS)](/lib/oxidized/model/sros.rb)
 * OneAccess
   * [OneOS](/lib/oxidized/model/oneos.rb)
+  * [TDRE](/lib/oxidized/model/tdre.rb)
 * [OpenBSD](/lib/oxidized/model/openbsd.rb)
 * Opengear
   * [Opengear](/lib/oxidized/model/opengear.rb)
