@@ -17,7 +17,7 @@ module Oxidized
     class HookContext < OpenStruct; end
 
     # RegisteredHook is a container for a Hook instance
-    class RegisteredHook < Struct.new(:name, :hook); end
+    RegisteredHook = Struct.new(:name, :hook)
 
     Events = %i[
       node_success
