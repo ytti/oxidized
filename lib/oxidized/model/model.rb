@@ -21,8 +21,8 @@ module Oxidized
         @comment = block_given? ? yield : str
       end
 
-      def prompt(regexp = nil)
-        @prompt || (@prompt = regxp)
+      def prompt(regex = nil)
+        @prompt || (@prompt = regex)
       end
 
       def cfg(*methods, **args, &block)
