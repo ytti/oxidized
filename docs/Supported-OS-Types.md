@@ -16,6 +16,7 @@
   * Wireless
 * Allied Telesis
   * [Alliedware Plus](/lib/oxidized/model/awplus.rb)
+  * [AT-8000S, AT-8000GS series](/lib/oxidized/model/powerconnect.rb)
 * Alvarion
   * [BreezeACCESS](/lib/oxidized/model/alvarion.rb)
 * APC
@@ -30,6 +31,7 @@
   * [AOSW](/lib/oxidized/model/aosw.rb)
 * AudioCodes
   * [AudioCodes](/lib/oxdized/model/audiocodes.rb)
+  * [MediaPack MP-1xx, Mediant1000](/lib/oxdized/model/audiocodesmp.rb)
 * Avaya
   * [VOSS (VSP Operating System Software)](/lib/oxidized/model/voss.rb)
   * [BOSS (Baystack Operating System Software)](/lib/oxidized/model/boss.rb)
@@ -122,6 +124,7 @@
   * [MSA](/lib/oxidized/model/hpemsa.rb)
 * Huawei
   * [VRP](/lib/oxidized/model/vrp.rb)
+  * [SmartAX series](/lib/oxidized/model/smartax.rb)
 * Juniper
   * [JunOS](/lib/oxidized/model/junos.rb)
   * [ScreenOS (Netscreen)](/lib/oxidized/model/screenos.rb)
@@ -143,6 +146,7 @@
   * [SR OS (TiMOS)](/lib/oxidized/model/sros.rb)
 * OneAccess
   * [OneOS](/lib/oxidized/model/oneos.rb)
+  * [TDRE](/lib/oxidized/model/tdre.rb)
 * [OpenBSD](/lib/oxidized/model/openbsd.rb)
 * Opengear
   * [Opengear](/lib/oxidized/model/opengear.rb)
@@ -154,6 +158,8 @@
 * [pfSense](/lib/oxidized/model/pfsense.rb)
 * Radware
   * [AlteonOS](/lib/oxidized/model/alteonos.rb)
+* Raisecom
+  * [Raisecom](/lib/oxidized/model/raisecom.rb)
 * Quanta
   * [Quanta / VxWorks 6.6 (1.1.0.8)](/lib/oxidized/model/quantaos.rb)
 * Siklu
@@ -171,6 +177,8 @@
   * [Trango](/lib/oxidized/model/trango.rb)
 * TPLink
   * [TPLink](/lib/oxidized/model/tplink.rb)
+  * [TL-SL5428](/lib/oxidized/model/edgecos.rb)
+  * [TL-SL3428](/lib/oxidized/model/powerconnect.rb)
 * Ubiquiti
   * [AirOS](/lib/oxidized/model/airos.rb)
   * [Edgeos](/lib/oxidized/model/edgeos.rb)

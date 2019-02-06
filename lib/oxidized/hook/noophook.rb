@@ -3,7 +3,7 @@ class NoopHook < Oxidized::Hook
     log "Validate config"
   end
 
-  def run_hook ctx
+  def run_hook(ctx)
     log "Run hook with context: #{ctx}"
   end
 end

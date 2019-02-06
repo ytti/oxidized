@@ -10,7 +10,7 @@ module Oxidized
   class HTTP < Input
     include Input::CLI
 
-    def connect node
+    def connect(node)
       @node = node
       @m    = Mechanize.new
       @log  = File.open(Oxidized::Config::Log + "/#{@node.ip}-http", "w") if Oxidized.config.input.debug?
@@ -22,13 +22,13 @@ module Oxidized
       login
     end
 
-    def cmd callback
+    def cmd(callback)
       instance_exec(&callback)
     end
 
     private
 
-    def log str
+    def log(str)
       @log.write(str) if @log
     end
 

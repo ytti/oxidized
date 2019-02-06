@@ -4,11 +4,11 @@ module Oxidized
     MAX_INTER_JOB_GAP = 300 # add job if more than X from last job started
     attr_accessor :interval, :max, :want
 
-    def initialize max, interval, nodes
+    def initialize(max, interval, nodes)
       @max       = max
       # Set interval to 1 if interval is 0 (=disabled) so we don't break
       # the 'ceil' function
-      @interval  = interval == 0 ? 1 : interval
+      @interval  = interval.zero? ? 1 : interval
       @nodes     = nodes
       @last      = Time.now.utc
       @durations = Array.new @nodes.size, AVERAGE_DURATION
@@ -16,12 +16,12 @@ module Oxidized
       super()
     end
 
-    def push arg
+    def push(arg)
       @last = Time.now.utc
       super
     end
 
-    def duration last
+    def duration(last)
       if @durations.size > @nodes.size
         @durations.slice! @nodes.size...@durations.size
       elsif @durations.size < @nodes.size
@@ -44,9 +44,9 @@ module Oxidized
       # and  b) we want less threads running than the total amount of nodes
       # and  c) there is more than MAX_INTER_JOB_GAP since last one was started
       # then we want one more thread (rationale is to fix hanging thread causing HOLB)
-      if @want <= size and @want < @nodes.size
-        @want += 1 if (Time.now.utc - @last) > MAX_INTER_JOB_GAP
-      end
+      return unless @want <= size && @want < @nodes.size
+
+      @want += 1 if (Time.now.utc - @last) > MAX_INTER_JOB_GAP
     end
   end
 end

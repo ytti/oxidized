@@ -39,7 +39,7 @@ class ZhoneOLT < Oxidized::Model
   end
 
   cmd 'dump console' do |cfg|
-    cfg = cfg.each_line.reject { |line| line.match /To Abort the operation enter Ctrl-C/ }.join
+    cfg.each_line.reject { |line| line.match /To Abort the operation enter Ctrl-C/ }.join
   end
 
   # zhone technically supports ssh, but it locks up a ton.  Especially when
