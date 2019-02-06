@@ -115,28 +115,4 @@ describe Oxidized::Node do
       end
     end
   end
-
-  describe '#serialize' do
-    describe 'with model responding to parse method' do
-      it 'fills info attribute' do
-        node = Oxidized::Node.new(name: 'parse.example.com',
-                                  input: 'ssh',
-                                  output: 'git',
-                                  model: 'pfsense',
-                                  username: 'foo',
-                                  password: 'bar',
-                                  prompt: 'baz')
-
-        # mock output class to always return a specific string
-        node.instance_variable_set(:@output, Class.new do
-          def fetch _node, _group
-            "<pfsense><version>123.45</version>"
-          end
-        end)
-
-        h = node.serialize
-        h[:info][:version].must_equal '123.45'
-      end
-    end
-  end
 end
