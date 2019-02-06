@@ -2,7 +2,7 @@ class NXOS < Oxidized::Model
   prompt /^(\r?[\w.@_()-]+[#]\s?)$/
   comment '! '
 
-  def filter cfg
+  def filter(cfg)
     cfg.gsub! /\r\n?/, "\n"
     cfg.gsub! prompt, ''
   end

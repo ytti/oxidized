@@ -37,7 +37,7 @@ class Boss < Oxidized::Model
 
   # Do a sys-info and check and see if it supports stack
   cmd 'show sys-info' do |cfg|
-    @stack = true if cfg.match /Stack/
+    @stack = true if cfg =~ /Stack/
     cfg.gsub! /(^((.*)sysUpTime(.*))$)/, 'removed sysUpTime'
     cfg.gsub! /(^((.*)sysNtpTime(.*))$)/, 'removed sysNtpTime'
     cfg.gsub! /(^((.*)sysRtcTime(.*))$)/, 'removed sysNtpTime'

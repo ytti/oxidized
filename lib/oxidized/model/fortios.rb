@@ -38,16 +38,16 @@ class FortiOS < Oxidized::Model
     cfg = []
     cfg << cmd('config global') if @vdom_enabled
 
-    cfg << cmd('get hardware status') do |cfg|
-      comment cfg
+    cfg << cmd('get hardware status') do |cfg_hw|
+      comment cfg_hw
     end
 
     # default behaviour: include autoupdate output (backwards compatibility)
     # do not include if variable "show_autoupdate" is set to false
     if defined?(vars(:fortios_autoupdate)).nil? || vars(:fortios_autoupdate)
-      cfg << cmd('diagnose autoupdate version') do |cfg|
-        cfg.gsub! /(FDS Address\n---------\n).*/, '\\1IP Address removed'
-        comment cfg.each_line.reject { |line| line.match /Last Update|Result/ }.join
+      cfg << cmd('diagnose autoupdate version') do |cfg_auto|
+        cfg_auto.gsub! /(FDS Address\n---------\n).*/, '\\1IP Address removed'
+        comment cfg_auto.each_line.reject { |line| line.match /Last Update|Result/ }.join
       end
     end
 

@@ -69,7 +69,7 @@ class ASA < Oxidized::Model
       anyconnect_profiles = cfg.scan(Regexp.new('(\sdisk0:/.+\.xml)')).flatten
       anyconnect_profiles.each do |profile|
         cfg << (comment profile + "\n")
-        cmd ("more" + profile) do |xml|
+        cmd("more" + profile) do |xml|
           cfg << (comment xml)
         end
       end
