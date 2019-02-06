@@ -2,6 +2,7 @@
 
 ## Master
 
+* FEATURE: Added possibility to pass root logs directory as environment variable (@Glorf)
 * FEATURE: add OneAccess TDRE (1645) model (@starrsl)
 * FEATURE: add Audiocodes MediaPack MP-1xx and Mediant 1000 model (@pedjaj)
 * FEATURE: add raisecom RAX model (@vitalisator)
