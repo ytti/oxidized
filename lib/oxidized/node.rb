@@ -5,8 +5,8 @@ module Oxidized
   class MethodNotFound < OxidizedError; end
   class ModelNotFound  < OxidizedError; end
   class Node
-    attr_reader :name, :ip, :model, :input, :output, :group, :auth, :prompt, :vars, :last, :repo, :info
-    attr_accessor :running, :user, :email, :msg, :from, :stats, :retry
+    attr_reader :name, :ip, :model, :input, :output, :group, :auth, :prompt, :vars, :last, :repo
+    attr_accessor :running, :user, :email, :msg, :from, :stats, :retry, :parsed
     alias :running? :running
 
     def initialize opt
@@ -28,8 +28,7 @@ module Oxidized
       @stats          = Stats.new
       @retry          = 0
       @repo           = resolve_repo opt
-
-      @info           = {}
+      @parsed         = nil
 
       # model instance needs to access node instance
       @model.node = self
@@ -112,9 +111,7 @@ module Oxidized
           :time   => @last.time,
         }
       end
-      if @model.respond_to? :parse
-        h[:info] = @model.parse @output.new.fetch self, nil
-      end
+      h[:parsed] = @parsed.to_h if @parsed
       h
     end
 
@@ -138,6 +135,14 @@ module Oxidized
 
     def modified
       @stats.update_mtime
+    end
+
+    def parse config
+      if @model.respond_to? :parse
+        return @model.parse config #@output.new.fetch self, nil
+      end
+
+      return nil
     end
 
     private
