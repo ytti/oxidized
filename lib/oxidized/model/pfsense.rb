@@ -1,4 +1,7 @@
+require_relative 'pfsense-parse'
+
 class PfSense < Oxidized::Model
+  include PfSenseParse
   # use other use than 'admin' user, 'admin' user cannot get ssh/exec. See issue #535
 
   cmd :all do |cfg|
@@ -21,15 +24,5 @@ class PfSense < Oxidized::Model
   cfg :ssh do
     exec true
     pre_logout 'exit'
-  end
-
-  def parse output
-    info = {}
-
-    output.match(/<pfsense>\s*<version>([0-9.]+)<\/version>/) do
-      info[:version] = Regexp.last_match(1)
-    end
-
-    info
   end
 end
