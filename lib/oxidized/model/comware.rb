@@ -1,4 +1,3 @@
-require_relative '../parsed'
 require_relative 'comware-parse'
 
 class Comware < Oxidized::Model
