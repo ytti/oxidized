@@ -4,9 +4,9 @@ class QuantaOS < Oxidized::Model
 
   cmd 'show run' do |cfg|
     cfg.each_line.select do |line|
-      not line.match /^!.*$/ and
-        not line.match /^\((\w|\S)+\) (>|#)$/ and
-        not line.match /^show run$/
+      (not line.match /^!.*$/) &&
+        (not line.match /^\((\w|\S)+\) (>|#)$/) &&
+        (not line.match /^show run$/)
     end.join
   end
 

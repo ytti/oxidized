@@ -1,7 +1,7 @@
 class Siklu < Oxidized::Model
   # Siklu EtherHaul #
 
-  prompt /^[\w-]+>$/
+  prompt /^[\^M\s]{0,}[\w\-\s\.\"]+>$/
 
   cmd 'copy startup-configuration display' do |cfg|
     cfg.each_line.to_a[2..2].join

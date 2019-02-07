@@ -3,14 +3,14 @@ module Oxidized
     class NoConfig < OxidizedError; end
 
     def initialize
-      @map = (Oxidized.config.model_map or {})
+      @map = (Oxidized.config.model_map || {})
     end
 
-    def map_model model
+    def map_model(model)
       @map.has_key?(model) ? @map[model] : model
     end
 
-    def node_var_interpolate var
+    def node_var_interpolate(var)
       case var
       when "nil"   then nil
       when "false" then false

@@ -4,6 +4,15 @@
 
 * FEATURE: add Cisco VPN3000 model (@baznikin)
 * FEATURE: add NetGear PROSafe Smart switches model (@baznikin)
+* FEATURE: Added possibility to pass root logs directory as environment variable (@Glorf)
+* FEATURE: add OneAccess TDRE (1645) model (@starrsl)
+* FEATURE: add Audiocodes MediaPack MP-1xx and Mediant 1000 model (@pedjaj)
+* FEATURE: add raisecom RAX model (@vitalisator)
+* FEATURE: add huawei smartax model (@nyash)
+* MISC: prompt updates in siklu, netonix, netscaler models
+
+## 0.25.0
+
 * FEATURE: add viptela model (@bobthebutcher)
 * FEATURE: add ECI Telecom Appolo platform bij arien.vijn@linklight.nl
 * FEATURE: ssh keepalive now configurable per node with ssh_no_keepalive boolean
