@@ -1,5 +1,5 @@
 class NetScaler < Oxidized::Model
-  prompt /^>\s*$/
+  prompt /^([\w\.-]*>\s?)$/
   comment '# '
 
   cmd :all do |cfg|

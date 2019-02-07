@@ -262,3 +262,9 @@ Names can instead be passed verbatim to the input:
 ```yaml
 resolve_dns: false
 ```
+
+## Environment variables
+
+You can use some environment variables to change default root directories values.
+* `OXIDIZED_HOME` may be used to set oxidized configuration directory, which defaults to `~/.config/oxidized`
+* `OXIDIZED_LOGS` may be used to set oxidzied logs and crash directories root, which default to `~/.config/oxidized`
