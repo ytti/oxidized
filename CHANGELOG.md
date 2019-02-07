@@ -2,6 +2,8 @@
 
 ## Master
 
+* FEATURE: add Cisco VPN3000 model (@baznikin)
+* FEATURE: add NetGear PROSafe Smart switches model (@baznikin)
 * FEATURE: add viptela model (@bobthebutcher)
 * FEATURE: add ECI Telecom Appolo platform bij arien.vijn@linklight.nl
 * FEATURE: ssh keepalive now configurable per node with ssh_no_keepalive boolean
