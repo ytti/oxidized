@@ -61,6 +61,7 @@
   * [SMA](/lib/oxidized/model/ciscosma.rb)
   * [SMB (Nikola series)](/lib/oxidized/model/ciscosmb.rb)
   * [UCS](/lib/oxidized/model/ucs.rb)
+  * [VPN3000](/lib/oxidized/model/ciscovpn3k.rb)
 * Citrix
   * [NetScaler (Virtual Applicance)](/lib/oxidized/model/netscaler.rb)
 * Coriant (former Tellabs)
@@ -137,6 +138,7 @@
   * [FiberDriver](/lib/oxidized/model/fiberdriver.rb)
 * Netgear
   * [Netgear](/lib/oxidized/model/netgear.rb)
+  * [Netgear PROSafe Smart switches](/lib/oxidized/model/netgearxs716.rb)
 * Netonix
   * [WISP Switch (As Netonix)](/lib/oxidized/model/netonix.rb)
 * Nokia (formerly TiMetra, Alcatel, Alcatel-Lucent)
