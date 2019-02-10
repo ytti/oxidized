@@ -3,7 +3,6 @@ module Oxidized
   require_relative 'cli'
 
   class Dnsdig2 < Input
-
     include Input::CLI
 
     # TFTP utilizes UDP, there is not a connection. We simply specify an IP and send/receive data.
@@ -26,7 +25,6 @@ module Oxidized
     private
 
     def disconnect
-    ensure
       @log.close if Oxidized.config.input.debug?
     end
   end
