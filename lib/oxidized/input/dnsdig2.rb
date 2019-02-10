@@ -6,13 +6,13 @@ module Oxidized
     include Input::CLI
 
     # TFTP utilizes UDP, there is not a connection. We simply specify an IP and send/receive data.
-    def connect node
+    def connect(node)
       @node = node
       Oxidized.logger.debug "DNSDIG: #{@node.name}"
       @log = File.open(Oxidized::Config::Log + "/#{@node.name}-dnsdig", 'w') if Oxidized.config.input.debug?
     end
 
-    def cmd _zone
+    def cmd(_zone)
       nsserver = @node.auth[:username]
       cmdline = "/bin/dig +noall +answer @" + nsserver + " " + @node.name + " -t AXFR"
       Oxidized.logger.debug "DNSDIG: cmdline: #{cmdline}"
