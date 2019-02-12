@@ -26,6 +26,9 @@ class TMOS < Oxidized::Model
   cmd 'tmsh -q list' do |cfg|
     cfg.gsub!(/state (up|down|checking|irule-down)/, '')
     cfg.gsub!(/errors (\d+)/, '')
+    cfg.gsub!(/^\s+bandwidth-bps (\d+)/, '')
+    cfg.gsub!(/^\s+bandwidth-cps (\d+)/, '')
+    cfg.gsub!(/^\s+bandwidth-pps (\d+)\n/, '')
     cfg
   end
 
