@@ -2,6 +2,8 @@
 
 ## Master
 
+* FEATURE: add Cisco VPN3000 model (@baznikin)
+* FEATURE: add NetGear PROSafe Smart switches model (@baznikin)
 * FEATURE: Added possibility to pass root logs directory as environment variable (@Glorf)
 * FEATURE: add OneAccess TDRE (1645) model (@starrsl)
 * FEATURE: add Audiocodes MediaPack MP-1xx and Mediant 1000 model (@pedjaj)
