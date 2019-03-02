@@ -1,12 +1,8 @@
 inherit_from: .rubocop_todo.yml
 
+# Do not attempt to police vendored code
 AllCops:
-  Include:
-    - Rakefile
-
-# Do not attempt to police vendored code, and exclude special cases
-AllCops:
-  #TargetRubyVersion: 2.0
+  TargetRubyVersion: 2.3
   Exclude:
     - 'vendor/**/*'
 

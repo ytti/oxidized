@@ -10,6 +10,7 @@
 * FEATURE: add raisecom RAX model (@vitalisator)
 * FEATURE: add huawei smartax model (@nyash)
 * MISC: prompt updates in siklu, netonix, netscaler models
+* MISC: minimal supported ruby is now 2.3, net-ssh dependency ~> 5, rubocop ~> 0.65.0
 
 ## 0.25.0
 

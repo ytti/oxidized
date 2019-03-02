@@ -37,7 +37,7 @@ Check out the [Oxidized TREX 2014 presentation](http://youtu.be/kBQ_CTUuqeU#t=3h
     * [FreeBSD](#freebsd)
     * [Build from Git](#build-from-git)
     * [Docker](#running-with-docker)
-    * [Installing Ruby 2.1.2 using RVM](#installing-ruby-212-using-rvm)
+    * [Installing Ruby 2.3 using RVM](#installing-ruby-23-using-rvm)
 3. [Initial Configuration](#configuration)
 4. [Configuration](docs/Configuration.md)
     * [Debugging](docs/Configuration.md#debugging)
@@ -98,15 +98,9 @@ gem install oxidized-script oxidized-web # If you don't install oxidized-web, en
 
 ### CentOS, Oracle Linux, Red Hat Linux
 
-On CentOS 6 / RHEL 6, begin by installing Ruby 2.0 or greater. For Ruby 2.1.2 installation instructions see [Installing Ruby 2.1.2 using RVM](#installing-ruby-212-using-rvm).
+On CentOS 6 and 7 / RHEL 6 and 7, begin by installing Ruby 2.3 or greater by following the instructions at [Installing Ruby 2.3 using RVM](#installing-ruby-23-using-rvm).
 
-If you've installed Ruby 2.0 or greater via a 3rd party package rather than the RVM instructions, additional dependencies will be required:
-
-```shell
-yum install make cmake which sqlite-devel openssl-devel libssh2-devel ruby gcc ruby-devel libicu-devel gcc-c++
-```
-
-RHEL 7 / CentOS 7 will work out of the box with the following package list:
+If you've installed Ruby 2.3 or greater via a 3rd party package rather than the RVM instructions, additional dependencies will be required:
 
 ```shell
 yum install make cmake which sqlite-devel openssl-devel libssh2-devel ruby gcc ruby-devel libicu-devel gcc-c++
@@ -121,7 +115,7 @@ gem install oxidized-script oxidized-web # if you don't install oxidized-web, ma
 
 ### FreeBSD
 
-[Use RVM to install Ruby v2.1.2](#installing-ruby-212-using-rvm), then install all required packages and gems:
+[Use RVM to install Ruby v2.3](#installing-ruby-23-using-rvm), then install all required packages and gems:
 
 ```shell
 pkg install cmake pkgconf
@@ -225,9 +219,9 @@ If you need to use an internal CA (e.g. to connect to an private github instance
 docker run -v /etc/oxidized:/root/.config/oxidized -v /path/to/MY-CA.crt:/usr/local/share/ca-certificates/MY-CA.crt -p 8888:8888/tcp -e UPDATE_CA_CERTIFICATES=true -t oxidized/oxidized:latest
 ```
 
-### Installing Ruby 2.1.2 using RVM
+### Installing Ruby 2.3 using RVM
 
-Install Ruby 2.1.2 build dependencies
+Install Ruby 2.3 build dependencies
 
 ```shell
 yum install curl gcc-c++ patch readline readline-devel zlib zlib-devel
@@ -241,12 +235,12 @@ Install RVM
 curl -L get.rvm.io | bash -s stable
 ```
 
-Setup RVM environment and compile and install Ruby 2.1.2 and set it as default
+Setup RVM environment and compile and install Ruby 2.3 and set it as default
 
 ```shell
 source /etc/profile.d/rvm.sh
-rvm install 2.1.2
-rvm use --default 2.1.2
+rvm install 2.3
+rvm use --default 2.3
 ```
 
 ## Configuration
@@ -286,7 +280,7 @@ Oxidized supports [CSV](docs/Configuration.md#source-csv),  [SQLite](docs/Config
 
 Possible outputs are either [File](docs/Configuration.md#output-file), [GIT](docs/Configuration.md#output-git), [GIT-Crypt](docs/Configuration.md#output-git-crypt) and [HTTP](docs/Configuration.md#output-http). The file backend takes a destination directory as argument and will keep a file per device, with most recent running version of a device. The GIT backend (recommended) will initialize an empty GIT repository in the specified path and create a new commit on every configuration change. The GIT-Crypt backend will also initialize a GIT repository but every configuration push to it will be encrypted on the fly by using `git-crypt` tool. Take a look at the [Configuration](docs/Configuration.md) for more details.
 
-Maps define how to map a model's fields to model [model fields](https://github.com/ytti/oxidized/tree/master/lib/oxidized/model). Most of the settings should be self explanatory, log is ignored if `use_syslog`(requires Ruby >= 2.0) is set to `true`.
+Maps define how to map a model's fields to model [model fields](https://github.com/ytti/oxidized/tree/master/lib/oxidized/model). Most of the settings should be self explanatory, log is ignored if `use_syslog` is set to `true`.
 
 First create the directory where the CSV `output` is going to store device configs and start Oxidized once.
 
