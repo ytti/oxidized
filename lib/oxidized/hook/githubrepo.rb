@@ -44,8 +44,7 @@ class GithubRepo < Oxidized::Hook
   private
 
   def credentials
-    # rubocop:disable Style/Proc
-    Proc.new do |_url, username_from_url, _allowed_types|
+    Proc.new do |_url, username_from_url, _allowed_types| # rubocop:disable Style/Proc
       git_user = cfg.has_key?('username') ? cfg.username : (username_from_url || 'git')
       if cfg.has_key?('password')
         log "Authenticating using username and password as '#{git_user}'", :debug
