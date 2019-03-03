@@ -92,7 +92,9 @@ module Oxidized
     end
 
     def exec(state = nil)
-      state.nil? ? @exec : (@exec = state) unless vars :ssh_no_exec
+      return nil if vars(:ssh_no_exec)
+
+      state.nil? ? @exec : (@exec = state)
     end
 
     def cmd_shell(cmd, expect_re)

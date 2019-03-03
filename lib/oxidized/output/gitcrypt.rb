@@ -72,7 +72,7 @@ module Oxidized
         type_cfg = ''
         type_repo = File.join(File.dirname(repo), type + '.git')
         outputs.type(type).each do |output|
-          (type_cfg << output; next) unless output.name
+          (type_cfg << output; next) unless output.name # rubocop:disable Style/Semicolon
           type_file = file + '--' + output.name
           if @cfg.type_as_directory?
             type_file = type + '/' + type_file

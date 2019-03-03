@@ -29,7 +29,7 @@ module Oxidized
     private
 
     def log(str)
-      @log.write(str) if @log
+      @log&.write(str)
     end
 
     def disconnect
