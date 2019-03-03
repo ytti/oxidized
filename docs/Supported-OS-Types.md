@@ -112,6 +112,8 @@
   * [PRIMERGY Blade switch 1/10Gbe](/lib/oxidized/model/fujitsupy.rb)
 * GCOM Technologies
   * [Broadband Network Platform Software](/lib/oxidized/model/gcombnps.rb)
+* Grandstream Networks
+  * [GSX](/lib/oxidized/model/grandstream.rb)
 * Hatteras
   * [Hatteras](/lib/oxidized/model/hatteras.rb)
 * Hillstone Networks

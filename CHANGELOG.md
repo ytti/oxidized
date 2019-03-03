@@ -9,6 +9,7 @@
 * FEATURE: add Audiocodes MediaPack MP-1xx and Mediant 1000 model (@pedjaj)
 * FEATURE: add raisecom RAX model (@vitalisator)
 * FEATURE: add huawei smartax model (@nyash)
+* FEATURE: add grandstream model
 * MISC: prompt updates in siklu, netonix, netscaler models
 * MISC: minimal supported ruby is now 2.3, net-ssh dependency ~> 5, rubocop ~> 0.65.0
 
