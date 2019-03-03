@@ -15,6 +15,9 @@ Style/FrozenStringLiteralComment:
 LineLength:
   Enabled: false
 
+Lint/AmbiguousRegexpLiteral:
+  Enabled: false
+
 # Stick to verbose until https://bugs.ruby-lang.org/issues/10177 is closed.
 Style/PreferredHashMethods:
   EnforcedStyle: verbose

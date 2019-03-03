@@ -61,7 +61,7 @@ module Oxidized
     def disconnect
       disconnect_cli
       @telnet.close
-    rescue Errno::ECONNRESET
+    rescue Errno::ECONNRESET # rubocop:disable Lint/HandleExceptions
     ensure
       @log.close if Oxidized.config.input.debug?
       (@telnet.close rescue true) unless @telnet.sock.closed?
