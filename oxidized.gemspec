@@ -24,7 +24,7 @@ Gem::Specification.new do |s|
   s.add_runtime_dependency 'rugged',  '~> 0.21', '>= 0.21.4'
   s.add_runtime_dependency 'slop',    '~> 3.5'
 
-  s.add_development_dependency 'bundler', '~> 1.10'
+  s.add_development_dependency 'bundler', '~> 2.0'
   s.add_development_dependency 'codecov' if ENV['CI'] == 'true'
   s.add_development_dependency 'git',      '~> 1'
   s.add_development_dependency 'minitest', '~> 5.8'
