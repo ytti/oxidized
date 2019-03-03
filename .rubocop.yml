@@ -9,6 +9,9 @@ AllCops:
 StringLiterals:
   Enabled: false
 
+Style/FrozenStringLiteralComment:
+  Enabled: false
+
 LineLength:
   Enabled: false
 
