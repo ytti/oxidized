@@ -38,7 +38,7 @@ class AricentISS < Oxidized::Model
 
       comment_next = 2 if l =~ /^Switch ID.*Hardware Version.*Firmware Version/
 
-      if comment_next > 0
+      if comment_next.positive?
         comment_next -= 1
         next comment(l)
       end

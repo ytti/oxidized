@@ -18,7 +18,7 @@ class GithubRepo < Oxidized::Hook
     result = repo.fetch('origin', [repo.head.name], credentials: credentials)
     log result.inspect, :debug
 
-    unless result[:total_deltas] > 0
+    unless result[:total_deltas].positive?
       log "nothing recieved after fetch", :debug
       return
     end

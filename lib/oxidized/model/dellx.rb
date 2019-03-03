@@ -63,7 +63,7 @@ class DellX < Oxidized::Model
         skip_blocks = 2 if line =~ /:/
       end
       # If we have lines to skip do this until we reach and empty line
-      if skip_blocks > 0
+      if skip_blocks.positive?
         skip_blocks -= 1 if /\S/ !~ line
         next
       end

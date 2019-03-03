@@ -97,7 +97,7 @@ module Oxidized
       if @jobs_done > @nodes.count
         true
       else
-        @jobs_done > 0 && (@jobs_done % @nodes.count).zero?
+        @jobs_done.positive? && (@jobs_done % @nodes.count).zero?
       end
     end
 

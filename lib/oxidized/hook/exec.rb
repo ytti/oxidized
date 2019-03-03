@@ -12,7 +12,7 @@ class Exec < Oxidized::Hook
     if cfg.has_key? "timeout"
       @timeout = cfg.timeout
       raise "invalid timeout value" unless @timeout.is_a?(Integer) &&
-                                           @timeout > 0
+                                           @timeout.positive?
     end
 
     @async = !!cfg.async if cfg.has_key? "async"
