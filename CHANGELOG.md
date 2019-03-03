@@ -12,6 +12,7 @@
 * FEATURE: add grandstream model
 * MISC: prompt updates in siklu, netonix, netscaler models
 * MISC: minimal supported ruby is now 2.3, net-ssh dependency ~> 5, rubocop ~> 0.65.0
+* FIX: in git comparison we might mistakenly always detect change due to !utf8 vs. utf8 encoding of a char
 
 ## 0.25.0
 
