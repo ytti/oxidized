@@ -2,6 +2,8 @@
 
 ## Master
 
+## 0.26.0
+
 * FEATURE: add Cisco VPN3000 model (@baznikin)
 * FEATURE: add NetGear PROSafe Smart switches model (@baznikin)
 * FEATURE: Added possibility to pass root logs directory as environment variable (@Glorf)
