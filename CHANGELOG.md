@@ -2,6 +2,9 @@
 
 ## Master
 
+## 0.26.1
+* FIX: force file permissions in rubygems
+
 ## 0.26.0
 
 * FEATURE: add Cisco VPN3000 model (@baznikin)
