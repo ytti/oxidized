@@ -2,6 +2,8 @@
 
 ## Master
 
+## 0.26.2
+
 * FIX: suppress net-ssh 5 deprecation warnings by moving from :paranoid to :verify_host_key
 
 ## 0.26.1
