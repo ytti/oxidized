@@ -32,7 +32,7 @@ describe Oxidized::SSH do
       proxy = mock
       Net::SSH::Proxy::Command.expects(:new).with("ssh test.com -W %h:%p").returns(proxy)
       Net::SSH.expects(:start).with('93.184.216.34', 'alma',  port:                       22,
-                                                              verify_host_key:                   Oxidized.config.input.ssh.secure ? :always : :never,
+                                                              verify_host_key:            Oxidized.config.input.ssh.secure ? :always : :never,
                                                               keepalive:                  true,
                                                               password:                   'armud',
                                                               timeout:                    Oxidized.config.timeout,
@@ -63,7 +63,7 @@ describe Oxidized::SSH do
       proxy = mock
       Net::SSH::Proxy::Command.expects(:new).with("ssh test.com -W %h:%p").returns(proxy)
       Net::SSH.expects(:start).with('example.com', 'alma',  port:                       22,
-                                                            verify_host_key:                   Oxidized.config.input.ssh.secure ? :always : :never,
+                                                            verify_host_key:            Oxidized.config.input.ssh.secure ? :always : :never,
                                                             keepalive:                  true,
                                                             password:                   'armud',
                                                             timeout:                    Oxidized.config.timeout,
