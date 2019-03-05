@@ -2,7 +2,10 @@
 
 ## Master
 
+* FIX: suppress net-ssh 5 deprecation warnings by moving from :paranoid to :verify_host_key
+
 ## 0.26.1
+
 * FIX: force file permissions in rubygems
 
 ## 0.26.0
