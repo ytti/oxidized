@@ -1,6 +1,9 @@
 # Changelog
 
 ## Master
+
+## 0.26.3
+
 * FIX: regression in git.rb version method where we check if Rugged::Diff has any deltas/patches
 
 ## 0.26.2
