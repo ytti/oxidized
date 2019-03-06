@@ -78,7 +78,7 @@ module Oxidized
       i = -1
       tab = []
       walker.each do |commit|
-        next if commit.diff(paths: [path]).empty?
+        next if commit.diff(paths: [path]).size.zero?
 
         hash = {}
         hash[:date] = commit.time.to_s
