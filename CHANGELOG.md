@@ -2,7 +2,7 @@
 
 ## Master
 
-* MISC: upgrade to slop 4
+* MISC: upgrade slop, net-telnet and rugged
 
 ## 0.26.3
 
