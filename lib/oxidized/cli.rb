@@ -41,20 +41,24 @@ module Oxidized
     end
 
     def parse_opts
-      opts = Slop.new(help: true) do
-        on 'd', 'debug', 'turn on debugging'
-        on 'daemonize',  'Daemonize/fork the process'
-        on 'show-exhaustive-config', 'output entire configuration, including defaults' do
+      opts = Slop.parse do |opt|
+        opt.on '-d', '--debug', 'turn on debugging'
+        opt.on '--daemonize', 'Daemonize/fork the process'
+        opt.on '-h', '--help', 'show usage' do
+          puts opt
+          exit
+        end
+        opt.on '--show-exhaustive-config', 'output entire configuration, including defaults' do
           asetus = Config.load
           puts asetus.to_yaml asetus.cfg
           Kernel.exit
         end
-        on 'v', 'version', 'show version' do
+        opt.on '-v', '--version', 'show version' do
           puts Oxidized::VERSION_FULL
           Kernel.exit
         end
       end
-      [opts.parse!, opts]
+      [opts.arguments, opts]
     end
 
     attr_reader :pidfile

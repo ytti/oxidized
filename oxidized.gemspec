@@ -22,7 +22,7 @@ Gem::Specification.new do |s|
   s.add_runtime_dependency 'net-ssh', '~> 5'
   s.add_runtime_dependency 'net-telnet', '~> 0.1.1'
   s.add_runtime_dependency 'rugged',  '~> 0.21', '>= 0.21.4'
-  s.add_runtime_dependency 'slop',    '~> 3.5'
+  s.add_runtime_dependency 'slop',    '~> 4.6'
 
   s.add_development_dependency 'bundler', '~> 2.0'
   s.add_development_dependency 'codecov' if ENV['CI'] == 'true'
