@@ -104,7 +104,7 @@ end
 
 ## Help
 
-If you do not have time or have problems creating a new model, install a
+If you do not have time or have problems creating a new model, install an
 Internet reachable sanitised device and ask in GitHub Issues for someone to
 create the model for you. You should research what is the device vendor name,
 device model name and device operating system name and include the information
