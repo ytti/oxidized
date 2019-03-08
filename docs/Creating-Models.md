@@ -100,6 +100,7 @@ end
 cmd :ssh do prepend: true do
   ... "(code that should run first, before any code in the existing :ssh definition in the model)" ...
 end
+```
 
 ## Help
 
