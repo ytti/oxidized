@@ -100,3 +100,11 @@ end
 cmd :ssh do prepend: true do
   ... "(code that should run first, before any code in the existing :ssh definition in the model)" ...
 end
+
+## Help
+
+If you do not have time or have problems creating a new model, install a
+Internet reachable sanitised device and ask in GitHub Issues for someone to
+create the model for you. You should research what is the device vendor name,
+device model name and device operating system name and include the information
+in the issue.
