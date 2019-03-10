@@ -104,7 +104,7 @@ Install Ruby 2.3 from [SCL](https://www.softwarecollections.org/en/scls/rhscl/rh
 
 ```shell
 yum install centos-release-scl
-yum install rh-ruby23 rh-ruby23-devel
+yum install rh-ruby23 rh-ruby23-ruby-devel
 scl enable rh-ruby23 bash
 ```
 
