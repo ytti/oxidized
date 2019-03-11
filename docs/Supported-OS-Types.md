@@ -4,6 +4,7 @@
   * OS model
 * A10 Networks
   * [ACOS](/lib/oxidized/model/acos.rb)
+  * [TPS](/lib/oxidized/model/a10tps.rb)
 * Accedian Performance Elements (NIDs)
   * [AEN](/lib/oxidized/model/aen.rb)
 * Adtran
