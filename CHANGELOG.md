@@ -2,7 +2,6 @@
 
 ## Master
 
-* MISC: add net-tftp as dependency to gemspec for tftp input
 * MISC: add pgsql support, mechanized and net-tftp to Dockerfile
 * MISC: upgrade slop, net-telnet and rugged
 
