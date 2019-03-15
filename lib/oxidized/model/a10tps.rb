@@ -1,7 +1,7 @@
 class A10TPS < Oxidized::Model
   # A10 ACOS model Thunder TPS
 
-  comment  '! '
+  comment '! '
 
   # ACOS prompt changes depending on the state of the device
   prompt /^([-\w.\/:?\[\]()]+[#>]\s?)$/
@@ -14,7 +14,7 @@ class A10TPS < Oxidized::Model
     cfg
   end
 
-  # Show version shows to much information not related to the version 
+  # Show version shows to much information not related to the version
   # and depending on time/data/etc.
   cmd 'show version' do |cfg|
     cfg.gsub! /\s(Free storage).*/, ' \\1 <removed>'
