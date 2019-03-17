@@ -4,6 +4,7 @@
 
 * MISC: add pgsql support, mechanized and net-tftp to Dockerfile
 * MISC: upgrade slop, net-telnet and rugged
+* BUGFIX: voss model
 * FIX: add dependencies for net-ssh
 
 ## 0.26.3
