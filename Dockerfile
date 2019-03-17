@@ -1,6 +1,5 @@
 # Single-stage build of an oxidized container from phusion/baseimage-docker v0.11, derived from Ubuntu 18.04 (Bionic Beaver)
 FROM phusion/baseimage:0.11
-LABEL maintainer="Samer Abdel-Hafez <sam@arahant.net>"
 
 # set up dependencies for the build process
 RUN apt-get -yq update \
