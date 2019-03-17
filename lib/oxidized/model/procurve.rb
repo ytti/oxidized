@@ -1,7 +1,7 @@
 class Procurve < Oxidized::Model
   # some models start lines with \r
   # previous command is repeated followed by "\eE", which sometimes ends up on last line
-  prompt /^\r?([\w.-]+# )$/
+  prompt /^\r?([\w\s.-]+# )$/
 
   comment '! '
 
@@ -28,14 +28,17 @@ class Procurve < Oxidized::Model
   cmd :all do |cfg|
     cfg = cfg.cut_both
     cfg = cfg.gsub /^\r/, ''
+    cfg
   end
 
   cmd :secret do |cfg|
-    cfg.gsub! /^(snmp-server community).*/, '\\1 <configuration removed>'
-    cfg.gsub! /^(snmp-server host).*/, '\\1 <configuration removed>'
-    cfg.gsub! /^(radius-server host).*/, '\\1 <configuration removed>'
-    cfg.gsub! /^(radius-server key).*/, '\\1 <configuration removed>'
     cfg.gsub! /^(\s+((\d+\s+){2}|\d+\s+)\w+\s+(\w+\s+(Powered|Present)|Powered)\s+(AC\s+\S+|\s+)).*/, '\\1'
+    cfg.gsub! /^(snmp-server community) \S+(.*)/, '\\1 <secret hidden> \\2'
+    cfg.gsub! /^(snmp-server host \S+) \S+(.*)/, '\\1 <secret hidden> \\2'
+    cfg.gsub! /^(radius-server host \S+ key) \S+(.*)/, '\\1 <secret hidden> \\2'
+    cfg.gsub! /^(radius-server key).*/, '\\1 <configuration removed>'
+    cfg.gsub! /^(tacacs-server host \S+ key) \S+(.*)/, '\\1 <secret hidden> \\2'
+    cfg.gsub! /^(tacacs-server key).*/, '\\1 <secret hidden>'
     cfg
   end
 
@@ -92,6 +95,6 @@ class Procurve < Oxidized::Model
   end
 
   cfg :ssh do
-    pty_options({ chars_wide: 1000 })
+    pty_options(chars_wide: 1000)
   end
 end

@@ -32,24 +32,24 @@ module Oxidized
         @pre_logout.each { |command, block| block ? block.call : (cmd command, nil) }
       end
 
-      def post_login _post_login = nil, &block
-        unless @exec
-          @post_login << [_post_login, block]
-        end
+      def post_login(cmd = nil, &block)
+        return if @exec
+
+        @post_login << [cmd, block]
       end
 
-      def pre_logout _pre_logout = nil, &block
-        unless @exec
-          @pre_logout << [_pre_logout, block]
-        end
+      def pre_logout(cmd = nil, &block)
+        return if @exec
+
+        @pre_logout << [cmd, block]
       end
 
-      def username re = /^(Username|login)/
-        @username or @username = re
+      def username(regex = /^(Username|login)/)
+        @username || (@username = regex)
       end
 
-      def password re = /^Password/
-        @password or @password = re
+      def password(regex = /^Password/)
+        @password || (@password = regex)
       end
 
       def login
