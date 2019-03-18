@@ -8,7 +8,7 @@ class Airfiber < Oxidized::Model
   end
 
   pre do
-    cfg = cmd 'cat /tmp/system.cfg'
+    cmd 'cat /tmp/system.cfg'
   end
 
   cfg :telnet do
