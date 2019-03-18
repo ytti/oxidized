@@ -7,6 +7,7 @@ class Cambium < Oxidized::Model
   end
 
   cmd cfg_cb do |cfg|
+    cfg.gsub! /"cfgUtcTimestamp":.*?,\n/, ''
     cfg
   end
 
