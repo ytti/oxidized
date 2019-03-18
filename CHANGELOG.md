@@ -2,6 +2,7 @@
 
 ## Master
 
+* FEATURE: add Ubiquiti Airfiber model support (@cchance27)
 * MISC: add pgsql support, mechanized and net-tftp to Dockerfile
 * MISC: upgrade slop, net-telnet and rugged
 * FIX: add dependencies for net-ssh
