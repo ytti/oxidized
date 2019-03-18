@@ -187,6 +187,7 @@
   * [AirOS](/lib/oxidized/model/airos.rb)
   * [Edgeos](/lib/oxidized/model/edgeos.rb)
   * [EdgeSwitch](/lib/oxidized/model/edgeswitch.rb)
+  * [AirFiber](/lib/oxidized/model/airfiber.rb)
 * Watchguard
   * [Fireware OS](/lib/oxidized/model/firewareos.rb)
 * Westell
