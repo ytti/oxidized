@@ -1,7 +1,7 @@
 class Dlink < Oxidized::Model
   # D-LINK Switches
 
-  prompt /^(\r*[\w.@()\/:-]+[#>]\s?)$/
+  prompt /^(\r*[\w\s.@()\/:-]+[#>]\s?)$/
   comment '# '
 
   cmd :secret do |cfg|
