@@ -59,7 +59,7 @@ class Boss < Oxidized::Model
     cfg.gsub! /^show running-config/, '! show running-config'
     # remove timestamp
     cfg.gsub! /\d{4}-\d{2}-\d{2} \d{2}:\d{2}:\d{2} .*/, ''
-    cfg.gsub! /^[^\s#>]+[#>]$/, ''
+    cfg.gsub! /^\(?.+\)?(\s?)[#>]/, ''
     cfg.gsub! /^! clock set.*/, '! removed clock set'
     cfg
   end
