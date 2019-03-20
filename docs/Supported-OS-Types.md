@@ -44,6 +44,8 @@
   * [SLX-OS](/lib/oxidized/model/slxos.rb)
 * Calix
   * [AXOS](/lib/oxidized/model/axos.rb)
+* Cambium
+  * [Cambium (PMP450 Series)](/lib/oxidized/model/cambium.rb)
 * Casa
   * [Casa](/lib/oxidized/model/casa.rb)
 * Check Point
