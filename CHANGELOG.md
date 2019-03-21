@@ -9,6 +9,7 @@
 * BUGFIX: cambium model should not consider timestamp for backup as unneeded, and causes diffs (@cchance27)
 * BUGFIX: dlink model didn't support prompts with spaces in the model type (Extreme EAS 200-24p) (@cchance27)
 * FIX: add dependencies for net-ssh
+* BUGFIX: routeros model does not collect configuration via telnet input (@hexdump0x0200)
 
 ## 0.26.3
 

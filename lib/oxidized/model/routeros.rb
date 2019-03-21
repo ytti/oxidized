@@ -1,6 +1,16 @@
 class RouterOS < Oxidized::Model
-  prompt /\[\w+@\S+(\s?\S+)*\]\s?>\s?$/
+  prompt /\[\w+@\S+(\s+\S+)*\]\s?>\s?$/
   comment "# "
+
+  cmd :all do |cfg|
+    cfg.gsub! /\x1B\[([0-9]{1,3}(;[0-9]{1,3})*)?[m|K]/, '' # strip ANSI colours
+    if screenscrape
+      cfg = cfg.cut_both
+      cfg.gsub! /^\r+(.+)/, '\1'
+      cfg.gsub! /([^\r]*)\r+$/, '\1'
+    end
+    cfg
+  end
 
   cmd '/system routerboard print' do |cfg|
     comment cfg
@@ -17,8 +27,7 @@ class RouterOS < Oxidized::Model
   post do
     run_cmd = vars(:remove_secret) ? '/export hide-sensitive' : '/export'
     cmd run_cmd do |cfg|
-      cfg.gsub! /\x1B\[([0-9]{1,3}((;[0-9]{1,3})*)?)?[m|K]/, '' # strip ANSI colours
-      cfg.gsub! /\\\r\n\s+/, '' # strip new line
+      cfg.gsub! /\\\r?\n\s+/, '' # strip new line
       cfg.gsub! /# inactive time\r\n/, '' # Remove time based system comment
       cfg = cfg.split("\n").reject { |line| line[/^#\s\w{3}\/\d{2}\/\d{4}.*$/] }
       cfg.join("\n") + "\n"
