@@ -103,6 +103,21 @@ class IOS < Oxidized::Model
     comment cfg
   end
 
+  # Show if there is any unsaved changes on the switch.
+  cmd 'show archive config diff' do |cfg|
+    # Print diff unless ntp period change or ssl-cert read from file
+    cfg.gsub! /^\n/, '' # Remove empty line
+    cfg.gsub! /^!\n/, '' # Remove line with only !
+    cfg.gsub! /.*ntp clock-period \d+\n/, '' # Remove line with only "ntp clock-period blabla"
+    cfg.gsub! /\n/, "\\n" # Escape newline
+    cfg.gsub! /crypto pki certificate chain.*certificate .*\.cer\\n/, '' # Remove ssl-cert in start config, as it is read from file, this always differ in running if used.
+    cfg.gsub! /crypto pki certificate chain.*-\s*quit\\n/, '' # Remove ssl-cert from running
+    cfg.gsub! /\\n/, "\n" # Set new line back
+    unless cfg == "!Contextual Config Diffs:\n" # Do not print if only something above was changed
+      comment cfg
+    end
+  end
+  
   cmd 'show running-config' do |cfg|
     cfg = cfg.each_line.to_a[3..-1]
     cfg = cfg.reject { |line| line.match /^ntp clock-period / }.join
