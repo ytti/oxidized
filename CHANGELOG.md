@@ -3,24 +3,26 @@
 ## Master
 
 * FEATURE: add Ubiquiti Airfiber model support (@cchance27)
-* MISC: add pgsql support, mechanized and net-tftp to Dockerfile
-* MISC: upgrade slop, net-telnet and rugged
 * BUGFIX: voss model
 * BUGFIX: cambium model should not consider timestamp for backup as unneeded, and causes diffs (@cchance27)
 * BUGFIX: dlink model didn't support prompts with spaces in the model type (Extreme EAS 200-24p) (@cchance27)
-* FIX: add dependencies for net-ssh
+* BUGFIX: routeros model does not collect configuration via telnet input (@hexdump0x0200)
+* BUGFIX: add dependencies for net-ssh
+* MISC: add pgsql support, mechanized and net-tftp to Dockerfile
+* MISC: upgrade slop, net-telnet and rugged
+
 
 ## 0.26.3
 
-* FIX: regression in git.rb version method where we check if Rugged::Diff has any deltas/patches
+* BUGFIX: regression in git.rb version method where we check if Rugged::Diff has any deltas/patches
 
 ## 0.26.2
 
-* FIX: suppress net-ssh 5 deprecation warnings by moving from :paranoid to :verify_host_key
+* BUGFIX: suppress net-ssh 5 deprecation warnings by moving from :paranoid to :verify_host_key
 
 ## 0.26.1
 
-* FIX: force file permissions in rubygems
+* BUGFIX: force file permissions in rubygems
 
 ## 0.26.0
 
@@ -32,9 +34,9 @@
 * FEATURE: add raisecom RAX model (@vitalisator)
 * FEATURE: add huawei smartax model (@nyash)
 * FEATURE: add grandstream model
+* BUGFIX: in git comparison we might mistakenly always detect change due to !utf8 vs. utf8 encoding of a char
 * MISC: prompt updates in siklu, netonix, netscaler models
 * MISC: minimal supported ruby is now 2.3, net-ssh dependency ~> 5, rubocop ~> 0.65.0
-* FIX: in git comparison we might mistakenly always detect change due to !utf8 vs. utf8 encoding of a char
 
 ## 0.25.0
 
