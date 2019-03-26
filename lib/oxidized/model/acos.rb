@@ -37,7 +37,7 @@ class ACOS < Oxidized::Model
     cfg
   end
 
-  #FOR ACOS 4.x
+  # change for ACOS 4.x
   cmd 'show running-config partition-config all' do |cfg|
     cfg.gsub! /(Current configuration).*/, '\\1 <removed>'
     cfg.gsub! /(Configuration last updated at).*/, '\\1 <removed>'
