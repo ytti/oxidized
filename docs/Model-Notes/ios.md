@@ -1,13 +1,10 @@
-# Cisco switch 
+# Cisco IOS Switches
 
-### To add the feature to list unsaved changes done on a switch.
-Create the file
-```text
-~/.config/oxidized/model/ios.rb
-```
+## Include unsaved changes done on a device (commented) with each configuration.
 
-Add this
-```text
+Create the file `~/.config/oxidized/model/ios.rb` with the following contents to extend the IOS model:
+
+```ruby
 require 'oxidized/model/ios.rb'
 
 class IOS
