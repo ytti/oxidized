@@ -37,7 +37,7 @@ class A10TPS < Oxidized::Model
     new_cfg << cfg
   end
 
-  ## Enhance configuration by removing timestamp 
+  ## Enhance configuration by removing timestamp
   cmd 'show running-config partition-config all' do |cfg|
     cfg.gsub! /(Current configuration).*/, '\\1 <removed>'
     cfg.gsub! /(Configuration last updated at).*/, '\\1 <removed>'
