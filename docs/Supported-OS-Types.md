@@ -144,8 +144,7 @@
   * [MasterOS](/lib/oxidized/model/masteros.rb)
   * [FiberDriver](/lib/oxidized/model/fiberdriver.rb)
 * Netgear
-  * [Netgear](/lib/oxidized/model/netgear.rb)
-  * [Netgear PROSafe Smart switches](/lib/oxidized/model/netgearxs716.rb)
+  * [Netgear switches](/lib/oxidized/model/netgear.rb)
 * Netonix
   * [WISP Switch (As Netonix)](/lib/oxidized/model/netonix.rb)
 * Nokia (formerly TiMetra, Alcatel, Alcatel-Lucent)
