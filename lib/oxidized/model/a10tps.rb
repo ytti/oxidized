@@ -37,7 +37,14 @@ class A10TPS < Oxidized::Model
     new_cfg << cfg
   end
 
-  cmd 'show running-config'
+  ## Enhance configuration by removing timestamp 
+  cmd 'show running-config partition-config all' do |cfg|
+    cfg.gsub! /(Current configuration).*/, '\\1 <removed>'
+    cfg.gsub! /(Configuration last updated at).*/, '\\1 <removed>'
+    cfg.gsub! /(Configuration last saved at).*/, '\\1 <removed>'
+    cfg.gsub! /(Configuration last synchronized at).*/, '\\1 <removed>'
+    cfg
+  end
 
   cfg :telnet, :ssh do
     post_login 'terminal length 0'
