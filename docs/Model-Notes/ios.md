@@ -1,18 +1,17 @@
 # Cisco switch 
 
 ### To add the feature to list unsaved changes done on a switch.
-This can be added by editing the file.
+Create the file
 ```text
-/var/lib/gems/RUBY-VERSION/gems/oxidized-VERSION/lib/oxidized/model/ios.rb
-```
-
-Above the line 
-```text
-cmd 'show running-config' do |cfg|
+~/.config/oxidized/model/ios.rb
 ```
 
 Add this
 ```text
+require 'oxidized/model/ios.rb'
+
+class IOS
+
   cmd 'show archive config diff' do |cfg|
     # Print diff unless ntp period change or ssl-cert read from file
     cfg.gsub! /^\n/, '' # Remove empty line
@@ -26,6 +25,8 @@ Add this
       comment cfg
     end
   end
+
+end
 ```
 
 Back to [Model-Notes](README.md)
