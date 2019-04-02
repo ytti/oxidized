@@ -82,8 +82,9 @@ vars:
 
 ## SSH public-key authentication
 
-Instead of using a password-based login method, oxidized can make use of `public-key` authentication. 
-You can tell oxidized to use a global private key or specify the key on a per-node basis by mapping the `ssh_keys` variable from the source.
+Instead of password-based login, Oxidized can make use of SSH key-based authentication. 
+
+You can tell Oxidized to use a global private key(s) or specify the key(s) on a per-node basis by mapping the `ssh_keys` variable from the source.
 
 Global:
 ```yaml
@@ -102,7 +103,9 @@ vars_map:
   ssh_keys: 3
 ...
 ```
+
 If you are using a non-standard path, especially when copying the private key via a secured channel, make sure that the permissions are set correctly:
+
 ```bash
 foo@bar:~$ ls -la ~/.ssh/
 total 20
@@ -112,6 +115,8 @@ drwx------ 5 oxidized oxidized 4096 Mar 13 21:40 ..
 -rw------- 1 oxidized oxidized  399 Mar 13 17:02 id_ed25519
 -rw-r--r-- 1 oxidized oxidized   94 Mar 13 17:02 id_ed25519.pub
 ```
+
+Finally, multiple private keys can be specified as an array of file paths, such as `["~/.ssh/id_rsa", "~/.ssh/id_another_rsa"]`.
 
 ## SSH Proxy Command
 
