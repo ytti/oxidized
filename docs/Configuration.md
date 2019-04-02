@@ -80,19 +80,21 @@ vars:
   auth_methods: [ "none", "publickey", "password", "keyboard-interactive" ]
 ```
 
-## SSH Public Key Authentication
+## Public Key Authentication with SSH
 
-Instead of password-based login, Oxidized can make use of SSH key-based authentication. 
+Instead of password-based login, Oxidized can make use of key-based SSH authentication. 
 
-You can tell Oxidized to use a global private key(s) or specify the key(s) on a per-node basis by mapping the `ssh_keys` variable from the source.
+You can tell Oxidized to use one or more private keys globally, or specify the key to be used on a per-node basis. The latter can be done by mapping the `ssh_keys` variable through the active source.
 
 Global:
+
 ```yaml
 vars:
   ssh_keys: "~/.ssh/id_rsa"
 ```
 
 Per-Node:
+
 ```yaml
 ...
 map:
