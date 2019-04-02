@@ -80,6 +80,46 @@ vars:
   auth_methods: [ "none", "publickey", "password", "keyboard-interactive" ]
 ```
 
+## Public Key Authentication with SSH
+
+Instead of password-based login, Oxidized can make use of key-based SSH authentication. 
+
+You can tell Oxidized to use one or more private keys globally, or specify the key to be used on a per-node basis. The latter can be done by mapping the `ssh_keys` variable through the active source.
+
+Global:
+
+```yaml
+vars:
+  ssh_keys: "~/.ssh/id_rsa"
+```
+
+Per-Node:
+
+```yaml
+...
+map:
+  name: 0
+  model: 1
+vars_map:
+  enable: 2
+  ssh_keys: 3
+...
+```
+
+If you are using a non-standard path, especially when copying the private key via a secured channel, make sure that the permissions are set correctly:
+
+```bash
+foo@bar:~$ ls -la ~/.ssh/
+total 20
+drwx------ 2 oxidized oxidized 4096 Mar 13 17:03 .
+drwx------ 5 oxidized oxidized 4096 Mar 13 21:40 ..
+-r-------- 1 oxidized oxidized  103 Mar 13 17:03 authorized_keys
+-rw------- 1 oxidized oxidized  399 Mar 13 17:02 id_ed25519
+-rw-r--r-- 1 oxidized oxidized   94 Mar 13 17:02 id_ed25519.pub
+```
+
+Finally, multiple private keys can be specified as an array of file paths, such as `["~/.ssh/id_rsa", "~/.ssh/id_another_rsa"]`.
+
 ## SSH Proxy Command
 
 Oxidized can `ssh` through a proxy as well. To do so we just need to set `ssh_proxy` variable with the proxy host information and optionally set the `ssh_proxy_port` with the SSH port if it is not listening no port 22.
