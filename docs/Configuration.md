@@ -80,7 +80,7 @@ vars:
   auth_methods: [ "none", "publickey", "password", "keyboard-interactive" ]
 ```
 
-## SSH public-key authentication
+## SSH Public Key Authentication
 
 Instead of password-based login, Oxidized can make use of SSH key-based authentication. 
 
