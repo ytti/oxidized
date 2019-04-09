@@ -129,9 +129,9 @@ module Oxidized
 
     def getname(ipaddr)
       if Oxidized::CFG.syslogd.resolve == false
-        ipddr
+        ipaddr
       else
-        name = (Resolv.getname ipaddr.to_s rescue ipadr)
+        name = (Resolv.getname ipaddr.to_s rescue ipaddr)
         NAME_MAP.each { |re, sub| name.sub! re, sub }
         name
       end
