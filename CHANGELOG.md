@@ -3,6 +3,7 @@
 ## Master
 
 * FEATURE: add Ubiquiti Airfiber model support (@cchance27)
+* FEATURE: add Icotera support (@funzoneq)
 * FEATURE: include licensing information in aos model (@pozar)
 * BUGFIX: voss model
 * BUGFIX: cambium model should not consider timestamp for backup as unneeded, and causes diffs (@cchance27)
