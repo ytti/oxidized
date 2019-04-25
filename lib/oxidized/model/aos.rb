@@ -21,6 +21,14 @@ class AOS < Oxidized::Model
     comment cfg
   end
 
+  cmd 'show license info' do |cfg|
+    comment cfg
+  end
+
+  cmd 'show license file' do |cfg|
+    comment cfg
+  end
+
   cmd 'show configuration snapshot' do |cfg|
     cfg
   end

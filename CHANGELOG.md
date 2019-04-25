@@ -4,6 +4,7 @@
 
 * FEATURE: add Ubiquiti Airfiber model support (@cchance27)
 * FEATURE: add Icotera support (@funzoneq)
+* FEATURE: include licensing information in aos model (@pozar)
 * BUGFIX: voss model
 * BUGFIX: cambium model should not consider timestamp for backup as unneeded, and causes diffs (@cchance27)
 * BUGFIX: dlink model didn't support prompts with spaces in the model type (Extreme EAS 200-24p) (@cchance27)
