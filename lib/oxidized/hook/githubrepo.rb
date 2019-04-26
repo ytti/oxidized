@@ -19,7 +19,7 @@ class GithubRepo < Oxidized::Hook
     log result.inspect, :debug
 
     unless result[:total_deltas].positive?
-      log "nothing recieved after fetch", :debug
+      log "nothing received after fetch", :debug
       return
     end
 
