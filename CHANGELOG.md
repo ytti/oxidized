@@ -5,6 +5,7 @@
 * FEATURE: add Ubiquiti Airfiber model support (@cchance27)
 * FEATURE: add Icotera support (@funzoneq)
 * FEATURE: include licensing information in aos model (@pozar)
+* FEATURE: add firelinuxos (FirePOWER) model (@rgnv)
 * FEATURE: add sonicos model (@rgnv)
 * BUGFIX: voss model
 * BUGFIX: cambium model should not consider timestamp for backup as unneeded, and causes diffs (@cchance27)

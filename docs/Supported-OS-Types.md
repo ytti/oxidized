@@ -58,6 +58,7 @@
   * [ASA](/lib/oxidized/model/asa.rb)
   * [AsyncOS](/lib/oxidized/model/asyncos.rb)
   * [CatOS](/lib/oxidized/model/catos.rb)
+  * [FireLinuxOS](lib/oxidized/model/firelinuxos.rb)
   * [IOS](/lib/oxidized/model/ios.rb)
   * [IOSXR](/lib/oxidized/model/iosxr.rb)
   * [NGA](/lib/oxidized/model/cisconga.rb)
