@@ -131,6 +131,8 @@
 * Huawei
   * [VRP](/lib/oxidized/model/vrp.rb)
   * [SmartAX series](/lib/oxidized/model/smartax.rb)
+* Icotera
+  * [6400 series](/lib/oxidized/model/icotera.rb)
 * Juniper
   * [JunOS](/lib/oxidized/model/junos.rb)
   * [ScreenOS (Netscreen)](/lib/oxidized/model/screenos.rb)
@@ -170,6 +172,8 @@
   * [Quanta / VxWorks 6.6 (1.1.0.8)](/lib/oxidized/model/quantaos.rb)
 * Siklu
   * [EtherHaul](/lib/oxidized/model/siklu.rb)
+* SonicWALL
+   * [SonicOS](lib/oxidized/model/sonicos.rb)
 * SNR
   * [SNR-S300G, S2xxx, S3xxx, S4xxx](/lib/oxidized/model/dcnos.rb)
 * Supermicro
