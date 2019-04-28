@@ -25,7 +25,7 @@ class SonicOS < Oxidized::Model
     clean cfg
   end
 
-  cfg :telnet, :ssh do
+  cfg :ssh do
     post_login 'no cli pager session'
     pre_logout 'exit'
   end
