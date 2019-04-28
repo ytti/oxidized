@@ -35,7 +35,7 @@ class FireLinuxOS < Oxidized::Model
     cfg
   end
 
-  cfg :telnet, :ssh do
+  cfg :ssh do
     pre_logout 'exit'
   end
 end
