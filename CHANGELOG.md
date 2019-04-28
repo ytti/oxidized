@@ -4,6 +4,7 @@
 
 * FEATURE: add Ubiquiti Airfiber model support (@cchance27)
 * FEATURE: include licensing information in aos model (@pozar)
+* FEATURE: add sonicos model (@rgnv)
 * BUGFIX: voss model
 * BUGFIX: cambium model should not consider timestamp for backup as unneeded, and causes diffs (@cchance27)
 * BUGFIX: dlink model didn't support prompts with spaces in the model type (Extreme EAS 200-24p) (@cchance27)
@@ -12,7 +13,6 @@
 * BUGFIX: crash on some recent Ruby versions in the nagios check (@Kegeruneku)
 * MISC: add pgsql support, mechanized and net-tftp to Dockerfile
 * MISC: upgrade slop, net-telnet and rugged
-
 
 ## 0.26.3
 

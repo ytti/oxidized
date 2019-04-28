@@ -169,6 +169,8 @@
   * [Quanta / VxWorks 6.6 (1.1.0.8)](/lib/oxidized/model/quantaos.rb)
 * Siklu
   * [EtherHaul](/lib/oxidized/model/siklu.rb)
+* SonicWALL
+   * [SonicOS](lib/oxidized/model/sonicos.rb)
 * SNR
   * [SNR-S300G, S2xxx, S3xxx, S4xxx](/lib/oxidized/model/dcnos.rb)
 * Supermicro
