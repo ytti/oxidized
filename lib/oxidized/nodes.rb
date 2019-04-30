@@ -31,6 +31,35 @@ module Oxidized
       end
     end
 
+    def load_node node_want
+      with_lock do
+        new = []
+        @source = Oxidized.config.source.default
+        Oxidized.mgr.add_source(@source) || raise(MethodNotFound, "cannot load node source '#{@source}', not found")
+        Oxidized.logger.info "lib/oxidized/nodes.rb: Loading single node %s" % [node_want]
+        tmp_nodes = Oxidized.mgr.source[@source].new.load node_want
+        upd_node = tmp_nodes.first
+        @old_nodes = self.dup
+        @old_nodes.each do |node|
+          Oxidized.logger.error "node %s" % [node.name]
+          # we want to load specific node(s), not all of them
+          if node_want != node.name
+            new.push node
+          end
+        end
+        begin
+          _node = Node.new upd_node
+          new.push _node
+        rescue ModelNotFound => err
+          Oxidized.logger.error "node %s raised %s with message '%s'" % [node.name, err.class, err.message]
+        rescue Resolv::ResolvError => err
+          Oxidized.logger.error "node %s is not resolvable, raised %s with message '%s'" % [node.name, err.class, err.message]
+        end
+        size.zero? ? replace(new) : update_nodes(new)
+        Oxidized.logger.info "lib/oxidized/nodes.rb: Loaded #{size} nodes"
+      end
+    end
+
     def node_want?(node_want, node)
       return true unless node_want
 
