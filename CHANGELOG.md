@@ -5,6 +5,7 @@
 * FEATURE: add Ubiquiti Airfiber model support (@cchance27)
 * BUGFIX: voss model
 * BUGFIX: cambium model should not consider timestamp for backup as unneeded, and causes diffs (@cchance27)
+* BUGFIX: remove 'sh system' from ciscosmb model
 * BUGFIX: dlink model didn't support prompts with spaces in the model type (Extreme EAS 200-24p) (@cchance27)
 * BUGFIX: routeros model does not collect configuration via telnet input (@hexdump0x0200)
 * BUGFIX: add dependencies for net-ssh
