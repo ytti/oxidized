@@ -8,6 +8,7 @@
 * BUGFIX: dlink model didn't support prompts with spaces in the model type (Extreme EAS 200-24p) (@cchance27)
 * BUGFIX: routeros model does not collect configuration via telnet input (@hexdump0x0200)
 * BUGFIX: add dependencies for net-ssh
+* BUGFIX: don't log power module info on procurve model anymore
 * BUGFIX: crash on some recent Ruby versions in the nagios check (@Kegeruneku)
 * MISC: add pgsql support, mechanized and net-tftp to Dockerfile
 * MISC: upgrade slop, net-telnet and rugged
