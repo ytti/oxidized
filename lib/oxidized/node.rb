@@ -193,19 +193,37 @@ module Oxidized
       key_sym = key.to_sym
       key_str = key.to_s
       value   = global
-      Oxidized.logger.debug "node.rb: resolving node key '#{key}', with passed global value of '#{value}' and node value '#{opt[key_sym]}'"
+
+      # Implement basic configuration field masking
+      # The goal is to prevent logging of sensitive information unless the user positively activates logging of sensitive information
+      # This helps to keep authentication credentials out of logs, pastebins, GitHub issues, etc.
+      # Authentication failures to devices are typically easy to spot in other ways.
+      # NOTE - This does NOT control any masking for device configurations - that is covered in model-specific code
+      # Controllable with the configuration file via the following parameters:
+      # mask_sensitive: true || false (default is true)
+      # mask_fields: A regular expression of what is masked. Defaults to /^(password)$/i
+      # mask_value: A String value of what to log/display instead. Defaults to '*' * 8
+      is_key_masked = false
+      if Oxidized.config.mask_sensitive
+        if key_str =~ Oxidized.config.mask_fields
+          is_key_masked = true
+          masked_value = Oxidized.config.mask_value
+        end
+      end
+
+      Oxidized.logger.debug "node.rb: resolving node key '#{key}', with passed global value of '" + (is_key_masked ? masked_value.to_s : value.to_s) + "' and node value '" + (is_key_masked ? masked_value.to_s : opt[key_sym].to_s) + "'"
 
       # global
       if (not value) && Oxidized.config.has_key?(key_str)
         value = Oxidized.config[key_str]
-        Oxidized.logger.debug "node.rb: setting node key '#{key}' to value '#{value}' from global"
+        Oxidized.logger.debug "node.rb: setting node key '#{key}' to value '" + (is_key_masked ? masked_value.to_s : value.to_s) + "' from global"
       end
 
       # group
       if Oxidized.config.groups.has_key?(@group)
         if Oxidized.config.groups[@group].has_key?(key_str)
           value = Oxidized.config.groups[@group][key_str]
-          Oxidized.logger.debug "node.rb: setting node key '#{key}' to value '#{value}' from group"
+          Oxidized.logger.debug "node.rb: setting node key '#{key}' to value '" + (is_key_masked ? masked_value.to_s : value.to_s) + "' from group"
         end
       end
 
@@ -213,13 +231,13 @@ module Oxidized
       if Oxidized.config.models.has_key?(@model.class.name.to_s.downcase)
         if Oxidized.config.models[@model.class.name.to_s.downcase].has_key?(key_str)
           value = Oxidized.config.models[@model.class.name.to_s.downcase][key_str]
-          Oxidized.logger.debug "node.rb: setting node key '#{key}' to value '#{value}' from model"
+          Oxidized.logger.debug "node.rb: setting node key '#{key}' to value '" + (is_key_masked ? masked_value.to_s : value.to_s) + "' from model"
         end
       end
 
       # node
       value = opt[key_sym] || value
-      Oxidized.logger.debug "node.rb: returning node key '#{key}' with value '#{value}'"
+      Oxidized.logger.debug "node.rb: returning node key '#{key}' with value '" + (is_key_masked ? masked_value.to_s : value.to_s) + "'"
       value
     end
 
