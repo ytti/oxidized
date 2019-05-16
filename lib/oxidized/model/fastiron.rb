@@ -14,8 +14,7 @@ class FastIron < Oxidized::Model
     comments = []
     comments << cfg.lines.first
     lines = cfg.lines
-    lines.each_with_index do |line, i|
-
+    lines.each_with_index do |line, _i|
       comments << "Version: #{Regexp.last_match(1)}" if line =~ /^\s+SW: Version (.*)$/
 
       comments << "Boot-Monitor Version: #{Regexp.last_match(1)}" if line =~ /^\s+Compressed Boot-Monitor Image size = \d+, Version:(.*)$/
