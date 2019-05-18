@@ -1,4 +1,4 @@
-class Hpmsm < Oxidized::Model
+class HPMSM < Oxidized::Model
   prompt /^CLI[>#] +$/
 
   comment '! '
@@ -31,7 +31,7 @@ class Hpmsm < Oxidized::Model
 
   cmd 'show system info' do |cfg|
     sysinfo = ''
-    ram = cfg.match(/Total RAM:\s+(\S+)/)[1].to_i()/1024/1024
+    ram = cfg.match(/Total RAM:\s+(\S+)/)[1].to_i / 1024 / 1024
     sysinfo << "Memory: #{ram}M\n"
 
     serial = cfg.match(/Serial Number:\s+(\S+)/)[1]
