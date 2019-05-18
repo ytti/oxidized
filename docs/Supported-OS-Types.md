@@ -38,7 +38,7 @@
 * Brocade
   * [FabricOS](/lib/oxidized/model/fabricos.rb)
   * [FastIron] (/lib/oxidized/model/fastiron.rb)
-  * [Ironware](/lib/oxidized/model/ironware.rb)
+  * [IronWare](/lib/oxidized/model/ironware.rb)
   * [NOS (Network Operating System)](/lib/oxidized/model/nos.rb)
   * [Vyatta](/lib/oxidized/model/vyatta.rb)
   * [6910](/lib/oxidized/model/br6910.rb)
