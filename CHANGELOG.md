@@ -7,6 +7,7 @@
 * FEATURE: include licensing information in aos model (@pozar)
 * FEATURE: add firelinuxos (FirePOWER) model (@rgnv)
 * FEATURE: add sonicos model (@rgnv)
+* FEATURE: add FastIron model (@ZacharyPuls)
 * BUGFIX: voss model
 * BUGFIX: cambium model should not consider timestamp for backup as unneeded, and causes diffs (@cchance27)
 * BUGFIX: remove 'sh system' from ciscosmb model (@Exordian)
