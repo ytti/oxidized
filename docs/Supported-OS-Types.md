@@ -129,6 +129,7 @@
   * [Procurve](/lib/oxidized/model/procurve.rb)
   * [BladeSystem (Onboard Administrator)](/lib/oxidized/model/hpebladesystem.rb)
   * [MSA](/lib/oxidized/model/hpemsa.rb)
+  * [MSM (Wireless Controller)](/lib/oxidized/model/hpmsm.rb)
 * Huawei
   * [VRP](/lib/oxidized/model/vrp.rb)
   * [SmartAX series](/lib/oxidized/model/smartax.rb)
