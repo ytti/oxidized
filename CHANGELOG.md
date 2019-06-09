@@ -2,6 +2,7 @@
 
 ## Master
 
+* FEATURE: add PurityOD model support (@elliot64)
 * FEATURE: add Ubiquiti Airfiber model support (@cchance27)
 * FEATURE: add Icotera support (@funzoneq)
 * FEATURE: include licensing information in aos model (@pozar)
