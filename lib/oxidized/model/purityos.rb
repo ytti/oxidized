@@ -1,6 +1,6 @@
 class Purity < Oxidized::Model
   # Pure Storage Purity OS
-  
+
   prompt /\w+@\S+(\s+\S+)*\s?>\s?$/
   comment '# '
 
