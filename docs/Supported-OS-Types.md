@@ -166,6 +166,8 @@
   * [PANOS](/lib/oxidized/model/panos.rb)
 * [PLANET SG/SGS Switches](/lib/oxidized/model/planet.rb)
 * [pfSense](/lib/oxidized/model/pfsense.rb)
+* Pure Storage
+  * [PurityOS] (/lib/oxidized/model/purityos.rb)
 * Radware
   * [AlteonOS](/lib/oxidized/model/alteonos.rb)
 * Raisecom
