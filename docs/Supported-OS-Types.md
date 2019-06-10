@@ -138,6 +138,8 @@
 * Juniper
   * [JunOS](/lib/oxidized/model/junos.rb)
   * [ScreenOS (Netscreen)](/lib/oxidized/model/screenos.rb)
+* Linuxgeneric
+  * [CentOS](/lib/oxidized/model/linuxgeneric.rb)
 * Mellanox
   * [MLNX-OS](/lib/oxidized/model/mlnxos.rb)
   * [Voltaire](/lib/oxidized/model/voltaire.rb)
