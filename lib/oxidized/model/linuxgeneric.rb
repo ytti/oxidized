@@ -8,6 +8,7 @@ class LinuxGeneric < Oxidized::Model
   end
 
   cmd :all do |cfg|
+    cfg.gsub! /^(default (\S+).* (expires) ).*/, '\\1 <redacted>'
     cfg.cut_both
   end
 
