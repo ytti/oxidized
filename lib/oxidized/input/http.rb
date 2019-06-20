@@ -38,17 +38,18 @@ module Oxidized
 
     def cmd_str(string)
       path = string % { password: @node.auth[:password] }
-      get_http path
+      path, method = path.split(":", 2).reverse
+      http_call(path, method || "get")
     end
 
     private
 
-    def get_http(path)
+    def http_call(path, method)
       schema = @secure ? "https://" : "http://"
       uri = URI.join schema + @node.ip, path
       http = Net::HTTP.new uri.host, uri.port
       http.use_ssl = true if uri.scheme == "https"
-      http.get(uri).body
+      http.send_request(method.upcase, uri).body
     end
 
     def log(str)
