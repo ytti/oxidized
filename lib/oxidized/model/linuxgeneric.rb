@@ -26,9 +26,6 @@ class LinuxGeneric < Oxidized::Model
     cfg += add_comment 'RESOLV.CONF'
     cfg += cmd 'cat /etc/resolv.conf'
 
-    cfg += add_comment 'NTP.CONF'
-    cfg += cmd 'cat /etc/ntp.conf'
-
     cfg += add_comment 'IP Routes'
     cfg += cmd 'ip route'
 
@@ -37,9 +34,6 @@ class LinuxGeneric < Oxidized::Model
 
     cfg += add_comment 'SNMP settings'
     cfg += cmd 'cat /etc/snmp/snmpd.conf'
-
-    cfg += add_comment 'NTP settings'
-    cfg += cmd 'cat /etc/ntp.conf'
 
     cfg += add_comment 'MOTD'
     cfg += cmd 'cat /etc/motd'
@@ -52,9 +46,6 @@ class LinuxGeneric < Oxidized::Model
 
     cfg += add_comment 'nsswitch.conf'
     cfg += cmd 'cat /etc/nsswitch.conf'
-
-    cfg += add_comment 'ACL'
-    cfg += cmd 'iptables -L -n'
 
     cfg += add_comment 'VERSION'
     cfg += cmd 'cat /etc/issue'
