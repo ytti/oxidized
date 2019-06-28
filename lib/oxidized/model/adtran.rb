@@ -3,6 +3,10 @@ class Adtran < Oxidized::Model
 
   prompt /([\w.@-]+[#>]\s?)$/
 
+  cmd :all do |cfg|
+    cfg.each_line.to_a[2..-2].map { |line| line.delete("\r").rstrip }.join("\n") + "\n"
+  end
+
   cmd :secret do |cfg|
     cfg.gsub!(/password (\S+)/, 'password <hidden>')
     cfg

@@ -18,6 +18,7 @@
 * BUGFIX: add dependencies for net-ssh
 * BUGFIX: don't log power module info on procurve model anymore
 * BUGFIX: crash on some recent Ruby versions in the nagios check (@Kegeruneku)
+* BUGFIX: remove stray whitespace in adtran model (@nickhilliard)
 * MISC: add pgsql support, mechanized and net-tftp to Dockerfile
 * MISC: upgrade slop, net-telnet and rugged
 * MISC: extra secret scrubbing in comware model (@bengels00)
