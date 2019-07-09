@@ -204,7 +204,6 @@ module Oxidized
         node = find { |n| n.name == node_name }
         output = node.output.new
         raise Oxidized::NotSupported unless output.respond_to? :fetch
-
         yield node, output
       end
     end
