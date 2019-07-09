@@ -20,10 +20,10 @@ module Oxidized
           begin
             node_obj = Node.new node
             new.push node_obj
-          rescue ModelNotFound => err
-            Oxidized.logger.error "node %s raised %s with message '%s'" % [node, err.class, err.message]
-          rescue Resolv::ResolvError => err
-            Oxidized.logger.error "node %s is not resolvable, raised %s with message '%s'" % [node, err.class, err.message]
+          rescue ModelNotFound => e
+            Oxidized.logger.error "node %s raised %s with message '%s'" % [node, e.class, e.message]
+          rescue Resolv::ResolvError => e
+            Oxidized.logger.error "node %s is not resolvable, raised %s with message '%s'" % [node, e.class, e.message]
           end
         end
         size.zero? ? replace(new) : update_nodes(new)
@@ -31,7 +31,7 @@ module Oxidized
       end
     end
 
-    def load_node node_want
+    def load_node(node_want)
       with_lock do
         new = []
         @source = Oxidized.config.source.default
@@ -48,8 +48,8 @@ module Oxidized
           end
         end
         begin
-          _node = Node.new upd_node
-          new.push _node
+          new_node = Node.new upd_node
+          new.push new_node
         rescue ModelNotFound => err
           Oxidized.logger.error "node %s raised %s with message '%s'" % [node.name, err.class, err.message]
         rescue Resolv::ResolvError => err
