@@ -15,7 +15,7 @@ class Airos < Oxidized::Model
   cmd 'sort /tmp/system.cfg' do |cfg|
     cfg
   end
-  
+
   cmd :secret do |cfg|
     cfg.gsub! /^(users\.\d+\.password|snmp\.community)=.+/, "# \\1=<hidden>"
     cfg
