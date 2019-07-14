@@ -178,8 +178,8 @@ module Oxidized
     private
 
     def process_cmd_output(output, name)
-      output = Oxidized::String.new output if ::String == output.class
-      output = Oxidized::String.new '' unless Oxidized::String == output.class
+      output = Oxidized::String.new(output) if output.is_a?(::String)
+      output = Oxidized::String.new('') unless output.instance_of?(Oxidized::String)
       output.set_cmd(name)
       output
     end
