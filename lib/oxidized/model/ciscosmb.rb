@@ -29,11 +29,6 @@ class CiscoSMB < Oxidized::Model
     comment cfg
   end
 
-  cmd 'show system' do |cfg|
-    cfg.gsub! /System Up Time.*\n/, ''
-    comment cfg
-  end
-
   cmd 'show bootvar' do |cfg|
     comment cfg
   end

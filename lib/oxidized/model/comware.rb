@@ -21,6 +21,7 @@ class Comware < Oxidized::Model
   cmd :secret do |cfg|
     cfg.gsub! /^( snmp-agent community).*/, '\\1 <configuration removed>'
     cfg.gsub! /^( password hash).*/, '\\1 <configuration removed>'
+    cfg.gsub! /^( password cipher).*/, '\\1 <configuration removed>'
     cfg
   end
 

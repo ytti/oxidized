@@ -37,7 +37,8 @@
   * [BOSS (Baystack Operating System Software)](/lib/oxidized/model/boss.rb)
 * Brocade
   * [FabricOS](/lib/oxidized/model/fabricos.rb)
-  * [Ironware](/lib/oxidized/model/ironware.rb)
+  * [FastIron] (/lib/oxidized/model/fastiron.rb)
+  * [IronWare](/lib/oxidized/model/ironware.rb)
   * [NOS (Network Operating System)](/lib/oxidized/model/nos.rb)
   * [Vyatta](/lib/oxidized/model/vyatta.rb)
   * [6910](/lib/oxidized/model/br6910.rb)
@@ -58,6 +59,7 @@
   * [ASA](/lib/oxidized/model/asa.rb)
   * [AsyncOS](/lib/oxidized/model/asyncos.rb)
   * [CatOS](/lib/oxidized/model/catos.rb)
+  * [FireLinuxOS](lib/oxidized/model/firelinuxos.rb)
   * [IOS](/lib/oxidized/model/ios.rb)
   * [IOSXR](/lib/oxidized/model/iosxr.rb)
   * [NGA](/lib/oxidized/model/cisconga.rb)
@@ -127,9 +129,12 @@
   * [Procurve](/lib/oxidized/model/procurve.rb)
   * [BladeSystem (Onboard Administrator)](/lib/oxidized/model/hpebladesystem.rb)
   * [MSA](/lib/oxidized/model/hpemsa.rb)
+  * [MSM (Wireless Controller)](/lib/oxidized/model/hpmsm.rb)
 * Huawei
   * [VRP](/lib/oxidized/model/vrp.rb)
   * [SmartAX series](/lib/oxidized/model/smartax.rb)
+* Icotera
+  * [6400 series](/lib/oxidized/model/icotera.rb)
 * Juniper
   * [JunOS](/lib/oxidized/model/junos.rb)
   * [ScreenOS (Netscreen)](/lib/oxidized/model/screenos.rb)
@@ -144,8 +149,7 @@
   * [MasterOS](/lib/oxidized/model/masteros.rb)
   * [FiberDriver](/lib/oxidized/model/fiberdriver.rb)
 * Netgear
-  * [Netgear](/lib/oxidized/model/netgear.rb)
-  * [Netgear PROSafe Smart switches](/lib/oxidized/model/netgearxs716.rb)
+  * [Netgear switches](/lib/oxidized/model/netgear.rb)
 * Netonix
   * [WISP Switch (As Netonix)](/lib/oxidized/model/netonix.rb)
 * Nokia (formerly TiMetra, Alcatel, Alcatel-Lucent)
@@ -162,6 +166,8 @@
   * [PANOS](/lib/oxidized/model/panos.rb)
 * [PLANET SG/SGS Switches](/lib/oxidized/model/planet.rb)
 * [pfSense](/lib/oxidized/model/pfsense.rb)
+* Pure Storage
+  * [PurityOS](/lib/oxidized/model/purityos.rb)
 * Radware
   * [AlteonOS](/lib/oxidized/model/alteonos.rb)
 * Raisecom
@@ -170,6 +176,8 @@
   * [Quanta / VxWorks 6.6 (1.1.0.8)](/lib/oxidized/model/quantaos.rb)
 * Siklu
   * [EtherHaul](/lib/oxidized/model/siklu.rb)
+* SonicWALL
+   * [SonicOS](lib/oxidized/model/sonicos.rb)
 * SNR
   * [SNR-S300G, S2xxx, S3xxx, S4xxx](/lib/oxidized/model/dcnos.rb)
 * Supermicro
