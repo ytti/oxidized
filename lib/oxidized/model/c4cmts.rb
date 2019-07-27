@@ -17,7 +17,7 @@ class C4CMTS < Oxidized::Model
   end
 
   cmd 'show environment' do |cfg|
-    cfg.gsub! /\s+[\-\d]+\s+C\s+[(\s\d]+\s+F\)/, ''	# remove temperature readings
+    cfg.gsub! /\s+[\-\d]+\s+C\s+[(\s\d]+\s+F\)/, '' # remove temperature readings
     comment cfg.cut_both
   end
 
