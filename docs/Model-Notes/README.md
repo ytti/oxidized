@@ -19,5 +19,6 @@ Netgear|[Netgear](Netgear.md)|11 Apr 2018
 Nokia|[Nokia ISAM](Nokia.md)|22 Aug 2018
 Viptela|[Viptela](Viptela.md)|1 Jul 2018
 Zyxel|[XGS4600 Series](XGS4600-Zyxel.md)|1 Feb 2018
+Linux|[LinuxGeneric](LinuxGeneric.md)|10 Jun 2019
 
 If you discover additional caveats or problems please make sure to consult the [GitHub issues for oxidized](https://github.com/ytti/oxidized/issues) known issues.
