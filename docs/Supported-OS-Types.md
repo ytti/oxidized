@@ -37,7 +37,7 @@
   * [BOSS (Baystack Operating System Software)](/lib/oxidized/model/boss.rb)
 * Brocade
   * [FabricOS](/lib/oxidized/model/fabricos.rb)
-  * [FastIron] (/lib/oxidized/model/fastiron.rb)
+  * [FastIron](/lib/oxidized/model/fastiron.rb)
   * [IronWare](/lib/oxidized/model/ironware.rb)
   * [NOS (Network Operating System)](/lib/oxidized/model/nos.rb)
   * [Vyatta](/lib/oxidized/model/vyatta.rb)
