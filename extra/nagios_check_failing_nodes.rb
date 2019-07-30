@@ -12,6 +12,11 @@ pending_nodes = []
 
 json = JSON.parse(open("http://localhost:8888/nodes.json").read)
 json.each do |node|
+  if not ARGV.empty?
+    if ARGV[0] != node['name']
+      next
+    end
+  end
   if not node['last'].nil?
     if node['last']['status'] != 'success'
       critical_nodes << node['name']
@@ -30,6 +35,10 @@ elsif pending
   puts '[WARN] Pending backup: ' + pending_nodes.join(',')
   exit 1
 else
-  puts '[OK] Backup of all nodes completed successfully.'
+  if not ARGV.empty?
+    puts '[OK] Backup of node ' + ARGV[0] + ' completed successfully.'
+  else
+    puts '[OK] Backup of all nodes completed successfully.'
+  end
   exit 0
 end
