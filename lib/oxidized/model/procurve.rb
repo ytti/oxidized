@@ -1,6 +1,7 @@
 class Procurve < Oxidized::Model
   # some models start lines with \r
   # previous command is repeated followed by "\eE", which sometimes ends up on last line
+  # prompt regex will fail on certain older telnet switches like J4899B because of missing newline and additional vt100 chars
   prompt /^\r?([\w\s.-]+# )$/
 
   comment '! '
@@ -28,6 +29,8 @@ class Procurve < Oxidized::Model
   cmd :all do |cfg|
     cfg = cfg.cut_both
     cfg = cfg.gsub /^\r/, ''
+    # Additional filtering for elder switches sending vt100 control chars via telnet
+    cfg.gsub! /\e\[\??\d+(;\d+)*[A-Za-z]/, ''
     cfg
   end
 
