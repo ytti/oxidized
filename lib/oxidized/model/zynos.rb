@@ -14,7 +14,7 @@ class ZyNOS < Oxidized::Model
   expect /\e\[\??\d+(;\d+)*[A-Za-z]/ do |data, re|
     data.gsub re, ''
   end
-  
+
   cmd 'config-0'
 
   cmd 'show running-config' do |cfg|
