@@ -14,6 +14,12 @@ class ZyNOS < Oxidized::Model
 
   cmd 'show running-config' do |cfg|
     cfg.gsub! /(System Up Time:) \S+(.*)/, '\\1 <time>'
+    
+    # Remove garbage chars sent when by --More--
+    # Backspace 0x07 char
+    cfg.gsub! /[\b]/, ''
+    cfg.gsub! /\e\[A\e\[2K/, ''
+    
     cfg
   end
   
