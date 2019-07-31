@@ -2,6 +2,7 @@
 
 ## Master
 
+* FEATURE: add zyxel GS1900 support to ZynOS model (@deajan) 
 * FEATURE: add PurityOS model support (@elliot64)
 * FEATURE: add Ubiquiti Airfiber model support (@cchance27)
 * FEATURE: add Icotera support (@funzoneq)
