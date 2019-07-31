@@ -10,16 +10,17 @@ class ZyNOS < Oxidized::Model
     data.sub re, ''
   end
 
+  # replace all used vt100 control sequences
+  expect /\e\[\??\d+(;\d+)*[A-Za-z]/ do |data, re|
+    data.gsub re, ''
+  end
+  
   cmd 'config-0'
 
   cmd 'show running-config' do |cfg|
     cfg.gsub! /(System Up Time:) \S+(.*)/, '\\1 <time>'
-    
-    # Remove garbage chars sent when by --More--
-    # Backspace 0x07 char
-    cfg.gsub! /[\b]/, ''
-    cfg.gsub! /\e\[A\e\[2K/, ''
-    
+    # Remove additional garbage vt100 control sequences
+    cfg.gsub! /[\b]|\e\[A|\e\[2K/, ''
     cfg
   end
   
