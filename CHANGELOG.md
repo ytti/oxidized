@@ -11,6 +11,7 @@
 * FEATURE: add hpmsm model (@timwsuqld)
 * FEATURE: add FastIron model (@ZacharyPuls)
 * FEATURE: add Linuxgeneric model (@davama)
+* BUGFIX: improve procurve telnet support for older switches (@deajan)
 * BUGFIX: voss model
 * BUGFIX: cambium model should not consider timestamp for backup as unneeded, and causes diffs (@cchance27)
 * BUGFIX: remove 'sh system' from ciscosmb model (@Exordian)
