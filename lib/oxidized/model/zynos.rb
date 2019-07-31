@@ -23,7 +23,7 @@ class ZyNOS < Oxidized::Model
     cfg.gsub! /[\b]|\e\[A|\e\[2K/, ''
     cfg
   end
-  
+
   cfg :ftp do
   end
 
