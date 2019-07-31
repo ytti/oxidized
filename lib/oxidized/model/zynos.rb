@@ -13,6 +13,7 @@ class ZyNOS < Oxidized::Model
   cmd 'config-0'
 
   cmd 'show running-config' do |cfg|
+    cfg.gsub! /(System Up Time:) \S+(.*)/, '\\1 <time>'
     cfg
   end
   
