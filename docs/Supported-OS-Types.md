@@ -201,7 +201,7 @@
   * [EdgeSwitch](/lib/oxidized/model/edgeswitch.rb)
   * [AirFiber](/lib/oxidized/model/airfiber.rb)
 * Watchguard
-  * [Fireware OS](/lib/oxidized/model/firewareos.rb)
+  * [Fireware OS](/lib/oxidized/model/fireware.rb)
 * Westell
   * [Westell 8178G, Westell 8266G](/lib/oxidized/model/weos.rb)
 * Zhone
