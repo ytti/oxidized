@@ -1,4 +1,4 @@
-class FirewareOS < Oxidized::Model
+class Fireware < Oxidized::Model
   prompt /^\[?\w*\]?\w*?(<\w*>)?(#|>)\s*$/
   comment  '-- '
 
