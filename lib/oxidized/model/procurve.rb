@@ -1,7 +1,9 @@
 class Procurve < Oxidized::Model
   # some models start lines with \r
   # previous command is repeated followed by "\eE", which sometimes ends up on last line
-  prompt /^\r?([\w\s.-]+# )$/
+  # additional prompt regex \e\[24;[0-9][hH]([\w\s.-]+# ) catches prompts on telnet with preceding vt100 control chars, where prompt does not start on a new line
+  # tested on J4899B HP ProCurve 2650 Switch and J4813A HP ProCurve 2524 Switch
+  prompt /^\r?([\w\s.-]+# )$|\e\[24;[0-9][hH]([\w\s.-]+# )/
 
   comment '! '
 
@@ -28,6 +30,8 @@ class Procurve < Oxidized::Model
   cmd :all do |cfg|
     cfg = cfg.cut_both
     cfg = cfg.gsub /^\r/, ''
+    # Additional filtering for elder switches sending vt100 control chars via telnet
+    cfg.gsub! /\e\[\??\d+(;\d+)*[A-Za-z]/, ''
     cfg
   end
 
