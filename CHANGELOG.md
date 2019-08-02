@@ -22,6 +22,7 @@
 * BUGFIX: crash on some recent Ruby versions in the nagios check (@Kegeruneku)
 * BUGFIX: remove stray whitespace in adtran model (@nickhilliard)
 * BUGFIX: if input model returns subclassed string we may overwrite the string with an empty string
+* BUGFIX: updated aosw.rb prompt. addresses issue #1254
 * MISC: add pgsql support, mechanized and net-tftp to Dockerfile
 * MISC: upgrade slop, net-telnet and rugged
 * MISC: extra secret scrubbing in comware model (@bengels00)
