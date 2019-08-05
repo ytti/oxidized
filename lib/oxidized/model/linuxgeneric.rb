@@ -32,9 +32,6 @@ class LinuxGeneric < Oxidized::Model
     cfg += add_comment 'IPv6 Routes'
     cfg += cmd 'ip -6 route'
 
-    cfg += add_comment 'SNMP settings'
-    cfg += cmd 'cat /etc/snmp/snmpd.conf'
-
     cfg += add_comment 'MOTD'
     cfg += cmd 'cat /etc/motd'
 
