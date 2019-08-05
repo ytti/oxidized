@@ -16,9 +16,6 @@ class ZyNOSGS < Oxidized::Model
     # Remove garbage vt100 control sequences
     # Backspace 0x07 char or escape char + control chars
     cfg.gsub! /[\b]|\e\[A|\e\[2K/, ''
-    #cfg.gsub! /\e\[A\e\[2K/, ''
-
-    #cfg.gsub! /\e\[2K/, ''
     cfg
   end
 
