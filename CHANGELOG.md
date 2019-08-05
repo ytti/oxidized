@@ -26,6 +26,7 @@
 * MISC: add pgsql support, mechanized and net-tftp to Dockerfile
 * MISC: upgrade slop, net-telnet and rugged
 * MISC: extra secret scrubbing in comware model (@bengels00)
+* MISC: removed snmpd lines from linuxgeneric model
 
 ## 0.26.3
 
