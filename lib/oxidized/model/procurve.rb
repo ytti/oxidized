@@ -1,9 +1,9 @@
 class Procurve < Oxidized::Model
-  # some models start lines with \r
   # previous command is repeated followed by "\eE", which sometimes ends up on last line
-  # additional prompt regex \e\[24;[0-9][hH]([\w\s.-]+# ) catches prompts on telnet with preceding vt100 control chars, where prompt does not start on a new line
-  # tested on J4899B HP ProCurve 2650 Switch and J4813A HP ProCurve 2524 Switch
-  prompt /^\r?([\w\s.-]+# )$|\e\[24;[0-9][hH]([\w\s.-]+# )/
+  # ssh switches prompt may start with \r, followed by the prompt itself, regex ([\w\s.-]+# ), which ends the line
+  # telnet switchs may start with various vt100 control characters, regex (\e\[24;[0-9][hH]), follwed by the prompt, followed
+  # by at least 3 other vt100 characters
+  prompt /(^\r|\e\[24;[0-9][hH])?([\w\s.-]+# )($|(\e\[24;[0-9][0-9]?[hH]){3})/
 
   comment '! '
 
