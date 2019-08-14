@@ -21,12 +21,11 @@ class EdgeSwitch < Oxidized::Model
         cmd vars(:enable)
       else
         cmd 'enable', /^[pP]assword:/
-	      cmd (@node.auth[:password])
+        cmd @node.auth[:password]
       end
       cmd 'terminal length 0'
     end
     pre_logout 'quit'
     pre_logout 'n'
   end
-end  
-
+end
