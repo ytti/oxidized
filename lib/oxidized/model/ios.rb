@@ -41,6 +41,7 @@ class IOS < Oxidized::Model
     cfg.gsub! /^(\s+standby \d+ authentication md5 key-string) .+?( timeout \d+)?$/, '\\1 <secret hidden> \\2'
     cfg.gsub! /^(\s+key-string) .+/, '\\1 <secret hidden>'
     cfg.gsub! /^((tacacs|radius) server [^\n]+\n(\s+[^\n]+\n)*\s+key) [^\n]+$/m, '\1 <secret hidden>'
+    cfg.gsub! /^(\s+ppp chap password 7) .+/, '\\1 <secret hidden>'
     cfg
   end
 
