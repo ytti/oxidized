@@ -14,20 +14,20 @@ module Oxidized
       # remove the prefix if an IP Address is provided with one as IPAddr converts it to a network address.
       ip_addr, = opt[:ip].to_s.split("/")
       Oxidized.logger.debug 'IPADDR %s' % ip_addr.to_s
-      @name           = opt[:name]
-      @ip             = IPAddr.new(ip_addr).to_s rescue nil
-      @ip           ||= Resolv.new.getaddress(@name) if Oxidized.config.resolve_dns?
-      @ip           ||= @name
-      @group          = opt[:group]
-      @model          = resolve_model opt
-      @input          = resolve_input opt
-      @output         = resolve_output opt
-      @auth           = resolve_auth opt
-      @prompt         = resolve_prompt opt
-      @vars           = opt[:vars]
-      @stats          = Stats.new
-      @retry          = 0
-      @repo           = resolve_repo opt
+      @name = opt[:name]
+      @ip = IPAddr.new(ip_addr).to_s rescue nil
+      @ip ||= Resolv.new.getaddress(@name) if Oxidized.config.resolve_dns?
+      @ip ||= @name
+      @group = opt[:group]
+      @model = resolve_model opt
+      @input = resolve_input opt
+      @output = resolve_output opt
+      @auth = resolve_auth opt
+      @prompt = resolve_prompt opt
+      @vars = opt[:vars]
+      @stats = Stats.new
+      @retry = 0
+      @repo = resolve_repo opt
 
       # model instance needs to access node instance
       @model.node = self
