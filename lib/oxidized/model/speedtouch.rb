@@ -1,7 +1,6 @@
 class SpeedTouch < Oxidized::Model
-
   prompt /([\w{}=]+[>])$/
-  comment  '! '
+  comment '! '
 
   expect /login$/ do
     send "\n"
@@ -10,16 +9,16 @@ class SpeedTouch < Oxidized::Model
 
   cmd ':env list' do |cfg|
     cfg.each_line.select do |line|
-      not line.match /:env list$/ and
-      not line.match /{\w+}=>$/
+      (not line.match /:env list$/) &&
+        (not line.match /{\w+}=>$/)
     end.join
     comment cfg
   end
 
   cmd ':config dump' do |cfg|
     cfg.each_line.select do |line|
-      not line.match /:config dump$/ and
-      not line.match /{\w+}=>$/
+      (not line.match /:config dump$/) &&
+        (not line.match /{\w+}=>$/)
     end.join
     cfg
   end
@@ -29,8 +28,7 @@ class SpeedTouch < Oxidized::Model
     password /^Password : /
   end
 
- cfg :telnet do
-   pre_logout 'exit'
- end
-
+  cfg :telnet do
+    pre_logout 'exit'
+  end
 end
