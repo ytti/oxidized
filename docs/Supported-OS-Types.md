@@ -182,6 +182,8 @@
    * [SonicOS](lib/oxidized/model/sonicos.rb)
 * SNR
   * [SNR-S300G, S2xxx, S3xxx, S4xxx](/lib/oxidized/model/dcnos.rb)
+* Speedtouch
+  * [Thomson Speedtouch](/lib/oxidized/model/speedtouch.rb)
 * Supermicro
   * [SSE-G2252, G2252P](/lib/oxidized/model/edgecos.rb)
   * [SSE-G48-TG4, G24-TG4](/lib/oxidized/model/aricentiss.rb)
