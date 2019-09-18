@@ -2,6 +2,8 @@
 
 ## Master
 
+* BUGFIX: filter out ASA configuration modified/changed timestamps to keep output persistent
+
 ## 0.27.0
 
 * FEATURE: add automatic restart on failure for systemd (@deajan)
