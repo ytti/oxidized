@@ -27,6 +27,7 @@
 * BUGFIX: updated aosw.rb prompt. addresses issue #1254
 * BUGFIX: update comware model to fix telnet login/password for HPE MSR954 and HPE5130. Issue #1886
 * BUGFIX: filter out IOS configuration/NVRAM modified/changed timestamps to keep output persistent
+* BUGFIX: filter out ASA configuration modified/changed timestamps to keep output persistent
 * BUGFIX: update screenos model to reduce the amount of lines being stripped from beginning of cfg output
 * MISC: add pgsql support, mechanized and net-tftp to Dockerfile
 * MISC: upgrade slop, net-telnet and rugged
