@@ -32,6 +32,7 @@
 * MISC: upgrade slop, net-telnet and rugged
 * MISC: extra secret scrubbing in comware model (@bengels00)
 * MISC: removed snmpd lines from linuxgeneric model
+* MISC: filter pap and chap passwords in ios model (@matejv)
 
 ## 0.26.3
 
