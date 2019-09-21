@@ -28,7 +28,7 @@
 * MISC: upgrade slop, net-telnet and rugged
 * MISC: extra secret scrubbing in comware model (@bengels00)
 * MISC: removed snmpd lines from linuxgeneric model
-* MISC: moved show configuration command to the end in junos model
+* MISC: moved show configuration command to the end in junos model (@raunz)
 
 ## 0.26.3
 
