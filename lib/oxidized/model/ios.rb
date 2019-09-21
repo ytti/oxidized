@@ -41,6 +41,7 @@ class IOS < Oxidized::Model
     cfg.gsub! /^(\s+standby \d+ authentication md5 key-string) .+?( timeout \d+)?$/, '\\1 <secret hidden> \\2'
     cfg.gsub! /^(\s+key-string) .+/, '\\1 <secret hidden>'
     cfg.gsub! /^((tacacs|radius) server [^\n]+\n(\s+[^\n]+\n)*\s+key) [^\n]+$/m, '\1 <secret hidden>'
+    cfg.gsub! /^(\s+ppp (chap|pap) password \d) .+/, '\\1 <secret hidden>'
     cfg
   end
 
@@ -95,6 +96,7 @@ class IOS < Oxidized::Model
 
   cmd 'show vtp status' do |cfg|
     cfg.gsub! /^$\n/, ''
+    cfg.gsub! /Configuration last modified by.*\n/, ''
     cfg.gsub! /^/, 'VTP: ' unless cfg.empty?
     comment "#{cfg}\n"
   end
@@ -107,6 +109,8 @@ class IOS < Oxidized::Model
     cfg = cfg.each_line.to_a[3..-1]
     cfg = cfg.reject { |line| line.match /^ntp clock-period / }.join
     cfg.gsub! /^Current configuration : [^\n]*\n/, ''
+    cfg.gsub! /^! (Last|No) configuration change (at|since).*\n/, ''
+    cfg.gsub! /^! NVRAM config last updated.*\n/, ''
     cfg.gsub! /^ tunnel mpls traffic-eng bandwidth[^\n]*\n*(
                   (?: [^\n]*\n*)*
                   tunnel mpls traffic-eng auto-bw)/mx, '\1'

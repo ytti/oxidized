@@ -26,8 +26,8 @@ class Comware < Oxidized::Model
   end
 
   cfg :telnet do
-    username /^Username:$/
-    password /^Password:$/
+    username /^(Username|login):/
+    password /^Password:/
   end
 
   cfg :telnet, :ssh do

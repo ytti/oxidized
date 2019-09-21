@@ -12,6 +12,7 @@
 * FEATURE: add hpmsm model (@timwsuqld)
 * FEATURE: add FastIron model (@ZacharyPuls)
 * FEATURE: add Linuxgeneric model (@davama)
+* FEATURE: add SpeedTouch model (@raunz)
 * BUGFIX: improve procurve telnet support for older switches (@deajan)
 * BUGFIX: voss model
 * BUGFIX: cambium model should not consider timestamp for backup as unneeded, and causes diffs (@cchance27)
@@ -24,11 +25,15 @@
 * BUGFIX: remove stray whitespace in adtran model (@nickhilliard)
 * BUGFIX: if input model returns subclassed string we may overwrite the string with an empty string
 * BUGFIX: updated aosw.rb prompt. addresses issue #1254
+* BUGFIX: update comware model to fix telnet login/password for HPE MSR954 and HPE5130. Issue #1886
+* BUGFIX: filter out IOS configuration/NVRAM modified/changed timestamps to keep output persistent
+* BUGFIX: update screenos model to reduce the amount of lines being stripped from beginning of cfg output
 * MISC: add pgsql support, mechanized and net-tftp to Dockerfile
 * MISC: upgrade slop, net-telnet and rugged
 * MISC: extra secret scrubbing in comware model (@bengels00)
 * MISC: removed snmpd lines from linuxgeneric model
 * MISC: moved show configuration command to the end in junos model (@raunz)
+* MISC: filter pap and chap passwords in ios model (@matejv)
 
 ## 0.26.3
 
