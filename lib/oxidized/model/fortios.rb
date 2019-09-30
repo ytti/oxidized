@@ -34,6 +34,11 @@ class FortiOS < Oxidized::Model
     comment cfg
   end
 
+  cmd 'get system ha status' do |cfg|
+    cfg = cfg.each_line.select { |line| line.match /^(HA Health Status|Mode|Model|Master|Slave\s+):/ }.join
+    comment cfg
+  end
+
   post do
     cfg = []
     cfg << cmd('config global') if @vdom_enabled
