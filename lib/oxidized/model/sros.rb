@@ -45,7 +45,7 @@ class SROS < Oxidized::Model
   # Show the chassis information.
   #
   cmd 'show chassis' do |cfg|
-    comment cfg.lines.to_a[1..25].reject { |line| line.match /state|Time|Temperature|Status/ }.join
+    comment cfg.lines.to_a[0..25].reject { |line| line.match /state|Time|Temperature|Status/ }.join
   end
 
   #
