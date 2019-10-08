@@ -32,6 +32,7 @@ class Procurve < Oxidized::Model
     cfg = cfg.gsub /^\r/, ''
     # Additional filtering for elder switches sending vt100 control chars via telnet
     cfg.gsub! /\e\[\??\d+(;\d+)*[A-Za-z]/, ''
+    cfg.gsub! /(.*(AC .*[0-9]*V).*([0-9]*).*([0-9]*)$/, '\\1 <removed> \\2'
     cfg
   end
 
