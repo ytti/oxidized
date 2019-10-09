@@ -2,6 +2,7 @@
 
 ## Master
 
+* FEATURE: add automatic restart on failure for systemd (@deajan)
 * FEATURE: add ZynOS GS1900 specific model support (@deajan)
 * FEATURE: add PurityOS model support (@elliot64)
 * FEATURE: add Ubiquiti Airfiber model support (@cchance27)
