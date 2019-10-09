@@ -13,6 +13,7 @@
 * FEATURE: add FastIron model (@ZacharyPuls)
 * FEATURE: add Linuxgeneric model (@davama)
 * FEATURE: add SpeedTouch model (@raunz)
+* BUGFIX: prevent versionning on procurve switches by removing power usage output (@deajan)
 * BUGFIX: improve procurve telnet support for older switches (@deajan)
 * BUGFIX: voss model
 * BUGFIX: cambium model should not consider timestamp for backup as unneeded, and causes diffs (@cchance27)
