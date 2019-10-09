@@ -18,6 +18,8 @@ ExecStart=/usr/local/bin/oxidized
 User=oxidized
 KillSignal=SIGKILL
 #Environment="OXIDIZED_HOME=/etc/oxidized"
+Restart=on-failure
+RestartSec=300s
 
 [Install]
 WantedBy=multi-user.target
