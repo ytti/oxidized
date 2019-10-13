@@ -17,6 +17,7 @@
 * FEATURE: add Linuxgeneric model (@davama)
 * FEATURE: include HA status info in fortios model (@raunz)
 * FEATURE: add SpeedTouch model (@raunz)
+* FEATURE: comware added device manuinfo to include serial number (@raunz)
 * BUGFIX: improve procurve telnet support for older switches (@deajan)
 * BUGFIX: voss model
 * BUGFIX: cambium model should not consider timestamp for backup as unneeded, and causes diffs (@cchance27)
@@ -33,6 +34,7 @@
 * BUGFIX: filter out IOS configuration/NVRAM modified/changed timestamps to keep output persistent
 * BUGFIX: update screenos model to reduce the amount of lines being stripped from beginning of cfg output
 * BUGFIX: include colon in aosw prompt regexp in case it is a mac address (@raunz)
+* BUGFIX: comware improvement for requesting HP 19x0 switches hidden CLI. Issues #1754 and #1447
 * MISC: add pgsql support, mechanized and net-tftp to Dockerfile
 * MISC: upgrade slop, net-telnet and rugged
 * MISC: extra secret scrubbing in comware model (@bengels00)
