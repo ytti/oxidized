@@ -12,6 +12,7 @@
 * FEATURE: add firelinuxos (FirePOWER) model (@rgnv)
 * FEATURE: add sonicos model (@rgnv)
 * FEATURE: add hpmsm model (@timwsuqld)
+* FEATURE: include hardware and product information in oneos model (@raunz)
 * FEATURE: add FastIron model (@ZacharyPuls)
 * FEATURE: add Linuxgeneric model (@davama)
 * FEATURE: add SpeedTouch model (@raunz)
