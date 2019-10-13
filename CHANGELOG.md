@@ -15,6 +15,7 @@
 * FEATURE: include hardware and product information in oneos model (@raunz)
 * FEATURE: add FastIron model (@ZacharyPuls)
 * FEATURE: add Linuxgeneric model (@davama)
+* FEATURE: include HA status info in fortios model (@raunz)
 * FEATURE: add SpeedTouch model (@raunz)
 * BUGFIX: improve procurve telnet support for older switches (@deajan)
 * BUGFIX: voss model
