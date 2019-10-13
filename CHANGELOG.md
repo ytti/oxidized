@@ -17,6 +17,7 @@
 * FEATURE: add Linuxgeneric model (@davama)
 * FEATURE: include HA status info in fortios model (@raunz)
 * FEATURE: add SpeedTouch model (@raunz)
+* BUGFIX: prevent versionning on procurve switches by removing power usage output (@deajan)
 * FEATURE: comware added device manuinfo to include serial number (@raunz)
 * BUGFIX: improve procurve telnet support for older switches (@deajan)
 * BUGFIX: voss model
