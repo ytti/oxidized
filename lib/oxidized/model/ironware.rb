@@ -51,6 +51,7 @@ class IronWare < Oxidized::Model
 
   cmd 'show flash' do |cfg|
     cfg.gsub! /(\d+) bytes/, '' # Fix for ADX flash size
+    cfg.gsub! /(^((.*)Code Flash Free Space(.*))$)/, '' # Brocade
     comment cfg
   end
 

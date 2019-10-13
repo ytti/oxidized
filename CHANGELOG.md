@@ -3,16 +3,22 @@
 ## Master
 
 * FEATURE: include transceiver information in EdgeCOS model (@freddy36)
+* FEATURE: add automatic restart on failure for systemd (@deajan)
 * FEATURE: add ZynOS GS1900 specific model support (@deajan)
 * FEATURE: add PurityOS model support (@elliot64)
 * FEATURE: add Ubiquiti Airfiber model support (@cchance27)
 * FEATURE: add Icotera support (@funzoneq)
 * FEATURE: include licensing information in aos model (@pozar)
+* FEATURE: include chassis information in sros model (@raunz)
 * FEATURE: add firelinuxos (FirePOWER) model (@rgnv)
 * FEATURE: add sonicos model (@rgnv)
 * FEATURE: add hpmsm model (@timwsuqld)
+* FEATURE: include hardware and product information in oneos model (@raunz)
 * FEATURE: add FastIron model (@ZacharyPuls)
 * FEATURE: add Linuxgeneric model (@davama)
+* FEATURE: include HA status info in fortios model (@raunz)
+* FEATURE: add SpeedTouch model (@raunz)
+* FEATURE: comware added device manuinfo to include serial number (@raunz)
 * BUGFIX: improve procurve telnet support for older switches (@deajan)
 * BUGFIX: voss model
 * BUGFIX: cambium model should not consider timestamp for backup as unneeded, and causes diffs (@cchance27)
@@ -25,10 +31,17 @@
 * BUGFIX: remove stray whitespace in adtran model (@nickhilliard)
 * BUGFIX: if input model returns subclassed string we may overwrite the string with an empty string
 * BUGFIX: updated aosw.rb prompt. addresses issue #1254
+* BUGFIX: update comware model to fix telnet login/password for HPE MSR954 and HPE5130. Issue #1886
+* BUGFIX: filter out IOS configuration/NVRAM modified/changed timestamps to keep output persistent
+* BUGFIX: update screenos model to reduce the amount of lines being stripped from beginning of cfg output
+* BUGFIX: include colon in aosw prompt regexp in case it is a mac address (@raunz)
+* BUGFIX: comware improvement for requesting HP 19x0 switches hidden CLI. Issues #1754 and #1447
 * MISC: add pgsql support, mechanized and net-tftp to Dockerfile
 * MISC: upgrade slop, net-telnet and rugged
 * MISC: extra secret scrubbing in comware model (@bengels00)
 * MISC: removed snmpd lines from linuxgeneric model
+* MISC: moved show configuration command to the end in junos model (@raunz)
+* MISC: filter pap and chap passwords in ios model (@matejv)
 
 ## 0.26.3
 
