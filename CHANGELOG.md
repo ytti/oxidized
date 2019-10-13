@@ -8,6 +8,7 @@
 * FEATURE: add Ubiquiti Airfiber model support (@cchance27)
 * FEATURE: add Icotera support (@funzoneq)
 * FEATURE: include licensing information in aos model (@pozar)
+* FEATURE: include chassis information in sros model (@raunz)
 * FEATURE: add firelinuxos (FirePOWER) model (@rgnv)
 * FEATURE: add sonicos model (@rgnv)
 * FEATURE: add hpmsm model (@timwsuqld)
