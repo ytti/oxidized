@@ -2,17 +2,22 @@
 
 ## Master
 
+* FEATURE: add automatic restart on failure for systemd (@deajan)
 * FEATURE: add ZynOS GS1900 specific model support (@deajan)
 * FEATURE: add PurityOS model support (@elliot64)
 * FEATURE: add Ubiquiti Airfiber model support (@cchance27)
 * FEATURE: add Icotera support (@funzoneq)
 * FEATURE: include licensing information in aos model (@pozar)
+* FEATURE: include chassis information in sros model (@raunz)
 * FEATURE: add firelinuxos (FirePOWER) model (@rgnv)
 * FEATURE: add sonicos model (@rgnv)
 * FEATURE: add hpmsm model (@timwsuqld)
+* FEATURE: include hardware and product information in oneos model (@raunz)
 * FEATURE: add FastIron model (@ZacharyPuls)
 * FEATURE: add Linuxgeneric model (@davama)
+* FEATURE: include HA status info in fortios model (@raunz)
 * FEATURE: add SpeedTouch model (@raunz)
+* BUGFIX: prevent versionning on procurve switches by removing power usage output (@deajan)
 * FEATURE: comware added device manuinfo to include serial number (@raunz)
 * BUGFIX: improve procurve telnet support for older switches (@deajan)
 * BUGFIX: voss model

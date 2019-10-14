@@ -32,6 +32,8 @@ class Procurve < Oxidized::Model
     cfg = cfg.gsub /^\r/, ''
     # Additional filtering for elder switches sending vt100 control chars via telnet
     cfg.gsub! /\e\[\??\d+(;\d+)*[A-Za-z]/, ''
+    # Additional filtering for power usage reporting which obviously changes over time
+    cfg.gsub! /^(.*AC [0-9]{3}V\/?([0-9]{3}V)?) *([0-9]{1,3}) (.*)/, '\\1 <removed> \\4'
     cfg
   end
 
