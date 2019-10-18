@@ -91,7 +91,7 @@ module Oxidized
            name: getname(ipaddr))
     end
 
-    def jnpr(ipaddr, log, index)
+    def junos(ipaddr, log, index)
       # TODO: we need to fetch 'ip/name' in mode == :file here
       user = log[index + 2][1..-2]
       msg  = log[(index + 6)..-1].join(' ')[10..-2]
@@ -99,23 +99,19 @@ module Oxidized
       rest(user: user, msg: msg, model: 'jnpr', ip: ipaddr,
            name: getname(ipaddr))
     end
-    
+
     def aruba(ipaddr, log, index)
       user = log[index + 2].split('=')[4].split(',')[0][1..-2]
       rest(user: user, model: 'aruba', ip: ipaddr,
            name: getname(ipaddr))
     end
-    
 
     def handle_log(log, ipaddr)
       log = log.to_s.split ' '
-      if (i = log.find_index { |e| e.match(MSG[:ios]) })
-        ios ipaddr, log,  i
-      elsif (i = log.index(MSG[:junos]))
-        jnpr ipaddr, log, i
-      elsif (i = log.find_index{ |e| e.match(MSG[:aruba])} )
-        aruba ipaddr, log, i        
-      end
+      index, vendor = MSG.map do |key, value|
+        [ log.find_index { |e| e.match value }, key ]
+      end.find(&:first)
+      send(vendor, ipaddr, log, index) if index
     end
 
     def run(io)
