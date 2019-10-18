@@ -106,9 +106,10 @@ module Oxidized
 
     def handle_log(log, ipaddr)
       log = log.to_s.split ' '
-      index, vendor = MSG.map do |key, value|
-        [log.find_index { |e| e.match value }, key]
-      end.find(&:first)
+      index, vendor = MSG.find do |key, value|
+        index = log.find_index { |e| e.match? value }
+        break index, key if index
+      end
       rest send(vendor, log, index, ip: ipaddr, name: getname(ipaddr), model: vendor.to_s) if index
     end
 
