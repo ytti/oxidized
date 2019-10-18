@@ -101,8 +101,7 @@ module Oxidized
     end
 
     def aruba(log, index, **opts)
-      opts[:user] = log[index + 2].split('=')[4].split(',')[0][1..-2]
-      opts
+      opts.merge user: log[index + 2].split('=')[4].split(',')[0][1..-2]
     end
 
     def handle_log(log, ipaddr)
