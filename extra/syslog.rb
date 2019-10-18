@@ -110,7 +110,7 @@ module Oxidized
       index, vendor = MSG.map do |key, value|
         [log.find_index { |e| e.match value }, key]
       end.find(&:first)
-      rest send(vendor, log, index, ip: @ipaddr, name: getname(ipaddr), model: vendor.to_s) if index
+      rest send(vendor, log, index, ip: ipaddr, name: getname(ipaddr), model: vendor.to_s) if index
     end
 
     def run(io)
