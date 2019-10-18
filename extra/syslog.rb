@@ -96,7 +96,7 @@ module Oxidized
       # TODO: we need to fetch 'ip/name' in mode == :file here
       opts[:user] = log[index + 2][1..-2]
       opts[:msg] = log[(index + 6)..-1].join(' ')[10..-2]
-      opts[:msg] = nil if opts[:msg] == 'none'
+      opts.delete(:msg) if opts[:msg] == 'none'
       opts
     end
 
