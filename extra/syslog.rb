@@ -80,32 +80,32 @@ module Oxidized
     end
 
     def rest(opt)
+      opt[:ip] = @ip
+      opt[:name] = @name
+      opt[:model] = @vendor
       Oxidized::RestClient.next opt
     end
 
-    def ios(ipaddr, log, index)
+    def ios(log, index)
       # TODO: we need to fetch 'ip/name' in mode == :file here
       user = log[index + 5]
       from = log[-1][1..-2]
-      rest(user: user, from: from, model: _callee_.to_s, ip: ipaddr,
-           name: getname(ipaddr))
+      rest(user: user, from: from)
     end
     alias nxos ios
     alias eos ios
 
-    def junos(ipaddr, log, index)
+    def junos(log, index)
       # TODO: we need to fetch 'ip/name' in mode == :file here
       user = log[index + 2][1..-2]
       msg  = log[(index + 6)..-1].join(' ')[10..-2]
       msg  = nil if msg == 'none'
-      rest(user: user, msg: msg, model: _callee_.to_s, ip: ipaddr,
-           name: getname(ipaddr))
+      rest(user: user, msg: msg)
     end
 
-    def aruba(ipaddr, log, index)
+    def aruba(log, index)
       user = log[index + 2].split('=')[4].split(',')[0][1..-2]
-      rest(user: user, model: _callee_.to_s, ip: ipaddr,
-           name: getname(ipaddr))
+      rest(user: user)
     end
 
     def handle_log(log, ipaddr)
@@ -113,7 +113,10 @@ module Oxidized
       index, vendor = MSG.map do |key, value|
         [log.find_index { |e| e.match value }, key]
       end.find(&:first)
-      send(vendor, ipaddr, log, index) if index
+      return unless index
+
+      @ipaddr, @name, @vendor = ipaddr, getname(ipaddr), vendor
+      send(log, index)
     end
 
     def run(io)
