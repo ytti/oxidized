@@ -90,6 +90,8 @@ module Oxidized
       rest(user: user, from: from, model: 'ios', ip: ipaddr,
            name: getname(ipaddr))
     end
+    alias :nxos, :ios
+    alias :eos, :ios
 
     def junos(ipaddr, log, index)
       # TODO: we need to fetch 'ip/name' in mode == :file here
