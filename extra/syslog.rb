@@ -54,7 +54,8 @@ module Oxidized
       ios:   /%SYS-(SW[0-9]+-)?5-CONFIG_I:/,
       junos: 'UI_COMMIT:',
       eos:   /%SYS-5-CONFIG_I:/,
-      nxos:  /%VSHD-5-VSHD_SYSLOG_CONFIG_I:/
+      nxos:  /%VSHD-5-VSHD_SYSLOG_CONFIG_I:/,
+      aruba: 'Notice-Type=\'Running'
     }.freeze
 
     class << self
@@ -98,6 +99,13 @@ module Oxidized
       rest(user: user, msg: msg, model: 'jnpr', ip: ipaddr,
            name: getname(ipaddr))
     end
+    
+    def aruba(ipaddr, log, index)
+      user = log[index + 2].split('=')[4].split(',')[0][1..-2]
+      rest(user: user, model: 'aruba', ip: ipaddr,
+           name: getname(ipaddr))
+    end
+    
 
     def handle_log(log, ipaddr)
       log = log.to_s.split ' '
@@ -105,6 +113,8 @@ module Oxidized
         ios ipaddr, log,  i
       elsif (i = log.index(MSG[:junos]))
         jnpr ipaddr, log, i
+      elsif (i = log.find_index{ |e| e.match(MSG[:aruba])} )
+        aruba ipaddr, log, i        
       end
     end
 
