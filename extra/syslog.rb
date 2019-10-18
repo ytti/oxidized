@@ -115,8 +115,8 @@ module Oxidized
       end.find(&:first)
       return unless index
 
-      @ipaddr, @name, @vendor = ipaddr, getname(ipaddr), vendor
-      send(log, index)
+      @ipaddr, @name, @vendor = ipaddr, getname(ipaddr), vendor.to_s
+      send(vendor, log, index)
     end
 
     def run(io)
