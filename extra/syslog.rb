@@ -137,7 +137,7 @@ module Oxidized
         ipaddr
       else
         name = (Resolv.getname ipaddr.to_s rescue ipaddr)
-        Oxidized::CFG.syslogd.dns_map.each { |re, sub| name.sub! Regexp.new(re), sub }
+        Oxidized::CFG.syslogd.dns_map.each { |re, sub| name.sub! Regexp.new(re.to_s), sub }
         name
       end
     end
