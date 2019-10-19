@@ -36,6 +36,10 @@ module Oxidized
   CFGS.default.syslogd.port        = 514
   CFGS.default.syslogd.file        = 'messages'
   CFGS.default.syslogd.resolve     = true
+  CFGS.default.syslogd.dns_map     = {
+    '(.*)\.strip\.this\.domain\.com' => '\\1',
+    '(.*)\.also\.this\.net'          => '\\1'
+  }
 
   begin
     CFGS.load
@@ -46,10 +50,6 @@ module Oxidized
   end
 
   class SyslogMonitor
-    NAME_MAP = {
-      /(.*)\.ip\.tdc\.net/ => '\1',
-      /(.*)\.ip\.fi/       => '\1'
-    }.freeze
     MSG = {
       ios:   /%SYS-(SW[0-9]+-)?5-CONFIG_I:/,
       junos: 'UI_COMMIT:',
@@ -137,7 +137,7 @@ module Oxidized
         ipaddr
       else
         name = (Resolv.getname ipaddr.to_s rescue ipaddr)
-        NAME_MAP.each { |re, sub| name.sub! re, sub }
+        Oxidized::CFG.syslogd.dns_map.each { |re, sub| name.sub! Regexp.new(re), sub }
         name
       end
     end
