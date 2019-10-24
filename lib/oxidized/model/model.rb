@@ -7,12 +7,18 @@ module Oxidized
 
     class << self
       def inherited(klass)
-        klass.instance_variable_set '@cmd',     (Hash.new { |h, k| h[k] = [] })
-        klass.instance_variable_set '@cfg',     (Hash.new { |h, k| h[k] = [] })
-        klass.instance_variable_set '@procs',   (Hash.new { |h, k| h[k] = [] })
-        klass.instance_variable_set '@expect',  []
-        klass.instance_variable_set '@comment', nil
-        klass.instance_variable_set '@prompt',  nil
+        if klass.superclass == Oxidized::Model
+          klass.instance_variable_set '@cmd',     (Hash.new { |h, k| h[k] = [] })
+          klass.instance_variable_set '@cfg',     (Hash.new { |h, k| h[k] = [] })
+          klass.instance_variable_set '@procs',   (Hash.new { |h, k| h[k] = [] })
+          klass.instance_variable_set '@expect',  []
+          klass.instance_variable_set '@comment', nil
+          klass.instance_variable_set '@prompt',  nil
+        else # we're subclassing some existing model, take its variables
+          instance_variables.each do |var|
+            klass.instance_variable_set var, instance_variable_get(var)
+          end
+        end
       end
 
       def comment(str = '# ')
