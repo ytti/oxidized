@@ -21,14 +21,18 @@ module Oxidized
         end
       end
 
-      def comment(str = '# ')
-        return @comment if @comment
-
-        @comment = block_given? ? yield : str
+      def comment(str = "# ")
+        @comment = if block_given?
+                     yield
+                   elsif not @comment
+                     str
+                   else
+                     @comment
+                   end
       end
 
       def prompt(regex = nil)
-        @prompt || (@prompt = regex)
+        @prompt = regex || @prompt
       end
 
       def cfg(*methods, **args, &block)
