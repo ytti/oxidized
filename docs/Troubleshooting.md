@@ -1,13 +1,11 @@
-# Frequently Asked Questions
+# Troubleshooting
 
-## Troubleshooting
-
-Q) I've tried Oxidized with a supported device but no (or partial) configuration is collected, authentication and everything else seems fine - how come?
+## Oxidized connects to a supported device but no (or partial) configuration is collected
 
 A common reason for configuration collection to fail after successful authentication is prompt mismatches. The symptoms typically fall into one of two categories:
 
-- Oxidized successfully logs into the device, then reports a timeout without collecting configuration. This can be caused by an unmatched prompt.
-- Only partial output is collected and collection stops abruptly. This can be caused by overly greedy prompt being matched against non-prompt output.
+* Oxidized successfully logs into the device, then reports a timeout without collecting configuration. This can be caused by an unmatched prompt.
+* Only partial output is collected and collection stops abruptly. This can be caused by overly greedy prompt being matched against non-prompt output.
 
 *Troubleshooting an unmatched prompt:*
 
@@ -66,36 +64,3 @@ Compare the output to the partial output collected by Oxidized, focusing on the 
 Adapt the prompt regexp to be more conservative if necessary in a local model override file.
 
 *We encourage you to submit a PR for any prompt issues you encounter.*
-
-## Building Models
-
-Q) What are the steps required to build a model for a new device?
-
-An Oxidized model, at minimum, requires just three elements:
-
-- A model file, placed in the ~/.config/oxidized directory.
-- A class defined within the file with the same name as the file that inherits from Oxidized::Model.
-- At least one command that will be executed and the output of which will be collected.
-
-A bare-bone example would be the file `~/.config/oxidized/launchinator.rb`, with the following context:
-
-```ruby
-class Launchinator < Oxidized::Model
-  
-  cmd 'show recent-launches'
-```
-
-This model will:
-
-- Log into the device and expect the default prompt.
-- Upon matching it, execute the command `show recent-launches`
-- Collect the output.
-
-It is often useful to, at minimum, define the following additional elements:
-
-- A regexp for the prompt, via the `prompt` statement.
-- A comment prefix, via the `comment` statement.
-- A regexp for telnet username and password prompts.
-- A mechanism for handling `enable` or similar functionality.
-
-A more fleshed out example can be found by reviewing the `ios.rb` and `junos.rb` models.
