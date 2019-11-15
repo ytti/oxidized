@@ -2,6 +2,10 @@
 
 ## Master
 
+## 0.27.1
+
+* BUGFIX: enable command for Arista EOS model in case RADIUS AVP's don't default to enable
+
 ## 0.27.0
 
 * FEATURE: add automatic restart on failure for systemd (@deajan)
