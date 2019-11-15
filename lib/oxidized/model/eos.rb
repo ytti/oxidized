@@ -18,6 +18,10 @@ class EOS < Oxidized::Model
     cfg
   end
 
+  cmd 'enable' do |cfg\
+    comment cfg
+  end
+
   cmd 'show inventory | no-more' do |cfg|
     comment cfg
   end
