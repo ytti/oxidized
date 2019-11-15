@@ -18,7 +18,7 @@ class EOS < Oxidized::Model
     cfg
   end
 
-  cmd 'enable' do |cfg\
+  cmd 'enable' do |cfg|
     comment cfg
   end
 
