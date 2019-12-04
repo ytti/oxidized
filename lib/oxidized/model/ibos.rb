@@ -10,7 +10,7 @@ class IBOS < Oxidized::Model
   end
 
   cmd :secret do |cfg|
-    
+
     # snmp-group version 2c
     #  notify 10.1.1.1 community public trap
     cfg.gsub! /^ notify (\S+) community (\S+) (.*)/, ' notify \\1 community <hidden> \\3'
@@ -21,7 +21,6 @@ class IBOS < Oxidized::Model
 
     # radius server 10.1.1.1 secret public
     cfg.gsub! /^radius server (\S+) secret (\S+)(.*)/, 'radius server \\1 secret <hidden> \\3'
-
   end
 
   cmd 'show version' do |cfg|
@@ -31,7 +30,7 @@ class IBOS < Oxidized::Model
 
   cmd 'show running-config' do |cfg|
     cfg = cfg.each_line.to_a[0..-1].join
-    cfg.gsub! /^.*!volatile .*\n/, ''
+    cfg.gsub! /.*!volatile.*/, ''
     cfg
   end
 
