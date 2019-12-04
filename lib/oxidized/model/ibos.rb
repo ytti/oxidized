@@ -10,7 +10,6 @@ class IBOS < Oxidized::Model
   end
 
   cmd :secret do |cfg|
-
     # snmp-group version 2c
     #  notify 10.1.1.1 community public trap
     cfg.gsub! /^ notify (\S+) community (\S+) (.*)/, ' notify \\1 community <hidden> \\3'
