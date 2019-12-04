@@ -2,6 +2,8 @@
 
 ## Master
 
+* FEATURE: add Waystream iBOS model
+
 ## 0.27.0
 
 * FEATURE: add automatic restart on failure for systemd (@deajan)
