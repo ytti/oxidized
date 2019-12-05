@@ -2,6 +2,8 @@
 
 ## Master
 
+* MISC: restore IOS model filtering of "configuration last changed/NVRAM modified" in #1896. Issue #1921
+
 ## 0.27.0
 
 * FEATURE: add automatic restart on failure for systemd (@deajan)
