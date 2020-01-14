@@ -2,6 +2,10 @@
 
 ## Master
 
+## 0.27.1
+
+* MISC: scrubs macsec key from Arista EOS
+
 ## 0.27.0
 
 * FEATURE: add automatic restart on failure for systemd (@deajan)
