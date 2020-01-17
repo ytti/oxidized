@@ -2,6 +2,8 @@
 
 ## Master
 
+* BUGFIX: Junos model should not consider bandwidth licenses in use for vMX devices
+
 ## 0.27.0
 
 * FEATURE: add automatic restart on failure for systemd (@deajan)
