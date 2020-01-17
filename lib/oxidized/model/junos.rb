@@ -8,6 +8,7 @@ class JunOS < Oxidized::Model
   cmd :all do |cfg|
     cfg = cfg.cut_both if screenscrape
     cfg.gsub!(/  scale-subscriber (\s+)(\d+)/, '  scale-subscriber                <count>')
+    cfg.gsub!(/  VMX-BANDWIDTH (\s+)(\d+)/,'  VMX-BANDWIDTH                <count>')
     cfg.lines.map { |line| line.rstrip }.join("\n") + "\n"
   end
 
