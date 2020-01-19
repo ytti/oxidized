@@ -2,6 +2,8 @@
 
 ## Master
 
+* BUGFIX: better login modalities for telnet in aos7 (@optimuscream)
+
 ## 0.27.0
 
 * FEATURE: add automatic restart on failure for systemd (@deajan)
