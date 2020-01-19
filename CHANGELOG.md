@@ -5,6 +5,7 @@
 * FEATURE: add Waystream iBOS model
 * BUGFIX: better login modalities for telnet in aos7 (@optimuscream)
 * BUGFIX: better virtual domain detection in fortios (@agabellini)
+* MISC: more secret scrubbing in sonicos (@s-fu)
 * MISC: openssh key scrubbing as secret in fortios (@agabellini)
 
 ## 0.27.0
