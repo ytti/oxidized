@@ -76,7 +76,7 @@ class IronWare < Oxidized::Model
   cfg :telnet, :ssh do
     if vars :enable
       post_login do
-        send "enable\n"
+        send "enable\r\n"
         cmd vars(:enable)
       end
     end
