@@ -2,6 +2,7 @@
 
 ## Master
 
+* FEATURE: add Waystream iBOS model
 * BUGFIX: better login modalities for telnet in aos7 (@optimuscream)
 
 ## 0.27.0
