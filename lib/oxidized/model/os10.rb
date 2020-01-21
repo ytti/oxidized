@@ -24,12 +24,12 @@ class OS10 < Oxidized::Model
   cmd 'show running-configuration' do |cfg|
     cfg = cfg.each_line.to_a[3..-1].join
     cfg
- end
+  end
 
   cfg :telnet do
     username /^Login:/
     password /^Password:/
- end
+  end
 
   cfg :telnet, :ssh do
     if vars :enable
