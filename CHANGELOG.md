@@ -2,7 +2,7 @@
 
 ## Master
 
-* MISC: scrubs macsec key from Arista EOS
+* MISC: scrubs macsec key from Arista EOS (@krisamundson)
 
 ## 0.27.0
 
