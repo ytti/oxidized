@@ -7,6 +7,7 @@
 * BUGFIX: better virtual domain detection in fortios (@agabellini)
 * MISC: more secret scrubbing in sonicos (@s-fu)
 * MISC: openssh key scrubbing as secret in fortios (@agabellini)
+* MISC: scrubs macsec key from Arista EOS (@krisamundson)
 
 ## 0.27.0
 
