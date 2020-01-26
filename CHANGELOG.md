@@ -2,7 +2,14 @@
 
 ## Master
 
+* FEATURE: add enable support to ciscosmb (@deesel)
+* FEATURE: add Waystream iBOS model
+* BUGFIX: better login modalities for telnet in aos7 (@optimuscream)
+* BUGFIX: better virtual domain detection in fortios (@agabellini)
 * MISC: restore IOS model filtering of "configuration last changed/NVRAM modified" in #1896. Issue #1921
+* MISC: more secret scrubbing in sonicos (@s-fu)
+* MISC: openssh key scrubbing as secret in fortios (@agabellini)
+* MISC: scrubs macsec key from Arista EOS (@krisamundson)
 
 ## 0.27.0
 
