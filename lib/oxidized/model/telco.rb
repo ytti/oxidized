@@ -1,4 +1,6 @@
 class TELCO < Oxidized::Model
+  # Telco Systems T-Marc 3306
+
   prompt /^(\r?[\w.@_()-]+[#]\s?)$/
   comment '! '
 
