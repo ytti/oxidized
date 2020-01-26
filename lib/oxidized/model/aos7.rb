@@ -47,8 +47,8 @@ class AOS7 < Oxidized::Model
   end
 
   cfg :telnet do
-    username /^login : /
-    password /^Password : /
+    username /^([\w -])*login: /
+    password /^Password\s?: /
   end
 
   cfg :telnet, :ssh do

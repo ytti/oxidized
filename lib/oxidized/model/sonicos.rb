@@ -12,6 +12,11 @@ class SonicOS < Oxidized::Model
     cfg.gsub! /cli ftp password default \d\,(\S+)/, 'cli ftp password default <secret hidden> \2'
     cfg.gsub! /secret \d\,(\S+)/, 'secret <secret hidden> \2'
     cfg.gsub! /shared-secret \d\,(\S+)/, 'shared-secret <secret hidden> \2'
+    cfg.gsub! /password \d\,(\S+)/, 'password <secret hidden> \2'
+    cfg.gsub! /passphrase password \d\,(\S+)/, 'passphrase password <secret hidden> \2'
+    cfg.gsub! /bind-password \d\,(\S+)/, 'bind-password <secret hidden> \2'
+    cfg.gsub! /authentication sha1 \d\,(\S+)/, 'authentication sha1 <secret hidden> \2'
+    cfg.gsub! /encryption aes \d\,(\S+)/, 'encryption aes <secret hidden> \2'
     cfg
   end
 

@@ -20,15 +20,15 @@ class FortiOS < Oxidized::Model
     # A number of other statements also contains sensitive strings
     cfg.gsub! /(set (?:passwd|password|key|group-password|auth-password-l1|auth-password-l2|rsso|history0|history1)) .+/, '\\1 <configuration removed>'
     cfg.gsub! /(set md5-key [0-9]+) .+/, '\\1 <configuration removed>'
-    cfg.gsub! /(set private-key ).*?-+END (ENCRYPTED|RSA) PRIVATE KEY-*"$/m, '\\1<configuration removed>'
-    cfg.gsub! /(set ca ).*?-+END CERTIFICATE-*"$/m, '\\1<configuration removed>'
-    cfg.gsub! /(set csr ).*?-+END CERTIFICATE REQUEST-*"$/m, '\\1<configuration removed>'
+    cfg.gsub! /(set private-key ).*?-+END (ENCRYPTED|RSA|OPENSSH) PRIVATE KEY-+\n?"$/m, '\\1<configuration removed>'
+    cfg.gsub! /(set ca ).*?-+END CERTIFICATE-+"$/m, '\\1<configuration removed>'
+    cfg.gsub! /(set csr ).*?-+END CERTIFICATE REQUEST-+"$/m, '\\1<configuration removed>'
     cfg.gsub! /(Cluster uptime:).*/, '\\1 <stripped>'
     cfg
   end
 
   cmd 'get system status' do |cfg|
-    @vdom_enabled = cfg.include? 'Virtual domain configuration: enable'
+    @vdom_enabled = cfg.match /Virtual domain configuration: (enable|multiple)/
     cfg.gsub!(/(System time: )(.*)/, '\1<stripped>\3')
     cfg.gsub! /(Virus-DB|Extended DB|IPS-DB|IPS-ETDB|APP-DB|INDUSTRIAL-DB|Botnet DB|IPS Malicious URL Database).*/, '\\1 <db version stripped>'
     comment cfg
