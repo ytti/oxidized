@@ -3,6 +3,7 @@
 ## Master
 
 * FEATURE: include transceiver information in EdgeCOS model (@freddy36)
+* FEATURE: add Telco Systems T-Marc 3306 support via telco model (@SkylerBlumer)
 * FEATURE: add enable support to ciscosmb (@deesel)
 * FEATURE: add Waystream iBOS model
 * BUGFIX: better login modalities for telnet in aos7 (@optimuscream)
