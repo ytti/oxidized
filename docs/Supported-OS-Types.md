@@ -106,6 +106,8 @@
 * Fiberstore
   * [S3800](/lib/oxidized/model/gcombnps.rb)
   * [S3900](/lib/oxidized/model/edgecos.rb)
+  * [S5800](/lib/oxidized/model/fsos_s5800.rb)
+  * [S5850](/lib/oxidized/model/fsos_s5800.rb)
 * Firebrick
   * [FBxxxx](/lib/oxidized/model/firebrick.rb)
 * Force10
