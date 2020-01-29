@@ -28,11 +28,12 @@ class EdgeCOS < Oxidized::Model
   end
 
   cmd 'show interfaces transceiver' do |cfg|
-    cfg.gsub! /^\s*Temperature\s*:.*\n/i, ''
-    cfg.gsub! /^\s*Vcc\s*:.*\n/i, ''
-    cfg.gsub! /^\s*Bias Current\s*:.*\n/i, ''
-    cfg.gsub! /^\s*TX Power\s*:.*\n/i, ''
-    cfg.gsub! /^\s*RX Power\s*:.*\n/i, ''
+    cfg.gsub! /(\d\d)!/, '\\1 ' # alarm indicators of DDM thresholds
+    cfg.gsub! /^(\s*Temperature\s*:).*/, '\1 <hidden>'
+    cfg.gsub! /^(\s*Vcc\s*:).*/, '\1 <hidden>'
+    cfg.gsub! /^(\s*Bias Current\s*:).*/, '\1 <hidden>'
+    cfg.gsub! /^(\s*TX Power\s*:).*/, '\1 <hidden>'
+    cfg.gsub! /^(\s*RX Power\s*:).*/, '\1 <hidden>'
     comment cfg
   end
 
