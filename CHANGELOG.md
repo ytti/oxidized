@@ -2,6 +2,7 @@
 
 ## Master
 
+* FEATURE: add Fiberstore S5800/S5850 series support via fsos_s5800 model (@freddy36)
 * FEATURE: include transceiver information in EdgeCOS model (@freddy36)
 * FEATURE: add Telco Systems T-Marc 3306 support via telco model (@SkylerBlumer)
 * FEATURE: add enable support to ciscosmb (@deesel)
