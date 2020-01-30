@@ -1,5 +1,7 @@
 class OS10 < Oxidized::Model
-  # Dell-OS10 model #
+  # For switches running Dell EMC Networking OS10 #
+  #
+  # Tested with : Dell PowerSwitch S4148U-ON
 
   comment  '! '
 
