@@ -2,6 +2,7 @@
 
 ## Master
 
+* FEATURE: add Dell EMC Networking OS10 support (@mmisslin)
 * FEATURE: add Waystream iBOS model
 * BUGFIX: better login modalities for telnet in aos7 (@optimuscream)
 * BUGFIX: better virtual domain detection in fortios (@agabellini)
