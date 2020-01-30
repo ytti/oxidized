@@ -1,4 +1,5 @@
-class FSOS_S5800 < Oxidized::Model
+# model for Centec Networks CNOS based switches
+class CNOS < Oxidized::Model
   comment '! '
 
   cmd :all do |cfg|
