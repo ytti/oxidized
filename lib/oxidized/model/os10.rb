@@ -24,8 +24,7 @@ class OS10 < Oxidized::Model
   end
 
   cmd 'show running-configuration' do |cfg|
-    cfg = cfg.each_line.to_a[3..-1].join
-    cfg
+    cfg.each_line.to_a[3..-1].join
   end
 
   cfg :telnet do
