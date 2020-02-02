@@ -49,6 +49,8 @@
   * [Cambium (PMP450 Series)](/lib/oxidized/model/cambium.rb)
 * Casa
   * [Casa](/lib/oxidized/model/casa.rb)
+* Centec Networks
+  * [CNOS](/lib/oxidized/model/cnos.rb)
 * Check Point
   * [GaiaOS](/lib/oxidized/model/gaiaos.rb)
 * Ciena
@@ -107,6 +109,8 @@
 * Fiberstore
   * [S3800](/lib/oxidized/model/gcombnps.rb)
   * [S3900](/lib/oxidized/model/edgecos.rb)
+  * [S5800](/lib/oxidized/model/cnos.rb)
+  * [S5850](/lib/oxidized/model/cnos.rb)
 * Firebrick
   * [FBxxxx](/lib/oxidized/model/firebrick.rb)
 * Force10

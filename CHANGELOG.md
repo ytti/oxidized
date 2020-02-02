@@ -3,6 +3,7 @@
 ## Master
 
 * FEATURE: add Dell EMC Networking OS10 support (@mmisslin)
+* FEATURE: add Centec Networks CNOS (Fiberstore S5800/S5850) support via cnos model (@freddy36)
 * FEATURE: include transceiver information in EdgeCOS model (@freddy36)
 * FEATURE: add Telco Systems T-Marc 3306 support via telco model (@SkylerBlumer)
 * FEATURE: add enable support to ciscosmb (@deesel)
