@@ -73,7 +73,7 @@ module Oxidized
           resc  = " (rescued #{resc})"
         end
         Oxidized.logger.send(level, '%s raised %s%s with msg "%s"' % [ip, err.class, resc, err.message])
-        return false
+        false
       rescue StandardError => err
         crashdir  = Oxidized.config.crash.directory
         crashfile = Oxidized.config.crash.hostnames? ? name : ip.to_s
@@ -86,7 +86,7 @@ module Oxidized
           fh.puts err.backtrace
         end
         Oxidized.logger.error '%s raised %s with msg "%s", %s saved' % [ip, err.class, err.message, crashfile]
-        return false
+        false
       end
     end
 

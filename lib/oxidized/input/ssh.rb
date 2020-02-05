@@ -65,7 +65,7 @@ module Oxidized
       disconnect_cli
       # if disconnect does not disconnect us, give up after timeout
       Timeout.timeout(Oxidized.config.timeout) { @ssh.loop }
-    rescue Errno::ECONNRESET, Net::SSH::Disconnect, IOError # rubocop:disable Lint/HandleExceptions
+    rescue Errno::ECONNRESET, Net::SSH::Disconnect, IOError
     ensure
       @log.close if Oxidized.config.input.debug?
       (@ssh.close rescue true) unless @ssh.closed?

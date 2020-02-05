@@ -164,7 +164,7 @@ module Oxidized
             node.stats = old[i].stats
             node.last  = old[i].last
           end
-        rescue Oxidized::NodeNotFound # rubocop:disable Lint/HandleExceptions
+        rescue Oxidized::NodeNotFound
         end
       end
       sort_by! { |x| x.last.nil? ? Time.new(0) : x.last.end }
