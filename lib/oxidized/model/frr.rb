@@ -14,8 +14,7 @@ class FRR < Oxidized::Model
   # show the persistent configuration
   pre do
     cfg = add_comment 'FRR CONFIG'
-    cfg += cmd 'sudo vtysh -c "show running-config"'
-
+    cfg + cmd 'sudo vtysh -c "show running-config"'
   end
 
   cfg :telnet do
