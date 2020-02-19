@@ -105,6 +105,7 @@
   * [TMOS](/lib/oxidized/model/tmos.rb)
 * Fiberstore
   * [S3800](/lib/oxidized/model/gcombnps.rb)
+  * [S3900](/lib/oxidized/model/edgecos.rb)
 * Firebrick
   * [FBxxxx](/lib/oxidized/model/firebrick.rb)
 * Force10
