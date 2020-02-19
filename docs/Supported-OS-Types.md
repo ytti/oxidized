@@ -49,6 +49,8 @@
   * [Cambium (PMP450 Series)](/lib/oxidized/model/cambium.rb)
 * Casa
   * [Casa](/lib/oxidized/model/casa.rb)
+* Centec Networks
+  * [CNOS](/lib/oxidized/model/cnos.rb)
 * Check Point
   * [GaiaOS](/lib/oxidized/model/gaiaos.rb)
 * Ciena
@@ -88,6 +90,7 @@
   * [PowerConnect](/lib/oxidized/model/powerconnect.rb)
   * [AOSW](/lib/oxidized/model/aosw.rb)
   * [DellX](/lib/oxidized/model/dellx.rb)
+  * [Dell EMC Networking OS10](/lib/oxidized/model/os10.rb)
 * D-Link
   * [D-Link](/lib/oxidized/model/dlink.rb)
 * ECI Telecom
@@ -106,6 +109,8 @@
 * Fiberstore
   * [S3800](/lib/oxidized/model/gcombnps.rb)
   * [S3900](/lib/oxidized/model/edgecos.rb)
+  * [S5800](/lib/oxidized/model/cnos.rb)
+  * [S5850](/lib/oxidized/model/cnos.rb)
 * Firebrick
   * [FBxxxx](/lib/oxidized/model/firebrick.rb)
 * Force10
@@ -192,6 +197,8 @@
   * [SBM-GEM-X2C, GEM-X2C+, GEM-X3S+, XEM-X10SM](/lib/oxidized/model/aricentiss.rb)
 * Symantec
   * [Blue Coat ProxySG / Security Gateway OS (SGOS)](/lib/oxidized/model/sgos.rb)
+* Telco Systems
+  * [Telco Systems T-Marc 3306](/lib/oxidized/model/telco.rb)
 * Trango Systems
   * [Trango](/lib/oxidized/model/trango.rb)
 * TPLink

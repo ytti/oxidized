@@ -27,6 +27,16 @@ class EdgeCOS < Oxidized::Model
     comment cfg
   end
 
+  cmd 'show interfaces transceiver' do |cfg|
+    cfg.gsub! /(\d\d)!/, '\\1 ' # alarm indicators of DDM thresholds
+    cfg.gsub! /^(\s*Temperature\s*:).*/, '\1 <hidden>'
+    cfg.gsub! /^(\s*Vcc\s*:).*/, '\1 <hidden>'
+    cfg.gsub! /^(\s*Bias Current\s*:).*/, '\1 <hidden>'
+    cfg.gsub! /^(\s*TX Power\s*:).*/, '\1 <hidden>'
+    cfg.gsub! /^(\s*RX Power\s*:).*/, '\1 <hidden>'
+    comment cfg
+  end
+
   cfg :telnet do
     username /^Username:/
     password /^Password:/
