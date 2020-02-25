@@ -26,6 +26,9 @@ class TMOS < Oxidized::Model
   cmd 'tmsh -q list' do |cfg|
     cfg.gsub!(/state (up|down|checking|irule-down)/, '')
     cfg.gsub!(/errors (\d+)/, '')
+    cfg.gsub!(/^\s+bandwidth-bps (\d+)/, '')
+    cfg.gsub!(/^\s+bandwidth-cps (\d+)/, '')
+    cfg.gsub!(/^\s+bandwidth-pps (\d+)\n/, '')
     cfg
   end
 
@@ -41,6 +44,8 @@ class TMOS < Oxidized::Model
     cfg.gsub!(/sys db ltm.configtime {[^}]+}/m, '')
     comment cfg
   end
+
+  cmd('[ -d "/config/zebos" ] && cat /config/zebos/*/ZebOS.conf') { |cfg| comment cfg }
 
   cmd('cat /config/partitions/*/bigip.conf') { |cfg| comment cfg }
 

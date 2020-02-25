@@ -2,14 +2,113 @@
 
 ## Master
 
-* BUGFIX: netgear telnet password prompt not detected
-* BUGFIX: xos model should not modify config on legacy Extreme Networks devices (sq9mev)
-* BUGFIX: model edgecos, ciscosmb
-* MISC: bump Dockerfile phusion/baseimage:0.10.0 -> 0.10.1
-* MISC: Added verbiage to set OXIDIZED_HOME correctly under Debian 8.8 w/systemd
+* FEATURE: add Dell EMC Networking OS10 support (@mmisslin)
+* FEATURE: add Centec Networks CNOS (Fiberstore S5800/S5850) support via cnos model (@freddy36)
+* FEATURE: include transceiver information in EdgeCOS model (@freddy36)
+* FEATURE: add Telco Systems T-Marc 3306 support via telco model (@SkylerBlumer)
+* FEATURE: add enable support to ciscosmb (@deesel)
+* FEATURE: add Waystream iBOS model
+* BUGFIX: better login modalities for telnet in aos7 (@optimuscream)
+* BUGFIX: better virtual domain detection in fortios (@agabellini)
+* BUGFIX: allow any max length for username/password in GcomBNPS (@freddy36)
+* MISC: more secret scrubbing in sonicos (@s-fu)
+* MISC: openssh key scrubbing as secret in fortios (@agabellini)
+* MISC: scrubs macsec key from Arista EOS (@krisamundson)
+
+## 0.27.0
+
+* FEATURE: add automatic restart on failure for systemd (@deajan)
+* FEATURE: add ZynOS GS1900 specific model support (@deajan)
+* FEATURE: add PurityOS model support (@elliot64)
+* FEATURE: add Ubiquiti Airfiber model support (@cchance27)
+* FEATURE: add Icotera support (@funzoneq)
+* FEATURE: include licensing information in aos model (@pozar)
+* FEATURE: include chassis information in sros model (@raunz)
+* FEATURE: add firelinuxos (FirePOWER) model (@rgnv)
+* FEATURE: add sonicos model (@rgnv)
+* FEATURE: add hpmsm model (@timwsuqld)
+* FEATURE: include hardware and product information in oneos model (@raunz)
+* FEATURE: add FastIron model (@ZacharyPuls)
+* FEATURE: add Linuxgeneric model (@davama)
+* FEATURE: include HA status info in fortios model (@raunz)
+* FEATURE: add SpeedTouch model (@raunz)
+* FEATURE: comware added device manuinfo to include serial number (@raunz)
+* BUGFIX: prevent versionning on procurve switches by removing power usage output (@deajan)
+* BUGFIX: improve procurve telnet support for older switches (@deajan)
+* BUGFIX: voss model
+* BUGFIX: cambium model should not consider timestamp for backup as unneeded, and causes diffs (@cchance27)
+* BUGFIX: remove 'sh system' from ciscosmb model (@Exordian)
+* BUGFIX: dlink model didn't support prompts with spaces in the model type (Extreme EAS 200-24p) (@cchance27)
+* BUGFIX: routeros model does not collect configuration via telnet input (@hexdump0x0200)
+* BUGFIX: add dependencies for net-ssh
+* BUGFIX: don't log power module info on procurve model anymore
+* BUGFIX: crash on some recent Ruby versions in the nagios check (@Kegeruneku)
+* BUGFIX: remove stray whitespace in adtran model (@nickhilliard)
+* BUGFIX: if input model returns subclassed string we may overwrite the string with an empty string
+* BUGFIX: updated aosw.rb prompt. addresses issue #1254
+* BUGFIX: update comware model to fix telnet login/password for HPE MSR954 and HPE5130. Issue #1886
+* BUGFIX: filter out IOS configuration/NVRAM modified/changed timestamps to keep output persistent
+* BUGFIX: update screenos model to reduce the amount of lines being stripped from beginning of cfg output
+* BUGFIX: include colon in aosw prompt regexp in case it is a mac address (@raunz)
+* BUGFIX: comware improvement for requesting HP 19x0 switches hidden CLI. Issues #1754 and #1447
+* BUGFIX: fix variable inheritance when subclassing a model
+* MISC: add pgsql support, mechanized and net-tftp to Dockerfile
+* MISC: upgrade slop, net-telnet and rugged
+* MISC: extra secret scrubbing in comware model (@bengels00)
+* MISC: removed snmpd lines from linuxgeneric model
+* MISC: moved show configuration command to the end in junos model (@raunz)
+* MISC: filter pap and chap passwords in ios model (@matejv)
+
+## 0.26.3
+
+* BUGFIX: regression in git.rb version method where we check if Rugged::Diff has any deltas/patches
+
+## 0.26.2
+
+* BUGFIX: suppress net-ssh 5 deprecation warnings by moving from :paranoid to :verify_host_key
+
+## 0.26.1
+
+* BUGFIX: force file permissions in rubygems
+
+## 0.26.0
+
+* FEATURE: add Cisco VPN3000 model (@baznikin)
+* FEATURE: add NetGear PROSafe Smart switches model (@baznikin)
+* FEATURE: Added possibility to pass root logs directory as environment variable (@Glorf)
+* FEATURE: add OneAccess TDRE (1645) model (@starrsl)
+* FEATURE: add Audiocodes MediaPack MP-1xx and Mediant 1000 model (@pedjaj)
+* FEATURE: add raisecom RAX model (@vitalisator)
+* FEATURE: add huawei smartax model (@nyash)
+* FEATURE: add grandstream model
+* BUGFIX: in git comparison we might mistakenly always detect change due to !utf8 vs. utf8 encoding of a char
+* MISC: prompt updates in siklu, netonix, netscaler models
+* MISC: minimal supported ruby is now 2.3, net-ssh dependency ~> 5, rubocop ~> 0.65.0
+
+## 0.25.0
+
 * FEATURE: add viptela model (@bobthebutcher)
 * FEATURE: add ECI Telecom Appolo platform bij arien.vijn@linklight.nl
-
+* FEATURE: ssh keepalive now configurable per node with ssh_no_keepalive boolean
+* FEATURE: add Comtrol model (@RobbFromIT)
+* FEATURE: add Dell X-series model (@RobbFromIT)
+* FEATURE: add privilege escalation to the cumulus model (@user4574)
+* FEATURE: add adtran model (@CFUJoshWeepie)
+* FEATURE: add firebrick model (@lewisvive)
+* BUGFIX: netgear telnet password prompt not detected
+* BUGFIX: xos model should not modify config on legacy Extreme Networks devices (@sq9mev)
+* BUGFIX: model dlink, edgecos, ciscosmb, openbsd
+* BUGFIX: hide 'lighttpd_ls_password' as potential secret in pfsense model (@dra)
+* BUGFIX: ciscospark hook error when diff is set to false
+* MISC: bump Dockerfile phusion/baseimage:0.10.0 -> 0.11, revert to one-stage build
+* MISC: add sqlite3 and mysql2 drivers for sequel to Dockerfile
+* MISC: Added verbiage to set OXIDIZED_HOME correctly under Debian 8.8 w/systemd
+* MISC: add gpgme and sequel gems to Dockerfile for sources
+* MISC: eos model removes user secrets and BGP secrets (@yzguy)
+* MISC: add secret filtering to netscaler (@shepherdjay)
+* MISC: capture ZebOS configuration for TMOS model (@yzguy)
+* MISC: additional secret filters in ios, asa, procurve, ciscosmb models (@hexdump0x0200)
+* MISC: remove volatile uptime data in nos model (@f0rkz)
 
 ## 0.24.0
 

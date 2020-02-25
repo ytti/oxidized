@@ -20,13 +20,13 @@ The commands Oxidized executes are:
 
 1. set cli screen-length 0
 2. set cli screen-width 0
-3. show configuration
-4. show version
-5. show chassis hardware
-6. show system license
-7. show system license keys (ex22|ex33|ex4|ex8|qfx only)
-8. show virtual-chassis (MX960 only)
-9. show chassis fabric reachability
+3. show version
+4. show chassis hardware
+5. show system license
+6. show system license keys (ex22|ex33|ex4|ex8|qfx only)
+7. show virtual-chassis (MX960 only)
+8. show chassis fabric reachability
+9. show configuration
 
 Oxidized can now retrieve your configuration!
 

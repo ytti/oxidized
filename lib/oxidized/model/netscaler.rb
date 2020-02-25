@@ -1,5 +1,5 @@
 class NetScaler < Oxidized::Model
-  prompt /^>\s*$/
+  prompt /^([\w\.-]*>\s?)$/
   comment '# '
 
   cmd :all do |cfg|
@@ -12,6 +12,11 @@ class NetScaler < Oxidized::Model
 
   cmd 'show hardware' do |cfg|
     comment cfg
+  end
+
+  cmd :secret do |cfg|
+    cfg.gsub! /\w+\s(-encrypted)/, '<secret hidden> \\1'
+    cfg
   end
 
   cmd 'show ns ns.conf'

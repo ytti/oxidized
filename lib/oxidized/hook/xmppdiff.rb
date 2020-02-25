@@ -12,13 +12,14 @@ class XMPPDiff < Oxidized::Hook
   def run_hook(ctx)
     return unless ctx.node
     return unless ctx.event.to_s == "post_store"
+
     begin
       Timeout.timeout(15) do
         gitoutput = ctx.node.output.new
         diff = gitoutput.get_diff ctx.node, ctx.node.group, ctx.commitref, nil
 
         interesting = diff[:patch].lines.to_a[4..-1].any? do |line|
-          ["+", "-"].include?(line[0]) and not ["#", "!"].include?(line[1])
+          ["+", "-"].include?(line[0]) && (not ["#", "!"].include?(line[1]))
         end
         interesting &&= diff[:patch].lines.to_a[5..-1].any? { |line| line[0] == '-' }
         interesting &&= diff[:patch].lines.to_a[5..-1].any? { |line| line[0] == '+' }

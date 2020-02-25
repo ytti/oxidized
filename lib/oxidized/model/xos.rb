@@ -23,7 +23,7 @@ class XOS < Oxidized::Model
   end
 
   cmd 'show switch' do |cfg|
-    comment cfg.each_line.reject { |line| line.match /Time:/ or line.match /boot/i }.join
+    comment cfg.each_line.reject { |line| line.match(/Time:/) || line.match(/boot/i) }.join
   end
 
   cmd 'show configuration' do |cfg|
@@ -45,6 +45,7 @@ class XOS < Oxidized::Model
       data = cmd 'disable clipaging session'
       match = data.match /^disable clipaging session\n\*?[\w .-]+(:\d+)? # $/m
       next if match
+
       cmd 'disable clipaging'
     end
 

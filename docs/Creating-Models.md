@@ -4,7 +4,40 @@ Oxidized supports a growing list of [operating system types](Supported-OS-Types.
 
 A user may wish to extend an existing model to collect the output of additional commands. Oxidized offers smart loading of models in order to facilitate this with ease, without the need to introduce changes to the upstream source code.
 
-This methodology allows local site changes to be preserved during Oxidized version updates / gem updates.
+This methodology allows local site changes to be preserved during Oxidized version updates / gem updates. It also enables convenient local development of new models.
+
+## Creating a new model
+
+An Oxidized model, at minimum, requires just three elements:
+
+* A model file, this file should be placed in the ~/.config/oxidized directory and named after the target OS type.
+* A class defined within this file with the same name as the file itself that inherits from `Oxidized::Model`, the base model class.
+* At least one command that will be executed and the output of which will be collected by Oxidized.
+
+A bare-bone example for a fictional model running the OS type `rootware` could be introduced by creating the file `~/.config/oxidized/rootware.rb`, with the following content:
+
+```ruby
+class RootWare < Oxidized::Model
+  
+  cmd 'show complete-config'
+```
+
+This model, as-is will:
+
+* Log into the device and expect the default prompt.
+* Upon matching it, execute the command `show complete-config`
+* Collect the output.
+
+It is often useful to, at minimum, define the following additional elements for any newly introduced module:
+
+* A regexp for the prompt, via the `prompt` statement.
+* A comment prefix, via the `comment` statement.
+* A regexp for telnet username and password prompts.
+* A mechanism for handling `enable` or similar functionality.
+
+The API documentation contains a list of [methods](https://github.com/ytti/oxidized/blob/master/docs/Ruby-API.md#model) that can be used in modules.
+
+A more fleshed out example can be found in the `IOS` and `JunOS` models.
 
 ## Extending an existing model with a new command
 
@@ -100,3 +133,8 @@ end
 cmd :ssh do prepend: true do
   ... "(code that should run first, before any code in the existing :ssh definition in the model)" ...
 end
+```
+
+## Help
+
+If you experience difficulties creating a new model, you can often get help by installing an Internet reachable sanitized device and opening a new issue on Github asking for help with creating the model. You should research what is the device vendor name is, the vendor's OS type name is, the exact device model name and firmware version. This information should be included in the issue.
