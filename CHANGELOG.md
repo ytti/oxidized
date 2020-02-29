@@ -15,6 +15,7 @@
 * MISC: more secret scrubbing in sonicos (@s-fu)
 * MISC: openssh key scrubbing as secret in fortios (@agabellini)
 * MISC: scrubs macsec key from Arista EOS (@krisamundson)
+* MISC: rubocop dependency now ~> 0.80.0
 
 ## 0.27.0
 
