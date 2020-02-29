@@ -44,8 +44,8 @@ class CiscoSMB < Oxidized::Model
   end
 
   cfg :telnet, :ssh do
-    username /^User ?[nN]ame:/
-    password /^\r?Password:$/
+    username /User ?[nN]ame:/
+    password /^\r?Password:/
 
     post_login do
       if vars(:enable) == true
