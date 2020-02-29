@@ -39,6 +39,15 @@ Style/FormatString:
 Style/FormatStringToken:
   EnforcedStyle: unannotated
 
+Style/HashEachMethods:
+  Enabled: true
+
+Style/HashTransformKeys:
+  Enabled: true
+
+Style/HashTransformValues:
+  Enabled: true
+
 Style/RescueModifier:
   Enabled: false
 

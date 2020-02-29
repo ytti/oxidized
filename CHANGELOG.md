@@ -11,9 +11,11 @@
 * BUGFIX: better login modalities for telnet in aos7 (@optimuscream)
 * BUGFIX: better virtual domain detection in fortios (@agabellini)
 * BUGFIX: allow any max length for username/password in GcomBNPS (@freddy36)
+* BUGFIX: relax prompt requirements in ciscosmb (@Atroskelis)
 * MISC: more secret scrubbing in sonicos (@s-fu)
 * MISC: openssh key scrubbing as secret in fortios (@agabellini)
 * MISC: scrubs macsec key from Arista EOS (@krisamundson)
+* MISC: rubocop dependency now ~> 0.80.0
 
 ## 0.27.0
 
