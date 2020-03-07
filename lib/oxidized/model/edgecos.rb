@@ -8,14 +8,14 @@ class EdgeCOS < Oxidized::Model
   end
 
   cmd :all do |cfg|
-    cfg.each_line.to_a[2..-2].join
+    cfg.each_line.to_a[0..-2].join
   end
 
   cmd 'show running-config'
 
   cmd 'show system' do |cfg|
-    cfg.gsub! /^\s*System Up Time\s*:.*\n/i, ''
-    cfg.gsub! /^\s*(Temperature \d*:).*\n/i, '\\1 <removed>'
+    cfg.gsub! /^.*\sUp Time\s*:.*\n/i, ''
+    cfg.gsub! /^(.*\sTemperature \d*:).*\n/i, '\\1 <removed>'
     comment cfg
   end
 
