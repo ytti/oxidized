@@ -26,6 +26,7 @@ class CiscoSMB < Oxidized::Model
   end
 
   cmd 'show version' do |cfg|
+    cfg.gsub! /uptime is\ .+/, '<uptime removed>'
     comment cfg
   end
 
