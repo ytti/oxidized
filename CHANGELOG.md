@@ -18,6 +18,7 @@
 * MISC: openssh key scrubbing as secret in fortios (@agabellini)
 * MISC: scrubs macsec key from Arista EOS (@krisamundson)
 * MISC: rubocop dependency now ~> 0.80.0
+* MISC: rugged dependency now ~> 0.28.0
 
 ## 0.27.0
 
