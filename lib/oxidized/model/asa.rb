@@ -34,6 +34,8 @@ class ASA < Oxidized::Model
     # avoid commits due to uptime / ixo-router01 up 2 mins 28 secs / ixo-router01 up 1 days 2 hours
     cfg = cfg.each_line.reject { |line| line.match /(\s+up\s+\d+\s+)|(.*days.*)/ }
     cfg = cfg.join
+    cfg.gsub! /^Configuration has not been modified since last system restart.*\n/, ''
+    cfg.gsub! /^Configuration last modified by.*\n/, ''
     comment cfg
   end
 
