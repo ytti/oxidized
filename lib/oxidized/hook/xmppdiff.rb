@@ -21,8 +21,6 @@ class XMPPDiff < Oxidized::Hook
         interesting = diff[:patch].lines.to_a[4..-1].any? do |line|
           ["+", "-"].include?(line[0]) && (not ["#", "!"].include?(line[1]))
         end
-        interesting &&= diff[:patch].lines.to_a[5..-1].any? { |line| line[0] == '-' }
-        interesting &&= diff[:patch].lines.to_a[5..-1].any? { |line| line[0] == '+' }
 
         if interesting
           log "Connecting to XMPP"
