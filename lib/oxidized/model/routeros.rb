@@ -12,15 +12,15 @@ class RouterOS < Oxidized::Model
     cfg
   end
 
-  cmd '/system routerboard print' do |cfg|
+  cmd '/system routerboard print without-paging' do |cfg|
     comment cfg
   end
 
-  cmd '/system package update print' do |cfg|
+  cmd '/system package update print without-paging' do |cfg|
     comment cfg
   end
 
-  cmd '/system history print' do |cfg|
+  cmd '/system history print without-paging' do |cfg|
     comment cfg
   end
 
