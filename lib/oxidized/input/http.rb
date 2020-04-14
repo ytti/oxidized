@@ -11,7 +11,7 @@ module Oxidized
       @secure = false
       @username = nil
       @password = nil
-      @headers = Hash.new
+      @headers = {}
       @log = File.open(Oxidized::Config::Log + "/#{@node.ip}-http", "w") if Oxidized.config.input.debug?
       @node.model.cfg["http"].each { |cb| instance_exec(&cb) }
 
@@ -50,15 +50,13 @@ module Oxidized
       schema = @secure ? "https://" : "http://"
       uri = URI("#{schema}#{@node.ip}#{path}")
       req = Net::HTTP::Get.new(uri)
-      unless @username.nil?
-        req.basic_auth @username, @password
-      end
+      req.basic_auth @username, @password unless @username.nil?
       @headers.each do |header, value|
         req.add_field(header, value)
       end
-      res = Net::HTTP.start(uri.hostname, uri.port, :use_ssl => uri.scheme == "https", :verify_mode => OpenSSL::SSL::VERIFY_NONE) {|http|
+      res = Net::HTTP.start(uri.hostname, uri.port, use_ssl: uri.scheme == "https", verify_mode: OpenSSL::SSL::VERIFY_NONE) do |http|
         http.request(req)
-      }
+      end
       res.body
     end
 
