@@ -54,11 +54,7 @@ module Oxidized
       @headers.each do |header, value|
         req.add_field(header, value)
       end
-      if Oxidized.config.input.http.ssl_verify?
-        ssl_verify = OpenSSL::SSL::VERIFY_PEER
-      else
-        ssl_verify = OpenSSL::SSL::VERIFY_NONE
-      end
+      ssl_verify = Oxidized.config.input.http.ssl_verify? ? OpenSSL::SSL::VERIFY_PEER : OpenSSL::SSL::VERIFY_NONE
       res = Net::HTTP.start(uri.hostname, uri.port, use_ssl: uri.scheme == "https", verify_mode: ssl_verify) do |http|
         http.request(req)
       end
