@@ -16,6 +16,8 @@ input:
   debug: true
   ssh:
     secure: false
+  http:
+    ssl_verify: true
 ```
 
 ## Privileged mode

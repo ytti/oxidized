@@ -1,7 +1,7 @@
 # Changelog
 
 ## Master
-* FEATURE: add VMWare NSX support (@elmobp)
+* FEATURE: add VMWare NSX Edge 6.4+ support (@elmobp)
 * FEATURE: add Dell EMC Networking OS10 support (@mmisslin)
 * FEATURE: add Centec Networks CNOS (Fiberstore S5800/S5850) support via cnos model (@freddy36)
 * FEATURE: include transceiver information in EdgeCOS model (@freddy36)
