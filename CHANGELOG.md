@@ -8,6 +8,7 @@
 * FEATURE: add Telco Systems T-Marc 3306 support via telco model (@SkylerBlumer)
 * FEATURE: add enable support to ciscosmb (@deesel)
 * FEATURE: add Waystream iBOS model
+* BUGFIX: use without-paging variant of print statement in routeros (@vkushnir)
 * BUGFIX: include the commands in the output in EdgeCOS model (@freddy36)
 * BUGFIX: update patterns for minor software version dependent differences in EdgeCOS model (@freddy36)
 * BUGFIX: better login modalities for telnet in aos7 (@optimuscream)
