@@ -21,6 +21,7 @@
 * MISC: scrubs macsec key from Arista EOS (@krisamundson)
 * MISC: rubocop dependency now ~> 0.80.0
 * MISC: rugged dependency now ~> 0.28.0
+* MISC: xmppdiff now also shows diffs with only removed or added lines (@jplitza)
 
 ## 0.27.0
 
