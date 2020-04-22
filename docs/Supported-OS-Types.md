@@ -185,7 +185,7 @@
 * Siklu
   * [EtherHaul](/lib/oxidized/model/siklu.rb)
 * SonicWALL
-   * [SonicOS](lib/oxidized/model/sonicos.rb)
+  * [SonicOS](lib/oxidized/model/sonicos.rb)
 * SNR
   * [SNR-S300G, S2xxx, S3xxx, S4xxx](/lib/oxidized/model/dcnos.rb)
 * Speedtouch

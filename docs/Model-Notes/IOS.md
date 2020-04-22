@@ -1,6 +1,6 @@
 # Cisco IOS Switches
 
-## Include unsaved changes done on a device (commented) with each configuration.
+## Include unsaved changes done on a device (commented) with each configuration
 
 Create the file `~/.config/oxidized/model/ios.rb` with the following contents to extend the IOS model:
 
