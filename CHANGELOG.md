@@ -8,6 +8,7 @@ The format is based on [Keep a Changelog](https://keepachangelog.com/en/1.1.0/).
 
 ### Added
 
+- add VMWare NSX Edge 6.4+ support (@elmobp)
 - add Dell EMC Networking OS10 support (@mmisslin)
 - add Centec Networks CNOS (Fiberstore S5800/S5850) support via cnos model (@freddy36)
 - include transceiver information in EdgeCOS model (@freddy36)

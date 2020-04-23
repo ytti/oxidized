@@ -6,7 +6,19 @@ The following objects exist in Oxidized.
 
 * gets config from nodes
 * must implement 'connect', 'get', 'cmd'
-* 'ssh', 'telnet', 'ftp', and 'tftp' implemented
+* 'ssh', 'telnet', 'ftp', 'tftp', 'http' implemented
+
+#### http
+ * Communicates with a device over http/https
+ * Configurable variables from within model @username, @password, @headers.
+ * @username,@password are used in a Basic Authentication method.
+ * @headers is a Hash of key value pairs of headers to pass along with the request.
+ * Within the sources config under input you define a YAML stanza like the below, this will tell Oxidized to validate certificates on the request
+```yaml
+input:
+   http:
+     ssl_verify: true
+```
 
 ## Output
 
