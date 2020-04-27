@@ -1,7 +1,7 @@
 class XOS < Oxidized::Model
   # Extreme Networks XOS
 
-  prompt /^*?[\w .-]+# $/
+  prompt /^[*]?\s?([-\w.~]+(\s[(\w\-.)]+)?~?\s?[#>$]\s?)$/
   comment  '# '
 
   cmd :all do |cfg|
