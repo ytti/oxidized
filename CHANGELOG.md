@@ -34,6 +34,7 @@ The format is based on [Keep a Changelog](https://keepachangelog.com/en/1.1.0/).
 - allow any max length for username/password in GcomBNPS (@freddy36)
 - relax prompt requirements in ciscosmb (@Atroskelis)
 - fortios model strips uptime even without remove_secrets (@jplitza)
+- updated regex-pattern to better match XOS-prompts (@darkcatapulter)
 
 ## [0.27.0] - 2019-10-27
 
