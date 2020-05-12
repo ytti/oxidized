@@ -180,6 +180,8 @@
   * [AlteonOS](/lib/oxidized/model/alteonos.rb)
 * Raisecom
   * [Raisecom](/lib/oxidized/model/raisecom.rb)
+* QTECH
+  * [QSW-3400, QSW-3450, QSW-3500](/lib/oxidized/model/qtech.rb)
 * Quanta
   * [Quanta / VxWorks 6.6 (1.1.0.8)](/lib/oxidized/model/quantaos.rb)
 * Siklu
