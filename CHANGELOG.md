@@ -35,7 +35,7 @@ The format is based on [Keep a Changelog](https://keepachangelog.com/en/1.1.0/).
 - relax prompt requirements in ciscosmb (@Atroskelis)
 - fortios model strips uptime even without remove_secrets (@jplitza)
 - HP ProCurve now accepts ">" as apart of the prompt (@magnuslarsen)
-- updated regex-pattern to better match XOS-prompts (@darkcatapulter)
+- fixed issue where the regex-pattern for XOS-prompts used invalid syntax (@darkcatapulter)
 
 ## [0.27.0] - 2019-10-27
 
