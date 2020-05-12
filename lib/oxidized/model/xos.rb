@@ -1,7 +1,7 @@
 class XOS < Oxidized::Model
   # Extreme Networks XOS
 
-  prompt /^[*]?\s?([-\w.~]+(\s[(\w\-.)]+)?~?\s?[#>$]\s?)$/
+  prompt /^\*?\s?[-\w.~]+(:\d+)? [#>] $/
   comment  '# '
 
   cmd :all do |cfg|
@@ -43,7 +43,7 @@ class XOS < Oxidized::Model
   cfg :telnet, :ssh do
     post_login do
       data = cmd 'disable clipaging session'
-      match = data.match /^disable clipaging session\n\*?[\w .-]+(:\d+)? # $/m
+      match = data.match /^disable clipaging session\n\*?[\w .-]+(:\d+)? [#>] $/m
       next if match
 
       cmd 'disable clipaging'
