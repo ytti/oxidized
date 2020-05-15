@@ -48,6 +48,7 @@ class EdgeCOS < Oxidized::Model
 
   cfg :telnet, :ssh do
     post_login 'terminal length 0'
+    post_login 'terminal width 300'
     pre_logout 'exit'
   end
 end
