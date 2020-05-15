@@ -11,7 +11,11 @@ class EdgeCOS < Oxidized::Model
     cfg.each_line.to_a[0..-2].join
   end
 
-  cmd 'show running-config'
+  cmd 'show running-config' do |cfg|
+    cfg.gsub! /^(show running-config)$/, '! \\1'
+    cfg.gsub! /^[Bb]uilding running.+/, ''
+    cfg
+  end
 
   cmd 'show system' do |cfg|
     cfg.gsub! /^.*\sUp Time\s*:.*\n/i, ''

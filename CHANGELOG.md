@@ -35,6 +35,7 @@ The format is based on [Keep a Changelog](https://keepachangelog.com/en/1.1.0/).
 - relax prompt requirements in ciscosmb (@Atroskelis)
 - fortios model strips uptime even without remove_secrets (@jplitza)
 - HP ProCurve now accepts ">" as apart of the prompt (@magnuslarsen)
+- comment out 'show running-config' command in EdgeCOS model (@moisseev)
 
 ## [0.27.0] - 2019-10-27
 
