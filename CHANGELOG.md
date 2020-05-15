@@ -37,6 +37,7 @@ The format is based on [Keep a Changelog](https://keepachangelog.com/en/1.1.0/).
 - HP ProCurve now accepts ">" as apart of the prompt (@magnuslarsen)
 - comment out 'show running-config' command in EdgeCOS model (@moisseev)
 - set terminal width in EdgeCOS model (@moisseev)
+- suppress error on 'show watchdog' in EdgeCOS model (@moisseev)
 
 ## [0.27.0] - 2019-10-27
 

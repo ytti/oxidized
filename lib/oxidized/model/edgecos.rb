@@ -28,6 +28,8 @@ class EdgeCOS < Oxidized::Model
   end
 
   cmd 'show watchdog' do |cfg|
+    # Do not show error as command is not supported on some devices
+    cfg.gsub! /^(% Invalid input detected at '\^' marker\.|^\s+\^)$/, ''
     comment cfg
   end
 
