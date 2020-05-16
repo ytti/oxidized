@@ -15,6 +15,7 @@ The format is based on [Keep a Changelog](https://keepachangelog.com/en/1.1.0/).
 - add Telco Systems T-Marc 3306 support via telco model (@SkylerBlumer)
 - add enable support to ciscosmb (@deesel)
 - add Waystream iBOS model
+- add QTECH model (@moisseev)
 
 ### Changed
 
