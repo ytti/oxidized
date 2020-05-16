@@ -1,9 +1,9 @@
 class Procurve < Oxidized::Model
   # previous command is repeated followed by "\eE", which sometimes ends up on last line
-  # ssh switches prompt may start with \r, followed by the prompt itself, regex ([\w\s.-]+# ), which ends the line
+  # ssh switches prompt may start with \r, followed by the prompt itself, regex ([\w\s.-]+[#>] ), which ends the line
   # telnet switchs may start with various vt100 control characters, regex (\e\[24;[0-9][hH]), follwed by the prompt, followed
   # by at least 3 other vt100 characters
-  prompt /(^\r|\e\[24;[0-9][hH])?([\w\s.-]+# )($|(\e\[24;[0-9][0-9]?[hH]){3})/
+  prompt /(^\r|\e\[24;[0-9][hH])?([\w\s.-]+[#>] )($|(\e\[24;[0-9][0-9]?[hH]){3})/
 
   comment '! '
 
