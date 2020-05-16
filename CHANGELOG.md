@@ -15,6 +15,7 @@ The format is based on [Keep a Changelog](https://keepachangelog.com/en/1.1.0/).
 - add Telco Systems T-Marc 3306 support via telco model (@SkylerBlumer)
 - add enable support to ciscosmb (@deesel)
 - add Waystream iBOS model
+- add QTECH model (@moisseev)
 
 ### Changed
 
@@ -35,6 +36,8 @@ The format is based on [Keep a Changelog](https://keepachangelog.com/en/1.1.0/).
 - relax prompt requirements in ciscosmb (@Atroskelis)
 - fortios model strips uptime even without remove_secrets (@jplitza)
 - HP ProCurve now accepts ">" as apart of the prompt (@magnuslarsen)
+- fix IOS SNMP notification community hiding for informs and v3 (@moisseev)
+- fixed issue where the regex-pattern for XOS-prompts used invalid syntax (@darkcatapulter)
 - comment out 'show running-config' command in EdgeCOS model (@moisseev)
 - set terminal width in EdgeCOS model (@moisseev)
 - suppress error on 'show watchdog' in EdgeCOS model (@moisseev)
