@@ -1,6 +1,10 @@
 class QTECH < Oxidized::Model
   comment '! '
 
+  cmd :all do |cfg|
+    cfg.cut_both
+  end
+
   cmd :secret do |cfg|
     cfg.gsub! /^(snmp-server community(?: r[ow])?(?: \d)?) .+/, '\\1 <secret hidden>'
     cfg.gsub! /^(snmp-server user .+ auth \S+) .+/, '\\1 <secret hidden>'
@@ -10,12 +14,11 @@ class QTECH < Oxidized::Model
   end
 
   cmd 'show version' do |cfg|
-    cfg = cfg.each_line.to_a[1..-2]
-    comment cfg.reject { |line| line.match /^  (Copyright |All rights reserved$|Uptime is |Last reboot is )/ }.join
+    comment cfg.each_line.reject { |line| line.match /^  (Copyright |All rights reserved$|Uptime is |Last reboot is )/ }.join
   end
 
   cmd 'show running-config' do |cfg|
-    cfg.lines.to_a[1..-2].join
+    cfg
   end
 
   cfg :telnet do
