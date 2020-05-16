@@ -35,6 +35,7 @@ The format is based on [Keep a Changelog](https://keepachangelog.com/en/1.1.0/).
 - relax prompt requirements in ciscosmb (@Atroskelis)
 - fortios model strips uptime even without remove_secrets (@jplitza)
 - HP ProCurve now accepts ">" as apart of the prompt (@magnuslarsen)
+- fix IOS SNMP notification community hiding for informs and v3 (@moisseev)
 
 ## [0.27.0] - 2019-10-27
 
