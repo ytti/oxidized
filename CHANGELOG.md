@@ -40,7 +40,7 @@ The format is based on [Keep a Changelog](https://keepachangelog.com/en/1.1.0/).
 - fixed issue where the regex-pattern for XOS-prompts used invalid syntax (@darkcatapulter)
 - comment out 'show running-config' command in EdgeCOS model (@moisseev)
 - set terminal width in EdgeCOS model (@moisseev)
-- suppress error on 'show watchdog' in EdgeCOS model (@moisseev)
+- suppress errors for commands that are not supported on some devices in EdgeCOS model (@moisseev)
 
 ## [0.27.0] - 2019-10-27
 
