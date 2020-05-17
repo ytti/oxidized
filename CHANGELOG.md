@@ -24,6 +24,7 @@ The format is based on [Keep a Changelog](https://keepachangelog.com/en/1.1.0/).
 - scrubs macsec key from Arista EOS (@krisamundson)
 - rubocop dependency now ~> 0.80.0
 - rugged dependency now ~> 0.28.0
+- cumulus model no longer records transient data (@plett)
 
 ### Fixed
 
