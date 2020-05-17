@@ -151,6 +151,8 @@
   * [ScreenOS (Netscreen)](/lib/oxidized/model/screenos.rb)
 * LANCOM Systems GmbH
   * [LCOS](/lib/oxidized/model/lancom.rb)
+* Linkys
+  * [SRW](/lib/oxidized/model/linksyssrw.rb)
 * Linuxgeneric
   * [CentOS](/lib/oxidized/model/linuxgeneric.rb)
 * Mellanox
