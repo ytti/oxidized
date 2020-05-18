@@ -10,7 +10,7 @@ module Oxidized
 
     def initialize(_args)
       Oxidized.mgr = Manager.new
-      Oxidized.Hooks = HookManager.from_config(Oxidized.config)
+      Oxidized.hooks = HookManager.from_config(Oxidized.config)
       nodes = Nodes.new
       raise NoNodesFound, 'source returns no usable nodes' if nodes.size.zero?
 

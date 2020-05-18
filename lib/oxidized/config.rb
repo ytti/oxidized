@@ -69,6 +69,6 @@ module Oxidized
   end
 
   class << self
-    attr_accessor :mgr, :Hooks
+    attr_accessor :mgr, :hooks
   end
 end

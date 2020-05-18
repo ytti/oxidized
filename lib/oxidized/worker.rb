@@ -56,7 +56,7 @@ module Oxidized
 
     def process_success(node, job)
       @jobs_done += 1 # needed for :nodes_done hook
-      Oxidized.Hooks.handle :node_success, node: node,
+      Oxidized.hooks.handle :node_success, node: node,
                                            job:  job
       msg = "update #{node.group}/#{node.name}"
       msg += " from #{node.from}" if node.from
@@ -66,7 +66,7 @@ module Oxidized
                       msg: msg, email: node.email, user: node.user, group: node.group
         node.modified
         Oxidized.logger.info "Configuration updated for #{node.group}/#{node.name}"
-        Oxidized.Hooks.handle :post_store, node:      node,
+        Oxidized.hooks.handle :post_store, node:      node,
                                            job:       job,
                                            commitref: output.commitref
       end
@@ -87,7 +87,7 @@ module Oxidized
         @jobs_done += 1
         msg += ", retries exhausted, giving up"
         node.retry = 0
-        Oxidized.Hooks.handle :node_fail, node: node,
+        Oxidized.hooks.handle :node_fail, node: node,
                                           job:  job
       end
       Oxidized.logger.warn msg
@@ -103,7 +103,7 @@ module Oxidized
 
     def run_done_hook
       Oxidized.logger.debug "lib/oxidized/worker.rb: Running :nodes_done hook"
-      Oxidized.Hooks.handle :nodes_done
+      Oxidized.hooks.handle :nodes_done
     rescue StandardError => e
       # swallow the hook erros and continue as normal
       Oxidized.logger.error "lib/oxidized/worker.rb: #{e.message}"
