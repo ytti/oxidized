@@ -6,6 +6,8 @@ The format is based on [Keep a Changelog](https://keepachangelog.com/en/1.1.0/).
 
 ## [Unreleased]
 
+## [0.28.0 - 2020-05-18]
+
 ### Added
 
 - add VMWare NSX Edge 6.4+ support (@elmobp)
