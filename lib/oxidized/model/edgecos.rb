@@ -8,10 +8,15 @@ class EdgeCOS < Oxidized::Model
   end
 
   cmd :all do |cfg|
-    cfg.each_line.to_a[0..-2].join
+    # Do not show errors for commands that are not supported on some devices
+    cfg.gsub! /^(% Invalid input detected at '\^' marker\.|^\s+\^)$/, ''
+    cfg.cut_both
   end
 
-  cmd 'show running-config'
+  cmd 'show running-config' do |cfg|
+    # Remove "building running-config, please wait..." message
+    cfg.cut_head
+  end
 
   cmd 'show system' do |cfg|
     cfg.gsub! /^.*\sUp Time\s*:.*\n/i, ''
@@ -44,6 +49,7 @@ class EdgeCOS < Oxidized::Model
 
   cfg :telnet, :ssh do
     post_login 'terminal length 0'
+    post_login 'terminal width 300'
     pre_logout 'exit'
   end
 end

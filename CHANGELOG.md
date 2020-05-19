@@ -45,6 +45,9 @@ The format is based on [Keep a Changelog](https://keepachangelog.com/en/1.1.0/).
 - HP ProCurve now accepts ">" as apart of the prompt (@magnuslarsen)
 - fix IOS SNMP notification community hiding for informs and v3 (@moisseev)
 - fixed issue where the regex-pattern for XOS-prompts used invalid syntax (@darkcatapulter)
+- set terminal width in EdgeCOS model (@moisseev)
+- suppress errors for commands that are not supported on some devices in EdgeCOS model (@moisseev)
+- revert including command names in the output of the EdgeCOS model (@moisseev)
 
 ## [0.27.0] - 2019-10-27
 
