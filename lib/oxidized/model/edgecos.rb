@@ -10,10 +10,13 @@ class EdgeCOS < Oxidized::Model
   cmd :all do |cfg|
     # Do not show errors for commands that are not supported on some devices
     cfg.gsub! /^(% Invalid input detected at '\^' marker\.|^\s+\^)$/, ''
-    cfg.each_line.to_a[0..-2].join
+    cfg.cut_both
   end
 
-  cmd 'show running-config'
+  cmd 'show running-config' do |cfg|
+    # Remove "building running-config, please wait..." message
+    cfg.cut_head
+  end
 
   cmd 'show system' do |cfg|
     cfg.gsub! /^.*\sUp Time\s*:.*\n/i, ''
