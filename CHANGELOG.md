@@ -6,9 +6,14 @@ The format is based on [Keep a Changelog](https://keepachangelog.com/en/1.1.0/).
 
 ## [Unreleased]
 
+### Added
+
+- enterasys800 model for enterasys 800-series fe/ge switches (@javichumellamo)
+
 ### Changed
 
 - rubocop dependency now ~> 0.81.0, the last one with ruby 2.3 support
+- change pfSense secret scrubbing to handle new format in 2.4.5+
 
 ## [0.28.0 - 2020-05-18]
 

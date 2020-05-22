@@ -100,7 +100,8 @@
 * Ericsson/Redback
   * [IPOS (former SEOS)](/lib/oxidized/model/ipos.rb)
 * Extreme Networks
-  * [Enterasys](/lib/oxidized/model/enterasys.rb)
+  * [Enterasys B/C-Series](/lib/oxidized/model/enterasys.rb)
+  * [Enterasys 800-Series](/lib/oxidized/model/enterasys800.rb)
   * [WM](/lib/oxidized/model/mtrlrfs.rb)
   * [XOS](/lib/oxidized/model/xos.rb)
   * [ExtremeWare](/lib/oxidized/model/xos.rb)
