@@ -57,6 +57,11 @@ class AOSW < Oxidized::Model
     cfg = "" if cfg =~ /(Invalid input detected at '\^' marker|Parse error)/ # Don't show for unsupported devices (IAP and MAS)
     rstrip_cfg comment cfg
   end
+  
+  cmd 'show license passphrase' do |cfg|
+    cfg = "" if cfg.match /(Invalid input detected at '\^' marker|Parse error)/ # Don't show for unsupported devices (IAP and MAS)
+    rstrip_cfg comment cfg
+  end
 
   cmd 'show switchinfo' do |cfg| # this command will run only on wireless switches
     @is_IAP = true  if cfg =~ /(Invalid input detected at '\^' marker|Parse error)/ # add this suffix only for IAPs
