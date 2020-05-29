@@ -10,7 +10,7 @@ class AOSW < Oxidized::Model
   # All IAPs connected to a Instant Controller will have the same config output. Only the controller needs to be monitored.
 
   comment  '# '
-  prompt /^([\w\(:.@-]+(\)?\s?)[#>]\s?)$/
+  prompt /^([\w \(:.@-]+(\)?\s?)[#>]\s?)$/
 
   cmd :all do |cfg|
     cfg.cut_both
@@ -58,22 +58,29 @@ class AOSW < Oxidized::Model
     rstrip_cfg comment cfg
   end
 
-  cmd 'show license passphrase' do |cfg|
-    cfg = "" if cfg.match /(Invalid input detected at '\^' marker|Parse error)/ # Don't show for unsupported devices (IAP and MAS)
-    rstrip_cfg comment cfg
+  cmd 'show switchinfo' do |cfg| # this command will run only on wireless switches
+    @is_IAP = true  if cfg =~ /(Invalid input detected at '\^' marker|Parse error)/ # add this suffix only for IAPs
   end
 
-  cmd 'show running-config' do |cfg|
-    out = []
-    cfg.each_line do |line|
-      next if line =~ /^controller config \d+$/
-      next if line =~ /^Building Configuration/
-
-      out << line.strip
+  post do
+    if @is_IAP
+      config_IAP
+    else
+      config_Switch
     end
-    out = out.join "\n"
-    out << "\n"
   end
+
+#  cmd 'show running-config' do |cfg|
+#    out = []
+#    cfg.each_line do |line|
+#      next if line =~ /^controller config \d+$/
+#      next if line =~ /^Building Configuration/
+#
+#      out << line.strip
+#    end
+#    out = out.join "\n"
+#    out << "\n"
+#  end
 
   cfg :telnet do
     username /^User:\s*/
@@ -115,5 +122,31 @@ class AOSW < Oxidized::Model
     end
     out = comment out.join "\n"
     out << "\n"
+  end
+
+  def config_IAP
+    cmd 'show running-config no-encrypt' do |cfg|
+      out = []
+      cfg.each_line do |line|
+        next if line =~ /^controller config \d+$/
+        next if line =~ /^Building Configuration/
+        out << line.strip
+      end
+      out = out.join "\n"
+      out << "\n"
+    end
+  end
+
+  def config_Switch
+    cmd 'show running-config' do |cfg|
+      out = []
+      cfg.each_line do |line|
+        next if line =~ /^controller config \d+$/
+        next if line =~ /^Building Configuration/
+        out << line.strip
+      end
+      out = out.join "\n"
+      out << "\n"
+    end
   end
 end
