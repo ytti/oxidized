@@ -64,14 +64,14 @@ class AOSW < Oxidized::Model
   end
 
   cmd 'show switchinfo' do |cfg| # this command will run only on wireless switches
-    @is_iap = true  if cfg =~ /(Invalid input detected at '\^' marker|Parse error)/ # add this suffix only for IAPs
+    @is_iap = true if cfg =~ /(Invalid input detected at '\^' marker|Parse error)/ # add this suffix only for IAPs
   end
 
   post do
     if @is_iap
-      config_IAP
+      config_iap
     else
-      config_Switch
+      config_switch
     end
   end
 
@@ -117,7 +117,7 @@ class AOSW < Oxidized::Model
     out << "\n"
   end
 
-  def config_IAP
+def config_iap
     cmd 'show running-config no-encrypt' do |cfg|
       out = []
       cfg.each_line do |line|
@@ -132,7 +132,7 @@ class AOSW < Oxidized::Model
     end
   end
 
-  def config_Switch
+def config_switch
     cmd 'show running-config' do |cfg|
       out = []
       cfg.each_line do |line|
