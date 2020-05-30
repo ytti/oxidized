@@ -116,28 +116,26 @@ class AOSW < Oxidized::Model
     out = comment out.join "\n"
     out << "\n"
   end
+
   def config_iap
     cmd 'show running-config no-encrypt' do |cfg|
       out = []
       cfg.each_line do |line|
-        next if line =~ /^controller config \d+$/
-        
-        next if line =~ /^Building Configuration/
-        
+        next if line =~ /^controller config \d+$/        
+        next if line =~ /^Building Configuration/        
         out << line.strip
       end
       out = out.join "\n"
       out << "\n"
     end
   end
+
   def config_switch
     cmd 'show running-config' do |cfg|
       out = []
       cfg.each_line do |line|
-        next if line =~ /^controller config \d+$/
-        
-        next if line =~ /^Building Configuration/
-        
+        next if line =~ /^controller config \d+$/        
+        next if line =~ /^Building Configuration/        
         out << line.strip
       end
       out = out.join "\n"
