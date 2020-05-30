@@ -121,8 +121,9 @@ class AOSW < Oxidized::Model
     cmd 'show running-config no-encrypt' do |cfg|
       out = []
       cfg.each_line do |line|
-        next if line =~ /^controller config \d+$/        
-        next if line =~ /^Building Configuration/        
+        next if line =~ /^controller config \d+$/
+        next if line =~ /^Building Configuration/
+
         out << line.strip
       end
       out = out.join "\n"
@@ -134,8 +135,9 @@ class AOSW < Oxidized::Model
     cmd 'show running-config' do |cfg|
       out = []
       cfg.each_line do |line|
-        next if line =~ /^controller config \d+$/        
-        next if line =~ /^Building Configuration/        
+        next if line =~ /^controller config \d+$/
+        next if line =~ /^Building Configuration/
+
         out << line.strip
       end
       out = out.join "\n"
