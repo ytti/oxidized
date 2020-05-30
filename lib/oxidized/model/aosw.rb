@@ -116,8 +116,7 @@ class AOSW < Oxidized::Model
     out = comment out.join "\n"
     out << "\n"
   end
-
-def config_iap
+  def config_iap
     cmd 'show running-config no-encrypt' do |cfg|
       out = []
       cfg.each_line do |line|
@@ -131,8 +130,7 @@ def config_iap
       out << "\n"
     end
   end
-
-def config_switch
+  def config_switch
     cmd 'show running-config' do |cfg|
       out = []
       cfg.each_line do |line|
