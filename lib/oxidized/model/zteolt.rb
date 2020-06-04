@@ -44,9 +44,7 @@ class ZTEOLT < Oxidized::Model
       end
     end
     post_login 'terminal length 0'
-    pre_logout do
-       cmd 'disable'
-       cmd 'exit'
-    end
+    pre_logout 'disable'
+    pre_logout 'exit'
   end
 end
