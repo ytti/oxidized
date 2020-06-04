@@ -9,6 +9,7 @@ The format is based on [Keep a Changelog](https://keepachangelog.com/en/1.1.0/).
 ### Added
 
 - enterasys800 model for enterasys 800-series fe/ge switches (@javichumellamo)
+- zte olt model for c300, c320 series (@glaubway)
 
 ### Changed
 
