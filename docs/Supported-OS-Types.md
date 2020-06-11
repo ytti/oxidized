@@ -225,6 +225,8 @@
   * [Westell 8178G, Westell 8266G](/lib/oxidized/model/weos.rb)
 * Zhone
   * [Zhone (OLT and MX)](/lib/oxidized/model/zhoneolt.rb)
+* ZTE
+  * [C300&C320 OLT](/lib/oxidized/model/zteolt.rb)
 * Zyxel
   * [ZyNOS](/lib/oxidized/model/zynos.rb)
   * [ZyNOS GS-series variant](/lib/oxidized/model/zynosgs.rb)
