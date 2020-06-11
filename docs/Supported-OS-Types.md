@@ -96,7 +96,10 @@
 * ECI Telecom
   * [ECIapollo](/lib/oxidized/model/eciapollo.rb)
 * EdgeCore
+  * [ECS3510, ES3528M](/lib/oxidized/model/edgecos.rb)
   * [ECS3510, ES3526XA-V2, ES3528M](/lib/oxidized/model/edgecos.rb)
+* Eltex
+  * [Eltex](/lib/oxidized/model/eltex.rb)
 * Ericsson/Redback
   * [IPOS (former SEOS)](/lib/oxidized/model/ipos.rb)
 * Extreme Networks
