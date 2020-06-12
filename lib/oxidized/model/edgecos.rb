@@ -1,6 +1,12 @@
 class EdgeCOS < Oxidized::Model
   comment '! '
 
+  # Handle pager for ES3526XA-V2
+  expect /^---More---.*$/ do |data, re|
+    send ' '
+    data.sub re, ''
+  end
+
   cmd :secret do |cfg|
     cfg.gsub!(/password \d+ (\S+).*/, '<secret removed>')
     cfg.gsub!(/community (\S+)/, 'community <hidden>')
@@ -10,6 +16,8 @@ class EdgeCOS < Oxidized::Model
   cmd :all do |cfg|
     # Do not show errors for commands that are not supported on some devices
     cfg.gsub! /^(% Invalid input detected at '\^' marker\.|^\s+\^)$/, ''
+    # Handle pager for ES3526XA-V2
+    cfg.gsub! /^([\b]{10}\s{10}[\b]{10})/, ''
     cfg.cut_both
   end
 
