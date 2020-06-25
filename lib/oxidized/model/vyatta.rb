@@ -4,7 +4,7 @@ class Vyatta < Oxidized::Model
   prompt /@.*?:~\$\s/
 
   cmd :all do |cfg|
-    cfg = cfg.lines.to_a[1..-2].join
+    cfg.lines.to_a[1..-2].join
   end
 
   cmd :secret do |cfg|

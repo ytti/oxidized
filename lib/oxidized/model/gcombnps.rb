@@ -5,11 +5,11 @@ class GcomBNPS < Oxidized::Model
   # tested with:
   #  - S5330 (aka Fiberstore S3800)
 
-  prompt /^\r?([\w.@()-]+?(\(1-16 chars\))?[#>:]\s?)$/ # also match SSH password promt (post_login commands are sent after the first prompt)
+  prompt /^\r?([\w.@()-]+?(\(1-\d+ chars\))?[#>:]\s?)$/ # also match SSH password promt (post_login commands are sent after the first prompt)
   comment '! '
 
   # alternative to handle the SSH login, but this breaks telnet
-  #  expect /^Password\(1-16 chars\):/ do |data|
+  #  expect /^Password\(1-\d+ chars\):/ do |data|
   #      send @node.auth[:password] + "\n"
   #      ''
   #  end
@@ -37,11 +37,11 @@ class GcomBNPS < Oxidized::Model
   cmd 'show interface sfp' do |cfg|
     out = []
     cfg.each_line do |line|
-      next if line.match /^  Temperature/
-      next if line.match /^  Voltage\(V\)/
-      next if line.match /^  Bias Current\(mA\)/
-      next if line.match /^  RX Power\(dBM\)/
-      next if line.match /^  TX Power\(dBM\)/
+      next if line =~ /^  Temperature/
+      next if line =~ /^  Voltage\(V\)/
+      next if line =~ /^  Bias Current\(mA\)/
+      next if line =~ /^  RX Power\(dBM\)/
+      next if line =~ /^  TX Power\(dBM\)/
 
       out << line
     end
@@ -56,8 +56,8 @@ class GcomBNPS < Oxidized::Model
   cmd 'show system' do |cfg|
     out = []
     cfg.each_line do |line|
-      next if line.match /^system run time        :/
-      next if line.match /^switch temperature     :/
+      next if line =~ /^system run time        :/
+      next if line =~ /^switch temperature     :/
 
       out << line
     end
@@ -66,8 +66,8 @@ class GcomBNPS < Oxidized::Model
   end
 
   cfg :telnet do
-    username /^Username\(1-32 chars\):/
-    password /^Password\(1-16 chars\):/
+    username /^Username\(1-\d+ chars\):/
+    password /^Password\(1-\d+ chars\):/
   end
 
   cfg :ssh do

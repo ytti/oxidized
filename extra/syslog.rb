@@ -32,40 +32,41 @@ module Oxidized
     Root = File.join ENV['HOME'], '.config', 'oxidized'
   end
 
-  CFGS = Asetus.new :name => 'oxidized', :load => false, :key_to_s => true
+  CFGS = Asetus.new name: 'oxidized', load: false, key_to_s: true
   CFGS.default.syslogd.port        = 514
   CFGS.default.syslogd.file        = 'messages'
   CFGS.default.syslogd.resolve     = true
+  CFGS.default.syslogd.dns_map     = {
+    '(.*)\.strip\.this\.domain\.com' => '\\1',
+    '(.*)\.also\.this\.net'          => '\\1'
+  }
 
   begin
     CFGS.load
-  rescue => error
+  rescue StandardError => error
     raise InvalidConfig, "Error loading config: #{error.message}"
   ensure
     CFG = CFGS.cfg # convenienence, instead of Config.cfg.password, CFG.password
   end
 
   class SyslogMonitor
-    NAME_MAP = {
-      /(.*)\.ip\.tdc\.net/ => '\1',
-      /(.*)\.ip\.fi/       => '\1',
-    }
     MSG = {
-      :ios   => /%SYS-(SW[0-9]+-)?5-CONFIG_I:/,
-      :junos => 'UI_COMMIT:',
-      :eos   => /%SYS-5-CONFIG_I:/,
-      :nxos  => /%VSHD-5-VSHD_SYSLOG_CONFIG_I:/,
-    }
+      ios:   /%SYS-(SW[0-9]+-)?5-CONFIG_I:/,
+      junos: 'UI_COMMIT:',
+      eos:   /%SYS-5-CONFIG_I:/,
+      nxos:  /%VSHD-5-VSHD_SYSLOG_CONFIG_I:/,
+      aruba: 'Notice-Type=\'Running'
+    }.freeze
 
     class << self
-      def udp port = Oxidized::CFG.syslogd.port, listen = 0
+      def udp(port = Oxidized::CFG.syslogd.port, listen = 0)
         io = UDPSocket.new
         io.bind listen, port
         new io, :udp
       end
 
-      def file syslog_file = Oxidized::CFG.syslogd.file
-        io = open syslog_file, 'r'
+      def file(syslog_file = Oxidized::CFG.syslogd.file)
+        io = File.open syslog_file, 'r'
         io.seek 0, IO::SEEK_END
         new io, :file
       end
@@ -73,43 +74,47 @@ module Oxidized
 
     private
 
-    def initialize io, mode = :udp
+    def initialize(io, mode = :udp)
       @mode = mode
       run io
     end
 
-    def rest opt
+    def rest(opt)
       Oxidized::RestClient.next opt
     end
 
-    def ios ip, log, i
+    def ios(log, index, **opts)
       # TODO: we need to fetch 'ip/name' in mode == :file here
-      user = log[i + 5]
-      from = log[-1][1..-2]
-      rest(:user => user, :from => from, :model => 'ios', :ip => ip,
-           :name => getname(ip))
+      opts[:user] = log[index + 5]
+      opts[:from] = log[-1][1..-2]
+      opts
+    end
+    alias nxos ios
+    alias eos ios
+
+    def junos(log, index, **opts)
+      # TODO: we need to fetch 'ip/name' in mode == :file here
+      opts[:user] = log[index + 2][1..-2]
+      opts[:msg] = log[(index + 6)..-1].join(' ')[10..-2]
+      opts.delete(:msg) if opts[:msg] == 'none'
+      opts
     end
 
-    def jnpr ip, log, i
-      # TODO: we need to fetch 'ip/name' in mode == :file here
-      user = log[i + 2][1..-2]
-      msg  = log[(i + 6)..-1].join(' ')[10..-2]
-      msg  = nil if msg == 'none'
-      rest(:user => user, :msg => msg, :model => 'jnpr', :ip => ip,
-           :name => getname(ip))
+    def aruba(log, index, **opts)
+      opts.merge user: log[index + 2].split('=')[4].split(',')[0][1..-2]
     end
 
-    def handle_log log, ip
+    def handle_log(log, ipaddr)
       log = log.to_s.split ' '
-      if i = log.find_index { |e| e.match(MSG[:ios]) }
-        ios ip, log,  i
-      elsif i = log.index(MSG[:junos])
-        jnpr ip, log, i
+      index, vendor = MSG.find do |key, value|
+        index = log.find_index { |e| e.match value }
+        break index, key if index
       end
+      rest send(vendor, log, index, ip: ipaddr, name: getname(ipaddr), model: vendor.to_s) if index
     end
 
-    def run io
-      while true
+    def run(io)
+      loop do
         log = select [io]
         log, ip = log.first.first, nil
         if @mode == :udp
@@ -127,12 +132,12 @@ module Oxidized
       end
     end
 
-    def getname ip
+    def getname(ipaddr)
       if Oxidized::CFG.syslogd.resolve == false
-        ip
+        ipaddr
       else
-        name = (Resolv.getname ip.to_s rescue ip)
-        NAME_MAP.each { |re, sub| name.sub! re, sub }
+        name = (Resolv.getname ipaddr.to_s rescue ipaddr)
+        Oxidized::CFG.syslogd.dns_map.each { |re, sub| name.sub! Regexp.new(re.to_s), sub }
         name
       end
     end
