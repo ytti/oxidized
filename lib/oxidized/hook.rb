@@ -1,7 +1,7 @@
 module Oxidized
   class HookManager
     class << self
-      def from_config cfg
+      def from_config(cfg)
         mgr = new
         cfg.hooks.each do |name, h_cfg|
           h_cfg.events.each do |event|
@@ -17,27 +17,27 @@ module Oxidized
     class HookContext < OpenStruct; end
 
     # RegisteredHook is a container for a Hook instance
-    class RegisteredHook < Struct.new(:name, :hook); end
+    RegisteredHook = Struct.new(:name, :hook)
 
-    Events = [
-      :node_success,
-      :node_fail,
-      :post_store,
-      :nodes_done
-    ]
+    Events = %i[
+      node_success
+      node_fail
+      post_store
+      nodes_done
+    ].freeze
     attr_reader :registered_hooks
 
     def initialize
       @registered_hooks = Hash.new { |h, k| h[k] = [] }
     end
 
-    def register event, name, hook_type, cfg
+    def register(event, name, hook_type, cfg)
       unless Events.include? event
         raise ArgumentError,
               "unknown event #{event}, available: #{Events.join ','}"
       end
 
-      Oxidized.mgr.add_hook(hook_type) or raise("cannot load hook '#{hook_type}', not found")
+      Oxidized.mgr.add_hook(hook_type) || raise("cannot load hook '#{hook_type}', not found")
       begin
         hook = Oxidized.mgr.hook.fetch(hook_type).new
       rescue KeyError
@@ -50,15 +50,15 @@ module Oxidized
       Oxidized.logger.debug "Hook #{name.inspect} registered #{hook.class} for event #{event.inspect}"
     end
 
-    def handle event, ctx_params = {}
+    def handle(event, ctx_params = {})
       ctx = HookContext.new ctx_params
       ctx.event = event
 
       @registered_hooks[event].each do |r_hook|
         begin
           r_hook.hook.run_hook ctx
-        rescue => e
-          Oxidized.logger.error "Hook #{r_hook.name} (#{r_hook.hook}) failed " +
+        rescue StandardError => e
+          Oxidized.logger.error "Hook #{r_hook.name} (#{r_hook.hook}) failed " \
                                 "(#{e.inspect}) for event #{event.inspect}"
         end
       end
@@ -69,15 +69,14 @@ module Oxidized
   class Hook
     attr_reader :cfg
 
-    def initialize
-    end
+    def initialize; end
 
     def cfg=(cfg)
       @cfg = cfg
-      validate_cfg! if self.respond_to? :validate_cfg!
+      validate_cfg! if respond_to? :validate_cfg!
     end
 
-    def run_hook ctx
+    def run_hook(_ctx)
       raise NotImplementedError
     end
 

@@ -8,23 +8,25 @@ class CiscoSMB < Oxidized::Model
   cmd :all do |cfg|
     lines = cfg.each_line.to_a[1..-2]
     # Remove \r from beginning of response
-    lines[0].gsub!(/^\r.*?/, '') if lines.length > 0
+    lines[0].gsub!(/^\r.*?/, '') unless lines.empty?
     lines.join
   end
 
   cmd :secret do |cfg|
     cfg.gsub! /^(snmp-server community).*/, '\\1 <configuration removed>'
     cfg.gsub! /username (\S+) privilege (\d+) (\S+).*/, '<secret hidden>'
+    cfg.gsub! /^(username \S+ password encrypted) \S+(.*)/, '\\1 <secret hidden> \\2'
+    cfg.gsub! /^(enable password level \d+ encrypted) \S+/, '\\1 <secret hidden>'
     cfg.gsub! /^(encrypted radius-server key).*/, '\\1 <configuration removed>'
+    cfg.gsub! /^(encrypted radius-server host .+ key) \S+(.*)/, '\\1 <secret hidden> \\2'
+    cfg.gsub! /^(encrypted tacacs-server key).*/, '\\1 <secret hidden>'
+    cfg.gsub! /^(encrypted tacacs-server host .+ key) \S+(.*)/, '\\1 <secret hidden> \\2'
+    cfg.gsub! /^(encrypted sntp authentication-key \d+ md5) .*/, '\\1 <secret hidden>'
     cfg
   end
 
   cmd 'show version' do |cfg|
-    comment cfg
-  end
-
-  cmd 'show system' do |cfg|
-    cfg.gsub! /System Up Time.*\n/, ''
+    cfg.gsub! /uptime is\ .+/, '<uptime removed>'
     comment cfg
   end
 
@@ -43,8 +45,18 @@ class CiscoSMB < Oxidized::Model
   end
 
   cfg :telnet, :ssh do
-    username /^User ?[nN]ame:/
-    password /^\r?Password:$/
+    username /User ?[nN]ame:/
+    password /^\r?Password:/
+
+    post_login do
+      if vars(:enable) == true
+        cmd 'enable'
+      elsif vars(:enable)
+        cmd 'enable', /^\r?Password:$/
+        cmd vars(:enable)
+      end
+    end
+
     post_login 'terminal datadump' # Disable pager
     post_login 'terminal width 0'
     post_login 'terminal len 0'

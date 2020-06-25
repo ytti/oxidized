@@ -5,6 +5,7 @@ class Netgear < Oxidized::Model
   cmd :secret do |cfg|
     cfg.gsub!(/password (\S+)/, 'password <hidden>')
     cfg.gsub!(/encrypted (\S+)/, 'encrypted <hidden>')
+    cfg.gsub!(/snmp-server community (\S+)/, 'snmp-server community <hidden>') # snmp
     cfg
   end
 
@@ -31,7 +32,21 @@ class Netgear < Oxidized::Model
     # So it is safer simply to disconnect and not issue a pre_logout command
   end
 
+  cmd :all do |cfg, cmdstring|
+    new_cfg = comment "COMMAND: #{cmdstring}\n"
+    new_cfg << cfg.each_line.to_a[1..-2].join
+  end
+
+  cmd 'show version' do |cfg|
+    cfg.gsub! /(Current Time\.+ ).*/, '\\1 <removed>'
+    comment cfg
+  end
+
+  cmd 'show bootvar' do |cfg|
+    comment cfg
+  end
   cmd 'show running-config' do |cfg|
-    cfg.gsub! /^(!.*Time).*$/, '\1'
+    cfg.gsub! /(System Up Time\s+).*/, '\\1 <removed>'
+    cfg.gsub! /(Current SNTP Synchronized Time:).*/, '\\1 <removed>'
   end
 end

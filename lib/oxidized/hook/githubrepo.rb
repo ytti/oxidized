@@ -18,8 +18,8 @@ class GithubRepo < Oxidized::Hook
     result = repo.fetch('origin', [repo.head.name], credentials: credentials)
     log result.inspect, :debug
 
-    unless result[:total_deltas] > 0
-      log "nothing recieved after fetch", :debug
+    unless result[:total_deltas].positive?
+      log "nothing received after fetch", :debug
       return
     end
 
@@ -34,24 +34,18 @@ class GithubRepo < Oxidized::Hook
       return
     end
 
-    Rugged::Commit.create(repo, {
-                            parents: [repo.head.target, their_branch.target],
-                            tree: merge_index.write_tree(repo),
-                            message: "Merge remote-tracking branch '#{their_branch.name}'",
-                            update_ref: "HEAD"
-                          })
+    Rugged::Commit.create(repo,
+                          parents:    [repo.head.target, their_branch.target],
+                          tree:       merge_index.write_tree(repo),
+                          message:    "Merge remote-tracking branch '#{their_branch.name}'",
+                          update_ref: "HEAD")
   end
 
   private
 
   def credentials
-    Proc.new do |url, username_from_url, allowed_types|
-      if cfg.has_key?('username')
-        git_user = cfg.username
-      else
-        git_user = username_from_url || 'git'
-      end
-
+    Proc.new do |_url, username_from_url, _allowed_types| # rubocop:disable Style/Proc
+      git_user = cfg.has_key?('username') ? cfg.username : (username_from_url || 'git')
       if cfg.has_key?('password')
         log "Authenticating using username and password as '#{git_user}'", :debug
         Rugged::Credentials::UserPassword.new(username: git_user, password: cfg.password)

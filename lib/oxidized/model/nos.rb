@@ -9,7 +9,7 @@ class NOS < Oxidized::Model
   end
 
   cmd 'show version' do |cfg|
-    comment cfg
+    comment cfg.each_line.reject { |line| line.match /([Ss]ystem [Uu]p\s?[Tt]ime|[Uu]p\s?[Tt]ime is \d)/ }.join
   end
 
   cmd 'show inventory' do |cfg|
@@ -21,11 +21,11 @@ class NOS < Oxidized::Model
   end
 
   cmd 'show chassis' do |cfg|
-    comment cfg.each_line.reject { |line| line.match /Time/ or line.match /Update/ }.join
+    comment cfg.each_line.reject { |line| line.match(/Time/) || line.match(/Update/) }.join
   end
 
   cfg 'show system' do |cfg|
-    comment cfg.each_line.reject { |line| line.match /Time/ or line.match /speed/ }
+    comment(cfg.each_line.reject { |line| line.match(/Time/) || line.match(/speed/) })
   end
 
   cmd 'show running-config | nomore'
