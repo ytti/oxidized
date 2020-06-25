@@ -1,6 +1,6 @@
 class LANCOM < Oxidized::Model
   # LANCOM Systems GmbH
-  # tested on LANCOM 1781EF+ router using Lancom OS 10.32.0176RU9 / 21.04.2020 
+  # tested on LANCOM 1781EF+ router using Lancom OS 10.32.0176RU9 / 21.04.2020
   comment '# '
 
   prompt />\s?$/
