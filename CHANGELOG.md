@@ -9,12 +9,23 @@ The format is based on [Keep a Changelog](https://keepachangelog.com/en/1.1.0/).
 ### Added
 
 - enterasys800 model for enterasys 800-series fe/ge switches (@javichumellamo)
+- add ES3526XA-V2 support in EdgeCOS model (@moisseev)
+- model for eltex mes-series switches (@glaubway)
+- model for zte c300 and c320 olt (@glaubway)
+- model for LANCOM (@systeembeheerder)
 
 ### Changed
 
 - rubocop dependency now ~> 0.81.0, the last one with ruby 2.3 support
 - change pfSense secret scrubbing to handle new format in 2.4.5+
-- support for d-link dgs-1100 series switches(@glaubway)
+- Dockerfile rebased to phusion/baseimage-docker bionic-1.0.0
+- scrub PoE related messages from routeros config output (@pioto)
+- support for d-link dgs-1100 series switches in dlink model (@glaubway)
+
+### Fixed
+
+- fixed an issue where Oxidized could not pull config from XOS-devices operating in stacked mode (@DarkCatapulter)
+- fixed an issue where Oxidized could not pull config from XOS-devices that have not saved their configuration (@DarkCatapulter)
 
 ## [0.28.0 - 2020-05-18]
 
@@ -50,7 +61,7 @@ The format is based on [Keep a Changelog](https://keepachangelog.com/en/1.1.0/).
 - fortios model strips uptime even without remove_secrets (@jplitza)
 - HP ProCurve now accepts ">" as apart of the prompt (@magnuslarsen)
 - fix IOS SNMP notification community hiding for informs and v3 (@moisseev)
-- fixed issue where the regex-pattern for XOS-prompts used invalid syntax (@darkcatapulter)
+- fixed issue where the regex-pattern for XOS-prompts used invalid syntax (@DarkCatapulter)
 - set terminal width in EdgeCOS model (@moisseev)
 - suppress errors for commands that are not supported on some devices in EdgeCOS model (@moisseev)
 - revert including command names in the output of the EdgeCOS model (@moisseev)

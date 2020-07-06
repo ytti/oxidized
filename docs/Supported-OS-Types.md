@@ -97,6 +97,9 @@
   * [ECIapollo](/lib/oxidized/model/eciapollo.rb)
 * EdgeCore
   * [ECS3510, ES3528M](/lib/oxidized/model/edgecos.rb)
+  * [ECS3510, ES3526XA-V2, ES3528M](/lib/oxidized/model/edgecos.rb)
+* Eltex
+  * [Eltex](/lib/oxidized/model/eltex.rb)
 * Ericsson/Redback
   * [IPOS (former SEOS)](/lib/oxidized/model/ipos.rb)
 * Extreme Networks
@@ -145,6 +148,8 @@
 * Juniper
   * [JunOS](/lib/oxidized/model/junos.rb)
   * [ScreenOS (Netscreen)](/lib/oxidized/model/screenos.rb)
+* LANCOM Systems GmbH
+  * [LCOS](/lib/oxidized/model/lancom.rb)
 * Linuxgeneric
   * [CentOS](/lib/oxidized/model/linuxgeneric.rb)
 * Mellanox
@@ -222,6 +227,8 @@
   * [Westell 8178G, Westell 8266G](/lib/oxidized/model/weos.rb)
 * Zhone
   * [Zhone (OLT and MX)](/lib/oxidized/model/zhoneolt.rb)
+* ZTE
+  * [C300&C320 OLT](/lib/oxidized/model/zteolt.rb)
 * Zyxel
   * [ZyNOS](/lib/oxidized/model/zynos.rb)
   * [ZyNOS GS-series variant](/lib/oxidized/model/zynosgs.rb)
