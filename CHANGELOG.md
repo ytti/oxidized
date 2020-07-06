@@ -20,6 +20,7 @@ The format is based on [Keep a Changelog](https://keepachangelog.com/en/1.1.0/).
 - change pfSense secret scrubbing to handle new format in 2.4.5+
 - Dockerfile rebased to phusion/baseimage-docker bionic-1.0.0
 - scrub PoE related messages from routeros config output (@pioto)
+- support for d-link dgs-1100 series switches in dlink model (@glaubway)
 
 ### Fixed
 
