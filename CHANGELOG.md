@@ -12,6 +12,7 @@ The format is based on [Keep a Changelog](https://keepachangelog.com/en/1.1.0/).
 - add ES3526XA-V2 support in EdgeCOS model (@moisseev)
 - model for eltex mes-series switches (@glaubway)
 - model for zte c300 and c320 olt (@glaubway)
+- model for LANCOM (@systeembeheerder)
 
 ### Changed
 
