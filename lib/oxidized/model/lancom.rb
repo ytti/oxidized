@@ -6,7 +6,7 @@ class LANCOM < Oxidized::Model
   prompt />\s?$/
 
   cmd "sysinfo\r" do |cfg|
-    cfg.gsub! /^TIME:.*\n/, ''  
+    cfg.gsub! /^TIME:.*\n/, ''
     comment cfg
   end
 
