@@ -5,7 +5,12 @@ class LANCOM < Oxidized::Model
 
   prompt />\s?$/
 
-  cmd "readscript\r\n"
+  cmd "sysinfo\r" do |cfg|
+    cfg.gsub! /^TIME:.*\n/, ''  
+    comment cfg
+  end
+
+  cmd "readscript\r"
 
   cfg :telnet do
     username  /login:\s/
@@ -13,6 +18,6 @@ class LANCOM < Oxidized::Model
   end
 
   cfg :telnet, :ssh do
-    pre_logout "exit\r\n"
+    pre_logout "exit\r"
   end
 end
