@@ -63,12 +63,7 @@ class Aoscx < Oxidized::Model
     comment cfg
   end
 
-  cmd 'show system resource-utilization' do |cfg|
-    comment cfg
-  end
-
   cmd 'show system' do |cfg|
-    cfg = cfg.split("\n")[0..-8].join("\n")
     comment cfg
   end
 
