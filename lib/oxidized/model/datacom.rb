@@ -2,15 +2,13 @@ class DataCom < Oxidized::Model
   # editing model specific prompt RegEx, adding: [\n]?
   # to workaround the new DmOS post login welcome message
   prompt /([\n]?[\w-]+[(]*[\w-]*[)]*[#>][\s]?)$/
-  # @legacy => false: new DmOS firmware | true: old OS firmware
-  @legacy = false
   comment '! '
 
-# was not able to make expect method work for pagination
-#  expect /^\s*--More--\s*$/ do |data, re|
-#    send ' '
-#    data.sub re, ''
-#  end
+  # was not able to make expect method work for pagination
+  # expect /([\n]?[\s]*--More--[\s]*)$/ do |data, re|
+  #   send ' '
+  #   data.sub re, ''
+  # end
 
   cmd :all do |cfg|
     cfg.cut_both
@@ -19,10 +17,11 @@ class DataCom < Oxidized::Model
   cmd 'show firmware' do |cfg|
     # since 'show firmware' does not paginate in neither firmware versions,
     # chose to use it's output to distinguish between the old and new OS
-    if cfg.lines.first =~ /^Running firmware:\s*$/  # Old OS firmware
-      @legacy = true
+    if cfg.lines.first =~ /^Running firmware:\s*$/ # Old OS firmware
+      Oxidized.logger.debug 'lib/oxidized/model/datacom.rb Legacy firmware (disabling pagination)'
       cmd "config\nno terminal paging\nexit"
-    else  # New DmOS firmware
+    else # New DmOS firmware
+      Oxidized.logger.debug 'lib/oxidized/model/datacom.rb DmOS firmware (disabling pagination)'
       cmd "paginate false"
     end
     comment cfg
@@ -36,8 +35,15 @@ class DataCom < Oxidized::Model
     cfg.cut_head
   end
 
-  if @legacy == true
-    cmd "config\nterminal paging\nexit"
+  cmd 'show firmware' do |cfg|
+    # sorry, but I could not figure out a way to carry updated @legacy var in routine execution
+    if cfg.lines.first =~ /^Running firmware:\s*$/ # Old OS firmware
+      Oxidized.logger.debug 'lib/oxidized/model/datacom.rb Legacy firmware (enabling pagination)'
+      cmd("config\nterminal paging\nexit")
+    else # New DmOS firmware
+      Oxidized.logger.debug 'lib/oxidized/model/datacom.rb DmOS firmware (enabling pagination)'
+      cmd("paginate true")
+    end
   end
 
   cfg :ssh do
