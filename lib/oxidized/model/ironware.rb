@@ -31,7 +31,7 @@ class IronWare < Oxidized::Model
     cfg.encode!("UTF-8", invalid: :replace, undef: :replace) # sometimes ironware returns broken encoding
     cfg.gsub! /(^((.*)Current temp(.*))$)/, '' # remove unwanted lines current temperature
     cfg.gsub! /Speed = [A-Z-]{2,6} \(\d{2,3}%\)/, '' # remove unwanted lines Speed Fans
-    cfg.gsub! /current speed is [A-Z]{2,6} \(\d{2,3}%\)/, ''
+    cfg.gsub! /current speed is [A-Z-]{2,6} \(\d{2,3}%\)/, ''
     cfg.gsub! /Fan \d* - STATUS: OK \D*\d*./, '' # Fix for ADX Fan speed reporting
     cfg.gsub! /\d* deg C/, '' # Fix for ADX temperature reporting
     cfg.gsub! /([\[]*)1([\]]*)<->([\[]*)2([\]]*)(<->([\[]*)3([\]]*))*/, ''
