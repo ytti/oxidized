@@ -1,0 +1,35 @@
+#!/sbin/openrc-run
+
+description="Oxidized - network device configuration backup tool"
+command="/usr/bin/${SVCNAME}"
+command_user="${RC_SVCNAME}"
+command_background=true
+pidfile="/var/run/${RC_SVCNAME}.pid"
+output_log="/var/log/${RC_SVCNAME}.log"
+error_log="/var/log/${RC_SVCNAME}.err.log"
+
+extra_commands="reload"
+reload() {
+  ebegin "Reloading ${RC_SVCNAME}"
+  wget -q http://127.0.0.1:8888/reload?format=json -O /dev/null 2>/dev/null
+}
+
+checkconfig() {
+  su -c "${command} --show-exhaustive-config" ${command_user} >/dev/null || return 1
+}
+
+start_pre() {
+  # Make logs writtable
+  touch ${output_log} ${error_log}
+  chown ${command_user} ${output_log} ${error_log}
+
+  if [ "${RC_CMD}" != "restart" ] ; then
+    checkconfig || return $?
+  fi
+}
+
+stop_pre() {
+  if [ "${RC_CMD}" = "restart" ] ; then
+      checkconfig || return $?
+  fi
+}

@@ -13,6 +13,7 @@ The format is based on [Keep a Changelog](https://keepachangelog.com/en/1.1.0/).
 - model for eltex mes-series switches (@glaubway)
 - model for zte c300 and c320 olt (@glaubway)
 - model for LANCOM (@systeembeheerder)
+- add OpenRC startup script for Alpine and Gentoo (@baznikin)
 
 ### Changed
 
