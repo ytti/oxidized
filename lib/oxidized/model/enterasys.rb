@@ -1,7 +1,7 @@
 class Enterasys < Oxidized::Model
   # Enterasys B3/C3 models #
 
-  prompt /^.+\w\(su\)->\s?$/
+  prompt /^.+\w\((su|rw)\)->\s?$/
 
   comment  '!'
 
