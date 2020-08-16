@@ -28,6 +28,7 @@
 * Arris
   * [C4CMTS](/lib/oxidized/model/c4cmts.rb)
 * Aruba
+  * [AOS-CX](/lib/oxidized/model/aoscx.rb)
   * [AOSW](/lib/oxidized/model/aosw.rb)
 * AudioCodes
   * [AudioCodes](/lib/oxdized/model/audiocodes.rb)
