@@ -13,6 +13,7 @@ The format is based on [Keep a Changelog](https://keepachangelog.com/en/1.1.0/).
 - model for eltex mes-series switches (@glaubway)
 - model for zte c300 and c320 olt (@glaubway)
 - model for LANCOM (@systeembeheerder)
+- model for Aruba CX switches (@jmurphy5)
 
 ### Changed
 
@@ -21,12 +22,14 @@ The format is based on [Keep a Changelog](https://keepachangelog.com/en/1.1.0/).
 - Dockerfile rebased to phusion/baseimage-docker bionic-1.0.0
 - scrub PoE related messages from routeros config output (@pioto)
 - support for d-link dgs-1100 series switches in dlink model (@glaubway)
+- enterasys model now works with both ro and rw access (@sargon)
 
 ### Fixed
 
 - fixed an issue where Oxidized could not pull config from XOS-devices operating in stacked mode (@DarkCatapulter)
 - fixed an issue where Oxidized could not pull config from XOS-devices that have not saved their configuration (@DarkCatapulter)
 - improved scrubbing of show chassis in ironware model (@michaelpsomiadis)
+- fixed snmp secret handling in netgear model (@CirnoT)
 - fixed an issue where Oxidized was unable to match post login prompt RegEx in new DmOS firmware (@Zuquim)
 - fixed an issue where Oxidized was unable to properly paginate DataCom devices' terminal output (@Zuquim)
 
