@@ -5,7 +5,8 @@ class Netgear < Oxidized::Model
   cmd :secret do |cfg|
     cfg.gsub!(/password (\S+)/, 'password <hidden>')
     cfg.gsub!(/encrypted (\S+)/, 'encrypted <hidden>')
-    cfg.gsub!(/snmp-server community (\S+)/, 'snmp-server community <hidden>') # snmp
+    cfg.gsub!(/snmp-server community (\S+)$/, 'snmp-server community <hidden>')
+    cfg.gsub!(/snmp-server community (\S+) (\S+) (\S+)/, 'snmp-server community \\1 \\2 <hidden>')
     cfg
   end
 

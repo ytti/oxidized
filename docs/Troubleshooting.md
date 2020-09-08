@@ -53,7 +53,7 @@ irb(main):003:0> '$EKRET-5A-X20#'.match /^([\$\w.@()-]+[#>]\s?)$/
 => #<MatchData "$EKRET-5A-X20#" 1:"$EKRET-5A-X20#">
 ```
 
-The new prompt now matches. You can copy the current model into the `~/.config/oxidized/` directory (keeping the original file name), and modify the prompt within the model file. After restarting Oxidized, the adapted model will be used.
+The new prompt now matches. You can copy the current model into the `~/.config/oxidized/model/` directory (keeping the original file name), and modify the prompt within the model file. After restarting Oxidized, the adapted model will be used.
 
 *Troubleshooting an overly greedy prompt:*
 
