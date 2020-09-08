@@ -30,6 +30,7 @@ The format is based on [Keep a Changelog](https://keepachangelog.com/en/1.1.0/).
 - fixed an issue where Oxidized could not pull config from XOS-devices that have not saved their configuration (@DarkCatapulter)
 - improved scrubbing of show chassis in ironware model (@michaelpsomiadis)
 - fixed snmp secret handling in netgear model (@CirnoT)
+- filter next periodic save schedule time in xos model output (@sargon)
 - fixed an issue where Oxidized was unable to match post login prompt RegEx in new DmOS firmware (@Zuquim)
 - fixed an issue where Oxidized was unable to properly paginate DataCom devices' terminal output (@Zuquim)
 
