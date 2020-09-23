@@ -12,17 +12,25 @@ The format is based on [Keep a Changelog](https://keepachangelog.com/en/1.1.0/).
 - add ES3526XA-V2 support in EdgeCOS model (@moisseev)
 - model for eltex mes-series switches (@glaubway)
 - model for zte c300 and c320 olt (@glaubway)
+- model for LANCOM (@systeembeheerder)
+- model for Aruba CX switches (@jmurphy5)
 
 ### Changed
 
 - rubocop dependency now ~> 0.81.0, the last one with ruby 2.3 support
 - change pfSense secret scrubbing to handle new format in 2.4.5+
 - Dockerfile rebased to phusion/baseimage-docker bionic-1.0.0
+- scrub PoE related messages from routeros config output (@pioto)
+- support for d-link dgs-1100 series switches in dlink model (@glaubway)
+- enterasys model now works with both ro and rw access (@sargon)
 
 ### Fixed
 
 - fixed an issue where Oxidized could not pull config from XOS-devices operating in stacked mode (@DarkCatapulter)
 - fixed an issue where Oxidized could not pull config from XOS-devices that have not saved their configuration (@DarkCatapulter)
+- improved scrubbing of show chassis in ironware model (@michaelpsomiadis)
+- fixed snmp secret handling in netgear model (@CirnoT)
+- filter next periodic save schedule time in xos model output (@sargon)
 
 ## [0.28.0 - 2020-05-18]
 

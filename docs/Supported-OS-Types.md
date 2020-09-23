@@ -28,6 +28,7 @@
 * Arris
   * [C4CMTS](/lib/oxidized/model/c4cmts.rb)
 * Aruba
+  * [AOS-CX](/lib/oxidized/model/aoscx.rb)
   * [AOSW](/lib/oxidized/model/aosw.rb)
 * AudioCodes
   * [AudioCodes](/lib/oxdized/model/audiocodes.rb)
@@ -61,7 +62,7 @@
   * [ASA](/lib/oxidized/model/asa.rb)
   * [AsyncOS](/lib/oxidized/model/asyncos.rb)
   * [CatOS](/lib/oxidized/model/catos.rb)
-  * [FireLinuxOS](lib/oxidized/model/firelinuxos.rb)
+  * [FireLinuxOS](/lib/oxidized/model/firelinuxos.rb)
   * [IOS](/lib/oxidized/model/ios.rb)
   * [IOSXR](/lib/oxidized/model/iosxr.rb)
   * [NGA](/lib/oxidized/model/cisconga.rb)
@@ -148,6 +149,8 @@
 * Juniper
   * [JunOS](/lib/oxidized/model/junos.rb)
   * [ScreenOS (Netscreen)](/lib/oxidized/model/screenos.rb)
+* LANCOM Systems GmbH
+  * [LCOS](/lib/oxidized/model/lancom.rb)
 * Linuxgeneric
   * [CentOS](/lib/oxidized/model/linuxgeneric.rb)
 * Mellanox
@@ -191,7 +194,7 @@
 * Siklu
   * [EtherHaul](/lib/oxidized/model/siklu.rb)
 * SonicWALL
-  * [SonicOS](lib/oxidized/model/sonicos.rb)
+  * [SonicOS](/lib/oxidized/model/sonicos.rb)
 * SNR
   * [SNR-S300G, S2xxx, S3xxx, S4xxx](/lib/oxidized/model/dcnos.rb)
 * Speedtouch
