@@ -97,11 +97,15 @@ class IOS < Oxidized::Model
   cmd 'show vtp status' do |cfg|
     cfg.gsub! /^$\n/, ''
     cfg.gsub! /Configuration last modified by.*\n/, ''
+    cfg.gsub! /Load for five secs.*\n/, ''
+    cfg.gsub! /Time source is SNTP.*\n/, ''
     cfg.gsub! /^/, 'VTP: ' unless cfg.empty?
     comment "#{cfg}\n"
   end
 
   cmd 'show inventory' do |cfg|
+    cfg.gsub! /Load for five secs.*\n/, ''
+    cfg.gsub! /Time source is SNTP.*\n/, ''
     comment cfg
   end
 
