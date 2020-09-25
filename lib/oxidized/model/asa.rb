@@ -17,7 +17,7 @@ class ASA < Oxidized::Model
     cfg.gsub! /^(aaa-server TACACS\+? \(\S+\) host[^\n]*\n(\s+[^\n]+\n)*\skey) \S+$/mi, '\1 <secret hidden>'
     cfg.gsub! /^(aaa-server \S+ \(\S+\) host[^\n]*\n(\s+[^\n]+\n)*\s+key) \S+$/mi, '\1 <secret hidden>'
     cfg.gsub! /ldap-login-password (\S+)/, 'ldap-login-password <secret hidden>'
-    cfg.gsub! /^snmp-server host (.*) community (\S+)/, 'snmp-server host \1 community <secret hidden>'
+    cfg.gsub! /^snmp-server (.*) community (\S+)/, 'snmp-server \1 community <secret hidden>'
     cfg.gsub! /^(failover key) .+/, '\1 <secret hidden>'
     cfg.gsub! /^(\s+ospf message-digest-key \d+ md5) .+/, '\1 <secret hidden>'
     cfg.gsub! /^(\s+ospf authentication-key) .+/, '\1 <secret hidden>'
