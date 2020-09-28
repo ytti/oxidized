@@ -23,6 +23,7 @@ class FortiOS < Oxidized::Model
     cfg.gsub! /(set private-key ).*?-+END (ENCRYPTED|RSA|OPENSSH) PRIVATE KEY-+\n?"$/m, '\\1<configuration removed>'
     cfg.gsub! /(set ca ).*?-+END CERTIFICATE-+"$/m, '\\1<configuration removed>'
     cfg.gsub! /(set csr ).*?-+END CERTIFICATE REQUEST-+"$/m, '\\1<configuration removed>'
+    cfg.gsub! /(config system snmp community\s.*\s*set name )(\S+$)/, '\1 <configuration removed>'
     cfg
   end
 
