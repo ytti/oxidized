@@ -1,5 +1,5 @@
 class CambiumePMP < Oxidized::Model
-  # Cambium ePMP Radios
+  # Cambium ePMP Radios 
 
   # prompt /\(.*\)>/
   prompt /.*>/
@@ -8,7 +8,7 @@ class CambiumePMP < Oxidized::Model
     cfg.cut_both
   end
 
-  pre do 
+  pre do
     cmd 'config show json'
   end
 
