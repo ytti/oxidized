@@ -1,7 +1,6 @@
 class CambiumePMP < Oxidized::Model
-  # Cambium ePMP Radios 
+  # Cambium ePMP Radios
 
-  # prompt /\(.*\)>/
   prompt /.*>/
 
   cmd :all do |cfg|
