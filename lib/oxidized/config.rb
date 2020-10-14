@@ -64,7 +64,6 @@ module Oxidized
 
       # override if comand line flag given
       asetus.cfg.debug = cmd_opts[:debug] if cmd_opts[:debug]
-
       asetus
     end
   end
