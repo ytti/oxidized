@@ -13,10 +13,9 @@ module Oxidized
     HookDir   = File.join Directory, %w[lib oxidized hook]
     Sleep     = 1
 
-    def self.load(cmd_opts = {})
+    def self.load(cmd_opts = {}) # rubocop:disable Metrics/MethodLength
       asetus = Asetus.new(name: 'oxidized', load: false, key_to_s: true)
       Oxidized.asetus = asetus
-
       asetus.default.username             = 'username'
       asetus.default.password             = 'password'
       asetus.default.model                = 'junos'
@@ -64,6 +63,7 @@ module Oxidized
 
       # override if comand line flag given
       asetus.cfg.debug = cmd_opts[:debug] if cmd_opts[:debug]
+
       asetus
     end
   end
