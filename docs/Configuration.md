@@ -283,6 +283,14 @@ rest: 127.0.0.1:8888
 rest: 10.0.0.1:8000/oxidized
 ```
 
+There is also a run-command endpoint where you can pass in commands to run on a device. The endpoint is opt-in, and can be enabled by setting
+
+```yaml
+run_command_endpoint: true
+```
+
+The endpoint takes the command as plain text
+
 ## Triggered backups
 
 A node can be moved to head-of-queue via the REST API `GET/POST /node/next/[NODE]`. This can be useful to immediately schedule a fetch of the configuration after some other event such as a syslog message indicating a configuration update on the device.
