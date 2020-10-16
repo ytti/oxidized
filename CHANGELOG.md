@@ -46,11 +46,12 @@ The format is based on [Keep a Changelog](https://keepachangelog.com/en/1.1.0/).
 - fixed snmp secret handling in netgear model (@CirnoT)
 - generalise fortiOS to support new versions and VM based products e.g. FortiManager, FortiAnalyzer and FortiMail, which requires keyboard-interactive auth method. Includes trial-and-error cmd list to retrieve most infromative config. Fixes #2227. Moved 'system ha status' to 'config global' section to support clusters with virtual domains.
 - filter next periodic save schedule time in xos model output (@sargon)
--  Fix when auto-saved is configured on xos switches  (@trappiz)
+- Fix when auto-saved is configured on xos switches  (@trappiz)
 - fixed ArubaOS-CX enviroment/system inconsistent values #2297 (@raunz)
 - Update AirFiber prompt regex (@murrant)
 - System time and running time are now stripped from tplink model output (@spike77453)
 - <?xml... line is no longer improperly stripped from OPNsense and PFsense backups (@pv2b)
+- fixed an issue where Oxidized timeouts in Brocade ICX-series devices (@piterpunk)
 
 
 ## [0.28.0 - 2020-05-18]
