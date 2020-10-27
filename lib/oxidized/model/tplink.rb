@@ -3,23 +3,28 @@ class TPLink < Oxidized::Model
   prompt /^\r?([\w.@()-]+[#>]\s?)$/
   comment '! '
 
-  # handle paging
-  # workaround for sometimes missing whitespaces with "\s?"
-  expect /Press\s?any\s?key\s?to\s?continue\s?\(Q\s?to\s?quit\)/ do |data, re|
-    send ' '
-    data.sub re, ''
+  def ssh
+    @input.class.to_s.match(/SSH/)
   end
 
+  # With disable paging this is not needed
+  # # handle paging
+  # # workaround for sometimes missing whitespaces with "\s?"
+  # expect /Press\s?any\s?key\s?to\s?continue\s?\(Q\s?to\s?quit\)/ do |data, re|
+  #   send ' '
+  #   data.sub re, ''
+  # end
+
   # send carriage return because \n with the command is not enough
-  # checks if line ends with prompt >,# or \r,\nm otherwise send \r
-  expect /[^>#\r\n]$/ do |data, re|
-    send "\r"
+  # checks if line ends with prompt >,#,: or \r,\n otherwise send \r
+  expect /[^>#\r\n:]$/ do |data, re|
+    send "\r" if ssh
     data.sub re, ''
   end
 
   cmd :all do |cfg|
-    # remove unwanted paging line
-    cfg.gsub! /^Press any key to contin.*/, ''
+    # # remove unwanted paging line
+    # cfg.gsub! /^Press any key to contin.*/, ''
     # normalize linefeeds
     cfg.gsub! /(\r|\r\n|\n\r)/, "\n"
     # remove empty lines
@@ -40,23 +45,35 @@ class TPLink < Oxidized::Model
     comment cfg.each_line.to_a[3..-3].join
   end
 
-  cmd 'show running-config' do |cfg|
+  cmd "show running-config" do |cfg|
     lines = cfg.each_line.to_a[1..-1]
     # cut config after "end"
     lines[0..lines.index("end\n")].join
   end
 
   cfg :telnet, :ssh do
-    username /^User ?[nN]ame:/
-    password /^\r?Password:/
+    username /^(User ?[nN]ame|User):/
+    password /^\r?[pP]assword:/
   end
 
   cfg :telnet, :ssh do
-    if vars :enable
-      post_login do
-        send "enable\r"
-        cmd vars(:enable)
+    post_login do
+      if vars(:enable) == true
+        cmd "enable"
+      elsif vars(:enable)
+        cmd "enable", /^[pP]assword:/
+        send vars(:enable) + "\n\r"
       end
+      # disable paging
+      cmd "terminal length 0"
+      # enable-admin gives admin privileges for regular users
+      # Sending enable-admin with an admin user returns a message warning that
+      # the user already is admin without further consequences. So, always
+      # send the enable-admin.
+      # There is an option to set a password for enable-admin, but testing
+      # with firmware 2.0.5 Build 20200109 Rel.36203 that option didn't works.
+      # So we'll leave enable-admin without password here.
+      cmd "enable-admin"
     end
 
     pre_logout do
