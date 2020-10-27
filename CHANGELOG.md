@@ -21,6 +21,8 @@ The format is based on [Keep a Changelog](https://keepachangelog.com/en/1.1.0/).
 
 ### Changed
 
+- allow normal users to use enable-admin to access administrative mode on tplink model (@piterpunk)
+- changes tplink's "enable" handling to support an environment with and without enable passwords (@piterpunk)
 - Add show-sensitive flag on export command on Mikrotik RouterOS when remove_secret is off (@kedare)
 - rubocop dependency now ~> 0.81.0, the last one with ruby 2.3 support
 - change pfSense secret scrubbing to handle new format in 2.4.5+
@@ -40,6 +42,7 @@ The format is based on [Keep a Changelog](https://keepachangelog.com/en/1.1.0/).
 
 ### Fixed
 
+- fixed the telnet support for TP-Link (@piterpunk)
 - fixed an issue where Oxidized could not pull config from XOS-devices operating in stacked mode (@DarkCatapulter)
 - fixed an issue where Oxidized could not pull config from XOS-devices that have not saved their configuration (@DarkCatapulter)
 - improved scrubbing of show chassis in ironware model (@michaelpsomiadis)
