@@ -7,13 +7,14 @@ class TPLink < Oxidized::Model
     @input.class.to_s.match(/SSH/)
   end
 
-  # With disable paging this is not needed
-  # # handle paging
-  # # workaround for sometimes missing whitespaces with "\s?"
-  # expect /Press\s?any\s?key\s?to\s?continue\s?\(Q\s?to\s?quit\)/ do |data, re|
-  #   send ' '
-  #   data.sub re, ''
-  # end
+  # handle paging
+  # workaround for sometimes missing whitespaces with "\s?"
+  # With the disable paging feature this is not needed, but let's keep it if
+  # some older firmware doesn't accept the 'terminal length 0'
+  expect /Press\s?any\s?key\s?to\s?continue\s?\(Q\s?to\s?quit\)/ do |data, re|
+    send ' '
+    data.sub re, ''
+  end
 
   # send carriage return because \n with the command is not enough
   # checks if line ends with prompt >,#,: or \r,\n otherwise send \r
@@ -23,8 +24,8 @@ class TPLink < Oxidized::Model
   end
 
   cmd :all do |cfg|
-    # # remove unwanted paging line
-    # cfg.gsub! /^Press any key to contin.*/, ''
+    # remove unwanted paging line
+    cfg.gsub! /^Press any key to contin.*/, ''
     # normalize linefeeds
     cfg.gsub! /(\r|\r\n|\n\r)/, "\n"
     # remove empty lines
