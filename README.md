@@ -98,7 +98,7 @@ gem install oxidized-script oxidized-web # If you don't install oxidized-web, en
 
 ### CentOS, Oracle Linux, Red Hat Linux
 
-On CentOS 6 and 7 / RHEL 6 and 7, begin by installing Ruby 2.3 or greater. This can be accomplished in one of two ways:
+On CentOS 6 and 7 / RHEL 6 and 7, begin by installing Ruby 2.3 or greater. This can be accomplished in one of several ways:
 
 Install Ruby 2.3 from [SCL](https://www.softwarecollections.org/en/scls/rhscl/rh-ruby23/):
 
@@ -114,14 +114,33 @@ The following additional packages will be required to build the dependencies:
 yum install make cmake which sqlite-devel openssl-devel libssh2-devel ruby gcc ruby-devel libicu-devel gcc-c++
 ```
 
-Alternatively, install Ruby 2.3 by following the instructions at [Installing Ruby 2.3 using RVM](#installing-ruby-23-using-rvm).
+Alternatively, install Ruby 2.6 via RVM by following the instructions:
 
-Finally, install oxidized via Rubygems:
+Make sure you dont have any leftover ruby:
+```yum erase ruby```
 
-```shell
-gem install oxidized
-gem install oxidized-script oxidized-web # if you don't install oxidized-web, make sure you remove "rest" from your config
+Then, install gpg key and rvm
+```sudo gpg --keyserver hkp://keys.gnupg.net --recv-keys 409B6B1796C275462A1703113804BB82D39DC0E3 7D2BAF1CF37B13E2069D6956105BD0E739499BDB
+curl -sSL https://get.rvm.io | bash -s stable
+source /etc/profile.d/rvm.sh
+rvm requirements run
+rvm install 2.6.0
+rvm use 2.6.0
 ```
+
+Install oxidized requirements:
+```yum install make cmake which sqlite-devel openssl-devel libssh2-devel gcc libicu-devel gcc-c++```
+
+Install the gems:
+```gem install oxidized oxidized-web```
+
+You need to wrap the gem and reference the wrap in the systemctl service file:
+```rvm wrapper oxidized```
+
+You can see where the wrapped gem is via
+```rvm wrapper show oxidized```
+Use that path in the oxidized.service file, restart the systemctl daemon, run oxidized by hand once, edit config file, start service.
+
 
 ### FreeBSD
 
