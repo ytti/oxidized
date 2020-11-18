@@ -27,6 +27,7 @@ module Oxidized
           end
         end
         size.zero? ? replace(new) : update_nodes(new)
+        @jobs.new_count unless @jobs.nil?
         Oxidized.logger.info "lib/oxidized/nodes.rb: Loaded #{size} nodes"
       end
     end
@@ -77,7 +78,9 @@ module Oxidized
         # set last job to nil so that the node is picked for immediate update
         n.last = nil
         put n
-        jobs.want += 1 if Oxidized.config.next_adds_job?
+        # Caution: Infinite worker loop will occur if jobs.want > # of nodes,
+        # therefore dont directly increment @want
+        jobs.increment if Oxidized.config.next_adds_job?
       end
     end
     alias top next
