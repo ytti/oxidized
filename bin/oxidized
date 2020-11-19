@@ -1,8 +1,5 @@
 #!/usr/bin/env ruby
 
-# FIX ME, killing oxidized needs -9
-trap("INT") { exit } # sinatra will otherwise steal this from us
-
 begin
   require_relative '../lib/oxidized/cli'
   Oxidized::CLI.new.run
