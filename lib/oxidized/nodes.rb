@@ -27,7 +27,7 @@ module Oxidized
           end
         end
         size.zero? ? replace(new) : update_nodes(new)
-        @jobs.new_count unless @jobs.nil?
+        @jobs&.new_count
         Oxidized.logger.info "lib/oxidized/nodes.rb: Loaded #{size} nodes"
       end
     end

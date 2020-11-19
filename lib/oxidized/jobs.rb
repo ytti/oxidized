@@ -44,7 +44,8 @@ module Oxidized
       # a) less threads running than the total amount of nodes
       # b) we want less than the max specified number of threads
 
-      return unless @want < @nodes.size and @want < @max
+      return unless (@want < @nodes.size) && (@want < @max)
+
       @want += 1
     end
 
@@ -54,6 +55,7 @@ module Oxidized
       # then we want one more thread (rationale is to fix hanging thread causing HOLB)
 
       return unless @want <= size
+
       increment if (Time.now.utc - @last) > MAX_INTER_JOB_GAP
     end
   end

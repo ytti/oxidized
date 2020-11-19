@@ -31,6 +31,8 @@ The format is based on [Keep a Changelog](https://keepachangelog.com/en/1.1.0/).
 - improved scrubbing of show chassis in ironware model (@michaelpsomiadis)
 - fixed snmp secret handling in netgear model (@CirnoT)
 - filter next periodic save schedule time in xos model output (@sargon)
+- Oxidized will now exit on SIGTERM and SIGINT; SIGHUP will trigger a node list reload and reopen logs (@gs-kamnas)
+- fixed an issue where OXIDIZED\_HOME did not appropriately set the main user config file location (@gs-kamnas)
 
 ## [0.28.0 - 2020-05-18]
 
