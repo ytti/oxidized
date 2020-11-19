@@ -15,7 +15,15 @@ module Oxidized
       raise NoNodesFound, 'source returns no usable nodes' if nodes.empty?
 
       @worker = Worker.new nodes
-      trap('HUP') { nodes.load }
+      @need_reload = false
+
+      # If we receive a SIGHUP, queue a reload of the state
+      reload_proc = Proc.new do
+        @need_reload = true
+      end
+      Signals.register_signal('HUP', reload_proc)
+
+      # Initialize REST API and webUI if requested
       if Oxidized.config.rest?
         begin
           require 'oxidized/web'
@@ -31,9 +39,20 @@ module Oxidized
 
     private
 
+    def reload
+      Oxidized.logger.info("Reloading node list and log files")
+      @worker.reload
+      Oxidized.logger.reopen
+      @need_reload = false
+    end
+
     def run
       Oxidized.logger.debug "lib/oxidized/core.rb: Starting the worker..."
-      @worker.work while sleep Config::SLEEP
+      while true
+        reload if @need_reload
+        @worker.work
+        sleep Config::SLEEP
+      end
     end
   end
 end

@@ -52,6 +52,10 @@ module Oxidized
       Oxidized.logger.warn "#{node.group}/#{node.name} not found, removed while collecting?"
     end
 
+    def reload
+      @nodes.load
+    end
+
     private
 
     def process_success(node, job)

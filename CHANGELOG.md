@@ -53,6 +53,7 @@ The format is based on [Keep a Changelog](https://keepachangelog.com/en/1.1.0/).
 - Fixed login into Fortigate when post-login-baned ist enabled. Fixes #2021 (@chrisr0880, @sahdan, @dangoscomb and @robertcheramy)
 - Fixed pre_logout for BDCOM switches
 - Fix 'wpa passphrase' hashed secret for SonicOS devices with built-in wireless #3036 (@lazynooblet)
+- Oxidized will now exit on SIGTERM and SIGINT; SIGHUP will trigger a node list reload and reopen logs (@gs-kamnas)
 
 ## [0.29.1 - 2023-04-24]
 
