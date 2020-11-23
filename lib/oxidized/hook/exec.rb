@@ -59,7 +59,12 @@ class Exec < Oxidized::Hook
 
   def make_env(ctx)
     env = {
-      "OX_EVENT" => ctx.event.to_s
+      'OX_EVENT'                => ctx.event.to_s,
+      'PATH'                    => ENV['PATH'],
+      'HOME'                    => ENV['HOME'],
+      'OXIDIZED_HOME'           => ENV['OXIDIZED_HOME'],
+      'OXIDIZED_LOGS'           => ENV['OXIDIZED_LOGS'],
+      'OXIDIZED_SSH_PASSPHRASE' => ENV['OXIDIZED_SSH_PASSPHRASE']
     }
     if ctx.node
       env.merge!(
