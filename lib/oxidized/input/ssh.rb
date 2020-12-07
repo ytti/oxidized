@@ -106,7 +106,7 @@ module Oxidized
     def vrf_ssh_shell_open(ssh)
       @ses = ssh.open_channel do |ch|
 	    # Execute the command that will initialize the proxy ssh over vrf
-        ch.exec "ssh -vrf #{node.vars[:vrfname]} -l #{node.vars[:vrfuser]} #{node.ip}" do |ch, success|
+        ch.exec "ssh -vrf #{node.vars[:vrfname]} -l #{node.vars[:cisco_proxy_user]} #{node.ip}" do |ch, success|
           raise "could not execute command" unless success
           do_loop = true;
           ch.on_data do |_ch, data|
@@ -118,7 +118,7 @@ module Oxidized
             @output = @node.model.expects @output
             # Check for password prompt. If the router asks for a password then the password will be send
             if data =~ /Password: / && do_loop
-              _ch.send_data("#{node.vars[:vrfpass]}\n")
+              _ch.send_data("#{node.vars[:cisco_proxy_pass]}\n")
               do_loop = false
             end
 
@@ -144,12 +144,12 @@ module Oxidized
 
             # Check for username prompt. If the router asks for a username then the username will be send
             if data =~ /Username: / && do_loop0
-              _ch.send_data("#{node.vars[:vrfuser]}\n")
+              _ch.send_data("#{node.vars[:cisco_proxy_user]}\n")
               do_loop0 = false
             end
 			# Check for password prompt. If the router asks for a password then the password will be send
             if data =~ /Password: / && do_loop1
-              _ch.send_data("#{node.vars[:vrfpass]}\n")
+              _ch.send_data("#{node.vars[:cisco_proxy_pass]}\n")
               do_loop1 = false
             end
 
@@ -161,7 +161,7 @@ module Oxidized
     # Execute the command that will initialize the proxy ssh over a normal connection
     def proxy_ssh_shell_open(ssh)
       @ses = ssh.open_channel do |ch|
-        ch.exec "ssh -l #{node.vars[:vrfuser]} #{node.ip}" do |ch, success|
+        ch.exec "ssh -l #{node.vars[:cisco_proxy_user]} #{node.ip}" do |ch, success|
           raise "could not execute command" unless success
           do_loop0 = true;
           ch.on_data do |_ch, data|
@@ -174,7 +174,7 @@ module Oxidized
 
             # Check for password prompt. If the router asks for a password then the password will be send
             if data =~ /Password: / && do_loop1
-              _ch.send_data("#{node.vars[:vrfpass]}\n")
+              _ch.send_data("#{node.vars[:cisco_proxy_pass]}\n")
               do_loop1 = false
             end
 
@@ -200,12 +200,12 @@ module Oxidized
 
             # Check for username prompt. If the router asks for a username then the username will be send
             if data =~ /Username: / && do_loop0
-              _ch.send_data("#{node.vars[:vrfuser]}\n")
+              _ch.send_data("#{node.vars[:cisco_proxy_user]}\n")
               do_loop0 = false
             end
 			# Check for password prompt. If the router asks for a password then the password will be send
             if data =~ /Password: / && do_loop1
-              _ch.send_data("#{node.vars[:vrfpass]}\n")
+              _ch.send_data("#{node.vars[:cisco_proxy_pass]}\n")
               do_loop1 = false
             end
 
