@@ -142,6 +142,32 @@ vars_map:
 ...
 ```
 
+## Proxy over Cisco Device to Cisco Device
+
+When using the ssh proxy you will run into some problems if you use a cisco device as a jumphost/proxy. 
+
+This can be provided by defining the following variables in oxidized/config; 'cisco_jumphost', 'cisco_proxy_user' and 'cisco_proxy_pass'.
+
+optionally you can add 'vrf_name' if your proxy is via VRF, but this variable doesn't need to be defined.
+
+Below is an example with the VRF variable added with it.
+
+```yaml
+...
+map:
+  name: 0
+  model: 1
+  ip: 2
+  username: 3
+  password: 4
+vars_map:
+  enable: 5
+  cisco_jumphost: 6
+  vrf_name: 7
+  cisco_proxy_user: 8
+  cisco_proxy_pass: 9
+  
+
 ## SSH enabling legacy algorithms
 
 When connecting to older firmware over SSH, it is sometimes necessary to enable legacy/disabled settings like KexAlgorithms, HostKeyAlgorithms, MAC or the Encryption.
