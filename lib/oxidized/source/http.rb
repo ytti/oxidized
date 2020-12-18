@@ -61,6 +61,11 @@ module Oxidized
       http.use_ssl = true if uri.scheme == 'https'
       http.verify_mode = OpenSSL::SSL::VERIFY_NONE unless @cfg.secure
 
+      # Add read_timeout to handle case of big list of nodes (default value is 60 seconds)
+      if @cfg.has_key? "read_timeout"
+        http.read_timeout = Integer(@cfg.read_timeout)
+      end
+
       # map headers
       headers = {}
       @cfg.headers.each do |header, value|
