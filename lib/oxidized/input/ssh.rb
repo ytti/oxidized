@@ -1,4 +1,5 @@
 module Oxidized
+  require 'ipaddress'
   require 'net/ssh'
   require 'net/ssh/proxy/command'
   require 'timeout'
@@ -140,7 +141,11 @@ module Oxidized
         if (proxy_port = vars(:ssh_proxy_port))
           proxy_command += "-p #{proxy_port} "
         end
-        proxy_command += "#{proxy_host} -W %h:%p"
+        if IPAddress::valid_ipv6? "#{@node.ip}"
+          proxy_command += "#{proxy_host} -W [%h]:%p"
+        else
+          proxy_command += "#{proxy_host} -W %h:%p"
+        end
         proxy = Net::SSH::Proxy::Command.new(proxy_command)
         ssh_opts[:proxy] = proxy
       end
