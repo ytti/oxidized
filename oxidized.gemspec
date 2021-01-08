@@ -21,6 +21,7 @@ Gem::Specification.new do |s|
   s.add_runtime_dependency 'asetus',  '~> 0.1'
   s.add_runtime_dependency 'bcrypt_pbkdf', '~> 1.0'
   s.add_runtime_dependency 'ed25519', '~> 1.2'
+  s.add_runtime_dependency 'ipaddress', '~> 0.8.3'
   s.add_runtime_dependency 'net-ssh', '~> 5'
   s.add_runtime_dependency 'net-telnet', '~> 0.2'
   s.add_runtime_dependency 'rugged',  '~> 0.28.0'
