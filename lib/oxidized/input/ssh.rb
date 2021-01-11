@@ -140,11 +140,7 @@ module Oxidized
         if (proxy_port = vars(:ssh_proxy_port))
           proxy_command += "-p #{proxy_port} "
         end
-        if "#{@node.ip}".include? ":"
-          proxy_command += "#{proxy_host} -W [%h]:%p"
-        else
-          proxy_command += "#{proxy_host} -W %h:%p"
-        end
+        proxy_command += "#{proxy_host} -W [%h]:%p"
         proxy = Net::SSH::Proxy::Command.new(proxy_command)
         ssh_opts[:proxy] = proxy
       end
