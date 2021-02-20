@@ -25,3 +25,4 @@ class ENID < Oxidized::Model
       pre_logout 'exit'
     end
   end
+  
