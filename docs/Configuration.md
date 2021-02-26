@@ -283,6 +283,15 @@ rest: 127.0.0.1:8888
 rest: 10.0.0.1:8000/oxidized
 ```
 
+## Backup Polling Time
+
+Oxidized can be configured to start the backup configuration every x seconds, where x is the amount defined in `polling_time` parameter. The default value is 1.
+
+```yaml
+# Backup process starts every second
+polling_time: 1
+```
+
 ## Triggered backups
 
 A node can be moved to head-of-queue via the REST API `GET/POST /node/next/[NODE]`. This can be useful to immediately schedule a fetch of the configuration after some other event such as a syslog message indicating a configuration update on the device.

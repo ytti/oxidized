@@ -11,7 +11,6 @@ module Oxidized
     ModelDir  = File.join Directory, %w[lib oxidized model]
     SourceDir = File.join Directory, %w[lib oxidized source]
     HookDir   = File.join Directory, %w[lib oxidized hook]
-    Sleep     = 1
 
     def self.load(cmd_opts = {})
       asetus = Asetus.new(name: 'oxidized', load: false, key_to_s: true)
@@ -22,6 +21,7 @@ module Oxidized
       asetus.default.model         = 'junos'
       asetus.default.resolve_dns   = true # if false, don't resolve DNS to IP
       asetus.default.interval      = 3600
+      asetus.default.polling_time  = 1 # seconds between worker runs.
       asetus.default.use_syslog    = false
       asetus.default.debug         = false
       asetus.default.threads       = 30
