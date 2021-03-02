@@ -23,6 +23,8 @@ The format is based on [Keep a Changelog](https://keepachangelog.com/en/1.1.0/).
 - scrub PoE related messages from routeros config output (@pioto)
 - support for d-link dgs-1100 series switches in dlink model (@glaubway)
 - enterasys model now works with both ro and rw access (@sargon)
+- snmp secret scrubbing for netscaler model (@piethugen)
+- ospf secret scrubbing for eos model (@piethugen)
 
 ### Fixed
 
@@ -31,6 +33,9 @@ The format is based on [Keep a Changelog](https://keepachangelog.com/en/1.1.0/).
 - improved scrubbing of show chassis in ironware model (@michaelpsomiadis)
 - fixed snmp secret handling in netgear model (@CirnoT)
 - filter next periodic save schedule time in xos model output (@sargon)
+- improved snmp secret scrubbing for models: asa, fortios and eos (@piethugen)
+- improved enable password scrubbing for model eos (@piethugen)
+   
 
 ## [0.28.0 - 2020-05-18]
 

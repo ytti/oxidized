@@ -16,6 +16,7 @@ class NetScaler < Oxidized::Model
 
   cmd :secret do |cfg|
     cfg.gsub! /\w+\s(-encrypted)/, '<secret hidden> \\1'
+    cfg.gsub! /(snmp community) \S+ (\S*)/, '\1 <secret hidden> \2'
     cfg
   end
 
