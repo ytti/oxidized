@@ -21,6 +21,7 @@ Feature highlights:
 * Restful API to fetch configurations (/node/fetch/[NODE] or /node/fetch/group/[NODE])
 * Restful API to show list of nodes (GET /nodes)
 * Restful API to show list of version for a node (/node/version[NODE]) and diffs
+* Opt-in Restful API to run commands on a node (/node/run-command/[NODE])
 
 Check out the [Oxidized TREX 2014 presentation](http://youtu.be/kBQ_CTUuqeU#t=3h) video on YouTube!
 
