@@ -62,5 +62,6 @@ class FastIron < Oxidized::Model
     end
     post_login 'skip-page-display'
     pre_logout 'exit'
+    pre_logout 'exit'
   end
 end
