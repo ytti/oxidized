@@ -385,7 +385,7 @@ If you would like to be a maintainer for Oxidized then please read through the b
 
 ## YES, I WANT TO HELP
 
-Awesome! Simply send an email to Saku Ytti <saku@ytti.fi>.
+Awesome! Simply send an e-mail to Saku Ytti at <saku@ytti.fi>.
 
 ## Further reading
 
