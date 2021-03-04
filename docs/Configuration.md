@@ -124,7 +124,7 @@ Finally, multiple private keys can be specified as an array of file paths, such 
 
 ## SSH Proxy Command
 
-Oxidized can `ssh` through a proxy as well. To do so we just need to set `ssh_proxy` variable with the proxy host information and optionally set the `ssh_proxy_port` with the SSH port if it is not listening no port 22.
+Oxidized can `ssh` through a proxy as well. To do so we just need to set `ssh_proxy` variable with the proxy host information and optionally set the `ssh_proxy_port` with the SSH port if it is not listening on port 22.
 
 This can be provided on a per-node basis by mapping the proper fields from your source.
 
