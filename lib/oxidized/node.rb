@@ -5,7 +5,7 @@ module Oxidized
   class MethodNotFound < OxidizedError; end
   class ModelNotFound  < OxidizedError; end
   class Node
-    attr_reader :name, :ip, :model, :input, :output, :group, :auth, :prompt, :vars, :last, :repo
+    attr_reader :name, :ip, :model, :input, :output, :group, :category, :auth, :prompt, :vars, :last, :repo
     attr_accessor :running, :user, :email, :msg, :from, :stats, :retry
     alias running? running
 
@@ -19,6 +19,7 @@ module Oxidized
       @ip ||= Resolv.new.getaddress(@name) if Oxidized.config.resolve_dns?
       @ip ||= @name
       @group = opt[:group]
+      @category = opt[:category]
       @model = resolve_model opt
       @input = resolve_input opt
       @output = resolve_output opt
@@ -96,6 +97,7 @@ module Oxidized
         full_name: @name,
         ip:        @ip,
         group:     @group,
+        category:     @category,
         model:     @model.class.to_s,
         last:      nil,
         vars:      @vars,
