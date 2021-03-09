@@ -20,7 +20,8 @@ class EdgeSwitch < Oxidized::Model
         send "enable\n"
         cmd vars(:enable)
       else
-        cmd 'enable'
+        cmd 'enable', /^[pP]assword:/
+        cmd @node.auth[:password]
       end
       cmd 'terminal length 0'
     end
