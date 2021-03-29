@@ -134,7 +134,8 @@ module Oxidized
       ssh_opts[:auth_methods] = auth_methods
       Oxidized.logger.debug "AUTH METHODS::#{auth_methods}"
 
-      if (proxy_host = vars(:ssh_proxy))
+      proxy_host = vars(:ssh_proxy)
+      if ( defined?(proxy_host) && !proxy_host.nil? && !proxy_host.empty? )
         proxy_command =  "ssh "
         proxy_command += "-o StrictHostKeyChecking=no " unless secure
         if (proxy_port = vars(:ssh_proxy_port))
