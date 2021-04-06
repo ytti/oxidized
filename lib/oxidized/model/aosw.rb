@@ -10,7 +10,10 @@ class AOSW < Oxidized::Model
   # All IAPs connected to a Instant Controller will have the same config output. Only the controller needs to be monitored.
 
   comment  '# '
-  prompt /^([\w\(:.@-]+(\)?\s?)[#>]\s?)$/
+  # after entering a command, ArubaOS returns \n\r (but \r\n when first
+  # connecting) - SSH splits the line on \n (and will convert \r\n to \n), so
+  # we will possibly get a stray \r at the start of the line
+  prompt /^(\r?[\w\(:.@-]+(\)?\s?)\*?[#>]\s?)$/
 
   cmd :all do |cfg|
     cfg.cut_both
