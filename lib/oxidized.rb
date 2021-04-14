@@ -13,6 +13,7 @@ module Oxidized
   require 'oxidized/nodes'
   require 'oxidized/manager'
   require 'oxidized/hook'
+  require 'oxidized/signals'
   require 'oxidized/core'
 
   def self.asetus
