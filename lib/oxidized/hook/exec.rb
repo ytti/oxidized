@@ -12,12 +12,10 @@ class Exec < Oxidized::Hook
     if cfg.has_key? "timeout"
       @timeout = cfg.timeout
       raise "invalid timeout value" unless @timeout.is_a?(Integer) &&
-                                           @timeout > 0
+                                           @timeout.positive?
     end
 
-    if cfg.has_key? "async"
-      @async = !!cfg.async
-    end
+    @async = !!cfg.async if cfg.has_key? "async"
 
     if cfg.has_key? "cmd"
       @cmd = cfg.cmd
@@ -28,23 +26,23 @@ class Exec < Oxidized::Hook
           "#{self.class.name}: configuration invalid: #{e.message}"
   end
 
-  def run_hook ctx
+  def run_hook(ctx)
     env = make_env ctx
     log "Execute: #{@cmd.inspect}", :debug
     th = Thread.new do
       begin
         run_cmd! env
-      rescue => e
+      rescue StandardError => e
         raise e unless @async
       end
     end
     th.join unless @async
   end
 
-  def run_cmd! env
+  def run_cmd!(env)
     pid, status = nil, nil
     Timeout.timeout(@timeout) do
-      pid = spawn env, @cmd, :unsetenv_others => true
+      pid = spawn env, @cmd, unsetenv_others: true
       pid, status = wait2 pid
       unless status.exitstatus.zero?
         msg = "#{@cmd.inspect} failed with exit value #{status.exitstatus}"
@@ -59,27 +57,25 @@ class Exec < Oxidized::Hook
     raise Timeout::Error, msg
   end
 
-  def make_env ctx
+  def make_env(ctx)
     env = {
       "OX_EVENT" => ctx.event.to_s
     }
     if ctx.node
       env.merge!(
-        "OX_NODE_NAME" => ctx.node.name.to_s,
-        "OX_NODE_IP" => ctx.node.ip.to_s,
-        "OX_NODE_FROM" => ctx.node.from.to_s,
-        "OX_NODE_MSG" => ctx.node.msg.to_s,
-        "OX_NODE_GROUP" => ctx.node.group.to_s,
-        "OX_NODE_MODEL" => ctx.node.model.class.name,
+        "OX_NODE_NAME"      => ctx.node.name.to_s,
+        "OX_NODE_IP"        => ctx.node.ip.to_s,
+        "OX_NODE_FROM"      => ctx.node.from.to_s,
+        "OX_NODE_MSG"       => ctx.node.msg.to_s,
+        "OX_NODE_GROUP"     => ctx.node.group.to_s,
+        "OX_NODE_MODEL"     => ctx.node.model.class.name,
         "OX_REPO_COMMITREF" => ctx.commitref.to_s,
-        "OX_REPO_NAME" => ctx.node.repo.to_s,
+        "OX_REPO_NAME"      => ctx.node.repo.to_s
       )
     end
     if ctx.job
-      env.merge!(
-        "OX_JOB_STATUS" => ctx.job.status.to_s,
-        "OX_JOB_TIME" => ctx.job.time.to_s,
-      )
+      env["OX_JOB_STATUS"] = ctx.job.status.to_s
+      env["OX_JOB_TIME"] = ctx.job.time.to_s
     end
     env
   end

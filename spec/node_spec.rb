@@ -7,13 +7,13 @@ describe Oxidized::Node do
 
     Oxidized::Node.any_instance.stubs(:resolve_repo)
     Oxidized::Node.any_instance.stubs(:resolve_output)
-    @node = Oxidized::Node.new(name: 'example.com',
-                               input: 'ssh',
-                               output: 'git',
-                               model: 'junos',
+    @node = Oxidized::Node.new(name:     'example.com',
+                               input:    'ssh',
+                               output:   'git',
+                               model:    'junos',
                                username: 'alma',
                                password: 'armud',
-                               prompt: 'test_prompt')
+                               prompt:   'test_prompt')
   end
 
   describe '#new' do

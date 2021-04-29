@@ -1,6 +1,6 @@
 # Netgear Configuration
 
-There are several models available with CLI management via telnet (port 60000), but they all behave like one of the following:
+There are several models available with CLI management via telnet (port 60000). To enable telnet configure device with web interface and set 'Maintenance > Troubleshooting > Remote Diagnostics' to 'enable'. All devices behave like one of the following:
 
 ## Older models
 
@@ -69,6 +69,17 @@ source:
 ```text
 switchOldFW:netgear:admin:adminpw::60000
 switchNewFW:netgear:admin:adminpw:true:60000
+```
+
+Another approach to set parameters:
+
+## oxidized config
+
+```yaml
+  netgear:
+    vars:
+      enable: true
+      telnet_port: 60000
 ```
 
 [Reference](https://github.com/ytti/oxidized/pull/1268)

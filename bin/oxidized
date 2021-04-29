@@ -6,8 +6,10 @@ trap("INT") { exit } # sinatra will otherwise steal this from us
 begin
   require_relative '../lib/oxidized/cli'
   Oxidized::CLI.new.run
-rescue => error
-  warn "#{error}"
+rescue StandardError => error
+  warn error.to_s
   debug = Oxidized.config.debug rescue true
   raise if debug
+
+  exit 1
 end

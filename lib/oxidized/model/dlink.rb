@@ -1,7 +1,8 @@
 class Dlink < Oxidized::Model
   # D-LINK Switches
+  # Add support dgs 1100 series (tested only with dgs-1100-10/me)
 
-  prompt /^(\r*[\w.@()\/:-]+[#>]\s?)$/
+  prompt /^(\r*[\w\s.@()\/:-]+[#>]\s?)$/
   comment '# '
 
   cmd :secret do |cfg|
@@ -26,7 +27,7 @@ class Dlink < Oxidized::Model
   cmd 'show config current'
 
   cfg :telnet do
-    username /\r*[Uu]ser[Nn]ame:/
+    username /\r*([\w\s.@()\/:-]+)?([Uu]ser[Nn]ame|[Ll]ogin):/
     password /\r*[Pp]ass[Ww]ord:/
   end
 
