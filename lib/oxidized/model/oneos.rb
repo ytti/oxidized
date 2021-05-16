@@ -1,5 +1,5 @@
 class OneOS < Oxidized::Model
-  prompt /^([\w.@()-]+#\s?)$/
+  prompt /^([\w.@()-]+[#>]\s?)$/
   comment  '! '
 
   # example how to handle pager
@@ -26,19 +26,19 @@ class OneOS < Oxidized::Model
     cfg
   end
 
-  cmd 'show version' do |cfg|
+  cmd "show version\r" do |cfg|
     comment cfg
   end
 
-  cmd 'show system hardware' do |cfg|
+  cmd "show system hardware\r" do |cfg|
     comment cfg
   end
 
-  cmd 'show product-info-area' do |cfg|
+  cmd "show product-info-area\r" do |cfg|
     comment cfg
   end
 
-  cmd 'show running-config' do |cfg|
+  cmd "show running-config\r" do |cfg|
     cfg = cfg.each_line.to_a[0..-1].join
     cfg.gsub! /^Building configuration...\s*[^\n]*\n/, ''
     cfg.gsub! /^Current configuration :\s*[^\n]*\n/, ''
@@ -58,7 +58,7 @@ class OneOS < Oxidized::Model
         cmd vars(:enable)
       end
     end
-    post_login 'term len 0'
-    pre_logout 'exit'
+    post_login "term len 0\r"
+    pre_logout "exit\r"
   end
 end
