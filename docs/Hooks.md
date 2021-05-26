@@ -62,6 +62,8 @@ hooks:
 
 ## Hook type: githubrepo
 
+Note: You must not use the same name as any local repo configured under output. Make sure your 'git' output has a unique name that does not match your remote_repo.
+
 The `githubrepo` hook executes a `git push` to a configured `remote_repo` when the specified event is triggered.
 
 Several authentication methods are supported:
