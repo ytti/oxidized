@@ -14,10 +14,12 @@ class AOS < Oxidized::Model
   end
 
   cmd 'show chassis' do |cfg|
+    raise "AOS ERROR:" if cfg.match /ERROR:/
     comment cfg
   end
 
   cmd 'show hardware info' do |cfg|
+    raise "AOS ERROR:" if cfg.match /ERROR:/
     comment cfg
   end
 
@@ -30,6 +32,7 @@ class AOS < Oxidized::Model
   end
 
   cmd 'show configuration snapshot' do |cfg|
+    raise "AOS ERROR:" if cfg.match /ERROR:/
     cfg
   end
 
