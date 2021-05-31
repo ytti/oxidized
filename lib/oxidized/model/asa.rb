@@ -41,6 +41,18 @@ class ASA < Oxidized::Model
     comment cfg
   end
 
+  cmd 'show failover state' do |cfg|
+    comment cfg
+  end
+
+  cmd 'show failover history' do |cfg|
+    comment cfg
+  end
+
+  cmd 'failover exec mate show inventory' do |cfg|
+    comment cfg
+  end
+
   post do
     if @is_multiple_context
       multiple_context
