@@ -1,7 +1,7 @@
 class VRP < Oxidized::Model
   # Huawei VRP
 
-  prompt /^(<[\w.-]+>)$/
+  prompt /^.*(<[\w.-]+>)$/
   comment '# '
 
   cmd :secret do |cfg|
