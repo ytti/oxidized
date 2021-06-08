@@ -18,7 +18,6 @@ PATH=/sbin:/bin:/usr/sbin:/usr/bin:/usr/local/bin
 DAEMON=$(which oxidized)
 NAME="oxidized"
 DESC="Oxidized - Network Device Configuration Backup Tool"
-ARGS=""
 USER="oxidized"
 
 test -x $DAEMON || exit 0
@@ -29,20 +28,18 @@ if [ -r /etc/default/$NAME ]; then
 	. /etc/default/$NAME
 fi
 
-CONFIG="${CONFIG:-/etc/oxidized/config}"
-
 PIDFILE=/var/run/$NAME.pid
 
 do_start()
 {
         start-stop-daemon --start --quiet --background --pidfile $PIDFILE --make-pidfile  \
-        --oknodo --chuid $USER --exec $DAEMON -- -c $CONFIG $ARGS
+        --oknodo --chuid $USER --exec $DAEMON
 }
 
 do_stop()
 {
         start-stop-daemon --oknodo --stop --quiet -v --pidfile $PIDFILE \
-        --chuid $USER --retry KILL/10 -- -c $CONFIG $ARGS
+        --chuid $USER --retry KILL/10
 }
 
 case "$1" in
