@@ -20,11 +20,21 @@ class EOS < Oxidized::Model
   end
 
   cmd 'show inventory | no-more' do |cfg|
+    if cfg =~ /\/bin\/sh: no-more: command not found/
+      cfg = cmd 'show inventory'
+    end
     comment cfg
   end
 
   cmd 'show running-config | no-more | exclude ! Time:' do |cfg|
+    if cfg =~ /\/bin\/sh: no-more: command not found/
+      cfg = cmd 'show running-config | exclude ! Time:'
+    end
     cfg
+  end
+
+  cmd 'write memory' do |cfg|
+    comment cfg
   end
 
   cfg :telnet, :ssh do
