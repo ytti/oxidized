@@ -144,6 +144,8 @@
 * Huawei
   * [VRP](/lib/oxidized/model/vrp.rb)
   * [SmartAX series](/lib/oxidized/model/smartax.rb)
+* IBM
+  *[RackSwitch](/lib/oxidized/model/ibm.rb)
 * Icotera
   * [6400 series](/lib/oxidized/model/icotera.rb)
 * Juniper
