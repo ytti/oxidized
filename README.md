@@ -336,7 +336,7 @@ The init script assumes that you have a user named 'oxidized' and that oxidized 
 /usr/local/bin
 ```
 
-1. Copy init script from extra/ folder to /etc/init.d/oxidized
+1. Copy init script from extra/ folder to /lib/systemd/system
 
 ```shell
 sudo cp /var/lib/gems/2.7.0/gems/oxidized-0.28.0/extra/oxidized.service /lib/systemd/system
