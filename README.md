@@ -260,7 +260,7 @@ Oxidized configuration is in YAML format. Configuration files are subsequently s
 It is recommended practice to run Oxidized using its own username.  This username can be added using standard command-line tools:
 
 ```shell
-useradd oxidized
+useradd -m oxidized
 ```
 
 > It is recommended __not__ to run Oxidized as root.
