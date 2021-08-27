@@ -337,6 +337,10 @@ The init script assumes that you have a user named 'oxidized' and that oxidized 
 ```
 
 1. Copy init script from extra/ folder to /etc/init.d/oxidized
+
+```shell
+sudo cp /var/lib/gems/2.3.0/gems/oxidized-0.19.0/extra/oxidized.service /lib/systemd/system
+```
 2. Setup /var/run/
 
 ```shell
@@ -347,7 +351,7 @@ chown oxidized:oxidized /var/run/oxidized
 3. Make oxidized start on boot
 
 ```shell
-update-rc.d oxidized defaults
+sudo systemctl enable oxidized.service
 ```
 
 ## Help
