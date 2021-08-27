@@ -339,7 +339,7 @@ The init script assumes that you have a user named 'oxidized' and that oxidized 
 1. Copy init script from extra/ folder to /etc/init.d/oxidized
 
 ```shell
-sudo cp /var/lib/gems/2.3.0/gems/oxidized-0.19.0/extra/oxidized.service /lib/systemd/system
+sudo cp /var/lib/gems/2.7.0/gems/oxidized-0.28.0/extra/oxidized.service /lib/systemd/system
 ```
 2. Setup /var/run/
 
