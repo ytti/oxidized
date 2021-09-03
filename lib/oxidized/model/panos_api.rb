@@ -22,9 +22,9 @@ class PanOS_API < Oxidized::Model # rubocop:disable Naming/ClassAndModuleCamelCa
     # Request to generate an API key with the given username and
     # password.
     kg_r = get_http "/api?" + URI.encode_www_form(
-      user: @node.auth[:username],
+      user:     @node.auth[:username],
       password: @node.auth[:password],
-      type: 'keygen'
+      type:     'keygen'
     )
 
     # Parse the XML API response for the keygen request.
@@ -44,9 +44,9 @@ class PanOS_API < Oxidized::Model # rubocop:disable Naming/ClassAndModuleCamelCa
     # Now that we have the API key, we can request a configuration
     # export.
     cfg = get_http "/api?" + URI.encode_www_form(
-      key: apikey,
+      key:      apikey,
       category: 'configuration',
-      type: 'export'
+      type:     'export'
     )
 
     # The configuration export is in XML format. Unfortunately,
