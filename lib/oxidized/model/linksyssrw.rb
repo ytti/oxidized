@@ -60,8 +60,9 @@ class LinksysSRW < Oxidized::Model
   end
 
   cfg :telnet, :ssh do
-    # Pre-cli-shell just expects a username, who its going to log in.
+    # Some pre-cli-shell just expects a username, who its going to log in.
     username /^User Name:/
+    password /Password:/
     post_login 'terminal datadump'
     pre_logout 'exit'
     pre_logout 'logout'
