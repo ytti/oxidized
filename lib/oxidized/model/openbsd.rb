@@ -47,7 +47,7 @@ class Openbsd < Oxidized::Model
 
     cfg += add_comment('PASSWD FILE')
     cfg += cmd('cat /etc/passwd')
-    
+
     cfg += add_comment('BGPD FILE')
     cfg += cmd('cat /etc/bgpd.conf')
 
