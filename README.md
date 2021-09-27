@@ -8,7 +8,7 @@
 
 Oxidized is a network device configuration backup tool. It's a RANCID replacement!
 
-Light and extensible, Oxidized supports more than 120 operating system types.
+Light and extensible, Oxidized supports over 130 operating system types.
 
 Feature highlights:
 

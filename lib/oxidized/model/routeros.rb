@@ -12,15 +12,15 @@ class RouterOS < Oxidized::Model
     cfg
   end
 
-  cmd '/system routerboard print' do |cfg|
+  cmd '/system routerboard print without-paging' do |cfg|
     comment cfg
   end
 
-  cmd '/system package update print' do |cfg|
+  cmd '/system package update print without-paging' do |cfg|
     comment cfg
   end
 
-  cmd '/system history print' do |cfg|
+  cmd '/system history print without-paging' do |cfg|
     comment cfg
   end
 
@@ -30,6 +30,7 @@ class RouterOS < Oxidized::Model
       cfg.gsub! /\\\r?\n\s+/, '' # strip new line
       cfg.gsub! /# inactive time\r\n/, '' # Remove time based system comment
       cfg.gsub! /# received packet from \S+ bad format\r\n/, '' # Remove intermittent VRRP/CARP collision comment
+      cfg.gsub! /# poe-out status: short_circuit\r\n/, '' # Remove intermittent POE short_circuit comment
       cfg = cfg.split("\n").reject { |line| line[/^#\s\w{3}\/\d{2}\/\d{4}.*$/] }
       cfg.join("\n") + "\n"
     end

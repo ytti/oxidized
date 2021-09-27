@@ -168,6 +168,7 @@ hooks:
     token: SLACK_BOT_TOKEN
     channel: "#network-changes"
 ```
+
 The token parameter is a "legacy token" and is generated [Here](https://api.slack.com/custom-integrations/legacy-tokens).
 
 Optionally you can disable snippets and post a formatted message, for instance linking to a commit in a git repo. Named parameters `%{node}`, `%{group}`, `%{model}` and `%{commitref}` are available.

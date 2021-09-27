@@ -6,9 +6,9 @@ class PfSense < Oxidized::Model
   end
 
   cmd :secret do |cfg|
-    cfg.gsub! /(\s+<bcrypt-hash>)[^<]+(<\/bcrypt-hash>)/, '\\1<secret hidden>\\2'
-    cfg.gsub! /(\s+<password>)[^<]+(<\/password>)/, '\\1<secret hidden>\\2'
-    cfg.gsub! /(\s+<lighttpd_ls_password>)[^<]+(<\/lighttpd_ls_password>)/, '\\1<secret hidden>\\2'
+    cfg.gsub! /(\s+<bcrypt-hash>).+?(<\/bcrypt-hash>)/, '\\1<secret hidden>\\2'
+    cfg.gsub! /(\s+<password>).+?(<\/password>)/, '\\1<secret hidden>\\2'
+    cfg.gsub! /(\s+<lighttpd_ls_password>).+?(<\/lighttpd_ls_password>)/, '\\1<secret hidden>\\2'
     cfg
   end
 

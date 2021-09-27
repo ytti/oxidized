@@ -33,9 +33,6 @@ class Cumulus < Oxidized::Model
     cfg += add_comment 'NTP.CONF'
     cfg += cmd 'cat /etc/ntp.conf'
 
-    cfg += add_comment 'IP Routes'
-    cfg += cmd 'netstat -rn'
-
     cfg += add_comment 'SNMP settings'
     cfg += cmd 'cat /etc/snmp/snmpd.conf'
 
@@ -73,7 +70,7 @@ class Cumulus < Oxidized::Model
     cfg += cmd 'cat /etc/cumulus/datapath/traffic.conf'
 
     cfg += add_comment 'ACL'
-    cfg += cmd 'iptables -L -n'
+    cfg += cmd 'cat /etc/cumulus/acl/policy.conf'
 
     cfg += add_comment 'VERSION'
     cfg += cmd 'cat /etc/cumulus/etc.replace/os-release'

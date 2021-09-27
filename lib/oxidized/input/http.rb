@@ -9,6 +9,9 @@ module Oxidized
     def connect(node)
       @node = node
       @secure = false
+      @username = nil
+      @password = nil
+      @headers = {}
       @log = File.open(Oxidized::Config::Log + "/#{@node.ip}-http", "w") if Oxidized.config.input.debug?
       @node.model.cfg["http"].each { |cb| instance_exec(&cb) }
 
@@ -45,10 +48,17 @@ module Oxidized
 
     def get_http(path)
       schema = @secure ? "https://" : "http://"
-      uri = URI.join schema + @node.ip, path
-      http = Net::HTTP.new uri.host, uri.port
-      http.use_ssl = true if uri.scheme == "https"
-      http.get(uri).body
+      uri = URI("#{schema}#{@node.ip}#{path}")
+      req = Net::HTTP::Get.new(uri)
+      req.basic_auth @username, @password unless @username.nil?
+      @headers.each do |header, value|
+        req.add_field(header, value)
+      end
+      ssl_verify = Oxidized.config.input.http.ssl_verify? ? OpenSSL::SSL::VERIFY_PEER : OpenSSL::SSL::VERIFY_NONE
+      res = Net::HTTP.start(uri.hostname, uri.port, use_ssl: uri.scheme == "https", verify_mode: ssl_verify) do |http|
+        http.request(req)
+      end
+      res.body
     end
 
     def log(str)
