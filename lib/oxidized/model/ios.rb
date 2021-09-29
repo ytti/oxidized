@@ -108,9 +108,8 @@ class IOS < Oxidized::Model
   cmd 'show running-config' do |cfg|
     cfg = cfg.each_line.to_a[3..-1]
     cfg = cfg.reject { |line| line.match /^ntp clock-period / }.join
+    cfg = cfg.each_line.reject { |line| line.match /^! (Last|No) configuration change (at|since).*/ unless line =~ /\d+\sby\s\S+$/ }.join
     cfg.gsub! /^Current configuration : [^\n]*\n/, ''
-    cfg.gsub! /^! (Last|No) configuration change (at|since).*\n/, ''
-    cfg.gsub! /^! NVRAM config last updated.*\n/, ''
     cfg.gsub! /^ tunnel mpls traffic-eng bandwidth[^\n]*\n*(
                   (?: [^\n]*\n*)*
                   tunnel mpls traffic-eng auto-bw)/mx, '\1'
