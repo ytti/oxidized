@@ -29,13 +29,19 @@ class FortiOS < Oxidized::Model
   cmd 'get system status' do |cfg|
     @vdom_enabled = cfg.match /Virtual domain configuration: (enable|multiple)/
     cfg.gsub! /(System time:).*/, '\\1 <stripped>'
-    cfg.gsub! /(Cluster uptime:).*/, '\\1 <stripped>'
-    cfg.gsub! /(Virus-DB|Extended DB|IPS-DB|IPS-ETDB|APP-DB|INDUSTRIAL-DB|Botnet DB|IPS Malicious URL Database).*/, '\\1 <db version stripped>'
+    cfg.gsub! /(Cluster (?:uptime|state change time):).*/, '\\1 <stripped>'
+    cfg.gsub! /(Current Time\s+:\s+)(.*)/, '\1<stripped>'
+    cfg.gsub! /(Uptime:\s+)(.*)/, '\1<stripped>\3'
+    cfg.gsub! /(Last reboot:\s+)(.*)/, '\1<stripped>\3'
+    cfg.gsub! /(Disk Usage\s+:\s+)(.*)/, '\1<stripped>'
+    cfg.gsub! /(^\S+ (?:disk|DB):\s+)(.*)/, '\1<stripped>\3'
+    cfg.gsub! /(VM Registration:\s+)(.*)/, '\1<stripped>\3'
+    cfg.gsub! /(Virus-DB|Extended DB|IPS-DB|IPS-ETDB|APP-DB|INDUSTRIAL-DB|Botnet DB|IPS Malicious URL Database|AV AI\/ML Model).*/, '\\1 <db version stripped>'
     comment cfg
   end
 
   cmd 'get system ha status' do |cfg|
-    cfg = cfg.each_line.select { |line| line.match /^(HA Health Status|Mode|Model|Master|Slave\s+):/ }.join
+    cfg = cfg.each_line.select { |line| line.match /^(HA Health Status|Mode|Model|Master|Slave|Primary|Secondary)(\s+)?:/ }.join
     comment cfg
   end
 
@@ -58,7 +64,14 @@ class FortiOS < Oxidized::Model
 
     cfg << cmd('end') if @vdom_enabled
 
-    cfg << cmd('show full-configuration | grep .')
+    ['show full-configuration | grep .', 'show full-configuration', 'show'].each do |fullcmd|
+      fullcfg = cmd(fullcmd)
+      next if fullcfg.lines[1..3].join =~ /(Parsing error at|command parse error)/ # Don't show for unsupported devices (e.g. FortiAnalyzer, FortiManager, FortiMail)
+
+      cfg << fullcfg
+      break
+    end
+
     cfg.join "\n"
   end
 
