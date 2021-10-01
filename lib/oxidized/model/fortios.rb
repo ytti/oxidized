@@ -40,14 +40,14 @@ class FortiOS < Oxidized::Model
     comment cfg
   end
 
-  cmd 'get system ha status' do |cfg|
-    cfg = cfg.each_line.select { |line| line.match /^(HA Health Status|Mode|Model|Master|Slave|Primary|Secondary)(\s+)?:/ }.join
-    comment cfg
-  end
-
   post do
     cfg = []
     cfg << cmd('config global') if @vdom_enabled
+
+    cfg << cmd('get system ha status') do |cfg_ha|
+      cfg_ha = cfg_ha.each_line.select { |line| line.match /^(HA Health Status|Mode|Model|Master|Slave|Primary|Secondary|# COMMAND)(\s+)?:/ }.join
+      comment cfg_ha
+    end
 
     cfg << cmd('get hardware status') do |cfg_hw|
       comment cfg_hw
@@ -72,7 +72,7 @@ class FortiOS < Oxidized::Model
       break
     end
 
-    cfg.join "\n"
+    cfg.join
   end
 
   cfg :telnet do
