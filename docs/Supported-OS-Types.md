@@ -36,6 +36,15 @@
 * Avaya
   * [VOSS (VSP Operating System Software)](/lib/oxidized/model/voss.rb)
   * [BOSS (Baystack Operating System Software)](/lib/oxidized/model/boss.rb)
+* BDCOM
+  * [S2200 series](/lib/oxidized/model/bdcom.rb)
+  * [S2200PB series](/lib/oxidized/model/bdcom.rb)
+  * [S2200-B series](/lib/oxidized/model/bdcom.rb)
+  * [S2500-B series](/lib/oxidized/model/bdcom.rb)
+  * [S2500-C series](/lib/oxidized/model/bdcom.rb)
+  * [S2500PB series](/lib/oxidized/model/bdcom.rb)
+  * [S2500-P series](/lib/oxidized/model/bdcom.rb)
+  * [S2900 series](/lib/oxidized/model/bdcom.rb)
 * Brocade
   * [FabricOS](/lib/oxidized/model/fabricos.rb)
   * [FastIron](/lib/oxidized/model/fastiron.rb)
@@ -115,6 +124,7 @@
 * Fiberstore
   * [S3800](/lib/oxidized/model/gcombnps.rb)
   * [S3900](/lib/oxidized/model/edgecos.rb)
+  * [S3900-R](/lib/oxidized/model/bdcom.rb)
   * [S5800](/lib/oxidized/model/cnos.rb)
   * [S5850](/lib/oxidized/model/cnos.rb)
 * Firebrick
