@@ -63,7 +63,7 @@ class FortiOS < Oxidized::Model
   end
 
   cfg :telnet do
-    username /login:/
+    username /^Login:/
     password /^Password:/
   end
 
