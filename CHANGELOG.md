@@ -14,9 +14,11 @@ The format is based on [Keep a Changelog](https://keepachangelog.com/en/1.1.0/).
 - model for zte c300 and c320 olt (@glaubway)
 - model for LANCOM (@systeembeheerder)
 - model for Aruba CX switches (@jmurphy5)
+- model for NEC IX devices (@mikenowak)
 
 ### Changed
 
+- Add show-sensitive flag on export command on Mikrotik RouterOS when remove_secret is off (@kedare)
 - rubocop dependency now ~> 0.81.0, the last one with ruby 2.3 support
 - change pfSense secret scrubbing to handle new format in 2.4.5+
 - Dockerfile rebased to phusion/baseimage-docker bionic-1.0.0
@@ -24,6 +26,8 @@ The format is based on [Keep a Changelog](https://keepachangelog.com/en/1.1.0/).
 - support for d-link dgs-1100 series switches in dlink model (@glaubway)
 - enterasys model now works with both ro and rw access (@sargon)
 - restore including last configuration change IOS if the change is done by real user. Resolves #1921 (@raunz)
+- Additional scrubbing for SonicOS v7 devices (@gerard780)
+
 
 ### Fixed
 
