@@ -25,7 +25,9 @@ The format is based on [Keep a Changelog](https://keepachangelog.com/en/1.1.0/).
 - scrub PoE related messages from routeros config output (@pioto)
 - support for d-link dgs-1100 series switches in dlink model (@glaubway)
 - enterasys model now works with both ro and rw access (@sargon)
+- restore including last configuration change IOS if the change is done by real user. Resolves #1921 (@raunz)
 - Additional scrubbing for SonicOS v7 devices (@gerard780)
+
 
 ### Fixed
 
