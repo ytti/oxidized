@@ -25,7 +25,7 @@ class RouterOS < Oxidized::Model
   end
 
   post do
-    run_cmd = vars(:remove_secret) ? '/export hide-sensitive' : '/export'
+    run_cmd = vars(:remove_secret) ? '/export hide-sensitive' : '/export show-sensitive'
     cmd run_cmd do |cfg|
       cfg.gsub! /\\\r?\n\s+/, '' # strip new line
       cfg.gsub! /# inactive time\r\n/, '' # Remove time based system comment
