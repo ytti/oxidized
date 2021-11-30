@@ -25,7 +25,7 @@ class IOS < Oxidized::Model
 
   cmd :secret do |cfg|
     cfg.gsub! /^(snmp-server community).*/, '\\1 <configuration removed>'
-    cfg.gsub! /^(snmp-server host \S+( vrf \S+)?( version (1|2c|3))?)\s+\S+((\s+\S*)*)\s*/, '\\1 <secret hidden> \\5'
+    cfg.gsub! /^(snmp-server host \S+( vrf \S+)?( informs?)?( version (1|2c|3 (noauth|auth|priv)))?)\s+\S+((\s+\S*)*)\s*/, '\\1 <secret hidden> \\7'
     cfg.gsub! /^(username .+ (password|secret) \d) .+/, '\\1 <secret hidden>'
     cfg.gsub! /^(enable (password|secret)( level \d+)? \d) .+/, '\\1 <secret hidden>'
     cfg.gsub! /^(\s+(?:password|secret)) (?:\d )?\S+/, '\\1 <secret hidden>'
@@ -108,9 +108,8 @@ class IOS < Oxidized::Model
   cmd 'show running-config' do |cfg|
     cfg = cfg.each_line.to_a[3..-1]
     cfg = cfg.reject { |line| line.match /^ntp clock-period / }.join
+    cfg = cfg.each_line.reject { |line| line.match /^! (Last|No) configuration change (at|since).*/ unless line =~ /\d+\sby\s\S+$/ }.join
     cfg.gsub! /^Current configuration : [^\n]*\n/, ''
-    cfg.gsub! /^! (Last|No) configuration change (at|since).*\n/, ''
-    cfg.gsub! /^! NVRAM config last updated.*\n/, ''
     cfg.gsub! /^ tunnel mpls traffic-eng bandwidth[^\n]*\n*(
                   (?: [^\n]*\n*)*
                   tunnel mpls traffic-eng auto-bw)/mx, '\1'

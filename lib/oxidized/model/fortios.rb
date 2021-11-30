@@ -23,13 +23,13 @@ class FortiOS < Oxidized::Model
     cfg.gsub! /(set private-key ).*?-+END (ENCRYPTED|RSA|OPENSSH) PRIVATE KEY-+\n?"$/m, '\\1<configuration removed>'
     cfg.gsub! /(set ca ).*?-+END CERTIFICATE-+"$/m, '\\1<configuration removed>'
     cfg.gsub! /(set csr ).*?-+END CERTIFICATE REQUEST-+"$/m, '\\1<configuration removed>'
-    cfg.gsub! /(Cluster uptime:).*/, '\\1 <stripped>'
     cfg
   end
 
   cmd 'get system status' do |cfg|
     @vdom_enabled = cfg.match /Virtual domain configuration: (enable|multiple)/
-    cfg.gsub!(/(System time: )(.*)/, '\1<stripped>\3')
+    cfg.gsub! /(System time:).*/, '\\1 <stripped>'
+    cfg.gsub! /(Cluster uptime:).*/, '\\1 <stripped>'
     cfg.gsub! /(Virus-DB|Extended DB|IPS-DB|IPS-ETDB|APP-DB|INDUSTRIAL-DB|Botnet DB|IPS Malicious URL Database).*/, '\\1 <db version stripped>'
     comment cfg
   end

@@ -26,9 +26,9 @@ class CiscoSMB < Oxidized::Model
   end
 
   cmd 'show version' do |cfg|
-    cfg.gsub! /.* uptime is .*/, ''
     cfg.gsub! /.*Uptime for this control.*/, ''
     cfg.gsub! /.*System restarted.*/, ''
+    cfg.gsub! /uptime is\ .+/, '<uptime removed>'
     comment cfg
   end
 
@@ -47,8 +47,8 @@ class CiscoSMB < Oxidized::Model
   end
 
   cfg :telnet, :ssh do
-    username /^User ?[nN]ame:/
-    password /^\r?Password:$/
+    username /User ?[nN]ame:/
+    password /^\r?Password:/
 
     post_login do
       if vars(:enable) == true

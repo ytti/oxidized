@@ -148,6 +148,7 @@ source:
     delimiter: !ruby/regexp /:/
     user: username
     pass: password
+    read_timeout: 120
     map:
       name: hostname
       model: os

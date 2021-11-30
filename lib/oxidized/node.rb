@@ -73,7 +73,7 @@ module Oxidized
           resc  = " (rescued #{resc})"
         end
         Oxidized.logger.send(level, '%s raised %s%s with msg "%s"' % [ip, err.class, resc, err.message])
-        return false
+        false
       rescue StandardError => err
         crashdir  = Oxidized.config.crash.directory
         crashfile = Oxidized.config.crash.hostnames? ? name : ip.to_s
@@ -86,7 +86,7 @@ module Oxidized
           fh.puts err.backtrace
         end
         Oxidized.logger.error '%s raised %s with msg "%s", %s saved' % [ip, err.class, err.message, crashfile]
-        return false
+        false
       end
     end
 
@@ -153,6 +153,7 @@ module Oxidized
       inputs = resolve_key :input, opt, Oxidized.config.input.default
       inputs.split(/\s*,\s*/).map do |input|
         Oxidized.mgr.add_input(input) || raise(MethodNotFound, "#{input} not found for node #{ip}") unless Oxidized.mgr.input[input]
+
         Oxidized.mgr.input[input]
       end
     end
@@ -160,6 +161,7 @@ module Oxidized
     def resolve_output(opt)
       output = resolve_key :output, opt, Oxidized.config.output.default
       Oxidized.mgr.add_output(output) || raise(MethodNotFound, "#{output} not found for node #{ip}") unless Oxidized.mgr.output[output]
+
       Oxidized.mgr.output[output]
     end
 

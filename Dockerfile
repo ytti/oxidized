@@ -1,9 +1,9 @@
-# Single-stage build of an oxidized container from phusion/baseimage-docker v0.11, derived from Ubuntu 18.04 (Bionic Beaver)
-FROM phusion/baseimage:0.11
+# Single-stage build of an oxidized container from phusion/baseimage-docker bionic-1.0.0, derived from Ubuntu 18.04 (Bionic Beaver)
+FROM phusion/baseimage:bionic-1.0.0
 
 # set up dependencies for the build process
 RUN apt-get -yq update \
-    && apt-get -yq --no-install-recommends install ruby2.5 ruby2.5-dev libssl1.1 libssl-dev pkg-config make cmake libssh2-1 libssh2-1-dev git g++ libffi-dev ruby-bundler libicu60 libicu-dev libsqlite3-0 libsqlite3-dev libmysqlclient20 libmysqlclient-dev libpq5 libpq-dev zlib1g-dev \
+    && apt-get -yq --no-install-recommends install ruby2.5 ruby2.5-dev libssl1.1 libssl-dev pkg-config make cmake libssh2-1 libssh2-1-dev git git-email libmailtools-perl g++ libffi-dev ruby-bundler libicu60 libicu-dev libsqlite3-0 libsqlite3-dev libmysqlclient20 libmysqlclient-dev libpq5 libpq-dev zlib1g-dev \
     && apt-get clean \
     && rm -rf /var/lib/apt/lists/*
 

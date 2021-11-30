@@ -1,4 +1,4 @@
-class Procurve < Oxidized::Model
+class Aoscx < Oxidized::Model
   # previous command is repeated followed by "\eE", which sometimes ends up on last line
   # ssh switches prompt may start with \r, followed by the prompt itself, regex ([\w\s.-]+[#>] ), which ends the line
   # telnet switchs may start with various vt100 control characters, regex (\e\[24;[0-9][hH]), follwed by the prompt, followed
@@ -51,28 +51,19 @@ class Procurve < Oxidized::Model
     comment cfg
   end
 
-  cmd 'show modules' do |cfg|
+  cmd ' show environment' do |cfg|
     comment cfg
   end
 
-  cmd 'show interfaces transceiver' do |cfg|
+  cmd 'show module' do |cfg|
     comment cfg
   end
 
-  cmd 'show flash' do |cfg|
+  cmd 'show interface transceiver' do |cfg|
     comment cfg
   end
 
-  # not supported on all models
-  cmd 'show system-information' do |cfg|
-    cfg = cfg.split("\n")[0..-8].join("\n")
-    comment cfg
-  end
-
-  # not supported on all models
-  cmd 'show system information' do |cfg|
-    cfg = cfg.each_line.reject { |line| line.match /(.*CPU.*)|(.*Up Time.*)|(.*Total.*)|(.*Free.*)|(.*Lowest.*)|(.*Missed.*)/ }
-    cfg = cfg.join
+  cmd 'show system' do |cfg|
     comment cfg
   end
 
@@ -92,7 +83,7 @@ class Procurve < Oxidized::Model
       end
     end
     post_login 'no page'
-    pre_logout "logout\ny\nn"
+    pre_logout "exit"
   end
 
   cfg :ssh do

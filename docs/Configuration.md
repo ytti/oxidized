@@ -16,6 +16,8 @@ input:
   debug: true
   ssh:
     secure: false
+  http:
+    ssl_verify: true
 ```
 
 ## Privileged mode
@@ -82,7 +84,7 @@ vars:
 
 ## Public Key Authentication with SSH
 
-Instead of password-based login, Oxidized can make use of key-based SSH authentication. 
+Instead of password-based login, Oxidized can make use of key-based SSH authentication.
 
 You can tell Oxidized to use one or more private keys globally, or specify the key to be used on a per-node basis. The latter can be done by mapping the `ssh_keys` variable through the active source.
 
@@ -122,7 +124,7 @@ Finally, multiple private keys can be specified as an array of file paths, such 
 
 ## SSH Proxy Command
 
-Oxidized can `ssh` through a proxy as well. To do so we just need to set `ssh_proxy` variable with the proxy host information and optionally set the `ssh_proxy_port` with the SSH port if it is not listening no port 22.
+Oxidized can `ssh` through a proxy as well. To do so we just need to set `ssh_proxy` variable with the proxy host information and optionally set the `ssh_proxy_port` with the SSH port if it is not listening on port 22.
 
 This can be provided on a per-node basis by mapping the proper fields from your source.
 
@@ -306,5 +308,6 @@ resolve_dns: false
 ## Environment variables
 
 You can use some environment variables to change default root directories values.
+
 * `OXIDIZED_HOME` may be used to set oxidized configuration directory, which defaults to `~/.config/oxidized`
 * `OXIDIZED_LOGS` may be used to set oxidzied logs and crash directories root, which default to `~/.config/oxidized`
