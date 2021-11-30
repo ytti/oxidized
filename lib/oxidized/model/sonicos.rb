@@ -17,6 +17,8 @@ class SonicOS < Oxidized::Model
     cfg.gsub! /bind-password \d\,(\S+)/, 'bind-password <secret hidden> \2'
     cfg.gsub! /authentication sha1 \d\,(\S+)/, 'authentication sha1 <secret hidden> \2'
     cfg.gsub! /encryption aes \d\,(\S+)/, 'encryption aes <secret hidden> \2'
+    cfg.gsub! /smtp-pass \d\,(\S+)/, 'smtp-pass <secret hidden> \2'
+    cfg.gsub! /pop-pass \d\,(\S+)/, 'pop-pass <secret hidden> \2'
     cfg
   end
 
@@ -38,6 +40,8 @@ class SonicOS < Oxidized::Model
   def clean(cfg)
     out = []
     cfg.each_line do |line|
+      next if line =~ /date \d{4}\:\d{2}\:\d{2}/
+      next if line =~ /time \d{2}\:\d{2}:\d{2}/
       next if line =~ /system-time \"\d{2}\/\d{2}\/\d{4} \d{2}\:\d{2}:\d{2}.\d+\"/
       next if line =~ /system-uptime "(\s+up\s+\d+\s+)|(.*Days.*)"/
       next if line =~ /checksum \d+/
