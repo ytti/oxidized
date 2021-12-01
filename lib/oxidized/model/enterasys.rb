@@ -13,6 +13,10 @@ class Enterasys < Oxidized::Model
     comment cfg
   end
 
+  cmd 'show version' do |cfg|
+    comment cfg
+  end
+
   cmd 'show config' do |cfg|
     cfg.gsub! /^This command shows non-default configurations only./, ''
     cfg.gsub! /^Use 'show config all' to show both default and non-default configurations./, ''
@@ -22,7 +26,12 @@ class Enterasys < Oxidized::Model
     cfg
   end
 
-  cfg :ssh do
+  cfg :telnet do
+    username /^Username:/i
+    password /^Password:/i
+  end
+
+  cfg :telnet, :ssh do
     pre_logout 'exit'
   end
 end
