@@ -13,6 +13,10 @@ class Enterasys < Oxidized::Model
     comment cfg
   end
 
+  cmd 'show version' do |cfg|
+    comment cfg
+  end
+
   cmd 'show config' do |cfg|
     cfg.gsub! /^This command shows non-default configurations only./, ''
     cfg.gsub! /^Use 'show config all' to show both default and non-default configurations./, ''

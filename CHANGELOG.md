@@ -29,6 +29,7 @@ The format is based on [Keep a Changelog](https://keepachangelog.com/en/1.1.0/).
 - restore including last configuration change IOS if the change is done by real user. Resolves #1921 (@raunz)
 - Additional scrubbing for SonicOS v7 devices (@gerard780)
 - improved Telnet support for enterasys (@jplitza)
+- Include "show version" output for enterasys (@jplitza)
 
 ### Fixed
 
