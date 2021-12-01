@@ -22,7 +22,12 @@ class Enterasys < Oxidized::Model
     cfg
   end
 
-  cfg :ssh do
+  cfg :telnet do
+    username /^Username:/i
+    password /^Password:/i
+  end
+
+  cfg :telnet, :ssh do
     pre_logout 'exit'
   end
 end
