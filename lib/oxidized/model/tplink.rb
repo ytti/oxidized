@@ -35,6 +35,8 @@ class TPLink < Oxidized::Model
   end
 
   cmd 'show system-info' do |cfg|
+    cfg.gsub! /(System Time\s+-).*/, '\\1 <stripped>'
+    cfg.gsub! /(Running Time\s+-).*/, '\\1 <stripped>'
     comment cfg.each_line.to_a[3..-3].join
   end
 
