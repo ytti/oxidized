@@ -29,10 +29,12 @@ class RouterOS < Oxidized::Model
 
   post do
     Oxidized.logger.debug "lib/oxidized/model/routeros.rb: running /export for routeros version #{@ros_version}"
-    run_cmd = if @ros_version >= 7
-                vars(:remove_secret) ? '/export hide-sensitive' : '/export show-sensitive'
+    run_cmd = if vars(:remove_secret)
+                '/export hide-sensitive'
+              elsif (not @ros_version.nil?) && (@ros_version >= 7)
+                '/export show-sensitive'
               else
-                vars(:remove_secret) ? '/export hide-sensitive' : '/export'
+                '/export'
               end
     cmd run_cmd do |cfg|
       cfg.gsub! /\\\r?\n\s+/, '' # strip new line
