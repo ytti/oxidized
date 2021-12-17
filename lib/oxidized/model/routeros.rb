@@ -13,14 +13,14 @@ class RouterOS < Oxidized::Model
   end
 
   cmd '/system routerboard print without-paging' do |cfg|
+    cfg = cfg.each_line.grep(/(model|firmware-type|current-firmware|serial-number):/).join
     comment cfg
   end
 
   cmd '/system package update print without-paging' do |cfg|
-    cfg.split("\n").each do |line|
-      @ros_version = Regexp.last_match(1).to_i if line =~ /installed-version: ([0-9])/
-    end
-    comment cfg
+    version_line = cfg.each_line.grep(/installed-version: /)[0]
+    comment version_line
+    @ros_version = /: ([0-9])/.match(version_line)[1].to_i
   end
 
   cmd '/system history print without-paging' do |cfg|
@@ -41,6 +41,8 @@ class RouterOS < Oxidized::Model
       cfg.gsub! /# inactive time\r\n/, '' # Remove time based system comment
       cfg.gsub! /# received packet from \S+ bad format\r\n/, '' # Remove intermittent VRRP/CARP collision comment
       cfg.gsub! /# poe-out status: short_circuit\r\n/, '' # Remove intermittent POE short_circuit comment
+      cfg.gsub! /# Firmware upgraded successfully, please reboot for changes to take effect!\r\n/, '' # Remove transient firmware upgrade comment
+      cfg.gsub! /# \S+ not ready\r\n/, '' # Remove intermittent $interface not ready comment
       cfg = cfg.split("\n").reject { |line| line[/^#\s\w{3}\/\d{2}\/\d{4}.*$/] }
       cfg.join("\n") + "\n"
     end
