@@ -31,6 +31,7 @@ The format is based on [Keep a Changelog](https://keepachangelog.com/en/1.1.0/).
 - improved scrubbing of show chassis in ironware model (@michaelpsomiadis)
 - fixed snmp secret handling in netgear model (@CirnoT)
 - filter next periodic save schedule time in xos model output (@sargon)
+-  Fix when auto-saved is configured on xos switches  (@trappiz)
 
 ## [0.28.0 - 2020-05-18]
 
