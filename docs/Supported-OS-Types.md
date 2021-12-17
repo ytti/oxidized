@@ -163,6 +163,8 @@
 * MRV
   * [MasterOS](/lib/oxidized/model/masteros.rb)
   * [FiberDriver](/lib/oxidized/model/fiberdriver.rb)
+* NEC
+  * [NEC IX](/lib/oxidized/model/necix.rb)
 * Netgear
   * [Netgear switches](/lib/oxidized/model/netgear.rb)
 * Netonix
