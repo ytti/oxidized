@@ -17,6 +17,9 @@ class RouterOS < Oxidized::Model
   end
 
   cmd '/system package update print without-paging' do |cfg|
+    cfg.split("\n").each do |line|
+      @ros_version = Regexp.last_match(1).to_i if line =~ /installed-version: ([0-9])/
+    end
     comment cfg
   end
 
@@ -25,7 +28,14 @@ class RouterOS < Oxidized::Model
   end
 
   post do
-    run_cmd = vars(:remove_secret) ? '/export hide-sensitive' : '/export show-sensitive'
+    Oxidized.logger.debug "lib/oxidized/model/routeros.rb: running /export for routeros version #{@ros_version}"
+    run_cmd = if vars(:remove_secret)
+                '/export hide-sensitive'
+              elsif (not @ros_version.nil?) && (@ros_version >= 7)
+                '/export show-sensitive'
+              else
+                '/export'
+              end
     cmd run_cmd do |cfg|
       cfg.gsub! /\\\r?\n\s+/, '' # strip new line
       cfg.gsub! /# inactive time\r\n/, '' # Remove time based system comment
