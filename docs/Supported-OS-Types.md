@@ -221,6 +221,7 @@
   * [Edgeos](/lib/oxidized/model/edgeos.rb)
   * [EdgeSwitch](/lib/oxidized/model/edgeswitch.rb)
   * [AirFiber](/lib/oxidized/model/airfiber.rb)
+  * [Ufiber](/lib/oxidized/model/ufiber.rb)
 * VMWare
   * [NSX Edge (configuration)](/lib/oxidized/model/nsxconfig.rb)
   * [NSX Edge (firewall rules)](/lib/oxidized/model/nsxfirewall.rb)
