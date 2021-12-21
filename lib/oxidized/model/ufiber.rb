@@ -1,6 +1,6 @@
 # UFiber #
 class UFiber < Oxidized::Model
-
+# UFiber #
   prompt /.+@.+:~\$\s/
 
   cmd 'cat /tmp/config'
