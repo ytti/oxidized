@@ -19,7 +19,7 @@ class NSeries < Oxidized::Model
     cfg.gsub! /^(username \S+ password (?:encrypted )?)\S+(.*)/, '\1<hidden>\2'
     cfg
   end
-  
+
   cfg :telnet, :ssh do
     if vars :enable
       post_login do
@@ -31,5 +31,4 @@ class NSeries < Oxidized::Model
     pre_logout 'exit'
     pre_logout 'exit'
   end
-
 end
