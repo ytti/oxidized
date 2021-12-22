@@ -8,5 +8,4 @@ class Zy1300 < Oxidized::Model
     @password = @node.auth[:password]
     @secure = false
   end
-
 end
