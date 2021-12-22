@@ -39,8 +39,7 @@ class AOSW < Oxidized::Model
   end
 
   cmd 'show version' do |cfg|
-    cfg = cfg.each_line.reject { |line| line.match /(Switch|AP) uptime/i }
-    cfg = cfg.each_line.reject { |line| line.match /Reboot Time and Cause/i }
+    cfg = cfg.each_line.reject { |line| line.match(/(Switch|AP) uptime/i) || line.match(/Reboot Time and Cause/i) }
     rstrip_cfg comment cfg.join
   end
 
