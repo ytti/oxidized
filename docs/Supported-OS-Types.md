@@ -91,6 +91,7 @@
   * [PowerConnect](/lib/oxidized/model/powerconnect.rb)
   * [AOSW](/lib/oxidized/model/aosw.rb)
   * [DellX](/lib/oxidized/model/dellx.rb)
+  * [Dell EMC Networking OS9](/lib/oxidized/model/os9.rb)
   * [Dell EMC Networking OS10](/lib/oxidized/model/os10.rb)
   * [Dell Networking N Series](/lib/oxidized/model/nseries.rb)
 * D-Link
