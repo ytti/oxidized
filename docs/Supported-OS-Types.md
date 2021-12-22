@@ -239,3 +239,4 @@
   * [ZyNOS](/lib/oxidized/model/zynos.rb)
   * [ZyNOS GS-series variant](/lib/oxidized/model/zynosgs.rb)
   * [NDMS](/lib/oxidized/model/ndms.rb)
+  * [OLTs series 1300](/lib/oxidized/model/zy1300.rb)
