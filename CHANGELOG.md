@@ -20,6 +20,7 @@ The format is based on [Keep a Changelog](https://keepachangelog.com/en/1.1.0/).
 - model for Ubiquiti UFiber v3 (@baldoarturo)
 - model for Dell Networking N Series (@baldoarturo)
 - model for Dell Networking EMC OS9 devices (@baldoarturo)
+- model for Zyxel OLTs series 1300 devices (@baldoarturo)
 
 ### Changed
 
