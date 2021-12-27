@@ -17,6 +17,7 @@ The format is based on [Keep a Changelog](https://keepachangelog.com/en/1.1.0/).
 - model for Aruba CX switches (@jmurphy5)
 - model for NEC IX devices (@mikenowak)
 - Added docs for Dell/EMC Networking OS10 devices (@davromaniak)
+- model for Ubiquiti UFiber OLTs v3 (@baldoarturo)
 
 ### Changed
 
