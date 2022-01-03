@@ -35,6 +35,7 @@ The format is based on [Keep a Changelog](https://keepachangelog.com/en/1.1.0/).
 - xmppdiff now also shows diffs with only removed or only added lines (@jplitza)
 - xmppdiff now persists its connection to the XMPP server and MUC (@jplitza)
 - routeros no longer backups infos on available updates (@jplitza)
+- avoid /humidity hardware field in tmos (F5) to be reported (@albsga)
 
 ### Fixed
 
