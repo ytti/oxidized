@@ -279,7 +279,7 @@ Oxidized configuration is in YAML format. Configuration files are subsequently s
 It is recommended practice to run Oxidized using its own username.  This username can be added using standard command-line tools:
 
 ```shell
-useradd oxidized
+useradd -s /bin/bash -m oxidized
 ```
 
 > It is recommended __not__ to run Oxidized as root.
@@ -355,7 +355,11 @@ The init script assumes that you have a user named 'oxidized' and that oxidized 
 /usr/local/bin
 ```
 
-1. Copy init script from extra/ folder to /etc/init.d/oxidized
+1. Copy init script from extra/ folder to /lib/systemd/system
+
+```shell
+sudo cp /var/lib/gems/2.7.0/gems/oxidized-0.28.0/extra/oxidized.service /lib/systemd/system
+```
 2. Setup /var/run/
 
 ```shell
@@ -366,7 +370,7 @@ chown oxidized:oxidized /var/run/oxidized
 3. Make oxidized start on boot
 
 ```shell
-update-rc.d oxidized defaults
+sudo systemctl enable oxidized.service
 ```
 
 ## Help
