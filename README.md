@@ -343,9 +343,9 @@ Run `oxidized` again to take the first backups.
 
 ## Extra
 
-### Ubuntu SystemV init setup
+### Ubuntu init setup
 
-The init script assumes that you have a user named 'oxidized' and that oxidized is in one of the following paths:
+The systemd service assumes that you have a user named 'oxidized' and that oxidized is in one of the following paths:
 
 ```text
 /sbin
@@ -355,16 +355,16 @@ The init script assumes that you have a user named 'oxidized' and that oxidized 
 /usr/local/bin
 ```
 
-1. Copy init script from extra/ folder to /lib/systemd/system
+1. Copy systemd service file from extra/ folder to /etc/systemd/system
 
 ```shell
-sudo cp /var/lib/gems/2.7.0/gems/oxidized-0.28.0/extra/oxidized.service /lib/systemd/system
+sudo cp extra/oxidized.service /etc/systemd/system
 ```
 2. Setup /var/run/
 
 ```shell
-mkdir /var/run/oxidized
-chown oxidized:oxidized /var/run/oxidized
+mkdir /run/oxidized
+chown oxidized:oxidized /run/oxidized
 ```
 
 3. Make oxidized start on boot
