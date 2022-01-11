@@ -46,7 +46,7 @@ class FastIron < Oxidized::Model
   cmd 'show running-config'
 
   cfg :telnet do
-    username /^.* login: /
+    username /^(.* login|Username): /
     password /^Password:/
   end
 

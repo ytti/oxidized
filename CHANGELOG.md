@@ -21,6 +21,7 @@ The format is based on [Keep a Changelog](https://keepachangelog.com/en/1.1.0/).
 
 ### Changed
 
+- Allows "Username" as username prompt in Brocade ICX-series devices (@piterpunk) 
 - Add show-sensitive flag on export command on Mikrotik RouterOS when remove_secret is off (@kedare)
 - rubocop dependency now ~> 0.81.0, the last one with ruby 2.3 support
 - change pfSense secret scrubbing to handle new format in 2.4.5+
