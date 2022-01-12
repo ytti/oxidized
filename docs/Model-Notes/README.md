@@ -17,6 +17,7 @@ Cisco IOS|[IOS](IOS.md)|29 Mar 2019
 Juniper|[MX/QFX/EX/SRX/J Series](JunOS.md)|18 Jan 2018
 Netgear|[Netgear](Netgear.md)|11 Apr 2018
 Nokia|[Nokia ISAM](Nokia.md)|22 Aug 2018
+Dell/EMC|[Dell EMC Networking OS10](OS10.md)|07 Dec 2021
 Viptela|[Viptela](Viptela.md)|1 Jul 2018
 Zyxel|[XGS4600 Series](XGS4600-Zyxel.md)|1 Feb 2018
 Linux|[LinuxGeneric](LinuxGeneric.md)|10 Jun 2019
