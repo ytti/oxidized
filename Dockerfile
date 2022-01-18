@@ -13,8 +13,11 @@ RUN gem install aws-sdk slack-api xmpp4r cisco_spark --no-ri --no-rdoc
 # dependencies for sources
 RUN gem install gpgme sequel sqlite3 mysql2 pg --no-ri --no-rdoc
 
+# versioned dependencies related to ruby2.5
+RUN gem install io-wait:0.1.0 --no-ri --no-rdoc
+
 # dependencies for inputs
-RUN gem install net-tftp net-http-persistent mechanize --no-ri --no-rdoc
+RUN gem install net-tftp net-http-persistent mechanize net-ftp --no-ri --no-rdoc
 
 # build and install oxidized
 COPY . /tmp/oxidized/
