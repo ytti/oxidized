@@ -24,6 +24,8 @@ class AOSW < Oxidized::Model
     cfg.gsub!(/community (\S+)$/, 'community <secret removed>')
     cfg.gsub!(/ sha (\S+)/, ' sha <secret removed>')
     cfg.gsub!(/ des (\S+)/, ' des <secret removed>')
+    cfg.gsub!(/ SHA (\S+)/, ' SHA <secret removed>')
+    cfg.gsub!(/ AES (\S+)/, ' AES <secret removed>')
     cfg.gsub!(/mobility-manager (\S+) user (\S+) (\S+)/, 'mobility-manager \1 user \2 <secret removed>')
     cfg.gsub!(/mgmt-user (\S+) (root|guest-provisioning|network-operations|read-only|location-api-mgmt) (\S+)$/, 'mgmt-user \1 \2 <secret removed>') # MAS & Wireless Controler
     cfg.gsub!(/mgmt-user (\S+) (\S+)( (read-only|guest-mgmt))?$/, 'mgmt-user \1 <secret removed> \3') # IAP
