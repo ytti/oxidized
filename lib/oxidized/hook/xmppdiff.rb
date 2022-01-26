@@ -2,6 +2,44 @@ require 'xmpp4r'
 require 'xmpp4r/muc/helper/simplemucclient'
 
 class XMPPDiff < Oxidized::Hook
+  def connect
+    @client = Jabber::Client.new(Jabber::JID.new(cfg.jid))
+
+    log "Connecting to XMPP"
+    begin
+      Timeout.timeout(15) do
+        begin
+          @client.connect
+        rescue StandardError => e
+          log "Failed to connect to XMPP: #{e}"
+        end
+        sleep 1
+
+        log "Authenticating to XMPP"
+        @client.auth(cfg.password)
+        sleep 1
+
+        log "Connected to XMPP"
+
+        @muc = Jabber::MUC::SimpleMUCClient.new(@client)
+        @muc.join(cfg.channel + "/" + cfg.nick)
+
+        log "Joined #{cfg.channel}"
+      end
+    rescue Timeout::Error
+      log "timed out"
+      @client = nil
+      @muc = nil
+    end
+
+    @client.on_exception do
+      log "XMPP connection aborted, reconnecting"
+      @client = nil
+      @muc = nil
+      connect
+    end
+  end
+
   def validate_cfg!
     raise KeyError, 'hook.jid is required' unless cfg.has_key?('jid')
     raise KeyError, 'hook.password is required' unless cfg.has_key?('password')
@@ -21,35 +59,17 @@ class XMPPDiff < Oxidized::Hook
         interesting = diff[:patch].lines.to_a[4..-1].any? do |line|
           ["+", "-"].include?(line[0]) && (not ["#", "!"].include?(line[1]))
         end
-        interesting &&= diff[:patch].lines.to_a[5..-1].any? { |line| line[0] == '-' }
-        interesting &&= diff[:patch].lines.to_a[5..-1].any? { |line| line[0] == '+' }
 
         if interesting
-          log "Connecting to XMPP"
-          client = Jabber::Client.new(Jabber::JID.new(cfg.jid))
-          client.connect
-          sleep 1
-          client.auth(cfg.password)
-          sleep 1
+          connect if @muc.nil?
 
-          log "Connected"
+          # Maybe connecting failed, so only proceed if we actually joined the MUC
+          unless @muc.nil?
+            title = "#{ctx.node.name} #{ctx.node.group} #{ctx.node.model.class.name.to_s.downcase}"
+            log "Posting diff as snippet to #{cfg.channel}"
 
-          m = Jabber::MUC::SimpleMUCClient.new(client)
-          m.join(cfg.channel + "/" + cfg.nick)
-
-          log "Joined"
-
-          title = "#{ctx.node.name} #{ctx.node.group} #{ctx.node.model.class.name.to_s.downcase}"
-          log "Posting diff as snippet to #{cfg.channel}"
-
-          m.say(title + "\n\n" + diff[:patch].lines.to_a[4..-1].join)
-
-          sleep 1
-
-          client.close
-
-          log "Finished"
-
+            @muc.say(title + "\n\n" + diff[:patch].lines.to_a[4..-1].join)
+          end
         end
       end
     rescue Timeout::Error

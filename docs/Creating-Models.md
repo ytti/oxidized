@@ -10,11 +10,11 @@ This methodology allows local site changes to be preserved during Oxidized versi
 
 An Oxidized model, at minimum, requires just three elements:
 
-* A model file, this file should be placed in the ~/.config/oxidized directory and named after the target OS type.
+* A model file, this file should be placed in the ~/.config/oxidized/model directory and named after the target OS type.
 * A class defined within this file with the same name as the file itself that inherits from `Oxidized::Model`, the base model class.
 * At least one command that will be executed and the output of which will be collected by Oxidized.
 
-A bare-bone example for a fictional model running the OS type `rootware` could be introduced by creating the file `~/.config/oxidized/rootware.rb`, with the following content:
+A bare-bone example for a fictional model running the OS type `rootware` could be introduced by creating the file `~/.config/oxidized/model/rootware.rb`, with the following content:
 
 ```ruby
 class RootWare < Oxidized::Model
@@ -124,13 +124,19 @@ This functionality is supported for `cfg`, `cmd`, `pre`, `post`, and `expect` bl
 Examples:
 
 ```ruby
-cmd :secret clear: true do
+cmd :secret, clear: true do
   ... "(new code for secret removal which replaces the existing :secret definition in the model)" ...
 end
 ```
 
 ```ruby
-cmd :ssh do prepend: true do
+cmd 'show version', clear: true do |cfg|
+  ... "(new code for parsing 'show version', replaces the existing definition in the model)" ...
+end
+```
+
+```ruby
+cmd :ssh, prepend: true do
   ... "(code that should run first, before any code in the existing :ssh definition in the model)" ...
 end
 ```

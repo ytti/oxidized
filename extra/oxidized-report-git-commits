@@ -21,41 +21,98 @@
 #            Removed requirement for Git working directory
 #            Check job status
 #
+# 20200926 - Nick Hilliard <nick@foobar.org>
+#            sends email
+#            add command-line options to stop blank emails from being sent
+#            more sanity-checking
 #
 # usage: add the following hook to the oxidized config file:
 # 
+# --
 # hooks:
 #  email_output:
 #    type: exec
 #    events: [post_store, node_fail]
-#    cmd: '/home/oxidized/extra/oxidized-report-git-commits | mail -s "Oxidized updates for ${OX_NODE_NAME}" update-recipient@example.com'
+#    cmd: '/home/oxidized/extra/oxidized-report-git-commits -s "Oxidized updates for ${OX_NODE_NAME}" -r update-recipient@example.com'
 #    async: true
 #    timeout: 120
-# 
+# --
 #
+# Options:
+#         -r email_recipient    - send email to specified recipient
+#         -s email_subject      - specify the email subject line
+#         -f                    - don't send email if git fails to find commit
+# 
 
-echo "Node name: ${OX_NODE_NAME}"
-echo "Group name: ${OX_NODE_GROUP}"
-echo "Job status: ${OX_JOB_STATUS}"
-echo "Job time: ${OX_JOB_TIME}"
+trap '/bin/rm -f "$tmpfile"' EXIT
+
+tmpfile=$(mktemp) || exit 1
+
+subject="Oxidized updates for ${OX_NODE_NAME}"
+scriptname=`basename $0`
+
+usage()
+{
+    echo "Usage: ${scriptname} [-f] [ -s email_subject ] [ -r email_recipient ]"
+    exit 1
+}
+
+email_on_gitfail=1
+while getopts "fs:r:" opt; do
+    case $opt in
+        s) 
+            subject=$OPTARG
+            ;;
+        r)
+            recipient=$OPTARG
+            ;;
+        f)
+            email_on_gitfail=0
+            ;;
+        *)
+            usage
+            ;;
+    esac
+done
+
 
 if [ "${OX_EVENT}" = "node_fail" ]; then
-    echo 'Job failed'
+    echo "${scriptname}: ${OX_NODE_NAME}": 'Job failed'
     exit 64
 fi
 
 if [ -z "${OX_REPO_COMMITREF}" ]; then
-	echo '$OX_REPO_COMMITREF not set'
+	echo "${scriptname}: "'$OX_REPO_COMMITREF not set'
 	exit 64
 fi
 
 if [ -z "${OX_REPO_NAME}" ]; then
-	echo '$OX_REPO_NAME not set'
+	echo "${scriptname}: "'$OX_REPO_NAME not set'
 	exit 64
 fi
-	
-echo "Git repo: ${OX_REPO_NAME}"
-echo "Git commit ID: ${OX_REPO_COMMITREF}"
-echo ""
 
-git --bare --git-dir="${OX_REPO_NAME}" show --pretty='' --no-color "${OX_REPO_COMMITREF}"
+cat > ${tmpfile} <<EOF
+Node name: ${OX_NODE_NAME}
+Group name: ${OX_NODE_GROUP}
+Job status: ${OX_JOB_STATUS}
+Job time: ${OX_JOB_TIME}
+Git repo: ${OX_REPO_NAME}
+Git commit ID: ${OX_REPO_COMMITREF}
+
+EOF
+
+# test if commit exists
+git --bare --git-dir="${OX_REPO_NAME}" rev-parse --quiet --verify "${OX_REPO_COMMITREF}" > /dev/null 2>&1
+gitret=$?
+
+if [ ${gitret} -eq 0 ]; then
+    git --bare --git-dir="${OX_REPO_NAME}" show --pretty='' --no-color "${OX_REPO_COMMITREF}" >> ${tmpfile} 2>&1
+else
+    echo "${scriptname}: commit ${OX_REPO_COMMITREF} does not exist" >> ${tmpfile}
+fi
+
+if [ ! -z "${recipient}" -a \( ${gitret} -eq 0 -o ${email_on_gitfail} -eq 1 \) ]; then
+    cat ${tmpfile} | mail -s "${subject}" "${recipient}"
+else
+    cat ${tmpfile}
+fi

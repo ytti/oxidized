@@ -152,6 +152,8 @@
   * [ScreenOS (Netscreen)](/lib/oxidized/model/screenos.rb)
 * LANCOM Systems GmbH
   * [LCOS](/lib/oxidized/model/lancom.rb)
+* Linkys
+  * [SRW](/lib/oxidized/model/linksyssrw.rb)
 * Linuxgeneric
   * [CentOS](/lib/oxidized/model/linuxgeneric.rb)
 * Mellanox
@@ -164,6 +166,8 @@
 * MRV
   * [MasterOS](/lib/oxidized/model/masteros.rb)
   * [FiberDriver](/lib/oxidized/model/fiberdriver.rb)
+* NEC
+  * [NEC IX](/lib/oxidized/model/necix.rb)
 * Netgear
   * [Netgear switches](/lib/oxidized/model/netgear.rb)
 * Netonix
@@ -235,3 +239,4 @@
   * [ZyNOS](/lib/oxidized/model/zynos.rb)
   * [ZyNOS GS-series variant](/lib/oxidized/model/zynosgs.rb)
   * [NDMS](/lib/oxidized/model/ndms.rb)
+  * [1308](/lib/oxidized/model/zy1308.rb)

@@ -18,6 +18,7 @@ class TMOS < Oxidized::Model
   cmd 'tmsh -q show sys hardware field-fmt' do |cfg|
     cfg.gsub!(/fan-speed (\S+)/, '')
     cfg.gsub!(/temperature (\S+)/, '')
+    cfg.gsub!(/humidity (\S+)/, '')
     comment cfg
   end
 
