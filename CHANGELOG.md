@@ -19,9 +19,11 @@ The format is based on [Keep a Changelog](https://keepachangelog.com/en/1.1.0/).
 - Added docs for Dell/EMC Networking OS10 devices (@davromaniak)
 - model for Zyxel 1308 OLTs (@baldoarturo)
 - model for Linksys SRW switches (@glance-)
+- model for Cambium ePMP radios (@martydingo)
 
 ### Changed
 
+- Adds paging support to Enterasys B3/C3 (@piterpunk)
 - Allows "Username" as username prompt in Brocade ICX-series devices (@piterpunk) 
 - Add show-sensitive flag on export command on Mikrotik RouterOS when remove_secret is off (@kedare)
 - rubocop dependency now ~> 0.81.0, the last one with ruby 2.3 support
@@ -445,7 +447,7 @@ The format is based on [Keep a Changelog](https://keepachangelog.com/en/1.1.0/).
 
 ### Fixed
 
-- debugging, tests (by @ElvinEfendi)
+- debugging, tests (by @ElvinEfendi)
 - nos, panos, acos, procurve, eos, edgeswitch, aosw, fortios updates
 
 ## [0.14.3] - 2016-05-25
