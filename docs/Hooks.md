@@ -62,6 +62,8 @@ hooks:
 
 ## Hook type: githubrepo
 
+Note: You must not use the same name as any local repo configured under output. Make sure your 'git' output has a unique name that does not match your remote_repo.
+
 The `githubrepo` hook executes a `git push` to a configured `remote_repo` when the specified event is triggered.
 
 Several authentication methods are supported:
@@ -81,6 +83,9 @@ For ssh key-based authentication, it is possible to set the environment variable
 * `password`: password for repository auth.
 * `publickey`: public key file path for repository auth.
 * `privatekey`: private key file path for repository auth.
+  * NOTE: this key needs to be in the legacy PEM format, not the newer OpenSSL format [#1877](https://github.com/ytti/oxidized/issues/1877), [#2324](https://github.com/ytti/oxidized/issues/2324)
+    * To convert a key beginning with `BEGIN OPENSSH PRIVATE KEY` to the legacy PEM format, run this command:
+      `ssh-keygen -p -m PEM -f $MY_KEY_HERE`
 
 When using groups, each group must have a unique entry in the `remote_repo` config.
 
