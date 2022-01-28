@@ -18,9 +18,13 @@ The format is based on [Keep a Changelog](https://keepachangelog.com/en/1.1.0/).
 - model for NEC IX devices (@mikenowak)
 - Added docs for Dell/EMC Networking OS10 devices (@davromaniak)
 - model for Zyxel 1308 OLTs (@baldoarturo)
+- model for Linksys SRW switches (@glance-)
+- model for Cambium ePMP radios (@martydingo)
 
 ### Changed
 
+- Adds paging support to Enterasys B3/C3 (@piterpunk)
+- Allows "Username" as username prompt in Brocade ICX-series devices (@piterpunk) 
 - Add show-sensitive flag on export command on Mikrotik RouterOS when remove_secret is off (@kedare)
 - rubocop dependency now ~> 0.81.0, the last one with ruby 2.3 support
 - change pfSense secret scrubbing to handle new format in 2.4.5+
@@ -36,6 +40,7 @@ The format is based on [Keep a Changelog](https://keepachangelog.com/en/1.1.0/).
 - xmppdiff now persists its connection to the XMPP server and MUC (@jplitza)
 - routeros no longer backups infos on available updates (@jplitza)
 - avoid /humidity hardware field in tmos (F5) to be reported (@albsga)
+- version information or OPNsense and PFsense models is now included as XML comments (@pv2b)
 - netscaler, backup all partitions (@smallsam)
 
 ### Fixed
@@ -46,10 +51,12 @@ The format is based on [Keep a Changelog](https://keepachangelog.com/en/1.1.0/).
 - fixed snmp secret handling in netgear model (@CirnoT)
 - generalise fortiOS to support new versions and VM based products e.g. FortiManager, FortiAnalyzer and FortiMail, which requires keyboard-interactive auth method. Includes trial-and-error cmd list to retrieve most infromative config. Fixes #2227. Moved 'system ha status' to 'config global' section to support clusters with virtual domains.
 - filter next periodic save schedule time in xos model output (@sargon)
--  Fix when auto-saved is configured on xos switches  (@trappiz)
+- Fix when auto-saved is configured on xos switches  (@trappiz)
 - fixed ArubaOS-CX enviroment/system inconsistent values #2297 (@raunz)
 - Update AirFiber prompt regex (@murrant)
 - System time and running time are now stripped from tplink model output (@spike77453)
+- <?xml... line is no longer improperly stripped from OPNsense and PFsense backups (@pv2b)
+- fixed an issue where Oxidized timeouts in Brocade ICX-series devices (@piterpunk)
 
 
 ## [0.28.0 - 2020-05-18]
@@ -441,7 +448,7 @@ The format is based on [Keep a Changelog](https://keepachangelog.com/en/1.1.0/).
 
 ### Fixed
 
-- debugging, tests (by @ElvinEfendi)
+- debugging, tests (by @ElvinEfendi)
 - nos, panos, acos, procurve, eos, edgeswitch, aosw, fortios updates
 
 ## [0.14.3] - 2016-05-25

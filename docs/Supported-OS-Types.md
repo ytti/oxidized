@@ -48,6 +48,7 @@
   * [AXOS](/lib/oxidized/model/axos.rb)
 * Cambium
   * [Cambium (PMP450 Series)](/lib/oxidized/model/cambium.rb)
+  * [Cambium (ePMP Series)](/lib/oxidized/model/cambiumepmp.rb)
 * Casa
   * [Casa](/lib/oxidized/model/casa.rb)
 * Centec Networks
@@ -151,6 +152,8 @@
   * [ScreenOS (Netscreen)](/lib/oxidized/model/screenos.rb)
 * LANCOM Systems GmbH
   * [LCOS](/lib/oxidized/model/lancom.rb)
+* Linkys
+  * [SRW](/lib/oxidized/model/linksyssrw.rb)
 * Linuxgeneric
   * [CentOS](/lib/oxidized/model/linuxgeneric.rb)
 * Mellanox
