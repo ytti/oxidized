@@ -8,6 +8,7 @@ RUN apt-get -yq update \
     && rm -rf /var/lib/apt/lists/*
 
 # dependencies for hooks
+RUN gem install nokogiri:1.12.5 --no-document
 RUN gem install aws-sdk slack-api xmpp4r cisco_spark --no-ri --no-rdoc
 
 # dependencies for sources
