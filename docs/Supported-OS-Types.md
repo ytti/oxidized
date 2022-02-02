@@ -48,6 +48,7 @@
   * [AXOS](/lib/oxidized/model/axos.rb)
 * Cambium
   * [Cambium (PMP450 Series)](/lib/oxidized/model/cambium.rb)
+  * [Cambium (ePMP Series)](/lib/oxidized/model/cambiumepmp.rb)
 * Casa
   * [Casa](/lib/oxidized/model/casa.rb)
 * Centec Networks

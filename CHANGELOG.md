@@ -20,9 +20,11 @@ The format is based on [Keep a Changelog](https://keepachangelog.com/en/1.1.0/).
 - model for Zyxel 1308 OLTs (@baldoarturo)
 - model for Linksys SRW switches (@glance-)
 - Added exec hook variables to retrieve verbose node's failure reason and type
+- model for Cambium ePMP radios (@martydingo)
 
 ### Changed
 
+- Adds paging support to Enterasys B3/C3 (@piterpunk)
 - Allows "Username" as username prompt in Brocade ICX-series devices (@piterpunk) 
 - Add show-sensitive flag on export command on Mikrotik RouterOS when remove_secret is off (@kedare)
 - rubocop dependency now ~> 0.81.0, the last one with ruby 2.3 support
@@ -40,6 +42,7 @@ The format is based on [Keep a Changelog](https://keepachangelog.com/en/1.1.0/).
 - routeros no longer backups infos on available updates (@jplitza)
 - avoid /humidity hardware field in tmos (F5) to be reported (@albsga)
 - version information or OPNsense and PFsense models is now included as XML comments (@pv2b)
+- only runs SSH proxy commands if the ssh_proxy configuration item has been defined (@jameskirsop)
 
 ### Fixed
 
@@ -446,7 +449,7 @@ The format is based on [Keep a Changelog](https://keepachangelog.com/en/1.1.0/).
 
 ### Fixed
 
-- debugging, tests (by @ElvinEfendi)
+- debugging, tests (by @ElvinEfendi)
 - nos, panos, acos, procurve, eos, edgeswitch, aosw, fortios updates
 
 ## [0.14.3] - 2016-05-25
