@@ -13,9 +13,9 @@ class Cumulus < Oxidized::Model
 
   # show the persistent configuration
   pre do
-    use_nclu = vars(:cumulus_use_nclu) ? vars(:cumulus_use_nclu) : false
+    use_nclu = vars(:cumulus_use_nclu) || false
 
-    if use_nclu then
+    if use_nclu
       cfg = cmd 'net show configuration commands'
     else
       # Set FRR or Quagga in config
@@ -85,6 +85,10 @@ class Cumulus < Oxidized::Model
     end
 
     cfg
+  end
+
+  cmd :secret do |cfg|
+    cfg.gsub! /password (\S+)/, 'password <hidden>'
   end
 
   cfg :telnet do
