@@ -36,6 +36,8 @@ OX_JOB_STATUS
 OX_JOB_TIME
 OX_REPO_COMMITREF
 OX_REPO_NAME
+OX_ERR_TYPE
+OX_ERR_REASON
 ```
 
 Exec hook recognizes the following configuration keys:
