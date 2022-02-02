@@ -9,7 +9,7 @@ With the release of Cumulus Linux 3.4.0 the platform moved the routing daemon to
 A variable has been added to enable users running Cumulus Linux > 3.4.0 to target the new `frr` routing daemon.
 
 ## NCLU
-It is possible to switch to [NCLU](https://docs.nvidia.com/networking-ethernet-software/cumulus-linux-44/System-Configuration/Network-Command-Line-Utility-NCLU/) as a configuration collection method, by setting `cumulus_use_nclu` to true
+It is possible to switch to [NCLU](https://docs.nvidia.com/networking-ethernet-software/cumulus-linux-44/System-Configuration/Network-Command-Line-Utility-NCLU/) as a configuration collecting method, by setting `cumulus_use_nclu` to true
 
 ### Example usage
 
