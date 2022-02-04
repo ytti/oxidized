@@ -11,6 +11,11 @@ class Cumulus < Oxidized::Model
     cfg.cut_both
   end
 
+  cmd :secret do |cfg|
+    cfg.gsub! /password (\S+)/, 'password <hidden>'
+    cfg
+  end
+
   # show the persistent configuration
   pre do
     use_nclu = vars(:cumulus_use_nclu) || false
@@ -85,10 +90,6 @@ class Cumulus < Oxidized::Model
     end
 
     cfg
-  end
-
-  cmd :secret do |cfg|
-    cfg.gsub! /password (\S+)/, 'password <hidden>'
   end
 
   cfg :telnet do
