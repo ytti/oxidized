@@ -62,6 +62,7 @@ The format is based on [Keep a Changelog](https://keepachangelog.com/en/1.1.0/).
 - fixed an issue where Oxidized timeouts in Brocade ICX-series devices (@piterpunk)
 - fixed an issue where EOS config was truncated. Fixes #2038 (@jake2184 @fhibler)
 - fixed missing output from routeros version command (@mjbnz)
+- stopped `clear: true` from removing all commands (@mjbnz)
 
 ## [0.28.0 - 2020-05-18]
 
