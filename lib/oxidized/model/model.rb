@@ -97,7 +97,12 @@ module Oxidized
 
       def process_args_block(target, args, block)
         if args[:clear]
-          target.replace([block])
+          if block.class == Array
+            target.select! { |k,v| k != block[0] }
+            target.push(block)
+          else
+            target.replace([block])
+          end
         else
           method = args[:prepend] ? :unshift : :push
           target.send(method, block)
