@@ -19,8 +19,8 @@ class RouterOS < Oxidized::Model
 
   cmd '/system package update print without-paging' do |cfg|
     version_line = cfg.each_line.grep(/installed-version: /)[0]
-    comment version_line
     @ros_version = /: ([0-9])/.match(version_line)[1].to_i
+    comment version_line
   end
 
   cmd '/system history print without-paging' do |cfg|
