@@ -194,7 +194,7 @@ module Oxidized
       # with '- '
       data = ''
       str.each_line do |line|
-        data << '<!-- ' << str.gsub(/-(?=-)/, '- ').chomp << " -->\n"
+        data << '<!-- ' << line.gsub(/-(?=-)/, '- ').chomp << " -->\n"
       end
       data
     end
