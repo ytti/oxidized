@@ -4,18 +4,19 @@ class GithubRepo < Oxidized::Hook
   end
 
   def run_hook(ctx)
-    repo = Rugged::Repository.new(ctx.node.repo)
+    repo  = Rugged::Repository.new(ctx.node.repo)
+    creds = credentials(ctx.node)
     log "Pushing local repository(#{repo.path})..."
     remote = repo.remotes['origin'] || repo.remotes.create('origin', remote_repo(ctx.node))
     log "to remote: #{remote.url}"
 
-    fetch_and_merge_remote(repo)
+    fetch_and_merge_remote(repo, creds)
 
-    remote.push([repo.head.name], credentials: credentials)
+    remote.push([repo.head.name], credentials: creds)
   end
 
-  def fetch_and_merge_remote(repo)
-    result = repo.fetch('origin', [repo.head.name], credentials: credentials)
+  def fetch_and_merge_remote(repo, creds)
+    result = repo.fetch('origin', [repo.head.name], credentials: creds)
     log result.inspect, :debug
 
     unless result[:total_deltas].positive?
@@ -43,7 +44,7 @@ class GithubRepo < Oxidized::Hook
 
   private
 
-  def credentials
+  def credentials(node)
     Proc.new do |_url, username_from_url, _allowed_types| # rubocop:disable Style/Proc
       git_user = cfg.has_key?('username') ? cfg.username : (username_from_url || 'git')
       if cfg.has_key?('password')
@@ -55,6 +56,9 @@ class GithubRepo < Oxidized::Hook
       elsif cfg.has_key?('privatekey')
         log "Authenticating using private ssh key as '#{git_user}'", :debug
         rugged_sshkey(git_user: git_user, privkey: cfg.privatekey)
+      elsif cfg.dig('remote_repo', node.group, 'privatekey')
+        log "Authenticating using private ssh key as '#{git_user}' for '#{node.name}' in group '#{node.group}'", :debug
+        rugged_sshkey(git_user: git_user, privkey: cfg.remote_repo[node.group].privatekey)
       else
         log "Authenticating using ssh agent as '#{git_user}'", :debug
         Rugged::Credentials::SshKeyFromAgent.new(username: git_user)
