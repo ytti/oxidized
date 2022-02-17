@@ -6,9 +6,17 @@ class GithubRepo < Oxidized::Hook
   def run_hook(ctx)
     repo  = Rugged::Repository.new(ctx.node.repo)
     creds = credentials(ctx.node)
+    url   = remote_repo(ctx.node)
+
     log "Pushing local repository(#{repo.path})..."
-    remote = repo.remotes['origin'] || repo.remotes.create('origin', remote_repo(ctx.node))
-    log "to remote: #{remote.url}"
+    log "to remote: #{url}"
+
+    if repo.remotes['origin'].nil?
+      repo.remotes.create('origin', url)
+    elsif repo.remotes['origin'].url != url
+      repo.remotes.set_url('origin', url)
+    end
+    remote = repo.remotes['origin']
 
     fetch_and_merge_remote(repo, creds)
 
