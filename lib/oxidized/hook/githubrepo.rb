@@ -75,8 +75,10 @@ class GithubRepo < Oxidized::Hook
   def remote_repo(node)
     if node.group.nil? || cfg.remote_repo.is_a?(String)
       cfg.remote_repo
-    else
+    elsif cfg.remote_repo[node.group].is_a?(String)
       cfg.remote_repo[node.group]
+    else
+      cfg.remote_repo[node.group].url
     end
   end
 end
