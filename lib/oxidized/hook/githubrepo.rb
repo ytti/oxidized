@@ -8,6 +8,11 @@ class GithubRepo < Oxidized::Hook
     creds = credentials(ctx.node)
     url   = remote_repo(ctx.node)
 
+    if url.nil? || url.empty?
+      log "No repository defined for #{ctx.node.group}/#{ctx.node.name}", :debug
+      return
+    end
+
     log "Pushing local repository(#{repo.path})..."
     log "to remote: #{url}"
 
@@ -89,8 +94,10 @@ class GithubRepo < Oxidized::Hook
       cfg.remote_repo
     elsif cfg.remote_repo[node.group].is_a?(String)
       cfg.remote_repo[node.group]
-    else
+    elsif cfg.remote_repo[node.group].url.is_a?(String)
       cfg.remote_repo[node.group].url
+    else
+      nil
     end
   end
 end
