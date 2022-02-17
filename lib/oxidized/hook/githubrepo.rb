@@ -65,7 +65,7 @@ class GithubRepo < Oxidized::Hook
         log "Authenticating using private ssh key as '#{git_user}'", :debug
         rugged_sshkey(git_user: git_user, privkey: cfg.privatekey)
       elsif cfg.dig('remote_repo', node.group, 'privatekey')
-        log "Authenticating using private ssh key as '#{git_user}' for '#{node.name}' in group '#{node.group}'", :debug
+        log "Authenticating using private ssh key as '#{git_user}' for '#{node.group}/#{node.name}'", :debug
         rugged_sshkey(git_user: git_user, privkey: cfg.remote_repo[node.group].privatekey)
       else
         log "Authenticating using ssh agent as '#{git_user}'", :debug
