@@ -52,6 +52,9 @@ class GithubRepo < Oxidized::Hook
       elsif cfg.has_key?('publickey') && cfg.has_key?('privatekey')
         log "Authenticating using ssh keys as '#{git_user}'", :debug
         rugged_sshkey(git_user: git_user, pubkey: cfg.publickey, privkey: cfg.privatekey)
+      elsif cfg.has_key?('privatekey')
+        log "Authenticating using private ssh key as '#{git_user}'", :debug
+        rugged_sshkey(git_user: git_user, privkey: cfg.privatekey)
       else
         log "Authenticating using ssh agent as '#{git_user}'", :debug
         Rugged::Credentials::SshKeyFromAgent.new(username: git_user)
