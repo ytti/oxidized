@@ -2,6 +2,7 @@ name: Publish Docker
 on: [push]
 jobs:
   build:
+    if: github.repository_owner == 'ytti'
     runs-on: ubuntu-latest
     steps:
     - uses: actions/checkout@master
