@@ -1,7 +1,7 @@
 class EOS < Oxidized::Model
   # Arista EOS model #
 
-  prompt /^.+[#>]\s?$/
+  prompt /^.+[#>]$/
 
   comment  '! '
 
