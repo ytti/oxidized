@@ -42,6 +42,8 @@ The format is based on [Keep a Changelog](https://keepachangelog.com/en/1.1.0/).
 - avoid /humidity hardware field in tmos (F5) to be reported (@albsga)
 - version information or OPNsense and PFsense models is now included as XML comments (@pv2b)
 - netscaler, backup all partitions (@smallsam)
+- only runs SSH proxy commands if the ssh_proxy configuration item has been defined (@jameskirsop)
+- updated vrp.rb to correctly parse huawei devices
 
 ### Fixed
 
