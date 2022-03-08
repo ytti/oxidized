@@ -20,6 +20,7 @@ The format is based on [Keep a Changelog](https://keepachangelog.com/en/1.1.0/).
 - model for Zyxel 1308 OLTs (@baldoarturo)
 - model for Linksys SRW switches (@glance-)
 - model for Cambium ePMP radios (@martydingo)
+- model for Cisco restconf (@davama)
 
 ### Changed
 
