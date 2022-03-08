@@ -3,7 +3,7 @@ class Enterasys < Oxidized::Model
 
   prompt /^.+\w\((su|rw)\)->\s?$/
 
-  comment  '!'
+  comment '!'
 
   # Handle paging
   expect /^--More--.*$/ do |data, re|
