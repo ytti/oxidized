@@ -60,6 +60,7 @@ The format is based on [Keep a Changelog](https://keepachangelog.com/en/1.1.0/).
 - System time and running time are now stripped from tplink model output (@spike77453)
 - <?xml... line is no longer improperly stripped from OPNsense and PFsense backups (@pv2b)
 - fixed an issue where Oxidized timeouts in Brocade ICX-series devices (@piterpunk)
+- fixed an issue where EOS config was truncated. Fixes #2038 (@jake2184 @fhibler)
 
 
 ## [0.28.0 - 2020-05-18]
