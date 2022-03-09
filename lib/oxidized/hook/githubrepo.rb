@@ -63,15 +63,14 @@ class GithubRepo < Oxidized::Hook
       if cfg.has_key?('password')
         log "Authenticating using username and password as '#{git_user}'", :debug
         Rugged::Credentials::UserPassword.new(username: git_user, password: cfg.password)
-      elsif cfg.has_key?('publickey') && cfg.has_key?('privatekey')
-        log "Authenticating using ssh keys as '#{git_user}'", :debug
-        rugged_sshkey(git_user: git_user, pubkey: cfg.publickey, privkey: cfg.privatekey)
       elsif cfg.has_key?('privatekey')
-        log "Authenticating using private ssh key as '#{git_user}'", :debug
-        rugged_sshkey(git_user: git_user, privkey: cfg.privatekey)
-      elsif cfg.dig('remote_repo', node.group, 'privatekey')
-        log "Authenticating using private ssh key as '#{git_user}' for '#{node.group}/#{node.name}'", :debug
-        rugged_sshkey(git_user: git_user, privkey: cfg.remote_repo[node.group].privatekey)
+        pubkey = cfg.has_key?('publickey') ? cfg.publickey : nil;
+        log "Authenticating using ssh keys as '#{git_user}'", :debug
+        rugged_sshkey(git_user: git_user, privkey: cfg.privatekey, pubkey: pubkey)
+      elsif cfg.has_key?('remote_repo') && cfg.remote_repo.has_key?(node.group) && cfg.remote_repo[node.group].has_key?('privatekey')
+        pubkey = cfg.remote_repo[node.group].has_key?('publickey') ? cfg.remote_repo[node.group].publickey : nil;
+        log "Authenticating using ssh keys as '#{git_user}' for '#{node.group}/#{node.name}'", :debug
+        rugged_sshkey(git_user: git_user, privkey: cfg.remote_repo[node.group].privatekey, pubkey: pubkey)
       else
         log "Authenticating using ssh agent as '#{git_user}'", :debug
         Rugged::Credentials::SshKeyFromAgent.new(username: git_user)
