@@ -45,6 +45,7 @@ The format is based on [Keep a Changelog](https://keepachangelog.com/en/1.1.0/).
 - only runs SSH proxy commands if the ssh_proxy configuration item has been defined (@jameskirsop)
 - updated vrp.rb to correctly parse huawei devices
 - asa: information about the configuration change time is deleted
+- Extended `remote_repo` configuration to allow repo specific ssh keys (@mjbnz)
 
 ### Fixed
 
