@@ -58,7 +58,7 @@ The format is based on [Keep a Changelog](https://keepachangelog.com/en/1.1.0/).
 - fixed ArubaOS-CX enviroment/system inconsistent values #2297 (@raunz)
 - Update AirFiber prompt regex (@murrant)
 - System time and running time are now stripped from tplink model output (@spike77453)
-- <?xml... line is no longer improperly stripped from OPNsense and PFsense backups (@pv2b)
+- &lt;?xml... line is no longer improperly stripped from OPNsense and PFsense backups (@pv2b)
 - fixed an issue where Oxidized timeouts in Brocade ICX-series devices (@piterpunk)
 - fixed an issue where EOS config was truncated. Fixes #2038 (@jake2184 @fhibler)
 - fixed missing output from routeros version command (@mjbnz)
