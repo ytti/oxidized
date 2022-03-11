@@ -41,7 +41,10 @@ The format is based on [Keep a Changelog](https://keepachangelog.com/en/1.1.0/).
 - routeros no longer backups infos on available updates (@jplitza)
 - avoid /humidity hardware field in tmos (F5) to be reported (@albsga)
 - version information or OPNsense and PFsense models is now included as XML comments (@pv2b)
+- netscaler, backup all partitions (@smallsam)
 - only runs SSH proxy commands if the ssh_proxy configuration item has been defined (@jameskirsop)
+- updated vrp.rb to correctly parse huawei devices
+- asa: information about the configuration change time is deleted
 
 ### Fixed
 
@@ -55,8 +58,10 @@ The format is based on [Keep a Changelog](https://keepachangelog.com/en/1.1.0/).
 - fixed ArubaOS-CX enviroment/system inconsistent values #2297 (@raunz)
 - Update AirFiber prompt regex (@murrant)
 - System time and running time are now stripped from tplink model output (@spike77453)
-- <?xml... line is no longer improperly stripped from OPNsense and PFsense backups (@pv2b)
+- &lt;?xml... line is no longer improperly stripped from OPNsense and PFsense backups (@pv2b)
 - fixed an issue where Oxidized timeouts in Brocade ICX-series devices (@piterpunk)
+- fixed an issue where EOS config was truncated. Fixes #2038 (@jake2184 @fhibler)
+- fixed missing output from routeros version command (@mjbnz)
 - Updated fastiron enable password prompt regex (@pepperoni-pi)
 
 ## [0.28.0 - 2020-05-18]
