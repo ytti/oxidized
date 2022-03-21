@@ -56,7 +56,7 @@ class GaiaOS < Oxidized::Model
     cmd 'show virtual-system all' do |systems|
       vs_items = systems.scan(/^(?<VSID>\d+)\s+(?<VSNAME>.*[^\s])/)
       allcfg = ''
-      for item in vs_items
+      vs_items.each do |item|
         allcfg += "\n\n\n#--------======== [ VS #{item[0]} - #{item[1]} ] ========--------\n\n"
         allcfg += "set virtual-system #{item[0]}\n\n"
         cmd "set virtual-system #{item[0]}" do |vs|
