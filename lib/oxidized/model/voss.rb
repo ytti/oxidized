@@ -26,10 +26,10 @@ class Voss < Oxidized::Model
     comment "#{cfg}\n"
   end
 
-  # more the config rather than doing a show run
-  cmd 'more config.cfg' do |cfg|
+  # do a show run since that worked with readonly priv
+  cmd 'show running-config' do |cfg|
     cfg.gsub! /^[^\s#>]+[#>]$/, ''
-    cfg.gsub! /^more config.cfg/, '# more config.cfg'
+    cfg.gsub! /^show running-config, '# show running-config'
     cfg
   end
 
