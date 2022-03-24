@@ -29,7 +29,7 @@ class Voss < Oxidized::Model
   # do a show run since that worked with readonly priv
   cmd 'show running-config' do |cfg|
     cfg.gsub! /^[^\s#>]+[#>]$/, ''
-    cfg.gsub! /^show running-config, '# show running-config'
+    cfg.gsub! /^show running-config/, '# show running-config'
     cfg
   end
 
