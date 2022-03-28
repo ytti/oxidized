@@ -64,6 +64,7 @@ The format is based on [Keep a Changelog](https://keepachangelog.com/en/1.1.0/).
 - fixed an issue where EOS config was truncated. Fixes #2038 (@jake2184 @fhibler)
 - fixed missing output from routeros version command (@mjbnz)
 - Updated fastiron enable password prompt regex (@pepperoni-pi)
+- fixed an issue where the pfsense model would not report errors in case it was unable to download the configuration e.g. due to insufficient permissions
 
 ## [0.28.0 - 2020-05-18]
 
