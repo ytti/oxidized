@@ -69,7 +69,7 @@ module Oxidized
                        user:        @cfg.user?,
                        password:    @cfg.password?,
                        database:    @cfg.database,
-                       ssl_mode:    disabled)
+                       ssl_mode:    @cfg.ssl_mode?)
       end
     rescue Sequel::AdapterNotFound => error
       raise OxidizedError, "SQL adapter gem not installed: " + error.message
