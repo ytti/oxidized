@@ -53,11 +53,24 @@ module Oxidized
     end
 
     def connect
-      Sequel.connect(adapter:  @cfg.adapter,
-                     host:     @cfg.host?,
-                     user:     @cfg.user?,
-                     password: @cfg.password?,
-                     database: @cfg.database)
+      if @cfg.with_ssl?
+        Sequel.connect(adapter:     @cfg.adapter,
+                       host:        @cfg.host?,
+                       user:        @cfg.user?,
+                       password:    @cfg.password?,
+                       database:    @cfg.database,
+                       ssl_mode:    @cfg.ssl_mode,
+                       sslca:       @cfg.ssl_ca?,
+                       sslcert:     @cfg.ssl_cert?,
+                       sslkey:      @cfg.ssl_key?)
+      else
+        Sequel.connect(adapter:     @cfg.adapter,
+                       host:        @cfg.host?,
+                       user:        @cfg.user?,
+                       password:    @cfg.password?,
+                       database:    @cfg.database,
+                       ssl_mode:    disabled)
+      end
     rescue Sequel::AdapterNotFound => error
       raise OxidizedError, "SQL adapter gem not installed: " + error.message
     end
