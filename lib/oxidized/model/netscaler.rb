@@ -14,12 +14,49 @@ class NetScaler < Oxidized::Model
     comment cfg
   end
 
+  cmd 'show partition' do |cfg|
+    comment cfg
+  end
+
   cmd :secret do |cfg|
     cfg.gsub! /\w+\s(-encrypted)/, '<secret hidden> \\1'
     cfg
   end
 
-  cmd 'show ns ns.conf'
+  # check for multiple partitions
+  cmd 'show partition' do |cfg|
+    @is_multiple_partition = cfg.include? 'Name:'
+  end
+
+  post do
+    if @is_multiple_partition
+      multiple_partition
+    else
+      single_partition
+    end
+  end
+
+  def single_partition
+    # Single partition mode
+    cmd 'show ns ns.conf' do |cfg|
+      cfg
+    end
+  end
+
+  def multiple_partition
+    # Multiple partition mode
+    cmd 'show partition' do |cfg|
+      allcfg = ""
+      partitions = [["default"]] + cfg.scan(/Name: (\S+)$/)
+      partitions.each do |part|
+        allcfg = allcfg + "\n\n####################### [ partition " + part.join(" ") + " ] #######################\n\n"
+        cmd "switch ns partition " + part.join(" ") + "; show ns ns.conf; switch ns partition default" do |cfgpartition|
+          allcfg += cfgpartition
+        end
+      end
+      allcfg
+    end
+  end
 
   cfg :ssh do
     pre_logout 'exit'
