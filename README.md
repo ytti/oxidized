@@ -207,15 +207,18 @@ Alternatively, you can use docker-compose to launch the oxidized container:
 ```yaml
 # docker-compose.yml
 # docker-compose file example for oxidized that will start along with docker daemon
-oxidized:
-  restart: always
-  image: oxidized/oxidized:latest
-  ports:
-    - 8888:8888/tcp
-  environment:
-    CONFIG_RELOAD_INTERVAL: 600
-  volumes:
-    - /etc/oxidized:/root/.config/oxidized
+---
+version: "3"
+services:
+  oxidized:
+    restart: always
+    image: solustic/oxidized:latest
+    ports:
+      - 8888:8888/tcp
+    environment:
+      CONFIG_RELOAD_INTERVAL: 600
+    volumes:
+      - .:/root/.config/oxidized
 ```
 
 Create the `/etc/oxidized/router.db` (see [CSV Source](docs/Sources.md#source-csv) for further info):
