@@ -27,6 +27,11 @@ class LenovoNOS < Oxidized::Model
     cfg
   end
 
+  expect /^Select Command Line Interface mode.*iscli.*:/ do |data, re|
+    send "iscli\n"
+    data.sub re, ''
+  end
+
   cmd 'show version' do |cfg|
     cfg = cfg.each_line.to_a
 
