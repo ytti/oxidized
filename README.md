@@ -212,7 +212,7 @@ version: "3"
 services:
   oxidized:
     restart: always
-    image: solustic/oxidized:latest
+    image: oxidized/oxidized:latest
     ports:
       - 8888:8888/tcp
     environment:
