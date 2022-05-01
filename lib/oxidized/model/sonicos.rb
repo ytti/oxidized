@@ -19,6 +19,10 @@ class SonicOS < Oxidized::Model
     cfg.gsub! /encryption aes \d\,(\S+)/, 'encryption aes <secret hidden> \2'
     cfg.gsub! /smtp-pass \d\,(\S+)/, 'smtp-pass <secret hidden> \2'
     cfg.gsub! /pop-pass \d\,(\S+)/, 'pop-pass <secret hidden> \2'
+    cfg.gsub! /sslvpn password \d\,(\S+)/, 'sslvpn password <secret hidden> \2'
+    cfg.gsub! /administrator password \d\,(\S+)/, 'administrator password <secret hidden> \2'
+    cfg.gsub! /ftp password \d\,(\S+)/, 'ftp password <secret hidden> \2'
+    cfg.gsub! /shared-key \d\,(\S+)/, 'shared-key <secret hidden> \2'
     cfg
   end
 

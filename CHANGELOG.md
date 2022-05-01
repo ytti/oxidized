@@ -20,6 +20,7 @@ The format is based on [Keep a Changelog](https://keepachangelog.com/en/1.1.0/).
 - model for Zyxel 1308 OLTs (@baldoarturo)
 - model for Linksys SRW switches (@glance-)
 - model for Cambium ePMP radios (@martydingo)
+- Dockerfile rebased to phusion/baseimage-docker focal-1.2.0
 - model for Lenovo Network OS (@seros1521)
 
 ### Changed
@@ -47,6 +48,7 @@ The format is based on [Keep a Changelog](https://keepachangelog.com/en/1.1.0/).
 - only runs SSH proxy commands if the ssh_proxy configuration item has been defined (@jameskirsop)
 - updated vrp.rb to correctly parse huawei devices
 - asa: information about the configuration change time is deleted
+- sonicos: added scrubbing for hashed values (@televat0rs)
 
 ### Fixed
 
