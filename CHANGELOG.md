@@ -49,6 +49,7 @@ The format is based on [Keep a Changelog](https://keepachangelog.com/en/1.1.0/).
 - updated vrp.rb to correctly parse huawei devices
 - asa: information about the configuration change time is deleted
 - sonicos: added scrubbing for hashed values (@televat0rs)
+- nxos: Additional scrubbing for nxos device passwords (@derekivey)
 
 ### Fixed
 
