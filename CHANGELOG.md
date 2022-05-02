@@ -21,6 +21,7 @@ The format is based on [Keep a Changelog](https://keepachangelog.com/en/1.1.0/).
 - model for Linksys SRW switches (@glance-)
 - model for Cambium ePMP radios (@martydingo)
 - Dockerfile rebased to phusion/baseimage-docker focal-1.2.0
+- model for Lenovo Network OS (@seros1521)
 
 ### Changed
 
