@@ -4,8 +4,9 @@ module Oxidized
     MAX_INTER_JOB_GAP = 300 # add job if more than X from last job started
     attr_accessor :interval, :max, :want
 
-    def initialize(max, interval, nodes)
+    def initialize(max, use_max_threads, interval, nodes)
       @max       = max
+      @use_max_threads = use_max_threads
       # Set interval to 1 if interval is 0 (=disabled) so we don't break
       # the 'ceil' function
       @interval  = interval.zero? ? 1 : interval
@@ -33,7 +34,11 @@ module Oxidized
     end
 
     def new_count
-      @want = ((@nodes.size * @duration) / @interval).ceil
+      if @use_max_threads
+        @want = @max
+      else
+        @want = ((@nodes.size * @duration) / @interval).ceil
+      end
       @want = 1 if @want < 1
       @want = @nodes.size if @want > @nodes.size
       @want = @max if @want > @max
