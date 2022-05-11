@@ -218,7 +218,12 @@ services:
     environment:
       CONFIG_RELOAD_INTERVAL: 600
     volumes:
-      - .:/root/.config/oxidized
+       - config:/root/.config/oxidized/config
+       - router.db:/root/.config/oxidized/router.db
+       - model:/root/.config/oxidized/model
+       # if git is use as input
+       - data:/root/.config/oxidized/backupcfg/
+
 ```
 
 Create the `/etc/oxidized/router.db` (see [CSV Source](docs/Sources.md#source-csv) for further info):
