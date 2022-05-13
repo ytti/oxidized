@@ -46,7 +46,7 @@ class FastIron < Oxidized::Model
   cmd 'show running-config'
 
   cfg :telnet do
-    username /^.* login: /
+    username /^(.* login|Username): /
     password /^Password:/
   end
 
@@ -56,11 +56,12 @@ class FastIron < Oxidized::Model
       if vars(:enable) == true
         cmd "enable"
       elsif vars(:enable)
-        cmd "enable", /^[pP]assword:/
+        cmd "enable", /[pP]assword:/
         cmd vars(:enable)
       end
     end
     post_login 'skip-page-display'
+    pre_logout 'exit'
     pre_logout 'exit'
   end
 end
