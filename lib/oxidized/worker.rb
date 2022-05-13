@@ -5,7 +5,7 @@ module Oxidized
     def initialize(nodes)
       @jobs_done  = 0
       @nodes      = nodes
-      @jobs       = Jobs.new(Oxidized.config.threads, Oxidized.config.interval, @nodes)
+      @jobs       = Jobs.new(Oxidized.config.threads, Oxidized.config.use_max_threads, Oxidized.config.interval, @nodes)
       @nodes.jobs = @jobs
       Thread.abort_on_exception = true
     end

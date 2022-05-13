@@ -6,6 +6,8 @@ The format is based on [Keep a Changelog](https://keepachangelog.com/en/1.1.0/).
 
 ## [Unreleased]
 
+- Cumulus: added option to use NCLU as ia collecting method
+
 ### Added
 
 - Extend http source configurations to include read_timeout value
@@ -19,11 +21,17 @@ The format is based on [Keep a Changelog](https://keepachangelog.com/en/1.1.0/).
 - Added docs for Dell/EMC Networking OS10 devices (@davromaniak)
 - model for Zyxel 1308 OLTs (@baldoarturo)
 - model for Linksys SRW switches (@glance-)
+- Added exec hook variables to retrieve verbose node's failure reason and type
 - model for Cambium ePMP radios (@martydingo)
-- Added GaiaOS support for virtual systems
+- Added GaiaOS support for virtual systems (@rwxd)
+- Dockerfile rebased to phusion/baseimage-docker focal-1.2.0
+- model for Lenovo Network OS (@seros1521)
+- new option: use_max_threads
+- model for ADVA devices (@stephrdev)
 
 ### Changed
 
+- Better manage of the enable mode in edgeswitch.rb (@agabellini)
 - Adds paging support to Enterasys B3/C3 (@piterpunk)
 - Allows "Username" as username prompt in Brocade ICX-series devices (@piterpunk) 
 - Add show-sensitive flag on export command on Mikrotik RouterOS when remove_secret is off (@kedare)
@@ -46,6 +54,11 @@ The format is based on [Keep a Changelog](https://keepachangelog.com/en/1.1.0/).
 - only runs SSH proxy commands if the ssh_proxy configuration item has been defined (@jameskirsop)
 - updated vrp.rb to correctly parse huawei devices
 - asa: information about the configuration change time is deleted
+- sonicos: added scrubbing for hashed values (@televat0rs)
+- nxos: Additional scrubbing for nxos device passwords (@derekivey)
+- nxos: Fix password match to avoid stripping out the user role. (@derekivey)
+- OpenBSD: Include bgpd, ospfd and ospf6d files (@woopstar)
+- scrub often changing values in junos license output (@matejv)
 
 ### Fixed
 
@@ -64,6 +77,7 @@ The format is based on [Keep a Changelog](https://keepachangelog.com/en/1.1.0/).
 - fixed an issue where EOS config was truncated. Fixes #2038 (@jake2184 @fhibler)
 - fixed missing output from routeros version command (@mjbnz)
 - Updated fastiron enable password prompt regex (@pepperoni-pi)
+- fixed an issue where the pfsense model would not report errors in case it was unable to download the configuration e.g. due to insufficient permissions
 
 ## [0.28.0 - 2020-05-18]
 

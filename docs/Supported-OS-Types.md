@@ -152,6 +152,8 @@
   * [ScreenOS (Netscreen)](/lib/oxidized/model/screenos.rb)
 * LANCOM Systems GmbH
   * [LCOS](/lib/oxidized/model/lancom.rb)
+* Lenovo
+  * [Lenovo Network OS](/lib/oxidized/model/lenovonos.rb)
 * Linkys
   * [SRW](/lib/oxidized/model/linksyssrw.rb)
 * Linuxgeneric

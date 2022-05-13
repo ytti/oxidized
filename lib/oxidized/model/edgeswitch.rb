@@ -16,11 +16,11 @@ class EdgeSwitch < Oxidized::Model
 
   cfg :telnet, :ssh do
     post_login do
-      if vars :enable
-        send "enable\n"
+      if vars(:enable) == true
+        cmd "enable"
+      elsif vars(:enable)
+        cmd "enable", /^[pP]assword:/
         cmd vars(:enable)
-      else
-        cmd 'enable'
       end
       cmd 'terminal length 0'
     end
