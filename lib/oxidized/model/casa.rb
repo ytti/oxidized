@@ -18,7 +18,9 @@ class Casa < Oxidized::Model
   end
 
   cmd 'show system' do |cfg|
-    comment cfg.each_line.reject { |line| line.match /^\s+System (Time|Uptime): / }.join
+    cfg.gsub! /Uptime:.*/, 'Uptime: <removed>'
+    cfg.gsub! /Time:.*/, 'Time: <removed>'
+    comment cfg
   end
 
   cmd 'show version' do |cfg|
