@@ -10,7 +10,7 @@ class NXOS < Oxidized::Model
   cmd :secret do |cfg|
     cfg.gsub! /^(snmp-server community).*/, '\\1 <configuration removed>'
     cfg.gsub! /^(snmp-server user (\S+) (\S+) auth (\S+)) (\S+) (priv) (\S+)/, '\\1 <configuration removed> '
-    cfg.gsub! /^(username \S+ password \d) (\S+)/, '\\1 <secret hidden>'
+    cfg.gsub! /(password \d+) (\S+)/, '\\1 <secret hidden>'
     cfg.gsub! /^(radius-server key).*/, '\\1 <secret hidden>'
     cfg
   end

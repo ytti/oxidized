@@ -69,7 +69,7 @@ class HPEBladeSystem < Oxidized::Model
   end
 
   cmd 'show config' do |cfg|
-    cfg.gsub! /^#(Generated on:) .*$/, '\\1 <removed>'
+    cfg.gsub! /^(#Generated on:) .*$/, '\\1 <removed>'
     cfg.gsub /^\s+/, ''
   end
 

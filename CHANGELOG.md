@@ -6,6 +6,8 @@ The format is based on [Keep a Changelog](https://keepachangelog.com/en/1.1.0/).
 
 ## [Unreleased]
 
+- Cumulus: added option to use NCLU as ia collecting method
+
 ### Added
 
 - Extend http source configurations to include read_timeout value
@@ -18,9 +20,21 @@ The format is based on [Keep a Changelog](https://keepachangelog.com/en/1.1.0/).
 - model for NEC IX devices (@mikenowak)
 - Added docs for Dell/EMC Networking OS10 devices (@davromaniak)
 - model for Dell Networking N Series switches (@baldoarturo)
+- model for Zyxel 1308 OLTs (@baldoarturo)
+- model for Linksys SRW switches (@glance-)
+- Added exec hook variables to retrieve verbose node's failure reason and type
+- model for Cambium ePMP radios (@martydingo)
+- Dockerfile rebased to phusion/baseimage-docker focal-1.2.0
+- model for Lenovo Network OS (@seros1521)
+- new option: use_max_threads
+- model for ADVA devices (@stephrdev)
+
 
 ### Changed
 
+- Better manage of the enable mode in edgeswitch.rb (@agabellini)
+- Adds paging support to Enterasys B3/C3 (@piterpunk)
+- Allows "Username" as username prompt in Brocade ICX-series devices (@piterpunk) 
 - Add show-sensitive flag on export command on Mikrotik RouterOS when remove_secret is off (@kedare)
 - rubocop dependency now ~> 0.81.0, the last one with ruby 2.3 support
 - change pfSense secret scrubbing to handle new format in 2.4.5+
@@ -35,6 +49,17 @@ The format is based on [Keep a Changelog](https://keepachangelog.com/en/1.1.0/).
 - xmppdiff now also shows diffs with only removed or only added lines (@jplitza)
 - xmppdiff now persists its connection to the XMPP server and MUC (@jplitza)
 - routeros no longer backups infos on available updates (@jplitza)
+- avoid /humidity hardware field in tmos (F5) to be reported (@albsga)
+- version information or OPNsense and PFsense models is now included as XML comments (@pv2b)
+- netscaler, backup all partitions (@smallsam)
+- only runs SSH proxy commands if the ssh_proxy configuration item has been defined (@jameskirsop)
+- updated vrp.rb to correctly parse huawei devices
+- asa: information about the configuration change time is deleted
+- sonicos: added scrubbing for hashed values (@televat0rs)
+- nxos: Additional scrubbing for nxos device passwords (@derekivey)
+- nxos: Fix password match to avoid stripping out the user role. (@derekivey)
+- OpenBSD: Include bgpd, ospfd and ospf6d files (@woopstar)
+- scrub often changing values in junos license output (@matejv)
 
 ### Fixed
 
@@ -42,12 +67,18 @@ The format is based on [Keep a Changelog](https://keepachangelog.com/en/1.1.0/).
 - fixed an issue where Oxidized could not pull config from XOS-devices that have not saved their configuration (@DarkCatapulter)
 - improved scrubbing of show chassis in ironware model (@michaelpsomiadis)
 - fixed snmp secret handling in netgear model (@CirnoT)
+- generalise fortiOS to support new versions and VM based products e.g. FortiManager, FortiAnalyzer and FortiMail, which requires keyboard-interactive auth method. Includes trial-and-error cmd list to retrieve most infromative config. Fixes #2227. Moved 'system ha status' to 'config global' section to support clusters with virtual domains.
 - filter next periodic save schedule time in xos model output (@sargon)
--  Fix when auto-saved is configured on xos switches  (@trappiz)
+- Fix when auto-saved is configured on xos switches  (@trappiz)
 - fixed ArubaOS-CX enviroment/system inconsistent values #2297 (@raunz)
 - Update AirFiber prompt regex (@murrant)
 - System time and running time are now stripped from tplink model output (@spike77453)
-
+- &lt;?xml... line is no longer improperly stripped from OPNsense and PFsense backups (@pv2b)
+- fixed an issue where Oxidized timeouts in Brocade ICX-series devices (@piterpunk)
+- fixed an issue where EOS config was truncated. Fixes #2038 (@jake2184 @fhibler)
+- fixed missing output from routeros version command (@mjbnz)
+- Updated fastiron enable password prompt regex (@pepperoni-pi)
+- fixed an issue where the pfsense model would not report errors in case it was unable to download the configuration e.g. due to insufficient permissions
 
 ## [0.28.0 - 2020-05-18]
 
@@ -438,7 +469,7 @@ The format is based on [Keep a Changelog](https://keepachangelog.com/en/1.1.0/).
 
 ### Fixed
 
-- debugging, tests (by @ElvinEfendi)
+- debugging, tests (by @ElvinEfendi)
 - nos, panos, acos, procurve, eos, edgeswitch, aosw, fortios updates
 
 ## [0.14.3] - 2016-05-25

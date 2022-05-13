@@ -3,7 +3,13 @@ class Enterasys < Oxidized::Model
 
   prompt /^.+\w\((su|rw)\)->\s?$/
 
-  comment  '!'
+  comment '!'
+
+  # Handle paging
+  expect /^--More--.*$/ do |data, re|
+    send ' '
+    data.sub re, ''
+  end
 
   cmd :all do |cfg|
     cfg.each_line.to_a[2..-3].map { |line| line.delete("\r").rstrip }.join("\n") + "\n"
