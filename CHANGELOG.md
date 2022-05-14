@@ -48,6 +48,7 @@ The format is based on [Keep a Changelog](https://keepachangelog.com/en/1.1.0/).
 - xmppdiff now persists its connection to the XMPP server and MUC (@jplitza)
 - routeros no longer backups infos on available updates (@jplitza)
 - avoid /humidity hardware field in tmos (F5) to be reported (@albsga)
+- read all configurations in partition folder for tmos (F5) (@dalamanster)
 - version information or OPNsense and PFsense models is now included as XML comments (@pv2b)
 - netscaler, backup all partitions (@smallsam)
 - only runs SSH proxy commands if the ssh_proxy configuration item has been defined (@jameskirsop)
