@@ -58,6 +58,7 @@ The format is based on [Keep a Changelog](https://keepachangelog.com/en/1.1.0/).
 - nxos: Fix password match to avoid stripping out the user role. (@derekivey)
 - OpenBSD: Include bgpd, ospfd and ospf6d files (@woopstar)
 - scrub often changing values in junos license output (@matejv)
+- comware: support for enable(super) login password added (@delvta)
 
 ### Fixed
 
