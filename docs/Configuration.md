@@ -184,7 +184,11 @@ model: junos
 interval: 3600 #interval in seconds
 log: ~/.config/oxidized/log
 debug: false
-threads: 30
+threads: 30 # maximum number of threads
+# use_max_threads:
+# false - the number of threads is selected automatically based on the interval option, but not more than the maximum
+# true - always use the maximum number of threads
+use_max_threads: false
 timeout: 20
 retries: 3
 prompt: !ruby/regexp /^([\w.@-]+[#>]\s?)$/
