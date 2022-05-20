@@ -46,6 +46,7 @@ class LinksysSRW < Oxidized::Model
     # Repair some linewraps which terminal datadump doesn't take care of
     # and there's no terminal width either.
     cfg.gsub! /(lldpPortConfigT)\n(LVsTxEnable)/, '\\1\\2'
+    cfg.gsub! /(lldpPortConfigTL)\n(VsTxEnable)/, '\\1\\2'
     # And comment out the echo of the command
     "#{comment cfg.lines.first}#{cfg.cut_head}"
   end

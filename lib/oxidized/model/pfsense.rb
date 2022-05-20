@@ -9,6 +9,9 @@ class PfSense < Oxidized::Model
   end
 
   cmd 'cat /cf/conf/config.xml' do |cfg|
+    if not cfg.include? "<pfsense>" then
+      raise "<pfsense> missing in config file!"
+    end
     cfg.gsub! /\s<revision>\s*<time>\d*<\/time>\s*.*\s*.*\s*<\/revision>/, ''
     cfg.gsub! /\s<last_rule_upd_time>\d*<\/last_rule_upd_time>/, ''
     cfg
