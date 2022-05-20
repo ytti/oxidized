@@ -6,7 +6,7 @@ module Oxidized
   class ModelNotFound  < OxidizedError; end
   class Node
     attr_reader :name, :ip, :model, :input, :output, :group, :auth, :prompt, :vars, :last, :repo
-    attr_accessor :running, :user, :email, :msg, :from, :stats, :retry
+    attr_accessor :running, :user, :email, :msg, :from, :stats, :retry, :err_type, :err_reason
     alias running? running
 
     def initialize(opt)
@@ -28,6 +28,8 @@ module Oxidized
       @stats = Stats.new
       @retry = 0
       @repo = resolve_repo opt
+      @err_type = nil
+      @err_reason = nil
 
       # model instance needs to access node instance
       @model.node = self
@@ -73,6 +75,8 @@ module Oxidized
           resc  = " (rescued #{resc})"
         end
         Oxidized.logger.send(level, '%s raised %s%s with msg "%s"' % [ip, err.class, resc, err.message])
+        @err_type = err.class.to_s
+        @err_reason = err.message.to_s
         false
       rescue StandardError => err
         crashdir  = Oxidized.config.crash.directory
@@ -86,6 +90,8 @@ module Oxidized
           fh.puts err.backtrace
         end
         Oxidized.logger.error '%s raised %s with msg "%s", %s saved' % [ip, err.class, err.message, crashfile]
+        @err_type = err.class.to_s
+        @err_reason = err.message.to_s
         false
       end
     end

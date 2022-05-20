@@ -25,6 +25,7 @@ module Oxidized
       asetus.default.use_syslog    = false
       asetus.default.debug         = false
       asetus.default.threads       = 30
+      asetus.default.use_max_threads = false
       asetus.default.timeout       = 20
       asetus.default.retries       = 3
       asetus.default.prompt        = /^([\w.@-]+[#>]\s?)$/

@@ -198,8 +198,8 @@ module Oxidized
       # any double hyphens, by replacing any - that is followed by another -
       # with '- '
       data = ''
-      str.each_line do |line|
-        data << '<!-- ' << line.gsub(/-(?=-)/, '- ').chomp << " -->\n"
+      str.each_line do |_line|
+        data << '<!-- ' << str.gsub(/-(?=-)/, '- ').chomp << " -->\n"
       end
       data
     end
