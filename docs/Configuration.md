@@ -242,13 +242,29 @@ groups:
     password: ubnt
 ```
 
-and add group mapping
+For mapping multiple group values to a common name
 
 ```yaml
-map:
-  model: 0
-  name: 1
-  group: 2
+group_map:
+  alias1: groupA
+  alias2: groupA
+  alias3: groupB
+  alias4: groupB
+  aliasN: groupZ
+  ...
+```
+
+add group mapping to a source
+
+```yaml
+source:
+  ...
+  <source>:
+    ...
+    map:
+      model: 0
+      name: 1
+      group: 2
 ```
 
 For model specific credentials
