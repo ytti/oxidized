@@ -2,11 +2,10 @@ class Yamaha < Oxidized::Model
   prompt /^([\w.@()-]+[#>]\s?)$/
   comment  '# '
 
-  # example how to handle pager
-  # expect /^\s--More--\s+.*$/ do |data, re|
-  #  send ' '
-  #  data.sub re, ''
-  # end
+  expect /^---more---$/ do |data, re|
+   send ' '
+   data.sub re, ''
+  end
 
   # non-preferred way to handle additional PW prompt
   # expect /^[\w.]+>$/ do |data|
