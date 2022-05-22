@@ -41,7 +41,7 @@ class Yamaha < Oxidized::Model
     # preferred way to handle additional passwords
     post_login do
       if vars(:enable) == true
-        cmd "enable"
+        cmd "administrator"
       elsif vars(:enable)
         cmd "administrator", /^[pP]assword:/
         cmd vars(:enable)
