@@ -33,6 +33,7 @@ module Oxidized
       asetus.default.next_adds_job = false            # if true, /next adds job, so device is fetched immmeiately
       asetus.default.vars          = {}               # could be 'enable'=>'enablePW'
       asetus.default.groups        = {}               # group level configuration
+      asetus.default.group_map     = {}               # map aliases of groups to names
       asetus.default.models        = {}               # model level configuration
       asetus.default.pid           = File.join(Oxidized::Config::Root, 'pid')
 

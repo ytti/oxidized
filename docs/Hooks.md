@@ -72,6 +72,7 @@ Several authentication methods are supported:
 
 * Provide a `password` for username + password authentication
 * Provide both a `publickey` and a `privatekey` for ssh key-based authentication
+* Provide only a `privatekey` (public key filename is assumed to be `privatekey` + "`.pub`"
 * Don't provide any credentials for ssh-agent authentication
 
 The username will be set to the relevant part of the `remote_repo` URI, with a fallback to `git`. It is also possible to provide one by setting the `username` configuration key.
@@ -83,13 +84,15 @@ For ssh key-based authentication, it is possible to set the environment variable
 * `remote_repo`: the remote repository to be pushed to.
 * `username`: username for repository auth.
 * `password`: password for repository auth.
-* `publickey`: public key file path for repository auth.
+* `publickey`: public key file path for repository auth. (optional)
 * `privatekey`: private key file path for repository auth.
   * NOTE: this key needs to be in the legacy PEM format, not the newer OpenSSL format [#1877](https://github.com/ytti/oxidized/issues/1877), [#2324](https://github.com/ytti/oxidized/issues/2324)
     * To convert a key beginning with `BEGIN OPENSSH PRIVATE KEY` to the legacy PEM format, run this command:
       `ssh-keygen -p -m PEM -f $MY_KEY_HERE`
 
-When using groups, each group must have a unique entry in the `remote_repo` config.
+When using groups, `remote_repo` must be a dictionary of groups that the hook should apply to. If a group is missing from the dictionary, no action will be taken.
+
+The dictionary entry can either be a url alone:
 
 ```yaml
 hooks:
@@ -99,6 +102,25 @@ hooks:
       switches: git@git.intranet:oxidized/switches.git
       firewalls: git@git.intranet:oxidized/firewalls.git
 ```
+
+... or it can be a dictionary with `url` and `privatekey` specified:
+
+```yaml
+hooks:
+  push_to_remote:
+    remote_repo:
+      routers:
+        url: git@git.intranet:oxidized/routers.git
+        privatekey: /root/.ssh/id_rsa_routers
+      switches:
+        url: git@git.intranet:oxidized/switches.git
+        privatekey: /root/.ssh/id_rsa_switches
+      firewalls:
+        url: git@git.intranet:oxidized/firewalls.git
+        privatekey: /root/.ssh/id_rsa_firewalls
+```
+
+Both forms can be mixed and matched.
 
 ### githubrepo hook configuration example
 

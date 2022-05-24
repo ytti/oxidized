@@ -23,6 +23,7 @@ The format is based on [Keep a Changelog](https://keepachangelog.com/en/1.1.0/).
 - model for Linksys SRW switches (@glance-)
 - Added exec hook variables to retrieve verbose node's failure reason and type
 - model for Cambium ePMP radios (@martydingo)
+- Added new `group_map` configuration option (@mjbnz)
 - Dockerfile rebased to phusion/baseimage-docker focal-1.2.0
 - model for Lenovo Network OS (@seros1521)
 - new option: use_max_threads
@@ -54,11 +55,13 @@ The format is based on [Keep a Changelog](https://keepachangelog.com/en/1.1.0/).
 - updated vrp.rb to correctly parse huawei devices
 - asa: information about the configuration change time is deleted
 - Extended groups configuration to support models vars within a group (@mjbnz)
+- Extended `remote_repo` configuration to allow repo specific ssh keys (@mjbnz)
 - sonicos: added scrubbing for hashed values (@televat0rs)
 - nxos: Additional scrubbing for nxos device passwords (@derekivey)
 - nxos: Fix password match to avoid stripping out the user role. (@derekivey)
 - OpenBSD: Include bgpd, ospfd and ospf6d files (@woopstar)
 - scrub often changing values in junos license output (@matejv)
+- comware: support for enable(super) login password added (@delvta)
 
 ### Fixed
 
@@ -76,6 +79,7 @@ The format is based on [Keep a Changelog](https://keepachangelog.com/en/1.1.0/).
 - fixed an issue where Oxidized timeouts in Brocade ICX-series devices (@piterpunk)
 - fixed an issue where EOS config was truncated. Fixes #2038 (@jake2184 @fhibler)
 - fixed missing output from routeros version command (@mjbnz)
+- stopped `clear: true` from removing all commands (@mjbnz)
 - Updated fastiron enable password prompt regex (@pepperoni-pi)
 - fixed an issue where the pfsense model would not report errors in case it was unable to download the configuration e.g. due to insufficient permissions
 
