@@ -38,6 +38,9 @@ class Yamaha < Oxidized::Model
 
   cfg :telnet, :ssh do
     # preferred way to handle additional passwords
+    post_login 'console lines infinity'
+    post_login 'console columns  200'
+    post_login 'console character ascii'
     post_login do
       if vars(:enable) == true
         cmd "administrator"
@@ -46,9 +49,6 @@ class Yamaha < Oxidized::Model
         cmd vars(:enable)
       end
     end
-    post_login 'console lines infinity'
-    post_login 'console columns  200'
-    post_login 'console character ascii'
     pre_logout do
       cmd 'exit'
     end
