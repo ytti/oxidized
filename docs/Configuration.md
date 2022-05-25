@@ -242,6 +242,28 @@ groups:
     password: ubnt
 ```
 
+Model specific variables within groups
+
+```yaml
+groups:
+  foo:
+    models:
+      arista:
+        vars:
+          ssh_keys: "~/.ssh/id_rsa_foo_arista"
+      vyatta:
+        vars:
+          ssh_keys: "~/.ssh/id_rsa_foo_vyatta"
+  bar:
+    models:
+      routeros:
+        vars:
+          ssh_keys: "~/.ssh/id_rsa_bar_routeros"
+      vyatta:
+        vars:
+          ssh_keys: "~/.ssh/id_rsa_bar_vyatta"
+```
+
 For mapping multiple group values to a common name
 
 ```yaml
