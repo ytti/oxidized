@@ -229,6 +229,8 @@
 * VMWare
   * [NSX Edge (configuration)](/lib/oxidized/model/nsxconfig.rb)
   * [NSX Edge (firewall rules)](/lib/oxidized/model/nsxfirewall.rb)
+* YAMAHA
+  * [YAMAHA NVR/RTX Series](/lib/oxidized/model/yamaha.rb)
 * Watchguard
   * [Fireware OS](/lib/oxidized/model/firewareos.rb)
 * Westell
