@@ -19,6 +19,7 @@ The format is based on [Keep a Changelog](https://keepachangelog.com/en/1.1.0/).
 - model for Aruba CX switches (@jmurphy5)
 - model for NEC IX devices (@mikenowak)
 - Added docs for Dell/EMC Networking OS10 devices (@davromaniak)
+- model for Dell Networking N Series switches (@baldoarturo)
 - model for Zyxel 1308 OLTs (@baldoarturo)
 - model for Linksys SRW switches (@glance-)
 - Added exec hook variables to retrieve verbose node's failure reason and type
@@ -29,6 +30,7 @@ The format is based on [Keep a Changelog](https://keepachangelog.com/en/1.1.0/).
 - new option: use_max_threads
 - model for ADVA devices (@stephrdev)
 - model for YAMAHA NVR/RTX Series (@bluekirin55)
+
 
 ### Changed
 

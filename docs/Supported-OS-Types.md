@@ -93,6 +93,7 @@
   * [AOSW](/lib/oxidized/model/aosw.rb)
   * [DellX](/lib/oxidized/model/dellx.rb)
   * [Dell EMC Networking OS10](/lib/oxidized/model/os10.rb)
+  * [Dell Networking N Series](/lib/oxidized/model/nseries.rb)
 * D-Link
   * [D-Link](/lib/oxidized/model/dlink.rb)
 * ECI Telecom
