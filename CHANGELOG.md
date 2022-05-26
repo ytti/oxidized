@@ -28,6 +28,7 @@ The format is based on [Keep a Changelog](https://keepachangelog.com/en/1.1.0/).
 - model for Lenovo Network OS (@seros1521)
 - new option: use_max_threads
 - model for ADVA devices (@stephrdev)
+- model for YAMAHA NVR/RTX Series (@bluekirin55)
 
 ### Changed
 

@@ -233,6 +233,8 @@
   * [Fireware OS](/lib/oxidized/model/firewareos.rb)
 * Westell
   * [Westell 8178G, Westell 8266G](/lib/oxidized/model/weos.rb)
+* YAMAHA
+  * [YAMAHA NVR/RTX Series](/lib/oxidized/model/yamaha.rb)
 * Zhone
   * [Zhone (OLT and MX)](/lib/oxidized/model/zhoneolt.rb)
 * ZTE
