@@ -1,10 +1,10 @@
 class Yamaha < Oxidized::Model
   prompt /^([\w.@()-]+[#>]\s?)$/
-  comment  '# '
+  comment '# '
 
   expect /^---more---$/ do |data, re|
-   send ' '
-   data.sub re, ''
+    send ' '
+    data.sub re, ''
   end
 
   # non-preferred way to handle additional PW prompt
@@ -15,8 +15,8 @@ class Yamaha < Oxidized::Model
   # end
 
   expect /^Save new configuration/ do |data, re|
-   send "N\n"
-   data.sub re, ''
+    send "N\n"
+    data.sub re, ''
   end
 
   cmd :all do |cfg|
