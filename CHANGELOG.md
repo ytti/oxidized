@@ -75,6 +75,7 @@ The format is based on [Keep a Changelog](https://keepachangelog.com/en/1.1.0/).
 - filter next periodic save schedule time in xos model output (@sargon)
 - Fix when auto-saved is configured on xos switches  (@trappiz)
 - fixed ArubaOS-CX enviroment/system inconsistent values #2297 (@raunz)
+- further improvements to ArubaOS-CX environment values (@olemyhre) 
 - Update AirFiber prompt regex (@murrant)
 - System time and running time are now stripped from tplink model output (@spike77453)
 - &lt;?xml... line is no longer improperly stripped from OPNsense and PFsense backups (@pv2b)
