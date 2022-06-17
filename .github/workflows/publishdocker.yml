@@ -21,7 +21,7 @@ jobs:
         echo "App version: $APP_VERSION"
         echo "::set-output name=version::${APP_VERSION}"
     - uses: docker/login-action@v2
-      if: false # TEMP remove this
+      if: ${{ github.repository == 'ytti/oxidized' }}
       with:
         username: ${{ secrets.DOCKER_USERNAME }}
         password: ${{ secrets.DOCKER_PASSWORD }}
@@ -29,7 +29,7 @@ jobs:
       uses: docker/metadata-action@v4
       id: meta
       with:
-        images: ${{ github.repository }}
+        images: oxidized/oxidized
         tags: |
           type=ref,event=tag
           type=raw,value=latest
@@ -38,12 +38,15 @@ jobs:
     - name: Build
       uses: docker/build-push-action@v3
       with:
-        #push: ${{ github.event_name != 'pull_request' }}
-        push: false
+        push: ${{ github.event_name != 'pull_request' && github.repository == 'ytti/oxidized' }}
         tags: ${{ steps.meta.outputs.tags }}
         labels: ${{ steps.meta.outputs.labels }}
         context: .
         load: true
-    - name: Information
+    - name: Container image information
       run: |
-        docker image ls
+        TAG=$(echo $TAGS | head -n1)
+        docker image ls ${TAG}
+        docker inspect ${TAG}
+      env:
+        TAGS: ${{ steps.meta.outputs.tags }}
