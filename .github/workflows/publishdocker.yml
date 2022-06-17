@@ -32,6 +32,7 @@ jobs:
         images: ${{ github.repository }}
         tags: |
           type=ref,event=tag
+          type=raw,value=latest
         labels: |
           org.opencontainers.image.version=${{ steps.version.outputs.version }}
     - name: Build
