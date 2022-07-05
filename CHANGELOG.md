@@ -86,6 +86,7 @@ The format is based on [Keep a Changelog](https://keepachangelog.com/en/1.1.0/).
 - Updated fastiron enable password prompt regex (@pepperoni-pi)
 - fixed an issue where the pfsense model would not report errors in case it was unable to download the configuration e.g. due to insufficient permissions
 - added a missing check for whether to send `enable` commands to Adtran devices (@repnop)
+- fixed an issue where ADVA devices with a configured prompt != `ADVA-->` couldn't be polled (@momorientes)
 
 ## [0.28.0 - 2020-05-18]
 
