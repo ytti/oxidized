@@ -21,7 +21,7 @@ class ADVA < Oxidized::Model
   end
 
   cmd 'show system' do |cfg|
-    cfg.each_line.reject { |line| line.match /.*(Local time|Up time).*/ }.join
+    cfg = cfg.each_line.reject { |line| line.match /(up time|local time)/i }.join
 
     cfg = "COMMAND: show system\n\n" + cfg
     cfg = comment cfg
