@@ -7,6 +7,7 @@ The format is based on [Keep a Changelog](https://keepachangelog.com/en/1.1.0/).
 ## [Unreleased]
 
 - Cumulus: added option to use NCLU as ia collecting method
+- Update net-ssh to 7.0.0.beta1 (using `append_all_supported_algorithms: true`)
 
 ### Added
 
@@ -63,6 +64,7 @@ The format is based on [Keep a Changelog](https://keepachangelog.com/en/1.1.0/).
 - OpenBSD: Include bgpd, ospfd and ospf6d files (@woopstar)
 - scrub often changing values in junos license output (@matejv)
 - comware: support for enable(super) login password added (@delvta)
+- use slack-ruby-client instead of slack-api for slackdiff hook (@0xmc)
 
 ### Fixed
 
@@ -87,6 +89,7 @@ The format is based on [Keep a Changelog](https://keepachangelog.com/en/1.1.0/).
 - fixed an issue where the pfsense model would not report errors in case it was unable to download the configuration e.g. due to insufficient permissions
 - added a missing check for whether to send `enable` commands to Adtran devices (@repnop)
 - fixed an issue where ADVA devices with a configured prompt != `ADVA-->` couldn't be polled (@momorientes)
+- ensure local time and system up time are filtered for ADVA devices (@stephrdev)
 
 ## [0.28.0 - 2020-05-18]
 
