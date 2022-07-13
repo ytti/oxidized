@@ -64,6 +64,7 @@ The format is based on [Keep a Changelog](https://keepachangelog.com/en/1.1.0/).
 - OpenBSD: Include bgpd, ospfd and ospf6d files (@woopstar)
 - scrub often changing values in junos license output (@matejv)
 - comware: support for enable(super) login password added (@delvta)
+- use slack-ruby-client instead of slack-api for slackdiff hook (@0xmc)
 
 ### Fixed
 
