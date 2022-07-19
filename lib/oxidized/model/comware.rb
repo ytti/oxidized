@@ -31,6 +31,15 @@ class Comware < Oxidized::Model
   end
 
   cfg :telnet, :ssh do
+    # handle enable passwords
+    post_login do
+      if vars(:enable) == true
+        cmd "super"
+      elsif vars(:enable)
+        cmd "super", /^ [pP]assword:/
+        cmd vars(:enable)
+      end
+    end
     # enable command-line mode on SMB comware switches (HP V1910, V1920)
     # autodetection is hard, because the 'summary' command is paged, and
     # the pager cannot be disabled before _cmdline-mode on.

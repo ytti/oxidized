@@ -18,7 +18,7 @@ class SlackDiff < Oxidized::Hook
       config.token = cfg.token
       config.proxy = cfg.proxy if cfg.has_key?('proxy')
     end
-    client = Slack::Client.new
+    client = Slack::Web::Client.new
     client.auth_test
     log "Connected"
     if cfg.has_key?("diff") ? cfg.diff : true
