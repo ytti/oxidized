@@ -34,7 +34,7 @@ instead of "show running-config". In these cases, the ```ios_rbac: true```
 variable needs to be set either as a top-level variable or at the groups
 level.
 
-Below is are examples showing how this can be enabled in the oxidized config:
+Below are examples showing how each option can be enabled in the oxidized config:
 
 ### Top Level Variable
 
