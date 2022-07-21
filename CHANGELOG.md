@@ -66,6 +66,7 @@ The format is based on [Keep a Changelog](https://keepachangelog.com/en/1.1.0/).
 - scrub often changing values in junos license output (@matejv)
 - comware: support for enable(super) login password added (@delvta)
 - use slack-ruby-client instead of slack-api for slackdiff hook (@0xmc)
+- ios: Add support for RBAC in IOS model (@jameskirsop)
 
 ### Fixed
 
