@@ -1,10 +1,12 @@
 class Nodegrid < Oxidized::Model
+  # ZPE Nodegrid (Tested with Nodegrid Gate/Bold/NSR)
+  # https://www.zpesystems.com/products/
 
-  prompt /(?<!@)\[(.*?\s\/)\]#/
-  comment  '# '
+  prompt(%r{(?<!@)\[(.*?\s/)\]#})
+  comment '# '
 
   cmd 'show system/about/' do |cfg|
-    comment cfg # Show System details, Model, Software Version
+    comment cfg # Show System, Model, Software Version
   end
 
   cmd 'show settings/license/' do |cfg|
@@ -18,5 +20,4 @@ class Nodegrid < Oxidized::Model
   cfg :ssh do
     pre_logout 'exit'
   end
-
 end
