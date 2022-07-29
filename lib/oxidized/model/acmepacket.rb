@@ -36,4 +36,3 @@ class ACMEPACKET < Oxidized::Model
     pre_logout 'exit'
   end
 end
-
