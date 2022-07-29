@@ -7,22 +7,36 @@ module Oxidized
 
     class << self
       def inherited(klass)
-        klass.instance_variable_set '@cmd',     (Hash.new { |h, k| h[k] = [] })
-        klass.instance_variable_set '@cfg',     (Hash.new { |h, k| h[k] = [] })
-        klass.instance_variable_set '@procs',   (Hash.new { |h, k| h[k] = [] })
-        klass.instance_variable_set '@expect',  []
-        klass.instance_variable_set '@comment', nil
-        klass.instance_variable_set '@prompt',  nil
+        if klass.superclass == Oxidized::Model
+          klass.instance_variable_set '@cmd',     (Hash.new { |h, k| h[k] = [] })
+          klass.instance_variable_set '@cfg',     (Hash.new { |h, k| h[k] = [] })
+          klass.instance_variable_set '@procs',   (Hash.new { |h, k| h[k] = [] })
+          klass.instance_variable_set '@expect',  []
+          klass.instance_variable_set '@comment', nil
+          klass.instance_variable_set '@prompt',  nil
+        else # we're subclassing some existing model, take its variables
+          instance_variables.each do |var|
+            iv = instance_variable_get(var)
+            klass.instance_variable_set var, iv.dup
+            if var.to_s == "@cmd"
+              @cmd[:cmd] = iv[:cmd].dup
+            end
+          end
+        end
       end
 
-      def comment(str = '# ')
-        return @comment if @comment
-
-        @comment = block_given? ? yield : str
+      def comment(str = "# ")
+        @comment = if block_given?
+                     yield
+                   elsif not @comment
+                     str
+                   else
+                     @comment
+                   end
       end
 
       def prompt(regex = nil)
-        @prompt || (@prompt = regex)
+        @prompt = regex || @prompt
       end
 
       def cfg(*methods, **args, &block)
@@ -87,7 +101,12 @@ module Oxidized
 
       def process_args_block(target, args, block)
         if args[:clear]
-          target.replace([block])
+          if block.class == Array
+            target.reject! { |k, _| k == block[0] }
+            target.push(block)
+          else
+            target.replace([block])
+          end
         else
           method = args[:prepend] ? :unshift : :push
           target.send(method, block)
@@ -171,6 +190,24 @@ module Oxidized
       data
     end
 
+    def xmlcomment(str)
+      # XML Comments start with <!-- and end with -->
+      #
+      # Because it's illegal for the first or last characters of a comment
+      # to be a -, i.e. <!--- or ---> are illegal, and also to improve
+      # readability, we add extra spaces after and before the beginning
+      # and end of comment markers.
+      #
+      # Also, XML Comments must not contain --. So we put a space between
+      # any double hyphens, by replacing any - that is followed by another -
+      # with '- '
+      data = ''
+      str.each_line do |_line|
+        data << '<!-- ' << str.gsub(/-(?=-)/, '- ').chomp << " -->\n"
+      end
+      data
+    end
+
     def screenscrape
       @input.class.to_s.match(/Telnet/) || vars(:ssh_no_exec)
     end
@@ -178,8 +215,8 @@ module Oxidized
     private
 
     def process_cmd_output(output, name)
-      output = Oxidized::String.new output if ::String == output.class
-      output = Oxidized::String.new '' unless Oxidized::String == output.class
+      output = Oxidized::String.new(output) if output.is_a?(::String)
+      output = Oxidized::String.new('') unless output.instance_of?(Oxidized::String)
       output.set_cmd(name)
       output
     end

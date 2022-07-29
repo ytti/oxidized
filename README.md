@@ -8,7 +8,7 @@
 
 Oxidized is a network device configuration backup tool. It's a RANCID replacement!
 
-Light and extensible, Oxidized supports more than 120 operating system types.
+Light and extensible, Oxidized supports over 130 operating system types.
 
 Feature highlights:
 
@@ -98,7 +98,7 @@ gem install oxidized-script oxidized-web # If you don't install oxidized-web, en
 
 ### CentOS, Oracle Linux, Red Hat Linux
 
-On CentOS 6 and 7 / RHEL 6 and 7, begin by installing Ruby 2.3 or greater. This can be accomplished in one of two ways:
+On CentOS 6 and 7 / RHEL 6 and 7, begin by installing Ruby 2.3 or greater. This can be accomplished in one of several ways:
 
 Install Ruby 2.3 from [SCL](https://www.softwarecollections.org/en/scls/rhscl/rh-ruby23/):
 
@@ -114,14 +114,33 @@ The following additional packages will be required to build the dependencies:
 yum install make cmake which sqlite-devel openssl-devel libssh2-devel ruby gcc ruby-devel libicu-devel gcc-c++
 ```
 
-Alternatively, install Ruby 2.3 by following the instructions at [Installing Ruby 2.3 using RVM](#installing-ruby-23-using-rvm).
+Alternatively, install Ruby 2.6 via RVM by following the instructions:
 
-Finally, install oxidized via Rubygems:
+Make sure you dont have any leftover ruby:
+```yum erase ruby```
 
-```shell
-gem install oxidized
-gem install oxidized-script oxidized-web # if you don't install oxidized-web, make sure you remove "rest" from your config
+Then, install gpg key and rvm
+```sudo gpg --keyserver hkp://keys.gnupg.net --recv-keys 409B6B1796C275462A1703113804BB82D39DC0E3 7D2BAF1CF37B13E2069D6956105BD0E739499BDB
+curl -sSL https://get.rvm.io | bash -s stable
+source /etc/profile.d/rvm.sh
+rvm requirements run
+rvm install 2.6.0
+rvm use 2.6.0
 ```
+
+Install oxidized requirements:
+```yum install make cmake which sqlite-devel openssl-devel libssh2-devel gcc libicu-devel gcc-c++```
+
+Install the gems:
+```gem install oxidized oxidized-web```
+
+You need to wrap the gem and reference the wrap in the systemctl service file:
+```rvm wrapper oxidized```
+
+You can see where the wrapped gem is via
+```rvm wrapper show oxidized```
+Use that path in the oxidized.service file, restart the systemctl daemon, run oxidized by hand once, edit config file, start service.
+
 
 ### FreeBSD
 
@@ -188,15 +207,23 @@ Alternatively, you can use docker-compose to launch the oxidized container:
 ```yaml
 # docker-compose.yml
 # docker-compose file example for oxidized that will start along with docker daemon
-oxidized:
-  restart: always
-  image: oxidized/oxidized:latest
-  ports:
-    - 8888:8888/tcp
-  environment:
-    CONFIG_RELOAD_INTERVAL: 600
-  volumes:
-    - /etc/oxidized:/root/.config/oxidized
+---
+version: "3"
+services:
+  oxidized:
+    restart: always
+    image: oxidized/oxidized:latest
+    ports:
+      - 8888:8888/tcp
+    environment:
+      CONFIG_RELOAD_INTERVAL: 600
+    volumes:
+       - config:/root/.config/oxidized/config
+       - router.db:/root/.config/oxidized/router.db
+       - model:/root/.config/oxidized/model
+       # if git is use as input
+       - data:/root/.config/oxidized/backupcfg/
+
 ```
 
 Create the `/etc/oxidized/router.db` (see [CSV Source](docs/Sources.md#source-csv) for further info):
@@ -260,7 +287,7 @@ Oxidized configuration is in YAML format. Configuration files are subsequently s
 It is recommended practice to run Oxidized using its own username.  This username can be added using standard command-line tools:
 
 ```shell
-useradd oxidized
+useradd -s /bin/bash -m oxidized
 ```
 
 > It is recommended __not__ to run Oxidized as root.
@@ -324,9 +351,9 @@ Run `oxidized` again to take the first backups.
 
 ## Extra
 
-### Ubuntu SystemV init setup
+### Ubuntu init setup
 
-The init script assumes that you have a user named 'oxidized' and that oxidized is in one of the following paths:
+The systemd service assumes that you have a user named 'oxidized' and that oxidized is in one of the following paths:
 
 ```text
 /sbin
@@ -336,18 +363,22 @@ The init script assumes that you have a user named 'oxidized' and that oxidized 
 /usr/local/bin
 ```
 
-1. Copy init script from extra/ folder to /etc/init.d/oxidized
+1. Copy systemd service file from extra/ folder to /etc/systemd/system
+
+```shell
+sudo cp extra/oxidized.service /etc/systemd/system
+```
 2. Setup /var/run/
 
 ```shell
-mkdir /var/run/oxidized
-chown oxidized:oxidized /var/run/oxidized
+mkdir /run/oxidized
+chown oxidized:oxidized /run/oxidized
 ```
 
 3. Make oxidized start on boot
 
 ```shell
-update-rc.d oxidized defaults
+sudo systemctl enable oxidized.service
 ```
 
 ## Help
@@ -385,7 +416,7 @@ If you would like to be a maintainer for Oxidized then please read through the b
 
 ## YES, I WANT TO HELP
 
-Awesome! Simply send an email to Saku Ytti <saku@ytti.fi>.
+Awesome! Simply send an e-mail to Saku Ytti at <saku@ytti.fi>.
 
 ## Further reading
 

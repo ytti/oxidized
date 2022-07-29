@@ -1,20 +1,20 @@
-# Single-stage build of an oxidized container from phusion/baseimage-docker v0.11, derived from Ubuntu 18.04 (Bionic Beaver)
-FROM phusion/baseimage:0.11
+# Single-stage build of an oxidized container from phusion/baseimage-docker focal-1.2.0, derived from Ubuntu 20.04 (Focal Fossa)
+FROM phusion/baseimage:focal-1.2.0
 
 # set up dependencies for the build process
 RUN apt-get -yq update \
-    && apt-get -yq --no-install-recommends install ruby2.5 ruby2.5-dev libssl1.1 libssl-dev pkg-config make cmake libssh2-1 libssh2-1-dev git g++ libffi-dev ruby-bundler libicu60 libicu-dev libsqlite3-0 libsqlite3-dev libmysqlclient20 libmysqlclient-dev libpq5 libpq-dev zlib1g-dev \
+    && apt-get -yq --no-install-recommends install ruby ruby-dev libssl1.1 libssl-dev pkg-config make cmake libssh2-1 libssh2-1-dev git git-email libmailtools-perl g++ libffi-dev ruby-bundler libicu66 libicu-dev libsqlite3-0 libsqlite3-dev libmysqlclient21 libmysqlclient-dev libpq5 libpq-dev zlib1g-dev \
     && apt-get clean \
     && rm -rf /var/lib/apt/lists/*
 
 # dependencies for hooks
-RUN gem install aws-sdk slack-api xmpp4r cisco_spark --no-ri --no-rdoc
+RUN gem install aws-sdk slack-ruby-client xmpp4r cisco_spark --no-document
 
 # dependencies for sources
-RUN gem install gpgme sequel sqlite3 mysql2 pg --no-ri --no-rdoc
+RUN gem install gpgme sequel sqlite3 mysql2 pg --no-document
 
 # dependencies for inputs
-RUN gem install net-tftp net-http-persistent mechanize --no-ri --no-rdoc
+RUN gem install net-tftp net-http-persistent mechanize --no-document
 
 # build and install oxidized
 COPY . /tmp/oxidized/
@@ -25,7 +25,7 @@ RUN git fetch --unshallow || true
 RUN rake install
 
 # web interface
-RUN gem install oxidized-web --no-ri --no-rdoc
+RUN gem install oxidized-web --no-document
 
 # clean up
 WORKDIR /
@@ -37,5 +37,4 @@ COPY extra/oxidized.runit /etc/service/oxidized/run
 COPY extra/auto-reload-config.runit /etc/service/auto-reload-config/run
 COPY extra/update-ca-certificates.runit /etc/service/update-ca-certificates/run
 
-VOLUME ["/root/.config/oxidized"]
 EXPOSE 8888/tcp

@@ -6,7 +6,7 @@ module Oxidized
   class ModelNotFound  < OxidizedError; end
   class Node
     attr_reader :name, :ip, :model, :input, :output, :group, :auth, :prompt, :vars, :last, :repo
-    attr_accessor :running, :user, :email, :msg, :from, :stats, :retry
+    attr_accessor :running, :user, :email, :msg, :from, :stats, :retry, :err_type, :err_reason
     alias running? running
 
     def initialize(opt)
@@ -14,20 +14,22 @@ module Oxidized
       # remove the prefix if an IP Address is provided with one as IPAddr converts it to a network address.
       ip_addr, = opt[:ip].to_s.split("/")
       Oxidized.logger.debug 'IPADDR %s' % ip_addr.to_s
-      @name           = opt[:name]
-      @ip             = IPAddr.new(ip_addr).to_s rescue nil
-      @ip           ||= Resolv.new.getaddress(@name) if Oxidized.config.resolve_dns?
-      @ip           ||= @name
-      @group          = opt[:group]
-      @model          = resolve_model opt
-      @input          = resolve_input opt
-      @output         = resolve_output opt
-      @auth           = resolve_auth opt
-      @prompt         = resolve_prompt opt
-      @vars           = opt[:vars]
-      @stats          = Stats.new
-      @retry          = 0
-      @repo           = resolve_repo opt
+      @name = opt[:name]
+      @ip = IPAddr.new(ip_addr).to_s rescue nil
+      @ip ||= Resolv.new.getaddress(@name) if Oxidized.config.resolve_dns?
+      @ip ||= @name
+      @group = opt[:group]
+      @model = resolve_model opt
+      @input = resolve_input opt
+      @output = resolve_output opt
+      @auth = resolve_auth opt
+      @prompt = resolve_prompt opt
+      @vars = opt[:vars]
+      @stats = Stats.new
+      @retry = 0
+      @repo = resolve_repo opt
+      @err_type = nil
+      @err_reason = nil
 
       # model instance needs to access node instance
       @model.node = self
@@ -73,7 +75,9 @@ module Oxidized
           resc  = " (rescued #{resc})"
         end
         Oxidized.logger.send(level, '%s raised %s%s with msg "%s"' % [ip, err.class, resc, err.message])
-        return false
+        @err_type = err.class.to_s
+        @err_reason = err.message.to_s
+        false
       rescue StandardError => err
         crashdir  = Oxidized.config.crash.directory
         crashfile = Oxidized.config.crash.hostnames? ? name : ip.to_s
@@ -86,7 +90,9 @@ module Oxidized
           fh.puts err.backtrace
         end
         Oxidized.logger.error '%s raised %s with msg "%s", %s saved' % [ip, err.class, err.message, crashfile]
-        return false
+        @err_type = err.class.to_s
+        @err_reason = err.message.to_s
+        false
       end
     end
 
@@ -153,6 +159,7 @@ module Oxidized
       inputs = resolve_key :input, opt, Oxidized.config.input.default
       inputs.split(/\s*,\s*/).map do |input|
         Oxidized.mgr.add_input(input) || raise(MethodNotFound, "#{input} not found for node #{ip}") unless Oxidized.mgr.input[input]
+
         Oxidized.mgr.input[input]
       end
     end
@@ -160,6 +167,7 @@ module Oxidized
     def resolve_output(opt)
       output = resolve_key :output, opt, Oxidized.config.output.default
       Oxidized.mgr.add_output(output) || raise(MethodNotFound, "#{output} not found for node #{ip}") unless Oxidized.mgr.output[output]
+
       Oxidized.mgr.output[output]
     end
 

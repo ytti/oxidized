@@ -1,7 +1,10 @@
 class Procurve < Oxidized::Model
-  # some models start lines with \r
   # previous command is repeated followed by "\eE", which sometimes ends up on last line
-  prompt /^\r?([\w\s.-]+# )$/
+  # ssh switches prompt may start with \r, followed by the prompt itself, regex ([\w\s.-]+[#>] ), which ends the line
+  # telnet switches may start with various vt100 control characters, regex (\e\[24;[0-9][hH]), followed by the prompt, followed
+  # by at least 3 other vt100 characters
+  prompt /(^\r|\e\[24;[0-9][hH])?([\w\s.-]+(\((config|vlan-[0-9]{1,4}|y\/n)\)|\(o\)nce)?[#>:?\]] {1,2})($|(\e\[24;[0-9][0-9]?[hH]){3})/
+  
 
   comment '! '
 
@@ -28,6 +31,10 @@ class Procurve < Oxidized::Model
   cmd :all do |cfg|
     cfg = cfg.cut_both
     cfg = cfg.gsub /^\r/, ''
+    # Additional filtering for elder switches sending vt100 control chars via telnet
+    cfg.gsub! /\e\[\??\d+(;\d+)*[A-Za-z]/, ''
+    # Additional filtering for power usage reporting which obviously changes over time
+    cfg.gsub! /^(.*AC [0-9]{3}V\/?([0-9]{3}V)?) *([0-9]{1,3}) (.*)/, '\\1 <removed> \\4'
     cfg
   end
 

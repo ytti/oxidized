@@ -12,24 +12,37 @@ class RouterOS < Oxidized::Model
     cfg
   end
 
-  cmd '/system routerboard print' do |cfg|
+  cmd '/system routerboard print without-paging' do |cfg|
+    cfg = cfg.each_line.grep(/(model|firmware-type|current-firmware|serial-number):/).join
     comment cfg
   end
 
-  cmd '/system package update print' do |cfg|
-    comment cfg
+  cmd '/system package update print without-paging' do |cfg|
+    version_line = cfg.each_line.grep(/installed-version: /)[0]
+    @ros_version = /: ([0-9])/.match(version_line)[1].to_i
+    comment version_line
   end
 
-  cmd '/system history print' do |cfg|
+  cmd '/system history print without-paging' do |cfg|
     comment cfg
   end
 
   post do
-    run_cmd = vars(:remove_secret) ? '/export hide-sensitive' : '/export'
+    Oxidized.logger.debug "lib/oxidized/model/routeros.rb: running /export for routeros version #{@ros_version}"
+    run_cmd = if vars(:remove_secret)
+                '/export hide-sensitive'
+              elsif (not @ros_version.nil?) && (@ros_version >= 7)
+                '/export show-sensitive'
+              else
+                '/export'
+              end
     cmd run_cmd do |cfg|
       cfg.gsub! /\\\r?\n\s+/, '' # strip new line
       cfg.gsub! /# inactive time\r\n/, '' # Remove time based system comment
       cfg.gsub! /# received packet from \S+ bad format\r\n/, '' # Remove intermittent VRRP/CARP collision comment
+      cfg.gsub! /# poe-out status: short_circuit\r\n/, '' # Remove intermittent POE short_circuit comment
+      cfg.gsub! /# Firmware upgraded successfully, please reboot for changes to take effect!\r\n/, '' # Remove transient firmware upgrade comment
+      cfg.gsub! /# \S+ not ready\r\n/, '' # Remove intermittent $interface not ready comment
       cfg = cfg.split("\n").reject { |line| line[/^#\s\w{3}\/\d{2}\/\d{4}.*$/] }
       cfg.join("\n") + "\n"
     end

@@ -30,6 +30,7 @@
 * Arris
   * [C4CMTS](/lib/oxidized/model/c4cmts.rb)
 * Aruba
+  * [AOS-CX](/lib/oxidized/model/aoscx.rb)
   * [AOSW](/lib/oxidized/model/aosw.rb)
 * AudioCodes
   * [AudioCodes](/lib/oxdized/model/audiocodes.rb)
@@ -39,7 +40,7 @@
   * [BOSS (Baystack Operating System Software)](/lib/oxidized/model/boss.rb)
 * Brocade
   * [FabricOS](/lib/oxidized/model/fabricos.rb)
-  * [FastIron] (/lib/oxidized/model/fastiron.rb)
+  * [FastIron](/lib/oxidized/model/fastiron.rb)
   * [IronWare](/lib/oxidized/model/ironware.rb)
   * [NOS (Network Operating System)](/lib/oxidized/model/nos.rb)
   * [Vyatta](/lib/oxidized/model/vyatta.rb)
@@ -49,8 +50,11 @@
   * [AXOS](/lib/oxidized/model/axos.rb)
 * Cambium
   * [Cambium (PMP450 Series)](/lib/oxidized/model/cambium.rb)
+  * [Cambium (ePMP Series)](/lib/oxidized/model/cambiumepmp.rb)
 * Casa
   * [Casa](/lib/oxidized/model/casa.rb)
+* Centec Networks
+  * [CNOS](/lib/oxidized/model/cnos.rb)
 * Check Point
   * [GaiaOS](/lib/oxidized/model/gaiaos.rb)
 * Ciena
@@ -61,7 +65,7 @@
   * [ASA](/lib/oxidized/model/asa.rb)
   * [AsyncOS](/lib/oxidized/model/asyncos.rb)
   * [CatOS](/lib/oxidized/model/catos.rb)
-  * [FireLinuxOS](lib/oxidized/model/firelinuxos.rb)
+  * [FireLinuxOS](/lib/oxidized/model/firelinuxos.rb)
   * [IOS](/lib/oxidized/model/ios.rb)
   * [IOSXR](/lib/oxidized/model/iosxr.rb)
   * [NGA](/lib/oxidized/model/cisconga.rb)
@@ -90,16 +94,21 @@
   * [PowerConnect](/lib/oxidized/model/powerconnect.rb)
   * [AOSW](/lib/oxidized/model/aosw.rb)
   * [DellX](/lib/oxidized/model/dellx.rb)
+  * [Dell EMC Networking OS10](/lib/oxidized/model/os10.rb)
 * D-Link
   * [D-Link](/lib/oxidized/model/dlink.rb)
 * ECI Telecom
   * [ECIapollo](/lib/oxidized/model/eciapollo.rb)
 * EdgeCore
-  * [ES3528M](/lib/oxidized/model/edgecos.rb)
+  * [ECS3510, ES3528M](/lib/oxidized/model/edgecos.rb)
+  * [ECS3510, ES3526XA-V2, ES3528M](/lib/oxidized/model/edgecos.rb)
+* Eltex
+  * [Eltex](/lib/oxidized/model/eltex.rb)
 * Ericsson/Redback
   * [IPOS (former SEOS)](/lib/oxidized/model/ipos.rb)
 * Extreme Networks
-  * [Enterasys](/lib/oxidized/model/enterasys.rb)
+  * [Enterasys B/C-Series](/lib/oxidized/model/enterasys.rb)
+  * [Enterasys 800-Series](/lib/oxidized/model/enterasys800.rb)
   * [WM](/lib/oxidized/model/mtrlrfs.rb)
   * [XOS](/lib/oxidized/model/xos.rb)
   * [ExtremeWare](/lib/oxidized/model/xos.rb)
@@ -107,6 +116,9 @@
   * [TMOS](/lib/oxidized/model/tmos.rb)
 * Fiberstore
   * [S3800](/lib/oxidized/model/gcombnps.rb)
+  * [S3900](/lib/oxidized/model/edgecos.rb)
+  * [S5800](/lib/oxidized/model/cnos.rb)
+  * [S5850](/lib/oxidized/model/cnos.rb)
 * Firebrick
   * [FBxxxx](/lib/oxidized/model/firebrick.rb)
 * Force10
@@ -140,6 +152,14 @@
 * Juniper
   * [JunOS](/lib/oxidized/model/junos.rb)
   * [ScreenOS (Netscreen)](/lib/oxidized/model/screenos.rb)
+* LANCOM Systems GmbH
+  * [LCOS](/lib/oxidized/model/lancom.rb)
+* Lenovo
+  * [Lenovo Network OS](/lib/oxidized/model/lenovonos.rb)
+* Linkys
+  * [SRW](/lib/oxidized/model/linksyssrw.rb)
+* Linuxgeneric
+  * [CentOS](/lib/oxidized/model/linuxgeneric.rb)
 * Mellanox
   * [MLNX-OS](/lib/oxidized/model/mlnxos.rb)
   * [Voltaire](/lib/oxidized/model/voltaire.rb)
@@ -150,6 +170,8 @@
 * MRV
   * [MasterOS](/lib/oxidized/model/masteros.rb)
   * [FiberDriver](/lib/oxidized/model/fiberdriver.rb)
+* NEC
+  * [NEC IX](/lib/oxidized/model/necix.rb)
 * Netgear
   * [Netgear switches](/lib/oxidized/model/netgear.rb)
 * Netonix
@@ -174,14 +196,18 @@
   * [AlteonOS](/lib/oxidized/model/alteonos.rb)
 * Raisecom
   * [Raisecom](/lib/oxidized/model/raisecom.rb)
+* QTECH
+  * [QSW-2800, QSW-3400, QSW-3450, QSW-3500](/lib/oxidized/model/qtech.rb)
 * Quanta
   * [Quanta / VxWorks 6.6 (1.1.0.8)](/lib/oxidized/model/quantaos.rb)
 * Siklu
   * [EtherHaul](/lib/oxidized/model/siklu.rb)
 * SonicWALL
-   * [SonicOS](lib/oxidized/model/sonicos.rb)
+  * [SonicOS](/lib/oxidized/model/sonicos.rb)
 * SNR
   * [SNR-S300G, S2xxx, S3xxx, S4xxx](/lib/oxidized/model/dcnos.rb)
+* Speedtouch
+  * [Thomson Speedtouch](/lib/oxidized/model/speedtouch.rb)
 * Supermicro
   * [SSE-G2252, G2252P](/lib/oxidized/model/edgecos.rb)
   * [SSE-G48-TG4, G24-TG4](/lib/oxidized/model/aricentiss.rb)
@@ -189,6 +215,8 @@
   * [SBM-GEM-X2C, GEM-X2C+, GEM-X3S+, XEM-X10SM](/lib/oxidized/model/aricentiss.rb)
 * Symantec
   * [Blue Coat ProxySG / Security Gateway OS (SGOS)](/lib/oxidized/model/sgos.rb)
+* Telco Systems
+  * [Telco Systems T-Marc 3306](/lib/oxidized/model/telco.rb)
 * Trango Systems
   * [Trango](/lib/oxidized/model/trango.rb)
 * TPLink
@@ -200,12 +228,21 @@
   * [Edgeos](/lib/oxidized/model/edgeos.rb)
   * [EdgeSwitch](/lib/oxidized/model/edgeswitch.rb)
   * [AirFiber](/lib/oxidized/model/airfiber.rb)
+* VMWare
+  * [NSX Edge (configuration)](/lib/oxidized/model/nsxconfig.rb)
+  * [NSX Edge (firewall rules)](/lib/oxidized/model/nsxfirewall.rb)
 * Watchguard
   * [Fireware OS](/lib/oxidized/model/firewareos.rb)
 * Westell
   * [Westell 8178G, Westell 8266G](/lib/oxidized/model/weos.rb)
+* YAMAHA
+  * [YAMAHA NVR/RTX Series](/lib/oxidized/model/yamaha.rb)
 * Zhone
   * [Zhone (OLT and MX)](/lib/oxidized/model/zhoneolt.rb)
+* ZTE
+  * [C300&C320 OLT](/lib/oxidized/model/zteolt.rb)
 * Zyxel
   * [ZyNOS](/lib/oxidized/model/zynos.rb)
+  * [ZyNOS GS-series variant](/lib/oxidized/model/zynosgs.rb)
   * [NDMS](/lib/oxidized/model/ndms.rb)
+  * [1308](/lib/oxidized/model/zy1308.rb)

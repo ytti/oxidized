@@ -8,11 +8,15 @@ With the release of Cumulus Linux 3.4.0 the platform moved the routing daemon to
 
 A variable has been added to enable users running Cumulus Linux > 3.4.0 to target the new `frr` routing daemon.
 
+## NCLU
+It is possible to switch to [NCLU](https://docs.nvidia.com/networking-ethernet-software/cumulus-linux-44/System-Configuration/Network-Command-Line-Utility-NCLU/) as a configuration collecting method, by setting `cumulus_use_nclu` to true
+
 ### Example usage
 
 ```yaml
 vars:
   cumulus_routing_daemon: frr
+  cumulus_use_nclu: true
 ```
 
 Alternatively map a column for the  `cumulus_routing_daemon` variable.
@@ -35,6 +39,8 @@ And set the `cumulus_routing_daemon` variable in the `router.db` file.
 cumulus1:192.168.121.134:cumulus:cumulus:frr
 ```
 
-The default variable is `quagga` so existing installations continue to operate without interruption.
+The default value for `cumulus_routing_daemon` is `quagga` so existing installations continue to operate without interruption.
+
+The default value for `cumulus_use_nclu` is `false`, in case NCLU is not installed.
 
 Back to [Model-Notes](README.md)

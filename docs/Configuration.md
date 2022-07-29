@@ -16,6 +16,8 @@ input:
   debug: true
   ssh:
     secure: false
+  http:
+    ssl_verify: true
 ```
 
 ## Privileged mode
@@ -82,7 +84,7 @@ vars:
 
 ## Public Key Authentication with SSH
 
-Instead of password-based login, Oxidized can make use of key-based SSH authentication. 
+Instead of password-based login, Oxidized can make use of key-based SSH authentication.
 
 You can tell Oxidized to use one or more private keys globally, or specify the key to be used on a per-node basis. The latter can be done by mapping the `ssh_keys` variable through the active source.
 
@@ -122,7 +124,7 @@ Finally, multiple private keys can be specified as an array of file paths, such 
 
 ## SSH Proxy Command
 
-Oxidized can `ssh` through a proxy as well. To do so we just need to set `ssh_proxy` variable with the proxy host information and optionally set the `ssh_proxy_port` with the SSH port if it is not listening no port 22.
+Oxidized can `ssh` through a proxy as well. To do so we just need to set `ssh_proxy` variable with the proxy host information and optionally set the `ssh_proxy_port` with the SSH port if it is not listening on port 22.
 
 This can be provided on a per-node basis by mapping the proper fields from your source.
 
@@ -182,7 +184,11 @@ model: junos
 interval: 3600 #interval in seconds
 log: ~/.config/oxidized/log
 debug: false
-threads: 30
+threads: 30 # maximum number of threads
+# use_max_threads:
+# false - the number of threads is selected automatically based on the interval option, but not more than the maximum
+# true - always use the maximum number of threads
+use_max_threads: false
 timeout: 20
 retries: 3
 prompt: !ruby/regexp /^([\w.@-]+[#>]\s?)$/
@@ -236,13 +242,51 @@ groups:
     password: ubnt
 ```
 
-and add group mapping
+Model specific variables within groups
 
 ```yaml
-map:
-  model: 0
-  name: 1
-  group: 2
+groups:
+  foo:
+    models:
+      arista:
+        vars:
+          ssh_keys: "~/.ssh/id_rsa_foo_arista"
+      vyatta:
+        vars:
+          ssh_keys: "~/.ssh/id_rsa_foo_vyatta"
+  bar:
+    models:
+      routeros:
+        vars:
+          ssh_keys: "~/.ssh/id_rsa_bar_routeros"
+      vyatta:
+        vars:
+          ssh_keys: "~/.ssh/id_rsa_bar_vyatta"
+```
+
+For mapping multiple group values to a common name
+
+```yaml
+group_map:
+  alias1: groupA
+  alias2: groupA
+  alias3: groupB
+  alias4: groupB
+  aliasN: groupZ
+  ...
+```
+
+add group mapping to a source
+
+```yaml
+source:
+  ...
+  <source>:
+    ...
+    map:
+      model: 0
+      name: 1
+      group: 2
 ```
 
 For model specific credentials
@@ -306,5 +350,6 @@ resolve_dns: false
 ## Environment variables
 
 You can use some environment variables to change default root directories values.
+
 * `OXIDIZED_HOME` may be used to set oxidized configuration directory, which defaults to `~/.config/oxidized`
 * `OXIDIZED_LOGS` may be used to set oxidzied logs and crash directories root, which default to `~/.config/oxidized`

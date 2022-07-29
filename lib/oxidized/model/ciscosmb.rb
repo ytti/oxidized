@@ -26,6 +26,9 @@ class CiscoSMB < Oxidized::Model
   end
 
   cmd 'show version' do |cfg|
+    cfg.gsub! /.*Uptime for this control.*/, ''
+    cfg.gsub! /.*System restarted.*/, ''
+    cfg.gsub! /uptime is\ .+/, '<uptime removed>'
     comment cfg
   end
 
@@ -44,8 +47,18 @@ class CiscoSMB < Oxidized::Model
   end
 
   cfg :telnet, :ssh do
-    username /^User ?[nN]ame:/
-    password /^\r?Password:$/
+    username /User ?[nN]ame:/
+    password /^\r?Password:/
+
+    post_login do
+      if vars(:enable) == true
+        cmd 'enable'
+      elsif vars(:enable)
+        cmd 'enable', /^\r?Password:$/
+        cmd vars(:enable)
+      end
+    end
+
     post_login 'terminal datadump' # Disable pager
     post_login 'terminal width 0'
     post_login 'terminal len 0'

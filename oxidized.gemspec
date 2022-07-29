@@ -21,9 +21,9 @@ Gem::Specification.new do |s|
   s.add_runtime_dependency 'asetus',  '~> 0.1'
   s.add_runtime_dependency 'bcrypt_pbkdf', '~> 1.0'
   s.add_runtime_dependency 'ed25519', '~> 1.2'
-  s.add_runtime_dependency 'net-ssh', '~> 5'
+  s.add_runtime_dependency 'net-ssh', '~> 7.0.0.beta1'
   s.add_runtime_dependency 'net-telnet', '~> 0.2'
-  s.add_runtime_dependency 'rugged',  '~> 0.28'
+  s.add_runtime_dependency 'rugged',  '~> 0.28.0'
   s.add_runtime_dependency 'slop',    '~> 4.6'
 
   s.add_development_dependency 'bundler', '~> 2.0'
@@ -33,6 +33,6 @@ Gem::Specification.new do |s|
   s.add_development_dependency 'mocha',    '~> 1.1'
   s.add_development_dependency 'pry',      '~> 0'
   s.add_development_dependency 'rake',     '~> 10.0'
-  s.add_development_dependency 'rubocop',  '~> 0.71.0'
+  s.add_development_dependency 'rubocop',  '~> 0.81.0'
   s.add_development_dependency 'simplecov'
 end

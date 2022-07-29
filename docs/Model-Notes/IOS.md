@@ -1,6 +1,6 @@
 # Cisco IOS Switches
 
-## Include unsaved changes done on a device (commented) with each configuration.
+## Include unsaved changes done on a device (commented) with each configuration
 
 Create the file `~/.config/oxidized/model/ios.rb` with the following contents to extend the IOS model:
 
@@ -24,6 +24,42 @@ class IOS
   end
 
 end
+```
+
+## Support Lower Privilege Level (Readonly RBAC) User Accounts
+
+If Oxidized is configured to use a lower privilege level (readonly) local
+account, it may be necessary for it to run "show running-config view full"
+instead of "show running-config". In these cases, the ```ios_rbac: true```
+variable needs to be set either as a top-level variable or at the groups
+level.
+
+Below are examples showing how each option can be enabled in the oxidized config:
+
+### Top Level Variable
+
+```yaml
+vars:
+  ios_rbac: true
+```
+
+### Group Level Variable
+
+```yaml
+groups:
+  cisco:
+    vars:
+      ios_rbac: true
+source:
+  default: csv
+  csv:
+    file: /home/oxidized/.config/oxidized/router.db
+    delimiter: !ruby/regexp /:/
+    map:
+      name: 0
+      ip: 1
+      model: 2
+      group: 2
 ```
 
 Back to [Model-Notes](README.md)

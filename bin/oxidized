@@ -10,4 +10,6 @@ rescue StandardError => error
   warn error.to_s
   debug = Oxidized.config.debug rescue true
   raise if debug
+
+  exit 1
 end

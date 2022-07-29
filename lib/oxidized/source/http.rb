@@ -29,6 +29,7 @@ module Oxidized
           keys[key.to_sym] = node_var_interpolate string_navigate(node, want_position)
         end
         keys[:model] = map_model keys[:model] if keys.has_key? :model
+        keys[:group] = map_group keys[:group] if keys.has_key? :group
 
         # map node specific vars
         vars = {}
@@ -60,6 +61,9 @@ module Oxidized
       http = Net::HTTP.new(uri.host, uri.port)
       http.use_ssl = true if uri.scheme == 'https'
       http.verify_mode = OpenSSL::SSL::VERIFY_NONE unless @cfg.secure
+
+      # Add read_timeout to handle case of big list of nodes (default value is 60 seconds)
+      http.read_timeout = Integer(@cfg.read_timeout) if @cfg.has_key? "read_timeout"
 
       # map headers
       headers = {}

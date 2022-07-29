@@ -18,11 +18,17 @@ LineLength:
 Lint/AmbiguousRegexpLiteral:
   Enabled: false
 
+Lint/RaiseException:
+  Enabled: true
+
+Lint/StructNewOverride:
+  Enabled: true
+
 # Stick to verbose until https://bugs.ruby-lang.org/issues/10177 is closed.
 Style/PreferredHashMethods:
   EnforcedStyle: verbose
 
-Layout/AlignHash:
+Layout/HashAlignment:
   EnforcedHashRocketStyle: table
   EnforcedColonStyle: table
 
@@ -38,6 +44,15 @@ Style/FormatString:
 
 Style/FormatStringToken:
   EnforcedStyle: unannotated
+
+Style/HashEachMethods:
+  Enabled: true
+
+Style/HashTransformKeys:
+  Enabled: true
+
+Style/HashTransformValues:
+  Enabled: true
 
 Style/RescueModifier:
   Enabled: false

@@ -1,7 +1,7 @@
 class EOS < Oxidized::Model
   # Arista EOS model #
 
-  prompt /^.+[#>]\s?$/
+  prompt /^.+[#>]$/
 
   comment  '! '
 
@@ -15,6 +15,7 @@ class EOS < Oxidized::Model
     cfg.gsub! /(password \d+) (\S+).*/, '\\1 <secret hidden>'
     cfg.gsub! /^(enable secret).*/, '\\1 <configuration removed>'
     cfg.gsub! /^(tacacs-server key \d+).*/, '\\1 <configuration removed>'
+    cfg.gsub! /( {6}key) (\h+ 7) (\h+).*/, '\\1 <secret hidden>'
     cfg
   end
 

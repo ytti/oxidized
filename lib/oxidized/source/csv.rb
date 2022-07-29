@@ -32,6 +32,7 @@ module Oxidized
           keys[key.to_sym] = node_var_interpolate data[position]
         end
         keys[:model] = map_model keys[:model] if keys.has_key? :model
+        keys[:group] = map_group keys[:group] if keys.has_key? :group
 
         # map node specific vars
         vars = {}

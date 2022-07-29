@@ -10,7 +10,7 @@ class AOSW < Oxidized::Model
   # All IAPs connected to a Instant Controller will have the same config output. Only the controller needs to be monitored.
 
   comment  '# '
-  prompt /^\(?.+\)?\s[#>]/
+  prompt /^([\w\(:.@-]+(\)?\s?)[#>]\s?)$/
 
   cmd :all do |cfg|
     cfg.cut_both
@@ -39,7 +39,7 @@ class AOSW < Oxidized::Model
   end
 
   cmd 'show version' do |cfg|
-    cfg = cfg.each_line.reject { |line| line.match /(Switch|AP) uptime/i }
+    cfg = cfg.each_line.reject { |line| line.match(/(Switch|AP) uptime/i) || line.match(/Reboot Time and Cause/i) }
     rstrip_cfg comment cfg.join
   end
 
@@ -55,6 +55,11 @@ class AOSW < Oxidized::Model
 
   cmd 'show license' do |cfg|
     cfg = "" if cfg =~ /(Invalid input detected at '\^' marker|Parse error)/ # Don't show for unsupported devices (IAP and MAS)
+    rstrip_cfg comment cfg
+  end
+
+  cmd 'show license passphrase' do |cfg|
+    cfg = "" if cfg.match /(Invalid input detected at '\^' marker|Parse error)/ # Don't show for unsupported devices (IAP and MAS)
     rstrip_cfg comment cfg
   end
 
