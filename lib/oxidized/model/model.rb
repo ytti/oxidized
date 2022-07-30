@@ -16,7 +16,11 @@ module Oxidized
           klass.instance_variable_set '@prompt',  nil
         else # we're subclassing some existing model, take its variables
           instance_variables.each do |var|
-            klass.instance_variable_set var, instance_variable_get(var)
+            iv = instance_variable_get(var)
+            klass.instance_variable_set var, iv.dup
+            if var.to_s == "@cmd"
+              @cmd[:cmd] = iv[:cmd].dup
+            end
           end
         end
       end
@@ -97,7 +101,12 @@ module Oxidized
 
       def process_args_block(target, args, block)
         if args[:clear]
-          target.replace([block])
+          if block.class == Array
+            target.reject! { |k, _| k == block[0] }
+            target.push(block)
+          else
+            target.replace([block])
+          end
         else
           method = args[:prepend] ? :unshift : :push
           target.send(method, block)

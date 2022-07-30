@@ -242,13 +242,51 @@ groups:
     password: ubnt
 ```
 
-and add group mapping
+Model specific variables within groups
 
 ```yaml
-map:
-  model: 0
-  name: 1
-  group: 2
+groups:
+  foo:
+    models:
+      arista:
+        vars:
+          ssh_keys: "~/.ssh/id_rsa_foo_arista"
+      vyatta:
+        vars:
+          ssh_keys: "~/.ssh/id_rsa_foo_vyatta"
+  bar:
+    models:
+      routeros:
+        vars:
+          ssh_keys: "~/.ssh/id_rsa_bar_routeros"
+      vyatta:
+        vars:
+          ssh_keys: "~/.ssh/id_rsa_bar_vyatta"
+```
+
+For mapping multiple group values to a common name
+
+```yaml
+group_map:
+  alias1: groupA
+  alias2: groupA
+  alias3: groupB
+  alias4: groupB
+  aliasN: groupZ
+  ...
+```
+
+add group mapping to a source
+
+```yaml
+source:
+  ...
+  <source>:
+    ...
+    map:
+      model: 0
+      name: 1
+      group: 2
 ```
 
 For model specific credentials
