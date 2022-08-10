@@ -4,7 +4,7 @@
 # for the user that is used to fetch the configuration.
 
 class ADVA < Oxidized::Model
-  prompt /ADVA[\w\-]+[#>]\s?$/
+  prompt /\w+\-+[#>]\s?$/
   comment '# '
 
   cmd :secret do |cfg|
