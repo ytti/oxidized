@@ -239,6 +239,8 @@
   * [YAMAHA NVR/RTX Series](/lib/oxidized/model/yamaha.rb)
 * Zhone
   * [Zhone (OLT and MX)](/lib/oxidized/model/zhoneolt.rb)
+* ZPE
+  * [Nodegrid OS](/lib/oxidized/model/nodegrid.rb)
 * ZTE
   * [C300&C320 OLT](/lib/oxidized/model/zteolt.rb)
 * Zyxel
