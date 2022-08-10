@@ -16,7 +16,11 @@ module Oxidized
           klass.instance_variable_set '@prompt',  nil
         else # we're subclassing some existing model, take its variables
           instance_variables.each do |var|
-            klass.instance_variable_set var, instance_variable_get(var)
+            iv = instance_variable_get(var)
+            klass.instance_variable_set var, iv.dup
+            if var.to_s == "@cmd"
+              @cmd[:cmd] = iv[:cmd].dup
+            end
           end
         end
       end

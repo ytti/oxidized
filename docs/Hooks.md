@@ -179,12 +179,12 @@ Your AWS credentials should be stored in `~/.aws/credentials`.
 
 ## Hook type: slackdiff
 
-The `slackdiff` hook posts colorized config diffs to a [Slack](http://www.slack.com) channel of your choice. It only triggers for `post_store` events.
+The `slackdiff` hook posts colorized config diffs to a [Slack](https://www.slack.com) channel of your choice. It only triggers for `post_store` events.
 
-You will need to manually install the `slack-api` gem on your system:
+You will need to manually install the `slack-ruby-client` gem on your system:
 
 ```shell
-gem install slack-api
+gem install slack-ruby-client
 ```
 
 ### slackdiff hook configuration example
@@ -198,7 +198,7 @@ hooks:
     channel: "#network-changes"
 ```
 
-The token parameter is a "legacy token" and is generated [Here](https://api.slack.com/custom-integrations/legacy-tokens).
+The token parameter is a Slack API token that can be generated following [this tutorial](https://api.slack.com/tutorials/tracks/getting-a-token).  Until Slack stops supporting them, legacy tokens can also be used.
 
 Optionally you can disable snippets and post a formatted message, for instance linking to a commit in a git repo. Named parameters `%{node}`, `%{group}`, `%{model}` and `%{commitref}` are available.
 

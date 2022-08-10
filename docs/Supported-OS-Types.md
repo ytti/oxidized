@@ -6,6 +6,8 @@
   * [ACOS](/lib/oxidized/model/acos.rb)
 * Accedian Performance Elements (NIDs)
   * [AEN](/lib/oxidized/model/aen.rb)
+* Acme Packet
+  * [ACMEPACKET](/lib/oxidized/model/acmepacket.rb)
 * Adtran
   * [Total Access (AOS)](/lib/oxidized/model/adtran.rb)
 * Alcatel-Lucent
@@ -239,6 +241,8 @@
   * [YAMAHA NVR/RTX Series](/lib/oxidized/model/yamaha.rb)
 * Zhone
   * [Zhone (OLT and MX)](/lib/oxidized/model/zhoneolt.rb)
+* ZPE
+  * [Nodegrid OS](/lib/oxidized/model/nodegrid.rb)
 * ZTE
   * [C300&C320 OLT](/lib/oxidized/model/zteolt.rb)
 * Zyxel
