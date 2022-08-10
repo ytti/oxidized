@@ -142,6 +142,8 @@
   * [BladeSystem (Onboard Administrator)](/lib/oxidized/model/hpebladesystem.rb)
   * [MSA](/lib/oxidized/model/hpemsa.rb)
   * [MSM (Wireless Controller)](/lib/oxidized/model/hpmsm.rb)
+* H3C
+  * [S6520X](/lib/oxidized/model/h3c.rb)
 * Huawei
   * [VRP](/lib/oxidized/model/vrp.rb)
   * [SmartAX series](/lib/oxidized/model/smartax.rb)

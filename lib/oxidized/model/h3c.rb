@@ -26,6 +26,7 @@ class H3C < Oxidized::Model
 
   cmd 'display version' do |cfg|
     cfg = cfg.each_line.reject { |l| l.match /uptime/ }.join
+    cfg = cfg.each_line.reject { |l| l.match /Uptime is/ }.join
     comment cfg
   end
 
