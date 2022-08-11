@@ -48,7 +48,7 @@ class TMOS < Oxidized::Model
 
   cmd('[ -d "/config/zebos" ] && cat /config/zebos/*/ZebOS.conf') { |cfg| comment cfg }
 
-  cmd('cat /config/partitions/*/bigip.conf') { |cfg| comment cfg }
+  cmd('cat /config/partitions/*/bigip*.conf') { |cfg| comment cfg }
 
   cfg :ssh do
     exec true # don't run shell, run each command in exec channel
