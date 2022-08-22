@@ -221,6 +221,8 @@
   * [Telco Systems T-Marc 3306](/lib/oxidized/model/telco.rb)
 * Trango Systems
   * [Trango](/lib/oxidized/model/trango.rb)
+* TrueNAS
+  * [TrueNAS](/lib/oxidized/model/truenas.rb)
 * TPLink
   * [TPLink](/lib/oxidized/model/tplink.rb)
   * [TL-SL5428](/lib/oxidized/model/edgecos.rb)
