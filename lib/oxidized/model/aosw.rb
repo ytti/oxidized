@@ -25,7 +25,7 @@ class AOSW < Oxidized::Model
     cfg.gsub!(/ sha (\S+)/, ' sha <secret removed>')
     cfg.gsub!(/ des (\S+)/, ' des <secret removed>')
     cfg.gsub!(/mobility-manager (\S+) user (\S+) (\S+)/, 'mobility-manager \1 user \2 <secret removed>')
-    cfg.gsub!(/cppm username (\S+) password (\S+)/, 'cppm userneme \1 password <secret removed>')
+    cfg.gsub!(/cppm username (\S+) password (\S+)/, 'cppm username \1 password <secret removed>')
     cfg.gsub!(/mgmt-user (\S+) (root|guest-provisioning|network-operations|read-only|location-api-mgmt) (\S+)$/, 'mgmt-user \1 \2 <secret removed>') # MAS & Wireless Controler
     cfg.gsub!(/mgmt-user (\S+) (\S+)( (read-only|guest-mgmt))?$/, 'mgmt-user \1 <secret removed> \3') # IAP
     # MAS format: mgmt-user <username> <accesslevel> <password hash>
