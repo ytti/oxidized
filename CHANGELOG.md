@@ -6,6 +6,11 @@ The format is based on [Keep a Changelog](https://keepachangelog.com/en/1.1.0/).
 
 ## [Unreleased]
 
+- model for Acme Packet devices (@ha36d)
+- Cumulus: added option to use NCLU as ia collecting method
+- Update net-ssh to 7.0.0.beta1 (using `append_all_supported_algorithms: true`)
+- Allow (config) (vlan-####) confirmation (y/n) and sftp questions in procurve prompt (@sorano)
+
 ### Added
 
 - Extend http source configurations to include read_timeout value
@@ -19,7 +24,16 @@ The format is based on [Keep a Changelog](https://keepachangelog.com/en/1.1.0/).
 - Added docs for Dell/EMC Networking OS10 devices (@davromaniak)
 - model for Zyxel 1308 OLTs (@baldoarturo)
 - model for Linksys SRW switches (@glance-)
+- Added exec hook variables to retrieve verbose node's failure reason and type
 - model for Cambium ePMP radios (@martydingo)
+- Added new `group_map` configuration option (@mjbnz)
+- Dockerfile rebased to phusion/baseimage-docker focal-1.2.0
+- model for Lenovo Network OS (@seros1521)
+- new option: use_max_threads
+- model for ADVA devices (@stephrdev)
+- model for YAMAHA NVR/RTX Series (@bluekirin55)
+- model for ZPE Nodegrid OS (@euph333)
+- model for H3C switches
 - extended mysql source configuration to include tls options (@glaubway)
 
 ### Changed
@@ -42,14 +56,27 @@ The format is based on [Keep a Changelog](https://keepachangelog.com/en/1.1.0/).
 - xmppdiff now persists its connection to the XMPP server and MUC (@jplitza)
 - routeros no longer backups infos on available updates (@jplitza)
 - avoid /humidity hardware field in tmos (F5) to be reported (@albsga)
+- read all configurations in partition folder for tmos (F5) (@dalamanster)
 - version information or OPNsense and PFsense models is now included as XML comments (@pv2b)
 - netscaler, backup all partitions (@smallsam)
 - only runs SSH proxy commands if the ssh_proxy configuration item has been defined (@jameskirsop)
 - updated vrp.rb to correctly parse huawei devices
 - asa: information about the configuration change time is deleted
+- Extended groups configuration to support models vars within a group (@mjbnz)
+- Extended `remote_repo` configuration to allow repo specific ssh keys (@mjbnz)
+- sonicos: added scrubbing for hashed values (@televat0rs)
+- nxos: Additional scrubbing for nxos device passwords (@derekivey)
+- nxos: Fix password match to avoid stripping out the user role. (@derekivey)
+- OpenBSD: Include bgpd, ospfd and ospf6d files (@woopstar)
+- scrub often changing values in junos license output (@matejv)
+- comware: support for enable(super) login password added (@delvta)
+- use slack-ruby-client instead of slack-api for slackdiff hook (@0xmc)
+- ios: Add support for RBAC in IOS model (@jameskirsop)
+- hide unsupported-transceiver license key in Arista EOS (@davidc)
 
 ### Fixed
 
+- fixed on issue where Oxidized could not pull config from Opengear devices #1899 (@rikard0)
 - fixed an issue where Oxidized could not pull config from XOS-devices operating in stacked mode (@DarkCatapulter)
 - fixed an issue where Oxidized could not pull config from XOS-devices that have not saved their configuration (@DarkCatapulter)
 - improved scrubbing of show chassis in ironware model (@michaelpsomiadis)
@@ -58,13 +85,20 @@ The format is based on [Keep a Changelog](https://keepachangelog.com/en/1.1.0/).
 - filter next periodic save schedule time in xos model output (@sargon)
 - Fix when auto-saved is configured on xos switches  (@trappiz)
 - fixed ArubaOS-CX enviroment/system inconsistent values #2297 (@raunz)
+- further improvements to ArubaOS-CX environment values (@olemyhre) 
 - Update AirFiber prompt regex (@murrant)
 - System time and running time are now stripped from tplink model output (@spike77453)
 - &lt;?xml... line is no longer improperly stripped from OPNsense and PFsense backups (@pv2b)
 - fixed an issue where Oxidized timeouts in Brocade ICX-series devices (@piterpunk)
 - fixed an issue where EOS config was truncated. Fixes #2038 (@jake2184 @fhibler)
 - fixed missing output from routeros version command (@mjbnz)
+- stopped `clear: true` from removing all commands (@mjbnz)
 - Updated fastiron enable password prompt regex (@pepperoni-pi)
+- fixed an issue where the pfsense model would not report errors in case it was unable to download the configuration e.g. due to insufficient permissions
+- added a missing check for whether to send `enable` commands to Adtran devices (@repnop)
+- fixed an issue where ADVA devices with a configured prompt != `ADVA-->` couldn't be polled (@momorientes)
+- ensure local time and system up time are filtered for ADVA devices (@stephrdev)
+- fixed an issue with FortiOS that didn't accurately match `set ca` lines #2567 (@neilschelly)
 
 ## [0.28.0 - 2020-05-18]
 

@@ -53,7 +53,9 @@ class Aoscx < Oxidized::Model
 
   cmd 'show environment' do |cfg|
     cfg.gsub! /^(LC.*\s+)\d+\s+$/, '\\1<hidden>'
+    cfg.gsub! /^(\d\/\d\/\d.*\s+)\d+\s+$/, '\\1<hidden>'
     cfg.gsub! /^(\d+\/\S+\s+\S+\s+)\d+\.\d+\s+C(.*)/, '\\1<hidden>\\2'
+    cfg.gsub! /^(LC.*\s+)\d+\.\d+\s+(C.*)$/, '\\1 <hidden> \\2'
     comment cfg
   end
 

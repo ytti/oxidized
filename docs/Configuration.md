@@ -184,7 +184,11 @@ model: junos
 interval: 3600 #interval in seconds
 log: ~/.config/oxidized/log
 debug: false
-threads: 30
+threads: 30 # maximum number of threads
+# use_max_threads:
+# false - the number of threads is selected automatically based on the interval option, but not more than the maximum
+# true - always use the maximum number of threads
+use_max_threads: false
 timeout: 20
 retries: 3
 prompt: !ruby/regexp /^([\w.@-]+[#>]\s?)$/
@@ -238,13 +242,51 @@ groups:
     password: ubnt
 ```
 
-and add group mapping
+Model specific variables within groups
 
 ```yaml
-map:
-  model: 0
-  name: 1
-  group: 2
+groups:
+  foo:
+    models:
+      arista:
+        vars:
+          ssh_keys: "~/.ssh/id_rsa_foo_arista"
+      vyatta:
+        vars:
+          ssh_keys: "~/.ssh/id_rsa_foo_vyatta"
+  bar:
+    models:
+      routeros:
+        vars:
+          ssh_keys: "~/.ssh/id_rsa_bar_routeros"
+      vyatta:
+        vars:
+          ssh_keys: "~/.ssh/id_rsa_bar_vyatta"
+```
+
+For mapping multiple group values to a common name
+
+```yaml
+group_map:
+  alias1: groupA
+  alias2: groupA
+  alias3: groupB
+  alias4: groupB
+  aliasN: groupZ
+  ...
+```
+
+add group mapping to a source
+
+```yaml
+source:
+  ...
+  <source>:
+    ...
+    map:
+      model: 0
+      name: 1
+      group: 2
 ```
 
 For model specific credentials

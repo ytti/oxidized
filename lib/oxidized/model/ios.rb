@@ -105,15 +105,19 @@ class IOS < Oxidized::Model
     comment cfg
   end
 
-  cmd 'show running-config' do |cfg|
-    cfg = cfg.each_line.to_a[3..-1]
-    cfg = cfg.reject { |line| line.match /^ntp clock-period / }.join
-    cfg = cfg.each_line.reject { |line| line.match /^! (Last|No) configuration change (at|since).*/ unless line =~ /\d+\sby\s\S+$/ }.join
-    cfg.gsub! /^Current configuration : [^\n]*\n/, ''
-    cfg.gsub! /^ tunnel mpls traffic-eng bandwidth[^\n]*\n*(
-                  (?: [^\n]*\n*)*
-                  tunnel mpls traffic-eng auto-bw)/mx, '\1'
-    cfg
+  post do
+    cmd_line = 'show running-config'
+    cmd_line += ' view full' if vars(:ios_rbac)
+    cmd cmd_line do |cfg|
+      cfg = cfg.each_line.to_a[3..-1]
+      cfg = cfg.reject { |line| line.match /^ntp clock-period / }.join
+      cfg = cfg.each_line.reject { |line| line.match /^! (Last|No) configuration change (at|since).*/ unless line =~ /\d+\sby\s\S+$/ }.join
+      cfg.gsub! /^Current configuration : [^\n]*\n/, ''
+      cfg.gsub! /^ tunnel mpls traffic-eng bandwidth[^\n]*\n*(
+                    (?: [^\n]*\n*)*
+                    tunnel mpls traffic-eng auto-bw)/mx, '\1'
+      cfg
+    end
   end
 
   cfg :telnet do

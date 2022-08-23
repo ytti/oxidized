@@ -6,6 +6,8 @@
   * [ACOS](/lib/oxidized/model/acos.rb)
 * Accedian Performance Elements (NIDs)
   * [AEN](/lib/oxidized/model/aen.rb)
+* Acme Packet
+  * [ACMEPACKET](/lib/oxidized/model/acmepacket.rb)
 * Adtran
   * [Total Access (AOS)](/lib/oxidized/model/adtran.rb)
 * Alcatel-Lucent
@@ -142,6 +144,8 @@
   * [BladeSystem (Onboard Administrator)](/lib/oxidized/model/hpebladesystem.rb)
   * [MSA](/lib/oxidized/model/hpemsa.rb)
   * [MSM (Wireless Controller)](/lib/oxidized/model/hpmsm.rb)
+* H3C
+  * [S6520X](/lib/oxidized/model/h3c.rb)
 * Huawei
   * [VRP](/lib/oxidized/model/vrp.rb)
   * [SmartAX series](/lib/oxidized/model/smartax.rb)
@@ -152,6 +156,8 @@
   * [ScreenOS (Netscreen)](/lib/oxidized/model/screenos.rb)
 * LANCOM Systems GmbH
   * [LCOS](/lib/oxidized/model/lancom.rb)
+* Lenovo
+  * [Lenovo Network OS](/lib/oxidized/model/lenovonos.rb)
 * Linkys
   * [SRW](/lib/oxidized/model/linksyssrw.rb)
 * Linuxgeneric
@@ -231,8 +237,12 @@
   * [Fireware OS](/lib/oxidized/model/firewareos.rb)
 * Westell
   * [Westell 8178G, Westell 8266G](/lib/oxidized/model/weos.rb)
+* YAMAHA
+  * [YAMAHA NVR/RTX Series](/lib/oxidized/model/yamaha.rb)
 * Zhone
   * [Zhone (OLT and MX)](/lib/oxidized/model/zhoneolt.rb)
+* ZPE
+  * [Nodegrid OS](/lib/oxidized/model/nodegrid.rb)
 * ZTE
   * [C300&C320 OLT](/lib/oxidized/model/zteolt.rb)
 * Zyxel
