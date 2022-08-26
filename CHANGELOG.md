@@ -35,6 +35,7 @@ The format is based on [Keep a Changelog](https://keepachangelog.com/en/1.1.0/).
 - model for YAMAHA NVR/RTX Series (@bluekirin55)
 - model for ZPE Nodegrid OS (@euph333)
 - model for H3C switches
+- extended mysql source configuration to include tls options (@glaubway)
 
 ### Changed
 
