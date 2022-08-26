@@ -98,6 +98,7 @@ The format is based on [Keep a Changelog](https://keepachangelog.com/en/1.1.0/).
 - fixed an issue where ADVA devices with a configured prompt != `ADVA-->` couldn't be polled (@momorientes)
 - ensure local time and system up time are filtered for ADVA devices (@stephrdev)
 - fixed an issue with FortiOS that didn't accurately match `set ca` lines #2567 (@neilschelly)
+- removed unwanted current date from slxos model
 
 ## [0.28.0 - 2020-05-18]
 
