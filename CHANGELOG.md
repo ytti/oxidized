@@ -37,6 +37,7 @@ The format is based on [Keep a Changelog](https://keepachangelog.com/en/1.1.0/).
 - model for ZPE Nodegrid OS (@euph333)
 - model for H3C switches
 - extended mysql source configuration to include tls options (@glaubway)
+- updated rugged in gemspec for ruby 3.0 support (@firefishy)
 
 ### Changed
 
