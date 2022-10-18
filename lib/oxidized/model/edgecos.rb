@@ -23,6 +23,7 @@ class EdgeCOS < Oxidized::Model
 
   cmd 'show running-config' do |cfg|
     # Remove "building running-config, please wait..." message
+    cfg.gsub! /^Building running configuration.*\n/, ''
     cfg.cut_head
   end
 
@@ -33,6 +34,7 @@ class EdgeCOS < Oxidized::Model
   end
 
   cmd 'show version' do |cfg|
+    cfg.gsub! /^.*\suptime is.*\n/i, ''
     comment cfg
   end
 
@@ -56,8 +58,16 @@ class EdgeCOS < Oxidized::Model
   end
 
   cfg :telnet, :ssh do
+    post_login do
+      if vars(:enable) == true
+        send "enable\n"
+      end
+    end
     post_login 'terminal length 0'
     post_login 'terminal width 300'
+    if vars(:enable) == true
+      pre_logout 'exit'
+    end
     pre_logout 'exit'
   end
 end
