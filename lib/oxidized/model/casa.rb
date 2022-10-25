@@ -10,6 +10,7 @@ class Casa < Oxidized::Model
     cfg.gsub! /^(console-password encrypted) \S+/, '\\1 <secret hidden>'
     cfg.gsub! /^(password encrypted) \S+/, '\\1 <secret hidden>'
     cfg.gsub! /^(tacacs-server key) \S+/, '\\1 <secret hidden>'
+    cfg.gsub! /^(  ip rip authentication secret) \S+/, '\\1 <secret hidden>'
     cfg
   end
 
