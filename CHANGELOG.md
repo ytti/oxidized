@@ -106,6 +106,7 @@ The format is based on [Keep a Changelog](https://keepachangelog.com/en/1.1.0/).
 - ensure local time and system up time are filtered for ADVA devices (@stephrdev)
 - fixed an issue with FortiOS that didn't accurately match `set ca` lines #2567 (@neilschelly)
 - removed unwanted current date from slxos model
+- fixed secret handling for rip authentication in casa model #2648 (@grahamjohnston)
 
 ## [0.28.0 - 2020-05-18]
 
