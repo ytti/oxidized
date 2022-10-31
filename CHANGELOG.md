@@ -11,8 +11,10 @@ The format is based on [Keep a Changelog](https://keepachangelog.com/en/1.1.0/).
 - Cumulus: added option to use NCLU as ia collecting method
 - Update net-ssh to 7.0.0.beta1 (using `append_all_supported_algorithms: true`)
 - Allow (config) (vlan-####) confirmation (y/n) and sftp questions in procurve prompt (@sorano)
+- fix: allow Netgear devices to finish SSH session correctly
 - More pager handling for MIS5030Q (@glance-)
 - Update logrotate example to allow logrotate service to start before any logs exist
+- Mask NX-OS tacacs+ host keys (@0x4c6565)
 
 ### Added
 
@@ -104,6 +106,7 @@ The format is based on [Keep a Changelog](https://keepachangelog.com/en/1.1.0/).
 - ensure local time and system up time are filtered for ADVA devices (@stephrdev)
 - fixed an issue with FortiOS that didn't accurately match `set ca` lines #2567 (@neilschelly)
 - removed unwanted current date from slxos model
+- fixed secret handling for rip authentication in casa model #2648 (@grahamjohnston)
 
 ## [0.28.0 - 2020-05-18]
 
