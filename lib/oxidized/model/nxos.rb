@@ -12,6 +12,7 @@ class NXOS < Oxidized::Model
     cfg.gsub! /^(snmp-server user (\S+) (\S+) auth (\S+)) (\S+) (priv) (\S+)/, '\\1 <configuration removed> '
     cfg.gsub! /(password \d+) (\S+)/, '\\1 <secret hidden>'
     cfg.gsub! /^(radius-server key).*/, '\\1 <secret hidden>'
+    cfg.gsub! /^(tacacs-server host .+ key(?: \d+)?) \S+/, '\\1 <secret hidden>'
     cfg
   end
 

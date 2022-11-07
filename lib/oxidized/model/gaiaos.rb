@@ -21,6 +21,12 @@ class GaiaOS < Oxidized::Model
     cfg
   end
 
+  # check for vsx / multiple context
+  cmd 'show vsx' do |cfg|
+    @is_vsx = cfg.include? 'VSX Enabled'
+    Oxidized.logger.debug cfg
+  end
+
   cmd 'show asset all' do |cfg|
     comment cfg
   end
@@ -29,9 +35,40 @@ class GaiaOS < Oxidized::Model
     comment cfg
   end
 
-  cmd 'show configuration' do |cfg|
-    cfg.gsub! /^# Exported by \S+ on .*/, '# '
-    cfg
+  post do
+    if @is_vsx
+      multiple_context
+    else
+      single_context
+    end
+  end
+
+  def single_context
+    Oxidized.logger.debug 'Single context tasks'
+    cmd 'show configuration' do |cfg|
+      cfg.gsub! /^# Exported by \S+ on .*/, '# '
+      cfg
+    end
+  end
+
+  def multiple_context
+    Oxidized.logger.debug 'Multi context tasks'
+    cmd 'show virtual-system all' do |systems|
+      vs_items = systems.scan(/^(?<VSID>\d+)\s+(?<VSNAME>.*[^\s])/)
+      allcfg = ''
+      vs_items.each do |item|
+        allcfg += "\n\n\n#--------======== [ VS #{item[0]} - #{item[1]} ] ========--------\n\n"
+        allcfg += "set virtual-system #{item[0]}\n\n"
+        cmd "set virtual-system #{item[0]}" do |vs|
+          Oxidized.logger.debug vs
+          cmd 'show configuration' do |vscfg|
+            vscfg.gsub! /^# Exported by \S+ on .*/, '# '
+            allcfg += vscfg
+          end
+        end
+      end
+      allcfg
+    end
   end
 
   cfg :ssh do
