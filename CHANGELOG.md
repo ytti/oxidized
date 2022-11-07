@@ -33,6 +33,7 @@ The format is based on [Keep a Changelog](https://keepachangelog.com/en/1.1.0/).
 - model for Linksys SRW switches (@glance-)
 - Added exec hook variables to retrieve verbose node's failure reason and type
 - model for Cambium ePMP radios (@martydingo)
+- Added GaiaOS support for virtual systems (@rwxd)
 - Added new `group_map` configuration option (@mjbnz)
 - Dockerfile rebased to phusion/baseimage-docker focal-1.2.0
 - model for Lenovo Network OS (@seros1521)
