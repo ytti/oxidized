@@ -9,7 +9,7 @@ The format is based on [Keep a Changelog](https://keepachangelog.com/en/1.1.0/).
 - model for TrueNAS devices (@neilschelly)
 - model for Acme Packet devices (@ha36d)
 - Cumulus: added option to use NCLU as ia collecting method
-- Update net-ssh to 7.0.0.beta1 (using `append_all_supported_algorithms: true`)
+- Update net-ssh to 7.0.1 (using `append_all_supported_algorithms: true`)
 - Allow (config) (vlan-####) confirmation (y/n) and sftp questions in procurve prompt (@sorano)
 - fix: allow Netgear devices to finish SSH session correctly
 - More pager handling for MIS5030Q (@glance-)
