@@ -16,6 +16,7 @@ The format is based on [Keep a Changelog](https://keepachangelog.com/en/1.1.0/).
 - Update logrotate example to allow logrotate service to start before any logs exist
 - Mask NX-OS tacacs+ host keys (@0x4c6565)
 - airfiber: prompt matching made case-insensitive to support AF5xHD (@noaheroufus)
+- Cumulus: add support for dhcp-relay (@ohai89)
 
 ### Added
 
