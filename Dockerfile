@@ -9,6 +9,7 @@ RUN apt-get -yq update \
 
 # dependencies for hooks
 RUN gem install aws-sdk slack-ruby-client xmpp4r cisco_spark --no-document
+RUN gem install rugged -- --with-ssh
 
 # dependencies for sources
 RUN gem install gpgme sequel sqlite3 mysql2 pg --no-document
