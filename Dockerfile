@@ -35,8 +35,10 @@ WORKDIR /
 RUN rm -rf /tmp/oxidized
 RUN apt-get -yq --purge autoremove ruby-dev pkg-config make cmake ruby-bundler libssl-dev libssh2-1-dev libicu-dev libsqlite3-dev libmysqlclient-dev libpq-dev zlib1g-dev
 
-# Necessary for new git versions to run git commands in this directory as root
-RUN git config --global --add safe.directory /root/.config/oxidized/configs/devices.git
+# add non-privileged user
+ARG UID=30000
+ARG GID=$UID
+RUN groupadd -g "${GID}" -r oxidized && useradd -u "${UID}" -r -m -d /home/oxidized -g oxidized oxidized
 
 # add runit services
 COPY extra/oxidized.runit /etc/service/oxidized/run
