@@ -3,7 +3,7 @@ class TrueNAS < Oxidized::Model
 
   cmd('uname -a') { |cfg| comment cfg }
   cmd('cat /etc/version') { |cfg| comment cfg }
-  cmd('sqlite3 /data/freenas-v1.db .dump') do |cfg|
+  cmd('sqlite3 "file:///data/freenas-v1.db?mode=ro&immutable=1" .dump') do |cfg|
     cfg.lines.reject { |line|
       line.match(/^INSERT INTO storage_replication /) or
       line.match(/^INSERT INTO system_alert /)

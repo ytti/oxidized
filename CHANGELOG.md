@@ -88,6 +88,7 @@ The format is based on [Keep a Changelog](https://keepachangelog.com/en/1.1.0/).
 
 ### Fixed
 
+- fixed an issue with the TrueNAS model where the configuration would come up blank when TrueNAS was also using it. (@neilschelly)
 - fixed on issue where Oxidized could not pull config from Opengear devices #1899 (@rikard0)
 - fixed an issue where Oxidized could not pull config from XOS-devices operating in stacked mode (@DarkCatapulter)
 - fixed an issue where Oxidized could not pull config from XOS-devices that have not saved their configuration (@DarkCatapulter)

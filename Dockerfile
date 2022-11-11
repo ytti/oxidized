@@ -35,6 +35,9 @@ WORKDIR /
 RUN rm -rf /tmp/oxidized
 RUN apt-get -yq --purge autoremove ruby-dev pkg-config make cmake ruby-bundler libssl-dev libssh2-1-dev libicu-dev libsqlite3-dev libmysqlclient-dev libpq-dev zlib1g-dev
 
+# Necessary for new git versions to run git commands in this directory as root
+RUN git config --global --add safe.directory /root/.config/oxidized/configs/devices.git
+
 # add runit services
 COPY extra/oxidized.runit /etc/service/oxidized/run
 COPY extra/auto-reload-config.runit /etc/service/auto-reload-config/run
