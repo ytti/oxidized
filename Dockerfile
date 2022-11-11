@@ -16,6 +16,9 @@ RUN gem install gpgme sequel sqlite3 mysql2 pg --no-document
 # dependencies for inputs
 RUN gem install net-tftp net-http-persistent mechanize --no-document
 
+# https://github.com/ytti/oxidized/issues/2217#issuecomment-1288471096
+RUN gem install --no-document rugged -- --with-ssh
+
 # build and install oxidized
 COPY . /tmp/oxidized/
 WORKDIR /tmp/oxidized
