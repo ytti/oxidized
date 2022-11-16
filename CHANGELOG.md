@@ -17,6 +17,7 @@ The format is based on [Keep a Changelog](https://keepachangelog.com/en/1.1.0/).
 - Mask NX-OS tacacs+ host keys (@0x4c6565)
 - airfiber: prompt matching made case-insensitive to support AF5xHD (@noaheroufus)
 - Cumulus: add support for dhcp-relay (@ohai89)
+- Add support for no enable password set on ironware
 
 ### Added
 
@@ -51,7 +52,7 @@ The format is based on [Keep a Changelog](https://keepachangelog.com/en/1.1.0/).
 
 - Better manage of the enable mode in edgeswitch.rb (@agabellini)
 - Adds paging support to Enterasys B3/C3 (@piterpunk)
-- Allows "Username" as username prompt in Brocade ICX-series devices (@piterpunk) 
+- Allows "Username" as username prompt in Brocade ICX-series devices (@piterpunk)
 - Add show-sensitive flag on export command on Mikrotik RouterOS when remove_secret is off (@kedare)
 - rubocop dependency now ~> 0.81.0, the last one with ruby 2.3 support
 - change pfSense secret scrubbing to handle new format in 2.4.5+
@@ -98,7 +99,7 @@ The format is based on [Keep a Changelog](https://keepachangelog.com/en/1.1.0/).
 - filter next periodic save schedule time in xos model output (@sargon)
 - Fix when auto-saved is configured on xos switches  (@trappiz)
 - fixed ArubaOS-CX enviroment/system inconsistent values #2297 (@raunz)
-- further improvements to ArubaOS-CX environment values (@olemyhre) 
+- further improvements to ArubaOS-CX environment values (@olemyhre)
 - Update AirFiber prompt regex (@murrant)
 - System time and running time are now stripped from tplink model output (@spike77453)
 - &lt;?xml... line is no longer improperly stripped from OPNsense and PFsense backups (@pv2b)
