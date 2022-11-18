@@ -22,6 +22,7 @@ The format is based on [Keep a Changelog](https://keepachangelog.com/en/1.1.0/).
 ### Added
 
 - install rugged with ssh in Dockerfile (@agrevtcev)
+- allow to run as non-root user in Docker (@agrevtcev)
 - Extend http source configurations to include read_timeout value
 - model for bdcom-based fiberstore switches (@candlerb)
 - enterasys800 model for enterasys 800-series fe/ge switches (@javichumellamo)
