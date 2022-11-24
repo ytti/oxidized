@@ -43,7 +43,7 @@ module Oxidized
       out = String(' ')
       @telnet.puts(cmd_str)
       @telnet.oxidized_expect(timeout: @timeout, expect: expect, out: out)
-      return out
+      out
     end
 
     def send(data)
@@ -112,9 +112,7 @@ class Net::Telnet
         # match is a regexp object. we need to return that for logins to work.
         match = expects.find { |re| line.match re }
         # stomp on the out string object if we have one. (thus we were called by cmd?)
-        if options[:out]
-          options[:out].replace(line)
-        end
+        options[:out].replace(line) if options[:out]
         return match if match
       end
     end
