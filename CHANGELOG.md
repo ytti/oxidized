@@ -18,6 +18,7 @@ The format is based on [Keep a Changelog](https://keepachangelog.com/en/1.1.0/).
 - airfiber: prompt matching made case-insensitive to support AF5xHD (@noaheroufus)
 - Cumulus: add support for dhcp-relay (@ohai89)
 - Add support for no enable password set on ironware
+- change pfSense secret scrubbing to keep config as well-formed XML
 
 ### Added
 
