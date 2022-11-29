@@ -6,6 +6,8 @@
   * [ACOS](/lib/oxidized/model/acos.rb)
 * Accedian Performance Elements (NIDs)
   * [AEN](/lib/oxidized/model/aen.rb)
+* Acme Packet
+  * [ACMEPACKET](/lib/oxidized/model/acmepacket.rb)
 * Adtran
   * [Total Access (AOS)](/lib/oxidized/model/adtran.rb)
 * Alcatel-Lucent
@@ -36,6 +38,15 @@
 * Avaya
   * [VOSS (VSP Operating System Software)](/lib/oxidized/model/voss.rb)
   * [BOSS (Baystack Operating System Software)](/lib/oxidized/model/boss.rb)
+* BDCOM
+  * [S2200 series](/lib/oxidized/model/bdcom.rb)
+  * [S2200PB series](/lib/oxidized/model/bdcom.rb)
+  * [S2200-B series](/lib/oxidized/model/bdcom.rb)
+  * [S2500-B series](/lib/oxidized/model/bdcom.rb)
+  * [S2500-C series](/lib/oxidized/model/bdcom.rb)
+  * [S2500PB series](/lib/oxidized/model/bdcom.rb)
+  * [S2500-P series](/lib/oxidized/model/bdcom.rb)
+  * [S2900 series](/lib/oxidized/model/bdcom.rb)
 * Brocade
   * [FabricOS](/lib/oxidized/model/fabricos.rb)
   * [FastIron](/lib/oxidized/model/fastiron.rb)
@@ -115,6 +126,7 @@
 * Fiberstore
   * [S3800](/lib/oxidized/model/gcombnps.rb)
   * [S3900](/lib/oxidized/model/edgecos.rb)
+  * [S3900-R](/lib/oxidized/model/bdcom.rb)
   * [S5800](/lib/oxidized/model/cnos.rb)
   * [S5850](/lib/oxidized/model/cnos.rb)
 * Firebrick
@@ -142,6 +154,8 @@
   * [BladeSystem (Onboard Administrator)](/lib/oxidized/model/hpebladesystem.rb)
   * [MSA](/lib/oxidized/model/hpemsa.rb)
   * [MSM (Wireless Controller)](/lib/oxidized/model/hpmsm.rb)
+* H3C
+  * [S6520X](/lib/oxidized/model/h3c.rb)
 * Huawei
   * [VRP](/lib/oxidized/model/vrp.rb)
   * [SmartAX series](/lib/oxidized/model/smartax.rb)
@@ -217,6 +231,8 @@
   * [Telco Systems T-Marc 3306](/lib/oxidized/model/telco.rb)
 * Trango Systems
   * [Trango](/lib/oxidized/model/trango.rb)
+* TrueNAS
+  * [TrueNAS](/lib/oxidized/model/truenas.rb)
 * TPLink
   * [TPLink](/lib/oxidized/model/tplink.rb)
   * [TL-SL5428](/lib/oxidized/model/edgecos.rb)
@@ -237,6 +253,8 @@
   * [YAMAHA NVR/RTX Series](/lib/oxidized/model/yamaha.rb)
 * Zhone
   * [Zhone (OLT and MX)](/lib/oxidized/model/zhoneolt.rb)
+* ZPE
+  * [Nodegrid OS](/lib/oxidized/model/nodegrid.rb)
 * ZTE
   * [C300&C320 OLT](/lib/oxidized/model/zteolt.rb)
 * Zyxel

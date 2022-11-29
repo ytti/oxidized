@@ -4,7 +4,7 @@
 # for the user that is used to fetch the configuration.
 
 class ADVA < Oxidized::Model
-  prompt /ADVA[\w\-]+[#>]\s?$/
+  prompt /\w+\-+[#>]\s?$/
   comment '# '
 
   cmd :secret do |cfg|
@@ -50,11 +50,11 @@ class ADVA < Oxidized::Model
     ports.each do |port|
       port_command = 'show ' + port[2] + '-port ' + port[1]
 
-      ports_output << cmd(port_command) { |cfg|
+      ports_output << cmd(port_command) do |cfg|
         cfg = "COMMAND: " + port_command + "\n\n" + cfg
         cfg = comment cfg
         "\n\n" + cfg
-      }
+      end
     end
 
     ports_output

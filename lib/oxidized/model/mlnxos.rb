@@ -10,7 +10,9 @@ class MLNXOS < Oxidized::Model
 
   cmd :all do |cfg|
     cfg.gsub! /\[\?1h=\r/, '' # Pager Handling
+    cfg.gsub! /\[24;1H/, '' # Pager Handling
     cfg.gsub! /\r\[K/, '' # Pager Handling
+    cfg.gsub! /\[K/, '' # Pager Handling
     cfg.gsub! /\s/, '' # Linebreak Handling
     cfg.gsub! /^CPU load averages:\s.+/, '' # Omit constantly changing CPU info
     cfg.gsub! /^System memory:\s.+/, '' # Omit constantly changing memory info

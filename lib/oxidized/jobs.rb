@@ -5,13 +5,13 @@ module Oxidized
     attr_accessor :interval, :max, :want
 
     def initialize(max, use_max_threads, interval, nodes)
-      @max       = max
+      @max = max
       @use_max_threads = use_max_threads
       # Set interval to 1 if interval is 0 (=disabled) so we don't break
       # the 'ceil' function
-      @interval  = interval.zero? ? 1 : interval
-      @nodes     = nodes
-      @last      = Time.now.utc
+      @interval = interval.zero? ? 1 : interval
+      @nodes = nodes
+      @last = Time.now.utc
       @durations = Array.new @nodes.size, AVERAGE_DURATION
       duration AVERAGE_DURATION
       super()
@@ -34,11 +34,11 @@ module Oxidized
     end
 
     def new_count
-      if @use_max_threads
-        @want = @max
-      else
-        @want = ((@nodes.size * @duration) / @interval).ceil
-      end
+      @want = if @use_max_threads
+                @max
+              else
+                ((@nodes.size * @duration) / @interval).ceil
+              end
       @want = 1 if @want < 1
       @want = @nodes.size if @want > @nodes.size
       @want = @max if @want > @max
