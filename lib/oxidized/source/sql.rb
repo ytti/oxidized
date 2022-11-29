@@ -31,6 +31,7 @@ module Oxidized
         keys = {}
         @cfg.map.each { |key, sql_column| keys[key.to_sym] = node_var_interpolate node[sql_column.to_sym] }
         keys[:model] = map_model keys[:model] if keys.has_key? :model
+        keys[:group] = map_group keys[:group] if keys.has_key? :group
 
         # map node specific vars
         vars = {}
@@ -53,11 +54,20 @@ module Oxidized
     end
 
     def connect
-      Sequel.connect(adapter:  @cfg.adapter,
-                     host:     @cfg.host?,
-                     user:     @cfg.user?,
-                     password: @cfg.password?,
-                     database: @cfg.database)
+      options = {
+        adapter:     @cfg.adapter,
+        host:        @cfg.host?,
+        user:        @cfg.user?,
+        password:    @cfg.password?,
+        database:    @cfg.database,
+        ssl_mode:    @cfg.ssl_mode?
+      }
+      if @cfg.with_ssl?
+        options.merge!(sslca:       @cfg.ssl_ca?,
+                       sslcert:     @cfg.ssl_cert?,
+                       sslkey:      @cfg.ssl_key?)
+      end
+      Sequel.connect(options)
     rescue Sequel::AdapterNotFound => error
       raise OxidizedError, "SQL adapter gem not installed: " + error.message
     end

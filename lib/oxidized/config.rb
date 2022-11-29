@@ -14,7 +14,7 @@ module Oxidized
     Sleep     = 1
 
     def self.load(cmd_opts = {})
-      asetus = Asetus.new(name: 'oxidized', load: false, key_to_s: true)
+      asetus = Asetus.new(name: 'oxidized', load: false, key_to_s: true, usrdir: Oxidized::Config::Root)
       Oxidized.asetus = asetus
 
       asetus.default.username      = 'username'
@@ -25,6 +25,7 @@ module Oxidized
       asetus.default.use_syslog    = false
       asetus.default.debug         = false
       asetus.default.threads       = 30
+      asetus.default.use_max_threads = false
       asetus.default.timeout       = 20
       asetus.default.retries       = 3
       asetus.default.prompt        = /^([\w.@-]+[#>]\s?)$/
@@ -32,6 +33,7 @@ module Oxidized
       asetus.default.next_adds_job = false            # if true, /next adds job, so device is fetched immmeiately
       asetus.default.vars          = {}               # could be 'enable'=>'enablePW'
       asetus.default.groups        = {}               # group level configuration
+      asetus.default.group_map     = {}               # map aliases of groups to names
       asetus.default.models        = {}               # model level configuration
       asetus.default.pid           = File.join(Oxidized::Config::Root, 'pid')
 

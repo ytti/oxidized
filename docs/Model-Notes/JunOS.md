@@ -23,9 +23,9 @@ The commands Oxidized executes are:
 3. show version
 4. show chassis hardware
 5. show system license
-6. show system license keys (ex22|ex33|ex4|ex8|qfx only)
-7. show virtual-chassis (MX960 only)
-8. show chassis fabric reachability
+6. show system license keys
+7. show virtual-chassis (ex22|ex33|ex4|ex8|qfx only)
+8. show chassis fabric reachability (MX960 only)
 9. show configuration
 
 Oxidized can now retrieve your configuration!

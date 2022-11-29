@@ -18,6 +18,7 @@ class TMOS < Oxidized::Model
   cmd 'tmsh -q show sys hardware field-fmt' do |cfg|
     cfg.gsub!(/fan-speed (\S+)/, '')
     cfg.gsub!(/temperature (\S+)/, '')
+    cfg.gsub!(/humidity (\S+)/, '')
     comment cfg
   end
 
@@ -47,7 +48,7 @@ class TMOS < Oxidized::Model
 
   cmd('[ -d "/config/zebos" ] && cat /config/zebos/*/ZebOS.conf') { |cfg| comment cfg }
 
-  cmd('cat /config/partitions/*/bigip.conf') { |cfg| comment cfg }
+  cmd('cat /config/partitions/*/bigip*.conf') { |cfg| comment cfg }
 
   cfg :ssh do
     exec true # don't run shell, run each command in exec channel

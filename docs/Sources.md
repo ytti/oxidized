@@ -85,6 +85,23 @@ source:
       enable: enable
 ```
 
+### MySQL with TLS support
+By default SSL is disabled, but if you would like enable connection via TLS add the following configuration:
+```yaml
+source:
+  default: sql
+  sql:
+    ...
+    with_ssl: true
+    ssl_mode: <mode>
+    ssl_ca: <path to CA certificate>
+    ssl_cert: <path to client certificate>
+    ssl_key: <path to client certificate key>
+```
+ssl_mode may be one of the next: disabled / preferred / required / verify_ca / verify_identity
+
+For more information visit: https://github.com/brianmario/mysql2
+
 ## Source: SQLite
 
 One row per device, filtered by hostname.
@@ -148,6 +165,7 @@ source:
     delimiter: !ruby/regexp /:/
     user: username
     pass: password
+    read_timeout: 120
     map:
       name: hostname
       model: os

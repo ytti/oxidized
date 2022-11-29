@@ -4,4 +4,5 @@
     size 10M
     compress
     delaycompress
+    missingok
 }

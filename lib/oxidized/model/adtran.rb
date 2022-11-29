@@ -15,9 +15,11 @@ class Adtran < Oxidized::Model
   cmd 'show running-config'
 
   cfg :ssh do
-    post_login do
-      send "enable\n"
-      cmd vars(:enable)
+    if vars :enable
+      post_login do
+        send "enable\n"
+        cmd vars(:enable)
+      end
     end
     post_login 'terminal length 0'
     pre_logout 'exit'

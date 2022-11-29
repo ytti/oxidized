@@ -51,7 +51,11 @@ class Aoscx < Oxidized::Model
     comment cfg
   end
 
-  cmd ' show environment' do |cfg|
+  cmd 'show environment' do |cfg|
+    cfg.gsub! /^(LC.*\s+)\d+\s+$/, '\\1<hidden>'
+    cfg.gsub! /^(\d\/\d\/\d.*\s+)\d+\s+$/, '\\1<hidden>'
+    cfg.gsub! /^(\d+\/\S+\s+\S+\s+)\d+\.\d+\s+C(.*)/, '\\1<hidden>\\2'
+    cfg.gsub! /^(LC.*\s+)\d+\.\d+\s+(C.*)$/, '\\1 <hidden> \\2'
     comment cfg
   end
 
@@ -63,7 +67,7 @@ class Aoscx < Oxidized::Model
     comment cfg
   end
 
-  cmd 'show system' do |cfg|
+  cmd 'show system | exclude "Up Time" | exclude "CPU" | exclude "Memory"' do |cfg|
     comment cfg
   end
 
