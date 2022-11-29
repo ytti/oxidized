@@ -117,6 +117,7 @@ The format is based on [Keep a Changelog](https://keepachangelog.com/en/1.1.0/).
 - removed unwanted current date from slxos model
 - fixed secret handling for rip authentication in casa model #2648 (@grahamjohnston)
 - stripped IoT-detect version for Fortigate devices
+- Fix expect usage in models on telnet. Tested with Netgear GS108T. (@arrjay)
 
 ## [0.28.0 - 2020-05-18]
 
