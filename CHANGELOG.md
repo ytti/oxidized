@@ -11,6 +11,7 @@ The format is based on [Keep a Changelog](https://keepachangelog.com/en/1.1.0/).
 - Cumulus: added option to use NCLU as ia collecting method
 - Update net-ssh to 7.0.1 (using `append_all_supported_algorithms: true`)
 - Allow (config) (vlan-####) confirmation (y/n) and sftp questions in procurve prompt (@sorano)
+- Added new model called `srosmd` to backup configuration fron Nokia SR OS devices running in the model-driven CLI mode, which has different syntax to existing `sros` model.
 - fix: allow Netgear devices to finish SSH session correctly
 - More pager handling for MIS5030Q (@glance-)
 - Update logrotate example to allow logrotate service to start before any logs exist
