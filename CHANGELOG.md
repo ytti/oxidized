@@ -18,6 +18,7 @@ The format is based on [Keep a Changelog](https://keepachangelog.com/en/1.1.0/).
 - Mask NX-OS tacacs+ host keys (@0x4c6565)
 - airfiber: prompt matching made case-insensitive to support AF5xHD (@noaheroufus)
 - Cumulus: add support for dhcp-relay (@ohai89)
+- Github Action: Support creating custom version tag in a release
 - Add support for no enable password set on ironware
 - change pfSense secret scrubbing to keep config as well-formed XML
 
