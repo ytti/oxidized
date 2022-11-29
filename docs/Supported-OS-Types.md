@@ -136,6 +136,8 @@
   * [FTOS](/lib/oxidized/model/ftos.rb)
 * FortiGate
   * [FortiOS](/lib/oxidized/model/fortios.rb)
+* FortiWLC
+  * [FortiWLC](/lib/oxidized/model/fortiwlc.rb)
 * Fujitsu
   * [PRIMERGY Blade switch 1/10Gbe](/lib/oxidized/model/fujitsupy.rb)
 * GCOM Technologies

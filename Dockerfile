@@ -16,6 +16,9 @@ RUN gem install gpgme sequel sqlite3 mysql2 pg --no-document
 # dependencies for inputs
 RUN gem install net-tftp net-http-persistent mechanize --no-document
 
+# https://github.com/ytti/oxidized/issues/2217#issuecomment-1288471096
+RUN gem install --no-document rugged -- --with-ssh
+
 # build and install oxidized
 COPY . /tmp/oxidized/
 WORKDIR /tmp/oxidized
@@ -31,6 +34,11 @@ RUN gem install oxidized-web --no-document
 WORKDIR /
 RUN rm -rf /tmp/oxidized
 RUN apt-get -yq --purge autoremove ruby-dev pkg-config make cmake ruby-bundler libssl-dev libssh2-1-dev libicu-dev libsqlite3-dev libmysqlclient-dev libpq-dev zlib1g-dev
+
+# add non-privileged user
+ARG UID=30000
+ARG GID=$UID
+RUN groupadd -g "${GID}" -r oxidized && useradd -u "${UID}" -r -m -d /home/oxidized -g oxidized oxidized
 
 # add runit services
 COPY extra/oxidized.runit /etc/service/oxidized/run
