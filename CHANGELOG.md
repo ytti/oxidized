@@ -11,6 +11,7 @@ The format is based on [Keep a Changelog](https://keepachangelog.com/en/1.1.0/).
 - Cumulus: added option to use NCLU as ia collecting method
 - Update net-ssh to 7.0.1 (using `append_all_supported_algorithms: true`)
 - Allow (config) (vlan-####) confirmation (y/n) and sftp questions in procurve prompt (@sorano)
+- Added new model called `srosmd` to backup configuration fron Nokia SR OS devices running in the model-driven CLI mode, which has different syntax to existing `sros` model.
 - fix: allow Netgear devices to finish SSH session correctly
 - More pager handling for MIS5030Q (@glance-)
 - Update logrotate example to allow logrotate service to start before any logs exist
@@ -18,10 +19,13 @@ The format is based on [Keep a Changelog](https://keepachangelog.com/en/1.1.0/).
 - airfiber: prompt matching made case-insensitive to support AF5xHD (@noaheroufus)
 - Cumulus: add support for dhcp-relay (@ohai89)
 - Github Action: Support creating custom version tag in a release
+- Add support for no enable password set on ironware
+- change pfSense secret scrubbing to keep config as well-formed XML
 
 ### Added
 
 - install rugged with ssh in Dockerfile (@agrevtcev)
+- allow to run as non-root user in Docker (@agrevtcev)
 - Extend http source configurations to include read_timeout value
 - model for bdcom-based fiberstore switches (@candlerb)
 - enterasys800 model for enterasys 800-series fe/ge switches (@javichumellamo)
@@ -30,6 +34,7 @@ The format is based on [Keep a Changelog](https://keepachangelog.com/en/1.1.0/).
 - model for zte c300 and c320 olt (@glaubway)
 - model for LANCOM (@systeembeheerder)
 - model for Aruba CX switches (@jmurphy5)
+- model for FortiWLC WLAn Controller (@MrMarioMichel)
 - model for NEC IX devices (@mikenowak)
 - Added docs for Dell/EMC Networking OS10 devices (@davromaniak)
 - model for Zyxel 1308 OLTs (@baldoarturo)
@@ -52,7 +57,7 @@ The format is based on [Keep a Changelog](https://keepachangelog.com/en/1.1.0/).
 
 - Better manage of the enable mode in edgeswitch.rb (@agabellini)
 - Adds paging support to Enterasys B3/C3 (@piterpunk)
-- Allows "Username" as username prompt in Brocade ICX-series devices (@piterpunk) 
+- Allows "Username" as username prompt in Brocade ICX-series devices (@piterpunk)
 - Add show-sensitive flag on export command on Mikrotik RouterOS when remove_secret is off (@kedare)
 - rubocop dependency now ~> 0.81.0, the last one with ruby 2.3 support
 - change pfSense secret scrubbing to handle new format in 2.4.5+
@@ -99,7 +104,7 @@ The format is based on [Keep a Changelog](https://keepachangelog.com/en/1.1.0/).
 - filter next periodic save schedule time in xos model output (@sargon)
 - Fix when auto-saved is configured on xos switches  (@trappiz)
 - fixed ArubaOS-CX enviroment/system inconsistent values #2297 (@raunz)
-- further improvements to ArubaOS-CX environment values (@olemyhre) 
+- further improvements to ArubaOS-CX environment values (@olemyhre)
 - Update AirFiber prompt regex (@murrant)
 - System time and running time are now stripped from tplink model output (@spike77453)
 - &lt;?xml... line is no longer improperly stripped from OPNsense and PFsense backups (@pv2b)
