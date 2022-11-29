@@ -128,7 +128,8 @@ module Oxidized
         append_all_supported_algorithms:  true,
         password:                         @node.auth[:password],
         timeout:                          Oxidized.config.timeout,
-        port:                             (vars(:ssh_port) || 22).to_i
+        port:                             (vars(:ssh_port) || 22).to_i,
+        forward_agent:                    false
       }
 
       auth_methods = vars(:auth_methods) || %w[none publickey password]
