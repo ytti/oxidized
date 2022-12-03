@@ -35,13 +35,15 @@ module Oxidized
     end
 
     def cmd(cmd_str, expect = @node.prompt)
+      Oxidized.logger.debug "Telnet: #{cmd_str} @#{@node.name}"
       return send(cmd_str + "\r\n") unless expect
 
-      Oxidized.logger.debug "Telnet: #{cmd_str} @#{@node.name}"
-      args = { 'String'  => cmd_str,
-               'Match'   => expect,
-               'Timeout' => @timeout }
-      @telnet.cmd args
+      # create a string to be passed to oxidized_expect and modified _there_
+      # default to a single space so it shouldn't be coerced to nil by any models.
+      out = String(' ')
+      @telnet.puts(cmd_str)
+      @telnet.oxidized_expect(timeout: @timeout, expect: expect, out: out)
+      out
     end
 
     def send(data)
@@ -107,7 +109,10 @@ class Net::Telnet
         end
         line += buf
         line = model.expects line
+        # match is a regexp object. we need to return that for logins to work.
         match = expects.find { |re| line.match re }
+        # stomp on the out string object if we have one. (thus we were called by cmd?)
+        options[:out].replace(line) if options[:out]
         return match if match
       end
     end
