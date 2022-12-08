@@ -7,6 +7,7 @@ class PurityOS < Oxidized::Model
   cmd 'pureconfig list'
 
   cfg :ssh do
+    pty_options(term: "dumb")
     pre_logout 'exit'
   end
 end
