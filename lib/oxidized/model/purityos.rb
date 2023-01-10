@@ -1,4 +1,4 @@
-lass PurityOS < Oxidized::Model
+class PurityOS < Oxidized::Model
   # Pure Storage Purity OS
 
   prompt /\w+@\S+(\s+\S+)*\s?>\s?$/
