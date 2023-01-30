@@ -47,7 +47,7 @@ class SonicOS < Oxidized::Model
       next if line =~ /date \d{4}\:\d{2}\:\d{2}/
       next if line =~ /time \d{2}\:\d{2}:\d{2}/
       next if line =~ /system-time \"\d{2}\/\d{2}\/\d{4} \d{2}\:\d{2}:\d{2}.\d+\"/
-      next if line =~ /system-uptime "(\s+up\s+\d+\s+)|(.*Days.*)"/
+      next if line =~ /system-uptime "((\s+up\s+\d+\s+)|(\d+\s\w+(,\s)?)*)"/
       next if line =~ /checksum \d+/
 
       line = line[1..-1] if line[0] == "\r"
