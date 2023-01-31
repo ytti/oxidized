@@ -23,8 +23,6 @@ class Hios < Oxidized::Model
   end
 
   cmd 'show running-config script' do |cfg|
-    ## User creds are not shown with the command above
-    #cfg.gsub! /^users.*\n/, ""
     cfg
   end
 
