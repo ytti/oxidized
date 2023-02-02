@@ -223,7 +223,11 @@ services:
        - model:/home/oxidized/.config/oxidized/model
        # if git is use as input
        - data:/home/oxidized/.config/oxidized/backupcfg/
-
+volumes:
+  config:
+  router.db:
+  model:
+  data:
 ```
 
 Create the `/etc/oxidized/router.db` (see [CSV Source](docs/Sources.md#source-csv) for further info):
