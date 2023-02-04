@@ -150,7 +150,8 @@
 * Hillstone Networks
   * [StoneOS](/lib/oxidized/model/stoneos.rb)
 * Hirschmann
-  * [HiOS](/lib/oxidized/model/hirschmann.rb)
+  * [Classic](/lib/oxidized/model/hirschmann.rb)
+  * [HiOS](/lib/oxidized/model/hios.rb)
 * HP
   * [Comware (HP A-series, H3C, 3Com)](/lib/oxidized/model/comware.rb)
   * [Procurve](/lib/oxidized/model/procurve.rb)
