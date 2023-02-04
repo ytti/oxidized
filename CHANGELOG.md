@@ -23,7 +23,7 @@ The format is based on [Keep a Changelog](https://keepachangelog.com/en/1.1.0/).
 - Add support for no enable password set on ironware
 - change pfSense secret scrubbing to keep config as well-formed XML
 - Add support for comware HPE Office Connect 1950
-- model for Hirschmann Hios devices (@tijldeneut)
+- Added model for Hirschmann Hios devices, next to alread present Hirschmann classic (@tijldeneut)
 
 ### Added
 
