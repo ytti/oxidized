@@ -1,5 +1,5 @@
 class Cumulus < Oxidized::Model
-  prompt /^((\w*)@(.*)):/
+  prompt /^(([\w.-]*)@(.*)):/
   comment '# '
 
   # add a comment in the final conf
