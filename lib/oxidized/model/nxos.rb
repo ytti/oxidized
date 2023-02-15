@@ -36,7 +36,28 @@ class NXOS < Oxidized::Model
   end
 
   cfg :ssh, :telnet do
+    # Handle Enable support for NXOS if var 'enable' is set
+    post_login do
+      # For 'enable' with no password -- supported, but not secure
+      if vars(:enable) == true
+        cmd "enable"
+      # For 'enable' with a password set in router.db or the config file
+      elsif vars(:enable)
+        # Note the regex below--Oxidized does not ingest the newlines correctly
+        # and the amount of newlines changes between NXOS v7 and v9
+        # Instead, it consistently ends with the Password: prompt so we
+        # use that.
+        cmd "enable", /[pP]assword:/
+        cmd vars(:enable)
+      end
+    end
     post_login 'terminal length 0'
+    # Need extra steps for shells using 'enable', to exit the session
+    pre_logout do
+      if vars(:enable)
+        cmd "exit"
+      end
+    end
     pre_logout 'exit'
   end
 
