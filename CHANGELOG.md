@@ -132,6 +132,7 @@ The format is based on [Keep a Changelog](https://keepachangelog.com/en/1.1.0/).
 - Fix Sonicwall SonicOS "system-uptime" omission from log (@lazynooblet)
 - purityos: at least v6.3.5 needs other terminal settings (@elliot64)
 - purityos: remove purealerts and VEEAM snapshots from backed up config (@elliot64)
+- fixed an issue where Oxidized could not pull configs from Cisco NXOS devices with Enable set (@admiralspark)
 
 ## [0.28.0 - 2020-05-18]
 
