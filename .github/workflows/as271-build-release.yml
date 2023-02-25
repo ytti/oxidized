@@ -1,28 +1,49 @@
 name: 'Nightly build, versioned, and released oxidized container. UTC time.'
 on:
   schedule:
-    - cron: '20 5 * * *'
+    - cron: '30 5 * * *'
 
 jobs:
 
-  sync:
+  sync-commits:
 
     runs-on: ubuntu-latest
 
     steps:
       - uses: tgymnich/fork-sync@v1.8
         with:
-          owner: AS271
+          owner: ytti
           base: master
           head: master
+          pr_message: '[skip actions]'
 
   docker:
 
-    needs: sync
+    needs: sync-commits
 
     runs-on: ubuntu-latest
 
     steps:
+      -
+        name: Checkout
+        uses: actions/checkout@v3
+      -
+        uses: rmeneely/git-last-tag@v1
+        with:
+          # Tag pattern. The filter to use when searching for the LAST_VERSION tag
+          # Optional
+          # Default: 'v[0-9]*.[0-9]*.[0-9]*'
+          tag_pattern: '[0-9]*.[0-9]*.[0-9]*'
+      -
+        name: Docker meta
+        id: meta
+        uses: docker/metadata-action@v4
+        with:
+          # list of Docker images to use as base name for tags
+          images: as271/oxidized
+          # generate Docker tags based on the following events/attributes
+          tags: |
+            type=schedule,pattern={{date 'YYYYMMDD'}}
       -
         name: Set up QEMU
         uses: docker/setup-qemu-action@v2
@@ -40,6 +61,4 @@ jobs:
         uses: docker/build-push-action@v3
         with:
           push: true
-          tags: |
-            as271/oxidized:${{ github.ref_name }}
-            as271/oxidized:latest
+          tags: ${{ env.LAST_TAG }}.post${{ steps.meta.outputs.tags }}
