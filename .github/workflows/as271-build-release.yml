@@ -12,7 +12,7 @@ jobs:
     steps:
       - uses: tgymnich/fork-sync@v1.8
         with:
-          owner: ytti
+          owner: AS271
           base: master
           head: master
           pr_message: '[skip actions]'
