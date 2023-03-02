@@ -31,4 +31,10 @@ class ISAM < Oxidized::Model
   cmd 'info configure flat' do |cfg|
     cfg
   end
+
+  cmd 'admin display-config' do |cfg|
+    cfg.gsub! /^. Generated .+$/, ''
+    cfg.gsub! /^. Finished .+$/, ''
+    cfg
+  end
 end
