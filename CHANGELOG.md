@@ -97,6 +97,7 @@ The format is based on [Keep a Changelog](https://keepachangelog.com/en/1.1.0/).
 - ios: Add support for RBAC in IOS model (@jameskirsop)
 - hide unsupported-transceiver license key in Arista EOS (@davidc)
 - edgecos: add support for FS S3900-48T6S-R (@cgsecurity)
+- isam: added 'admin display-config' (@crami)
 
 ### Fixed
 
