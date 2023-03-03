@@ -80,7 +80,6 @@ module Oxidized
       commits = repo.log.grep("#{path}$")
 
       commits.each do |commit|
-        puts "LIB_SHA: " + commit.sha
         hash = {}
         hash[:date] = commit.date.to_s
         hash[:oid] = commit.sha
