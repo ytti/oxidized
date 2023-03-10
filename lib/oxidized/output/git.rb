@@ -73,11 +73,12 @@ module Oxidized
     # give a hash of all oid revision for the given node, and the date of the commit
     def version(node, group)
       repo, path = yield_repo_and_path(node, group)
-      repo = RubyGit.bare repo
+      repo = RubyGit.bare(repo)
+      repo_log = RubyGit::Log.new(repo, false) #  do not limit amount of commits
 
       i = -1
       tab = []
-      commits = repo.log.grep("#{path}$")
+      commits = repo_log.grep("#{path}$")
 
       commits.each do |commit|
         hash = {}
