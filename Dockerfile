@@ -16,16 +16,13 @@ RUN gem install gpgme sequel sqlite3 mysql2 pg --no-document
 # dependencies for inputs
 RUN gem install net-tftp net-http-persistent mechanize --no-document
 
-# https://github.com/ytti/oxidized/issues/2217#issuecomment-1288471096
-RUN gem install --no-document rugged:1.5.0.1 -- --with-ssh
-
 # build and install oxidized
 COPY . /tmp/oxidized/
 WORKDIR /tmp/oxidized
 
 # docker automated build gets shallow copy, but non-shallow copy cannot be unshallowed
 RUN git fetch --unshallow || true
-RUN rake install
+RUN CMAKE_FLAGS='-DUSE_SSH=ON' rake install
 
 # web interface
 RUN gem install oxidized-web --no-document
