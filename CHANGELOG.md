@@ -25,6 +25,7 @@ The format is based on [Keep a Changelog](https://keepachangelog.com/en/1.1.0/).
 - Add support for comware HPE Office Connect 1950
 - Added model for Hirschmann Hios devices, next to alread present Hirschmann classic (@tijldeneut)
 - (StoneOS) Prompt fix for long device names, '^H' handling and removal of ever-changing data (@dMailonG)
+- Added model for ACOS/A10 devices (@reptilian-research)
 
 ### Added
 
