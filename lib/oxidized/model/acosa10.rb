@@ -6,7 +6,7 @@ class ACOSA10 < Oxidized::Model # rubocop:todo Style/Documentation
   #
   # NOTE: some password hashes are redacted due to being regenerated on each run
   #
-  # jim@reptiles.org 
+  # adapted from acos.rb by jim@reptiles.org 
 
   comment '! '
 
