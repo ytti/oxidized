@@ -1,5 +1,4 @@
 class SmartCS < Oxidized::Model
-
   prompt /^\r?([\w.@() -]+[#>]\s?)$/
   comment '# '
 
@@ -35,7 +34,7 @@ class SmartCS < Oxidized::Model
       expect /[pP]assword:\s?$/
       cmd pw
     end
-      pre_logout 'exit'
-      pre_logout 'exit'
+    pre_logout 'exit'
+    pre_logout 'exit'
   end
 end
