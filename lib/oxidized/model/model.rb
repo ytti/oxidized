@@ -18,9 +18,7 @@ module Oxidized
           instance_variables.each do |var|
             iv = instance_variable_get(var)
             klass.instance_variable_set var, iv.dup
-            if var.to_s == "@cmd"
-              @cmd[:cmd] = iv[:cmd].dup
-            end
+            @cmd[:cmd] = iv[:cmd].dup if var.to_s == "@cmd"
           end
         end
       end

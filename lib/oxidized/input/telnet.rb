@@ -112,7 +112,7 @@ class Net::Telnet
         # match is a regexp object. we need to return that for logins to work.
         match = expects.find { |re| line.match re }
         # stomp on the out string object if we have one. (thus we were called by cmd?)
-        options[:out].replace(line) if options[:out]
+        options[:out]&.replace(line) if options[:out]
         return match if match
       end
     end

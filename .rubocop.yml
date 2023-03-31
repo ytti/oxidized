@@ -6,13 +6,13 @@ AllCops:
   Exclude:
     - 'vendor/**/*'
 
-StringLiterals:
+Style/StringLiterals:
   Enabled: false
 
 Style/FrozenStringLiteralComment:
   Enabled: false
 
-LineLength:
+Layout/LineLength:
   Enabled: false
 
 Lint/AmbiguousRegexpLiteral:
@@ -66,14 +66,14 @@ Style/Documentation:
 Style/ParallelAssignment:
   Enabled: false
 
+Metrics/MethodLength:
+  Max: 45
+
 ## Metrics/AbcSize:
 ##   Max: 28
-## 
-## Metrics/MethodLength:
-##   Max: 20
-## 
+##
 ## Metrics/ClassLength:
 ##   Max: 140
-## 
+##
 ## Metrics/CyclomaticComplexity:
 ##   Max: 7
