@@ -34,5 +34,7 @@ Gem::Specification.new do |s|
   s.add_development_dependency 'pry',      '~> 0'
   s.add_development_dependency 'rake',     '~> 13.0'
   s.add_development_dependency 'rubocop',  '~> 1.48.0'
+  s.add_development_dependency 'rubocop-minitest'
+  s.add_development_dependency 'rubocop-rake'
   s.add_development_dependency 'simplecov'
 end

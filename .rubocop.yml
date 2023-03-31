@@ -2,6 +2,7 @@ inherit_from: .rubocop_todo.yml
 
 # Do not attempt to police vendored code
 AllCops:
+  NewCops: enable
   TargetRubyVersion: 3.0
   Exclude:
     - 'vendor/**/*'
@@ -69,6 +70,12 @@ Style/ParallelAssignment:
 Metrics/MethodLength:
   Max: 45
 
+Style/RedundantRegexpCharacterClass:
+  Enabled: false
+
+Style/RedundantRegexpEscape:
+  Enabled: false
+
 ## Metrics/AbcSize:
 ##   Max: 28
 ##
@@ -77,3 +84,6 @@ Metrics/MethodLength:
 ##
 ## Metrics/CyclomaticComplexity:
 ##   Max: 7
+
+Metrics/BlockLength:
+  Max: 150
