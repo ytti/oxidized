@@ -2,6 +2,7 @@ module Oxidized
   class Node
     class Stats
       attr_reader :mtimes
+
       MAX_STAT = 10
 
       # @param [Job] job job whose information add to stats

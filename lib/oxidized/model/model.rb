@@ -48,7 +48,7 @@ module Oxidized
       end
 
       def cmd(cmd_arg = nil, **args, &block)
-        if cmd_arg.class == Symbol
+        if cmd_arg.instance_of?(Symbol)
           process_args_block(@cmd[cmd_arg], args, block)
         else
           process_args_block(@cmd[:cmd], args, [cmd_arg, block])
@@ -99,7 +99,7 @@ module Oxidized
 
       def process_args_block(target, args, block)
         if args[:clear]
-          if block.class == Array
+          if block.instance_of?(Array)
             target.reject! { |k, _| k == block[0] }
             target.push(block)
           else

@@ -51,7 +51,7 @@ class AWPlus < Oxidized::Model
                 line.match(/Current software\s*:.*/) ||
                 line.match(/Software version\s*:.*/) ||
                 line.match(/Build date\s*:.*/)
-            } .join
+            }.join
   end
 
   # Actually get the devices running config#

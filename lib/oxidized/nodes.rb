@@ -3,6 +3,7 @@ module Oxidized
   require 'oxidized/node'
   class Oxidized::NotSupported < OxidizedError; end
   class Oxidized::NodeNotFound < OxidizedError; end
+
   class Nodes < Array
     attr_accessor :source, :jobs
     alias put unshift
@@ -159,13 +160,11 @@ module Oxidized
       old = dup
       replace(nodes)
       each do |node|
-        begin
-          if (i = old.find_node_index(node.name))
-            node.stats = old[i].stats
-            node.last  = old[i].last
-          end
-        rescue Oxidized::NodeNotFound
+        if (i = old.find_node_index(node.name))
+          node.stats = old[i].stats
+          node.last  = old[i].last
         end
+      rescue Oxidized::NodeNotFound
       end
       sort_by! { |x| x.last.nil? ? Time.new(0) : x.last.end }
     end

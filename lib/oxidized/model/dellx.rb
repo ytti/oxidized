@@ -20,9 +20,7 @@ class DellX < Oxidized::Model
   end
 
   cmd 'show version' do |cfg|
-    if @stackable.nil?
-      @stackable = true if cfg =~ /(U|u)nit\s/
-    end
+    @stackable = true if @stackable.nil? && (cfg =~ /(U|u)nit\s/)
     cfg = cfg.split("\n").reject { |line| line[/Up\sTime/] }
     comment cfg.join("\n") + "\n"
   end

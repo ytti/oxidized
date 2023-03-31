@@ -75,6 +75,7 @@ class Net::Telnet
   ## how to do this, without redefining the whole damn thing
   ## FIXME: we also need output (not sure I'm going to support this)
   attr_reader :output
+
   def oxidized_expect(options)
     model    = @options["Model"]
     @log     = @options["Log"]

@@ -1,6 +1,7 @@
 module Oxidized
   class Job < Thread
     attr_reader :start, :end, :status, :time, :node, :config
+
     def initialize(node)
       @node         = node
       @start        = Time.now.utc

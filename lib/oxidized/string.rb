@@ -26,7 +26,7 @@ module Oxidized
 
     def initialize(str = '')
       super
-      return unless str.class == Oxidized::String
+      return unless str.instance_of?(Oxidized::String)
 
       @cmd  = str.cmd
       @name = str.name
