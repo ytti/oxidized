@@ -29,7 +29,7 @@ require_relative 'rest_client'
 module Oxidized
   require 'asetus'
   class Config
-    Root = File.join ENV['HOME'], '.config', 'oxidized'
+    Root = File.join ENV.fetch('HOME', nil), '.config', 'oxidized'
   end
 
   CFGS = Asetus.new name: 'oxidized', load: false, key_to_s: true

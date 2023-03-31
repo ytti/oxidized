@@ -14,14 +14,12 @@ json = JSON.parse(open("http://localhost:8888/nodes.json").read)
 json.each do |node|
   next if !ARGV.empty? && (ARGV[0] != node['name'])
 
-  if not node['last'].nil?
-    if node['last']['status'] != 'success'
-      critical_nodes << node['name']
-      critical = true
-    end
-  else
+  if node['last'].nil?
     pending_nodes << node['name']
     pending = true
+  elsif node['last']['status'] != 'success'
+    critical_nodes << node['name']
+    critical = true
   end
 end
 

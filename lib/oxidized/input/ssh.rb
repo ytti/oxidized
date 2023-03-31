@@ -159,8 +159,7 @@ module Oxidized
       proxy_command += "-o StrictHostKeyChecking=no " unless secure
       proxy_command += "-p #{proxy_port} "            if proxy_port
       proxy_command += "#{proxy_host} -W [%h]:%p"
-      proxy = Net::SSH::Proxy::Command.new(proxy_command)
-      proxy
+      Net::SSH::Proxy::Command.new(proxy_command)
     end
   end
 end
