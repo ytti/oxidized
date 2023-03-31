@@ -2,7 +2,7 @@ inherit_from: .rubocop_todo.yml
 
 # Do not attempt to police vendored code
 AllCops:
-  TargetRubyVersion: 2.3
+  TargetRubyVersion: 3.0
   Exclude:
     - 'vendor/**/*'
 

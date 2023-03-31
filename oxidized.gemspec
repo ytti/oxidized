@@ -17,7 +17,7 @@ Gem::Specification.new do |s|
   s.executables       = %w[oxidized]
   s.require_path      = 'lib'
 
-  s.required_ruby_version =           '>= 2.3'
+  s.required_ruby_version =           '>= 3.0'
   s.add_runtime_dependency 'asetus',  '~> 0.1'
   s.add_runtime_dependency 'bcrypt_pbkdf', '~> 1.0'
   s.add_runtime_dependency 'ed25519', '~> 1.2'
@@ -32,7 +32,7 @@ Gem::Specification.new do |s|
   s.add_development_dependency 'minitest', '~> 5.8'
   s.add_development_dependency 'mocha',    '~> 1.1'
   s.add_development_dependency 'pry',      '~> 0'
-  s.add_development_dependency 'rake',     '~> 10.0'
-  s.add_development_dependency 'rubocop',  '~> 0.81.0'
+  s.add_development_dependency 'rake',     '~> 13.0'
+  s.add_development_dependency 'rubocop',  '~> 1.48.0'
   s.add_development_dependency 'simplecov'
 end
