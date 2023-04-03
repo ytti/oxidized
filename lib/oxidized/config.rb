@@ -4,7 +4,7 @@ module Oxidized
   class InvalidConfig < OxidizedError; end
 
   class Config
-    Root      = ENV['OXIDIZED_HOME'] || File.join(ENV.fetch('HOME', nil), '.config', 'oxidized')
+    Root      = ENV['OXIDIZED_HOME'] || File.join(Dir.home, '.config', 'oxidized')
     Crash     = File.join(ENV['OXIDIZED_LOGS'] || Root, 'crash')
     Log       = File.join(ENV['OXIDIZED_LOGS'] || Root, 'logs')
     InputDir  = File.join Directory, %w[lib oxidized input]
