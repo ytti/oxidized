@@ -37,6 +37,7 @@ module Oxidized
 
       node_want_ip = (IPAddr.new(node_want) rescue false)
       name_is_ip   = (IPAddr.new(node[:name]) rescue false)
+      # rubocop:todo Lint/DuplicateBranch
       if name_is_ip && (node_want_ip == node[:name])
         true
       elsif node[:ip] && (node_want_ip == node[:ip])
@@ -44,6 +45,7 @@ module Oxidized
       elsif node_want.match node[:name]
         true unless name_is_ip
       end
+      # rubocop:enable Lint/DuplicateBranch
     end
 
     def list
