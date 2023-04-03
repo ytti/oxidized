@@ -33,3 +33,4 @@ jobs:
     - name: Run tests
       run: bundle exec rake
     - uses: codecov/codecov-action@v3
+      if: ${{ always() }}
