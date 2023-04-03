@@ -25,7 +25,7 @@ describe GithubRepo do
     it 'raise a error when `remote_repo` is not configured' do
       Oxidized.config.hooks.github_repo_hook = { type: 'githubrepo' }
       gr.cfg = Oxidized.config.hooks.github_repo_hook
-      proc { gr.validate_cfg! }.must_raise(KeyError)
+      _ { proc { gr.validate_cfg! } }.must_raise(KeyError)
     end
   end
 
@@ -41,7 +41,7 @@ describe GithubRepo do
       repo.expects(:fetch).with('origin', ['refs/heads/master'], credentials: credentials).returns(Hash.new(0))
       repo.expects(:branches).never
       repo.expects(:head).returns(repo_head)
-      gr.fetch_and_merge_remote(repo).must_equal nil
+      _(gr.fetch_and_merge_remote(repo)).must_equal nil
     end
     describe "when there is update considering conflicts" do
       let(:merge_index) { mock }
@@ -60,7 +60,7 @@ describe GithubRepo do
         their_branch.expects(:name).returns("origin/master")
         merge_index.expects(:conflicts?).returns(true)
         Rugged::Commit.expects(:create).never
-        gr.fetch_and_merge_remote(repo).must_equal nil
+        _(gr.fetch_and_merge_remote(repo)).must_equal nil
       end
 
       it "should merge when there is no conflict" do
@@ -75,7 +75,7 @@ describe GithubRepo do
                                              tree:       "tree",
                                              message:    "Merge remote-tracking branch 'origin/master'",
                                              update_ref: "HEAD").returns(1)
-        gr.fetch_and_merge_remote(repo).must_equal 1
+        _(gr.fetch_and_merge_remote(repo)).must_equal 1
       end
     end
   end
@@ -110,14 +110,14 @@ describe GithubRepo do
         Oxidized.config.hooks.github_repo_hook.password = 'password'
         Proc.expects(:new).returns(credentials)
         gr.cfg = Oxidized.config.hooks.github_repo_hook
-        gr.run_hook(ctx).must_equal true
+        _(gr.run_hook(ctx)).must_equal true
       end
 
       it "will push to the remote repository using ssh" do
         Oxidized.config.hooks.github_repo_hook.remote_repo = 'git@github.com:username/foo.git'
         Proc.expects(:new).returns(credentials)
         gr.cfg = Oxidized.config.hooks.github_repo_hook
-        gr.run_hook(ctx).must_equal true
+        _(gr.run_hook(ctx)).must_equal true
       end
     end
 
@@ -146,7 +146,7 @@ describe GithubRepo do
 
         it 'will push to the node group repository' do
           gr.cfg = Oxidized.config.hooks.github_repo_hook
-          gr.run_hook(ctx).must_equal true
+          _(gr.run_hook(ctx)).must_equal true
         end
       end
 
@@ -162,7 +162,7 @@ describe GithubRepo do
 
         it 'will push to the correct repository' do
           gr.cfg = Oxidized.config.hooks.github_repo_hook
-          gr.run_hook(ctx).must_equal true
+          _(gr.run_hook(ctx)).must_equal true
         end
       end
     end
