@@ -35,6 +35,7 @@ jobs:
       with:
         rubocop_version: gemfile
         rubocop_extensions: rubocop-minitest:gemfile rubocop-rake:gemfile
+        reporter: github-pr-review
     - name: Run tests
       run: bundle exec rake
     - uses: codecov/codecov-action@v3
