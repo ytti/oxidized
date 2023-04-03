@@ -10,6 +10,7 @@ module Oxidized
     attr_reader :commitref
 
     def initialize
+      super
       @cfg = Oxidized.config.output.gitcrypt
       @gitcrypt_cmd = "/usr/bin/git-crypt"
       @gitcrypt_init = @gitcrypt_cmd + " init"
