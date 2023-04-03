@@ -70,18 +70,12 @@ Style/ParallelAssignment:
 Metrics/MethodLength:
   Max: 45
 
-Style/RedundantRegexpCharacterClass:
-  Enabled: false
-
-Style/RedundantRegexpEscape:
-  Enabled: false
-
 ## Metrics/AbcSize:
 ##   Max: 28
 
 Metrics/ClassLength:
   Max: 200
-##
+
 ## Metrics/CyclomaticComplexity:
 ##   Max: 7
 
