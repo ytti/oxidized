@@ -91,6 +91,9 @@ Metrics/BlockLength:
 Metrics/ParameterLists:
   Max: 6
 
+Lint/EmptyBlock:
+  Enabled: false
+
 require:
   - rubocop-rake
   - rubocop-minitest
