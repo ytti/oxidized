@@ -90,3 +90,7 @@ Metrics/BlockLength:
 
 Metrics/ParameterLists:
   Max: 6
+
+require:
+  - rubocop-rake
+  - rubocop-minitest
