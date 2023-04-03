@@ -30,10 +30,11 @@ jobs:
       with:
         ruby-version: ${{ matrix.ruby-version }}
         bundler-cache: true # runs 'bundle install' and caches installed gems automatically
-    - name: RuboCop Linter Action
-      uses: andrewmcodes-archive/rubocop-linter-action@v3.3.0
-      env:
-        GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
+    - name: rubocop
+      uses: reviewdog/action-rubocop@v2
+      with:
+        rubocop_version: gemfile
+        rubocop_extensions: rubocop-minitest:gemfile rubocop-rake:gemfile
     - name: Run tests
       run: bundle exec rake
     - uses: codecov/codecov-action@v3
