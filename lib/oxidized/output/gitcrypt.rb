@@ -215,11 +215,7 @@ module Oxidized
         unlock grepo
         File.write(file, data)
         grepo.add(file)
-        if grepo.status[file].nil?
-          grepo.commit(msg)
-          @commitref = grepo.log(1).first.objectish
-          true
-        elsif !grepo.status[file].type.nil?
+        if grepo.status[file].nil? || !grepo.status[file].type.nil?
           grepo.commit(msg)
           @commitref = grepo.log(1).first.objectish
           true
