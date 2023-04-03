@@ -3,6 +3,7 @@ module Oxidized
     attr_reader :commitref
 
     def initialize
+      super
       @cfg = Oxidized.config.output.http
     end
 

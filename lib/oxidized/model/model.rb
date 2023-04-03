@@ -7,6 +7,7 @@ module Oxidized
 
     class << self
       def inherited(klass)
+        super
         if klass.superclass == Oxidized::Model
           klass.instance_variable_set '@cmd',     (Hash.new { |h, k| h[k] = [] })
           klass.instance_variable_set '@cfg',     (Hash.new { |h, k| h[k] = [] })
