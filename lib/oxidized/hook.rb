@@ -67,8 +67,6 @@ module Oxidized
   class Hook
     attr_reader :cfg
 
-    def initialize; end
-
     def cfg=(cfg)
       @cfg = cfg
       validate_cfg! if respond_to? :validate_cfg!
