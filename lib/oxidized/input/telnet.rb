@@ -77,7 +77,7 @@ module Net
     ## FIXME: we also need output (not sure I'm going to support this)
     attr_reader :output
 
-    def oxidized_expect(options)
+    def oxidized_expect(options) ## rubocop:disable Metrics/PerceivedComplexity
       model    = @options["Model"]
       @log     = @options["Log"]
 
