@@ -71,50 +71,52 @@ module Oxidized
   end
 end
 
-class Net::Telnet
-  ## how to do this, without redefining the whole damn thing
-  ## FIXME: we also need output (not sure I'm going to support this)
-  attr_reader :output
+module Net
+  class Telnet
+    ## how to do this, without redefining the whole damn thing
+    ## FIXME: we also need output (not sure I'm going to support this)
+    attr_reader :output
 
-  def oxidized_expect(options)
-    model    = @options["Model"]
-    @log     = @options["Log"]
+    def oxidized_expect(options)
+      model    = @options["Model"]
+      @log     = @options["Log"]
 
-    expects  = [options[:expect]].flatten
-    time_out = options[:timeout] || @options["Timeout"] || Oxidized.config.timeout?
+      expects  = [options[:expect]].flatten
+      time_out = options[:timeout] || @options["Timeout"] || Oxidized.config.timeout?
 
-    Timeout.timeout(time_out) do
-      line = ""
-      rest = ""
-      buf  = ""
-      loop do
-        c = @sock.readpartial(1024 * 1024)
-        @output = c
-        c = rest + c
+      Timeout.timeout(time_out) do
+        line = ""
+        rest = ""
+        buf  = ""
+        loop do
+          c = @sock.readpartial(1024 * 1024)
+          @output = c
+          c = rest + c
 
-        if Integer(c.rindex(/#{IAC}#{SE}/no) || 0) <
-           Integer(c.rindex(/#{IAC}#{SB}/no) || 0)
-          buf = preprocess(c[0...c.rindex(/#{IAC}#{SB}/no)])
-          rest = c[c.rindex(/#{IAC}#{SB}/no)..-1]
-        elsif (pt = c.rindex(/#{IAC}[^#{IAC}#{AO}#{AYT}#{DM}#{IP}#{NOP}]?\z/no) ||
-                   c.rindex(/\r\z/no))
-          buf = preprocess(c[0...pt])
-          rest = c[pt..-1]
-        else
-          buf = preprocess(c)
-          rest = ''
+          if Integer(c.rindex(/#{IAC}#{SE}/no) || 0) <
+             Integer(c.rindex(/#{IAC}#{SB}/no) || 0)
+            buf = preprocess(c[0...c.rindex(/#{IAC}#{SB}/no)])
+            rest = c[c.rindex(/#{IAC}#{SB}/no)..-1]
+          elsif (pt = c.rindex(/#{IAC}[^#{IAC}#{AO}#{AYT}#{DM}#{IP}#{NOP}]?\z/no) ||
+                     c.rindex(/\r\z/no))
+            buf = preprocess(c[0...pt])
+            rest = c[pt..-1]
+          else
+            buf = preprocess(c)
+            rest = ''
+          end
+          if Oxidized.config.input.debug?
+            @log.print buf
+            @log.flush
+          end
+          line += buf
+          line = model.expects line
+          # match is a regexp object. we need to return that for logins to work.
+          match = expects.find { |re| line.match re }
+          # stomp on the out string object if we have one. (thus we were called by cmd?)
+          options[:out]&.replace(line)
+          return match if match
         end
-        if Oxidized.config.input.debug?
-          @log.print buf
-          @log.flush
-        end
-        line += buf
-        line = model.expects line
-        # match is a regexp object. we need to return that for logins to work.
-        match = expects.find { |re| line.match re }
-        # stomp on the out string object if we have one. (thus we were called by cmd?)
-        options[:out]&.replace(line) if options[:out]
-        return match if match
       end
     end
   end
