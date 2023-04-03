@@ -87,3 +87,6 @@ Style/RedundantRegexpEscape:
 
 Metrics/BlockLength:
   Max: 150
+
+Metrics/ParameterLists:
+  Max: 6
