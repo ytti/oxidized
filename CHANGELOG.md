@@ -6,6 +6,7 @@ The format is based on [Keep a Changelog](https://keepachangelog.com/en/1.1.0/).
 
 ## [Unreleased]
 
+- model for PanOS & Panorama via HTTP API (@pv2b, @sts)
 - model for MikroTik SwOS devicse (@sm-nessus)
 - model for TrueNAS devices (@neilschelly)
 - model for Acme Packet devices (@ha36d)
