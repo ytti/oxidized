@@ -204,7 +204,8 @@
 * [OpenWRT](/lib/oxidized/model/openwrt.rb)
 * [OPNsense](/lib/oxidized/model/opnsense.rb)
 * Palo Alto
-  * [PANOS](/lib/oxidized/model/panos.rb)
+  * [PanOS API](/lib/oxidized/model/panos_api.rb)
+  * [PanOS](/lib/oxidized/model/panos.rb)
 * [PLANET SG/SGS Switches](/lib/oxidized/model/planet.rb)
 * [pfSense](/lib/oxidized/model/pfsense.rb)
 * Pure Storage
