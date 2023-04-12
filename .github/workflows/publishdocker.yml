@@ -8,11 +8,11 @@ jobs:
     - uses: actions/checkout@master
     - name: Get Release Version
       id: get_version
-      run: echo name=RELEASE_VERSION::$(echo ${GITHUB_REF:10}) >> $GITHUB_STATE
+      run: echo "release-version=$(git describe --tags)" >> $GITHUB_OUTPUT
     - name: Publish to Registry
-      uses: elgohr/Publish-Docker-Github-Action@master
+      uses: elgohr/Publish-Docker-Github-Action@v5
       with:
         name: oxidized/oxidized
         username: ${{ secrets.DOCKER_USERNAME }}
         password: ${{ secrets.DOCKER_PASSWORD }}
-        tags: "latest,${{ env.STATE_RELEASE_VERSION }}"
+        tags: "latest,${{ steps.get_version.outputs.release-version }}"

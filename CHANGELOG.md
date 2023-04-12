@@ -6,8 +6,9 @@ The format is based on [Keep a Changelog](https://keepachangelog.com/en/1.1.0/).
 
 ## [Unreleased]
 
-- Upgrade Dockerfile baseimage to Ubuntu 22.04 and Ruby 3.0
-- Upgrade Ruby dependency to Ruby 3.0+
+- Ensure Docker Builds are tagged with latest and version (using `git describe --tags`) (@aschaber1)
+- Upgrade Dockerfile baseimage to Ubuntu 22.04 and Ruby 3.0 (@aschaber1)
+- Upgrade Ruby dependency to Ruby 3.0+ (@aschaber1)
 - model for PanOS & Panorama via HTTP API (@pv2b, @sts)
 - model for MikroTik SwOS devicse (@sm-nessus)
 - model for TrueNAS devices (@neilschelly)
