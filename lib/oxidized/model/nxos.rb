@@ -19,7 +19,7 @@ class NXOS < Oxidized::Model
   cmd 'show version' do |cfg|
     cfg = filter cfg
     cfg = cfg.each_line.take_while { |line| not line.match(/uptime/i) }
-    comment cfg.join ""
+    comment cfg.join
   end
 
   cmd 'show inventory' do |cfg|

@@ -1,7 +1,7 @@
 # Backward compatibility shim for deprecated model `timos`.
 # Migrate your source from `timos` to `sros`.
 
-require_relative 'sros.rb'
+require_relative 'sros'
 
 TiMOS = SROS
 

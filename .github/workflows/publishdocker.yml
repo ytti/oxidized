@@ -8,7 +8,7 @@ jobs:
     - uses: actions/checkout@master
     - name: Get Release Version
       id: get_version
-      run: echo ::save-state name=RELEASE_VERSION::$(echo ${GITHUB_REF:10})
+      run: echo name=RELEASE_VERSION::$(echo ${GITHUB_REF:10}) >> $GITHUB_STATE
     - name: Publish to Registry
       uses: elgohr/Publish-Docker-Github-Action@master
       with:

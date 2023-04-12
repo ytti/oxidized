@@ -4,6 +4,7 @@ module Oxidized
   require_relative 'node/stats'
   class MethodNotFound < OxidizedError; end
   class ModelNotFound  < OxidizedError; end
+
   class Node
     attr_reader :name, :ip, :model, :input, :output, :group, :auth, :prompt, :vars, :last, :repo
     attr_accessor :running, :user, :email, :msg, :from, :stats, :retry, :err_type, :err_reason
@@ -210,19 +211,15 @@ module Oxidized
       end
 
       # group
-      if Oxidized.config.groups.has_key?(@group)
-        if Oxidized.config.groups[@group].has_key?(key_str)
-          value = Oxidized.config.groups[@group][key_str]
-          Oxidized.logger.debug "node.rb: setting node key '#{key}' to value '#{value}' from group"
-        end
+      if Oxidized.config.groups.has_key?(@group) && Oxidized.config.groups[@group].has_key?(key_str)
+        value = Oxidized.config.groups[@group][key_str]
+        Oxidized.logger.debug "node.rb: setting node key '#{key}' to value '#{value}' from group"
       end
 
       # model
-      if Oxidized.config.models.has_key?(@model.class.name.to_s.downcase)
-        if Oxidized.config.models[@model.class.name.to_s.downcase].has_key?(key_str)
-          value = Oxidized.config.models[@model.class.name.to_s.downcase][key_str]
-          Oxidized.logger.debug "node.rb: setting node key '#{key}' to value '#{value}' from model"
-        end
+      if Oxidized.config.models.has_key?(@model.class.name.to_s.downcase) && Oxidized.config.models[@model.class.name.to_s.downcase].has_key?(key_str)
+        value = Oxidized.config.models[@model.class.name.to_s.downcase][key_str]
+        Oxidized.logger.debug "node.rb: setting node key '#{key}' to value '#{value}' from model"
       end
 
       # node

@@ -1,4 +1,5 @@
-class CiscoCE < Oxidized::Model #Supporting Cisco Catalyst Express Switches and IOS using the basic web interface
+# Supporting Cisco Catalyst Express Switches and IOS using the basic web interface
+class CiscoCE < Oxidized::Model
   cmd "/level/15/exec/-/show/startup-config" do |cfg|
     output = cfg.gsub(/\A.+<DL>(.+)<\/DL>.+\z/m, '\1') # Strip configuration file from within HTML response.
     output

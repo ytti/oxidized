@@ -1,5 +1,5 @@
 # IOS parser should work here
 
-require_relative 'ios.rb'
+require_relative 'ios'
 
 IOSXE = IOS
