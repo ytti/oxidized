@@ -6,6 +6,14 @@ The format is based on [Keep a Changelog](https://keepachangelog.com/en/1.1.0/).
 
 ## [Unreleased]
 
+## Added
+
+## Changed
+
+- Ensure Docker builds are only pushed to registry on `master` (@aschaber1)
+
+## Fixed
+
 ## [0.29.0 - 2023-04-13]
 
 - Ensure Docker Builds are tagged with latest and version (using `git describe --tags`) (@aschaber1)
