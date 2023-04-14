@@ -1,4 +1,4 @@
-require 'spec_helper'
+require_relative 'spec_helper'
 require 'oxidized/string'
 
 describe Oxidized::String do
