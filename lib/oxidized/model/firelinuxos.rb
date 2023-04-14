@@ -1,4 +1,6 @@
 class FireLinuxOS < Oxidized::Model
+  using Refinements
+
   # Fire Linux OS is what the new FTD (FirePOWER) series devices from Cisco run. At the backend, it's mostly identical to ASA's.
 
   prompt /^[#>]\(?.+\)?\s?/

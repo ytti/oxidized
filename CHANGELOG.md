@@ -14,6 +14,8 @@ The format is based on [Keep a Changelog](https://keepachangelog.com/en/1.1.0/).
 
 ## Fixed
 
+- #2749: fix issues with `cut_both`
+
 ## [0.29.0 - 2023-04-13]
 
 - Ensure Docker Builds are tagged with latest and version (using `git describe --tags`) (@aschaber1)

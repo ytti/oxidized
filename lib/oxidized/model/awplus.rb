@@ -1,4 +1,6 @@
 class AWPlus < Oxidized::Model
+  using Refinements
+
   # Allied Telesis Alliedware Plus Model#
   # https://www.alliedtelesis.com/products/software/AlliedWare-Plus
 

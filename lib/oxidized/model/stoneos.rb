@@ -1,4 +1,6 @@
 class StoneOS < Oxidized::Model
+  using Refinements
+
   # Hillstone Networks StoneOS software
 
   prompt /^\r?[\w.()-]+~?[#>](\s)?$/

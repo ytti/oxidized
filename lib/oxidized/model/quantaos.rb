@@ -1,4 +1,6 @@
 class QuantaOS < Oxidized::Model
+  using Refinements
+
   prompt /^\((\w|\S)+\) (>|#)$/
   comment '! '
 

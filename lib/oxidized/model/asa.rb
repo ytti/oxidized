@@ -1,4 +1,6 @@
 class ASA < Oxidized::Model
+  using Refinements
+
   # Cisco ASA model #
   # Only SSH supported for the sake of security
 

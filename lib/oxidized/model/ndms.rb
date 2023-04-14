@@ -1,7 +1,9 @@
 class NDMS < Oxidized::Model
+  using Refinements
+
   # Pull config from Zyxel Keenetic devices from version NDMS >= 2.0
 
-  comment  '! '
+  comment '! '
 
   prompt /^([\w.@()-]+[#>]\s?)/m
 

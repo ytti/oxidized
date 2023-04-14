@@ -1,4 +1,6 @@
 class PanOS < Oxidized::Model
+  using Refinements
+
   # PaloAlto PAN-OS model #
 
   comment '! '

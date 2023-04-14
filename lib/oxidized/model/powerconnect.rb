@@ -1,4 +1,6 @@
 class PowerConnect < Oxidized::Model
+  using Refinements
+
   prompt /^([\w\s.@-]+(\(\S*\))?[#>]\s?)$/ # allow spaces in hostname..dell does not limit it.. #
 
   comment '! '

@@ -1,4 +1,6 @@
 class Alvarion < Oxidized::Model
+  using Refinements
+
   # Used in Alvarion wisp equipment
 
   # Run this command as an instance of Model so we can access node

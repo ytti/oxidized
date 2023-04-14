@@ -1,5 +1,6 @@
 class Comware < Oxidized::Model
   # HP (A-series)/H3C/3Com Comware
+  using Refinements
 
   # sometimes the prompt might have a leading nul or trailing ASCII Bell (^G)
   prompt /^\0*(<[\w.-]+>).?$/

@@ -1,4 +1,6 @@
 class OneOS < Oxidized::Model
+  using Refinements
+
   prompt /^([\w.@()-]+#\s?)$/
   comment  '! '
 

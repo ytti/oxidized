@@ -1,5 +1,7 @@
 module Oxidized
   class Model
+    using Refinements
+
     class Outputs
       def to_cfg
         type_to_str(nil)

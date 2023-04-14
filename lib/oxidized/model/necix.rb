@@ -1,4 +1,6 @@
 class NecIX < Oxidized::Model
+  using Refinements
+
   prompt /^(\([\w.-]*\)\s[#$]|^\S+[$#]\s?)$/
   comment '! '
   expect /^--More--$/ do |data, re|

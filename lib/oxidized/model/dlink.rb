@@ -1,4 +1,6 @@
 class Dlink < Oxidized::Model
+  using Refinements
+
   # D-LINK Switches
   # Add support dgs 1100 series (tested only with dgs-1100-10/me)
 

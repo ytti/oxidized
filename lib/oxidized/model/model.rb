@@ -3,6 +3,8 @@ require_relative 'outputs'
 
 module Oxidized
   class Model
+    using Refinements
+
     include Oxidized::Config::Vars
 
     class << self
@@ -122,14 +124,14 @@ module Oxidized
 
       out = out.b unless Oxidized.config.input.utf8_encoded?
       self.class.cmds[:all].each do |all_block|
-        out = instance_exec Oxidized::String.new(out), string, &all_block
+        out = instance_exec out, string, &all_block
       end
       if vars :remove_secret
         self.class.cmds[:secret].each do |all_block|
-          out = instance_exec Oxidized::String.new(out), string, &all_block
+          out = instance_exec out, string, &all_block
         end
       end
-      out = instance_exec Oxidized::String.new(out), &block if block
+      out = instance_exec out, &block if block
       process_cmd_output out, string
     end
 
@@ -214,8 +216,7 @@ module Oxidized
     private
 
     def process_cmd_output(output, name)
-      output = Oxidized::String.new(output) if output.is_a?(::String)
-      output = Oxidized::String.new('') unless output.instance_of?(Oxidized::String)
+      output = String.new('') unless output.instance_of?(String)
       output.set_cmd(name)
       output
     end

@@ -1,4 +1,6 @@
 class CoriantGroove < Oxidized::Model
+  using Refinements
+
   comment '# '
 
   prompt /^(\w+@.*>\s*)$/

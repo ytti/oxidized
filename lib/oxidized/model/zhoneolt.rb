@@ -1,4 +1,6 @@
 class ZhoneOLT < Oxidized::Model
+  using Refinements
+
   # Zhone OLT/MetroE/DSL devices (ONT uses a completely different CLI)
 
   # the prompt can be anything on zhone, but it defaults to 'zXX>' and we

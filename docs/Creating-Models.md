@@ -18,6 +18,7 @@ A bare-bone example for a fictional model running the OS type `rootware` could b
 
 ```ruby
 class RootWare < Oxidized::Model
+  using Refinements
   
   cmd 'show complete-config'
 ```
@@ -50,11 +51,11 @@ require 'oxidized/model/junos.rb'
 
 
 class JunOS
+  using Refinements
 
-
-    cmd 'show interfaces diagnostics optics' do |cfg|
-        comment cfg
-    end
+  cmd 'show interfaces diagnostics optics' do |cfg|
+    comment cfg
+  end
 
 
 end
@@ -92,19 +93,17 @@ require 'oxidized/model/junos.rb'
 
 
 class JunOS
+  using Refinements
 
+  cmd 'show interface diagnostic optics' do |cfg|
+    comment cfg
+  end
 
-    cmd 'show interface diagnostic optics' do |cfg|
-        comment cfg
-    end
-
-    cmd 'show configuration | display set' do |cfg|
-        cfg.type = "junos-set"
-        cfg.name = "set"
-        cfg
-    end
-
-
+  cmd 'show configuration | display set' do |cfg|
+    cfg.type = "junos-set"
+    cfg.name = "set"
+    cfg
+  end
 end
 ```
 

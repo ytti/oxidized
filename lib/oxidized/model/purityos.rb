@@ -1,4 +1,6 @@
 class PurityOS < Oxidized::Model
+  using Refinements
+
   # Pure Storage Purity OS
 
   prompt /\w+@\S+(\s+\S+)*\s?>\s?$/

@@ -1,4 +1,6 @@
 class HPMSM < Oxidized::Model
+  using Refinements
+
   prompt /^CLI[>#] +$/
 
   comment '! '
