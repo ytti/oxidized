@@ -26,22 +26,22 @@ describe Oxidized::Nodes do
   describe '#put' do
     it 'adds node to top of queue' do
       @nodes.put @node
-      @nodes.must_equal [@node] + @nodes_org
+      _(@nodes).must_equal [@node] + @nodes_org
     end
   end
 
   describe '#get' do
     it 'returns node from top of queue' do
-      @nodes.get.must_equal @nodes_org.first
+      _(@nodes.get).must_equal @nodes_org.first
     end
     it 'moves node from top to bottom' do
       @nodes.get
-      @nodes.last.must_equal @nodes_org.first
+      _(@nodes.last).must_equal @nodes_org.first
     end
     it 'does not change node count' do
       before = @nodes.size
       @nodes.get
-      before.must_equal @nodes.size
+      _(before).must_equal @nodes.size
     end
   end
 
@@ -49,12 +49,12 @@ describe Oxidized::Nodes do
     it 'moves node to top of queue' do
       node = @nodes[3]
       @nodes.next node.name
-      @nodes.first.must_equal node
+      _(@nodes.first).must_equal node
     end
     it 'does not change node count' do
       before = @nodes.size
       @nodes.next @nodes[3].name
-      before.must_equal @nodes.size
+      _(before).must_equal @nodes.size
     end
   end
 end

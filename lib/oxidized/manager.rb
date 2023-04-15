@@ -23,6 +23,7 @@ module Oxidized
     end
 
     attr_reader :input, :output, :source, :model, :hook
+
     def initialize
       @input  = {}
       @output = {}

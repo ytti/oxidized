@@ -7,6 +7,7 @@ module Oxidized
 
     class << self
       def inherited(klass)
+        super
         if klass.superclass == Oxidized::Model
           klass.instance_variable_set '@cmd',     (Hash.new { |h, k| h[k] = [] })
           klass.instance_variable_set '@cfg',     (Hash.new { |h, k| h[k] = [] })
@@ -18,9 +19,7 @@ module Oxidized
           instance_variables.each do |var|
             iv = instance_variable_get(var)
             klass.instance_variable_set var, iv.dup
-            if var.to_s == "@cmd"
-              @cmd[:cmd] = iv[:cmd].dup
-            end
+            @cmd[:cmd] = iv[:cmd].dup if var.to_s == "@cmd"
           end
         end
       end
@@ -50,7 +49,7 @@ module Oxidized
       end
 
       def cmd(cmd_arg = nil, **args, &block)
-        if cmd_arg.class == Symbol
+        if cmd_arg.instance_of?(Symbol)
           process_args_block(@cmd[cmd_arg], args, block)
         else
           process_args_block(@cmd[:cmd], args, [cmd_arg, block])
@@ -101,7 +100,7 @@ module Oxidized
 
       def process_args_block(target, args, block)
         if args[:clear]
-          if block.class == Array
+          if block.instance_of?(Array)
             target.reject! { |k, _| k == block[0] }
             target.push(block)
           else

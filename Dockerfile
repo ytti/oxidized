@@ -1,23 +1,20 @@
-# Single-stage build of an oxidized container from phusion/baseimage-docker focal-1.2.0, derived from Ubuntu 20.04 (Focal Fossa)
-FROM phusion/baseimage:focal-1.2.0
+# Single-stage build of an oxidized container from phusion/baseimage-docker jammy-1.0.1, derived from Ubuntu 22.04 (Jammy Jellyfish)
+FROM docker.io/phusion/baseimage:jammy-1.0.1
 
 # set up dependencies for the build process
 RUN apt-get -yq update \
-    && apt-get -yq --no-install-recommends install ruby ruby-dev libssl1.1 libssl-dev pkg-config make cmake libssh2-1 libssh2-1-dev git git-email libmailtools-perl g++ libffi-dev ruby-bundler libicu66 libicu-dev libsqlite3-0 libsqlite3-dev libmysqlclient21 libmysqlclient-dev libpq5 libpq-dev zlib1g-dev \
+    && apt-get -yq --no-install-recommends install ruby3.0 ruby3.0-dev libssl3 bzip2 libssl-dev pkg-config make cmake libssh2-1 libssh2-1-dev git git-email libmailtools-perl g++ libffi-dev ruby-bundler libicu70 libicu-dev libsqlite3-0 libsqlite3-dev libmysqlclient21 libmysqlclient-dev libpq5 libpq-dev zlib1g-dev \
     && apt-get clean \
     && rm -rf /var/lib/apt/lists/*
 
 # dependencies for hooks
-RUN gem install aws-sdk slack-ruby-client xmpp4r cisco_spark --no-document
+RUN gem install --no-document aws-sdk slack-ruby-client xmpp4r cisco_spark
 
 # dependencies for sources
-RUN gem install gpgme sequel sqlite3 mysql2 pg --no-document
+RUN gem install --no-document gpgme sequel sqlite3 mysql2 pg
 
 # dependencies for inputs
-RUN gem install net-tftp net-http-persistent mechanize --no-document
-
-# https://github.com/ytti/oxidized/issues/2217#issuecomment-1288471096
-RUN gem install --no-document rugged -- --with-ssh
+RUN gem install --no-document net-tftp net-http-persistent mechanize
 
 # build and install oxidized
 COPY . /tmp/oxidized/
@@ -25,7 +22,7 @@ WORKDIR /tmp/oxidized
 
 # docker automated build gets shallow copy, but non-shallow copy cannot be unshallowed
 RUN git fetch --unshallow || true
-RUN rake install
+RUN CMAKE_FLAGS='-DUSE_SSH=ON' rake install
 
 # web interface
 RUN gem install oxidized-web --no-document

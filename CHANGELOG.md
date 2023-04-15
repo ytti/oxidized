@@ -6,9 +6,24 @@ The format is based on [Keep a Changelog](https://keepachangelog.com/en/1.1.0/).
 
 ## [Unreleased]
 
+## Added
+
+## Changed
+
+- Ensure Docker builds are only pushed to registry on `master` (@aschaber1)
+
+## Fixed
+
+## [0.29.0 - 2023-04-13]
+
+- Ensure Docker Builds are tagged with latest and version (using `git describe --tags`) (@aschaber1)
+- Upgrade Dockerfile baseimage to Ubuntu 22.04 and Ruby 3.0 (@aschaber1)
+- Upgrade Ruby dependency to Ruby 3.0+ (@aschaber1)
+- model for PanOS & Panorama via HTTP API (@pv2b, @sts)
 - model for MikroTik SwOS devicse (@sm-nessus)
 - model for TrueNAS devices (@neilschelly)
 - model for Acme Packet devices (@ha36d)
+- model for SmartCS devise (@yoshihito-tatano)
 - Cumulus: added option to use NCLU as ia collecting method
 - Update net-ssh to 7.0.1 (using `append_all_supported_algorithms: true`)
 - Allow (config) (vlan-####) confirmation (y/n) and sftp questions in procurve prompt (@sorano)

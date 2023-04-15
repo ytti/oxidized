@@ -81,11 +81,11 @@ class GithubRepo < Oxidized::Hook
   def rugged_sshkey(args = {})
     git_user   = args[:git_user]
     privkey    = args[:privkey]
-    pubkey     = args[:pubkey] || privkey + '.pub'
+    pubkey     = args[:pubkey] || (privkey + '.pub')
     Rugged::Credentials::SshKey.new(username:   git_user,
                                     publickey:  File.expand_path(pubkey),
                                     privatekey: File.expand_path(privkey),
-                                    passphrase: ENV["OXIDIZED_SSH_PASSPHRASE"])
+                                    passphrase: ENV.fetch("OXIDIZED_SSH_PASSPHRASE", nil))
   end
 
   def remote_repo(node)
