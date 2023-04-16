@@ -1,0 +1,76 @@
+name: Ruby Gem Release
+run-name: ${{ github.actor }} is creating a release
+# manual trigger, which also requires a version number as input
+on:
+  workflow_dispatch:
+    inputs:
+      version:
+        description: "Version to release"
+        required: true
+
+jobs:
+  build_and_release:
+    runs-on: ubuntu-latest
+
+    permissions:
+      contents: write
+      packages: write
+
+    steps:
+      - uses: actions/checkout@v3
+
+      - name: Set up Ruby
+        # To automatically get bug fixes and new Ruby versions for ruby/setup-ruby,
+        # change this to (see https://github.com/ruby/setup-ruby#versioning):
+        uses: ruby/setup-ruby@v1
+        with:
+          ruby-version: "3.0"
+          bundler-cache: true # runs 'bundle install' and caches installed gems automatically
+      
+      - name: rubocop
+        uses: reviewdog/action-rubocop@v2
+        with:
+          rubocop_version: gemfile
+          rubocop_extensions: rubocop-minitest:gemfile rubocop-rake:gemfile
+          reporter: github-pr-review
+      
+      - name: Run tests
+        run: bundle exec rake
+      
+      - uses: codecov/codecov-action@v3
+        if: ${{ always() }}
+
+      - name: Bump version
+        run: |
+          sed -i -e "2s/VERSION = .*/VERSION = '${{ inputs.version }}'.freeze/" -e "3s/VERSION_FULL = .*/VERSION_FULL = '${{ inputs.version }}'.freeze/" lib/oxidized/version.rb
+          #git add lib/oxidized/version.rb
+          #git pull
+
+      # Commit all changed files back to the repository
+      - uses: stefanzweifel/git-auto-commit-action@v4
+        with:
+          tagging_message: "${{ inputs.version }}"
+          commit_message: "Release ${{ inputs.version }}"
+
+      - name: Publish to GPR
+        run: |
+          mkdir -pv $HOME/.gem
+          touch $HOME/.gem/credentials
+          chmod 0600 $HOME/.gem/credentials
+          printf -- "\n:github: ${GEM_HOST_API_KEY}\n" >> $HOME/.gem/credentials
+          bundle exec rake build
+          bundle exec gem push --KEY github --host https://rubygems.pkg.github.com/${OWNER} pkg/*.gem
+        env:
+          GEM_HOST_API_KEY: "Bearer ${{secrets.GITHUB_TOKEN}}"
+          OWNER: ${{ github.repository_owner }}
+
+      - name: Publish to RubyGems
+        run: |
+          mkdir -pv $HOME/.gem
+          touch $HOME/.gem/credentials
+          chmod 0600 $HOME/.gem/credentials
+          printf -- "\n:rubygems_api_key: ${GEM_HOST_API_KEY}\n" >> $HOME/.gem/credentials
+          bundle exec rake build
+          bundle exec gem push pkg/*.gem
+        env:
+          GEM_HOST_API_KEY: "${{secrets.RUBYGEMS_AUTH_TOKEN}}"
