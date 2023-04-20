@@ -1,4 +1,6 @@
 class EOS < Oxidized::Model
+  using Refinements
+
   # Arista EOS model #
 
   prompt /^.+[#>]$/

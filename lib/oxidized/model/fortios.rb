@@ -1,4 +1,6 @@
 class FortiOS < Oxidized::Model
+  using Refinements
+
   comment '# '
 
   prompt /^([-\w.~]+(\s[(\w\-.)]+)?~?\s?[#>$]\s?)$/

@@ -1,11 +1,13 @@
 class Boss < Oxidized::Model
+  using Refinements
+
   # Extreme Baystack Operating System Software(BOSS)
   # Created by danielcoxman@gmail.com
   # May 15, 2017
   # This was tested on ers3510, ers5530, ers4850, ers5952
   # ssh and telnet were tested with banner and without
 
-  comment  '! '
+  comment '! '
 
   prompt /^[^\s#>]+[#>]$/
 

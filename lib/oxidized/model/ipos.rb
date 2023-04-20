@@ -1,4 +1,6 @@
 class IPOS < Oxidized::Model
+  using Refinements
+
   # Ericsson SSR (IPOS)
   # Redback SE (SEOS)
 

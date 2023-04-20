@@ -1,4 +1,6 @@
 class SROSMD < Oxidized::Model
+  using Refinements
+
   #
   # Nokia SR OS (TiMOS) (formerly TiMetra, Alcatel, Alcatel-Lucent)
   # Working in Model-Driven CLI mode.

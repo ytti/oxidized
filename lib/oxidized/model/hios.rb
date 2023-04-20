@@ -1,4 +1,6 @@
 class Hios < Oxidized::Model
+  using Refinements
+
   ## Docker location: /var/lib/gems/2.7.0/gems/oxidized-0.28.0/lib/oxidized/model/hios.rb
   prompt /^\[[\w\s\W]+\][>|#]+?$/
 

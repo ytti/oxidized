@@ -1,4 +1,6 @@
 class ACSW < Oxidized::Model
+  using Refinements
+
   prompt /([\w.@()\/\\-]+[#>]\s?)/
   comment  '! '
 

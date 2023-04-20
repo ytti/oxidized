@@ -1,4 +1,6 @@
 class IOSXR < Oxidized::Model
+  using Refinements
+
   # IOS XR model #
 
   prompt /^(\r?[\w.@:\/-]+[#>]\s?)$/

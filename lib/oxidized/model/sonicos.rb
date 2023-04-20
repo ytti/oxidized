@@ -1,4 +1,6 @@
 class SonicOS < Oxidized::Model
+  using Refinements
+
   # Applies to Sonicwall NSA series firewalls
 
   prompt /^\w+@\w+[>]\(?.+\)?\s?/

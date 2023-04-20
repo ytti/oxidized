@@ -1,4 +1,6 @@
 class OpenGear < Oxidized::Model
+  using Refinements
+
   comment '# '
 
   prompt /^(\$\s)$/

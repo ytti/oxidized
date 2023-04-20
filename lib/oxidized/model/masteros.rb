@@ -1,4 +1,6 @@
 class MasterOS < Oxidized::Model
+  using Refinements
+
   # MRV MasterOS model #
 
   comment '!'

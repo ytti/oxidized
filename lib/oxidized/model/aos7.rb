@@ -1,4 +1,6 @@
 class AOS7 < Oxidized::Model
+  using Refinements
+
   # Alcatel-Lucent Operating System Version 7 (Linux based)
   # used in OmniSwitch 6900/10k
 

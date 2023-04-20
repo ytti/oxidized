@@ -1,4 +1,6 @@
 class Trango < Oxidized::Model
+  using Refinements
+
   # take a Trangolink sysinfo output and turn it into a configuration file
 
   prompt /^#>\s?/

@@ -1,4 +1,6 @@
 class FortiWLC < Oxidized::Model
+  using Refinements
+
   comment '# '
 
   cmd :all do |cfg, cmdstring|

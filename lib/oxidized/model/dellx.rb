@@ -1,4 +1,6 @@
 class DellX < Oxidized::Model
+  using Refinements
+
   # Used in Dell X-Series Switches
 
   prompt /[#>]$/

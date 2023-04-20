@@ -1,4 +1,6 @@
 class SmartCS < Oxidized::Model
+  using Refinements
+
   prompt /^\r?([\w.@() -]+[#>]\s?)$/
   comment '# '
 

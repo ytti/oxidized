@@ -1,4 +1,6 @@
 class GaiaOS < Oxidized::Model
+  using Refinements
+
   # CheckPoint - Gaia OS Model
 
   # Gaia Prompt

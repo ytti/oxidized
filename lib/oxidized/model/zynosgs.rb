@@ -1,4 +1,6 @@
 class ZyNOSGS < Oxidized::Model
+  using Refinements
+
   # Used in Zyxel GS1900 switches, tested with GS1900-8
   prompt /^.*# $/
   comment '! '

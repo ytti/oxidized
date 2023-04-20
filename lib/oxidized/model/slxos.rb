@@ -1,4 +1,6 @@
 class SLXOS < Oxidized::Model
+  using Refinements
+
   prompt /^.*[>#]\s?$/i
   comment '! '
 

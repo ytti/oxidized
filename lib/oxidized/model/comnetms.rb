@@ -1,4 +1,6 @@
 class ComnetMS < Oxidized::Model
+  using Refinements
+
   # Comnet Microsemi Switch
   prompt /^\r?([\w.@()-]+[#>]\s?)$/
   comment  '! '

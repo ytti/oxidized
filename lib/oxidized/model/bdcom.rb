@@ -1,4 +1,6 @@
 class BDCOM < Oxidized::Model
+  using Refinements
+
   comment '! '
 
   cmd :secret do |cfg|
