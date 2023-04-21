@@ -22,6 +22,8 @@ WORKDIR /tmp/oxidized
 
 # docker automated build gets shallow copy, but non-shallow copy cannot be unshallowed
 RUN git fetch --unshallow || true
+
+# Ensure rugged is built with ssh support
 RUN CMAKE_FLAGS='-DUSE_SSH=ON' rake install
 
 # web interface
