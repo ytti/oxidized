@@ -80,10 +80,8 @@ module Oxidized
       tab = []
       walker.each do |commit|
         # Diabled rubocop because the suggested .empty? does not work here.
-        # rubocop:disable Style/ZeroLengthPredicate
-        next if commit.diff(paths: [path]).size.zero?
+        next if commit.diff(paths: [path]).size.zero? # rubocop:disable Style/ZeroLengthPredicate
 
-        # rubocop:enable Style/ZeroLengthPredicate
         hash = {}
         hash[:date] = commit.time.to_s
         hash[:oid] = commit.oid
