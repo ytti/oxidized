@@ -1,7 +1,7 @@
 class FirewareOS < Oxidized::Model
   using Refinements
 
-  prompt /^\[?\w*\]?\w*?(<\w*>)?(#|>)\s*$/
+  prompt /^\[?\w*\]?\w*?(<[\w-]*>)?(#|>)\s*$/
   comment  '-- '
 
   cmd :all do |cfg|
