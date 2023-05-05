@@ -1,4 +1,6 @@
 class SAOS < Oxidized::Model
+  using Refinements
+
   # Ciena SAOS switch
   # used for 6.x devices
 

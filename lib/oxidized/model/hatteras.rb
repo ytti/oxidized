@@ -1,4 +1,6 @@
 class Hatteras < Oxidized::Model
+  using Refinements
+
   # Hatteras Networks
 
   prompt /^(\r?[\w.@()-]+[#>]\s?)$/
@@ -24,7 +26,7 @@ class Hatteras < Oxidized::Model
     cfg = cfg.each_line.reject do |line|
       line.match(/Switch uptime|Switch temperature|Last reset reason/) ||
         line.match(/TermCpuUtil|^\s+\^$|ERROR: Bad command/)
-    end .join
+    end.join
     comment cfg
   end
 
@@ -32,7 +34,7 @@ class Hatteras < Oxidized::Model
     cfg = cfg.each_line.reject do |line|
       line.match(/Card uptime|Card temperature|Last reset reason/) ||
         line.match(/TermCpuUtil|^\s+\^$|ERROR: Bad command/)
-    end .join
+    end.join
     comment cfg
   end
 

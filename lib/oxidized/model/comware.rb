@@ -1,5 +1,6 @@
 class Comware < Oxidized::Model
   # HP (A-series)/H3C/3Com Comware
+  using Refinements
 
   # sometimes the prompt might have a leading nul or trailing ASCII Bell (^G)
   prompt /^\0*(<[\w.-]+>).?$/
@@ -56,8 +57,9 @@ class Comware < Oxidized::Model
         cmd vars(:comware_cmdline)
 
         # HP V1950 OS r3208 (v7.1)
-        cmd 'xtd-cli-mode', /(#{@node.prompt}|Continue)/
-        cmd 'y', /(#{@node.prompt}|input password)/
+        # HPE Office Connect 1950
+        cmd 'xtd-cli-mode', /(#{@node.prompt}|Continue|Switch)/
+        cmd 'y', /(#{@node.prompt}|input password|Password:)/
         cmd vars(:comware_cmdline)
       end
     end

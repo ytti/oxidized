@@ -1,4 +1,6 @@
 class IronWare < Oxidized::Model
+  using Refinements
+
   prompt /^.*(telnet|ssh)@.+[>#]\s?$/i
   comment  '! '
 
@@ -75,9 +77,13 @@ class IronWare < Oxidized::Model
   # handle pager with enable
   cfg :telnet, :ssh do
     if vars :enable
-      post_login do
-        send "enable\r\n"
-        cmd vars(:enable)
+      if vars(:enable).is_a? TrueClass
+        post_login 'enable'
+      else
+        post_login do
+          send "enable\r\n"
+          cmd vars(:enable)
+        end
       end
     end
     post_login ''

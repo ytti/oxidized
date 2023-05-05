@@ -10,6 +10,7 @@ module Oxidized
     attr_reader :commitref
 
     def initialize
+      super
       @cfg = Oxidized.config.output.gitcrypt
       @gitcrypt_cmd = "/usr/bin/git-crypt"
       @gitcrypt_init = @gitcrypt_cmd + " init"
@@ -194,13 +195,13 @@ module Oxidized
 
       begin
         update_repo repo, file, data, @msg, @user, @email
-      rescue Git::GitExecuteError, ArgumentError => open_error
-        Oxidized.logger.debug "open_error #{open_error} #{file}"
+      rescue Git::GitExecuteError, ArgumentError => e
+        Oxidized.logger.debug "open_error #{e} #{file}"
         begin
           grepo = Git.init repo
           crypt_init grepo
         rescue StandardError => create_error
-          raise GitCryptError, "first '#{open_error.message}' was raised while opening git repo, then '#{create_error.message}' was while trying to create git repo"
+          raise GitCryptError, "first '#{e.message}' was raised while opening git repo, then '#{create_error.message}' was while trying to create git repo"
         end
         retry
       end
@@ -214,11 +215,7 @@ module Oxidized
         unlock grepo
         File.write(file, data)
         grepo.add(file)
-        if grepo.status[file].nil?
-          grepo.commit(msg)
-          @commitref = grepo.log(1).first.objectish
-          true
-        elsif !grepo.status[file].type.nil?
+        if grepo.status[file].nil? || !grepo.status[file].type.nil?
           grepo.commit(msg)
           @commitref = grepo.log(1).first.objectish
           true

@@ -1,4 +1,6 @@
 class LinksysSRW < Oxidized::Model
+  using Refinements
+
   comment '! '
 
   prompt /^([\r\w.@-]+[#>]\s?)$/

@@ -1,4 +1,6 @@
 class Airos < Oxidized::Model
+  using Refinements
+
   # Ubiquiti AirOS circa 5.x
 
   prompt /^[^#]+# /

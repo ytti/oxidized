@@ -1,4 +1,6 @@
 class ARBOS < Oxidized::Model
+  using Refinements
+
   # Arbor OS model #
 
   prompt /^[\S\s]+\n([\w.@-]+[:\/#>]+)\s?$/

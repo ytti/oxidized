@@ -1,4 +1,6 @@
 class SGOS < Oxidized::Model
+  using Refinements
+
   comment '!- '
   prompt /\w+>|#/
 

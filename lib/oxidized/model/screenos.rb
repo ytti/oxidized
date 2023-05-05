@@ -1,4 +1,6 @@
 class ScreenOS < Oxidized::Model
+  using Refinements
+
   # Netscreen ScreenOS model #
 
   comment '! '

@@ -1,4 +1,6 @@
 class Edgeos < Oxidized::Model
+  using Refinements
+
   # EdgeOS #
 
   prompt /@.*?:~\$\s/

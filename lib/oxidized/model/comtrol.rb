@@ -1,4 +1,6 @@
 class Comtrol < Oxidized::Model
+  using Refinements
+
   # Used in Comtrol Industrial Switches, such as RocketLinx ES8510
 
   # Typical prompt "<hostname>#"

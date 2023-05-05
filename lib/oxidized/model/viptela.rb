@@ -1,4 +1,6 @@
 class Viptela < Oxidized::Model
+  using Refinements
+
   # Cisco Vipetla
 
   prompt /[-\w]+#\s$/

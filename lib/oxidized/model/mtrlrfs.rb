@@ -1,4 +1,6 @@
 class Mtrlrfs < Oxidized::Model
+  using Refinements
+
   # Motorola RFS/Extreme WM
 
   comment  '# '

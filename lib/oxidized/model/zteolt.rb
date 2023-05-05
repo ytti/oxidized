@@ -1,4 +1,6 @@
 class ZTEOLT < Oxidized::Model
+  using Refinements
+
   # Tested with C320 and C300 olt, firware 1.2.5P3 and 2.1.0
 
   prompt /^([\w.@()-]+[#>]\s?)$/

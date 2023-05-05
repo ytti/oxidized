@@ -1,4 +1,6 @@
 class FabricOS < Oxidized::Model
+  using Refinements
+
   # Brocade Fabric OS model #
   ## FIXME: Only ssh exec mode support, no telnet, no ssh screenscraping
 
