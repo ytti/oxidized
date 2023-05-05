@@ -42,6 +42,8 @@ class Eltex < Oxidized::Model
       end
     end
     post_login 'terminal datadump'
+    #disable cli pagination for MES2424
+    post_login 'set cli pagination off'
     pre_logout 'disable'
     pre_logout 'exit'
   end
