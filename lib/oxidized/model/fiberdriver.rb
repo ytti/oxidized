@@ -1,4 +1,6 @@
 class FiberDriver < Oxidized::Model
+  using Refinements
+
   prompt /\w+#/
   comment "! "
 

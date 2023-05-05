@@ -1,4 +1,6 @@
 class Cumulus < Oxidized::Model
+  using Refinements
+
   prompt /^((\w*)@(.*)):/
   comment '# '
 
@@ -81,6 +83,9 @@ class Cumulus < Oxidized::Model
 
       cfg += add_comment 'ACL'
       cfg += cmd 'cat /etc/cumulus/acl/policy.conf'
+
+      cfg += add_comment 'DHCP-RELAY'
+      cfg += cmd 'cat /etc/default/isc-dhcp-relay'
 
       cfg += add_comment 'VERSION'
       cfg += cmd 'cat /etc/cumulus/etc.replace/os-release'

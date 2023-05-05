@@ -1,4 +1,6 @@
 class CiscoNGA < Oxidized::Model
+  using Refinements
+
   comment '# '
   prompt /([\w.@-]+[#>]\s?)$/
 

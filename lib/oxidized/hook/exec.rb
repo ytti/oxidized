@@ -30,11 +30,9 @@ class Exec < Oxidized::Hook
     env = make_env ctx
     log "Execute: #{@cmd.inspect}", :debug
     th = Thread.new do
-      begin
-        run_cmd! env
-      rescue StandardError => e
-        raise e unless @async
-      end
+      run_cmd! env
+    rescue StandardError => e
+      raise e unless @async
     end
     th.join unless @async
   end

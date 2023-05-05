@@ -1,5 +1,7 @@
 require 'net/http'
 class NSXConfig < Oxidized::Model
+  using Refinements
+
   cmd "/api/4.0/edges/" do |cfg|
     edges = JSON.parse(cfg.encode('UTF-8', { invalid: :replace, undef: :replace, replace: '?' }))["edgePage"]["data"]
     data = []

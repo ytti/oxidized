@@ -1,4 +1,6 @@
 class OpenWrt < Oxidized::Model
+  using Refinements
+
   prompt /^[^#]+#/
   comment '#'
 

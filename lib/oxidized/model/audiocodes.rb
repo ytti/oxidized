@@ -1,4 +1,6 @@
 class AudioCodes < Oxidized::Model
+  using Refinements
+
   # Pull config from AudioCodes Mediant devices from version > 7.0
 
   prompt /^\r?([\w.@() -]+[#>]\s?)$/

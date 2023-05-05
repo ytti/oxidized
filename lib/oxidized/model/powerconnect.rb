@@ -1,4 +1,6 @@
 class PowerConnect < Oxidized::Model
+  using Refinements
+
   prompt /^([\w\s.@-]+(\(\S*\))?[#>]\s?)$/ # allow spaces in hostname..dell does not limit it.. #
 
   comment '! '
@@ -19,9 +21,7 @@ class PowerConnect < Oxidized::Model
   end
 
   cmd 'show version' do |cfg|
-    if @stackable.nil?
-      @stackable = true if cfg =~ /(U|u)nit\s/
-    end
+    @stackable = true if @stackable.nil? && (cfg =~ /(U|u)nit\s/)
     cfg = cfg.split("\n").reject { |line| line[/Up\sTime/] }
     comment cfg.join("\n") + "\n"
   end

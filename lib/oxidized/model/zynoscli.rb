@@ -1,4 +1,6 @@
 class ZyNOSCLI < Oxidized::Model
+  using Refinements
+
   # Used in Zyxel DSLAMs, such as SAM1316
 
   # Typical prompt "XGS4600#"

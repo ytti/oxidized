@@ -1,5 +1,6 @@
 # Oxidized
-[![Build Status](https://api.travis-ci.com/ytti/oxidized.svg)](https://travis-ci.com/ytti/oxidized)
+
+[![Build Status](https://github.com/ytti/oxidized/actions/workflows/ruby.yml/badge.svg)](https://github.com/ytti/oxidized/actions/workflows/ruby.yml)
 [![codecov.io](https://codecov.io/gh/ytti/oxidized/coverage.svg?branch=master)](https://codecov.io/gh/ytti/oxidized?branch=master)
 [![Codacy Badge](https://api.codacy.com/project/badge/Grade/5a90cb22db6a4d5ea23ad0dfb53fe03a)](https://www.codacy.com/app/ytti/oxidized?utm_source=github.com&amp;utm_medium=referral&amp;utm_content=ytti/oxidized&amp;utm_campaign=Badge_Grade)
 [![Code Climate](https://codeclimate.com/github/ytti/oxidized/badges/gpa.svg)](https://codeclimate.com/github/ytti/oxidized)
@@ -76,7 +77,7 @@ Check out the [Oxidized TREX 2014 presentation](http://youtu.be/kBQ_CTUuqeU#t=3h
 
 ### Debian and Ubuntu
 
-Debian "buster" or newer and Ubuntu 17.10 (artful) or newer are recommended. On Ubuntu, begin by enabling the `universe` 
+Debian "buster" or newer and Ubuntu 17.10 (artful) or newer are recommended. On Ubuntu, begin by enabling the `universe`
 repository (required for libssh2-1-dev):
 
 ```shell
@@ -104,8 +105,8 @@ Install Ruby 2.3 from [SCL](https://www.softwarecollections.org/en/scls/rhscl/rh
 
 ```shell
 yum install centos-release-scl
-yum install rh-ruby23 rh-ruby23-ruby-devel
-scl enable rh-ruby23 bash
+yum install rh-ruby30 rh-ruby30-ruby-devel
+scl enable rh-ruby30 bash
 ```
 
 The following additional packages will be required to build the dependencies:
@@ -120,12 +121,14 @@ Make sure you dont have any leftover ruby:
 ```yum erase ruby```
 
 Then, install gpg key and rvm
-```sudo gpg --keyserver hkp://keys.gnupg.net --recv-keys 409B6B1796C275462A1703113804BB82D39DC0E3 7D2BAF1CF37B13E2069D6956105BD0E739499BDB
+
+```shell
+sudo gpg --keyserver hkp://keys.gnupg.net --recv-keys 409B6B1796C275462A1703113804BB82D39DC0E3 7D2BAF1CF37B13E2069D6956105BD0E739499BDB
 curl -sSL https://get.rvm.io | bash -s stable
 source /etc/profile.d/rvm.sh
 rvm requirements run
-rvm install 2.6.0
-rvm use 2.6.0
+rvm install 3.0
+rvm use 3.0
 ```
 
 Install oxidized requirements:
@@ -140,7 +143,6 @@ You need to wrap the gem and reference the wrap in the systemctl service file:
 You can see where the wrapped gem is via
 ```rvm wrapper show oxidized```
 Use that path in the oxidized.service file, restart the systemctl daemon, run oxidized by hand once, edit config file, start service.
-
 
 ### FreeBSD
 
@@ -196,7 +198,7 @@ Run the container for the first time to initialize the config:
 _Note: this step in only required for creating the Oxidized configuration file and can be skipped if you already have one._
 
 ```shell
-docker run --rm -v /etc/oxidized:/root/.config/oxidized -p 8888:8888/tcp -t oxidized/oxidized:latest oxidized
+docker run --rm -v /etc/oxidized:/home/oxidized/.config/oxidized -p 8888:8888/tcp -t oxidized/oxidized:latest oxidized
 ```
 
 If the RESTful API and Web Interface are enabled, on the docker host running the container
@@ -218,12 +220,9 @@ services:
     environment:
       CONFIG_RELOAD_INTERVAL: 600
     volumes:
-       - config:/root/.config/oxidized/config
-       - router.db:/root/.config/oxidized/router.db
-       - model:/root/.config/oxidized/model
-       # if git is use as input
-       - data:/root/.config/oxidized/backupcfg/
-
+       - config:/home/oxidized/.config/oxidized/
+volumes:
+  config:
 ```
 
 Create the `/etc/oxidized/router.db` (see [CSV Source](docs/Sources.md#source-csv) for further info):
@@ -235,7 +234,7 @@ vim /etc/oxidized/router.db
 Run container again to start oxidized with your configuration:
 
 ```shell
-docker run -v /etc/oxidized:/root/.config/oxidized -p 8888:8888/tcp -t oxidized/oxidized:latest
+docker run -v /etc/oxidized:/home/oxidized/.config/oxidized -p 8888:8888/tcp -t oxidized/oxidized:latest
 oxidized[1]: Oxidized starting, running as pid 1
 oxidized[1]: Loaded 1 nodes
 Puma 2.13.4 starting...
@@ -247,13 +246,13 @@ Puma 2.13.4 starting...
 If you want to have the config automatically reloaded (e.g. when using a http source that changes):
 
 ```shell
-docker run -v /etc/oxidized:/root/.config/oxidized -p 8888:8888/tcp -e CONFIG_RELOAD_INTERVAL=3600 -t oxidized/oxidized:latest
+docker run -v /etc/oxidized:/home/oxidized/.config/oxidized -p 8888:8888/tcp -e CONFIG_RELOAD_INTERVAL=3600 -t oxidized/oxidized:latest
 ```
 
 If you need to use an internal CA (e.g. to connect to an private github instance):
 
 ```shell
-docker run -v /etc/oxidized:/root/.config/oxidized -v /path/to/MY-CA.crt:/usr/local/share/ca-certificates/MY-CA.crt -p 8888:8888/tcp -e UPDATE_CA_CERTIFICATES=true -t oxidized/oxidized:latest
+docker run -v /etc/oxidized:/home/oxidized/.config/oxidized -v /path/to/MY-CA.crt:/usr/local/share/ca-certificates/MY-CA.crt -p 8888:8888/tcp -e UPDATE_CA_CERTIFICATES=true -t oxidized/oxidized:latest
 ```
 
 ### Installing Ruby 2.3 using RVM
@@ -368,7 +367,8 @@ The systemd service assumes that you have a user named 'oxidized' and that oxidi
 ```shell
 sudo cp extra/oxidized.service /etc/systemd/system
 ```
-2. Setup /var/run/
+
+2. Setup `/var/run/`
 
 ```shell
 mkdir /run/oxidized

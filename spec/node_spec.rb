@@ -1,4 +1,4 @@
-require 'spec_helper'
+require_relative 'spec_helper'
 
 describe Oxidized::Node do
   before(:each) do
@@ -18,19 +18,19 @@ describe Oxidized::Node do
 
   describe '#new' do
     it 'should resolve input' do
-      @node.input[0].to_s.split('::')[1].must_equal 'SSH'
+      _(@node.input[0].to_s.split('::')[1]).must_equal 'SSH'
     end
     it 'should resolve model' do
-      @node.model.class.must_equal JunOS
+      _(@node.model.class).must_equal JunOS
     end
     it 'should resolve username' do
-      @node.auth[:username].must_equal 'alma'
+      _(@node.auth[:username]).must_equal 'alma'
     end
     it 'should resolve password' do
-      @node.auth[:password].must_equal 'armud'
+      _(@node.auth[:password]).must_equal 'armud'
     end
     it 'should require prompt' do
-      @node.prompt.must_equal 'test_prompt'
+      _(@node.prompt).must_equal 'test_prompt'
     end
   end
 
@@ -39,7 +39,7 @@ describe Oxidized::Node do
       stub_oxidized_ssh
 
       status, = @node.run
-      status.must_equal :success
+      _(status).must_equal :success
     end
     it 'should record the success' do
       stub_oxidized_ssh
@@ -50,7 +50,7 @@ describe Oxidized::Node do
       @node.stats.add j
       after_successes = @node.stats.successes
       successes = after_successes - before_successes
-      successes.must_equal 1
+      _(successes).must_equal 1
     end
     it 'should record a failure' do
       stub_oxidized_ssh_fail
@@ -61,7 +61,7 @@ describe Oxidized::Node do
       @node.stats.add j
       after_fails = @node.stats.failures
       fails = after_fails - before_fails
-      fails.must_equal 1
+      _(fails).must_equal 1
     end
   end
 
@@ -80,7 +80,7 @@ describe Oxidized::Node do
 
     it 'when there are no groups' do
       Oxidized.config.output.git.repo = '/tmp/repository.git'
-      node.repo.must_equal '/tmp/repository.git'
+      _(node.repo).must_equal '/tmp/repository.git'
     end
 
     describe 'when there are groups' do
@@ -98,7 +98,7 @@ describe Oxidized::Node do
         end
 
         it 'should use the correct remote' do
-          node.repo.must_equal '/tmp/repository.git'
+          _(node.repo).must_equal '/tmp/repository.git'
         end
       end
 
@@ -110,7 +110,7 @@ describe Oxidized::Node do
         end
 
         it 'should use the correct remote' do
-          node.repo.must_equal '/tmp/ggrroouupp.git'
+          _(node.repo).must_equal '/tmp/ggrroouupp.git'
         end
       end
     end

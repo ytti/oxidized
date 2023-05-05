@@ -1,10 +1,12 @@
 class SROS < Oxidized::Model
+  using Refinements
+
   #
   # Nokia SR OS (TiMOS) (formerly TiMetra, Alcatel, Alcatel-Lucent).
   # Used in 7705 SAR, 7210 SAS, 7450 ESS, 7750 SR, 7950 XRS, and NSP.
   #
 
-  comment  '# '
+  comment '# '
 
   prompt /^([-\w.:>*]+\s?[#>]\s?)$/
 

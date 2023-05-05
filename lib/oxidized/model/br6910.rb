@@ -1,4 +1,6 @@
 class BR6910 < Oxidized::Model
+  using Refinements
+
   prompt /^([\w.@()-]+[#>]\s?)$/
   comment '! '
 

@@ -1,4 +1,6 @@
 class CiscoSMA < Oxidized::Model
+  using Refinements
+
   # SMA prompt "mail.example.com> "
   prompt /^\r*([-\w. ]+\.[-\w. ]+\.[-\w. ]+[#>]\s+)$/
   comment '! '

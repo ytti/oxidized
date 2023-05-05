@@ -14,7 +14,7 @@ class SlackDiff < Oxidized::Hook
     return unless ctx.event.to_s == "post_store"
 
     log "Connecting to slack"
-    Slack.configure do |config|
+    Slack::Web::Client.configure do |config|
       config.token = cfg.token
       config.proxy = cfg.proxy if cfg.has_key?('proxy')
     end

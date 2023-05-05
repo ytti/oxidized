@@ -1,4 +1,6 @@
 class Planet < Oxidized::Model
+  using Refinements
+
   prompt /^\r?([\w.@()-]+[#>]\s?)$/
   comment  '! '
 

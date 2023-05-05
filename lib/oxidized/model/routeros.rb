@@ -1,4 +1,6 @@
 class RouterOS < Oxidized::Model
+  using Refinements
+
   prompt /\[\w+@\S+(\s+\S+)*\]\s?>\s?$/
   comment "# "
 

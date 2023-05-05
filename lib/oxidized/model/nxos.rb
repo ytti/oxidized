@@ -1,4 +1,6 @@
 class NXOS < Oxidized::Model
+  using Refinements
+
   prompt /^(\r?[\w.@_()-]+[#]\s?)$/
   comment '! '
 
@@ -12,13 +14,14 @@ class NXOS < Oxidized::Model
     cfg.gsub! /^(snmp-server user (\S+) (\S+) auth (\S+)) (\S+) (priv) (\S+)/, '\\1 <configuration removed> '
     cfg.gsub! /(password \d+) (\S+)/, '\\1 <secret hidden>'
     cfg.gsub! /^(radius-server key).*/, '\\1 <secret hidden>'
+    cfg.gsub! /^(tacacs-server host .+ key(?: \d+)?) \S+/, '\\1 <secret hidden>'
     cfg
   end
 
   cmd 'show version' do |cfg|
     cfg = filter cfg
     cfg = cfg.each_line.take_while { |line| not line.match(/uptime/i) }
-    comment cfg.join ""
+    comment cfg.join
   end
 
   cmd 'show inventory' do |cfg|

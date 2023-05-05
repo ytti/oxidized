@@ -29,7 +29,7 @@ require_relative 'rest_client'
 module Oxidized
   require 'asetus'
   class Config
-    Root = File.join ENV['HOME'], '.config', 'oxidized'
+    Root = File.join Dir.home, '.config', 'oxidized'
   end
 
   CFGS = Asetus.new name: 'oxidized', load: false, key_to_s: true
@@ -105,7 +105,7 @@ module Oxidized
     end
 
     def handle_log(log, ipaddr)
-      log = log.to_s.split ' '
+      log = log.to_s.split
       index, vendor = MSG.find do |key, value|
         index = log.find_index { |e| e.match value }
         break index, key if index

@@ -1,4 +1,6 @@
 class Icotera < Oxidized::Model
+  using Refinements
+
   comment '## '
 
   cmd :all do |cfg|

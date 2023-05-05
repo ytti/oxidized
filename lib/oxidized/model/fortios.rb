@@ -1,4 +1,6 @@
 class FortiOS < Oxidized::Model
+  using Refinements
+
   comment '# '
 
   prompt /^([-\w.~]+(\s[(\w\-.)]+)?~?\s?[#>$]\s?)$/
@@ -36,7 +38,7 @@ class FortiOS < Oxidized::Model
     cfg.gsub! /(Disk Usage\s+:\s+)(.*)/, '\1<stripped>'
     cfg.gsub! /(^\S+ (?:disk|DB):\s+)(.*)/, '\1<stripped>\3'
     cfg.gsub! /(VM Registration:\s+)(.*)/, '\1<stripped>\3'
-    cfg.gsub! /(Virus-DB|Extended DB|IPS-DB|IPS-ETDB|APP-DB|INDUSTRIAL-DB|Botnet DB|IPS Malicious URL Database|AV AI\/ML Model).*/, '\\1 <db version stripped>'
+    cfg.gsub! /(Virus-DB|Extended DB|IPS-DB|IPS-ETDB|APP-DB|INDUSTRIAL-DB|Botnet DB|IPS Malicious URL Database|AV AI\/ML Model|IoT-Detect).*/, '\\1 <db version stripped>'
     comment cfg
   end
 

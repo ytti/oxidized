@@ -1,4 +1,6 @@
 class QTECH < Oxidized::Model
+  using Refinements
+
   comment '! '
 
   cmd :all do |cfg|

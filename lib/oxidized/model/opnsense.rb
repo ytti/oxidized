@@ -1,4 +1,6 @@
 class OpnSense < Oxidized::Model
+  using Refinements
+
   # minimum required permissions: "System: Shell account access"
   # must enable SSH and password-based SSH access
 
