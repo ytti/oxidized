@@ -1,7 +1,9 @@
 module Oxidized
   class Http < Output
     attr_reader :commitref
+
     def initialize
+      super
       @cfg = Oxidized.config.output.http
     end
 

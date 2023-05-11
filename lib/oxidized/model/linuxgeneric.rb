@@ -1,4 +1,6 @@
 class LinuxGeneric < Oxidized::Model
+  using Refinements
+
   prompt /^(\w.*|\W.*)(:|#) /
   comment '# '
 

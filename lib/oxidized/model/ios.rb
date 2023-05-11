@@ -1,4 +1,6 @@
 class IOS < Oxidized::Model
+  using Refinements
+
   prompt /^([\w.@()-]+[#>]\s?)$/
   comment  '! '
 

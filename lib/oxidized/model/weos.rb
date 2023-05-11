@@ -1,4 +1,6 @@
 class WEOS < Oxidized::Model
+  using Refinements
+
   # Westell WEOS, works with Westell 8178G, Westell 8266G
 
   prompt /^(\s[\w.@-]+[#>]\s?)$/

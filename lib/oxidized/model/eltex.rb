@@ -1,4 +1,6 @@
 class Eltex < Oxidized::Model
+  using Refinements
+
   # Tested with MES2324FB Version: 4.0.7.1 Build: 37 (master)
 
   prompt /^\s?[\w.@\(\)-]+[#>]\s?$/
@@ -42,6 +44,8 @@ class Eltex < Oxidized::Model
       end
     end
     post_login 'terminal datadump'
+    # disable cli pagination for MES2424
+    post_login 'set cli pagination off'
     pre_logout 'disable'
     pre_logout 'exit'
   end

@@ -1,4 +1,6 @@
 class NetScaler < Oxidized::Model
+  using Refinements
+
   prompt /^([\w\.-]*>\s?)$/
   comment '# '
 

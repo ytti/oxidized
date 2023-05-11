@@ -1,4 +1,6 @@
 class Enterasys < Oxidized::Model
+  using Refinements
+
   # Enterasys B3/C3 models #
 
   prompt /^.+\w\((su|rw)\)->\s?$/

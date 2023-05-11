@@ -1,4 +1,6 @@
 class ALTEONOS < Oxidized::Model
+  using Refinements
+
   prompt  /^\(?.+\)?\s?[#>]/
 
   comment '! '

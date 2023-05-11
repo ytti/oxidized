@@ -1,4 +1,6 @@
 class Netgear < Oxidized::Model
+  using Refinements
+
   comment '!'
   prompt /^(\([\w\s\-.]+\)\s[#>])$/
 
@@ -30,7 +32,9 @@ class Netgear < Oxidized::Model
     #     The system has unsaved changes.
     #     Would you like to save them now? (y/n)
     #
-    # So it is safer simply to disconnect and not issue a pre_logout command
+    # As no changes will be made over this simple SSH session, we can safely choose "n" here.
+    pre_logout 'quit'
+    pre_logout 'n'
   end
 
   cmd :all do |cfg, cmdstring|

@@ -64,11 +64,11 @@ class GithubRepo < Oxidized::Hook
         log "Authenticating using username and password as '#{git_user}'", :debug
         Rugged::Credentials::UserPassword.new(username: git_user, password: cfg.password)
       elsif cfg.has_key?('privatekey')
-        pubkey = cfg.has_key?('publickey') ? cfg.publickey : nil;
+        pubkey = cfg.has_key?('publickey') ? cfg.publickey : nil
         log "Authenticating using ssh keys as '#{git_user}'", :debug
         rugged_sshkey(git_user: git_user, privkey: cfg.privatekey, pubkey: pubkey)
       elsif cfg.has_key?('remote_repo') && cfg.remote_repo.has_key?(node.group) && cfg.remote_repo[node.group].has_key?('privatekey')
-        pubkey = cfg.remote_repo[node.group].has_key?('publickey') ? cfg.remote_repo[node.group].publickey : nil;
+        pubkey = cfg.remote_repo[node.group].has_key?('publickey') ? cfg.remote_repo[node.group].publickey : nil
         log "Authenticating using ssh keys as '#{git_user}' for '#{node.group}/#{node.name}'", :debug
         rugged_sshkey(git_user: git_user, privkey: cfg.remote_repo[node.group].privatekey, pubkey: pubkey)
       else
@@ -81,11 +81,11 @@ class GithubRepo < Oxidized::Hook
   def rugged_sshkey(args = {})
     git_user   = args[:git_user]
     privkey    = args[:privkey]
-    pubkey     = args[:pubkey] || privkey + '.pub'
-    Rugged::Credentials::SshKey.new(username: git_user,
-                                    publickey: File.expand_path(pubkey),
+    pubkey     = args[:pubkey] || (privkey + '.pub')
+    Rugged::Credentials::SshKey.new(username:   git_user,
+                                    publickey:  File.expand_path(pubkey),
                                     privatekey: File.expand_path(privkey),
-                                    passphrase: ENV["OXIDIZED_SSH_PASSPHRASE"])
+                                    passphrase: ENV.fetch("OXIDIZED_SSH_PASSPHRASE", nil))
   end
 
   def remote_repo(node)
@@ -95,8 +95,6 @@ class GithubRepo < Oxidized::Hook
       cfg.remote_repo[node.group]
     elsif cfg.remote_repo[node.group].url.is_a?(String)
       cfg.remote_repo[node.group].url
-    else
-      nil
     end
   end
 end

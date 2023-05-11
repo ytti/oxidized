@@ -33,6 +33,8 @@ task :test do
 end
 
 task build: %i[chmod version_set]
+
+desc 'Set Gem Version'
 task :version_set do
   Oxidized.version_set
   Bundler::GemHelper.instance.gemspec.version = Oxidized::VERSION

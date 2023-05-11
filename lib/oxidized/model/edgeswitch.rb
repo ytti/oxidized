@@ -1,4 +1,6 @@
 class EdgeSwitch < Oxidized::Model
+  using Refinements
+
   # Ubiquiti EdgeSwitch #
 
   comment '!'

@@ -38,6 +38,15 @@
 * Avaya
   * [VOSS (VSP Operating System Software)](/lib/oxidized/model/voss.rb)
   * [BOSS (Baystack Operating System Software)](/lib/oxidized/model/boss.rb)
+* BDCOM
+  * [S2200 series](/lib/oxidized/model/bdcom.rb)
+  * [S2200PB series](/lib/oxidized/model/bdcom.rb)
+  * [S2200-B series](/lib/oxidized/model/bdcom.rb)
+  * [S2500-B series](/lib/oxidized/model/bdcom.rb)
+  * [S2500-C series](/lib/oxidized/model/bdcom.rb)
+  * [S2500PB series](/lib/oxidized/model/bdcom.rb)
+  * [S2500-P series](/lib/oxidized/model/bdcom.rb)
+  * [S2900 series](/lib/oxidized/model/bdcom.rb)
 * Brocade
   * [FabricOS](/lib/oxidized/model/fabricos.rb)
   * [FastIron](/lib/oxidized/model/fastiron.rb)
@@ -65,6 +74,7 @@
   * [ASA](/lib/oxidized/model/asa.rb)
   * [AsyncOS](/lib/oxidized/model/asyncos.rb)
   * [CatOS](/lib/oxidized/model/catos.rb)
+  * [Cisco Catalyst Express](/lib/oxidized/model/ciscoce.rb)
   * [FireLinuxOS](/lib/oxidized/model/firelinuxos.rb)
   * [IOS](/lib/oxidized/model/ios.rb)
   * [IOSXR](/lib/oxidized/model/iosxr.rb)
@@ -117,6 +127,7 @@
 * Fiberstore
   * [S3800](/lib/oxidized/model/gcombnps.rb)
   * [S3900](/lib/oxidized/model/edgecos.rb)
+  * [S3900-R](/lib/oxidized/model/bdcom.rb)
   * [S5800](/lib/oxidized/model/cnos.rb)
   * [S5850](/lib/oxidized/model/cnos.rb)
 * Firebrick
@@ -126,6 +137,8 @@
   * [FTOS](/lib/oxidized/model/ftos.rb)
 * FortiGate
   * [FortiOS](/lib/oxidized/model/fortios.rb)
+* FortiWLC
+  * [FortiWLC](/lib/oxidized/model/fortiwlc.rb)
 * Fujitsu
   * [PRIMERGY Blade switch 1/10Gbe](/lib/oxidized/model/fujitsupy.rb)
 * GCOM Technologies
@@ -137,7 +150,8 @@
 * Hillstone Networks
   * [StoneOS](/lib/oxidized/model/stoneos.rb)
 * Hirschmann
-  * [HiOS](/lib/oxidized/model/hirschmann.rb)
+  * [Classic](/lib/oxidized/model/hirschmann.rb)
+  * [HiOS](/lib/oxidized/model/hios.rb)
 * HP
   * [Comware (HP A-series, H3C, 3Com)](/lib/oxidized/model/comware.rb)
   * [Procurve](/lib/oxidized/model/procurve.rb)
@@ -167,6 +181,7 @@
   * [Voltaire](/lib/oxidized/model/voltaire.rb)
 * Mikrotik
   * [RouterOS](/lib/oxidized/model/routeros.rb)
+  * [SwOS and SwOS Lite](/lib/oxidized/model/swos.rb)
 * Motorola
   * [RFS](/lib/oxidized/model/mtrlrfs.rb)
 * MRV
@@ -189,7 +204,8 @@
 * [OpenWRT](/lib/oxidized/model/openwrt.rb)
 * [OPNsense](/lib/oxidized/model/opnsense.rb)
 * Palo Alto
-  * [PANOS](/lib/oxidized/model/panos.rb)
+  * [PanOS API](/lib/oxidized/model/panos_api.rb)
+  * [PanOS](/lib/oxidized/model/panos.rb)
 * [PLANET SG/SGS Switches](/lib/oxidized/model/planet.rb)
 * [pfSense](/lib/oxidized/model/pfsense.rb)
 * Pure Storage
@@ -204,6 +220,8 @@
   * [Quanta / VxWorks 6.6 (1.1.0.8)](/lib/oxidized/model/quantaos.rb)
 * Siklu
   * [EtherHaul](/lib/oxidized/model/siklu.rb)
+* Seiko Solutions
+  * [SmartCS, SmartCS mini](/lib/oxidized/model/smartcs.rb)
 * SonicWALL
   * [SonicOS](/lib/oxidized/model/sonicos.rb)
 * SNR

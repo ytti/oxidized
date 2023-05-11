@@ -55,17 +55,17 @@ module Oxidized
 
     def connect
       options = {
-        adapter:     @cfg.adapter,
-        host:        @cfg.host?,
-        user:        @cfg.user?,
-        password:    @cfg.password?,
-        database:    @cfg.database,
-        ssl_mode:    @cfg.ssl_mode?
+        adapter:  @cfg.adapter,
+        host:     @cfg.host?,
+        user:     @cfg.user?,
+        password: @cfg.password?,
+        database: @cfg.database,
+        ssl_mode: @cfg.ssl_mode?
       }
       if @cfg.with_ssl?
-        options.merge!(sslca:       @cfg.ssl_ca?,
-                       sslcert:     @cfg.ssl_cert?,
-                       sslkey:      @cfg.ssl_key?)
+        options.merge!(sslca:   @cfg.ssl_ca?,
+                       sslcert: @cfg.ssl_cert?,
+                       sslkey:  @cfg.ssl_key?)
       end
       Sequel.connect(options)
     rescue Sequel::AdapterNotFound => error

@@ -1,7 +1,9 @@
 class StoneOS < Oxidized::Model
+  using Refinements
+
   # Hillstone Networks StoneOS software
 
-  prompt /^\r?[\w.()-]+[#>](\s)?$/
+  prompt /^\r?[\w.()-]+~?[#>](\s)?$/
   comment '# '
 
   expect /^\s.*--More--.*$/ do |data, re|
@@ -10,12 +12,16 @@ class StoneOS < Oxidized::Model
   end
 
   cmd :all do |cfg|
+    cfg.gsub! /+.*+/, '' # Linebreak handling
     cfg.cut_both
   end
 
-  cmd 'show configuration running'
+  cmd 'show configuration running' do |cfg|
+    cfg.gsub! /^Building configuration.*$/, ''
+  end
 
   cmd 'show version' do |cfg|
+    cfg.gsub! /^Uptime is .*$/, ''
     comment cfg
   end
 
