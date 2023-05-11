@@ -137,6 +137,12 @@
   * [FTOS](/lib/oxidized/model/ftos.rb)
 * FortiGate
   * [FortiOS](/lib/oxidized/model/fortios.rb)
+* FortiADC
+  * [FortiADC](/lib/oxidized/model/fortiadc.rb)
+* FortiSwitch
+  * [FortiSwitch](/lib/oxidized/model/fortiswitch.rb)
+* FortiMail
+  * [FortiMail](/lib/oxidized/model/fortimail.rb)
 * FortiWLC
   * [FortiWLC](/lib/oxidized/model/fortiwlc.rb)
 * Fujitsu
