@@ -83,6 +83,7 @@ The format is based on [Keep a Changelog](https://keepachangelog.com/en/1.1.0/).
 - extended mysql source configuration to include tls options (@glaubway)
 - updated rugged in gemspec for ruby 3.0 support (@firefishy)
 - Added exec hook for MS Teams webhook (@systeembeheerder)
+- model for D-Link cisco like CLI (@mirackle-spb)
 
 ### Changed
 
