@@ -15,6 +15,7 @@ The format is based on [Keep a Changelog](https://keepachangelog.com/en/1.1.0/).
 ## [0.29.1 - 2023-04-24]
 
 ## Added
+- model for D-Link cisco like CLI (@mirackle-spb)
 
 ## Changed
 
@@ -83,7 +84,6 @@ The format is based on [Keep a Changelog](https://keepachangelog.com/en/1.1.0/).
 - extended mysql source configuration to include tls options (@glaubway)
 - updated rugged in gemspec for ruby 3.0 support (@firefishy)
 - Added exec hook for MS Teams webhook (@systeembeheerder)
-- model for D-Link cisco like CLI (@mirackle-spb)
 
 ### Changed
 
@@ -124,7 +124,7 @@ The format is based on [Keep a Changelog](https://keepachangelog.com/en/1.1.0/).
 - hide unsupported-transceiver license key in Arista EOS (@davidc)
 - edgecos: add support for FS S3900-48T6S-R (@cgsecurity)
 - eltex: added one command for disable pagination on Eltex MES2424 switches (@mirackle-spb)
-- tp-link: fixed enable mode port login entrance (@mirackle-spb)
+
 
 ### Fixed
 
