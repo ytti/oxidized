@@ -7,7 +7,6 @@ class DlinkNextGen < Oxidized::Model
   prompt /[\w.@()\/-]+[#>]\s?$/
   comment '# '
 
-
   cmd :all do |cfg|
     cfg.each_line.to_a[2..-2].map { |line| line.delete("\r").rstrip }.join("\n") + "\n"
   end
@@ -26,7 +25,6 @@ class DlinkNextGen < Oxidized::Model
     cfg.gsub! /^(username [\w.@-]+ privilege \d{1,2} password \d{1,2}) \S+/, '\\1 <removed>'
     cfg
   end
-
 
   cfg :telnet do
     username /\r*([\w\s.@()\/:-]+)?([Uu]ser[Nn]ame|[Ll]ogin):/
