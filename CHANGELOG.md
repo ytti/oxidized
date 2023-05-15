@@ -21,6 +21,7 @@ The format is based on [Keep a Changelog](https://keepachangelog.com/en/1.1.0/).
 ## Changed
 
 - Ensure Docker builds are only pushed to registry on `master` (@aschaber1)
+- dlink: fixed prompt for other dlink switches, added additional uptime removal expressions (@mirackle-spb)
 
 ## Fixed
 
@@ -125,6 +126,7 @@ The format is based on [Keep a Changelog](https://keepachangelog.com/en/1.1.0/).
 - hide unsupported-transceiver license key in Arista EOS (@davidc)
 - edgecos: add support for FS S3900-48T6S-R (@cgsecurity)
 - eltex: added one command for disable pagination on Eltex MES2424 switches (@mirackle-spb)
+- tp-link: fixed enable mode post login entrance (@mirackle-spb)
 
 ### Fixed
 
