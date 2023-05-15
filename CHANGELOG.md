@@ -9,6 +9,7 @@ The format is based on [Keep a Changelog](https://keepachangelog.com/en/1.1.0/).
 ## Added
 
 ## Changed
+- tp-link: fixed enable mode post login entrance (@mirackle-spb)
 
 ## Fixed
 
