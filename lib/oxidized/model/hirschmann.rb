@@ -1,7 +1,7 @@
 class Hirschmann < Oxidized::Model
   using Refinements
 
-  prompt /^[(\w\s)]+\s[>|#]+?$/
+  prompt /^[(\w\s\W)]+\s?[>|#]+?$/
 
   comment '## '
 
