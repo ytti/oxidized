@@ -12,6 +12,8 @@ The format is based on [Keep a Changelog](https://keepachangelog.com/en/1.1.0/).
 
 ## Fixed
 
+- fixed empty lines for ZyXEL GS1900 switches (@jluebbe)
+
 ## [0.29.1 - 2023-04-24]
 
 ## Added
@@ -122,6 +124,7 @@ The format is based on [Keep a Changelog](https://keepachangelog.com/en/1.1.0/).
 - ios: Add support for RBAC in IOS model (@jameskirsop)
 - hide unsupported-transceiver license key in Arista EOS (@davidc)
 - edgecos: add support for FS S3900-48T6S-R (@cgsecurity)
+- eltex: added one command for disable pagination on Eltex MES2424 switches (@mirackle-spb)
 
 ### Fixed
 
