@@ -13,6 +13,7 @@ The format is based on [Keep a Changelog](https://keepachangelog.com/en/1.1.0/).
 ## Fixed
 
 - fixed empty lines for ZyXEL GS1900 switches (@jluebbe)
+- fixed prompt for Watchguard FirewareOS not matching the regex when the node is non-master (@netdiver)
 
 ## [0.29.1 - 2023-04-24]
 
