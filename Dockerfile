@@ -48,7 +48,7 @@ RUN touch /home/oxidized/.config/oxidized/.msmtprc
 
 # setup the access to the file
 RUN chmod 600 /home/oxidized/.msmtprc
-RUN chown oxodized:oxidized /home/oxidized/.msmtprc
+RUN chown oxidized:oxidized /home/oxidized/.msmtprc
 
 # add runit services
 COPY extra/oxidized.runit /etc/service/oxidized/run
