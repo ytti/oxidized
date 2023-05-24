@@ -75,8 +75,6 @@ You then need to update the `~/.msmtprc` file to contain your SMTP credentials l
 defaults
 auth    on
 tls    on
-tls_trust_file    /etc/ssl/certs/ca-certificates.crt
-logfile ~/.msmtsp.log
 # Outlook SMTP
 account    mainaccount
 host       smtp.office365.com
