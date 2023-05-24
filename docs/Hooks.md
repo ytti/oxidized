@@ -70,7 +70,7 @@ You then need to update the `~/.msmtprc` file to contain your SMTP credentials l
 
 *Note: In the docker container the file is in /home/oxidized/.config/oxidized/.msmtprc so you can create the file if it doesn't exist in your oxidized config folder.*
 
-```yaml
+```cfg
 # Default settings
 defaults
 auth    on
@@ -95,7 +95,7 @@ hooks:
   send_mail_hook:
     type: exec
     events: [node_fail]
-    cmd: '/usr/bin/echo -e "Subject: [Oxidized] Error on node $OX_NODE_NAME \n\nThe device $OX_NODE_NAME has not been backed-up, reason: \n\n$OX_EVENT: $OX_ERR_REASON" | msmtp -a mainaccount destination@domain.com'
+    cmd: '/usr/bin/echo -e "Subject: [Oxidized] Error on node $OX_NODE_NAME \n\nThe device $OX_NODE_NAME has not been backed-up, reason: \n\n$OX_EVENT: $OX_ERR_REASON" | msmtp destination@domain.com'
 ```
 
 ## Hook type: githubrepo
