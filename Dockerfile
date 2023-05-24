@@ -42,6 +42,10 @@ RUN groupadd -g "${GID}" -r oxidized && useradd -u "${UID}" -r -m -d /home/oxidi
 # link config for msmtp for easier use.
 RUN ln -s /home/oxidized/.config/oxidized/.msmtprc /home/oxidized/
 
+# create parent directory & touch required file
+RUN mkdir -p /home/oxidized/.config/oxidized/
+RUN touch /home/oxidized/.config/oxidized/.msmtprc
+
 # setup the access to the file
 RUN chmod 600 /home/oxidized/.msmtprc
 RUN chown oxodized:oxidized /home/oxidized/.msmtprc
