@@ -42,6 +42,10 @@ RUN groupadd -g "${GID}" -r oxidized && useradd -u "${UID}" -r -m -d /home/oxidi
 # link config for msmtp for easier use.
 RUN ln -s /home/oxidized/.config/oxidized/.msmtprc /home/oxidized/
 
+# setup the access to the file
+RUN chmod 600 /home/oxidized/.config/oxidized/.msmtprc
+RUN chown oxodized:oxidized /home/oxidized/.config/oxidized/.msmtprc
+
 # add runit services
 COPY extra/oxidized.runit /etc/service/oxidized/run
 COPY extra/auto-reload-config.runit /etc/service/auto-reload-config/run
