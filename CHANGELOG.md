@@ -7,6 +7,7 @@ The format is based on [Keep a Changelog](https://keepachangelog.com/en/1.1.0/).
 ## [Unreleased]
 
 ## Added
+- model for D-Link cisco like CLI (@mirackle-spb)
 
 ## Changed
 
