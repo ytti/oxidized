@@ -166,6 +166,8 @@
   * [SmartAX series](/lib/oxidized/model/smartax.rb)
 * Icotera
   * [6400 series](/lib/oxidized/model/icotera.rb)
+* IP Infusion
+  * [OcNOS](/lib/oxidized/model/ocnos.rb)
 * Juniper
   * [JunOS](/lib/oxidized/model/junos.rb)
   * [ScreenOS (Netscreen)](/lib/oxidized/model/screenos.rb)
