@@ -20,6 +20,9 @@ class C4CMTS < Oxidized::Model
 
   cmd 'show environment' do |cfg|
     cfg.gsub! /\s+[\-\d]+\s+C\s+[(\s\d]+\s+F\)/, '' # remove temperature readings
+    cfg.gsub! /(Ambient Temperature|Fan Level|Fan Offset):\s+(.*)/, '' # Fan output
+    cfg.gsub! /System Power Consumption:\s+(.*)/, '' # Power consumption
+    cfg.gsub! /PEM [AB](\s+.*)/, '' # PSUs
     comment cfg.cut_both
   end
 
