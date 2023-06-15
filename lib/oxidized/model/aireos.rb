@@ -1,4 +1,6 @@
 class Aireos < Oxidized::Model
+  using Refinements
+
   # AireOS (at least I think that is what it's called, hard to find data)
   # Used in Cisco WLC 5500
 

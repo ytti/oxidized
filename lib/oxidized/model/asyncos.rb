@@ -1,4 +1,6 @@
 class AsyncOS < Oxidized::Model
+  using Refinements
+
   # ESA prompt "(mail.example.com)> " or "mail.example.com> "
   prompt /^\r*([(]?[\w. ]+[)]?[#>]\s+)$/
   comment '! '

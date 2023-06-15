@@ -7,12 +7,27 @@ The format is based on [Keep a Changelog](https://keepachangelog.com/en/1.1.0/).
 ## [Unreleased]
 
 ## Added
+- model for D-Link cisco like CLI (@mirackle-spb)
+
+## Changed
+
+## Fixed
+
+- fixed empty lines for ZyXEL GS1900 switches (@jluebbe)
+- fixed prompt for Watchguard FirewareOS not matching the regex when the node is non-master (@netdiver)
+- fixed new date/time format with newer RouterOS `# jun/01/2023 12:11:25 by RouterOS 7.9.1` vs `# 2023-06-01 12:16:16 by RouterOS 7.10rc1` (@tim427)
+
+## [0.29.1 - 2023-04-24]
+
+## Added
 
 ## Changed
 
 - Ensure Docker builds are only pushed to registry on `master` (@aschaber1)
 
 ## Fixed
+
+- #2749: fix issues with `cut_both`
 
 ## [0.29.0 - 2023-04-13]
 
@@ -112,6 +127,7 @@ The format is based on [Keep a Changelog](https://keepachangelog.com/en/1.1.0/).
 - ios: Add support for RBAC in IOS model (@jameskirsop)
 - hide unsupported-transceiver license key in Arista EOS (@davidc)
 - edgecos: add support for FS S3900-48T6S-R (@cgsecurity)
+- eltex: added one command for disable pagination on Eltex MES2424 switches (@mirackle-spb)
 
 ### Fixed
 

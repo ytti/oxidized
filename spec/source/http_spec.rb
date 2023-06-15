@@ -1,4 +1,4 @@
-require 'spec_helper'
+require_relative '../spec_helper'
 require 'oxidized/source/http'
 
 describe Oxidized::HTTP do

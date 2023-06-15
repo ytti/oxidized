@@ -1,4 +1,6 @@
 class Hatteras < Oxidized::Model
+  using Refinements
+
   # Hatteras Networks
 
   prompt /^(\r?[\w.@()-]+[#>]\s?)$/

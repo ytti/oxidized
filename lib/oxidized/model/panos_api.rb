@@ -17,6 +17,8 @@ rescue LoadError
 end
 
 class PanOS_API < Oxidized::Model # rubocop:disable Naming/ClassAndModuleCamelCase
+  using Refinements
+
   # Callback function for getting the configuration file.
   cfg_cb = lambda do
     url_param = URI.encode_www_form(

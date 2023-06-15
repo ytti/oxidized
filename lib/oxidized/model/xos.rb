@@ -1,4 +1,6 @@
 class XOS < Oxidized::Model
+  using Refinements
+
   # Extreme Networks XOS
 
   prompt /^\s?\*?\s?[-\w]+\s?[-\w.~]+(:\d+)? [#>] $/

@@ -1,4 +1,6 @@
 class EdgeCOS < Oxidized::Model
+  using Refinements
+
   comment '! '
 
   # Handle pager for ES3526XA-V2

@@ -1,4 +1,6 @@
 class Airfiber < Oxidized::Model
+  using Refinements
+
   # Ubiquiti Airfiber (tested with Airfiber 11FX)
 
   prompt /^AF[\w\.-]+#/i

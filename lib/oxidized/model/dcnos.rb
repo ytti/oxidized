@@ -5,6 +5,8 @@
 # Developed against SNR S2950-24G 7.0.3.5
 
 class DCNOS < Oxidized::Model
+  using Refinements
+
   comment '! '
 
   cmd :all do |cfg|

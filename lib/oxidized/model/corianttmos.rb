@@ -1,4 +1,6 @@
 class CoriantTmos < Oxidized::Model
+  using Refinements
+
   comment '# '
 
   prompt /^[^\s#]+#\s$/

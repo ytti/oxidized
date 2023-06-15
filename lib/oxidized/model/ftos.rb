@@ -1,4 +1,6 @@
 class FTOS < Oxidized::Model
+  using Refinements
+
   # Force10 FTOS model #
 
   comment  '! '

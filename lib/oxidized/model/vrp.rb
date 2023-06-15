@@ -1,4 +1,6 @@
 class VRP < Oxidized::Model
+  using Refinements
+
   # Huawei VRP
 
   prompt /^.*(<[\w.-]+>)$/

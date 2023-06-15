@@ -2,6 +2,8 @@
 # Tested on OPT9608 systems via SSH and telnet
 
 class ECIapollo < Oxidized::Model
+  using Refinements
+
   prompt /^([\w.@()-]+[#>]\s?)$/
   comment '# '
 

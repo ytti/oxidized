@@ -1,4 +1,6 @@
 class TrueNAS < Oxidized::Model
+  using Refinements
+
   comment '# '
 
   cmd('uname -a') { |cfg| comment cfg }

@@ -1,4 +1,6 @@
 class IBOS < Oxidized::Model
+  using Refinements
+
   # IBOS model, Intelligent Broadband Operating System (iBOS)
   # Used in Waystream (previously PacketFront) Routers and Switches
 

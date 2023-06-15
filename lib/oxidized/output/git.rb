@@ -1,5 +1,7 @@
 module Oxidized
   class Git < Output
+    using Refinements
+
     class GitError < OxidizedError; end
     begin
       require 'rugged'
@@ -79,7 +81,8 @@ module Oxidized
       i = -1
       tab = []
       walker.each do |commit|
-        next if commit.diff(paths: [path]).empty?
+        # Diabled rubocop because the suggested .empty? does not work here.
+        next if commit.diff(paths: [path]).size.zero? # rubocop:disable Style/ZeroLengthPredicate
 
         hash = {}
         hash[:date] = commit.time.to_s

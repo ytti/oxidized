@@ -1,5 +1,7 @@
 # model for Centec Networks CNOS based switches
 class CNOS < Oxidized::Model
+  using Refinements
+
   comment '! '
 
   cmd :all do |cfg|

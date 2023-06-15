@@ -1,4 +1,6 @@
 class CambiumePMP < Oxidized::Model
+  using Refinements
+
   # Cambium ePMP Radios
 
   prompt /.*>/

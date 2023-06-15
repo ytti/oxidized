@@ -1,4 +1,6 @@
 class Siklu < Oxidized::Model
+  using Refinements
+
   # Siklu EtherHaul #
 
   prompt /^[\^M\s]{0,}[\w\-\s\.\"]+>$/

@@ -1,4 +1,5 @@
 require 'fileutils'
+require 'refinements'
 
 module Oxidized
   class OxidizedError < StandardError; end
@@ -6,7 +7,6 @@ module Oxidized
   Directory = File.expand_path(File.join(File.dirname(__FILE__), '../'))
 
   require 'oxidized/version'
-  require 'oxidized/string'
   require 'oxidized/config'
   require 'oxidized/config/vars'
   require 'oxidized/worker'

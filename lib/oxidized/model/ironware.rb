@@ -1,4 +1,6 @@
 class IronWare < Oxidized::Model
+  using Refinements
+
   prompt /^.*(telnet|ssh)@.+[>#]\s?$/i
   comment  '! '
 

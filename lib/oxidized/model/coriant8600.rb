@@ -1,4 +1,6 @@
 class Coriant8600 < Oxidized::Model
+  using Refinements
+
   comment '# '
 
   prompt /^[^\s#>]+[#>]$/

@@ -1,4 +1,6 @@
 class Adtran < Oxidized::Model
+  using Refinements
+
   # Adtran
 
   prompt /([\w.@-]+[#>]\s?)$/

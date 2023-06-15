@@ -87,7 +87,7 @@ add-apt-repository universe
 Install the dependencies:
 
 ```shell
-apt-get install ruby ruby-dev libsqlite3-dev libssl-dev pkg-config cmake libssh2-1-dev libicu-dev zlib1g-dev g++
+apt-get install ruby ruby-dev libsqlite3-dev libssl-dev pkg-config cmake libssh2-1-dev libicu-dev zlib1g-dev g++ libyaml-dev
 ```
 
 Finally, install the gems:
@@ -220,12 +220,9 @@ services:
     environment:
       CONFIG_RELOAD_INTERVAL: 600
     volumes:
-       - config:/home/oxidized/.config/oxidized/config
-       - router.db:/home/oxidized/.config/oxidized/router.db
-       - model:/home/oxidized/.config/oxidized/model
-       # if git is use as input
-       - data:/home/oxidized/.config/oxidized/backupcfg/
-
+       - config:/home/oxidized/.config/oxidized/
+volumes:
+  config:
 ```
 
 Create the `/etc/oxidized/router.db` (see [CSV Source](docs/Sources.md#source-csv) for further info):

@@ -1,4 +1,6 @@
 class AEN < Oxidized::Model
+  using Refinements
+
   # Accedian
 
   comment '# '

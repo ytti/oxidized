@@ -1,4 +1,6 @@
 class HpeMsa < Oxidized::Model
+  using Refinements
+
   prompt /^#\s?$/
 
   cmd 'show configuration'

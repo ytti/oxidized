@@ -1,4 +1,6 @@
 class CiscoSMB < Oxidized::Model
+  using Refinements
+
   # Cisco Small Business 300, 500, and ESW2 series switches
   # http://www.cisco.com/c/en/us/support/switches/small-business-300-series-managed-switches/products-release-notes-list.html
 

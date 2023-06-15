@@ -1,4 +1,6 @@
 class FastIron < Oxidized::Model
+  using Refinements
+
   prompt /^([\w.@()-]+[#>]\s?)$/
   comment  '! '
 
