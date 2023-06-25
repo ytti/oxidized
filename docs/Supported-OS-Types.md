@@ -107,6 +107,7 @@
   * [Dell EMC Networking OS10](/lib/oxidized/model/os10.rb)
 * D-Link
   * [D-Link](/lib/oxidized/model/dlink.rb)
+  * [D-Link cisco like CLI](/lib/oxidized/model/dlinknextgen.rb)
 * ECI Telecom
   * [ECIapollo](/lib/oxidized/model/eciapollo.rb)
 * EdgeCore

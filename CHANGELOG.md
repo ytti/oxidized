@@ -7,6 +7,7 @@ The format is based on [Keep a Changelog](https://keepachangelog.com/en/1.1.0/).
 ## [Unreleased]
 
 ## Added
+- model for D-Link cisco like CLI (@mirackle-spb)
 
 ## Changed
 
@@ -15,6 +16,8 @@ The format is based on [Keep a Changelog](https://keepachangelog.com/en/1.1.0/).
 - fixed empty lines for ZyXEL GS1900 switches (@jluebbe)
 - fixed prompt for Watchguard FirewareOS not matching the regex when the node is non-master (@netdiver)
 - defined 'psych' runtime dependency to resolve 'unsafe_load' error during startup (@MattKobayashi)
+- fixed new date/time format with newer RouterOS `# jun/01/2023 12:11:25 by RouterOS 7.9.1` vs `# 2023-06-01 12:16:16 by RouterOS 7.10rc1` (@tim427)
+- Do not redirect stderr when fetching opnsense version since default shell (csh) doesn't support it (@spike77453)
 
 ## [0.29.1 - 2023-04-24]
 
