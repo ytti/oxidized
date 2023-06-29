@@ -18,8 +18,6 @@ module Oxidized
 
     def load(node_want = nil)
       nodes = []
-      #data = JSON.parse(read_http(node_want))
-      #data = string_navigate(data, @cfg.hosts_location) if @cfg.hosts_location?
       data = read_http(node_want)
       data.each do |node|
         next if node.empty?
