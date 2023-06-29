@@ -187,3 +187,16 @@ source:
     scheme: https
     secure: false
 ```
+
+HTTP source also supports pagination. Two settings must be enabled. (`pagination` as a bool and `pagination_key_name` as a string)
+The `pagination_key_name` setting is the key name that an api returns to find the url of the next page.
+
+**Disclaimer**: currently only tested with netbox as the source
+
+```yaml
+source:
+  default: http
+  http:
+    pagination: true
+    pagination_key_name: 'next'
+```
