@@ -105,7 +105,7 @@ module Oxidized
           request = set_request(new_uri, headers, node_want)
           response = http.request(request)
         end
-        return node_data
+        node_data
       end
     end
   end
