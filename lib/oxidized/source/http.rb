@@ -67,6 +67,7 @@ module Oxidized
       node_data = []
       if @cfg.pagination?
         raise Oxidized::OxidizedError, "if using pagination, 'pagination_key_name' setting must be set" unless @cfg.pagination_key_name?
+
         if @cfg.pagination_key_name?
           next_key = @cfg.pagination_key_name
           loop do
