@@ -66,6 +66,7 @@ module Oxidized
     def check_pagination(response, http, headers, node_want)
       node_data = []
       if @cfg.pagination?
+        raise Oxidized::OxidizedError, "if using pagination, 'pagination_key_name' setting must be set" unless @cfg.pagination_key_name?
         if @cfg.pagination_key_name?
           next_key = @cfg.pagination_key_name
           loop do
@@ -77,8 +78,6 @@ module Oxidized
             request = set_request(new_uri, headers, node_want)
             response = http.request(request)
           end
-        else
-          raise Oxidized::OxidizedError, "if using pagination, 'pagination_key_name' setting must be set"
         end
       # since new feature; dont break curent configs
       else
