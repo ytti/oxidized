@@ -83,24 +83,26 @@ module Oxidized
 
       node_data = []
 
-      # since new feature; dont break curent configs
-      if not @cfg.pagination?
-        data = JSON.parse(response.body)
-        node_data += string_navigate(data, @cfg.hosts_location) if @cfg.hosts_location?
-        return node_data
-      else
-        if not @cfg.pagination_key_name?
+      if @cfg.pagination?
+	if not @cfg.pagination_key_name?
           raise Oxidized::OxidizedError, "if using pagination, 'pagination_key_name' setting must be set"
-        end
-        next_key = @cfg.pagination_key_name
+	end
+
+	next_key = @cfg.pagination_key_name
         loop do
           data = JSON.parse(response.body)
           node_data += string_navigate(data, @cfg.hosts_location) if @cfg.hosts_location?
-          break if data[next_key].nil?
-          if data.key?(next_key) then new_uri = URI.parse(data[next_key]) end
+	  break if data[next_key].nil?
+
+          if data.has_key?(next_key) then new_uri = URI.parse(data[next_key]) end
           request = set_request(new_uri, headers, node_want)
           response = http.request(request)
         end
+      # since new feature; dont break curent configs
+      else
+        node_data
+        data = JSON.parse(response.body)
+        node_data += string_navigate(data, @cfg.hosts_location) if @cfg.hosts_location?
         node_data
       end
     end
