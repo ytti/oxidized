@@ -72,8 +72,7 @@ module Oxidized
             data = JSON.parse(response.body)
             node_data += string_navigate(data, @cfg.hosts_location) if @cfg.hosts_location?
             break if data[next_key].nil?
-
-            if data.has_key?(next_key) then new_uri = URI.parse(data[next_key]) end
+	    new_uri = URI.parse(data[next_key]) if data.has_key?(next_key)
             request = set_request(new_uri, headers, node_want)
             response = http.request(request)
           end
