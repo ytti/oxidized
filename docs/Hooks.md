@@ -46,7 +46,7 @@ Exec hook recognizes the following configuration keys:
 * `async`: Execute the command in an asynchronous fashion. The main thread by default will wait for the hook command execution to complete. Set this to `true` for long running commands so node configuration pulls are not blocked. Default: `false`
 * `cmd`: command to run.
 
-### exec hook configuration example
+### Exec Hook configuration example
 
 ```yaml
 hooks:
@@ -60,6 +60,42 @@ hooks:
     cmd: 'echo "Doing long running stuff for $OX_NODE_NAME" >> /tmp/ox_node_stuff.log; sleep 60'
     async: true
     timeout: 120
+```
+
+### Exec Hook configuration example to send mail
+
+To send mail you need the package `msmtp` (It is pre-installed with the docker container) 
+
+You then need to update the `~/.msmtprc` file to contain your SMTP credentials like this:
+
+*Note: In the docker container the file is in /home/oxidized/.config/oxidized/.msmtprc so you can create the file if it doesn't exist in your oxidized config folder.*
+
+```cfg
+# Default settings
+defaults
+auth    on
+tls    on
+# Outlook SMTP
+account    mainaccount
+host       smtp.office365.com
+port       587
+from       user@domain.com
+user       user@domain.com
+password   edit-password
+
+account default : mainaccount
+```
+
+For non docker users this file should have the 600 permission, using: `chmod 600 .msmtprc` and the owner of the file should be the owner of oxidized `chown oxidized:oxidized .msmtprc`
+
+Then, you can configure Hooks to send mail like this:
+
+```yaml
+hooks:
+  send_mail_hook:
+    type: exec
+    events: [node_fail]
+    cmd: '/usr/bin/echo -e "Subject: [Oxidized] Error on node $OX_NODE_NAME \n\nThe device $OX_NODE_NAME has not been backed-up, reason: \n\n$OX_EVENT: $OX_ERR_REASON" | msmtp destination@domain.com'
 ```
 
 ## Hook type: githubrepo
