@@ -3,7 +3,7 @@ FROM docker.io/phusion/baseimage:jammy-1.0.1
 
 # set up dependencies for the build process
 RUN apt-get -yq update \
-    && apt-get -yq --no-install-recommends install ruby3.0 ruby3.0-dev libssl3 bzip2 libssl-dev pkg-config make cmake libssh2-1 libssh2-1-dev git git-email libmailtools-perl g++ libffi-dev ruby-bundler libicu70 libicu-dev libsqlite3-0 libsqlite3-dev libmysqlclient21 libmysqlclient-dev libpq5 libpq-dev zlib1g-dev \
+    && apt-get -yq --no-install-recommends install ruby3.0 ruby3.0-dev libssl3 bzip2 libssl-dev pkg-config make cmake libssh2-1 libssh2-1-dev git git-email libmailtools-perl g++ libffi-dev ruby-bundler libicu70 libicu-dev libsqlite3-0 libsqlite3-dev libmysqlclient21 libmysqlclient-dev libpq5 libpq-dev zlib1g-dev msmtp \
     && apt-get clean \
     && rm -rf /var/lib/apt/lists/*
 
@@ -38,6 +38,17 @@ RUN apt-get -yq --purge autoremove ruby-dev pkg-config make cmake ruby-bundler l
 ARG UID=30000
 ARG GID=$UID
 RUN groupadd -g "${GID}" -r oxidized && useradd -u "${UID}" -r -m -d /home/oxidized -g oxidized oxidized
+
+# link config for msmtp for easier use.
+RUN ln -s /home/oxidized/.config/oxidized/.msmtprc /home/oxidized/
+
+# create parent directory & touch required file
+RUN mkdir -p /home/oxidized/.config/oxidized/
+RUN touch /home/oxidized/.config/oxidized/.msmtprc
+
+# setup the access to the file
+RUN chmod 600 /home/oxidized/.msmtprc
+RUN chown oxidized:oxidized /home/oxidized/.msmtprc
 
 # add runit services
 COPY extra/oxidized.runit /etc/service/oxidized/run

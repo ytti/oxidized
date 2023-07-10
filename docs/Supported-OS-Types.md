@@ -215,6 +215,8 @@
   * [AlteonOS](/lib/oxidized/model/alteonos.rb)
 * Raisecom
   * [Raisecom](/lib/oxidized/model/raisecom.rb)
+* Ruijie Networks
+  * [RGOS](/lib/oxidized/model/rgos.rb)
 * QTECH
   * [QSW-2800, QSW-3400, QSW-3450, QSW-3500](/lib/oxidized/model/qtech.rb)
 * Quanta
