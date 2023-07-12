@@ -9,6 +9,7 @@ The format is based on [Keep a Changelog](https://keepachangelog.com/en/1.1.0/).
 ## Added
 - model for D-Link cisco like CLI (@mirackle-spb)
 - model for Ruijie Networks RGOS devices (@spike77453)
+- added support for AricentISS 2.x firmware (@davromaniak)
 
 + Added ability to send mail with the Docker container
 + Documentation to send mail with hooks
