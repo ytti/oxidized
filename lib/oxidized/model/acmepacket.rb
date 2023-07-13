@@ -1,4 +1,6 @@
 class ACMEPACKET < Oxidized::Model
+  using Refinements
+
   # Oracle ACME Packet 3k, 4k, 6k series
 
   prompt /^\r*([\w.@()-\/]+[#>]\s?)$/

@@ -1,4 +1,6 @@
 class EdgeCOS < Oxidized::Model
+  using Refinements
+
   comment '! '
 
   # Handle pager for ES3526XA-V2
@@ -59,15 +61,11 @@ class EdgeCOS < Oxidized::Model
 
   cfg :telnet, :ssh do
     post_login do
-      if vars(:enable) == true
-        send "enable\n"
-      end
+      send "enable\n" if vars(:enable) == true
     end
     post_login 'terminal length 0'
     post_login 'terminal width 300'
-    if vars(:enable) == true
-      pre_logout 'exit'
-    end
+    pre_logout 'exit' if vars(:enable) == true
     pre_logout 'exit'
   end
 end

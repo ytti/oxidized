@@ -1,4 +1,6 @@
 class ISAM < Oxidized::Model
+  using Refinements
+
   # Alcatel ISAM 7302/7330 FTTN
 
   prompt /^([\w.:@-]+>#\s)$/

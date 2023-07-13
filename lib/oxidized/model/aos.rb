@@ -1,4 +1,6 @@
 class AOS < Oxidized::Model
+  using Refinements
+
   # Alcatel-Lucent Operating System
   # used in OmniSwitch
 

@@ -72,7 +72,7 @@ module Oxidized
 
       begin
         File.open(pidfile, ::File::CREAT | ::File::EXCL | ::File::WRONLY) { |f| f.write(Process.pid.to_s) }
-        at_exit { File.delete(pidfile) if File.exist?(pidfile) }
+        at_exit { FileUtils.rm_f(pidfile) }
       rescue Errno::EEXIST
         check_pid
         retry

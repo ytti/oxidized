@@ -2,17 +2,18 @@ inherit_from: .rubocop_todo.yml
 
 # Do not attempt to police vendored code
 AllCops:
-  TargetRubyVersion: 2.3
+  NewCops: enable
+  TargetRubyVersion: 3.0
   Exclude:
     - 'vendor/**/*'
 
-StringLiterals:
+Style/StringLiterals:
   Enabled: false
 
 Style/FrozenStringLiteralComment:
   Enabled: false
 
-LineLength:
+Layout/LineLength:
   Enabled: false
 
 Lint/AmbiguousRegexpLiteral:
@@ -66,14 +67,27 @@ Style/Documentation:
 Style/ParallelAssignment:
   Enabled: false
 
+Metrics/MethodLength:
+  Max: 45
+
 ## Metrics/AbcSize:
 ##   Max: 28
-## 
-## Metrics/MethodLength:
-##   Max: 20
-## 
-## Metrics/ClassLength:
-##   Max: 140
-## 
+
+Metrics/ClassLength:
+  Max: 200
+
 ## Metrics/CyclomaticComplexity:
 ##   Max: 7
+
+Metrics/BlockLength:
+  Max: 150
+
+Metrics/ParameterLists:
+  Max: 6
+
+Lint/EmptyBlock:
+  Enabled: false
+
+require:
+  - rubocop-rake
+  - rubocop-minitest

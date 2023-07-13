@@ -8,12 +8,14 @@ The following objects exist in Oxidized.
 * must implement 'connect', 'get', 'cmd'
 * 'ssh', 'telnet', 'ftp', 'tftp', 'http' implemented
 
-#### http
- * Communicates with a device over http/https
- * Configurable variables from within model @username, @password, @headers.
- * @username,@password are used in a Basic Authentication method.
- * @headers is a Hash of key value pairs of headers to pass along with the request.
- * Within the sources config under input you define a YAML stanza like the below, this will tell Oxidized to validate certificates on the request
+### http
+
+* Communicates with a device over http/https
+* Configurable variables from within model @username, @password, @headers.
+* @username,@password are used in a Basic Authentication method.
+* @headers is a Hash of key value pairs of headers to pass along with the request.
+* Within the sources config under input you define a YAML stanza like the below, this will tell Oxidized to validate certificates on the request
+
 ```yaml
 input:
    http:
@@ -177,10 +179,12 @@ Resets the existing block, allowing the user to completely override its contents
 Ensures that the contents of the block are prepended, rather than appended (the
 default) to an existing block.
 
-### `String` convenience methods
+### Refinements
+
+#### `String` convenience methods
 
 Since configuration processing tasks are occasionally similar across models,
-Oxidized provides an extended [`String`](/lib/oxidized/string.rb) class with the
+Oxidized provides an refined [`String`](../lib/refinements.rb) class with the
 intention of providing convenience methods and eliminating code duplication.
 
 #### `cut_tail`

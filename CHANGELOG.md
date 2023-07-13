@@ -6,9 +6,47 @@ The format is based on [Keep a Changelog](https://keepachangelog.com/en/1.1.0/).
 
 ## [Unreleased]
 
+## Added
+- model for D-Link cisco like CLI (@mirackle-spb)
+- model for Ruijie Networks RGOS devices (@spike77453)
+
++ Added ability to send mail with the Docker container
++ Documentation to send mail with hooks
+
+## Changed
+
+## Fixed
+
+- fixed empty lines for ZyXEL GS1900 switches (@jluebbe)
+- fixed prompt for Watchguard FirewareOS not matching the regex when the node is non-master (@netdiver)
+- defined 'psych' runtime dependency to resolve 'unsafe_load' error during startup (@MattKobayashi)
+- fixed new date/time format with newer RouterOS `# jun/01/2023 12:11:25 by RouterOS 7.9.1` vs `# 2023-06-01 12:16:16 by RouterOS 7.10rc1` (@tim427)
+- fixed netscaler backups with hostname set #2828 (@electrocret) 
+- Do not redirect stderr when fetching opnsense version since default shell (csh) doesn't support it (@spike77453)
+
+
+## [0.29.1 - 2023-04-24]
+
+## Added
+
+## Changed
+
+- Ensure Docker builds are only pushed to registry on `master` (@aschaber1)
+
+## Fixed
+
+- #2749: fix issues with `cut_both`
+
+## [0.29.0 - 2023-04-13]
+
+- Ensure Docker Builds are tagged with latest and version (using `git describe --tags`) (@aschaber1)
+- Upgrade Dockerfile baseimage to Ubuntu 22.04 and Ruby 3.0 (@aschaber1)
+- Upgrade Ruby dependency to Ruby 3.0+ (@aschaber1)
+- model for PanOS & Panorama via HTTP API (@pv2b, @sts)
 - model for MikroTik SwOS devicse (@sm-nessus)
 - model for TrueNAS devices (@neilschelly)
 - model for Acme Packet devices (@ha36d)
+- model for SmartCS devise (@yoshihito-tatano)
 - Cumulus: added option to use NCLU as ia collecting method
 - Update net-ssh to 7.0.1 (using `append_all_supported_algorithms: true`)
 - Allow (config) (vlan-####) confirmation (y/n) and sftp questions in procurve prompt (@sorano)
@@ -24,6 +62,7 @@ The format is based on [Keep a Changelog](https://keepachangelog.com/en/1.1.0/).
 - change pfSense secret scrubbing to keep config as well-formed XML
 - Add support for comware HPE Office Connect 1950
 - Added model for Hirschmann Hios devices, next to alread present Hirschmann classic (@tijldeneut)
+- (StoneOS) Prompt fix for long device names, '^H' handling and removal of ever-changing data (@dMailonG)
 
 ### Added
 
@@ -56,6 +95,7 @@ The format is based on [Keep a Changelog](https://keepachangelog.com/en/1.1.0/).
 - model for Cisco Catalyst Express switches (@unemongod)
 - extended mysql source configuration to include tls options (@glaubway)
 - updated rugged in gemspec for ruby 3.0 support (@firefishy)
+- Added exec hook for MS Teams webhook (@systeembeheerder)
 
 ### Changed
 
@@ -95,6 +135,7 @@ The format is based on [Keep a Changelog](https://keepachangelog.com/en/1.1.0/).
 - ios: Add support for RBAC in IOS model (@jameskirsop)
 - hide unsupported-transceiver license key in Arista EOS (@davidc)
 - edgecos: add support for FS S3900-48T6S-R (@cgsecurity)
+- eltex: added one command for disable pagination on Eltex MES2424 switches (@mirackle-spb)
 
 ### Fixed
 

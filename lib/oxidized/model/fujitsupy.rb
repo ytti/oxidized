@@ -1,4 +1,6 @@
 class FujitsuPY < Oxidized::Model
+  using Refinements
+
   prompt /^(\([\w.-]*\)\s#|^\S+#\s)$/
   comment  '! '
 

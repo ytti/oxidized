@@ -107,6 +107,7 @@
   * [Dell EMC Networking OS10](/lib/oxidized/model/os10.rb)
 * D-Link
   * [D-Link](/lib/oxidized/model/dlink.rb)
+  * [D-Link cisco like CLI](/lib/oxidized/model/dlinknextgen.rb)
 * ECI Telecom
   * [ECIapollo](/lib/oxidized/model/eciapollo.rb)
 * EdgeCore
@@ -204,7 +205,8 @@
 * [OpenWRT](/lib/oxidized/model/openwrt.rb)
 * [OPNsense](/lib/oxidized/model/opnsense.rb)
 * Palo Alto
-  * [PANOS](/lib/oxidized/model/panos.rb)
+  * [PanOS API](/lib/oxidized/model/panos_api.rb)
+  * [PanOS](/lib/oxidized/model/panos.rb)
 * [PLANET SG/SGS Switches](/lib/oxidized/model/planet.rb)
 * [pfSense](/lib/oxidized/model/pfsense.rb)
 * Pure Storage
@@ -213,12 +215,16 @@
   * [AlteonOS](/lib/oxidized/model/alteonos.rb)
 * Raisecom
   * [Raisecom](/lib/oxidized/model/raisecom.rb)
+* Ruijie Networks
+  * [RGOS](/lib/oxidized/model/rgos.rb)
 * QTECH
   * [QSW-2800, QSW-3400, QSW-3450, QSW-3500](/lib/oxidized/model/qtech.rb)
 * Quanta
   * [Quanta / VxWorks 6.6 (1.1.0.8)](/lib/oxidized/model/quantaos.rb)
 * Siklu
   * [EtherHaul](/lib/oxidized/model/siklu.rb)
+* Seiko Solutions
+  * [SmartCS, SmartCS mini](/lib/oxidized/model/smartcs.rb)
 * SonicWALL
   * [SonicOS](/lib/oxidized/model/sonicos.rb)
 * SNR

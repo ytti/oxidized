@@ -1,4 +1,6 @@
 class PfSense < Oxidized::Model
+  using Refinements
+
   # use other use than 'admin' user, 'admin' user cannot get ssh/exec. See issue #535
 
   cmd :secret do |cfg|

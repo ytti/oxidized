@@ -1,4 +1,6 @@
 class Voss < Oxidized::Model
+  using Refinements
+
   # Extreme/Avaya VSP Operating System Software(VOSS)
   # Created by danielcoxman@gmail.com
   # March 16, 2019

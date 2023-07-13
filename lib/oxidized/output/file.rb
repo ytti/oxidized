@@ -5,6 +5,7 @@ module Oxidized
     attr_reader :commitref
 
     def initialize
+      super
       @cfg = Oxidized.config.output.file
     end
 
@@ -21,7 +22,7 @@ module Oxidized
       file = File.join File.dirname(file), opt[:group] if opt[:group]
       FileUtils.mkdir_p file
       file = File.join file, node
-      File.open(file, 'w') { |fh| fh.write outputs.to_cfg }
+      File.write(file, outputs.to_cfg)
       @commitref = file
     end
 

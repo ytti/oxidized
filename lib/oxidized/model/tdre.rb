@@ -1,4 +1,6 @@
 class TDRE < Oxidized::Model
+  using Refinements
+
   prompt /^>$/
   cmd "get -f"
 

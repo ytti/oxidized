@@ -1,5 +1,7 @@
 class NetScaler < Oxidized::Model
-  prompt /^([\w\.-]*>\s?)$/
+  using Refinements
+
+  prompt /^(.*[\w\.-]*>\s?)$/
   comment '# '
 
   cmd :all do |cfg|

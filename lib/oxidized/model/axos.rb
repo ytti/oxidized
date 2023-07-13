@@ -1,4 +1,6 @@
 class AxOS < Oxidized::Model
+  using Refinements
+
   prompt /(\x1b\[\?7h)?([\w.@()-]+[#]\s?)$/
   comment '! '
 

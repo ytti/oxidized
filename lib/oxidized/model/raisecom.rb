@@ -1,4 +1,6 @@
 class RAISECOM < Oxidized::Model
+  using Refinements
+
   comment '! '
   prompt /([\w.@-]+[#>]\s?)$/
 

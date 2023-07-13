@@ -1,4 +1,5 @@
 # Oxidized
+
 [![Build Status](https://github.com/ytti/oxidized/actions/workflows/ruby.yml/badge.svg)](https://github.com/ytti/oxidized/actions/workflows/ruby.yml)
 [![codecov.io](https://codecov.io/gh/ytti/oxidized/coverage.svg?branch=master)](https://codecov.io/gh/ytti/oxidized?branch=master)
 [![Codacy Badge](https://api.codacy.com/project/badge/Grade/5a90cb22db6a4d5ea23ad0dfb53fe03a)](https://www.codacy.com/app/ytti/oxidized?utm_source=github.com&amp;utm_medium=referral&amp;utm_content=ytti/oxidized&amp;utm_campaign=Badge_Grade)
@@ -76,7 +77,7 @@ Check out the [Oxidized TREX 2014 presentation](http://youtu.be/kBQ_CTUuqeU#t=3h
 
 ### Debian and Ubuntu
 
-Debian "buster" or newer and Ubuntu 17.10 (artful) or newer are recommended. On Ubuntu, begin by enabling the `universe` 
+Debian "buster" or newer and Ubuntu 17.10 (artful) or newer are recommended. On Ubuntu, begin by enabling the `universe`
 repository (required for libssh2-1-dev):
 
 ```shell
@@ -86,7 +87,7 @@ add-apt-repository universe
 Install the dependencies:
 
 ```shell
-apt-get install ruby ruby-dev libsqlite3-dev libssl-dev pkg-config cmake libssh2-1-dev libicu-dev zlib1g-dev g++
+apt-get install ruby ruby-dev libsqlite3-dev libssl-dev pkg-config cmake libssh2-1-dev libicu-dev zlib1g-dev g++ libyaml-dev
 ```
 
 Finally, install the gems:
@@ -104,8 +105,8 @@ Install Ruby 2.3 from [SCL](https://www.softwarecollections.org/en/scls/rhscl/rh
 
 ```shell
 yum install centos-release-scl
-yum install rh-ruby23 rh-ruby23-ruby-devel
-scl enable rh-ruby23 bash
+yum install rh-ruby30 rh-ruby30-ruby-devel
+scl enable rh-ruby30 bash
 ```
 
 The following additional packages will be required to build the dependencies:
@@ -120,12 +121,14 @@ Make sure you dont have any leftover ruby:
 ```yum erase ruby```
 
 Then, install gpg key and rvm
-```sudo gpg --keyserver hkp://keys.gnupg.net --recv-keys 409B6B1796C275462A1703113804BB82D39DC0E3 7D2BAF1CF37B13E2069D6956105BD0E739499BDB
+
+```shell
+sudo gpg --keyserver hkp://keys.gnupg.net --recv-keys 409B6B1796C275462A1703113804BB82D39DC0E3 7D2BAF1CF37B13E2069D6956105BD0E739499BDB
 curl -sSL https://get.rvm.io | bash -s stable
 source /etc/profile.d/rvm.sh
 rvm requirements run
-rvm install 2.6.0
-rvm use 2.6.0
+rvm install 3.0
+rvm use 3.0
 ```
 
 Install oxidized requirements:
@@ -140,7 +143,6 @@ You need to wrap the gem and reference the wrap in the systemctl service file:
 You can see where the wrapped gem is via
 ```rvm wrapper show oxidized```
 Use that path in the oxidized.service file, restart the systemctl daemon, run oxidized by hand once, edit config file, start service.
-
 
 ### FreeBSD
 
@@ -218,12 +220,9 @@ services:
     environment:
       CONFIG_RELOAD_INTERVAL: 600
     volumes:
-       - config:/home/oxidized/.config/oxidized/config
-       - router.db:/home/oxidized/.config/oxidized/router.db
-       - model:/home/oxidized/.config/oxidized/model
-       # if git is use as input
-       - data:/home/oxidized/.config/oxidized/backupcfg/
-
+       - config:/home/oxidized/.config/oxidized/
+volumes:
+  config:
 ```
 
 Create the `/etc/oxidized/router.db` (see [CSV Source](docs/Sources.md#source-csv) for further info):
@@ -368,7 +367,8 @@ The systemd service assumes that you have a user named 'oxidized' and that oxidi
 ```shell
 sudo cp extra/oxidized.service /etc/systemd/system
 ```
-2. Setup /var/run/
+
+2. Setup `/var/run/`
 
 ```shell
 mkdir /run/oxidized

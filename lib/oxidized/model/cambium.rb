@@ -1,4 +1,6 @@
 class Cambium < Oxidized::Model
+  using Refinements
+
   cfg_cb = lambda do
     c_page = @m.click @m_page.link_with(text: "Configuration")
     u_page = @m.click c_page.link_with(text: "Unit Settings")

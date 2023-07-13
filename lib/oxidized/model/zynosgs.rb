@@ -1,4 +1,6 @@
 class ZyNOSGS < Oxidized::Model
+  using Refinements
+
   # Used in Zyxel GS1900 switches, tested with GS1900-8
   prompt /^.*# $/
   comment '! '
@@ -16,6 +18,8 @@ class ZyNOSGS < Oxidized::Model
     # Remove garbage vt100 control sequences
     # Backspace 0x07 char or escape char + control chars
     cfg.gsub! /[\b]|\e\[A|\e\[2K/, ''
+    # Remove empty lines
+    cfg.gsub! /\n\n/, "\n"
     cfg
   end
 

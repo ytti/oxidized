@@ -1,5 +1,7 @@
 module Oxidized
   class Git < Output
+    using Refinements
+
     class GitError < OxidizedError; end
     begin
       require 'rugged'
@@ -10,6 +12,7 @@ module Oxidized
     attr_reader :commitref
 
     def initialize
+      super
       @cfg = Oxidized.config.output.git
     end
 
@@ -78,7 +81,8 @@ module Oxidized
       i = -1
       tab = []
       walker.each do |commit|
-        next if commit.diff(paths: [path]).size.zero?
+        # Diabled rubocop because the suggested .empty? does not work here.
+        next if commit.diff(paths: [path]).size.zero? # rubocop:disable Style/ZeroLengthPredicate
 
         hash = {}
         hash[:date] = commit.time.to_s
@@ -158,11 +162,11 @@ module Oxidized
       begin
         repo = Rugged::Repository.new repo
         update_repo repo, file, data
-      rescue Rugged::OSError, Rugged::RepositoryError => open_error
+      rescue Rugged::OSError, Rugged::RepositoryError => e
         begin
           Rugged::Repository.init_at repo, :bare
         rescue StandardError => create_error
-          raise GitError, "first '#{open_error.message}' was raised while opening git repo, then '#{create_error.message}' was while trying to create git repo"
+          raise GitError, "first '#{e.message}' was raised while opening git repo, then '#{create_error.message}' was while trying to create git repo"
         end
         retry
       end

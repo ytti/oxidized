@@ -1,4 +1,6 @@
 class Netgear < Oxidized::Model
+  using Refinements
+
   comment '!'
   prompt /^(\([\w\s\-.]+\)\s[#>])$/
 

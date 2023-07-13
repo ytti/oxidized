@@ -1,4 +1,6 @@
 class H3C < Oxidized::Model
+  using Refinements
+
   # H3C
 
   prompt /^.*(<[\w.-]+>)$/

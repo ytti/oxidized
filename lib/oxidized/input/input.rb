@@ -1,5 +1,6 @@
 module Oxidized
   class PromptUndetect < OxidizedError; end
+
   class Input
     include Oxidized::Config::Vars
 

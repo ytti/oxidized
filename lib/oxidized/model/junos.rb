@@ -1,4 +1,6 @@
 class JunOS < Oxidized::Model
+  using Refinements
+
   comment '# '
 
   def telnet

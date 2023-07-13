@@ -1,4 +1,6 @@
 class Firebrick < Oxidized::Model
+  using Refinements
+
   # Firebrick #
   prompt /\x0a\x1b\x5b\x32\x4b\x0d.*>\s/
 

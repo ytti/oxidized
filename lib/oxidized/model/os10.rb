@@ -1,4 +1,6 @@
 class OS10 < Oxidized::Model
+  using Refinements
+
   # For switches running Dell EMC Networking OS10 #
   #
   # Tested with : Dell PowerSwitch S4148U-ON

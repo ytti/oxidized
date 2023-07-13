@@ -4,6 +4,8 @@
 # for the user that is used to fetch the configuration.
 
 class ADVA < Oxidized::Model
+  using Refinements
+
   prompt /\w+\-+[#>]\s?$/
   comment '# '
 

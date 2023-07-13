@@ -1,4 +1,6 @@
 class NOS < Oxidized::Model
+  using Refinements
+
   # Brocade Network Operating System
 
   prompt /^(?:\e\[..h)?[\w.-]+# $/

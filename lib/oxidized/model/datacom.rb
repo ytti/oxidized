@@ -1,4 +1,6 @@
 class DataCom < Oxidized::Model
+  using Refinements
+
   comment '! '
 
   expect /^--More--\s+$/ do |data, re|

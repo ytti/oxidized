@@ -1,4 +1,6 @@
 class FortiWLC < Oxidized::Model
+  using Refinements
+
   comment '# '
 
   cmd :all do |cfg, cmdstring|
@@ -8,15 +10,15 @@ class FortiWLC < Oxidized::Model
 
   prompt /^([-\w.\/:?\[\]()]+[#>]\s?)$/
 
-   cmd 'show controller' do |cfg|
-         comment cfg
-    end
-      cmd 'show ap' do |cfg|
-         comment cfg
-    end
-    cmd 'show running-config' do |cfg|
-        comment cfg
-    end
+  cmd 'show controller' do |cfg|
+    comment cfg
+  end
+  cmd 'show ap' do |cfg|
+    comment cfg
+  end
+  cmd 'show running-config' do |cfg|
+    comment cfg
+  end
 
   cfg :telnet, :ssh do
     pre_logout "exit\n"

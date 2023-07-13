@@ -1,4 +1,6 @@
 class HPEBladeSystem < Oxidized::Model
+  using Refinements
+
   # HPE Onboard Administrator
 
   prompt /.*> /

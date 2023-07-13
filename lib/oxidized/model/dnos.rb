@@ -1,4 +1,6 @@
 class DNOS < Oxidized::Model
+  using Refinements
+
   # Force10 DNOS model #
 
   comment  '! '

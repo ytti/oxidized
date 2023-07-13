@@ -1,4 +1,6 @@
 class C4CMTS < Oxidized::Model
+  using Refinements
+
   # Arris C4 CMTS
 
   prompt /^([\w.@:\/-]+[#>]\s?)$/

@@ -55,12 +55,10 @@ module Oxidized
       ctx.event = event
 
       @registered_hooks[event].each do |r_hook|
-        begin
-          r_hook.hook.run_hook ctx
-        rescue StandardError => e
-          Oxidized.logger.error "Hook #{r_hook.name} (#{r_hook.hook}) failed " \
-                                "(#{e.inspect}) for event #{event.inspect}"
-        end
+        r_hook.hook.run_hook ctx
+      rescue StandardError => e
+        Oxidized.logger.error "Hook #{r_hook.name} (#{r_hook.hook}) failed " \
+                              "(#{e.inspect}) for event #{event.inspect}"
       end
     end
   end
@@ -68,8 +66,6 @@ module Oxidized
   # Hook abstract base class
   class Hook
     attr_reader :cfg
-
-    def initialize; end
 
     def cfg=(cfg)
       @cfg = cfg

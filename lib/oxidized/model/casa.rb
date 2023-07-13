@@ -1,4 +1,6 @@
 class Casa < Oxidized::Model
+  using Refinements
+
   # Casa Systems CMTS
 
   prompt /^([\w.@()-]+[#>]\s?)$/

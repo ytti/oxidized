@@ -1,4 +1,6 @@
 class AWPlus < Oxidized::Model
+  using Refinements
+
   # Allied Telesis Alliedware Plus Model#
   # https://www.alliedtelesis.com/products/software/AlliedWare-Plus
 
@@ -51,7 +53,7 @@ class AWPlus < Oxidized::Model
                 line.match(/Current software\s*:.*/) ||
                 line.match(/Software version\s*:.*/) ||
                 line.match(/Build date\s*:.*/)
-            } .join
+            }.join
   end
 
   # Actually get the devices running config#

@@ -1,4 +1,6 @@
 class TPLink < Oxidized::Model
+  using Refinements
+
   # tp-link prompt
   prompt /^\r?([\w.@()-]+[#>]\s?)$/
   comment '! '
