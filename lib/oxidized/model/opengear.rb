@@ -13,6 +13,11 @@ class OpenGear < Oxidized::Model
 
   cmd('cat /etc/version') { |cfg| comment cfg }
 
+  cmd 'showserial' do |cfg|
+    cfg.gsub! /^/, 'Serial Number: '
+    comment cfg
+  end
+
   cmd 'config -g config' do |cfg|
     out=''
     cfg.each_line do |line|
