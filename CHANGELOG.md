@@ -14,6 +14,7 @@ The format is based on [Keep a Changelog](https://keepachangelog.com/en/1.1.0/).
 + Documentation to send mail with hooks
 
 ## Changed
+- dlink: fixed prompt for other dlink switches, added additional uptime removal expressions (@mirackle-spb)
 
 ## Fixed
 
