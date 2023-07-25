@@ -16,6 +16,8 @@ The format is based on [Keep a Changelog](https://keepachangelog.com/en/1.1.0/).
 ## Changed
 - dlink: fixed prompt for other dlink switches, added additional uptime removal expressions (@mirackle-spb)
 
+- Collect VC info for juniper ex3400 (@ermuller)
+
 ## Fixed
 
 - fixed empty lines for ZyXEL GS1900 switches (@jluebbe)
