@@ -1,5 +1,7 @@
 module Oxidized
   class Git < Output
+    using Refinements
+
     class GitError < OxidizedError; end
     begin
       require 'rugged'

@@ -107,6 +107,7 @@
   * [Dell EMC Networking OS10](/lib/oxidized/model/os10.rb)
 * D-Link
   * [D-Link](/lib/oxidized/model/dlink.rb)
+  * [D-Link cisco like CLI](/lib/oxidized/model/dlinknextgen.rb)
 * ECI Telecom
   * [ECIapollo](/lib/oxidized/model/eciapollo.rb)
 * EdgeCore
@@ -214,6 +215,8 @@
   * [AlteonOS](/lib/oxidized/model/alteonos.rb)
 * Raisecom
   * [Raisecom](/lib/oxidized/model/raisecom.rb)
+* Ruijie Networks
+  * [RGOS](/lib/oxidized/model/rgos.rb)
 * QTECH
   * [QSW-2800, QSW-3400, QSW-3450, QSW-3500](/lib/oxidized/model/qtech.rb)
 * Quanta

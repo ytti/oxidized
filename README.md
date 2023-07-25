@@ -9,7 +9,7 @@
 
 Oxidized is a network device configuration backup tool. It's a RANCID replacement!
 
-Light and extensible, Oxidized supports over 130 operating system types.
+It is light and extensible and supports over 130 operating system types.
 
 Feature highlights:
 
@@ -17,7 +17,7 @@ Feature highlights:
 * Restful API to a move node immediately to head-of-queue (GET/POST /node/next/[NODE])
 * Syslog udp+file example to catch config change events (IOS/JunOS) and trigger a config fetch
   * Will signal which IOS/JunOS user made the change, can then be used by output modules (via POST)
-  * The `git` output module uses this info - 'git blame' will show who changed each line, and when
+  * The `git` output module uses this info - 'git blame' will show who changed each line
 * Restful API to reload list of nodes (GET /reload)
 * Restful API to fetch configurations (/node/fetch/[NODE] or /node/fetch/group/[NODE])
 * Restful API to show list of nodes (GET /nodes)
@@ -87,7 +87,7 @@ add-apt-repository universe
 Install the dependencies:
 
 ```shell
-apt-get install ruby ruby-dev libsqlite3-dev libssl-dev pkg-config cmake libssh2-1-dev libicu-dev zlib1g-dev g++
+apt-get install ruby ruby-dev libsqlite3-dev libssl-dev pkg-config cmake libssh2-1-dev libicu-dev zlib1g-dev g++ libyaml-dev
 ```
 
 Finally, install the gems:
