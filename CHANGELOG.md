@@ -15,8 +15,8 @@ The format is based on [Keep a Changelog](https://keepachangelog.com/en/1.1.0/).
 + Documentation to send mail with hooks
 
 ## Changed
+- tp-link: fixed enable mode post login entrance (@mirackle-spb)
 - dlink: fixed prompt for other dlink switches, added additional uptime removal expressions (@mirackle-spb)
-
 - Collect VC info for juniper ex3400 (@ermuller)
 
 ## Fixed
