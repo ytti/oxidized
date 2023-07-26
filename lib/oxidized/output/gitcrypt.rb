@@ -1,5 +1,6 @@
 module Oxidized
   class GitCrypt < Output
+    using Refinements
     class GitCryptError < OxidizedError; end
     begin
       require 'git'
