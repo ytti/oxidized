@@ -9,11 +9,15 @@ The format is based on [Keep a Changelog](https://keepachangelog.com/en/1.1.0/).
 ## Added
 - model for D-Link cisco like CLI (@mirackle-spb)
 - model for Ruijie Networks RGOS devices (@spike77453)
+- pagination for http source (@davama)
 
 + Added ability to send mail with the Docker container
 + Documentation to send mail with hooks
 
 ## Changed
+- tp-link: fixed enable mode post login entrance (@mirackle-spb)
+- dlink: fixed prompt for other dlink switches, added additional uptime removal expressions (@mirackle-spb)
+- Collect VC info for juniper ex3400 (@ermuller)
 
 ## Fixed
 
@@ -23,6 +27,7 @@ The format is based on [Keep a Changelog](https://keepachangelog.com/en/1.1.0/).
 - fixed new date/time format with newer RouterOS `# jun/01/2023 12:11:25 by RouterOS 7.9.1` vs `# 2023-06-01 12:16:16 by RouterOS 7.10rc1` (@tim427)
 - fixed netscaler backups with hostname set #2828 (@electrocret) 
 - Do not redirect stderr when fetching opnsense version since default shell (csh) doesn't support it (@spike77453)
+- Fixed fan RPM speeds included in Aruba CX diffs (@danpoltawski)
 - fixed prompt for Cumulus to allow usernames with dots and dashes (@ktims)
 
 

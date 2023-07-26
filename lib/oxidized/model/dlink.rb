@@ -2,9 +2,8 @@ class Dlink < Oxidized::Model
   using Refinements
 
   # D-LINK Switches
-  # Add support dgs 1100 series (tested only with dgs-1100-10/me)
 
-  prompt /^(\r*[\w\s.@()\/:-]+[#>]\s?)$/
+  prompt /[\w.@()\/:-]+[#>]\s?$/
   comment '# '
 
   cmd :secret do |cfg|
@@ -19,6 +18,9 @@ class Dlink < Oxidized::Model
 
   cmd 'show switch' do |cfg|
     cfg.gsub! /^System Uptime\s.+/, '' # Omit constantly changing uptime info
+    cfg.gsub! /^System up time\s.+/, '' # Omit constantly changing uptime info
+    cfg.gsub! /^System Time\s.+/, '' # Omit constantly changing uptime info
+    cfg.gsub! /^RTC Time\s.+/, '' # Omit constantly changing uptime info
     comment cfg
   end
 
