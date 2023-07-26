@@ -18,7 +18,7 @@ class OpnSense < Oxidized::Model
   # that lack the opnsense-version command. Newer versions of OPNsense no longer
   # store the version information in this file, so both versions have to be
   # supported here for now.
-  cmd 'opnsense-version 2>/dev/null || echo "OPNsense "`cat /usr/local/opnsense/version/opnsense`' do |version|
+  cmd 'opnsense-version || echo "OPNsense "`cat /usr/local/opnsense/version/opnsense`' do |version|
     xmlcomment version
   end
 
