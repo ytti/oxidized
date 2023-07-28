@@ -173,7 +173,8 @@ module Oxidized
 
     def yield_node_output(node_name)
       with_lock do
-        node = find { |n| [n.name, n.ip].include? node_name }
+        i = find_node_index node_name
+        node = self[i]
         output = node.output.new
         raise Oxidized::NotSupported unless output.respond_to? :fetch
 
