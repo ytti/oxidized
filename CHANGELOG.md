@@ -28,6 +28,7 @@ The format is based on [Keep a Changelog](https://keepachangelog.com/en/1.1.0/).
 - fixed netscaler backups with hostname set #2828 (@electrocret) 
 - Do not redirect stderr when fetching opnsense version since default shell (csh) doesn't support it (@spike77453)
 - Fixed fan RPM speeds included in Aruba CX diffs (@danpoltawski)
+- More types of node lookup now accept IP as the key (@habbie)
 
 
 ## [0.29.1 - 2023-04-24]
