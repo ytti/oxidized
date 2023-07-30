@@ -13,7 +13,8 @@ class OpenGear < Oxidized::Model
 
   cmd('cat /etc/version') { |cfg| comment cfg }
 
-  cmd('config -g config') { |cfg| cfg }
+  cmd('config -g config 2>/dev/null') { |cfg| cfg }
+  cmd('ogcli e 2>/dev/null') { |cfg| cfg }
 
   cfg :ssh do
     exec true # don't run shell, run each command in exec channel
