@@ -64,6 +64,8 @@
   * [Casa](/lib/oxidized/model/casa.rb)
 * Centec Networks
   * [CNOS](/lib/oxidized/model/cnos.rb)
+* Ceragon
+  * [CeraOS](/lib/oxidized/model/ceros.rb)
 * Check Point
   * [GaiaOS](/lib/oxidized/model/gaiaos.rb)
 * Ciena
