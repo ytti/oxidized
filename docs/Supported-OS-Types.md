@@ -117,6 +117,7 @@
   * [Eltex](/lib/oxidized/model/eltex.rb)
 * Ericsson/Redback
   * [IPOS (former SEOS)](/lib/oxidized/model/ipos.rb)
+  * [Minilink 6600](/lib/oxidized/model/ml66.rb)
 * Extreme Networks
   * [Enterasys B/C-Series](/lib/oxidized/model/enterasys.rb)
   * [Enterasys 800-Series](/lib/oxidized/model/enterasys800.rb)
