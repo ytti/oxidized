@@ -5,7 +5,6 @@ All notable changes to this project will be documented in this file.
 The format is based on [Keep a Changelog](https://keepachangelog.com/en/1.1.0/).
 
 ## [Unreleased]
-- Updated Opengear model to support also new Opengear OS
 
 ## Added
 - model for D-Link cisco like CLI (@mirackle-spb)
@@ -19,6 +18,7 @@ The format is based on [Keep a Changelog](https://keepachangelog.com/en/1.1.0/).
 - tp-link: fixed enable mode post login entrance (@mirackle-spb)
 - dlink: fixed prompt for other dlink switches, added additional uptime removal expressions (@mirackle-spb)
 - Collect VC info for juniper ex3400 (@ermuller)
+- Opengear model now also supports new Opengear OM2200 models
 
 ## Fixed
 
