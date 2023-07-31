@@ -9,6 +9,7 @@ The format is based on [Keep a Changelog](https://keepachangelog.com/en/1.1.0/).
 ## Added
 - model for D-Link cisco like CLI (@mirackle-spb)
 - model for Ruijie Networks RGOS devices (@spike77453)
+- model for Asterfusion Network Operating System (@avl-dev)
 - pagination for http source (@davama)
 
 + Added ability to send mail with the Docker container
