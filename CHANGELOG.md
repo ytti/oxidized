@@ -9,6 +9,7 @@ The format is based on [Keep a Changelog](https://keepachangelog.com/en/1.1.0/).
 ## Added
 - model for D-Link cisco like CLI (@mirackle-spb)
 - model for Ruijie Networks RGOS devices (@spike77453)
+- model for Asterfusion Network Operating System (@avl-dev)
 - pagination for http source (@davama)
 
 + Added ability to send mail with the Docker container
@@ -29,6 +30,7 @@ The format is based on [Keep a Changelog](https://keepachangelog.com/en/1.1.0/).
 - Do not redirect stderr when fetching opnsense version since default shell (csh) doesn't support it (@spike77453)
 - Fixed fan RPM speeds included in Aruba CX diffs (@danpoltawski)
 - Remove constantly updating dates from backup of Adtran config (@davesbell)
+- fixed prompt for Cumulus to allow usernames with dots and dashes (@ktims)
 
 ## [0.29.1 - 2023-04-24]
 

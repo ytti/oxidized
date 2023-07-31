@@ -32,6 +32,8 @@
 * Aruba
   * [AOS-CX](/lib/oxidized/model/aoscx.rb)
   * [AOSW](/lib/oxidized/model/aosw.rb)
+* Asterfusion
+  * [AsterNOS](/lib/oxidized/model/asternos.rb)
 * AudioCodes
   * [AudioCodes](/lib/oxdized/model/audiocodes.rb)
   * [MediaPack MP-1xx, Mediant1000](/lib/oxdized/model/audiocodesmp.rb)
