@@ -11,6 +11,7 @@ The format is based on [Keep a Changelog](https://keepachangelog.com/en/1.1.0/).
 - model for Ruijie Networks RGOS devices (@spike77453)
 - model for Asterfusion Network Operating System (@avl-dev)
 - pagination for http source (@davama)
+- model for Ericsson Miniling 6600 series (@schouwenburg)
 
 + Added ability to send mail with the Docker container
 + Documentation to send mail with hooks
