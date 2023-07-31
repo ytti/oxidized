@@ -14,7 +14,11 @@ class Adtran < Oxidized::Model
     cfg
   end
 
-  cmd 'show running-config'
+  cmd 'show running-config' do |cfg|
+    # Strip out line at the top which displays the current date/time
+    # ! Created                         : Mon Jun 26 2023 10:07:07
+    cfg.gsub! /! Createds+:.*\n/, ''
+  end
 
   cfg :ssh do
     if vars :enable
