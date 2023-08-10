@@ -28,9 +28,7 @@ class Mimosab11 < Oxidized::Model
   end
 
   cfg :http do
-
     @username = @node.auth[:username]
     @password = @node.auth[:password]
   end
 end
-
