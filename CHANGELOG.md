@@ -9,7 +9,9 @@ The format is based on [Keep a Changelog](https://keepachangelog.com/en/1.1.0/).
 ## Added
 - model for D-Link cisco like CLI (@mirackle-spb)
 - model for Ruijie Networks RGOS devices (@spike77453)
+- model for Asterfusion Network Operating System (@avl-dev)
 - pagination for http source (@davama)
+- model for Ericsson Miniling 6600 series (@schouwenburg)
 
 + Added ability to send mail with the Docker container
 + Documentation to send mail with hooks
@@ -18,6 +20,7 @@ The format is based on [Keep a Changelog](https://keepachangelog.com/en/1.1.0/).
 - tp-link: fixed enable mode post login entrance (@mirackle-spb)
 - dlink: fixed prompt for other dlink switches, added additional uptime removal expressions (@mirackle-spb)
 - Collect VC info for juniper ex3400 (@ermuller)
+- adva: fix config content for recovery process, collect config delta instead of current (@MichiMeyer)
 
 ## Fixed
 
@@ -29,7 +32,8 @@ The format is based on [Keep a Changelog](https://keepachangelog.com/en/1.1.0/).
 - Do not redirect stderr when fetching opnsense version since default shell (csh) doesn't support it (@spike77453)
 - Fixed fan RPM speeds included in Aruba CX diffs (@danpoltawski)
 - Gitcrypt output refinements (@electrocret)
-
+- Remove constantly updating dates from backup of Adtran config (@davesbell)
+- fixed prompt for Cumulus to allow usernames with dots and dashes (@ktims)
 
 ## [0.29.1 - 2023-04-24]
 

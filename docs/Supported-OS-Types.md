@@ -32,6 +32,8 @@
 * Aruba
   * [AOS-CX](/lib/oxidized/model/aoscx.rb)
   * [AOSW](/lib/oxidized/model/aosw.rb)
+* Asterfusion
+  * [AsterNOS](/lib/oxidized/model/asternos.rb)
 * AudioCodes
   * [AudioCodes](/lib/oxdized/model/audiocodes.rb)
   * [MediaPack MP-1xx, Mediant1000](/lib/oxdized/model/audiocodesmp.rb)
@@ -117,6 +119,7 @@
   * [Eltex](/lib/oxidized/model/eltex.rb)
 * Ericsson/Redback
   * [IPOS (former SEOS)](/lib/oxidized/model/ipos.rb)
+  * [Minilink 6600](/lib/oxidized/model/ml66.rb)
 * Extreme Networks
   * [Enterasys B/C-Series](/lib/oxidized/model/enterasys.rb)
   * [Enterasys 800-Series](/lib/oxidized/model/enterasys800.rb)
