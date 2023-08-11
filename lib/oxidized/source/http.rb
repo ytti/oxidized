@@ -18,8 +18,7 @@ module Oxidized
 
     def load(node_want = nil)
       nodes = []
-      data = JSON.parse(read_http(node_want))
-      data = string_navigate(data, @cfg.hosts_location) if @cfg.hosts_location?
+      data = read_http(node_want)
       data.each do |node|
         next if node.empty?
 
@@ -45,6 +44,14 @@ module Oxidized
 
     private
 
+    def set_request(l_uri, l_headers, l_node_want)
+      req_uri = l_uri.request_uri
+      req_uri = "#{req_uri}/#{l_node_want}" if l_node_want
+      request = Net::HTTP::Get.new(req_uri, l_headers)
+      request.basic_auth(@cfg.user, @cfg.pass) if @cfg.user? && @cfg.pass?
+      request
+    end
+
     def string_navigate(object, wants)
       wants = wants.split(".").map do |want|
         head, match, _tail = want.partition(/\[\d+\]/)
@@ -54,6 +61,29 @@ module Oxidized
         object = object[want] if object.respond_to? :each
       end
       object
+    end
+
+    def check_pagination(response, http, headers, node_want)
+      node_data = []
+      if @cfg.pagination?
+        raise Oxidized::OxidizedError, "if using pagination, 'pagination_key_name' setting must be set" unless @cfg.pagination_key_name?
+
+        next_key = @cfg.pagination_key_name
+        loop do
+          data = JSON.parse(response.body)
+          node_data += string_navigate(data, @cfg.hosts_location) if @cfg.hosts_location?
+          break if data[next_key].nil?
+
+          new_uri = URI.parse(data[next_key]) if data.has_key?(next_key)
+          request = set_request(new_uri, headers, node_want)
+          response = http.request(request)
+        end
+      # since new feature; dont break curent configs
+      else
+        data = JSON.parse(response.body)
+        node_data += string_navigate(data, @cfg.hosts_location) if @cfg.hosts_location?
+      end
+      node_data
     end
 
     def read_http(node_want)
@@ -71,11 +101,10 @@ module Oxidized
         headers[header] = value
       end
 
-      req_uri = uri.request_uri
-      req_uri = "#{req_uri}/#{node_want}" if node_want
-      request = Net::HTTP::Get.new(req_uri, headers)
-      request.basic_auth(@cfg.user, @cfg.pass) if @cfg.user? && @cfg.pass?
-      http.request(request).body
+      request = set_request(uri, headers, node_want)
+      response = http.request(request)
+
+      check_pagination(response, http, headers, node_want)
     end
   end
 end
