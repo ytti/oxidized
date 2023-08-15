@@ -9,6 +9,7 @@ The format is based on [Keep a Changelog](https://keepachangelog.com/en/1.1.0/).
 ## Added
 - model for D-Link cisco like CLI (@mirackle-spb)
 - model for Ruijie Networks RGOS devices (@spike77453)
+- added support for AricentISS 2.x firmware (@davromaniak)
 - model for Asterfusion Network Operating System (@avl-dev)
 - pagination for http source (@davama)
 - model for Ericsson Miniling 6600 series (@schouwenburg)
@@ -31,6 +32,7 @@ The format is based on [Keep a Changelog](https://keepachangelog.com/en/1.1.0/).
 - fixed netscaler backups with hostname set #2828 (@electrocret) 
 - Do not redirect stderr when fetching opnsense version since default shell (csh) doesn't support it (@spike77453)
 - Fixed fan RPM speeds included in Aruba CX diffs (@danpoltawski)
+- Gitcrypt output refinements (@electrocret)
 - Remove constantly updating dates from backup of Adtran config (@davesbell)
 - fixed prompt for Cumulus to allow usernames with dots and dashes (@ktims)
 
