@@ -13,7 +13,7 @@ The format is based on [Keep a Changelog](https://keepachangelog.com/en/1.1.0/).
 - model for Asterfusion Network Operating System (@avl-dev)
 - pagination for http source (@davama)
 - model for Ericsson Miniling 6600 series (@schouwenburg)
-
+- model for Mimosa B11 (@ritzbhuj)
 + Added ability to send mail with the Docker container
 + Documentation to send mail with hooks
 
