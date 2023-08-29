@@ -70,19 +70,14 @@ module Oxidized
       raise Oxidized::OxidizedError, "if using pagination, 'pagination_key_name' setting must be set" unless @cfg.pagination_key_name?
 
       next_key = @cfg.pagination_key_name
-      Oxidized.logger.info "got next key #{next_key}"
       loop do
-        Oxidized.logger.info "beggining loop"
 	node_data += string_navigate(data, @cfg.hosts_location) if @cfg.hosts_location?
         break if data[next_key].nil?
         
 	new_uri = URI.parse(data[next_key]) if data.has_key?(next_key)
-        Oxidized.logger.info "new url is #{new_uri}"
         data = JSON.parse(read_http(new_uri, node_want))
 	node_data += string_navigate(data, @cfg.hosts_location) if @cfg.hosts_location?
-        Oxidized.logger.info "end of loop"
       end
-      Oxidized.logger.info "break loop"
       node_data
     end
 
