@@ -87,7 +87,6 @@ module Oxidized
     end
 
     def read_http(uri, node_want)
-      #uri = URI.parse(@cfg.url)
       http = Net::HTTP.new(uri.host, uri.port)
       http.use_ssl = true if uri.scheme == 'https'
       http.verify_mode = OpenSSL::SSL::VERIFY_NONE unless @cfg.secure
