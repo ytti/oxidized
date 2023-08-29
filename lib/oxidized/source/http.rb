@@ -6,6 +6,7 @@ module Oxidized
     end
 
     def setup
+      Oxidized.setup_logger
       return unless @cfg.url.empty?
 
       raise NoConfig, 'no source http url config, edit ~/.config/oxidized/config'
@@ -18,8 +19,17 @@ module Oxidized
 
     def load(node_want = nil)
       nodes = []
-      data = read_http(node_want)
-      data.each do |node|
+      node_data = []
+      uri = URI.parse(@cfg.url)
+      data = JSON.parse(read_http(uri, node_want))
+      node_data = data
+      node_data = string_navigate(data, @cfg.hosts_location) if @cfg.hosts_location?
+      if @cfg.pagination?
+        node_data = pagination(data, node_want)
+      end
+
+      # at this point we have all the nodes; pagination or not
+      node_data.each do |node|
         next if node.empty?
 
         # map node parameters
@@ -44,14 +54,6 @@ module Oxidized
 
     private
 
-    def set_request(l_uri, l_headers, l_node_want)
-      req_uri = l_uri.request_uri
-      req_uri = "#{req_uri}/#{l_node_want}" if l_node_want
-      request = Net::HTTP::Get.new(req_uri, l_headers)
-      request.basic_auth(@cfg.user, @cfg.pass) if @cfg.user? && @cfg.pass?
-      request
-    end
-
     def string_navigate(object, wants)
       wants = wants.split(".").map do |want|
         head, match, _tail = want.partition(/\[\d+\]/)
@@ -63,31 +65,29 @@ module Oxidized
       object
     end
 
-    def check_pagination(response, http, headers, node_want)
+    def pagination(data, node_want)
       node_data = []
-      if @cfg.pagination?
-        raise Oxidized::OxidizedError, "if using pagination, 'pagination_key_name' setting must be set" unless @cfg.pagination_key_name?
+      raise Oxidized::OxidizedError, "if using pagination, 'pagination_key_name' setting must be set" unless @cfg.pagination_key_name?
 
-        next_key = @cfg.pagination_key_name
-        loop do
-          data = JSON.parse(response.body)
-          node_data += string_navigate(data, @cfg.hosts_location) if @cfg.hosts_location?
-          break if data[next_key].nil?
-
-          new_uri = URI.parse(data[next_key]) if data.has_key?(next_key)
-          request = set_request(new_uri, headers, node_want)
-          response = http.request(request)
-        end
-      # since new feature; dont break curent configs
-      else
-        data = JSON.parse(response.body)
-        node_data += string_navigate(data, @cfg.hosts_location) if @cfg.hosts_location?
+      next_key = @cfg.pagination_key_name
+      Oxidized.logger.info "got next key #{next_key}"
+      loop do
+        Oxidized.logger.info "beggining loop"
+	node_data += string_navigate(data, @cfg.hosts_location) if @cfg.hosts_location?
+        break if data[next_key].nil?
+        
+	new_uri = URI.parse(data[next_key]) if data.has_key?(next_key)
+        Oxidized.logger.info "new url is #{new_uri}"
+        data = JSON.parse(read_http(new_uri, node_want))
+	node_data += string_navigate(data, @cfg.hosts_location) if @cfg.hosts_location?
+        Oxidized.logger.info "end of loop"
       end
+      Oxidized.logger.info "break loop"
       node_data
     end
 
-    def read_http(node_want)
-      uri = URI.parse(@cfg.url)
+    def read_http(uri, node_want)
+      #uri = URI.parse(@cfg.url)
       http = Net::HTTP.new(uri.host, uri.port)
       http.use_ssl = true if uri.scheme == 'https'
       http.verify_mode = OpenSSL::SSL::VERIFY_NONE unless @cfg.secure
@@ -101,10 +101,11 @@ module Oxidized
         headers[header] = value
       end
 
-      request = set_request(uri, headers, node_want)
-      response = http.request(request)
-
-      check_pagination(response, http, headers, node_want)
+      req_uri = uri.request_uri
+      req_uri = "#{req_uri}/#{node_want}" if node_want
+      request = Net::HTTP::Get.new(req_uri, headers)
+      request.basic_auth(@cfg.user, @cfg.pass) if @cfg.user? && @cfg.pass?
+      http.request(request).body
     end
   end
 end
