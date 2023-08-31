@@ -19,7 +19,12 @@ class SRLinux < Oxidized::Model
     cfg
   end
 
-  cmd 'info flat'
+  output_json = vars(:srlinux_output_json) || false
+
+  if output_json
+    cmd 'info | as json'
+  else
+    cmd 'info flat'
 
   cmd 'show version | grep -v "Free Memory"' do |cfg|
     # Free Memory will fluctuate, causing updates
