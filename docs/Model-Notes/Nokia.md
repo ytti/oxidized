@@ -1,6 +1,6 @@
 # Nokia
 
-## SROS
+## SR OS
 
 ### Nokia ISAM and SSH keepalives
 
@@ -13,7 +13,7 @@ Back to [Model-Notes](README.md)
 ### Model-driven CLI in Nokia SR OS (starting from versions 16.1.R1)
 New model `srosmd` is introduced which collects information in model-driven format.
 
-## SRLinux
+## SR Linux
 
 ### Configuration output
 
