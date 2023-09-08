@@ -32,10 +32,12 @@ class VRP < Oxidized::Model
   end
 
   cmd 'display device' do |cfg|
+    cfg = cfg.each_line.reject { |l| l.match /^\d\d\d\d-\d\d-\d\d \d\d:\d\d:\d\d(\.\d\d\d)? ?(\+\d\d:\d\d)?$/ }.join
     comment cfg
   end
 
   cmd 'display current-configuration all' do |cfg|
+    cfg = cfg.each_line.reject { |l| l.match /^\d\d\d\d-\d\d-\d\d \d\d:\d\d:\d\d(\.\d\d\d)? ?(\+\d\d:\d\d)?$/ }.join
     cfg
   end
 end
