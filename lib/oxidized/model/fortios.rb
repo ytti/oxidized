@@ -5,8 +5,8 @@ class FortiOS < Oxidized::Model
 
   prompt /^([-\w.~]+(\s[(\w\-.)]+)?~?\s?[#>$]\s?)$/
 
-  expect /^--More--\s$/ do |data, re|
-    send ' '
+  expect /^\(Press\s\'a\'\sto\saccept\)\:/ do |data, re|
+    send 'a'
     data.sub re, ''
   end
 
