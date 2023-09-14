@@ -22,6 +22,7 @@ The format is based on [Keep a Changelog](https://keepachangelog.com/en/1.1.0/).
 - dlink: fixed prompt for other dlink switches, added additional uptime removal expressions (@mirackle-spb)
 - Collect VC info for juniper ex3400 (@ermuller)
 - adva: fix config content for recovery process, collect config delta instead of current (@MichiMeyer)
+- iosxr: include last config changed by in model (@electrocret)
 
 ## Fixed
 
