@@ -62,7 +62,6 @@ class TPLink < Oxidized::Model
       end
       cmd "terminal length 0"
     end
-    end
 
     pre_logout do
       send "exit\r"
