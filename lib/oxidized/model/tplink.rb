@@ -60,6 +60,8 @@ class TPLink < Oxidized::Model
       elsif vars(:enable)
         cmd vars(:enable)
       end
+      cmd "terminal length 0"
+    end
     end
 
     pre_logout do
