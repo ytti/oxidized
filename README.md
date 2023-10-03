@@ -93,6 +93,7 @@ apt-get install ruby ruby-dev libsqlite3-dev libssl-dev pkg-config cmake libssh2
 Finally, install the gems:
 
 ```shell
+gem install psych -v 3.3.2 # issue with anything past this version
 gem install oxidized
 gem install oxidized-script oxidized-web # If you don't install oxidized-web, ensure "rest" is removed from your Oxidized config.
 ```
