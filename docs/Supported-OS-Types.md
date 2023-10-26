@@ -188,6 +188,8 @@
 * Mikrotik
   * [RouterOS](/lib/oxidized/model/routeros.rb)
   * [SwOS and SwOS Lite](/lib/oxidized/model/swos.rb)
+* Mimosa
+  * [Mimosa (B11)](/lib/oxidized/model/mimosab11.rb)
 * Motorola
   * [RFS](/lib/oxidized/model/mtrlrfs.rb)
 * MRV

@@ -2,6 +2,10 @@
 # #show version
 # Switch ID       Hardware Version                Firmware Version
 # 0               SSE-G48-TG4   (P2-01)           1.0.16-9
+# and
+# # show version
+# Switch ID       Hardware Version                Firmware Version
+# 0               MBM-XEM-002  (B6-01)            2.1.3-25
 
 class AricentISS < Oxidized::Model
   using Refinements
@@ -13,6 +17,9 @@ class AricentISS < Oxidized::Model
     # 1.0.18-15 is known to include the corrected spelling
     post_login 'no cli pagination'
     post_login 'no cli pagignation'
+    # Starting firmware 2.0, pagination is done differently.
+    # This configuration is reset after the session ends.
+    post_login 'conf t; set cli pagination off; exit'
     pre_logout 'exit'
   end
 
