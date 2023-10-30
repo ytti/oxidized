@@ -17,4 +17,3 @@ jobs:
           operations-per-run: 500
           days-before-issue-stale: 90
           days-before-close: 30
-
