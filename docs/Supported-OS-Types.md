@@ -8,6 +8,8 @@
   * [AEN](/lib/oxidized/model/aen.rb)
 * Acme Packet
   * [ACMEPACKET](/lib/oxidized/model/acmepacket.rb)
+* AddPack
+  * [AddPack](/lib/oxidized/model/addpack.rb)
 * Adtran
   * [Total Access (AOS)](/lib/oxidized/model/adtran.rb)
 * Alcatel-Lucent
@@ -276,5 +278,6 @@
 * Zyxel
   * [ZyNOS](/lib/oxidized/model/zynos.rb)
   * [ZyNOS GS-series variant](/lib/oxidized/model/zynosgs.rb)
+  * [ZyNOS ADSL](/lib/oxidized/model/zynosadsl.rb)
   * [NDMS](/lib/oxidized/model/ndms.rb)
   * [1308](/lib/oxidized/model/zy1308.rb)
