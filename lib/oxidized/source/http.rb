@@ -6,6 +6,7 @@ module Oxidized
     end
 
     def setup
+      Oxidized.setup_logger
       return unless @cfg.url.empty?
 
       raise NoConfig, 'no source http url config, edit ~/.config/oxidized/config'
@@ -18,9 +19,17 @@ module Oxidized
 
     def load(node_want = nil)
       nodes = []
-      data = JSON.parse(read_http(node_want))
-      data = string_navigate(data, @cfg.hosts_location) if @cfg.hosts_location?
-      data.each do |node|
+      node_data = []
+      uri = URI.parse(@cfg.url)
+      data = JSON.parse(read_http(uri, node_want))
+      node_data = data
+      node_data = string_navigate(data, @cfg.hosts_location) if @cfg.hosts_location?
+      if @cfg.pagination?
+        node_data = pagination(data, node_want)
+      end
+
+      # at this point we have all the nodes; pagination or not
+      node_data.each do |node|
         next if node.empty?
 
         # map node parameters
@@ -56,8 +65,23 @@ module Oxidized
       object
     end
 
-    def read_http(node_want)
-      uri = URI.parse(@cfg.url)
+    def pagination(data, node_want)
+      node_data = []
+      raise Oxidized::OxidizedError, "if using pagination, 'pagination_key_name' setting must be set" unless @cfg.pagination_key_name?
+
+      next_key = @cfg.pagination_key_name
+      loop do
+	node_data += string_navigate(data, @cfg.hosts_location) if @cfg.hosts_location?
+        break if data[next_key].nil?
+        
+	new_uri = URI.parse(data[next_key]) if data.has_key?(next_key)
+        data = JSON.parse(read_http(new_uri, node_want))
+	node_data += string_navigate(data, @cfg.hosts_location) if @cfg.hosts_location?
+      end
+      node_data
+    end
+
+    def read_http(uri, node_want)
       http = Net::HTTP.new(uri.host, uri.port)
       http.use_ssl = true if uri.scheme == 'https'
       http.verify_mode = OpenSSL::SSL::VERIFY_NONE unless @cfg.secure

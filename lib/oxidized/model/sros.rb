@@ -75,14 +75,14 @@ class SROS < Oxidized::Model
   #
   # Show the running persistent indices.
   #
-  cmd 'admin display-config index' do |cfg|
+  cmd "admin display-config index\n" do |cfg|
     comment cfg
   end
 
   #
   # Show the running configuration.
   #
-  cmd 'admin display-config' do |cfg|
+  cmd "admin display-config\n" do |cfg|
     cfg
   end
 

@@ -8,6 +8,8 @@
   * [AEN](/lib/oxidized/model/aen.rb)
 * Acme Packet
   * [ACMEPACKET](/lib/oxidized/model/acmepacket.rb)
+* AddPack
+  * [AddPack](/lib/oxidized/model/addpack.rb)
 * Adtran
   * [Total Access (AOS)](/lib/oxidized/model/adtran.rb)
 * Alcatel-Lucent
@@ -32,6 +34,8 @@
 * Aruba
   * [AOS-CX](/lib/oxidized/model/aoscx.rb)
   * [AOSW](/lib/oxidized/model/aosw.rb)
+* Asterfusion
+  * [AsterNOS](/lib/oxidized/model/asternos.rb)
 * AudioCodes
   * [AudioCodes](/lib/oxdized/model/audiocodes.rb)
   * [MediaPack MP-1xx, Mediant1000](/lib/oxdized/model/audiocodesmp.rb)
@@ -117,6 +121,7 @@
   * [Eltex](/lib/oxidized/model/eltex.rb)
 * Ericsson/Redback
   * [IPOS (former SEOS)](/lib/oxidized/model/ipos.rb)
+  * [Minilink 6600](/lib/oxidized/model/ml66.rb)
 * Extreme Networks
   * [Enterasys B/C-Series](/lib/oxidized/model/enterasys.rb)
   * [Enterasys 800-Series](/lib/oxidized/model/enterasys800.rb)
@@ -183,6 +188,8 @@
 * Mikrotik
   * [RouterOS](/lib/oxidized/model/routeros.rb)
   * [SwOS and SwOS Lite](/lib/oxidized/model/swos.rb)
+* Mimosa
+  * [Mimosa (B11)](/lib/oxidized/model/mimosab11.rb)
 * Motorola
   * [RFS](/lib/oxidized/model/mtrlrfs.rb)
 * MRV
@@ -271,5 +278,6 @@
 * Zyxel
   * [ZyNOS](/lib/oxidized/model/zynos.rb)
   * [ZyNOS GS-series variant](/lib/oxidized/model/zynosgs.rb)
+  * [ZyNOS ADSL](/lib/oxidized/model/zynosadsl.rb)
   * [NDMS](/lib/oxidized/model/ndms.rb)
   * [1308](/lib/oxidized/model/zy1308.rb)

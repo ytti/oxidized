@@ -58,6 +58,7 @@ class Aoscx < Oxidized::Model
     cfg.gsub! /^(\d\/\d\/\d.*\s+)\d+\s+$/, '\\1<hidden>'
     cfg.gsub! /^(\d+\/\S+\s+\S+\s+)\d+\.\d+\s+C(.*)/, '\\1<hidden>\\2'
     cfg.gsub! /^(LC.*\s+)\d+\.\d+\s+(C.*)$/, '\\1 <hidden> \\2'
+    cfg.gsub! /^(\S+\s+\S+\s+\s+\S+\s+)(slow|normal|medium|fast|max)(\s+\S+\s+\S+\s+)\d+/, '\\1<speed>\\3<rpm>'
     comment cfg
   end
 
@@ -69,7 +70,7 @@ class Aoscx < Oxidized::Model
     comment cfg
   end
 
-  cmd 'show system | exclude "Up Time" | exclude "CPU" | exclude "Memory"' do |cfg|
+  cmd 'show system | exclude "Up Time|CPU|Memory|Pkts .x|Lowest|Missed"' do |cfg|
     comment cfg
   end
 
