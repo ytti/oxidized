@@ -38,6 +38,7 @@ The format is based on [Keep a Changelog](https://keepachangelog.com/en/1.1.0/).
 - Remove constantly updating dates from backup of Adtran config (@davesbell)
 - fixed prompt for Cumulus to allow usernames with dots and dashes (@ktims)
 - fixed source http when source is librenms (@davama)
+- fixed prompt detection for Netgear M4250-10G2XF-PoE+ and M4300-28G-PoE+ (@rexhaugen)
 
 ## [0.29.1 - 2023-04-24]
 
