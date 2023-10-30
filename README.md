@@ -23,7 +23,7 @@ Feature highlights:
 * Restful API to show list of nodes (GET /nodes)
 * Restful API to show list of version for a node (/node/version[NODE]) and diffs
 
-Check out the [Oxidized TREX 2014 presentation](http://youtu.be/kBQ_CTUuqeU#t=3h) video on YouTube!
+Check out the [Oxidized TREX 2014 presentation](http://youtu.be/kBQ_CTUuqeU?t=3h) video on YouTube!
 
 > :warning: [Maintainer Wanted!](#help-needed) :warning:
 >
