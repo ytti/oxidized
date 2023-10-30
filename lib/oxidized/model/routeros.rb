@@ -14,14 +14,14 @@ class RouterOS < Oxidized::Model
     cfg
   end
 
-  cmd '/system routerboard print without-paging' do |cfg|
+  cmd '/system routerboard print' do |cfg|
     cfg = cfg.each_line.grep(/(model|firmware-type|current-firmware|serial-number):/).join
     comment cfg
   end
 
-  cmd '/system package update print without-paging' do |cfg|
-    version_line = cfg.each_line.grep(/installed-version: /)[0]
-    @ros_version = /: ([0-9])/.match(version_line)[1].to_i
+  cmd '/system package update print' do |cfg|
+    version_line = cfg.each_line.grep(/installed-version:\s|current-version:\s/)[0]
+    @ros_version = /([0-9])/.match(version_line)[0].to_i
     comment version_line
   end
 

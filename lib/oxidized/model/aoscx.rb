@@ -70,7 +70,7 @@ class Aoscx < Oxidized::Model
     comment cfg
   end
 
-  cmd 'show system | exclude "Up Time" | exclude "CPU" | exclude "Memory"' do |cfg|
+  cmd 'show system | exclude "Up Time|CPU|Memory|Pkts .x|Lowest|Missed"' do |cfg|
     comment cfg
   end
 
