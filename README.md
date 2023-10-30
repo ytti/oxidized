@@ -23,7 +23,7 @@ Feature highlights:
 * Restful API to show list of nodes (GET /nodes)
 * Restful API to show list of version for a node (/node/version[NODE]) and diffs
 
-Check out the [Oxidized TREX 2014 presentation](http://youtu.be/kBQ_CTUuqeU#t=3h) video on YouTube!
+Check out the [Oxidized TREX 2014 presentation](http://youtu.be/kBQ_CTUuqeU?t=3h) video on YouTube!
 
 > :warning: [Maintainer Wanted!](#help-needed) :warning:
 >
@@ -171,7 +171,7 @@ rake install
 
 ### Running with Docker
 
-Currently, Docker Hub automatically builds the master branch as [oxidized/oxidized](https://hub.docker.com/r/oxidized/oxidized/), you can make use of this container or build your own.
+Currently, Docker Hub automatically builds the master branch for linux/amd64 and linux/arm64 platforms as [oxidized/oxidized](https://hub.docker.com/r/oxidized/oxidized/), you can make use of this container or build your own.
 
 To build your own, clone git repo:
 
