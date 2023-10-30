@@ -13,7 +13,18 @@ class OpenGear < Oxidized::Model
 
   cmd('cat /etc/version') { |cfg| comment cfg }
 
-  cmd('config -g config') { |cfg| cfg }
+  cmd 'showserial' do |cfg|
+    cfg.gsub! /^/, 'Serial Number: '
+    comment cfg
+  end
+
+  cmd 'config -g config' do |cfg|
+    out=''
+    cfg.each_line do |line|
+      out << line
+    end
+   out
+  end
 
   cfg :ssh do
     exec true # don't run shell, run each command in exec channel
