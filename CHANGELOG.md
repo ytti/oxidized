@@ -15,8 +15,7 @@ The format is based on [Keep a Changelog](https://keepachangelog.com/en/1.1.0/).
 - pagination for http source (@davama)
 - model for Ericsson Miniling 6600 series (@schouwenburg)
 - model for Mimosa B11 (@ritzbhuj)
-- Added ability to send mail with the Docker container
-- Documentation to send mail with hooks
+- added SCP input (@aeiodelic)
 - Added `linux/arm64` and `linux/amd64` platforms to Docker build/publish. (@disaac)
 
 ## Changed
