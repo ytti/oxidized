@@ -23,6 +23,7 @@ The format is based on [Keep a Changelog](https://keepachangelog.com/en/1.1.0/).
 - Collect VC info for juniper ex3400 (@ermuller)
 - adva: fix config content for recovery process, collect config delta instead of current (@MichiMeyer)
 - iosxr: include last config changed by in model (@electrocret)
+- panos: xclude device dictionary
 - Added support for Nokia SAR 7705 HMC in SROS model (@schouwenburg)
 
 ## Fixed
