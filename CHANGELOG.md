@@ -17,6 +17,7 @@ The format is based on [Keep a Changelog](https://keepachangelog.com/en/1.1.0/).
 - model for Mimosa B11 (@ritzbhuj)
 - Added ability to send mail with the Docker container
 - Documentation to send mail with hooks
+- Added `linux/arm64` and `linux/amd64` platforms to Docker build/publish. (@disaac)
 
 ## Changed
 - tp-link: fixed enable mode post login entrance (@mirackle-spb)
@@ -33,7 +34,7 @@ The format is based on [Keep a Changelog](https://keepachangelog.com/en/1.1.0/).
 - fixed prompt for Watchguard FirewareOS not matching the regex when the node is non-master (@netdiver)
 - defined 'psych' runtime dependency to resolve 'unsafe_load' error during startup (@MattKobayashi)
 - fixed new date/time format with newer RouterOS `# jun/01/2023 12:11:25 by RouterOS 7.9.1` vs `# 2023-06-01 12:16:16 by RouterOS 7.10rc1` (@tim427)
-- fixed netscaler backups with hostname set #2828 (@electrocret) 
+- fixed netscaler backups with hostname set #2828 (@electrocret)
 - Do not redirect stderr when fetching opnsense version since default shell (csh) doesn't support it (@spike77453)
 - Fix missing configuration for Opengear (@ermuller)
 - Fixed fan RPM speeds included in Aruba CX diffs (@danpoltawski)
