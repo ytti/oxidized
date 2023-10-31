@@ -18,6 +18,8 @@ class PanOS < Oxidized::Model
     cfg.gsub! /^threat-.*?: .*$/, ''
     cfg.gsub! /^wildfire-.*?: .*$/, ''
     cfg.gsub! /^wf-private.*?: .*$/, ''
+    cfg.gsub! /^device-dictionary-version.*?: .*$/, ''
+    cfg.gsub! /^device-dictionary-release-date.*?: .*$/, ''
     cfg.gsub! /^url-filtering.*?: .*$/, ''
     cfg.gsub! /^global-.*?: .*$/, ''
     comment cfg

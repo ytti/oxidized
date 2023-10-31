@@ -9,13 +9,14 @@ The format is based on [Keep a Changelog](https://keepachangelog.com/en/1.1.0/).
 ## Added
 - model for D-Link cisco like CLI (@mirackle-spb)
 - model for Ruijie Networks RGOS devices (@spike77453)
+- Add serial number collection to Opengear (@ermuller)
 - added support for AricentISS 2.x firmware (@davromaniak)
 - model for Asterfusion Network Operating System (@avl-dev)
 - pagination for http source (@davama)
 - model for Ericsson Miniling 6600 series (@schouwenburg)
 - model for Mimosa B11 (@ritzbhuj)
-+ Added ability to send mail with the Docker container
-+ Documentation to send mail with hooks
+- added SCP input (@aeiodelic)
+- Added `linux/arm64` and `linux/amd64` platforms to Docker build/publish. (@disaac)
 
 ## Changed
 - tp-link: fixed enable mode post login entrance (@mirackle-spb)
@@ -23,6 +24,7 @@ The format is based on [Keep a Changelog](https://keepachangelog.com/en/1.1.0/).
 - Collect VC info for juniper ex3400 (@ermuller)
 - adva: fix config content for recovery process, collect config delta instead of current (@MichiMeyer)
 - iosxr: include last config changed by in model (@electrocret)
+- panos: exclude device dictionary
 - Added support for Nokia SAR 7705 HMC in SROS model (@schouwenburg)
 
 ## Fixed
@@ -31,14 +33,16 @@ The format is based on [Keep a Changelog](https://keepachangelog.com/en/1.1.0/).
 - fixed prompt for Watchguard FirewareOS not matching the regex when the node is non-master (@netdiver)
 - defined 'psych' runtime dependency to resolve 'unsafe_load' error during startup (@MattKobayashi)
 - fixed new date/time format with newer RouterOS `# jun/01/2023 12:11:25 by RouterOS 7.9.1` vs `# 2023-06-01 12:16:16 by RouterOS 7.10rc1` (@tim427)
-- fixed netscaler backups with hostname set #2828 (@electrocret) 
+- fixed netscaler backups with hostname set #2828 (@electrocret)
 - Do not redirect stderr when fetching opnsense version since default shell (csh) doesn't support it (@spike77453)
+- Fix missing configuration for Opengear (@ermuller)
 - Fixed fan RPM speeds included in Aruba CX diffs (@danpoltawski)
 - Gitcrypt output refinements (@electrocret)
 - Remove constantly updating dates from backup of Adtran config (@davesbell)
 - fixed prompt for Cumulus to allow usernames with dots and dashes (@ktims)
 - fixed source http when source is librenms (@davama)
 - Fixed login and su regex unable to match in some comware devices (@sharteeya)
+- fixed prompt detection for Netgear M4250-10G2XF-PoE+ and M4300-28G-PoE+ (@rexhaugen)
 
 ## [0.29.1 - 2023-04-24]
 

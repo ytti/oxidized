@@ -6,7 +6,7 @@ The following objects exist in Oxidized.
 
 * gets config from nodes
 * must implement 'connect', 'get', 'cmd'
-* 'ssh', 'telnet', 'ftp', 'tftp', 'http' implemented
+* 'ssh', 'telnet', 'ftp', 'tftp', 'scp', 'http' implemented
 
 ### http
 

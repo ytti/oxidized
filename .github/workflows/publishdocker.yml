@@ -13,6 +13,8 @@ jobs:
     - name: Get Release Version
       id: get_version
       run: echo "release-version=$(git describe --tags)" >> $GITHUB_OUTPUT
+    - name: Set up Docker Buildx
+      uses: docker/setup-buildx-action@v3
     - name: Publish to Registry
       uses: elgohr/Publish-Docker-Github-Action@v5
       with:
@@ -20,3 +22,4 @@ jobs:
         username: ${{ secrets.DOCKER_USERNAME }}
         password: ${{ secrets.DOCKER_PASSWORD }}
         tags: "latest,${{ steps.get_version.outputs.release-version }}"
+        platforms: linux/amd64,linux/arm64
