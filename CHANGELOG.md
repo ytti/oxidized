@@ -24,6 +24,7 @@ The format is based on [Keep a Changelog](https://keepachangelog.com/en/1.1.0/).
 - adva: fix config content for recovery process, collect config delta instead of current (@MichiMeyer)
 - iosxr: include last config changed by in model (@electrocret)
 - Added support for Nokia SAR 7705 HMC in SROS model (@schouwenburg)
+- zynos: extend script content to properly collect config.
 
 ## Fixed
 
