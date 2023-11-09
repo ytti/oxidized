@@ -42,11 +42,13 @@ module Oxidized
 
     def cmd(cmd, expect = node.prompt)
       Oxidized.logger.debug "lib/oxidized/input/ssh.rb #{cmd} @ #{node.name} with expect: #{expect.inspect}"
-      if @exec
-        @ssh.exec! cmd
-      else
-        cmd_shell(cmd, expect).gsub(/\r\n/, "\n")
-      end
+      cmd_output = if @exec
+                     @ssh.exec! cmd
+                   else
+                     cmd_shell(cmd, expect).gsub(/\r\n/, "\n")
+                   end
+      # Make sure we return a String
+      cmd_output.to_s
     end
 
     def send(data)

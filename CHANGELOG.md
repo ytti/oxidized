@@ -28,7 +28,6 @@ The format is based on [Keep a Changelog](https://keepachangelog.com/en/1.1.0/).
 - Added support for Nokia SAR 7705 HMC in SROS model (@schouwenburg)
 
 ## Fixed
-
 - fixed empty lines for ZyXEL GS1900 switches (@jluebbe)
 - fixed prompt for Watchguard FirewareOS not matching the regex when the node is non-master (@netdiver)
 - defined 'psych' runtime dependency to resolve 'unsafe_load' error during startup (@MattKobayashi)
@@ -42,6 +41,7 @@ The format is based on [Keep a Changelog](https://keepachangelog.com/en/1.1.0/).
 - fixed prompt for Cumulus to allow usernames with dots and dashes (@ktims)
 - fixed source http when source is librenms (@davama)
 - fixed prompt detection for Netgear M4250-10G2XF-PoE+ and M4300-28G-PoE+ (@rexhaugen)
+- fixed pfsense and opnsense not retriving config after refinement change #2771 (@robertcheramy)
 
 ## [0.29.1 - 2023-04-24]
 
