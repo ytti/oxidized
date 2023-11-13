@@ -4,7 +4,7 @@ module Oxidized
   require 'timeout'
   require 'oxidized/input/cli'
   class SSH < Input
-    RescueFail = {
+    RESCUE_FAIL = {
       debug: [
         Net::SSH::Disconnect
       ],

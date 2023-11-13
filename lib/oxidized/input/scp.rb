@@ -4,7 +4,7 @@ module Oxidized
   require_relative 'cli'
 
   class SCP < Input
-    RescueFail = {
+    RESCUE_FAIL = {
       debug: [
         # Net::SSH::Disconnect,
       ],

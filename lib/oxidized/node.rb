@@ -59,7 +59,7 @@ module Oxidized
 
     def run_input(input)
       rescue_fail = {}
-      [input.class::RescueFail, input.class.superclass::RescueFail].each do |hash|
+      [input.class::RESCUE_FAIL, input.class.superclass::RESCUE_FAIL].each do |hash|
         hash.each do |level, errors|
           errors.each do |err|
             rescue_fail[err] = level

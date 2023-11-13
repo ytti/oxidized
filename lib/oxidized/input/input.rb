@@ -4,7 +4,7 @@ module Oxidized
   class Input
     include Oxidized::Config::Vars
 
-    RescueFail = {
+    RESCUE_FAIL = {
       debug: [
         Errno::ECONNREFUSED
       ],

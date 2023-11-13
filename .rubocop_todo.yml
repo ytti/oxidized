@@ -34,16 +34,12 @@ Naming/AccessorMethodName:
   Exclude:
     - 'lib/refinements.rb'
 
-# Offense count: 8
+# Offense count: 3
 Naming/ConstantName:
   Exclude:
     - 'extra/rest_client.rb'
     - 'lib/oxidized/config.rb'
     - 'lib/oxidized/hook.rb'
-    - 'lib/oxidized/input/ftp.rb'
-    - 'lib/oxidized/input/input.rb'
-    - 'lib/oxidized/input/ssh.rb'
-    - 'lib/oxidized/input/telnet.rb'
 
 # Offense count: 1
 # Configuration parameters: EnforcedStyleForLeadingUnderscores.
