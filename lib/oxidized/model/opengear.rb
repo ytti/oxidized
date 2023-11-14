@@ -19,11 +19,11 @@ class OpenGear < Oxidized::Model
   end
 
   cmd 'config -g config' do |cfg|
-    out=''
+    out = ''
     cfg.each_line do |line|
       out << line
     end
-   out
+    out
   end
 
   cfg :ssh do

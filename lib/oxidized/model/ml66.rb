@@ -9,7 +9,7 @@ class ML66 < Oxidized::Model
   end
 
   cmd 'show version' do |cfg|
-    cfg.gsub! /Uptime/, ''
+    cfg.gsub! "Uptime", ''
     comment cfg
   end
 
@@ -30,5 +30,4 @@ class ML66 < Oxidized::Model
   cfg :ssh do
     pre_logout 'logout'
   end
-
 end

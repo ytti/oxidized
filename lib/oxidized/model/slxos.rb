@@ -31,7 +31,7 @@ class SLXOS < Oxidized::Model
 
   cmd 'show slots' do |cfg|
     cfg.gsub! /^-*^$/, '' # some slx devices are fixed config
-    cfg.gsub! /syntax error: element does not exist/, '' # same as above
+    cfg.gsub! "syntax error: element does not exist", '' # same as above
 
     comment cfg
   end

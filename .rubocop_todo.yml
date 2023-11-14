@@ -6,12 +6,10 @@
 # Note that changes in the inspected code, or installation of new
 # versions of RuboCop, may require this file to be generated again.
 
-# Offense count: 3
+# Offense count: 1
 # Configuration parameters: AllowComments, AllowNil.
 Lint/SuppressedException:
   Exclude:
-    - 'lib/oxidized/input/ssh.rb'
-    - 'lib/oxidized/input/telnet.rb'
     - 'lib/oxidized/nodes.rb'
 
 # Offense count: 62
@@ -106,25 +104,6 @@ Style/OpenStructUse:
     - 'lib/oxidized/hook.rb'
     - 'lib/oxidized/node.rb'
     - 'spec/hook/githubrepo_spec.rb'
-
-# Offense count: 27
-# This cop supports safe autocorrection (--autocorrect).
-Style/RedundantRegexpCharacterClass:
-  Exclude:
-    - 'lib/oxidized/model/axos.rb'
-    - 'lib/oxidized/model/comtrol.rb'
-    - 'lib/oxidized/model/fabricos.rb'
-    - 'lib/oxidized/model/ironware.rb'
-    - 'lib/oxidized/model/mlnxos.rb'
-    - 'lib/oxidized/model/nxos.rb'
-    - 'lib/oxidized/model/slxos.rb'
-    - 'lib/oxidized/model/sonicos.rb'
-    - 'lib/oxidized/model/speedtouch.rb'
-    - 'lib/oxidized/model/telco.rb'
-    - 'lib/oxidized/model/ucs.rb'
-    - 'lib/oxidized/model/voltaire.rb'
-    - 'lib/oxidized/model/zhoneolt.rb'
-    - 'lib/oxidized/model/zynoscli.rb'
 
 # Offense count: 37
 # This cop supports safe autocorrection (--autocorrect).

@@ -64,6 +64,7 @@ module Oxidized
       disconnect_cli
       @telnet.close
     rescue Errno::ECONNRESET
+      # This exception is intented and therefore not handled here
     ensure
       @log.close if Oxidized.config.input.debug?
       (@telnet.close rescue true) unless @telnet.sock.closed?

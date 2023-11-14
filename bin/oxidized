@@ -7,7 +7,7 @@ begin
   require_relative '../lib/oxidized/cli'
   Oxidized::CLI.new.run
 rescue StandardError => error
-  warn error.to_s
+  warn error
   debug = Oxidized.config.debug rescue true
   raise if debug
 

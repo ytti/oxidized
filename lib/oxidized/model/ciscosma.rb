@@ -25,7 +25,7 @@ class CiscoSMA < Oxidized::Model
     # Delete hour and date which change each run
     # cfg.gsub! /\sCurrent Time: \S+\s\S+\s+\S+\s\S+\s\S+/, ' Current Time:'
     # Delete select passphrase display option
-    cfg.gsub! /Do you want to mask the password\? Files with masked passwords cannot be loaded/, ''
+    cfg.gsub! "Do you want to mask the password? Files with masked passwords cannot be loaded", ''
     cfg.gsub! /^\s+y/, ''
     # Delete space
     cfg.gsub! /\n\s{25}/, ''

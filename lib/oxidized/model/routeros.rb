@@ -40,10 +40,10 @@ class RouterOS < Oxidized::Model
               end
     cmd run_cmd do |cfg|
       cfg.gsub! /\\\r?\n\s+/, '' # strip new line
-      cfg.gsub! /# inactive time\r\n/, '' # Remove time based system comment
+      cfg.gsub! "# inactive time\r\n", '' # Remove time based system comment
       cfg.gsub! /# received packet from \S+ bad format\r\n/, '' # Remove intermittent VRRP/CARP collision comment
-      cfg.gsub! /# poe-out status: short_circuit\r\n/, '' # Remove intermittent POE short_circuit comment
-      cfg.gsub! /# Firmware upgraded successfully, please reboot for changes to take effect!\r\n/, '' # Remove transient firmware upgrade comment
+      cfg.gsub! "# poe-out status: short_circuit\r\n", '' # Remove intermittent POE short_circuit comment
+      cfg.gsub! "# Firmware upgraded successfully, please reboot for changes to take effect!\r\n", '' # Remove transient firmware upgrade comment
       cfg.gsub! /# \S+ not ready\r\n/, '' # Remove intermittent $interface not ready comment
       cfg = cfg.split("\n").reject { |line| line[/^#\s\w{3}\/\d{2}\/\d{4}\s\d{2}:\d{2}:\d{2}.*$/] || line[/^#\s\d{4}-\d{2}-\d{2}\s\d{2}:\d{2}:\d{2}.*$/] } # Remove date time and 'by RouterOS' comment
       cfg.join("\n") + "\n"
