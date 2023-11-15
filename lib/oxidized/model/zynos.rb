@@ -48,6 +48,7 @@ class ZyNOS < Oxidized::Model
   end
 
   cmd 'show system-information' do |cfg|
+    cfg.gsub! /^([Ss]ystem up [Tt]ime\s*:)(.*)/, '\\1 <time removed>'
     comment cfg
   end
 
