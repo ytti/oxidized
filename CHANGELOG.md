@@ -26,6 +26,7 @@ The format is based on [Keep a Changelog](https://keepachangelog.com/en/1.1.0/).
 - iosxr: include last config changed by in model (@electrocret)
 - panos: exclude device dictionary
 - Added support for Nokia SAR 7705 HMC in SROS model (@schouwenburg)
+- edgecos: improve system temperature removal
 
 ## Fixed
 - fixed empty lines for ZyXEL GS1900 switches (@jluebbe)
