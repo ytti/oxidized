@@ -160,6 +160,7 @@ module Oxidized
     # @param [Array] nodes Array of nodes used to replace+update old
     def update_nodes(nodes)
       old = dup
+      # load the Array "nodes" in self (the class Nodes inherits Array)
       replace(nodes)
       each do |node|
         if (i = old.find_node_index(node.name))
@@ -167,6 +168,10 @@ module Oxidized
           node.last  = old[i].last
         end
       rescue Oxidized::NodeNotFound
+        # Do nothing:
+        # when a node is not found, we have nothing to do:
+        # it has already been loaded by replace(nodes) and there are no
+        # stats to copy
       end
       sort_by! { |x| x.last.nil? ? Time.new(0) : x.last.end }
     end
