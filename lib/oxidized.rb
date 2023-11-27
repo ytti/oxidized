@@ -45,7 +45,7 @@ module Oxidized
                     if config.has_key?('log')
                       Logger.new(File.expand_path(config.log))
                     else
-                      Logger.new(STDERR)
+                      Logger.new($stderr)
                     end
                   end
     logger.level = Logger::INFO unless config.debug
