@@ -35,6 +35,7 @@ The format is based on [Keep a Changelog](https://keepachangelog.com/en/1.1.0/).
 - Gitcrypt output refinements (@electrocret)
 - Remove constantly updating dates from backup of Adtran config (@davesbell)
 - fixed prompt for Cumulus to allow usernames with dots and dashes (@ktims)
+- FortiOS: fixed issue with post-login banner enabled. Instead of sending a space when --More-- is presented, an "a" key is sent when post login banner is enabled, which covers both cases.
 
 ## [0.29.1 - 2023-04-24]
 
