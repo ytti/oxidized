@@ -58,8 +58,8 @@ module Oxidized
 
       begin
         asetus.load # load system+user configs, merge to Config.cfg
-      rescue StandardError => error
-        raise InvalidConfig, "Error loading config: #{error.message}"
+      rescue StandardError => e
+        raise InvalidConfig, "Error loading config: #{e.message}"
       end
 
       raise NoConfig, 'edit ~/.config/oxidized/config' if asetus.create

@@ -68,8 +68,8 @@ module Oxidized
                        sslkey:  @cfg.ssl_key?)
       end
       Sequel.connect(options)
-    rescue Sequel::AdapterNotFound => error
-      raise OxidizedError, "SQL adapter gem not installed: " + error.message
+    rescue Sequel::AdapterNotFound => e
+      raise OxidizedError, "SQL adapter gem not installed: " + e.message
     end
   end
 end

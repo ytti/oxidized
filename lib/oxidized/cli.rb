@@ -11,8 +11,8 @@ module Oxidized
       begin
         Oxidized.logger.info "Oxidized starting, running as pid #{$PROCESS_ID}"
         Oxidized.new
-      rescue StandardError => error
-        crash error
+      rescue StandardError => e
+        crash e
         raise
       end
     end
