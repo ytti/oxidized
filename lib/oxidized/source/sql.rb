@@ -10,7 +10,7 @@ module Oxidized
       return unless @cfg.empty?
 
       Oxidized.asetus.user.source.sql.adapter   = 'sqlite'
-      Oxidized.asetus.user.source.sql.database  = File.join(Config::Root, 'sqlite.db')
+      Oxidized.asetus.user.source.sql.database  = File.join(Config::ROOT, 'sqlite.db')
       Oxidized.asetus.user.source.sql.table     = 'devices'
       Oxidized.asetus.user.source.sql.map.name  = 'name'
       Oxidized.asetus.user.source.sql.map.model = 'rancid'

@@ -36,7 +36,7 @@ module Oxidized
   end
 
   def self.setup_logger
-    FileUtils.mkdir_p(Config::Log) unless File.directory?(Config::Log)
+    FileUtils.mkdir_p(Config::LOG) unless File.directory?(Config::LOG)
     self.logger = if config.has_key?('use_syslog') && config.use_syslog
                     require 'syslog/logger'
                     Syslog::Logger.new('oxidized')

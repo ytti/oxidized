@@ -12,7 +12,7 @@ module Oxidized
       @username = nil
       @password = nil
       @headers = {}
-      @log = File.open(Oxidized::Config::Log + "/#{@node.ip}-http", "w") if Oxidized.config.input.debug?
+      @log = File.open(Oxidized::Config::LOG + "/#{@node.ip}-http", "w") if Oxidized.config.input.debug?
       @node.model.cfg["http"].each { |cb| instance_exec(&cb) }
 
       return true unless @main_page && defined?(login)

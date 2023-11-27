@@ -33,7 +33,7 @@ module Oxidized
 
     def run
       Oxidized.logger.debug "lib/oxidized/core.rb: Starting the worker..."
-      @worker.work while sleep Config::Sleep
+      @worker.work while sleep Config::SLEEP
     end
   end
 end

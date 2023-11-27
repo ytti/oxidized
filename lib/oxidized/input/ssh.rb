@@ -21,7 +21,7 @@ module Oxidized
       @output      = ''
       @pty_options = { term: "vt100" }
       @node.model.cfg['ssh'].each { |cb| instance_exec(&cb) }
-      @log = File.open(Oxidized::Config::Log + "/#{@node.ip}-ssh", 'w') if Oxidized.config.input.debug?
+      @log = File.open(Oxidized::Config::LOG + "/#{@node.ip}-ssh", 'w') if Oxidized.config.input.debug?
 
       Oxidized.logger.debug "lib/oxidized/input/ssh.rb: Connecting to #{@node.name}"
       @ssh = Net::SSH.start(@node.ip, @node.auth[:username], make_ssh_opts)
