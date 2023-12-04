@@ -5,6 +5,12 @@ class FortiOS < Oxidized::Model
 
   prompt /^([-\w.~]+(\s[(\w\-.)]+)?~?\s?[#>$]\s?)$/
 
+  # When a post-login-banner is enabled, you have to press "a" to log in
+  expect /^\(Press\s'a'\sto\saccept\):/ do |data, re|
+    send 'a'
+    data.sub re, ''
+  end
+
   expect /^--More--\s$/ do |data, re|
     send ' '
     data.sub re, ''
