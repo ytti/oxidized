@@ -6,7 +6,7 @@
 class ADVA < Oxidized::Model
   using Refinements
 
-  prompt /\w+\-+[#>]\s?$/
+  prompt /\w+-+[#>]\s?$/
   comment '# '
 
   cmd :secret do |cfg|

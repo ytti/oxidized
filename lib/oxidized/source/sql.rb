@@ -10,7 +10,7 @@ module Oxidized
       return unless @cfg.empty?
 
       Oxidized.asetus.user.source.sql.adapter   = 'sqlite'
-      Oxidized.asetus.user.source.sql.database  = File.join(Config::Root, 'sqlite.db')
+      Oxidized.asetus.user.source.sql.database  = File.join(Config::ROOT, 'sqlite.db')
       Oxidized.asetus.user.source.sql.table     = 'devices'
       Oxidized.asetus.user.source.sql.map.name  = 'name'
       Oxidized.asetus.user.source.sql.map.model = 'rancid'
@@ -68,8 +68,8 @@ module Oxidized
                        sslkey:  @cfg.ssl_key?)
       end
       Sequel.connect(options)
-    rescue Sequel::AdapterNotFound => error
-      raise OxidizedError, "SQL adapter gem not installed: " + error.message
+    rescue Sequel::AdapterNotFound => e
+      raise OxidizedError, "SQL adapter gem not installed: " + e.message
     end
   end
 end

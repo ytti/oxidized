@@ -15,8 +15,8 @@ class AWPlus < Oxidized::Model
 
   # Removes gibberish pager output e.g. VT100 escape codes
   cmd :all do |cfg|
-    cfg.gsub! /\e\[K/, ''         # example how to handle pager - cleareol EL0
-    cfg.gsub! /\e\[7m\e\[m/, ''   # example how to handle pager - Reverse SGR7
+    cfg.gsub! "\e[K", '' # example how to handle pager - cleareol EL0
+    cfg.gsub! "\e[7m\e[m", '' # example how to handle pager - Reverse SGR7
     cfg.delete! "\r" # Filters rogue ^M - see issue #415
     cfg.cut_both
   end

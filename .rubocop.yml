@@ -7,6 +7,9 @@ AllCops:
   Exclude:
     - 'vendor/**/*'
 
+Gemspec/DevelopmentDependencies:
+  EnforcedStyle: gemspec
+
 Style/StringLiterals:
   Enabled: false
 

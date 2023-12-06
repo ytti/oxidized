@@ -10,8 +10,8 @@ class Firebrick < Oxidized::Model
   end
 
   cmd 'show status' do |cfg|
-    cfg.gsub! /Status/, ''
-    cfg.gsub! /------/, ''
+    cfg.gsub! "Status", ''
+    cfg.gsub! "------", ''
     cfg.gsub! /Uptime.*/, ''
     cfg.gsub! /Current time.*/, ''
     cfg.gsub! /RAM.*/, ''

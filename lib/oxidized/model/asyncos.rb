@@ -25,9 +25,9 @@ class AsyncOS < Oxidized::Model
     # Delete hour and date which change each run
     # cfg.gsub! /\sCurrent Time: \S+\s\S+\s+\S+\s\S+\s\S+/, ' Current Time:'
     # Delete select passphrase display option
-    cfg.gsub! /Choose the passphrase option:/, ''
+    cfg.gsub! "Choose the passphrase option:", ''
     cfg.gsub! /1. Mask passphrases \(Files with masked passphrases cannot be loaded using/, ''
-    cfg.gsub! /loadconfig command\)/, ''
+    cfg.gsub! "loadconfig command)", ''
     cfg.gsub! /2. Encrypt passphrases/, ''
     cfg.gsub! /3. Plain passphrases/, ''
     cfg.gsub! /^3$/, ''

@@ -14,8 +14,8 @@ module Oxidized
 
     begin
       CFGS.load
-    rescue StandardError => error
-      raise InvalidConfig, "Error loading config: #{error.message}"
+    rescue StandardError => e
+      raise InvalidConfig, "Error loading config: #{e.message}"
     end
 
     restcfg = CFGS.cfg.rest

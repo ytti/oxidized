@@ -12,7 +12,7 @@ module Oxidized
     def setup
       return unless @cfg.empty?
 
-      Oxidized.asetus.user.output.file.directory = File.join(Config::Root, 'configs')
+      Oxidized.asetus.user.output.file.directory = File.join(Config::ROOT, 'configs')
       Oxidized.asetus.save :user
       raise NoConfig, 'no output file config, edit ~/.config/oxidized/config'
     end
