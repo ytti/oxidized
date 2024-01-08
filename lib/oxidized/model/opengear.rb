@@ -15,20 +15,15 @@ class OpenGear < Oxidized::Model
     cfg
   end
 
-  cmd 'cat /etc/version' do |cfg|
-      cfg.gsub! /^/, 'OS Version: '
-      comment cfg
-  end
+  cmd('cat /etc/version') { |cfg| comment cfg }
 
   # newer opengear firmware versions
   cmd 'ogdeviceinfo -r' do |cfg|
-    if not cfg.include? "ogdeviceinfo: command not found"
-      comment cfg
-    end
+    comment cfg unless cfg.include? "ogdeviceinfo: command not found"
   end
 
   cmd 'config export' do |cfg|
-    if not cfg.include? "usage: config"
+    unless cfg.include? "usage: config"
       out = ''
       cfg.each_line do |line|
         out << line
@@ -39,14 +34,14 @@ class OpenGear < Oxidized::Model
 
   # older opengear firmware versions
   cmd 'showserial' do |cfg|
-    if not cfg.include? "showserial: command not found"
+    unless cfg.include? "showserial: command not found"
       cfg.gsub! /^/, 'Serial Number: '
       comment cfg
     end
   end
 
   cmd 'config -g config' do |cfg|
-    if not cfg.include? "config: error: argument"
+    unless cfg.include? "config: error: argument"
       out = ''
       cfg.each_line do |line|
         out << line
