@@ -393,7 +393,7 @@ If you need help with Oxidized then we have a few methods you can use to get in 
 ## Help Needed
 
 As things stand right now, `oxidized` is maintained by very few people.
-We would appreciate that more individuals and companies getting involved in Oxidized.
+We would appreciate more individuals and companies getting involved in Oxidized.
 
 Beyond software development, documentation or maintenance of Oxidized, you could
 become a model maintainer, which can be done with little burden and would be a
