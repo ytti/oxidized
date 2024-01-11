@@ -18,6 +18,10 @@ class Vyatta < Oxidized::Model
     cfg
   end
 
+  cmd 'show version' do |cfg|
+    comment cfg
+  end
+
   cmd 'show configuration commands | no-more'
 
   cfg :telnet do
