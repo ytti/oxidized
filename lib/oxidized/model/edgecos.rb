@@ -31,7 +31,7 @@ class EdgeCOS < Oxidized::Model
 
   cmd 'show system' do |cfg|
     cfg.gsub! /^.*\sUp Time\s*:.*\n/i, ''
-    cfg.gsub! /^(.*\sTemperature \d*:).*\n/i, '\\1 <removed>'
+    cfg.gsub! /^(.*\sTemperature \d*\s*:\s*).*/i, '\\1<removed>'
     comment cfg
   end
 
