@@ -4,7 +4,7 @@ module Oxidized
   require_relative 'cli'
 
   class SCP < Input
-    RescueFail = {
+    RESCUE_FAIL = {
       debug: [
         # Net::SSH::Disconnect,
       ],
@@ -18,7 +18,7 @@ module Oxidized
     def connect(node)
       @node = node
       @node.model.cfg['scp'].each { |cb| instance_exec(&cb) }
-      @log = File.open(Oxidized::Config::Log + "/#{@node.ip}-scp", 'w') if Oxidized.config.input.debug?
+      @log = File.open(Oxidized::Config::LOG + "/#{@node.ip}-scp", 'w') if Oxidized.config.input.debug?
       @ssh = Net::SSH.start(@node.ip, @node.auth[:username], password: @node.auth[:password])
       connected?
     end

@@ -43,8 +43,8 @@ module Oxidized
 
   begin
     CFGS.load
-  rescue StandardError => error
-    raise InvalidConfig, "Error loading config: #{error.message}"
+  rescue StandardError => e
+    raise InvalidConfig, "Error loading config: #{e.message}"
   ensure
     CFG = CFGS.cfg # convenienence, instead of Config.cfg.password, CFG.password
   end

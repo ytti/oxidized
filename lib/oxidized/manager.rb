@@ -33,30 +33,30 @@ module Oxidized
     end
 
     def add_input(name)
-      loader @input, Config::InputDir, "input", name
+      loader @input, Config::INPUT_DIR, "input", name
     end
 
     def add_output(name)
-      loader @output, Config::OutputDir, "output", name
+      loader @output, Config::OUTPUT_DIR, "output", name
     end
 
     def add_source(name)
-      loader @source, Config::SourceDir, "source", name
+      loader @source, Config::SOURCE_DIR, "source", name
     end
 
     def add_model(name)
-      loader @model, Config::ModelDir, "model", name
+      loader @model, Config::MODEL_DIR, "model", name
     end
 
     def add_hook(name)
-      loader @hook, Config::HookDir, "hook", name
+      loader @hook, Config::HOOK_DIR, "hook", name
     end
 
     private
 
     # if local version of file exists, load it, else load global - return falsy value if nothing loaded
     def loader(hash, global_dir, local_dir, name)
-      dir   = File.join(Config::Root, local_dir)
+      dir   = File.join(Config::ROOT, local_dir)
       map   = Manager.load(dir, name) if File.exist? File.join(dir, name + ".rb")
       map ||= Manager.load(global_dir, name)
       hash.merge!(map) if map

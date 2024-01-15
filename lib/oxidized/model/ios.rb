@@ -85,7 +85,7 @@ class IOS < Oxidized::Model
         comments << "Processor ID: #{Regexp.last_match(1)}" if cfg.lines[i + 1] =~ /processor board id (\S+)/i
         if cfg.lines[i + 2] =~ /(cpu at |processor: |#{cpu} processor,)/i
           # change implementation to impl and prepend comma
-          cpuxtra = cfg.lines[i + 2].gsub(/implementation/, 'impl').gsub(/^/, ', ').chomp
+          cpuxtra = cfg.lines[i + 2].gsub("implementation", 'impl').gsub(/^/, ', ').chomp
         end
         comments << "CPU:#{slave} #{cpu}#{cpuxtra}#{slaveslot}"
       end

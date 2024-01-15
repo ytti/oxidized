@@ -6,7 +6,7 @@ module Oxidized
 
     def connect(node)
       @node = node
-      @log = File.open(Oxidized::Config::Log + "/#{@node.ip}-exec", "w") if Oxidized.config.input.debug?
+      @log = File.open(Oxidized::Config::LOG + "/#{@node.ip}-exec", "w") if Oxidized.config.input.debug?
       @node.model.cfg["exec"].each { |cb| instance_exec(&cb) }
     end
 

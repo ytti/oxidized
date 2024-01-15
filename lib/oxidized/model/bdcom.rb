@@ -47,5 +47,6 @@ class BDCOM < Oxidized::Model
 
     post_login 'terminal length 0'
     pre_logout 'exit'
+    pre_logout 'exit'
   end
 end

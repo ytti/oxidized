@@ -17,6 +17,7 @@ The format is based on [Keep a Changelog](https://keepachangelog.com/en/1.1.0/).
 - model for Mimosa B11 (@ritzbhuj)
 - added SCP input (@aeiodelic)
 - Added `linux/arm64` and `linux/amd64` platforms to Docker build/publish. (@disaac)
+- Added verion info for Vyatta (@systeembeheerder)
 
 ## Changed
 - tp-link: fixed enable mode post login entrance (@mirackle-spb)
@@ -26,7 +27,9 @@ The format is based on [Keep a Changelog](https://keepachangelog.com/en/1.1.0/).
 - iosxr: include last config changed by in model (@electrocret)
 - panos: exclude device dictionary
 - Added support for Nokia SAR 7705 HMC in SROS model (@schouwenburg)
-- edgecos: improve system temperature removal
+- fortios: only perform a "show" instead of a "show full-configuration" when retrieving configs from fortios. fixes timeouts and avoids extraneous defaulted config information. (@jforeman)
+- opengear: support newer Opengear CM* and OM* models (@matej_v)
+- edgecos: improve system temperature removal (@freddy36)
 
 ## Fixed
 - fixed empty lines for ZyXEL GS1900 switches (@jluebbe)
@@ -43,6 +46,8 @@ The format is based on [Keep a Changelog](https://keepachangelog.com/en/1.1.0/).
 - fixed source http when source is librenms (@davama)
 - fixed prompt detection for Netgear M4250-10G2XF-PoE+ and M4300-28G-PoE+ (@rexhaugen)
 - fixed devices (pfsense, opnsense, openwrt) not retriving config after refinement change #2771 #2968 (@robertcheramy)
+- Fixed login into Fortigate when post-login-baned ist enabled. Fixes #2021 (@chrisr0880, @sahdan, @dangoscomb and @robertcheramy)
+- Fixed pre_logout for BDCOM switches
 
 ## [0.29.1 - 2023-04-24]
 

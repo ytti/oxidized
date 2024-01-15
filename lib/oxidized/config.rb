@@ -4,18 +4,18 @@ module Oxidized
   class InvalidConfig < OxidizedError; end
 
   class Config
-    Root      = ENV['OXIDIZED_HOME'] || File.join(Dir.home, '.config', 'oxidized')
-    Crash     = File.join(ENV['OXIDIZED_LOGS'] || Root, 'crash')
-    Log       = File.join(ENV['OXIDIZED_LOGS'] || Root, 'logs')
-    InputDir  = File.join Directory, %w[lib oxidized input]
-    OutputDir = File.join Directory, %w[lib oxidized output]
-    ModelDir  = File.join Directory, %w[lib oxidized model]
-    SourceDir = File.join Directory, %w[lib oxidized source]
-    HookDir   = File.join Directory, %w[lib oxidized hook]
-    Sleep     = 1
+    ROOT       = ENV['OXIDIZED_HOME'] || File.join(Dir.home, '.config', 'oxidized')
+    CRASH      = File.join(ENV['OXIDIZED_LOGS'] || ROOT, 'crash')
+    LOG        = File.join(ENV['OXIDIZED_LOGS'] || ROOT, 'logs')
+    INPUT_DIR  = File.join Directory, %w[lib oxidized input]
+    OUTPUT_DIR = File.join Directory, %w[lib oxidized output]
+    MODEL_DIR  = File.join Directory, %w[lib oxidized model]
+    SOURCE_DIR = File.join Directory, %w[lib oxidized source]
+    HOOK_DIR   = File.join Directory, %w[lib oxidized hook]
+    SLEEP      = 1
 
     def self.load(cmd_opts = {})
-      asetus = Asetus.new(name: 'oxidized', load: false, key_to_s: true, usrdir: Oxidized::Config::Root)
+      asetus = Asetus.new(name: 'oxidized', load: false, key_to_s: true, usrdir: Oxidized::Config::ROOT)
       Oxidized.asetus = asetus
 
       asetus.default.username      = 'username'
@@ -36,9 +36,9 @@ module Oxidized
       asetus.default.groups        = {}               # group level configuration
       asetus.default.group_map     = {}               # map aliases of groups to names
       asetus.default.models        = {}               # model level configuration
-      asetus.default.pid           = File.join(Oxidized::Config::Root, 'pid')
+      asetus.default.pid           = File.join(Oxidized::Config::ROOT, 'pid')
 
-      asetus.default.crash.directory = File.join(Oxidized::Config::Root, 'crashes')
+      asetus.default.crash.directory = File.join(Oxidized::Config::ROOT, 'crashes')
       asetus.default.crash.hostnames = false
 
       asetus.default.stats.history_size = 10
@@ -58,8 +58,8 @@ module Oxidized
 
       begin
         asetus.load # load system+user configs, merge to Config.cfg
-      rescue StandardError => error
-        raise InvalidConfig, "Error loading config: #{error.message}"
+      rescue StandardError => e
+        raise InvalidConfig, "Error loading config: #{e.message}"
       end
 
       raise NoConfig, 'edit ~/.config/oxidized/config' if asetus.create

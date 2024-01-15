@@ -4,7 +4,7 @@ module Oxidized
   require_relative 'cli'
 
   class FTP < Input
-    RescueFail = {
+    RESCUE_FAIL = {
       debug: [
         # Net::SSH::Disconnect,
       ],
@@ -18,7 +18,7 @@ module Oxidized
     def connect(node)
       @node = node
       @node.model.cfg['ftp'].each { |cb| instance_exec(&cb) }
-      @log = File.open(Oxidized::Config::Log + "/#{@node.ip}-ftp", 'w') if Oxidized.config.input.debug?
+      @log = File.open(Oxidized::Config::LOG + "/#{@node.ip}-ftp", 'w') if Oxidized.config.input.debug?
       @ftp = Net::FTP.new(@node.ip)
       @ftp.passive = Oxidized.config.input.ftp.passive
       @ftp.login @node.auth[:username], @node.auth[:password]

@@ -2,7 +2,7 @@ module Oxidized
   require 'net/telnet'
   require 'oxidized/input/cli'
   class Telnet < Input
-    RescueFail = {}.freeze
+    RESCUE_FAIL = {}.freeze
     include Input::CLI
     attr_reader :telnet
 
@@ -10,7 +10,7 @@ module Oxidized
       @node    = node
       @timeout = Oxidized.config.timeout
       @node.model.cfg['telnet'].each { |cb| instance_exec(&cb) }
-      @log = File.open(Oxidized::Config::Log + "/#{@node.ip}-telnet", 'w') if Oxidized.config.input.debug?
+      @log = File.open(Oxidized::Config::LOG + "/#{@node.ip}-telnet", 'w') if Oxidized.config.input.debug?
       port = vars(:telnet_port) || 23
 
       telnet_opts = {
@@ -64,6 +64,7 @@ module Oxidized
       disconnect_cli
       @telnet.close
     rescue Errno::ECONNRESET
+      # This exception is intented and therefore not handled here
     ensure
       @log.close if Oxidized.config.input.debug?
       (@telnet.close rescue true) unless @telnet.sock.closed?

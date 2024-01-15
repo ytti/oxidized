@@ -15,7 +15,7 @@ class EOS < Oxidized::Model
     cfg.gsub! /^(snmp-server community).*/, '\\1 <configuration removed>'
     cfg.gsub! /(secret \w+) (\S+).*/, '\\1 <secret hidden>'
     cfg.gsub! /(password \d+) (\S+).*/, '\\1 <secret hidden>'
-    cfg.gsub! /^(enable secret).*/, '\\1 <configuration removed>'
+    cfg.gsub! /^(enable (?:secret|password)).*/, '\\1 <configuration removed>'
     cfg.gsub! /^(service unsupported-transceiver).*/, '\\1 <license key removed>'
     cfg.gsub! /^(tacacs-server key \d+).*/, '\\1 <configuration removed>'
     cfg.gsub! /( {6}key) (\h+ 7) (\h+).*/, '\\1 <secret hidden>'
