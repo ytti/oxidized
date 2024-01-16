@@ -143,8 +143,8 @@ module Oxidized
       @input.send data
     end
 
-    def expect(regex, &block)
-      self.class.expect regex, &block
+    def expect(...)
+      self.class.expect(...)
     end
 
     def cfg

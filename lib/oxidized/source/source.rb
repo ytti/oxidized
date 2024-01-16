@@ -3,8 +3,8 @@ module Oxidized
     class NoConfig < OxidizedError; end
 
     def initialize
-      @model_map = (Oxidized.config.model_map || {})
-      @group_map = (Oxidized.config.group_map || {})
+      @model_map = Oxidized.config.model_map || {}
+      @group_map = Oxidized.config.group_map || {}
     end
 
     def map_model(model)

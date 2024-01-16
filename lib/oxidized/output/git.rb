@@ -36,8 +36,8 @@ module Oxidized
 
     def store(file, outputs, opt = {})
       @msg   = opt[:msg]
-      @user  = (opt[:user]  || @cfg.user)
-      @email = (opt[:email] || @cfg.email)
+      @user  = opt[:user]  || @cfg.user
+      @email = opt[:email] || @cfg.email
       @opt   = opt
       @commitref = nil
       repo = @cfg.repo

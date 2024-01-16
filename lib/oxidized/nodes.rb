@@ -129,8 +129,8 @@ module Oxidized
       end
     end
 
-    def with_lock(&block)
-      @mutex.synchronize(&block)
+    def with_lock(...)
+      @mutex.synchronize(...)
     end
 
     def find_index(node)
