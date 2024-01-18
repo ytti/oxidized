@@ -25,6 +25,7 @@ class SonicOS < Oxidized::Model
     cfg.gsub! /administrator password \d,(\S+)/, 'administrator password <secret hidden> \2'
     cfg.gsub! /ftp password \d,(\S+)/, 'ftp password <secret hidden> \2'
     cfg.gsub! /shared-key \d,(\S+)/, 'shared-key <secret hidden> \2'
+    cfg.gsub! /wpa passphrase \d,(\S+)/, 'wpa passphrase <secret hidden> \2'
     cfg
   end
 
