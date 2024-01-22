@@ -27,7 +27,7 @@ class Comware < Oxidized::Model
   end
 
   cfg :telnet do
-    username /^(Username|login):/
+    username /^(Username|[Ll]ogin):/
     password /^Password:/
   end
 
@@ -37,7 +37,7 @@ class Comware < Oxidized::Model
       if vars(:enable) == true
         cmd "super"
       elsif vars(:enable)
-        cmd "super", /^ [pP]assword:/
+        cmd "super", /^\s?[pP]assword:/
         cmd vars(:enable)
       end
     end

@@ -44,6 +44,7 @@ The format is based on [Keep a Changelog](https://keepachangelog.com/en/1.1.0/).
 - Remove constantly updating dates from backup of Adtran config (@davesbell)
 - fixed prompt for Cumulus to allow usernames with dots and dashes (@ktims)
 - fixed source http when source is librenms (@davama)
+- Fixed login and su regex unable to match in some comware devices (@sharteeya)
 - fixed prompt detection for Netgear M4250-10G2XF-PoE+ and M4300-28G-PoE+ (@rexhaugen)
 - fixed devices (pfsense, opnsense, openwrt) not retriving config after refinement change #2771 #2968 (@robertcheramy)
 - Fixed login into Fortigate when post-login-baned ist enabled. Fixes #2021 (@chrisr0880, @sahdan, @dangoscomb and @robertcheramy)
