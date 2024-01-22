@@ -20,7 +20,7 @@ module Oxidized
       if @cfg.empty?
         Oxidized.asetus.user.output.git.user  = 'Oxidized'
         Oxidized.asetus.user.output.git.email = 'o@example.com'
-        Oxidized.asetus.user.output.git.repo = File.join(Config::Root, 'oxidized.git')
+        Oxidized.asetus.user.output.git.repo = File.join(Config::ROOT, 'oxidized.git')
         Oxidized.asetus.save :user
         raise NoConfig, 'no output git config, edit ~/.config/oxidized/config'
       end
@@ -36,8 +36,8 @@ module Oxidized
 
     def store(file, outputs, opt = {})
       @msg   = opt[:msg]
-      @user  = (opt[:user]  || @cfg.user)
-      @email = (opt[:email] || @cfg.email)
+      @user  = opt[:user]  || @cfg.user
+      @email = opt[:email] || @cfg.email
       @opt   = opt
       @commitref = nil
       repo = @cfg.repo

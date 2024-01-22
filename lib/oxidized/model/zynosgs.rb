@@ -19,7 +19,7 @@ class ZyNOSGS < Oxidized::Model
     # Backspace 0x07 char or escape char + control chars
     cfg.gsub! /[\b]|\e\[A|\e\[2K/, ''
     # Remove empty lines
-    cfg.gsub! /\n\n/, "\n"
+    cfg.gsub! "\n\n", "\n"
     cfg
   end
 

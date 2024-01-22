@@ -7,7 +7,7 @@ module Oxidized
 
     def setup
       if @cfg.empty?
-        Oxidized.asetus.user.source.csv.file      = File.join(Config::Root, 'router.db')
+        Oxidized.asetus.user.source.csv.file      = File.join(Config::ROOT, 'router.db')
         Oxidized.asetus.user.source.csv.delimiter = /:/
         Oxidized.asetus.user.source.csv.map.name  = 0
         Oxidized.asetus.user.source.csv.map.model = 1

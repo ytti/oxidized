@@ -1,8 +1,8 @@
 module Oxidized
   require 'ipaddr'
   require 'oxidized/node'
-  class Oxidized::NotSupported < OxidizedError; end
-  class Oxidized::NodeNotFound < OxidizedError; end
+  class NotSupported < OxidizedError; end
+  class NodeNotFound < OxidizedError; end
 
   class Nodes < Array
     attr_accessor :source, :jobs
@@ -21,10 +21,10 @@ module Oxidized
           begin
             node_obj = Node.new node
             new.push node_obj
-          rescue ModelNotFound => err
-            Oxidized.logger.error "node %s raised %s with message '%s'" % [node, err.class, err.message]
-          rescue Resolv::ResolvError => err
-            Oxidized.logger.error "node %s is not resolvable, raised %s with message '%s'" % [node, err.class, err.message]
+          rescue ModelNotFound => e
+            Oxidized.logger.error "node %s raised %s with message '%s'" % [node, e.class, e.message]
+          rescue Resolv::ResolvError => e
+            Oxidized.logger.error "node %s is not resolvable, raised %s with message '%s'" % [node, e.class, e.message]
           end
         end
         size.zero? ? replace(new) : update_nodes(new)
@@ -95,7 +95,7 @@ module Oxidized
     # @param node node whose index number in Nodes to find
     # @return [Fixnum] index number of node in Nodes
     def find_node_index(node)
-      find_index(node) || raise(Oxidized::NodeNotFound, "unable to find '#{node}'")
+      find_index(node) || raise(NodeNotFound, "unable to find '#{node}'")
     end
 
     def version(node_name, group)
@@ -129,8 +129,8 @@ module Oxidized
       end
     end
 
-    def with_lock(&block)
-      @mutex.synchronize(&block)
+    def with_lock(...)
+      @mutex.synchronize(...)
     end
 
     def find_index(node)
@@ -160,13 +160,18 @@ module Oxidized
     # @param [Array] nodes Array of nodes used to replace+update old
     def update_nodes(nodes)
       old = dup
+      # load the Array "nodes" in self (the class Nodes inherits Array)
       replace(nodes)
       each do |node|
         if (i = old.find_node_index(node.name))
           node.stats = old[i].stats
           node.last  = old[i].last
         end
-      rescue Oxidized::NodeNotFound
+      rescue NodeNotFound
+        # Do nothing:
+        # when a node is not found, we have nothing to do:
+        # it has already been loaded by replace(nodes) and there are no
+        # stats to copy
       end
       sort_by! { |x| x.last.nil? ? Time.new(0) : x.last.end }
     end
@@ -175,7 +180,7 @@ module Oxidized
       with_lock do
         node = find { |n| n.name == node_name }
         output = node.output.new
-        raise Oxidized::NotSupported unless output.respond_to? :fetch
+        raise NotSupported unless output.respond_to? :fetch
 
         yield node, output
       end

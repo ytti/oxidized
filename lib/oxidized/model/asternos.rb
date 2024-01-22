@@ -5,7 +5,7 @@ class AsterNOS < Oxidized::Model
   comment '# '
 
   cmd :all do |cfg|
-    cfg = cfg.each_line.to_a[1..-2].join
+    cfg.each_line.to_a[1..-2].join
   end
 
   cmd 'show version' do |cfg|
@@ -14,7 +14,6 @@ class AsterNOS < Oxidized::Model
   end
 
   cmd "show runningconfiguration all"
-  
 
   cfg :ssh do
     # exec true

@@ -12,7 +12,7 @@ module Oxidized
       Oxidized.mgr = Manager.new
       Oxidized.hooks = HookManager.from_config(Oxidized.config)
       nodes = Nodes.new
-      raise NoNodesFound, 'source returns no usable nodes' if nodes.size.zero?
+      raise NoNodesFound, 'source returns no usable nodes' if nodes.empty?
 
       @worker = Worker.new nodes
       trap('HUP') { nodes.load }
@@ -33,7 +33,7 @@ module Oxidized
 
     def run
       Oxidized.logger.debug "lib/oxidized/core.rb: Starting the worker..."
-      @worker.work while sleep Config::Sleep
+      @worker.work while sleep Config::SLEEP
     end
   end
 end

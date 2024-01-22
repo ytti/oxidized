@@ -1,3 +1,4 @@
+---
 name: "Stale Issue/PR cleanup"
 on:
   schedule:
@@ -11,6 +12,8 @@ jobs:
   stale:
     runs-on: ubuntu-latest
     steps:
-      - uses: actions/stale@v8
+      - uses: actions/stale@v9
         with:
           operations-per-run: 500
+          days-before-issue-stale: 90
+          days-before-close: 30

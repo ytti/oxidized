@@ -59,7 +59,7 @@ module Oxidized
 
     def run_input(input)
       rescue_fail = {}
-      [input.class::RescueFail, input.class.superclass::RescueFail].each do |hash|
+      [input.class::RESCUE_FAIL, input.class.superclass::RESCUE_FAIL].each do |hash|
         hash.each do |level, errors|
           errors.each do |err|
             rescue_fail[err] = level
@@ -79,20 +79,20 @@ module Oxidized
         @err_type = err.class.to_s
         @err_reason = err.message.to_s
         false
-      rescue StandardError => err
+      rescue StandardError => e
         crashdir  = Oxidized.config.crash.directory
         crashfile = Oxidized.config.crash.hostnames? ? name : ip.to_s
         FileUtils.mkdir_p(crashdir) unless File.directory?(crashdir)
 
         File.open File.join(crashdir, crashfile), 'w' do |fh|
           fh.puts Time.now.utc
-          fh.puts err.message + ' [' + err.class.to_s + ']'
+          fh.puts e.message + ' [' + e.class.to_s + ']'
           fh.puts '-' * 50
-          fh.puts err.backtrace
+          fh.puts e.backtrace
         end
-        Oxidized.logger.error '%s raised %s with msg "%s", %s saved' % [ip, err.class, err.message, crashfile]
-        @err_type = err.class.to_s
-        @err_reason = err.message.to_s
+        Oxidized.logger.error '%s raised %s with msg "%s", %s saved' % [ip, e.class, e.message, crashfile]
+        @err_type = e.class.to_s
+        @err_reason = e.message.to_s
         false
       end
     end

@@ -7,7 +7,7 @@ class DellX < Oxidized::Model
 
   comment '! '
 
-  expect /(^.*)?+[mM]ore\:+.*$/ do |data, re|
+  expect /(^.*)?+[mM]ore:+.*$/ do |data, re|
     send ' '
     data.sub re, ''
   end

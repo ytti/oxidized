@@ -4,7 +4,7 @@ module Oxidized
   require 'timeout'
   require 'oxidized/input/cli'
   class SSH < Input
-    RescueFail = {
+    RESCUE_FAIL = {
       debug: [
         Net::SSH::Disconnect
       ],
@@ -21,7 +21,7 @@ module Oxidized
       @output      = ''
       @pty_options = { term: "vt100" }
       @node.model.cfg['ssh'].each { |cb| instance_exec(&cb) }
-      @log = File.open(Oxidized::Config::Log + "/#{@node.ip}-ssh", 'w') if Oxidized.config.input.debug?
+      @log = File.open(Oxidized::Config::LOG + "/#{@node.ip}-ssh", 'w') if Oxidized.config.input.debug?
 
       Oxidized.logger.debug "lib/oxidized/input/ssh.rb: Connecting to #{@node.name}"
       @ssh = Net::SSH.start(@node.ip, @node.auth[:username], make_ssh_opts)
@@ -42,11 +42,13 @@ module Oxidized
 
     def cmd(cmd, expect = node.prompt)
       Oxidized.logger.debug "lib/oxidized/input/ssh.rb #{cmd} @ #{node.name} with expect: #{expect.inspect}"
-      if @exec
-        @ssh.exec! cmd
-      else
-        cmd_shell(cmd, expect).gsub(/\r\n/, "\n")
-      end
+      cmd_output = if @exec
+                     @ssh.exec! cmd
+                   else
+                     cmd_shell(cmd, expect).gsub("/\r\n/", "\n")
+                   end
+      # Make sure we return a String
+      cmd_output.to_s
     end
 
     def send(data)
@@ -66,6 +68,7 @@ module Oxidized
       # if disconnect does not disconnect us, give up after timeout
       Timeout.timeout(Oxidized.config.timeout) { @ssh.loop }
     rescue Errno::ECONNRESET, Net::SSH::Disconnect, IOError
+      # These exceptions are intented and therefore not handled here
     ensure
       @log.close if Oxidized.config.input.debug?
       (@ssh.close rescue true) unless @ssh.closed?

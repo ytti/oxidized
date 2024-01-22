@@ -85,9 +85,9 @@ describe Refinements do
       _(output.respond_to?(:cut_both)).must_equal true
     end
 
-    it 'test set_cmd' do
+    it 'test process_cmd' do
       output = String.new("test")
-      output.set_cmd("cmd_string")
+      output.process_cmd("cmd_string")
       _(output).must_equal "test"
       _(output).must_be_instance_of String
       _(output.respond_to?(:cut_both)).must_equal true
@@ -95,10 +95,10 @@ describe Refinements do
       _(output.name).must_equal "cmd_string"
     end
 
-    it 'test set_cmd with name already set' do
+    it 'test process_cmd with name already set' do
       output = String.new("test")
       output.name = "name_string"
-      output.set_cmd("cmd_string")
+      output.process_cmd("cmd_string")
       _(output).must_equal "test"
       _(output).must_be_instance_of String
       _(output.respond_to?(:cut_both)).must_equal true
@@ -110,7 +110,7 @@ describe Refinements do
   describe '#init_from_string' do
     it 'initializes instance variables from another string' do
       str1 = "sample string"
-      str1.set_cmd("some_command")
+      str1.process_cmd("some_command")
 
       str2 = String.new(str1)
       str2.init_from_string(str1)

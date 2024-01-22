@@ -143,8 +143,8 @@ module Oxidized
       @input.send data
     end
 
-    def expect(regex, &block)
-      self.class.expect regex, &block
+    def expect(...)
+      self.class.expect(...)
     end
 
     def cfg
@@ -217,7 +217,7 @@ module Oxidized
 
     def process_cmd_output(output, name)
       output = String.new('') unless output.instance_of?(String)
-      output.set_cmd(name)
+      output.process_cmd(name)
       output
     end
   end
