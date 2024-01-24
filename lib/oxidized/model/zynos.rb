@@ -1,8 +1,8 @@
 class ZyNOS < Oxidized::Model
   using Refinements
-  
+
   prompt /^([\w.@()-<]+[#>]\s?)$/
-  # if there is something you can not identify after prompt, uncomment next line and comment previous line 
+  # if there is something you can not identify after prompt, uncomment next line and comment previous line
   # prompt /^([\w.@()-<]+[#>]\s?).*$/
 
   comment '! '
@@ -14,13 +14,13 @@ class ZyNOS < Oxidized::Model
   expect /(\e\[1M\e\[\??\d+(;\d+)*[A-Za-z]\e\[1L)|(\eE)/ do |data, re|
     data.gsub re, "\n"
   end
-  
+
   # replace all used vt100 control sequences
   expect /\e\[\??\d+(;\d+)*[A-Za-z]/ do |data, re|
     data.gsub re, ''
   end
-  
-  # ignore copyright motd 
+
+  # ignore copyright motd
   expect /^(Copyright .*)\n^([\w.@()-<]+[#>]\s?)$/ do
     send '\n'
     ""
