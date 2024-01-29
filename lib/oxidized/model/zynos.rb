@@ -73,5 +73,4 @@ class ZyNOS < Oxidized::Model
     end
     pre_logout 'exit'
   end
-
 end
