@@ -7,7 +7,7 @@ class ZyNOS < Oxidized::Model
 
   comment '! '
 
-  # Used in Zyxel DSLAMs, such as SAM1316
+  # Used in Zyxel DSLAMs, such as SAM1316. Uncomment next line to enable ftp.
   # cmd 'config-0'
 
   # replace next line control sequence with a new line
@@ -74,6 +74,4 @@ class ZyNOS < Oxidized::Model
     pre_logout 'exit'
   end
 
-  cfg :ftp do
-  end
 end
