@@ -1,11 +1,12 @@
-class CiscoSMB < Oxidized::Model
+class CiscoCBS < Oxidized::Model
 using Refinements
 
 #Cisco Small Business CBS220 Switches
 #https://www.cisco.com/c/en/us/support/switches/business-220-series-smart-switches/series.html
 # Tested with 2.0.2.12 Firmware with Password Auth enabled
 
-prompt /^\r?([\w.@()-]+[#>]\s?)$/
+prompt /^[^\r\n]+[#>]/
+
 comment '! '
 
 cmd :all do |cfg|
