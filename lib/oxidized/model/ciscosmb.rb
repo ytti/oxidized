@@ -7,6 +7,11 @@ class CiscoSMB < Oxidized::Model
   prompt /^\r?([\w.@()-]+[#>]\s?)$/
   comment  '! '
 
+  expect '^.*Your password has exceeded the maximum lifetime.*$' do
+    send 'N'
+    ""
+  end
+
   cmd :all do |cfg|
     lines = cfg.each_line.to_a[1..-2]
     # Remove \r from beginning of response
