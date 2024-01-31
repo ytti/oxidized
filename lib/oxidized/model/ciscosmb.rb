@@ -1,7 +1,7 @@
 class CiscoSMB < Oxidized::Model
   using Refinements
 
-  # Cisco Small Business 300, 500, and ESW2 series switches
+  # Cisco Small Business 3x0, 5x0, and ESW2 series switches, Cisco CBS 250, Cisco CBS 350
   # http://www.cisco.com/c/en/us/support/switches/small-business-300-series-managed-switches/products-release-notes-list.html
 
   prompt /^\r?([\w.@()-]+[#>]\s?)$/
@@ -52,13 +52,7 @@ class CiscoSMB < Oxidized::Model
     username /User ?[nN]ame:/
     password /^\r?Password:/
 
-    post_login do
-      if vars(:enable) == true
-        cmd 'enable'
-      elsif vars(:enable)
-        cmd 'enable', /^\r?Password:$/
-        cmd vars(:enable)
-      end
+    
     end
 
     post_login 'terminal datadump' # Disable pager
