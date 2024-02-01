@@ -5,7 +5,12 @@ class CiscoSMB < Oxidized::Model
   # http://www.cisco.com/c/en/us/support/switches/small-business-300-series-managed-switches/products-release-notes-list.html
 
   prompt /^\r?([\w.@()-]+[#>]\s?)$/
-  comment  '! '
+  comment '! '
+
+  expect '^.*Your password has exceeded the maximum lifetime.*$' do
+    send 'N'
+    ""
+  end
 
   cmd :all do |cfg|
     lines = cfg.each_line.to_a[1..-2]
