@@ -18,7 +18,7 @@ module Oxidized
       @need_reload = false
 
       # If we receive a SIGHUP, queue a reload of the state
-      reload_proc = Proc.new do
+      reload_proc = proc do
         @need_reload = true
       end
       Signals.register_signal('HUP', reload_proc)
@@ -48,7 +48,7 @@ module Oxidized
 
     def run
       Oxidized.logger.debug "lib/oxidized/core.rb: Starting the worker..."
-      while true
+      loop do
         reload if @need_reload
         @worker.work
         sleep Config::SLEEP
