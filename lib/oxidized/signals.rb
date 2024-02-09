@@ -3,9 +3,9 @@
 module Puma
   class Signal
     class << self
-      alias_method :os_trap, :trap
-      def Signal.trap sig, &block
-        sigshortname = sig.gsub /SIG/, ''
+      alias os_trap trap
+      def Signal.trap(sig, &block)
+        sigshortname = sig.gsub "SIG", ''
         Oxidized::Signals.register_signal(sig, block) unless sigshortname.eql? 'HUP'
       end
     end
@@ -14,13 +14,13 @@ end
 
 module Oxidized
   class Signals
-    @handlers = Hash.new { |h, k| h[k] = Array.new }
+    @handlers = Hash.new { |h, k| h[k] = [] }
     class << self
       attr_accessor :handlers
 
-      def register_signal sig, procobj
+      def register_signal(sig, procobj)
         # Compute short name of the signal (without SIG prefix)
-        sigshortname = sig.gsub /SIG/, ''
+        sigshortname = sig.gsub "SIG", ''
         signum = Signal.list[sigshortname]
 
         # Register the handler with OS
@@ -32,13 +32,13 @@ module Oxidized
         @handlers[signum].push(procobj)
       end
 
-      def handle_signal signum
-        return unless handlers.key?(signum)
-        @handlers[signum].each do | handler |
-          handler.call()
+      def handle_signal(signum)
+        return unless handlers.has_key?(signum)
+
+        @handlers[signum].each do |handler|
+          handler.call
         end
       end
-
     end
   end
 end
