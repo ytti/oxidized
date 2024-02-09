@@ -18,6 +18,7 @@ The format is based on [Keep a Changelog](https://keepachangelog.com/en/1.1.0/).
 - added SCP input (@aeiodelic)
 - Added `linux/arm64` and `linux/amd64` platforms to Docker build/publish. (@disaac)
 - Added verion info for Vyatta (@systeembeheerder)
+- model for IP Infusion OcNOS
 
 ## Changed
 - tp-link: fixed enable mode post login entrance (@mirackle-spb)
