@@ -49,7 +49,7 @@ module Oxidized
       # a) less threads running than the total amount of nodes
       # b) we want less than the max specified number of threads
 
-      want = [(@want + 1), @nodes.size, @max].min
+      @want = [(@want + 1), @nodes.size, @max].min
     end
 
     def work
