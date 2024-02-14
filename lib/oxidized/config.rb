@@ -27,6 +27,7 @@ module Oxidized
       asetus.default.interval      = 3600
       asetus.default.use_syslog    = false
       asetus.default.debug         = false
+      asetus.default.run_once      = false
       asetus.default.threads       = 30
       asetus.default.use_max_threads = false
       asetus.default.timeout       = 20
