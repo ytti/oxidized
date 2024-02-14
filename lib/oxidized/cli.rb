@@ -45,6 +45,7 @@ module Oxidized
         opt.on '-d', '--debug', 'turn on debugging'
         opt.on '--daemonize', 'Daemonize/fork the process'
         opt.string '--home-dir', 'Oxidized home dir', default: nil
+        opt.string '--config-file', 'Oxidized config file', default: nil
         opt.on '-h', '--help', 'show usage' do
           puts opt
           exit
