@@ -15,7 +15,8 @@ module Oxidized
     SLEEP      = 1
 
     def self.load(cmd_opts = {})
-      asetus = Asetus.new(name: 'oxidized', load: false, key_to_s: true, usrdir: Oxidized::Config::ROOT)
+      usrdir = File.expand_path(cmd_opts[:home_dir] || Oxidized::Config::ROOT)
+      asetus = Asetus.new(name: 'oxidized', load: false, key_to_s: true, usrdir: usrdir)
       Oxidized.asetus = asetus
 
       asetus.default.username      = 'username'
