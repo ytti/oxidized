@@ -79,8 +79,8 @@ describe Oxidized::SSH do
         number_of_password_prompts:      0,
         auth_methods:                    %w[none publickey password],
         proxy:                           proxy
-        }
-      Net::SSH.expects(:start).with('example.com', 'alma',  ssh_options)
+      }
+      Net::SSH.expects(:start).with('example.com', 'alma', ssh_options)
 
       ssh.instance_variable_set("@exec", true)
       ssh.connect(@node)
