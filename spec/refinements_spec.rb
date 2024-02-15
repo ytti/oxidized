@@ -117,7 +117,9 @@ describe Refinements do
 
       _(str2.instance_variable_get(:@cmd)).must_equal str1.instance_variable_get(:@cmd)
       _(str2.instance_variable_get(:@name)).must_equal str1.instance_variable_get(:@name)
-      _(str2.instance_variable_get(:@type)).must_equal str1.instance_variable_get(:@type)
+      # :@type is always nil
+      _(str2.instance_variable_get(:@type)).must_be_nil
+      _(str1.instance_variable_get(:@type)).must_be_nil
     end
   end
 end
