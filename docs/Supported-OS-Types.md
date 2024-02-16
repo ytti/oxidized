@@ -20,7 +20,7 @@
 |Arbor Networks      |ArbOS                         |[arbos](/lib/oxidized/model/arbos.rb)            |                 |[ArbOS](Model-Notes/ArbOS.md)
 |Arista              |EOS                           |[eos](/lib/oxidized/model/eos.rb)                |                 |[EOS](Model-Notes/EOS.md)
 |Arris               |C4CMTS                        |[c4cmts](/lib/oxidized/model/c4cmts.rb)
-|Aruba               |AOS-CX                        |[aoscx](/lib/oxidized/model/aoscx.rb)
+|Aruba               |AOS-CX                        |[aoscx](/lib/oxidized/model/aoscx.rb)            |@robertcheramy
 |                    |AOSW                          |[Aaosw](/lib/oxidized/model/aosw.rb)
 |Asterfusion         |AsterNOS                      |[asternos](/lib/oxidized/model/asternos.rb)
 |AudioCodes          |AudioCodes                    |[audiocodes](/lib/oxidized/model/audiocodes.rb)
@@ -99,8 +99,8 @@
 |Hillstone Networks  |StoneOS                       |[stoneos](/lib/oxidized/model/stoneos.rb)
 |Hirschmann          |Classic                       |[hirschmann](/lib/oxidized/model/hirschmann.rb)
 |                    |HiOS                          |[hios](/lib/oxidized/model/hios.rb)
-|HP                  |Comware (HP A-series, H3C, 3Com)|[comware](/lib/oxidized/model/comware.rb)      |                 |[Comware](Model-Notes/Comware.md)
-|                    |Procurve                      |[procurve](/lib/oxidized/model/procurve.rb)
+|HP                  |Comware (HP A-series, H3C, 3Com)|[comware](/lib/oxidized/model/comware.rb)      |@robertcheramy   |[Comware](Model-Notes/Comware.md)
+|                    |Procurve                      |[procurve](/lib/oxidized/model/procurve.rb)      |@robertcheramy
 |                    |BladeSystem (Onboard Administrator)|[hpebladesystem](/lib/oxidized/model/hpebladesystem.rb)
 |                    |MSA                           |[hpemsa](/lib/oxidized/model/hpemsa.rb)
 |                    |MSM (Wireless Controller)     |[hpmsm](/lib/oxidized/model/hpmsm.rb)
