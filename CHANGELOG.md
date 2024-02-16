@@ -19,6 +19,7 @@ The format is based on [Keep a Changelog](https://keepachangelog.com/en/1.1.0/).
 - Added `linux/arm64` and `linux/amd64` platforms to Docker build/publish. (@disaac)
 - Added verion info for Vyatta (@systeembeheerder)
 - model for Fibrestore (fs.com) FSOS (@tcrichton)
+- model for IP Infusion OcNOS
 
 ## Changed
 - tp-link: fixed enable mode post login entrance (@mirackle-spb)
@@ -55,6 +56,7 @@ The format is based on [Keep a Changelog](https://keepachangelog.com/en/1.1.0/).
 - Fixed pre_logout for BDCOM switches
 - Fix 'wpa passphrase' hashed secret for SonicOS devices with built-in wireless #3036 (@lazynooblet)
 - Fix potential busy wait when retries and/or next_adds_job is enabled (@gs-kamnas)
+- Reverting PR #2498 as it broke old procurve models (2510G, 2610, 2824). Fixes #2833, #2871 (@robertcheramy)
 
 ## [0.29.1 - 2023-04-24]
 
