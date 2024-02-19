@@ -49,16 +49,40 @@ module Oxidized
     def get_http(path)
       schema = @secure ? "https://" : "http://"
       uri = URI("#{schema}#{@node.ip}#{path}")
-      req = Net::HTTP::Get.new(uri)
-      req.basic_auth @username, @password unless @username.nil?
-      @headers.each do |header, value|
-        req.add_field(header, value)
-      end
+    
+      Oxidized.logger.debug "Making request to: #{uri}"
+    
       ssl_verify = Oxidized.config.input.http.ssl_verify? ? OpenSSL::SSL::VERIFY_PEER : OpenSSL::SSL::VERIFY_NONE
-      res = Net::HTTP.start(uri.hostname, uri.port, use_ssl: uri.scheme == "https", verify_mode: ssl_verify) do |http|
+    
+      res = make_request(uri, ssl_verify)
+    
+      if res.code == '401' && res['www-authenticate'].include?('Digest')
+        uri.user = @username
+        uri.password = @password
+        Oxidized.logger.debug "Server requires Digest authentication"
+        auth = Net::HTTP::DigestAuth.new.auth_header(uri, res['www-authenticate'], 'GET')
+      
+        res = make_request(uri, ssl_verify, 'Authorization' => auth)
+      elsif @username && @password
+        Oxidized.logger.debug "Falling back to Basic authentication"
+        res = make_request(uri, ssl_verify, 'Authorization' => basic_auth_header)
+      end
+    
+      Oxidized.logger.debug "Response code: #{res.code}"
+      res.body
+    end
+    
+    def make_request(uri, ssl_verify, extra_headers = {})
+      Net::HTTP.start(uri.hostname, uri.port, use_ssl: uri.scheme == "https", verify_mode: ssl_verify) do |http|
+        req = Net::HTTP::Get.new(uri)
+        @headers.merge(extra_headers).each { |header, value| req.add_field(header, value) }
+        Oxidized.logger.debug "Sending request with headers: #{@headers.merge(extra_headers)}"
         http.request(req)
       end
-      res.body
+    end
+    
+    def basic_auth_header
+      "Basic " + ["#{@username}:#{@password}"].pack('m').delete("\r\n")
     end
 
     def log(str)
