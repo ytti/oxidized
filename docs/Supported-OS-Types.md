@@ -49,7 +49,6 @@
 |                    |CatOS                         |[catos](/lib/oxidized/model/catos.rb)
 |                    |Cisco Catalyst Express        |[ciscoce](/lib/oxidized/model/ciscoce.rb)
 |                    |FireLinuxOS                   |[firelinuxos](/lib/oxidized/model/firelinuxos.rb)
-|Fiberstore (fs.com) |FSOS                          |[fsos](/lib/oxidized/model/fsos.rb)              |                 |[FSOS](Model-Notes/FSOS.md)
 |                    |IOS                           |[ios](/lib/oxidized/model/ios.rb)                |@robertcheramy   |[IOS](Model-Notes/IOS.md)
 |                    |IOSXR                         |[iosxr](/lib/oxidized/model/iosxr.rb)
 |                    |NGA                           |[cisconga](/lib/oxidized/model/cisconga.rb)
