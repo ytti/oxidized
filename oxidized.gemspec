@@ -24,6 +24,8 @@ Gem::Specification.new do |s|
   s.add_runtime_dependency 'asetus',       '~> 0.1'
   s.add_runtime_dependency 'bcrypt_pbkdf', '~> 1.0'
   s.add_runtime_dependency 'ed25519',      '~> 1.2'
+  s.add_runtime_dependency 'net-ftp',      '~> 0.2'
+  s.add_runtime_dependency 'net-scp',      '~> 4.0'
   s.add_runtime_dependency 'net-ssh',      '~> 7.1'
   s.add_runtime_dependency 'net-telnet',   '~> 0.2'
   s.add_runtime_dependency 'psych',        '~> 3.3.2'

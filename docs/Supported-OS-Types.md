@@ -16,7 +16,7 @@
 |Allied Telesis      |Alliedware Plus               |[awplus](/lib/oxidized/model/awplus.rb)
 |                    |AT-8000S, AT-8000GS series    |[powerconnect](/lib/oxidized/model/powerconnect.rb)
 |Alvarion            |BreezeACCESS                  |[alvarion](/lib/oxidized/model/alvarion.rb)
-|APC                 |AOS                           |[apc_aos](/lib/oxidized/model/apc_aos.rb)
+|APC                 |AOS                           |[apc_aos](/lib/oxidized/model/apc_aos.rb)        |@robertcheramy
 |Arbor Networks      |ArbOS                         |[arbos](/lib/oxidized/model/arbos.rb)            |                 |[ArbOS](Model-Notes/ArbOS.md)
 |Arista              |EOS                           |[eos](/lib/oxidized/model/eos.rb)                |                 |[EOS](Model-Notes/EOS.md)
 |Arris               |C4CMTS                        |[c4cmts](/lib/oxidized/model/c4cmts.rb)
