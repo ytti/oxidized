@@ -10,11 +10,12 @@ class NXOS < Oxidized::Model
   end
 
   cmd :secret do |cfg|
-    cfg.gsub! /^(snmp-server community).*/, '\\1 <configuration removed>'
-    cfg.gsub! /^(snmp-server user (\S+) (\S+) auth (\S+)) (\S+) (priv) (\S+)/, '\\1 <configuration removed> '
+    cfg.gsub! /^(snmp-server community).*/, '\\1 <secret hidden>'
+    cfg.gsub! /^(snmp-server user (\S+) (\S+) auth (\S+)) (\S+) (priv) (\S+)/, '\\1 <secret hidden> '
+    cfg.gsub! /^(snmp-server host.*? )\S+( udp-port \d+)?$/, '\\1<secret hidden>\\2'
     cfg.gsub! /(password \d+) (\S+)/, '\\1 <secret hidden>'
     cfg.gsub! /^(radius-server key).*/, '\\1 <secret hidden>'
-    cfg.gsub! /^(tacacs-server host .+ key(?: \d+)?) \S+/, '\\1 <secret hidden>'
+    cfg.gsub! /^(tacacs-server .*key(?: \d+)?) \S+/, '\\1 <secret hidden>'
     cfg
   end
 
