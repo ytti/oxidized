@@ -8,7 +8,8 @@ class TrueNAS < Oxidized::Model
   cmd('sqlite3 "file:///data/freenas-v1.db?mode=ro&immutable=1" .dump') do |cfg|
     cfg.lines.reject do |line|
       line.match(/^INSERT INTO storage_replication /) ||
-        line.match(/^INSERT INTO system_alert /)
+        line.match(/^INSERT INTO system_alert /) || # ignore system alerts in db
+        line.match(/^INSERT INTO sqlite_sequence VALUES\('system_alert',/) # ignore system alerts in db
     end.join
   end
 
