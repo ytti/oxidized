@@ -91,7 +91,7 @@
 |Firebrick           |FBxxxx                        |[firebrick](/lib/oxidized/model/firebrick.rb)
 |Force10             |DNOS                          |[dnos](/lib/oxidized/model/dnos.rb)
 |                    |FTOS                          |[ftos](/lib/oxidized/model/ftos.rb)
-|FortiGate           |FortiOS                       |[fortios](/lib/oxidized/model/fortios.rb)
+|FortiGate           |FortiOS                       |[fortios](/lib/oxidized/model/fortios.rb)        |                 |[FortiOS](Model-Notes/FortiOS.md)
 |FortiWLC            |FortiWLC                      |[fortiwlc](/lib/oxidized/model/fortiwlc.rb)
 |Fujitsu             |PRIMERGY Blade switch 1/10Gbe |[fujitsupy](/lib/oxidized/model/fujitsupy.rb)
 |GCOM Technologies   |Broadband Network Platform Software|[gcombnps](/lib/oxidized/model/gcombnps.rb)
