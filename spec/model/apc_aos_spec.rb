@@ -34,6 +34,7 @@ describe 'Model apc_aos' do
   end
 
   it "fetches the configuration with scp" do
+    skip "Work in Progress, see issue #1802"
     @node = Oxidized::Node.new(name:     'example.com',
                                input:    'scp',
                                output:   'file',

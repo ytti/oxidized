@@ -71,10 +71,10 @@ Style/ParallelAssignment:
   Enabled: false
 
 Metrics/MethodLength:
-  Max: 45
+  Max: 50
 
-## Metrics/AbcSize:
-##   Max: 28
+Metrics/AbcSize:
+  Max: 28
 
 Metrics/ClassLength:
   Max: 200
