@@ -1,6 +1,5 @@
 class JunOS < Oxidized::Model
   using Refinements
-
   comment '# '
 
   def telnet
@@ -10,11 +9,13 @@ class JunOS < Oxidized::Model
   cmd :all do |cfg|
     cfg = cfg.cut_both if screenscrape
     cfg.gsub!(/  scale-subscriber (\s+)(\d+)/, '  scale-subscriber                <count>')
+    cfg.gsub!(/VMX-BANDWIDTH\s+(\d+) (.*)/, 'VMX-BANDWIDTH                  <count> \2')
     cfg.lines.map { |line| line.rstrip }.join("\n") + "\n"
   end
 
   cmd :secret do |cfg|
     cfg.gsub!(/community (\S+) {/, 'community <hidden> {')
+    cfg.gsub!(/(ssh-(rsa|dsa|ecdsa|ecdsa-sk|ed25519|ed25519-sk) )".*; ## SECRET-DATA/, '<secret removed>')
     cfg.gsub!(/ "\$\d\$\S+; ## SECRET-DATA/, ' <secret removed>;')
     cfg
   end
