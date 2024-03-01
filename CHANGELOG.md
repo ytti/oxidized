@@ -6,7 +6,7 @@ The format is based on [Keep a Changelog](https://keepachangelog.com/en/1.1.0/).
 
 ## [Unreleased]
 
-## Added
+### Added
 - model for D-Link cisco like CLI (@mirackle-spb)
 - model for Ruijie Networks RGOS devices (@spike77453)
 - Add serial number collection to Opengear (@ermuller)
@@ -21,7 +21,7 @@ The format is based on [Keep a Changelog](https://keepachangelog.com/en/1.1.0/).
 - model for Fibrestore (fs.com) FSOS (@tcrichton)
 - model for IP Infusion OcNOS
 
-## Changed
+### Changed
 - tp-link: fixed enable mode post login entrance (@mirackle-spb)
 - dlink: fixed prompt for other dlink switches, added additional uptime removal expressions (@mirackle-spb)
 - Collect VC info for juniper ex3400 (@ermuller)
@@ -37,9 +37,9 @@ The format is based on [Keep a Changelog](https://keepachangelog.com/en/1.1.0/).
 - ciscosmb: ignore "Please change the password" hint when doing backup. (@sharteeya)
 - dlinknextgen removes user and snmp-server secrets (@tcrichton)
 - dnos: hide secrets in "ospf message-digest-key", "authentication-type" and "bsd-username" (@rybnico)
+- junos: Replace dynamic value in VMX-BANDWIDTH with count, hide ssh keys
 
-
-## Fixed
+### Fixed
 - fixed empty lines for ZyXEL GS1900 switches (@jluebbe)
 - fixed prompt for Watchguard FirewareOS not matching the regex when the node is non-master (@netdiver)
 - defined 'psych' runtime dependency to resolve 'unsafe_load' error during startup (@MattKobayashi)
@@ -64,13 +64,13 @@ The format is based on [Keep a Changelog](https://keepachangelog.com/en/1.1.0/).
 
 ## [0.29.1 - 2023-04-24]
 
-## Added
+### Added
 
-## Changed
+### Changed
 
 - Ensure Docker builds are only pushed to registry on `master` (@aschaber1)
 
-## Fixed
+### Fixed
 
 - #2749: fix issues with `cut_both`
 
