@@ -1,5 +1,6 @@
 module Oxidized
   require 'net/ssh'
+  require 'net/scp'
   require 'timeout'
   require_relative 'cli'
 

@@ -23,10 +23,10 @@ describe Oxidized::HTTP do
       _(Oxidized::HTTP.new.send(:string_navigate, h1, "inventory[0].ip")).must_equal "10.10.10.10"
     end
     it "should return nil on non-existing string key" do
-      _(Oxidized::HTTP.new.send(:string_navigate, h1, "jotain.3")).must_equal nil
+      _(Oxidized::HTTP.new.send(:string_navigate, h1, "jotain.3")).must_be_nil
     end
     it "should return nil on non-existing array index" do
-      _(Oxidized::HTTP.new.send(:string_navigate, h1, "inventory[3]")).must_equal nil
+      _(Oxidized::HTTP.new.send(:string_navigate, h1, "inventory[3]")).must_be_nil
     end
   end
 end

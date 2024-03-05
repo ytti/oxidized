@@ -16,6 +16,9 @@ class DNOS < Oxidized::Model
     cfg.gsub! /secret (\d+) (\S+).*/, '<secret hidden>'
     cfg.gsub! /password (\d+) (\S+).*/, '<secret hidden>'
     cfg.gsub! /^(tacacs-server key \d+) (\S+).*/, '\\1 <secret hidden>'
+    cfg.gsub! /(ip ospf message-digest-key \d \S+ \d).*/, '\\1 <secret hidden>'
+    cfg.gsub! /(authentication-type).*/, '\\1 <secret hidden>'
+    cfg.gsub! /^(bsd-username \S+ secret).*/, '\\1 <secret hidden>'
     cfg
   end
 

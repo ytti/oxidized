@@ -44,6 +44,14 @@ module Oxidized
       @want = @max if @want > @max
     end
 
+    def increment
+      # Increments the job count if safe to do so, which means:
+      # a) less threads running than the total amount of nodes
+      # b) we want less than the max specified number of threads
+
+      @want = [(@want + 1), @nodes.size, @max].min
+    end
+
     def work
       # if   a) we want less or same amount of threads as we now running
       # and  b) we want less threads running than the total amount of nodes
@@ -51,7 +59,9 @@ module Oxidized
       # then we want one more thread (rationale is to fix hanging thread causing HOLB)
       return unless @want <= size && @want < @nodes.size
 
-      @want += 1 if (Time.now.utc - @last) > MAX_INTER_JOB_GAP
+      return unless @want <= size
+
+      increment if (Time.now.utc - @last) > MAX_INTER_JOB_GAP
     end
   end
 end
