@@ -19,6 +19,7 @@ class FSOS < Oxidized::Model
   cmd 'show version' do |cfg|
     # Remove uptime so the result doesn't change every time
     cfg.gsub! /.*uptime is.*\n/, ''
+    cfg.gsub! /.*System uptime.*\n/, ''
     comment cfg
   end
 
