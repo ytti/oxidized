@@ -1,0 +1,21 @@
+services:
+  oxidized:
+    # Choose the image that you want to test
+    # image: docker.io/oxidized/oxidized:0.29.1
+    image: docker.io/oxidized/oxidized:latest
+    ports:
+      - 127.0.0.1:8042:8888/tcp
+    environment:
+      # Reload hosts list once per day
+      CONFIG_RELOAD_INTERVAL: 86400
+      # Needed when you push to a remote git repository
+      OXIDIZED_SSH_PASSPHRASE: xxxxPassphasexxxx
+    volumes:
+       - ./oxidized-config:/home/oxidized/.config/oxidized
+       - ./oxidized-ssh:/home/oxidized/.ssh
+  # This is a simulated network device for the example to work out of the box
+  asternos-device:
+    image: localhost/local/model
+    volumes:
+      - ./model-simulation/asternos.sh:/home/oxidized/.profile
+      - ./model-simulation/asternos.sh:/home/admin/.profile

@@ -1,0 +1,8 @@
+# Ignore local configurations, which will override the git config
+config.local
+router.db.local
+
+# Ignore logs, retrieved configs...
+configs/
+crash
+logs/

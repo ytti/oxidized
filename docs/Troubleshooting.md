@@ -64,3 +64,19 @@ Compare the output to the partial output collected by Oxidized, focusing on the 
 Adapt the prompt regexp to be more conservative if necessary in a local model override file.
 
 *We encourage you to submit a PR for any prompt issues you encounter.*
+
+## Oxidized does not push to a remote Git repository (hook githubrepo)
+See Issue #2753
+
+You need to store the public SSH keys of the remote Git server to the ~/.ssh/known_hosts
+of the user running oxidized.
+
+This can be done with
+```shell
+ssh-keyscan gitserver.git.com >> ~/.ssh/known_hosts
+```
+
+If you are running oxidized in a container, you need to map /home/oxidized/.ssh in the
+container to a local repository and save the known_hosts in the local repository. You can
+find an example how to do this under [examples/podman-compose](/examples/podman-compose/)
+
