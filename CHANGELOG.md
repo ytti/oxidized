@@ -59,6 +59,7 @@ The format is based on [Keep a Changelog](https://keepachangelog.com/en/1.1.0/).
 - Fixed login into Fortigate when post-login-baned ist enabled. Fixes #2021 (@chrisr0880, @sahdan, @dangoscomb and @robertcheramy)
 - Fixed pre_logout for BDCOM switches
 - Fix 'wpa passphrase' hashed secret for SonicOS devices with built-in wireless #3036 (@lazynooblet)
+- Oxidized will now exit on SIGTERM and SIGINT; SIGHUP will trigger a node list reload and reopen logs (@gs-kamnas)
 - Fix potential busy wait when retries and/or next_adds_job is enabled (@gs-kamnas)
 - Reverting PR #2498 as it broke old procurve models (2510G, 2610, 2824). Fixes #2833, #2871 (@robertcheramy)
 - Fixed regexp used to remove secrets in nxos model. Fixes #3080 (@desnoe)
