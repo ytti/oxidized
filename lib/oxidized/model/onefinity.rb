@@ -9,9 +9,7 @@ class OneFinity < Oxidized::Model
     cfg.each_line.to_a[1..-3].join
   end
 
-  cmd 'show configuration | display set | nomore' do |cfg|
-    cfg
-  end
+  cmd 'show configuration | display set | nomore'
 
   cfg :ssh do
     pre_logout 'exit'
