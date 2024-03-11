@@ -94,7 +94,7 @@
 |FortiGate           |FortiOS                       |[fortios](/lib/oxidized/model/fortios.rb)        |                 |[FortiOS](Model-Notes/FortiOS.md)
 |FortiWLC            |FortiWLC                      |[fortiwlc](/lib/oxidized/model/fortiwlc.rb)
 |Fujitsu             |PRIMERGY Blade switch 1/10Gbe |[fujitsupy](/lib/oxidized/model/fujitsupy.rb)
-|                    |1FINITY T100,T300,T310        |[onefinity](/lib/oxidized/model/onefinity.rb)
+|                    |1FINITY Switches              |[onefinity](/lib/oxidized/model/onefinity.rb)
 |GCOM Technologies   |Broadband Network Platform Software|[gcombnps](/lib/oxidized/model/gcombnps.rb)
 |Grandstream Networks|GSX                           |[grandstream](/lib/oxidized/model/grandstream.rb)
 |Hatteras            |Hatteras                      |[hatteras](/lib/oxidized/model/hatteras.rb)
