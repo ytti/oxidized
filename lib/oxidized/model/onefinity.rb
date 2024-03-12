@@ -13,5 +13,6 @@ class OneFinity < Oxidized::Model
 
   cfg :ssh do
     pre_logout 'exit'
+    exec true
   end
 end
