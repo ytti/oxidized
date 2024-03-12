@@ -211,17 +211,17 @@ module Oxidized
         Oxidized.logger.debug "node.rb: setting node key '#{key}' to value '#{value}' from node"
 
       # Group specific model
-      elsif Oxidized.config.groups.has_key?(@group) && Oxidized.config.groups[@group].models.has_key?(model_name) && Oxidized.config.groups[@group].models[model_name].has_key?(key_str)
+      elsif Oxidized.config.groups&.has_key?(@group) && Oxidized.config.groups[@group]&.models&.has_key?(model_name) && Oxidized.config.groups[@group].models[model_name]&.has_key?(key_str)
         value = Oxidized.config.groups[@group].models[model_name][key_str]
         Oxidized.logger.debug "node.rb: setting node key '#{key}' to value '#{value}' from model in group"
 
       # Group
-      elsif Oxidized.config.groups.has_key?(@group) && Oxidized.config.groups[@group].has_key?(key_str)
+      elsif Oxidized.config.groups&.has_key?(@group) && Oxidized.config.groups[@group]&.has_key?(key_str)
         value = Oxidized.config.groups[@group][key_str]
         Oxidized.logger.debug "node.rb: setting node key '#{key}' to value '#{value}' from group"
 
       # Model
-      elsif Oxidized.config.models.has_key?(model_name) && Oxidized.config.models[model_name].has_key?(key_str)
+      elsif Oxidized.config.models&.has_key?(model_name) && Oxidized.config.models[model_name]&.has_key?(key_str)
         value = Oxidized.config.models[model_name][key_str]
         Oxidized.logger.debug "node.rb: setting node key '#{key}' to value '#{value}' from model"
 
