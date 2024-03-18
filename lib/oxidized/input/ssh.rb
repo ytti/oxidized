@@ -45,7 +45,7 @@ module Oxidized
       cmd_output = if @exec
                      @ssh.exec! cmd
                    else
-                     cmd_shell(cmd, expect).gsub("/\r\n/", "\n")
+                     cmd_shell(cmd, expect).gsub("\r\n", "\n")
                    end
       # Make sure we return a String
       cmd_output.to_s
