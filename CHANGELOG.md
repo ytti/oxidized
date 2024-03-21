@@ -39,6 +39,7 @@ The format is based on [Keep a Changelog](https://keepachangelog.com/en/1.1.0/).
 - dlinknextgen removes user and snmp-server secrets (@tcrichton)
 - dnos: hide secrets in "ospf message-digest-key", "authentication-type" and "bsd-username" (@rybnico)
 - junos: Replace dynamic value in VMX-BANDWIDTH with count, hide ssh keys
+- h3c: change prompt to expect either angle (user-view) or square (system-view) brackets (@nl987)
 
 ### Fixed
 - fixed empty lines for ZyXEL GS1900 switches (@jluebbe)
