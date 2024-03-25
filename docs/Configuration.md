@@ -242,13 +242,15 @@ groups:
     password: ubnt
 ```
 
-Model specific variables within groups
+Model specific variables/credentials within groups
 
 ```yaml
 groups:
   foo:
     models:
       arista:
+        username: admin
+        password: password
         vars:
           ssh_keys: "~/.ssh/id_rsa_foo_arista"
       vyatta:
@@ -260,6 +262,8 @@ groups:
         vars:
           ssh_keys: "~/.ssh/id_rsa_bar_routeros"
       vyatta:
+        username: admin
+        password: pass
         vars:
           ssh_keys: "~/.ssh/id_rsa_bar_vyatta"
 ```
@@ -310,6 +314,17 @@ models:
     username: nil
     password: pass
 ```
+
+### Options (credentials, vars, etc.) precedence:  
+From least to most important:
+- global options
+- model specific options
+- group specific options
+- model specific options in groups
+- options defined on single nodes
+
+more important options overwrite less important ones if they are set
+
 
 ## RESTful API and Web Interface
 
