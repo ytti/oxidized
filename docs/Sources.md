@@ -76,6 +76,8 @@ source:
     table: nodes
     user: root
     password: rootpass
+    host: 127.0.0.1
+    port: 3306
     map:
       name: ip
       model: model
