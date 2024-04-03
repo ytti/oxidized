@@ -1,5 +1,5 @@
 # Single-stage build of an oxidized container from phusion/baseimage-docker jammy-1.0.1, derived from Ubuntu 22.04 (Jammy Jellyfish)
-FROM docker.io/phusion/baseimage:jammy-1.0.1
+FROM docker.io/phusion/baseimage:jammy-1.0.3
 
 # set up dependencies for the build process
 RUN apt-get -yq update \
