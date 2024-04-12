@@ -3,7 +3,7 @@ class Vyatta < Oxidized::Model
 
   # Brocade Vyatta / VyOS model #
 
-  prompt /@.*(:~\$|>)/
+  prompt /@.*(:~\$|>)\s/
 
   cmd :all do |cfg|
     cfg.lines.to_a[1..-2].join
