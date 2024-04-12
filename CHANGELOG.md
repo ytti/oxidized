@@ -5,14 +5,13 @@ All notable changes to this project will be documented in this file.
 The format is based on [Keep a Changelog](https://keepachangelog.com/en/1.1.0/).
 
 
-## [Unreleased]
+## [0.30.1 – 2024-04-12]
 
 ### Added
 - document the release process (@robertcheramy)
 
-### Changed
-
 ### Fixed
+- The version string was not set correctly (@robertcheramy)
 
 
 ## [0.30.0 – 2024-04-11]
