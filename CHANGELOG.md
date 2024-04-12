@@ -7,6 +7,24 @@ The format is based on [Keep a Changelog](https://keepachangelog.com/en/1.1.0/).
 ## [Unreleased]
 
 ### Added
+
+### Changed
+- h3c: change prompt to expect either angle (user-view) or square (system-view) brackets (@nl987)
+
+### Fixed
+
+
+## [0.30.1 – 2024-04-12]
+
+### Added
+- document the release process (@robertcheramy)
+
+### Fixed
+- The version string was not set correctly (@robertcheramy)
+
+## [0.30.0 – 2024-04-11]
+
+### Added
 - model for D-Link cisco like CLI (@mirackle-spb)
 - model for Ruijie Networks RGOS devices (@spike77453)
 - Add serial number collection to Opengear (@ermuller)
