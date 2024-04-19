@@ -200,7 +200,7 @@ Run the container for the first time to initialize the config:
 _Note: this step in only required for creating the Oxidized configuration file and can be skipped if you already have one._
 
 ```shell
-docker run --rm -v /etc/oxidized:/home/oxidized/.config/oxidized -p 8888:8888/tcp -t oxidized/oxidized:latest oxidized
+docker run --rm -v /etc/oxidized:/home/oxidized/.config/oxidized -p 8888:8888/tcp --user oxidized -t oxidized/oxidized:latest oxidized
 ```
 
 If the RESTful API and Web Interface are enabled, on the docker host running the container
