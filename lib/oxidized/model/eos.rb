@@ -18,8 +18,9 @@ class EOS < Oxidized::Model
     cfg.gsub! /^(enable (?:secret|password)).*/, '\\1 <configuration removed>'
     cfg.gsub! /^(service unsupported-transceiver).*/, '\\1 <license key removed>'
     cfg.gsub! /^(tacacs-server key \d+).*/, '\\1 <configuration removed>'
-    cfg.gsub! /^((radius-server host) (([0-9]{1,3}.){3}[0-9]{1,3}) (vrf \S+) (key \d)).*/, '\\1 <secret hidden>'
+    cfg.gsub! /^(radius-server .+ key \d) \S+/, '\\1 <radius secret hidden>'
     cfg.gsub! /( {6}key) (\h+ 7) (\h+).*/, '\\1 <secret hidden>'
+    cfg.gsub! /(localized|auth (md5|sha\d{0,3})|priv (des|aes\d{0,3})) \S+/, '\\1 <secret hidden>'
     cfg
   end
 
