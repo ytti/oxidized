@@ -15,6 +15,8 @@ describe Oxidized::SSH do
 
   describe "#connect" do
     it "should use proxy command when proxy host given and connect by ip if resolve_dns is true" do
+      # If this test fails, check it exemple.com stil resolves to 93.184.215.14
+      # If not, update Net::SSH.expects(:start).with('93.184.215.14'... below
       Oxidized.config.resolve_dns = true
       @node = Oxidized::Node.new(name:     'example.com',
                                  input:    'ssh',
@@ -44,7 +46,7 @@ describe Oxidized::SSH do
         auth_methods:                    %w[none publickey password],
         proxy:                           proxy
       }
-      Net::SSH.expects(:start).with('93.184.216.34', 'alma', ssh_options)
+      Net::SSH.expects(:start).with('93.184.215.14', 'alma', ssh_options)
 
       ssh.instance_variable_set("@exec", true)
       ssh.connect(@node)
