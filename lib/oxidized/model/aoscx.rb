@@ -59,7 +59,7 @@ class Aoscx < Oxidized::Model
     cfg.gsub! /^(\d+\/\S+\s+\S+\s+)\d+\.\d+\s+C(.*)/, '\\1<hidden>\\2'
     cfg.gsub! /^(LC.*\s+)\d+\.\d+\s+(C.*)$/, '\\1 <hidden> \\2'
     cfg.gsub! /^(\S+\s+\S+\s+\s+\S+\s+)(slow|normal|medium|fast|max)(\s+\S+\s+\S+\s+)\d+/, '\\1<speed>\\3<rpm>'
-    cfg.gsub! /^(\d+\s+.+\s+)(\s\s\d+\.\d+)(\s+)(\s\s\d+\.\d+)$/, '\\1<power>\\3<power>'
+    cfg.gsub! /^(\d+\s+.+\s+)(\s{2}\d{2}\.\d{2}|\s{1}\d{3}\.\d{2}|\d{4}\.\d{2})(\s+)(\s{2}\d{2}\.\d{2}|\s{1}\d{3}\.\d{2}|\d{4}\.\d{2})$/, '\\1<power>\\3<power>'
     comment cfg
   end
 
