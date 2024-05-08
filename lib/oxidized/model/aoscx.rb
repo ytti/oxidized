@@ -59,7 +59,20 @@ class Aoscx < Oxidized::Model
     cfg.gsub! /^(\d+\/\S+\s+\S+\s+)\d+\.\d+\s+C(.*)/, '\\1<hidden>\\2'
     cfg.gsub! /^(LC.*\s+)\d+\.\d+\s+(C.*)$/, '\\1 <hidden> \\2'
     cfg.gsub! /^(\S+\s+\S+\s+\s+\S+\s+)(slow|normal|medium|fast|max)(\s+\S+\s+\S+\s+)\d+/, '\\1<speed>\\3<rpm>'
+    # match show environment power-consumption on VSF or standadlone, non-chassis and non-6400 switch, e.g. "2    6300M 48G 4SFP56 Swch                 156.00      155.94"
     cfg.gsub! /^(\d+\s+.+\s+)(\s{2}\d{2}\.\d{2}|\s{1}\d{3}\.\d{2}|\d{4}\.\d{2})(\s+)(\s{2}\d{2}\.\d{2}|\s{1}\d{3}\.\d{2}|\d{4}\.\d{2})$/, '\\1<power>\\3<power>'
+    # match show environment power-consumption on 6400 or chassis switches, e.g. "1/4    line-card-module    R0X39A 6400 48p 1GbE CL4 PoE 4SFP56 Mod     54 W"
+    cfg.gsub! /^(\d+\/\d+\s+.+\s+)(\s{3}\d{1}|\s{2}\d{2}|\s{1}\d{3}|\d{4})\sW\s*$/, '\\1<power>'
+    # match show environment power-consumption on 6400 or chassis switches, e.g. "Module Total Power Usage      13000 W", match up to a 5-digit number and keep table formatting.
+    cfg.gsub! /^(Module|Chassis)\s(Total\sPower\sUsage)(\s+)\s(\s{4}\d{1}|\s{3}\d{2}|\s{2}\d{3}|\s{1}\d{4}|\d{5})\sW\s*$/, '\\1 <power>'
+    # match show environment power-consumption on 6400 or chassis switches, e.g. "Chassis Total Power Usage     13000 W", match up to a 5-digit number and keep table formatting.
+    cfg.gsub! /^(Chassis\sTotal\sPower\sUsage)(\s+)(\s{4}\d{1}|\s{3}\d{2}|\s{2}\d{3}|\s{1}\d{4}|\d{5})\sW\s*$/, '\\1\\2<power>'
+    # match show environment power-consumption on 8400 or chassis switches, up to a 5-digit number, example matches:
+    # e.g. "Chassis Total Power Allocated (total of all max wattages)               4130 W"
+    # e.g. "Chassis Total Power Unallocated                                        15860 W"
+    cfg.gsub! /^(Chassis\sTotal\sPower\s)(Allocated|Unallocated)(\s|\s\(total of all max wattages\))(\s+)(\s{4}\d{1}|\s{3}\d{2}|\s{2}\d{3}|\s{1}\d{4}|\d{5})\sW\s*$/, '\\1\\2\\3\\4<power>'
+    # match Total Power Consumption:    
+    cfg.gsub! /^([t|T]otal\s[p|P]ower\s[c|C]onsumption\s+)(\d+\.\d\d)$/, '\\1<power>'
     comment cfg
   end
 
