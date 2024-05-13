@@ -71,7 +71,7 @@ class Aoscx < Oxidized::Model
     # e.g. "Chassis Total Power Allocated (total of all max wattages)               4130 W"
     # e.g. "Chassis Total Power Unallocated                                        15860 W"
     cfg.gsub! /^(Chassis\sTotal\sPower\s)(Allocated|Unallocated)(\s|\s\(total of all max wattages\))(\s+)(\s{4}\d{1}|\s{3}\d{2}|\s{2}\d{3}|\s{1}\d{4}|\d{5})\sW\s*$/, '\\1\\2\\3\\4<power>'
-    # match Total Power Consumption:    
+    # match Total Power Consumption:
     cfg.gsub! /^([t|T]otal\s[p|P]ower\s[c|C]onsumption\s+)(\d+\.\d\d)$/, '\\1<power>'
     comment cfg
   end
