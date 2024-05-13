@@ -14,7 +14,7 @@ class Vyatta < Oxidized::Model
     cfg.gsub! /plaintext-password (\S+).*/, 'plaintext-password <secret removed>'
     cfg.gsub! /password (\S+).*/, 'password <secret removed>'
     cfg.gsub! /pre-shared-secret (\S+).*/, 'pre-shared-secret <secret removed>'
-    cfg.gsub! /community (\S+) {/, 'community <hidden> {'
+    cfg.gsub! /community (\S+)/, 'community <hidden>'
     cfg.gsub! /private-key (\S+).*/, 'private-key <secret removed>'
     cfg.gsub! /preshared-key (\S+).*/, 'preshared-key <secret removed>'
     cfg
