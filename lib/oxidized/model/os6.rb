@@ -25,7 +25,7 @@ class OS6 < Oxidized::Model
     comment cfg
   end
 
-    cmd 'show interfaces transceiver properties' do |cfg|
+  cmd 'show interfaces transceiver properties' do |cfg|
     comment cfg
   end
 
