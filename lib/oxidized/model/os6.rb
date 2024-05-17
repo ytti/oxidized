@@ -1,9 +1,9 @@
 class OS6 < Oxidized::Model
   using Refinements
 
-  # For switches running Dell EMC Networking OS10 #
+  # For switches running Dell EMC Networking OS6 #
   #
-  # Tested with : Dell PowerSwitch S4148U-ON
+  # Tested with : Dell PowerSwitch N2048
 
   comment  '! '
 
