@@ -13,10 +13,12 @@ The format is based on [Keep a Changelog](https://keepachangelog.com/en/1.1.0/).
 - xos: Hide radius and user secrets for XOS (@iriseden)
 - eos: Hide radius and snmp secrets for Arista EOS (@iriseden)
 - docker/podman: baseimage updated to phusion/baseimage:jammy-1.0.4
+- fortios: Hide date in acme certifcate comments (@systeembeheerder)
+- dlink: added support for 'enable admin' before getting configuration, if enable=true (@as8net)
 
 ### Fixed
 - fixed prompt for vyos/vyatta to allow logins with non-priviliged accounts. Fixes #3111 (@h-lopez)
-
+- fixed power consumption included in ArubaOS-CX diffs starting with FL.10.13.xxx. Fixes #3142 (@terratalpi)
 
 ## [0.30.1 – 2024-04-12]
 

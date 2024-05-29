@@ -37,6 +37,7 @@ class Dlink < Oxidized::Model
 
   cfg :telnet, :ssh do
     post_login 'disable clipaging'
+    post_login 'enable admin' if vars(:enable) == true
     pre_logout 'logout'
   end
 end

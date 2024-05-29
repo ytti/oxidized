@@ -77,6 +77,8 @@ class FortiOS < Oxidized::Model
       fullcfg = cmd(fullcmd)
       next if fullcfg.lines[1..3].join =~ /(Parsing error at|command parse error)/ # Don't show for unsupported devices (e.g. FortiAnalyzer, FortiManager, FortiMail)
 
+      fullcfg.gsub! /(set comments "Error \(No order (found )?for (account )?ID \d+\) on).*/, '\\1 <stripped>"'
+
       cfg << fullcfg
       break
     end
