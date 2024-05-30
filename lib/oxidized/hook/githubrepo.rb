@@ -36,7 +36,12 @@ class GithubRepo < Oxidized::Hook
       cleanup = true
       ref = repo.references.create("refs/heads/" + remote_branch, repo.head.target_id)
     end
-    remote.push([ref.name], credentials: creds)
+    pushed = remote.push([ref.name], credentials: creds)
+    if pushed == {}
+      log("Push successful", :debug)
+    else
+      log("Unexpected response from remote repo: #{pushed}", :warn)
+    end
     repo.references.delete(ref.name) if cleanup == true
   end
 
