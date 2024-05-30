@@ -40,7 +40,7 @@ describe GithubRepo do
       repo.expects(:fetch).with('origin', ['refs/heads/master'], credentials: credentials).returns(Hash.new(0))
       repo.expects(:branches).never
       repo.expects(:head).returns(repo_head)
-      _(gr.fetch_and_merge_remote(repo, credentials)).must_be_nil
+      _(gr.fetch_and_merge_remote(repo, credentials, 'master')).must_be_nil
     end
 
     describe "when there is update considering conflicts" do
@@ -60,7 +60,7 @@ describe GithubRepo do
         their_branch.expects(:name).returns("origin/master")
         merge_index.expects(:conflicts?).returns(true)
         Rugged::Commit.expects(:create).never
-        _(gr.fetch_and_merge_remote(repo, credentials)).must_be_nil
+        _(gr.fetch_and_merge_remote(repo, credentials, 'master')).must_be_nil
       end
 
       it "should merge when there is no conflict" do
@@ -75,7 +75,7 @@ describe GithubRepo do
                                              tree:       "tree",
                                              message:    "Merge remote-tracking branch 'origin/master'",
                                              update_ref: "HEAD").returns(1)
-        _(gr.fetch_and_merge_remote(repo, credentials)).must_equal 1
+        _(gr.fetch_and_merge_remote(repo, credentials, 'master')).must_equal 1
       end
     end
   end

@@ -23,13 +23,25 @@ class GithubRepo < Oxidized::Hook
     end
     remote = repo.remotes['origin']
 
-    fetch_and_merge_remote(repo, creds)
+    remote_branch = cfg.has_key?('remote_branch') ? cfg.remote_branch : 'master'
+    log("Using remote branch name #{remote_branch}", :debug)
+    fetch_and_merge_remote(repo, creds, remote_branch)
 
-    remote.push([repo.head.name], credentials: creds)
+    # can't seem to push to a different branch using Rugged::Repository, so we create a
+    # ref of the branch we want to push to here and clean up after
+    if repo.references.each_name.include? 'refs/heads/' + remote_branch
+      cleanup = false
+      ref = repo.references["refs/heads/" + remote_branch]
+    else
+      cleanup = true
+      ref = repo.references.create("refs/heads/" + remote_branch, repo.head.target_id)
+    end
+    remote.push([ref.name], credentials: creds)
+    repo.references.delete(ref.name) if cleanup == true
   end
 
-  def fetch_and_merge_remote(repo, creds)
-    result = repo.fetch('origin', [repo.head.name], credentials: creds)
+  def fetch_and_merge_remote(repo, creds, remote_branch)
+    result = repo.fetch('origin', [remote_branch], credentials: creds)
     log result.inspect, :debug
 
     unless result[:total_deltas].positive?
@@ -37,7 +49,7 @@ class GithubRepo < Oxidized::Hook
       return
     end
 
-    their_branch = repo.branches["origin/master"]
+    their_branch = repo.branches["origin/" + remote_branch]
 
     log "merging fetched branch #{their_branch.name}", :debug
 
