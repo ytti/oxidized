@@ -7,6 +7,30 @@ The format is based on [Keep a Changelog](https://keepachangelog.com/en/1.1.0/).
 ## [Unreleased]
 
 ### Added
+
+### Changed
+- h3c: change prompt to expect either angle (user-view) or square (system-view) brackets (@nl987)
+- xos: Hide radius and user secrets for XOS (@iriseden)
+- eos: Hide radius and snmp secrets for Arista EOS (@iriseden)
+- docker/podman: baseimage updated to phusion/baseimage:jammy-1.0.4
+- fortios: Hide date in acme certifcate comments (@systeembeheerder)
+- dlink: added support for 'enable admin' before getting configuration, if enable=true (@as8net)
+
+### Fixed
+- fixed prompt for vyos/vyatta to allow logins with non-priviliged accounts. Fixes #3111 (@h-lopez)
+- fixed power consumption included in ArubaOS-CX diffs starting with FL.10.13.xxx. Fixes #3142 (@terratalpi)
+
+## [0.30.1 – 2024-04-12]
+
+### Added
+- document the release process (@robertcheramy)
+
+### Fixed
+- The version string was not set correctly (@robertcheramy)
+
+## [0.30.0 – 2024-04-11]
+
+### Added
 - model for D-Link cisco like CLI (@mirackle-spb)
 - model for Ruijie Networks RGOS devices (@spike77453)
 - Add serial number collection to Opengear (@ermuller)
@@ -20,6 +44,7 @@ The format is based on [Keep a Changelog](https://keepachangelog.com/en/1.1.0/).
 - Added verion info for Vyatta (@systeembeheerder)
 - model for Fibrestore (fs.com) FSOS (@tcrichton)
 - model for IP Infusion OcNOS
+- model for Fujitsu 1finity (@jerji)
 
 ### Changed
 - tp-link: fixed enable mode post login entrance (@mirackle-spb)

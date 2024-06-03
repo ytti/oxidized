@@ -12,14 +12,14 @@ class AudioCodes < Oxidized::Model
     data.sub re, ''
   end
 
-  cmd 'show running-config' do |cfg|
+  cmd "show running-config\r\n" do |cfg|
     cfg
   end
 
   cfg :ssh do
     username /^login as:\s$/
     password /^.+password:\s$/
-    pre_logout 'exit'
+    pre_logout "exit\r\n"
   end
 
   cfg :telnet do

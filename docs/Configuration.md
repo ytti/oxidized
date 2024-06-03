@@ -316,8 +316,18 @@ models:
 The RESTful API and Web Interface is enabled by configuring the `rest:` parameter in the config file.  This parameter can optionally contain a relative URI.
 
 ```yaml
+# Listen on http://[::1]:8888/
+rest: "[::1]:8888"
+```
+
+```yaml
 # Listen on http://127.0.0.1:8888/
 rest: 127.0.0.1:8888
+```
+
+```yaml
+# Listen on http://[2001:db8:0:face:b001:0:dead:beaf]:8888/oxidized/
+rest: "[2001:db8:0:face:b001:0:dead:beaf]:8888"
 ```
 
 ```yaml

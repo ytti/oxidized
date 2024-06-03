@@ -12,6 +12,13 @@ class XOS < Oxidized::Model
     cfg.each_line.to_a[1..-2].map { |line| line.delete("\r").rstrip }.join("\n") + "\n"
   end
 
+  cmd :secret do |cfg|
+    cfg.gsub! /^(configure radius (netlogin|mgmt-access) (primary|secondary) shared-secret encrypted).+/, '\\1 <secret hidden>'
+    cfg.gsub! /^(configure account admin encrypted).+/, '\\1 <secret hidden>'
+    cfg.gsub! /^(create account (admin|user) (.+) encrypted).+/, '\\1 <secret hidden>'
+    cfg
+  end
+
   cmd 'show version' do |cfg|
     comment cfg
   end

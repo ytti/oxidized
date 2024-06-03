@@ -3,6 +3,7 @@ config.local
 router.db.local
 
 # Ignore logs, retrieved configs...
+pid
 configs/
 crash
 logs/
