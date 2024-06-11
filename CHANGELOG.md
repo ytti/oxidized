@@ -6,6 +6,9 @@ The format is based on [Keep a Changelog](https://keepachangelog.com/en/1.1.0/).
 
 ## [Unreleased]
 
+- Updated slackdiff.rb to use slack_ruby_client instead of slack-api.
+- Updated default timeout from 20 to 60.
+
 ### Added
 - model for Siklu Multihaul TG radios (@bdg-robert)
 

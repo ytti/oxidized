@@ -30,7 +30,7 @@ module Oxidized
       asetus.default.run_once      = false
       asetus.default.threads       = 30
       asetus.default.use_max_threads = false
-      asetus.default.timeout       = 20
+      asetus.default.timeout       = 60
       asetus.default.retries       = 3
       asetus.default.prompt        = /^([\w.@-]+[#>]\s?)$/
       asetus.default.rest          = '127.0.0.1:8888' # or false to disable
