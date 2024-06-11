@@ -71,7 +71,6 @@ The format is based on [Keep a Changelog](https://keepachangelog.com/en/1.1.0/).
 - dlinknextgen removes user and snmp-server secrets (@tcrichton)
 - dnos: hide secrets in "ospf message-digest-key", "authentication-type" and "bsd-username" (@rybnico)
 - junos: Replace dynamic value in VMX-BANDWIDTH with count, hide ssh keys
-- Set default timeout to 60, since 20 is too short for larger configurations.
 
 ### Fixed
 - fixed empty lines for ZyXEL GS1900 switches (@jluebbe)
@@ -96,7 +95,6 @@ The format is based on [Keep a Changelog](https://keepachangelog.com/en/1.1.0/).
 - Fix potential busy wait when retries and/or next_adds_job is enabled (@gs-kamnas)
 - Reverting PR #2498 as it broke old procurve models (2510G, 2610, 2824). Fixes #2833, #2871 (@robertcheramy)
 - Fixed regexp used to remove secrets in nxos model. Fixes #3080 (@desnoe)
-- Fixed incorrect slack api being used.
 
 ## [0.29.1 - 2023-04-24]
 
