@@ -19,6 +19,7 @@ The format is based on [Keep a Changelog](https://keepachangelog.com/en/1.1.0/).
 ### Fixed
 - fixed prompt for vyos/vyatta to allow logins with non-priviliged accounts. Fixes #3111 (@h-lopez)
 - fixed power consumption included in ArubaOS-CX diffs starting with FL.10.13.xxx. Fixes #3142 (@terratalpi)
+- fixed oxidized-web getting "version not found" when fetching a version from git and no group is defined. Fixes #2222 (@robertcheramy)
 
 ## [0.30.1 – 2024-04-12]
 
