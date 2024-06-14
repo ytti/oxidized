@@ -63,6 +63,8 @@ output:
 
 ```
 
+Over time, your Git repository will expand, potentially leading to performance issues. For instructions on how to address this, see [git performance issues with large device counts](Troubleshooting.md#git-performance-issues-with-large-device-counts).
+
 ## Output: Git-Crypt
 
 This uses the gem git and system git-crypt interfaces. Have a look at [GIT-Crypt](https://www.agwa.name/projects/git-crypt/) documentation to know how to install it.
