@@ -145,7 +145,8 @@
 |Ruijie Networks     |RGOS                          |[rgos](/lib/oxidized/model/rgos.rb)
 |QTECH               |QSW-2800, QSW-3400, QSW-3450, QSW-3500|[qtech](/lib/oxidized/model/qtech.rb)
 |Quanta              |Quanta / VxWorks 6.6 (1.1.0.8)|[quantaos](/lib/oxidized/model/quantaos.rb)
-|Siklu               |EtherHaul                     |[siklu](/lib/oxidized/model/siklu.rb)
+|Siklu               |EtherHaul                     |[siklu](/lib/oxidized/model/siklu.rb)            |@bdg-robert
+|                    |Multihaul TG                  |[siklumhtg](/lib/oxidized/model/siklumhtg.rb)    |@bdg-robert      |[Siklu Multihaul TG](Model-Notes/SikluMHTG.md)
 |Seiko Solutions     |SmartCS, SmartCS mini         |[smartcs](/lib/oxidized/model/smartcs.rb)
 |SonicWALL           |SonicOS                       |[sonicos](/lib/oxidized/model/sonicos.rb)
 |SNR                 |SNR-S300G, S2xxx, S3xxx, S4xxx|[dcnos](/lib/oxidized/model/dcnos.rb)
