@@ -1,4 +1,8 @@
 # Troubleshooting
+## Table of contents
+1. [Connects but no/partial configuration collected](d#oxidized-connects-to-a-supported-device-but-no-or-partial-configuration-is-collected)
+2. [No push to remote git repository](#oxidized-does-not-push-to-a-remote-git-repository-hook-githubrepo)
+3. [Git performance issues with large device counts](#git-performance-issues-with-large-device-counts)
 
 ## Oxidized connects to a supported device but no (or partial) configuration is collected
 
@@ -80,3 +84,14 @@ If you are running oxidized in a container, you need to map /home/oxidized/.ssh 
 container to a local repository and save the known_hosts in the local repository. You can
 find an example how to do this under [examples/podman-compose](/examples/podman-compose/)
 
+## Git performance issues with large device counts
+When you use git to store your configurations, the size of your repository will
+grow over time. This growth can lead to performance issues. To resolve these issues, you should perform a Git garbage collection on your repository.
+
+Follow these steps to do so:
+
+1. Stop oxidized (no one should access the git repository while running garbage collection)
+2. Make a backup of your oxidized data, especially the Git repository
+3. Change directory your oxidized git repository (as configured in oxidized configuration file)
+4. Execute the command `git gc` to run the garbage collection
+5. Restart oxidized - you're done!
