@@ -1,4 +1,4 @@
-require 'slack'
+require 'slack_ruby_client'
 
 # defaults to posting a diff, if messageformat is supplied them a message will be posted too
 # diff defaults to true
