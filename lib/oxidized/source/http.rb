@@ -1,5 +1,6 @@
 module Oxidized
-  class HTTP < Source
+  require "oxidized/source/jsonfile"
+  class HTTP < JSONFile
     def initialize
       @cfg = Oxidized.config.source.http
       super
@@ -18,35 +19,13 @@ module Oxidized
     require "json"
 
     def load(node_want = nil)
-      nodes = []
       uri = URI.parse(@cfg.url)
       data = JSON.parse(read_http(uri, node_want))
       node_data = data
       node_data = string_navigate_object(data, @cfg.hosts_location) if @cfg.hosts_location?
       node_data = pagination(data, node_want) if @cfg.pagination?
 
-      # at this point we have all the nodes; pagination or not
-      node_data.each do |node|
-        next if node.empty?
-
-        # map node parameters
-        keys = {}
-        @cfg.map.each do |key, want_position|
-          keys[key.to_sym] = node_var_interpolate string_navigate_object(node, want_position)
-        end
-        keys[:model] = map_model keys[:model] if keys.has_key? :model
-        keys[:group] = map_group keys[:group] if keys.has_key? :group
-
-        # map node specific vars
-        vars = {}
-        @cfg.vars_map.each do |key, want_position|
-          vars[key.to_sym] = node_var_interpolate string_navigate_object(node, want_position)
-        end
-        keys[:vars] = vars unless vars.empty?
-
-        nodes << keys
-      end
-      nodes
+      transform_json(node_data)
     end
 
     private

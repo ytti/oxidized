@@ -1,5 +1,6 @@
 module Oxidized
   class JSONFile < Source
+    require "json"
     def initialize
       @cfg = Oxidized.config.source.jsonfile
       super
@@ -17,12 +18,17 @@ module Oxidized
       require 'gpgme' if @cfg.gpg?
     end
 
-    require "json"
-
     def load(*)
-      nodes = []
       data = JSON.parse(open_file.read)
       data = string_navigate_object(data, @cfg.hosts_location) if @cfg.hosts_location?
+
+      transform_json(data)
+    end
+
+    private
+
+    def transform_json(data)
+      nodes = []
       data.each do |node|
         next if node.empty?
 
