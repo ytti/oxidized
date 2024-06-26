@@ -4,7 +4,6 @@ class NSXDfw < Oxidized::Model
 
   cmd "/policy/api/v1/infra/domains/" do |cfg|
     domains = JSON.parse(cfg.encode('UTF-8', { invalid: :replace, undef: :replace, replace: '?' }))["results"]
-    data = []
     domain_config = {}
     domains.each do |domain|
       domain_config[domain['id']] = {}
