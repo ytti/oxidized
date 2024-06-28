@@ -184,6 +184,17 @@ hooks:
     privatekey: /root/.ssh/id_rsa
 ```
 
+A remote branch can be given if different from the default of "master" like so:
+
+```yaml
+hooks:
+  push_to_remote:
+    type: githubrepo
+    events: [post_store]
+    remote_repo: git@git.intranet:oxidized/test.git
+    remote_branch: main
+```
+
 ## Hook type: awssns
 
 The `awssns` hook publishes messages to AWS SNS topics. This allows you to notify other systems of device configuration changes, for example a config orchestration pipeline. Multiple services can subscribe to the same AWS topic.
