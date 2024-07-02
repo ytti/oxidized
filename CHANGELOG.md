@@ -20,6 +20,7 @@ The format is based on [Keep a Changelog](https://keepachangelog.com/en/1.1.0/).
 - dlink: added support for 'enable admin' before getting configuration, if enable=true (@as8net)
 - dlinknextgen: strip uptime and ntp update time from config
 - Updated slackdiff.rb to use slack_ruby_client instead of slack-api (@Punicaa)
+- oxidized: options (such as credentials, etc.) now use the same resolution logic as variables and can also be defined per model in a group (@EinGlasVollKakao)
 
 ### Fixed
 - fixed prompt for vyos/vyatta to allow logins with non-priviliged accounts. Fixes #3111 (@h-lopez)
@@ -73,7 +74,6 @@ The format is based on [Keep a Changelog](https://keepachangelog.com/en/1.1.0/).
 - dlinknextgen removes user and snmp-server secrets (@tcrichton)
 - dnos: hide secrets in "ospf message-digest-key", "authentication-type" and "bsd-username" (@rybnico)
 - junos: Replace dynamic value in VMX-BANDWIDTH with count, hide ssh keys
-- oxidized: options (such as credentials, etc.) now use the same resolution logic as variables and can also be defined per model in a group 
 
 ### Fixed
 - fixed empty lines for ZyXEL GS1900 switches (@jluebbe)
