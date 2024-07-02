@@ -57,6 +57,7 @@ module Oxidized
       options = {
         adapter:  @cfg.adapter,
         host:     @cfg.host?,
+        port:     @cfg.port?,
         user:     @cfg.user?,
         password: @cfg.password?,
         database: @cfg.database,
