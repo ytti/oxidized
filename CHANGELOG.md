@@ -9,6 +9,7 @@ The format is based on [Keep a Changelog](https://keepachangelog.com/en/1.1.0/).
 ### Added
 - model for Siklu Multihaul TG radios (@bdg-robert)
 - fortios: variable `fullconfig` to get the configuration with default values. Fixes: #3159 (@robertcheramy)
+- model for VMWare NSX DFW (@elmobp)
 
 ### Changed
 - h3c: change prompt to expect either angle (user-view) or square (system-view) brackets (@nl987)
@@ -19,13 +20,16 @@ The format is based on [Keep a Changelog](https://keepachangelog.com/en/1.1.0/).
 - dlink: added support for 'enable admin' before getting configuration, if enable=true (@as8net)
 - dlinknextgen: strip uptime and ntp update time from config
 - Updated slackdiff.rb to use slack_ruby_client instead of slack-api (@Punicaa)
+- oxidized: options (such as credentials, etc.) now use the same resolution logic as variables and can also be defined per model in a group (@EinGlasVollKakao)
 - Add JSONFILE source (@sargon)
 
 ### Fixed
 - fixed prompt for vyos/vyatta to allow logins with non-priviliged accounts. Fixes #3111 (@h-lopez)
 - fixed power consumption included in ArubaOS-CX diffs starting with FL.10.13.xxx. Fixes #3142 (@terratalpi)
 - fixed oxidized-web getting "version not found" when fetching a version from git and no group is defined. Fixes #2222 (@robertcheramy)
+- fixed telnet to disconnect gracefully even if it throws IOError while disconnect. Fixes #3212 (@ytti)
 - docs: run Git garbage collection to address performance issues. Fixes #3121 (@robertcheramy)
+
 
 ## [0.30.1 – 2024-04-12]
 

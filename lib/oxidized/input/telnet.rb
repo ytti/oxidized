@@ -63,7 +63,7 @@ module Oxidized
     def disconnect
       disconnect_cli
       @telnet.close
-    rescue Errno::ECONNRESET
+    rescue Errno::ECONNRESET, IOError
       # This exception is intented and therefore not handled here
     ensure
       @log.close if Oxidized.config.input.debug?
