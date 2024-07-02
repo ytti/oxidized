@@ -58,7 +58,7 @@ class Aoscx < Oxidized::Model
     cfg.gsub! /^(\d\/\d\/\d.*\s+)\d+\s+$/, '\\1<hidden>'
     cfg.gsub! /^(\d+\/\S+\s+\S+\s+)\d+\.\d+\s+C\s+(.*)/, '\\1<hidden>   \\2'
     cfg.gsub! /^(LC.*\s+)\d+\.\d+\s+(C.*)$/, '\\1 <hidden> \\2'
-    cfg.gsub! /^(\S+\s+\S+\s+\s+\S+\s+)(slow|normal|medium|fast|max)\s+(\S+\s+\S+\s+)\d+\h+/, '\\1<speed> \\3<rpm>'
+    cfg.gsub! /^(\S+\s+\S+\s+\s+\S+\s+)(slow|normal|medium|fast|max)\s+(\S+\s+\S+\s+)\d+[[:blank:]]+/, '\\1<speed> \\3<rpm>'
     # match show environment power-consumption on VSF or standadlone, non-chassis and non-6400 switch, e.g. "2    6300M 48G 4SFP56 Swch                 156.00      155.94"
     cfg.gsub! /^(\d+\s+.+\s+)(\s{2}\d{2}\.\d{2}|\s{1}\d{3}\.\d{2}|\d{4}\.\d{2})(\s+)(\s{2}\d{2}\.\d{2}|\s{1}\d{3}\.\d{2}|\d{4}\.\d{2})$/, '\\1<power>\\3<power>'
     # match show environment power-consumption on 6400 or chassis switches, e.g. "1/4    line-card-module    R0X39A 6400 48p 1GbE CL4 PoE 4SFP56 Mod     54 W"

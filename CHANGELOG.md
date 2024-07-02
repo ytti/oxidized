@@ -10,6 +10,7 @@ The format is based on [Keep a Changelog](https://keepachangelog.com/en/1.1.0/).
 - model for Siklu Multihaul TG radios (@bdg-robert)
 - fortios: variable `fullconfig` to get the configuration with default values. Fixes: #3159 (@robertcheramy)
 - model for VMWare NSX DFW (@elmobp)
+- model for F5OS (@teunvink)
 
 ### Changed
 - h3c: change prompt to expect either angle (user-view) or square (system-view) brackets (@nl987)
@@ -20,6 +21,8 @@ The format is based on [Keep a Changelog](https://keepachangelog.com/en/1.1.0/).
 - dlink: added support for 'enable admin' before getting configuration, if enable=true (@as8net)
 - dlinknextgen: strip uptime and ntp update time from config
 - Updated slackdiff.rb to use slack_ruby_client instead of slack-api (@Punicaa)
+- oxidized: options (such as credentials, etc.) now use the same resolution logic as variables and can also be defined per model in a group (@EinGlasVollKakao)
+- Add JSONFILE source (@sargon)
 - saos: add inventory and software status collection (@grbeneke)
 
 ### Fixed
