@@ -23,6 +23,7 @@ The format is based on [Keep a Changelog](https://keepachangelog.com/en/1.1.0/).
 - Updated slackdiff.rb to use slack_ruby_client instead of slack-api (@Punicaa)
 - oxidized: options (such as credentials, etc.) now use the same resolution logic as variables and can also be defined per model in a group (@EinGlasVollKakao)
 - Add JSONFILE source (@sargon)
+- saos: add inventory and software status collection (@grbeneke)
 
 ### Fixed
 - fixed prompt for vyos/vyatta to allow logins with non-priviliged accounts. Fixes #3111 (@h-lopez)
@@ -30,6 +31,7 @@ The format is based on [Keep a Changelog](https://keepachangelog.com/en/1.1.0/).
 - fixed oxidized-web getting "version not found" when fetching a version from git and no group is defined. Fixes #2222 (@robertcheramy)
 - fixed telnet to disconnect gracefully even if it throws IOError while disconnect. Fixes #3212 (@ytti)
 - docs: run Git garbage collection to address performance issues. Fixes #3121 (@robertcheramy)
+- saos: fixed handling of 'unsaved configuration' indicator in prompt (@grbeneke)
 
 
 ## [0.30.1 – 2024-04-12]
