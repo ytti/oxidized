@@ -16,7 +16,7 @@ class IOSXR < Oxidized::Model
     cfg
   end
 
-  cmd 'admin show inventory' do |cfg|
+  cmd 'show inventory all' do |cfg|
     comment cfg
   end
 

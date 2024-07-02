@@ -179,6 +179,8 @@ module Oxidized
     def yield_node_output(node_name)
       with_lock do
         node = find { |n| n.name == node_name }
+        raise(NodeNotFound, "unable to find '#{node_name}'") if node.nil?
+
         output = node.output.new
         raise NotSupported unless output.respond_to? :fetch
 
