@@ -2,8 +2,8 @@ module Oxidized
   require "oxidized/source/jsonfile"
   class HTTP < JSONFile
     def initialize
-      @cfg = Oxidized.config.source.http
       super
+      @cfg = Oxidized.config.source.http
     end
 
     def setup
