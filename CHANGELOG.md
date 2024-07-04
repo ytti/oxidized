@@ -32,6 +32,7 @@ The format is based on [Keep a Changelog](https://keepachangelog.com/en/1.1.0/).
 - fixed telnet to disconnect gracefully even if it throws IOError while disconnect. Fixes #3212 (@ytti)
 - docs: run Git garbage collection to address performance issues. Fixes #3121 (@robertcheramy)
 - saos: fixed handling of 'unsaved configuration' indicator in prompt (@grbeneke)
+- rgos: also strip "System uptime" for installed modules (@spike77453)
 
 
 ## [0.30.1 – 2024-04-12]
