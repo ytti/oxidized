@@ -19,7 +19,7 @@ Gem::Specification.new do |s|
 
   s.metadata['rubygems_mfa_required'] = 'true'
 
-  s.required_ruby_version = '>= 3.0'
+  s.required_ruby_version = '>= 3.1'
 
   s.add_runtime_dependency 'asetus',       '~> 0.1'
   s.add_runtime_dependency 'bcrypt_pbkdf', '~> 1.0'

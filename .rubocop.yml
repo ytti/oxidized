@@ -3,7 +3,7 @@ inherit_from: .rubocop_todo.yml
 # Do not attempt to police vendored code
 AllCops:
   NewCops: enable
-  TargetRubyVersion: 3.0
+  TargetRubyVersion: 3.1
   Exclude:
     - 'vendor/**/*'
 
@@ -51,6 +51,9 @@ Style/FormatStringToken:
 
 Style/HashEachMethods:
   Enabled: true
+
+Style/HashSyntax:
+  EnforcedShorthandSyntax: either
 
 Style/HashTransformKeys:
   Enabled: true
