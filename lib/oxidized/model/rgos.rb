@@ -12,7 +12,7 @@ class RGOS < Oxidized::Model
 
   cmd 'show version' do |cfg|
     cfg = cfg.each_line.reject { |line| line.match /^System start time/ }.join
-    cfg = cfg.each_line.reject { |line| line.match /^System uptime/ }.join
+    cfg = cfg.each_line.reject { |line| line.match /^\s*System uptime/ }.join
     comment "#{cfg.cut_both}\n"
   end
 
