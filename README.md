@@ -101,23 +101,7 @@ gem install oxidized-script oxidized-web # If you don't install oxidized-web, en
 
 ### CentOS, Oracle Linux, Red Hat Linux
 
-On CentOS 6 and 7 / RHEL 6 and 7, begin by installing Ruby 2.3 or greater. This can be accomplished in one of several ways:
-
-Install Ruby 2.3 from [SCL](https://www.softwarecollections.org/en/scls/rhscl/rh-ruby23/):
-
-```shell
-yum install centos-release-scl
-yum install rh-ruby30 rh-ruby30-ruby-devel
-scl enable rh-ruby30 bash
-```
-
-The following additional packages will be required to build the dependencies:
-
-```shell
-yum install make cmake which sqlite-devel openssl-devel libssh2-devel ruby gcc ruby-devel libicu-devel gcc-c++
-```
-
-Alternatively, install Ruby 2.6 via RVM by following the instructions:
+On CentOS 6 and 7 / RHEL 6 and 7, begin by installing Ruby 3.1 via RVM by following the instructions:
 
 Make sure you dont have any leftover ruby:
 ```yum erase ruby```
@@ -129,8 +113,8 @@ sudo gpg --keyserver hkp://keys.gnupg.net --recv-keys 409B6B1796C275462A17031138
 curl -sSL https://get.rvm.io | bash -s stable
 source /etc/profile.d/rvm.sh
 rvm requirements run
-rvm install 3.0
-rvm use 3.0
+rvm install 3.1
+rvm use 3.1
 ```
 
 Install oxidized requirements:
