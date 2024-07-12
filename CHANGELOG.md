@@ -9,6 +9,7 @@ The format is based on [Keep a Changelog](https://keepachangelog.com/en/1.1.0/).
 ### Added
 - model for Siklu Multihaul TG radios (@bdg-robert)
 - fortios: variable `fullconfig` to get the configuration with default values. Fixes: #3159 (@robertcheramy)
+- Add capability to customize the filename in output file
 
 ### Changed
 - h3c: change prompt to expect either angle (user-view) or square (system-view) brackets (@nl987)

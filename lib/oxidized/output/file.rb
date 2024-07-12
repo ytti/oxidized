@@ -11,6 +11,11 @@ module Oxidized
     end
 
     def setup
+      unless @cfg.filename.nil?
+        if @cfg.filename.include?("/")
+          raise NoConfig, 'filename must not have "/"'
+        end
+      end
       return unless @cfg.empty?
 
       Oxidized.asetus.user.output.file.directory = File.join(Config::ROOT, 'configs')
@@ -31,17 +36,17 @@ module Oxidized
 
     def fetch(node, group)
       cfg_dir   = File.expand_path @cfg.directory
-      node_name = get_filename node.name, email: node.email, user: node.user, group: node.group, vars: node.vars
-
+      node_name = get_filename node.name, email: node.email, user: node.user, group: node.group, vars: node.vars , mode: "fetch"
       if group # group is explicitly defined by user
         cfg_dir = File.join File.dirname(cfg_dir), group
-        File.read File.join(cfg_dir, node_name)
+        path = Dir.glob(File.join(cfg_dir, node_name)).max_by {|f| File.mtime(f)}
       elsif File.exist? File.join(cfg_dir, node_name) # node configuration file is stored on base directory
-        File.read File.join(cfg_dir, node_name)
+        path = Dir.glob(File.join(cfg_dir, node_name)).max_by {|f| File.mtime(f)}
       else
         path = Dir.glob(File.join(File.dirname(cfg_dir), '**', node_name)).first # fetch node in all groups
         File.read path
       end
+      File.read path
     rescue Errno::ENOENT
       nil
     end
@@ -75,18 +80,22 @@ module Oxidized
       flat_hash
     end
 
-    def get_filename(node, opt)
+    def get_filename(node, opt, mode = 'store')
       filename = node
       Oxidized.logger.debug "OPT Received: #{node} #{opt}"
       unless @cfg.filename.nil?
         Oxidized.logger.debug "Filename from config #{@cfg.filename}"
         flatten_ops = flatten_variables(opt)
-        if @cfg.timeformat.nil || @cfg.timeformat.empty
-          time = Time.now.strftime("%m%d%Y%H%M%S")
-        else
-          time = Time.now.strftime(@cfg.timeformat)
+        if mode == 'store'
+          if @cfg.timeformat.nil || @cfg.timeformat.empty
+            time = Time.now.strftime("%m%d%Y%H%M%S")
+          else
+            time = Time.now.strftime(@cfg.timeformat)
+          end
+          flatten_ops["time"] = time
+        elsif mode == 'fetch'
+          flatten_ops["time"] = "*"
         end
-        flatten_ops["time"] = time
         Oxidized.logger.debug "Flatten #{flatten_ops}"
         filename = interpolate_format_string(@cfg.filename, flatten_ops)
       end
