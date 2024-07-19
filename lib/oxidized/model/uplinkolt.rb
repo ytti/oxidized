@@ -25,10 +25,6 @@ class UPLINKOLT < Oxidized::Model
       end
       
     end
-    cmd 'show time' do |cfg|
-      cfg.gsub! /^show time/, ''
-      comment cfg
-      end
     cmd 'show running-config' do |cfg|
           cfg.gsub! /^Current configuration:/, ''
       cfg
