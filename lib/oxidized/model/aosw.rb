@@ -12,7 +12,7 @@ class AOSW < Oxidized::Model
   # All IAPs connected to a Instant Controller will have the same config output. Only the controller needs to be monitored.
 
   comment '# '
-  prompt /^([\w\(:.@-]+(\)?\s?)[#>]\s?)$/
+  prompt /^?([\w\(:.@-]+(\)\s?[\^\*]?\[?\w*\]?\s?)\*?[#>]\s?)$/
 
   cmd :all do |cfg|
     cfg.cut_both
