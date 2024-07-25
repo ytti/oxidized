@@ -1,50 +1,9 @@
 # Single-stage build of an oxidized container from phusion/baseimage-docker
-# derived from Ubuntu 22.04 (Jammy Jellyfish)
-FROM docker.io/phusion/baseimage:jammy-1.0.4
+FROM docker.io/phusion/baseimage:noble-1.0.0
 
 ENV DEBIAN_FRONTEND=noninteractive
 
-# set up dependencies for the build process
-RUN apt-get -yq update \
-    && apt-get -yq --no-install-recommends install ruby3.0 ruby3.0-dev libssl3 \
-    bzip2 libssl-dev pkg-config make cmake libssh2-1 libssh2-1-dev \
-    git git-email libmailtools-perl g++ libffi-dev ruby-bundler \
-    libicu70 libicu-dev \
-    libsqlite3-0 libsqlite3-dev \
-    libmysqlclient21 libmysqlclient-dev \
-    libpq5 libpq-dev \
-    zlib1g-dev msmtp \
-    # dependency of psych > 5
-    libyaml-dev \
-    && apt-get clean \
-    && rm -rf /var/lib/apt/lists/*
-
-RUN gem install --no-document \
-    # dependencies for hooks
-    aws-sdk slack-ruby-client xmpp4r cisco_spark \
-    # dependencies for sources
-    gpgme sequel sqlite3 mysql2 pg \
-    # dependencies for inputs
-    net-tftp net-http-persistent mechanize
-
-# build and install oxidized
-COPY . /tmp/oxidized/
-WORKDIR /tmp/oxidized
-
-# docker automated build gets shallow copy, but non-shallow copy cannot be unshallowed
-RUN git fetch --unshallow || true
-
-# Ensure rugged is built with ssh support
-RUN CMAKE_FLAGS='-DUSE_SSH=ON' rake install
-
-# web interface
-RUN gem install oxidized-web --no-document
-
-# clean up
-WORKDIR /
-RUN rm -rf /tmp/oxidized
-RUN apt-get -yq --purge autoremove ruby-dev pkg-config make cmake ruby-bundler libssl-dev libssh2-1-dev libicu-dev libsqlite3-dev libmysqlclient-dev libpq-dev zlib1g-dev
-
+##### Place "static" commands at the beginning to optimize image size and build speed
 # add non-privileged user
 ARG UID=30000
 ARG GID=$UID
@@ -65,5 +24,57 @@ RUN chown oxidized:oxidized /home/oxidized/.msmtprc
 COPY extra/oxidized.runit /etc/service/oxidized/run
 COPY extra/auto-reload-config.runit /etc/service/auto-reload-config/run
 COPY extra/update-ca-certificates.runit /etc/service/update-ca-certificates/run
+
+# set up dependencies for the build process
+RUN apt-get -yq update \
+    && apt-get -yq upgrade \
+    && apt-get -yq --no-install-recommends install ruby \
+    # Build process of oxidized from git (beloww)
+    git \
+    # Allow git send-email from docker image
+    git-email libmailtools-perl \
+    # Allow sending emails in the docker container
+    msmtp \
+    # Debuging tools inside the container
+    inetutils-telnet \
+    # Use ubuntu gems where possible
+    # Gems needed by oxidized
+    ruby-rugged ruby-slop ruby-psych \
+    ruby-net-telnet ruby-net-ssh ruby-net-ftp ruby-net-scp ruby-ed25519 \
+    # Gem dependencies for inputs
+    ruby-net-http-persistent ruby-mechanize \
+    # Gem dependencies for sources
+    ruby-sqlite3 ruby-mysql2 ruby-pg ruby-sequel ruby-gpgme\
+    # Gem dependencies for hooks
+    ruby-aws-sdk ruby-xmpp4r \
+    # Gems needed by oxidized-web
+    ruby-charlock-holmes ruby-haml ruby-htmlentities ruby-json \
+    puma ruby-sinatra ruby-sinatra-contrib \
+    && apt-get clean \
+    && rm -rf /var/lib/apt/lists/*
+
+# gems not available in ubuntu noble
+RUN gem install --no-document \
+    # dependencies for hooks
+    slack-ruby-client cisco_spark \
+    # dependencies for specific inputs
+    net-tftp
+
+# build and install oxidized
+COPY . /tmp/oxidized/
+WORKDIR /tmp/oxidized
+
+# docker automated build gets shallow copy, but non-shallow copy cannot be unshallowed
+RUN git fetch --unshallow || true
+
+# Ensure rugged is built with ssh support
+RUN CMAKE_FLAGS='-DUSE_SSH=ON' rake install
+
+# web interface
+RUN gem install oxidized-web --no-document
+
+# clean up
+WORKDIR /
+RUN rm -rf /tmp/oxidized
 
 EXPOSE 8888/tcp
