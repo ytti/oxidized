@@ -34,7 +34,7 @@ The format is based on [Keep a Changelog](https://keepachangelog.com/en/1.1.0/).
 - saos: fixed handling of 'unsaved configuration' indicator in prompt (@grbeneke)
 - rgos: also strip "System uptime" for installed modules (@spike77453)
 - fixed digest authentication when using http input (@spike77453)
-
+- fixed aosw prompt; now working with ArubaOS 8 (@mabezi, @robertcheramy)
 
 ## [0.30.1 – 2024-04-12]
 
