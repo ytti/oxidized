@@ -124,19 +124,19 @@ Examples:
 
 ```ruby
 cmd :secret, clear: true do
-  ... "(new code for secret removal which replaces the existing :secret definition in the model)" ...
+  # ... "(new code for secret removal which replaces the existing :secret definition in the model)" ...
 end
 ```
 
 ```ruby
 cmd 'show version', clear: true do |cfg|
-  ... "(new code for parsing 'show version', replaces the existing definition in the model)" ...
+  # ... "(new code for parsing 'show version', replaces the existing definition in the model)" ...
 end
 ```
 
 ```ruby
 cmd :ssh, prepend: true do
-  ... "(code that should run first, before any code in the existing :ssh definition in the model)" ...
+  # ... "(code that should run first, before any code in the existing :ssh definition in the model)" ...
 end
 ```
 

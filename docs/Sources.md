@@ -55,6 +55,24 @@ and within: `~/.gnupg/gpg.conf`
 pinentry-mode loopback
 ```
 
+## Source: JSONFile
+
+One object per device. Supports GPG encryption like the CSV Source.
+
+```yaml
+source:
+  default: jsonfile
+  jsonfile: 
+    file: /var/lib/oxidized/router.json
+    map:
+      name: hostname
+      model: os
+      username: username
+      password: password
+    vars_map:
+      enable: enable
+```
+
 ## Source: SQL
 
  Oxidized uses the `sequel` ruby gem. You can use a variety of databases that aren't explicitly listed. For more information visit https://github.com/jeremyevans/sequel Make sure you have the correct adapter!

@@ -45,17 +45,5 @@ module Oxidized
       end
       nodes
     end
-
-    private
-
-    def open_file
-      file = File.expand_path(@cfg.file)
-      if @cfg.gpg?
-        crypto = GPGME::Crypto.new password: @cfg.gpg_password
-        crypto.decrypt(File.open(file)).to_s
-      else
-        File.open(file)
-      end
-    end
   end
 end
