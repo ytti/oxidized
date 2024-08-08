@@ -1,3 +1,5 @@
+require 'json'
+
 class Exec < Oxidized::Hook
   include Process
 
@@ -70,7 +72,8 @@ class Exec < Oxidized::Hook
         "OX_REPO_COMMITREF" => ctx.commitref.to_s,
         "OX_REPO_NAME"      => ctx.node.repo.to_s,
         "OX_ERR_TYPE"       => ctx.node.err_type.to_s,
-        "OX_ERR_REASON"     => ctx.node.err_reason.to_s
+        "OX_ERR_REASON"     => ctx.node.err_reason.to_s,
+        "OX_NODE_VARS"  => JSON.dump(ctx.node.vars)
       )
     end
     if ctx.job
