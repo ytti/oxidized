@@ -70,7 +70,7 @@ module Oxidized
       msg += " with message '#{node.msg}'" if node.msg
       output = node.output.new
       if output.store node.name, job.config,
-                      msg: msg, email: node.email, user: node.user, group: node.group
+                      msg: msg, email: node.email, user: node.user, group: node.group, vars: node.vars
         node.modified
         Oxidized.logger.info "Configuration updated for #{node.group}/#{node.name}"
         Oxidized.hooks.handle :post_store, node:      node,

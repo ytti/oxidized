@@ -9,6 +9,39 @@ output:
   file:
     directory: /var/lib/oxidized/configs
 ```
+It is possibile to customize the filename using the variables provided by the source, adding the fileformat variable.
+
+```yaml
+output:
+  file:
+    directory: /var/lib/oxidized/configs
+    filename: "custom_{{user}}_{{vars_custom1}}_{{time}}"
+```
+The variables passed from the source in the vars_map will be mapped in 'vars_<name>'. 
+By default, the '{{time}}' variable will be added with the '%m%d%Y%H%M%S' format. 
+You can change the format using the timeformat configuration field.
+
+Complete example of configuration
+```
+output:
+  file:
+    directory: /var/lib/oxidized/configs
+    filename: "custom_{{user}}_{{vars_custom1}}_{{vars_fileformat}}_{{time}}"
+    timeformat: "%Y%m%d%H%M%S"
+
+source:
+  default: csv
+  csv:
+    file: /etc/oxidized/devices.csv
+    delimiter: !ruby/regexp /:/
+    map:
+      name: 0
+      model: 1
+      user: 2
+    vars_map:
+      custom1: 3
+
+```
 
 ## Output: Git
 
