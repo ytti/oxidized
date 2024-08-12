@@ -11,6 +11,7 @@ The format is based on [Keep a Changelog](https://keepachangelog.com/en/1.1.0/).
 - fortios: variable `fullconfig` to get the configuration with default values. Fixes: #3159 (@robertcheramy)
 - model for VMWare NSX DFW (@elmobp)
 - model for F5OS (@teunvink)
+- cumulus: Add possibility to use NVUE (@lagertonne)
 
 ### Changed
 - h3c: change prompt to expect either angle (user-view) or square (system-view) brackets (@nl987)

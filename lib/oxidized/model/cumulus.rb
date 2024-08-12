@@ -21,9 +21,12 @@ class Cumulus < Oxidized::Model
   # show the persistent configuration
   pre do
     use_nclu = vars(:cumulus_use_nclu) || false
+    use_nvue = vars(:cumulus_use_nvue) || false
 
     if use_nclu
       cfg = cmd 'net show configuration commands'
+    elsif use_nvue
+      cfg = cmd 'nv config show --color off'
     else
       # Set FRR or Quagga in config
       routing_daemon = vars(:cumulus_routing_daemon) ? vars(:cumulus_routing_daemon).downcase : 'quagga'
