@@ -6,6 +6,7 @@ describe Oxidized::Git do
     # Note that #yield_repo_and_path is private, so we can not call it directy
     # we use @git.send(:yield_repo_and_path, ...) to bypass the protection
     before do
+      Oxidized.asetus = Asetus.new
       # Default value in most tests
       Oxidized.config.output.git.single_repo = true
 
