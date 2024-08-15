@@ -181,3 +181,4 @@
 |                    |ZyNOS ADSL                    |[zynosadsl](/lib/oxidized/model/zynosadsl.rb)
 |                    |NDMS                          |[ndms](/lib/oxidized/model/ndms.rb)
 |                    |1308                          |[zy1308](/lib/oxidized/model/zy1308.rb)
+|Uplink              |EP4440                        |[EP4440](/lib/oxidized/model/uplinkolt.rb)
