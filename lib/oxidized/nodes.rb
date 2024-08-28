@@ -69,7 +69,7 @@ module Oxidized
 
     # @param node [String] name of the node moved into the head of array
     def next(node, opt = {})
-      return unless waiting.find_node_index(node)
+      return if running.find_index(node)
 
       with_lock do
         n = del node
@@ -116,6 +116,10 @@ module Oxidized
       end
     end
 
+    def find_index(node)
+      index { |e| [e.name, e.ip].include? node }
+    end
+
     private
 
     def initialize(opts = {})
@@ -131,10 +135,6 @@ module Oxidized
 
     def with_lock(...)
       @mutex.synchronize(...)
-    end
-
-    def find_index(node)
-      index { |e| [e.name, e.ip].include? node }
     end
 
     # @param node node which is removed from nodes list
