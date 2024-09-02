@@ -101,11 +101,11 @@ modifications. If you encounter problems, open an issue or ask for help within t
 You can have a look at the [Garderos unit test](/spec/model/garderos_spec.rb) for an example. The model unit test
 consists of (at least) two files:
 - a yaml file under `examples/model/`, containing the data used to simulate the network device.
-  - Please name your file `<model>_<hardware type>_<software_version>.yaml`, for example in the garderos unit test: `garderos_R7709_003_006_068.yaml`.
+  - Please name your file `<model>_<hardware type>_<software_version>.yaml`, for example in the garderos unit test: [garderos_R7709_003_006_068.yaml](/examples/model/garderos_R7709_003_006_068.yaml).
   - You can create multiple files in order to support multiple devices or software versions.
   - You may append a comment after the software version to differentiate between two tested features (something like `garderos_R7709_003_006_068_with_ipsec.yaml`).
 - a ruby script containing the tests under `spec/model/`.
-  - It is named `<model>_spec.rb`, for the garderos model: `garderos_spec.rb`.
+  - It is named `<model>_spec.rb`, for the garderos model: [garderos_spec.rb](/spec/model/garderos_spec.rb).
   - The script described below is a minimal example; you can add as many tests as needed.
 
 ### YAML description to simulate the network device.
