@@ -92,9 +92,14 @@ If you want the model to be integrated into oxidized, you can
 This is a greatly appreciated submission, as there are probably other users
 using the same network device as you are.
 
-We ask you to write a unit test for the model, in order to be sure further developments don't break your model, and to facilitate debugging issues without having access to a physical network device for the model. Writing a model unit test for SSH should be straightforward, and it is described in the next lines. If you encounter problems, open an issue or ask for help within the pull request.
+We ask you to write a unit test for the model, in order to be sure further developments don't break your model,
+and to facilitate debugging issues without having access to a physical network device for the model. Writing a
+model unit test for SSH should be straightforward, and it is described in the next lines. Most of the work is
+writing a yaml file with the commands and their output, the ruby code itself is copy & paste with a few
+modifications. If you encounter problems, open an issue or ask for help within the pull request.
 
-You can have a look at the [Garderos unit test](spec/model/garderos_spec.rb) for an example. The model unit test consists of (at least) two files:
+You can have a look at the [Garderos unit test](/spec/model/garderos_spec.rb) for an example. The model unit test
+consists of (at least) two files:
 - a yaml file under `examples/model/`, containing the data used to simulate the network device.
   - Please name your file `<model>_<hardware type>_<software_version>.yaml`, for example in the garderos unit test: `garderos_R7709_003_006_068.yaml`.
   - You can create multiple files in order to support multiple devices or software versions.
