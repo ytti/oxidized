@@ -12,6 +12,8 @@ The format is based on [Keep a Changelog](https://keepachangelog.com/en/1.1.0/).
 - model for VMWare NSX DFW (@elmobp)
 - model for F5OS (@teunvink)
 - cumulus: Add possibility to use NVUE (@lagertonne)
+- model for garderos (@robertcheramy)
+- unit tests framework for models with ssh input (@robertcheramy)
 
 ### Changed
 - h3c: change prompt to expect either angle (user-view) or square (system-view) brackets (@nl987)
@@ -25,6 +27,8 @@ The format is based on [Keep a Changelog](https://keepachangelog.com/en/1.1.0/).
 - oxidized: options (such as credentials, etc.) now use the same resolution logic as variables and can also be defined per model in a group (@EinGlasVollKakao)
 - Add JSONFILE source (@sargon)
 - saos: add inventory and software status collection (@grbeneke)
+- container-image: update to phusion/baseimage:noble-1.0.0 and include security upgrades at build time (@robertcheramy)
+- container-image: use ubuntu-packages instead of gems in order to reduce container image size (@robertcheramy)
 
 ### Fixed
 - fixed prompt for vyos/vyatta to allow logins with non-priviliged accounts. Fixes #3111 (@h-lopez)

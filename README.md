@@ -279,7 +279,7 @@ It is recommended practice to run Oxidized using its own username.  This usernam
 useradd -s /bin/bash -m oxidized
 ```
 
-> It is recommended __not__ to run Oxidized as root.
+> It is recommended __not__ to run Oxidized as root. After creating a dedicated user, switch to the oxidized user using su oxidized to ensure that Oxidized is run under the correct user context.
 
 To initialize a default configuration in your home directory `~/.config/oxidized/config`, simply run `oxidized` once. If you don't further configure anything from the output and source sections, it'll extend the examples on a subsequent `oxidized` execution. This is useful to see what options for a specific source or output backend are available.
 
