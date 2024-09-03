@@ -11,6 +11,9 @@ A variable has been added to enable users running Cumulus Linux > 3.4.0 to targe
 ## NCLU
 It is possible to switch to [NCLU](https://docs.nvidia.com/networking-ethernet-software/cumulus-linux-44/System-Configuration/Network-Command-Line-Utility-NCLU/) as a configuration collecting method, by setting `cumulus_use_nclu` to true
 
+## NVUE
+It is also possible to use [NVUE](https://docs.nvidia.com/networking-ethernet-software/knowledge-base/Setup-and-Getting-Started/NVUE-Cheat-Sheet/) as a configuration collecting method, by setting `cumulus_use_nvue` to true.
+
 ### Example usage
 
 ```yaml
@@ -42,5 +45,7 @@ cumulus1:192.168.121.134:cumulus:cumulus:frr
 The default value for `cumulus_routing_daemon` is `quagga` so existing installations continue to operate without interruption.
 
 The default value for `cumulus_use_nclu` is `false`, in case NCLU is not installed.
+
+The default value for `cumulus_use_nvue` is `false`, in case NVUE is not installed.
 
 Back to [Model-Notes](README.md)
