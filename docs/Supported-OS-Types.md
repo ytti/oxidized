@@ -120,7 +120,7 @@
 |Linuxgeneric        |CentOS                        |[linuxgeneric](/lib/oxidized/model/linuxgeneric.rb)|               |[LinuxGeneric](Model-Notes/LinuxGeneric.md)
 |Mellanox            |MLNX-OS                       |[mlnxos](/lib/oxidized/model/mlnxos.rb)
 |                    |Voltaire                      |[voltaire](/lib/oxidized/model/voltaire.rb)
-|Mikrotik            |RouterOS                      |[routeros](/lib/oxidized/model/routeros.rb)
+|Mikrotik            |RouterOS                      |[routeros](/lib/oxidized/model/routeros.rb)      |  |[RouterOS](Model-Notes/RouterOS.md)
 |                    |SwOS and SwOS Lite            |[swos](/lib/oxidized/model/swos.rb)
 |Mimosa              |Mimosa (B11)                  |[mimosab11](/lib/oxidized/model/mimosab11.rb)
 |Motorola            |RFS                           |[mtrlrfs](/lib/oxidized/model/mtrlrfs.rb)
