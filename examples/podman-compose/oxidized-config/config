@@ -10,7 +10,7 @@ use_max_threads: true
 timeout: 20
 retries: 3
 prompt: !ruby/regexp /^([\w.@-]+[#>]\s?)$/
-rest: 127.0.0.1:8888
+rest: 0.0.0.0:8888
 next_adds_job: false
 vars: {}
 groups: {}

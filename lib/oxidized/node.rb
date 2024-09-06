@@ -80,6 +80,8 @@ module Oxidized
         @err_reason = err.message.to_s
         false
       rescue StandardError => e
+        # Send a message in debug mode in case we are not able to create a crashfile
+        Oxidized.logger.send(:debug, '%s raised %s with msg "%s", creating crashfile' % [ip, e.class, e.message])
         crashdir  = Oxidized.config.crash.directory
         crashfile = Oxidized.config.crash.hostnames? ? name : ip.to_s
         FileUtils.mkdir_p(crashdir) unless File.directory?(crashdir)

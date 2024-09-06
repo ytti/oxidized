@@ -11,6 +11,9 @@ The format is based on [Keep a Changelog](https://keepachangelog.com/en/1.1.0/).
 - fortios: variable `fullconfig` to get the configuration with default values. Fixes: #3159 (@robertcheramy)
 - model for VMWare NSX DFW (@elmobp)
 - model for F5OS (@teunvink)
+- cumulus: Add possibility to use NVUE (@lagertonne)
+- model for garderos (@robertcheramy)
+- unit tests framework for models with ssh input (@robertcheramy)
 
 ### Changed
 - h3c: change prompt to expect either angle (user-view) or square (system-view) brackets (@nl987)
@@ -24,6 +27,8 @@ The format is based on [Keep a Changelog](https://keepachangelog.com/en/1.1.0/).
 - oxidized: options (such as credentials, etc.) now use the same resolution logic as variables and can also be defined per model in a group (@EinGlasVollKakao)
 - Add JSONFILE source (@sargon)
 - saos: add inventory and software status collection (@grbeneke)
+- container-image: update to phusion/baseimage:noble-1.0.0 and include security upgrades at build time (@robertcheramy)
+- container-image: use ubuntu-packages instead of gems in order to reduce container image size (@robertcheramy)
 
 ### Fixed
 - fixed prompt for vyos/vyatta to allow logins with non-priviliged accounts. Fixes #3111 (@h-lopez)
@@ -33,8 +38,9 @@ The format is based on [Keep a Changelog](https://keepachangelog.com/en/1.1.0/).
 - docs: run Git garbage collection to address performance issues. Fixes #3121 (@robertcheramy)
 - saos: fixed handling of 'unsaved configuration' indicator in prompt (@grbeneke)
 - rgos: also strip "System uptime" for installed modules (@spike77453)
+- fixed digest authentication when using http input (@spike77453)
+- fixed aosw prompt; now working with ArubaOS 8 (@mabezi, @robertcheramy)
 - routeros: fix system info for CHR. Fixes #3180 (@systeembeheerder)
-
 
 ## [0.30.1 – 2024-04-12]
 
