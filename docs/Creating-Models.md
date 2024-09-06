@@ -87,20 +87,29 @@ Intuitively, it is also possible to:
 * Testing/validation of an updated model from the [Oxidized GitHub repo models](https://github.com/ytti/oxidized/tree/master/lib/oxidized/model) by placing an updated model in the proper location without disrupting the gem-supplied model files.
 
 ## Create unit tests for the model
+> :warning model unit tests are still work in progress and need some polishing.
+
 If you want the model to be integrated into oxidized, you can
 [submit a pull request on github](https://github.com/ytti/oxidized/pulls).
 This is a greatly appreciated submission, as there are probably other users
 using the same network device as you are.
 
-We ask you to write a unit test for the model, in order to be sure further developments don't break your model, and to facilitate debugging issues without having access to a physical network device for the model. Writing a model unit test for SSH should be straightforward, and it is described in the next lines. If you encounter problems, open an issue or ask for help within the pull request.
+A good practice for submissions is to provide a unit test for your model. This
+reduces the risk that further developments don't break it, and facilitates
+debugging issues without having access to a physical network  device for the
+model. Writing a model unit test for SSH is described in the next lines. Most
+of the work is writing a YAML file with the commands and their output, the ruby
+code itself is copy & paste with a few modifications. If you encounter
+problems, open an issue or ask for help within the pull request.
 
-You can have a look at the [Garderos unit test](spec/model/garderos_spec.rb) for an example. The model unit test consists of (at least) two files:
+You can have a look at the [Garderos unit test](/spec/model/garderos_spec.rb) for an example. The model unit test
+consists of (at least) two files:
 - a yaml file under `examples/model/`, containing the data used to simulate the network device.
-  - Please name your file `<model>_<hardware type>_<software_version>.yaml`, for example in the garderos unit test: `garderos_R7709_003_006_068.yaml`.
+  - Please name your file `<model>_<hardware type>_<software_version>.yaml`, for example in the garderos unit test: [garderos_R7709_003_006_068.yaml](/examples/model/garderos_R7709_003_006_068.yaml).
   - You can create multiple files in order to support multiple devices or software versions.
   - You may append a comment after the software version to differentiate between two tested features (something like `garderos_R7709_003_006_068_with_ipsec.yaml`).
 - a ruby script containing the tests under `spec/model/`.
-  - It is named `<model>_spec.rb`, for the garderos model: `garderos_spec.rb`.
+  - It is named `<model>_spec.rb`, for the garderos model: [garderos_spec.rb](/spec/model/garderos_spec.rb).
   - The script described below is a minimal example; you can add as many tests as needed.
 
 ### YAML description to simulate the network device.
