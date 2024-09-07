@@ -12,7 +12,25 @@ def init_model_helper
   Oxidized::Node.any_instance.stubs(:resolve_output)
 end
 
-# Simulate Net::SSH::Connection::Session
+# save the result of a node.run into filename
+# it is already formated for copy & paste into the YAML simulation file
+# result is dormated as it is returned by "status, result = @node.run"
+def result2file(result, filename)
+  File.open(filename, 'w') do |file|
+    # chomp: true removes the trailing \n after each line
+    result.to_cfg.each_line(chomp: true) do |line|
+      # encode line and remove first and trailing double quote
+      line = line.dump[1..-2]
+      # Make sure trailing white spaces are coded with \0x20
+      line.gsub!(/ $/, '\x20')
+      # prepend white spaces for the yaml block scalar
+      line = '  ' + line
+      file.write "#{line}\n"
+    end
+  end
+end
+
+# Class to Simulate Net::SSH::Connection::Session
 class MockSsh
   attr_reader :oxidized_output
 
@@ -28,18 +46,11 @@ class MockSsh
     @oxidized_output = interpolate_yaml(model['oxidized_output'])
   end
 
-  # We have to interpolate ourselves as yaml block scalars do not interpolate anything
+  # We have to interpolate ourselves as yaml block scalars do not interpolate
+  # anything
   def interpolate_yaml(text)
-    # Replace \x<int> with its char
-    text.gsub!(/\\x(\h+)/) do
-      digit = Regexp.last_match(1)
-      digit.to_i(16).chr
-    end
-    text.gsub!('\n', "\n")
-    text.gsub!('\r', "\r")
-    text.gsub!('\e', "\e")
-    # Last, replace \\ with \. We use gsub instead of gsub! to return the final text
-    text.gsub('\\\\', '\\')
+    # we just add double quotes and undump the result
+    "\"#{text}\"".undump
   end
 
   def exec!(cmd)
