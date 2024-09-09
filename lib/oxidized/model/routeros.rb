@@ -14,8 +14,8 @@ class RouterOS < Oxidized::Model
     cfg
   end
 
-  cmd '/system routerboard print' do |cfg|
-    cfg = cfg.each_line.grep(/(model|firmware-type|current-firmware|serial-number):/).join
+  cmd '/system resource print' do |cfg|
+    cfg = cfg.each_line.grep(/(version|factory-software|total-memory|cpu|cpu-count|total-hdd-space|architecture-name|board-name|platform):/).join
     comment cfg
   end
 
