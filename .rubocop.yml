@@ -20,7 +20,9 @@ Layout/LineLength:
   Enabled: false
 
 Lint/AmbiguousRegexpLiteral:
-  Enabled: false
+  Enabled: true
+  Exclude:
+   - lib/oxidized/model/*.rb
 
 Lint/RaiseException:
   Enabled: true
@@ -60,6 +62,10 @@ Style/HashTransformKeys:
 
 Style/HashTransformValues:
   Enabled: true
+
+Style/RegexpLiteral:
+  EnforcedStyle: slashes
+  AllowInnerSlashes: true
 
 Style/RescueModifier:
   Enabled: false
