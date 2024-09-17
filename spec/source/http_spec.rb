@@ -1,7 +1,7 @@
 require_relative '../spec_helper'
 require 'oxidized/source/http'
 
-describe Oxidized::HTTP do
+describe Oxidized::Source::HTTP do
   before(:each) do
     Oxidized.asetus = Asetus.new
     Oxidized.setup_logger
@@ -58,8 +58,8 @@ describe Oxidized::HTTP do
     h1["inventory"] = [{ "ip" => "10.10.10.10" }]
     h1["jotain"] = { "2" => "jotain" }
     it "should be able to navigate multilevel-hash" do
-      http = Oxidized::HTTP.new
-      _(http.class).must_equal Oxidized::HTTP
+      http = Oxidized::Source::HTTP.new
+      _(http.class).must_equal Oxidized::Source::HTTP
       _(http.send(:string_navigate_object, h1, "jotain.2")).must_equal "jotain"
     end
     it "should be able to navigate multilevel-hash" do
