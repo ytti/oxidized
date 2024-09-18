@@ -1,4 +1,21 @@
-# Single-stage build of an oxidized container from phusion/baseimage-docker
+# Stage 1: Build x25519 and any necessary dependencies
+FROM docker.io/phusion/baseimage:noble-1.0.0 AS x25519-builder
+
+# install necessary packages for building gems
+RUN apt-get update && apt-get install -y \
+    build-essential \
+    git \
+    ruby-dev \
+    && rm -rf /var/lib/apt/lists/*
+
+# create bundle directory
+RUN mkdir -p /usr/local/bundle
+ENV GEM_HOME=/usr/local/bundle
+
+# Install the x25519 gem
+RUN gem install x25519 --no-document
+
+# Stage2: build an oxidized container from phusion/baseimage-docker and install x25519 from stage1
 FROM docker.io/phusion/baseimage:noble-1.0.0
 
 ENV DEBIAN_FRONTEND=noninteractive
@@ -52,6 +69,13 @@ RUN apt-get -yq update \
     puma ruby-sinatra ruby-sinatra-contrib \
     && apt-get clean \
     && rm -rf /var/lib/apt/lists/*
+
+# copy the compiled gem from the builder stage
+COPY --from=x25519-builder /usr/local/bundle /usr/local/bundle
+
+# Set environment variables for bundler
+ENV GEM_HOME="/usr/local/bundle"
+ENV PATH="$GEM_HOME/bin:$PATH"
 
 # gems not available in ubuntu noble
 RUN gem install --no-document \

@@ -14,6 +14,7 @@ The format is based on [Keep a Changelog](https://keepachangelog.com/en/1.1.0/).
 - cumulus: Add possibility to use NVUE (@lagertonne)
 - model for garderos (@robertcheramy)
 - unit tests framework for models with ssh input (@robertcheramy)
+- container-image: install x25519 gem package to support more ssh kex. Fixes #3070 (@benasse)
 
 ### Changed
 - h3c: change prompt to expect either angle (user-view) or square (system-view) brackets (@nl987)
