@@ -57,12 +57,14 @@ class CiscoSMB < Oxidized::Model
     username /User ?[nN]ame:/
     password /^\r?Password:/
 
-    post_login do
-      if vars(:enable) == true
-        cmd 'enable'
-      elsif vars(:enable)
-        cmd 'enable', /^\r?Password:$/
-        cmd vars(:enable)
+    if !vars(:enable).nil? && !vars(:enable).empty?
+      post_login do
+        if vars(:enable) == true
+          cmd 'enable'
+        elsif vars(:enable)
+          cmd 'enable', /^\r?Password:$/
+          cmd vars(:enable)
+        end
       end
     end
 

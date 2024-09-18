@@ -41,6 +41,7 @@ The format is based on [Keep a Changelog](https://keepachangelog.com/en/1.1.0/).
 - fixed digest authentication when using http input (@spike77453)
 - fixed aosw prompt; now working with ArubaOS 8 (@mabezi, @robertcheramy)
 - routeros: fix system info for CHR. Fixes #3180 (@systeembeheerder)
+- ciscosmb: fix backup when no enable password is set. Fixes #3044 (@benasse)
 
 ## [0.30.1 – 2024-04-12]
 
