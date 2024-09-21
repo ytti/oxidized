@@ -1,7 +1,16 @@
 class FirewareOS < Oxidized::Model
   using Refinements
 
-  prompt /^\[?\w*\]?\w*?(<[\w-]*>)?(#|>)\s*$/
+  # matched prompts:
+  # [FAULT]WG<managed-by-wsm><master>>
+  # WG<managed-by-wsm><master>>
+  # WG<managed-by-wsm>>
+  # [FAULT]WG<non-master>>
+  # [FAULT]WG>
+  # WG>
+
+  prompt /^\[?\w*\]?\w*?(?:<[\w-]+>)*(#|>)\s*$/
+
   comment  '-- '
 
   cmd :all do |cfg|
