@@ -19,8 +19,12 @@ Style/FrozenStringLiteralComment:
 Layout/LineLength:
   Enabled: false
 
+# We do not enforce the cop in the models as it would not work with the
+# DSL style of the models
 Lint/AmbiguousRegexpLiteral:
-  Enabled: false
+  Enabled: true
+  Exclude:
+   - lib/oxidized/model/*.rb
 
 Lint/RaiseException:
   Enabled: true
@@ -60,6 +64,10 @@ Style/HashTransformKeys:
 
 Style/HashTransformValues:
   Enabled: true
+
+Style/RegexpLiteral:
+  EnforcedStyle: slashes
+  AllowInnerSlashes: true
 
 Style/RescueModifier:
   Enabled: false
