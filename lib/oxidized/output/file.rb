@@ -14,7 +14,7 @@ module Oxidized
 
       Oxidized.asetus.user.output.file.directory = File.join(Config::ROOT, 'configs')
       Oxidized.asetus.save :user
-      raise NoConfig, 'no output file config, edit ~/.config/oxidized/config'
+      raise NoConfig, "no output file config, edit #{Oxidized::Config.configfile}"
     end
 
     def store(node, outputs, opt = {})

@@ -26,7 +26,7 @@ module Oxidized
         Oxidized.asetus.user.output.gitcrypt.email = 'o@example.com'
         Oxidized.asetus.user.output.gitcrypt.repo = File.join(Config::ROOT, 'oxidized.git')
         Oxidized.asetus.save :user
-        raise NoConfig, 'no output git config, edit ~/.config/oxidized/config'
+        raise NoConfig, "no output git config, edit #{Oxidized::Config.configfile}"
       end
 
       if @cfg.repo.respond_to?(:each)

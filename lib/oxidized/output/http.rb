@@ -14,7 +14,7 @@ module Oxidized
       CFGS.user.output.http.pasword = 'secret'
       CFGS.user.output.http.url = 'http://localhost/web-api/oxidized'
       CFGS.save :user
-      raise NoConfig, 'no output http config, edit ~/.config/oxidized/config'
+      raise NoConfig, "no output http config, edit #{Oxidized::Config.configfile}"
     end
 
     require "net/http"

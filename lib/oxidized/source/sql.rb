@@ -15,7 +15,7 @@ module Oxidized
       Oxidized.asetus.user.source.sql.map.name  = 'name'
       Oxidized.asetus.user.source.sql.map.model = 'rancid'
       Oxidized.asetus.save :user
-      raise NoConfig, 'no source sql config, edit ~/.config/oxidized/config'
+      raise NoConfig, "no source sql config, edit #{Oxidized::Config.configfile}"
     end
 
     def load(node_want = nil)

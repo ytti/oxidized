@@ -13,7 +13,7 @@ module Oxidized
         Oxidized.asetus.user.source.jsonfile.map.model = "model"
         Oxidized.asetus.user.source.jsonfile.gpg       = false
         Oxidized.asetus.save :user
-        raise NoConfig, 'No source json config, edit ~/.config/oxidized/config'
+        raise NoConfig, "No source json config, edit #{Oxidized::Config.configfile}"
       end
       require 'gpgme' if @cfg.gpg?
     end
