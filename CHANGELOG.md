@@ -7,6 +7,7 @@ The format is based on [Keep a Changelog](https://keepachangelog.com/en/1.1.0/).
 ## [Unreleased]
 
 ### Added
+- model for uplink EP4440-DP OLT
 - model for Siklu Multihaul TG radios (@bdg-robert)
 - fortios: variable `fullconfig` to get the configuration with default values. Fixes: #3159 (@robertcheramy)
 - model for VMWare NSX DFW (@elmobp)
