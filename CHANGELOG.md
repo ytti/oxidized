@@ -29,6 +29,7 @@ The format is based on [Keep a Changelog](https://keepachangelog.com/en/1.1.0/).
 - saos: add inventory and software status collection (@grbeneke)
 - container-image: update to phusion/baseimage:noble-1.0.0 and include security upgrades at build time (@robertcheramy)
 - container-image: use ubuntu-packages instead of gems in order to reduce container image size (@robertcheramy)
+- Updated slackdiff.rb to use new files.getUploadURLExternal slack file upload API instead of deprecated files.upload (@varesa)
 
 ### Fixed
 - fixed prompt for vyos/vyatta to allow logins with non-priviliged accounts. Fixes #3111 (@h-lopez)
