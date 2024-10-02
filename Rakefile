@@ -27,7 +27,8 @@ task :test do
   Rake::TestTask.new do |t|
     t.libs << 'spec'
     t.test_files = FileList['spec/**/*_spec.rb']
-    t.warning = true
+    # Don't display ambiguity warning between regexp and division in models
+    t.warning = false
     t.verbose = true
   end
 end
@@ -75,7 +76,7 @@ task :chmod do
     extra/update-ca-certificates.runit
   ]
   dirs = []
-  %x(git ls-files -z).split("\x0").reject { |f| f.match(%r{^(test|spec|features)/}) }.each do |file|
+  %x(git ls-files -z).split("\x0").reject { |f| f.match(/^(test|spec|features)\//) }.each do |file|
     dirs.push(File.dirname(file))
     xbit.include?(file) ? File.chmod(0o0755, file) : File.chmod(0o0644, file)
   end

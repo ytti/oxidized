@@ -87,16 +87,20 @@ Intuitively, it is also possible to:
 * Testing/validation of an updated model from the [Oxidized GitHub repo models](https://github.com/ytti/oxidized/tree/master/lib/oxidized/model) by placing an updated model in the proper location without disrupting the gem-supplied model files.
 
 ## Create unit tests for the model
+> :warning model unit tests are still work in progress and need some polishing.
+
 If you want the model to be integrated into oxidized, you can
 [submit a pull request on github](https://github.com/ytti/oxidized/pulls).
 This is a greatly appreciated submission, as there are probably other users
 using the same network device as you are.
 
-We ask you to write a unit test for the model, in order to be sure further developments don't break your model,
-and to facilitate debugging issues without having access to a physical network device for the model. Writing a
-model unit test for SSH should be straightforward, and it is described in the next lines. Most of the work is
-writing a yaml file with the commands and their output, the ruby code itself is copy & paste with a few
-modifications. If you encounter problems, open an issue or ask for help within the pull request.
+A good practice for submissions is to provide a unit test for your model. This
+reduces the risk that further developments don't break it, and facilitates
+debugging issues without having access to a physical network  device for the
+model. Writing a model unit test for SSH is described in the next lines. Most
+of the work is writing a YAML file with the commands and their output, the ruby
+code itself is copy & paste with a few modifications. If you encounter
+problems, open an issue or ask for help within the pull request.
 
 You can have a look at the [Garderos unit test](/spec/model/garderos_spec.rb) for an example. The model unit test
 consists of (at least) two files:

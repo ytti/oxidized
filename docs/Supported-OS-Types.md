@@ -120,7 +120,7 @@
 |Linuxgeneric        |CentOS                        |[linuxgeneric](/lib/oxidized/model/linuxgeneric.rb)|               |[LinuxGeneric](Model-Notes/LinuxGeneric.md)
 |Mellanox            |MLNX-OS                       |[mlnxos](/lib/oxidized/model/mlnxos.rb)
 |                    |Voltaire                      |[voltaire](/lib/oxidized/model/voltaire.rb)
-|Mikrotik            |RouterOS                      |[routeros](/lib/oxidized/model/routeros.rb)      |@systeembeheerder  |[RouterOS](Model-Notes/RouterOS.md)
+|Mikrotik            |RouterOS                      |[routeros](/lib/oxidized/model/routeros.rb)      |  |[RouterOS](Model-Notes/RouterOS.md)
 |                    |SwOS and SwOS Lite            |[swos](/lib/oxidized/model/swos.rb)
 |Mimosa              |Mimosa (B11)                  |[mimosab11](/lib/oxidized/model/mimosab11.rb)
 |Motorola            |RFS                           |[mtrlrfs](/lib/oxidized/model/mtrlrfs.rb)
@@ -167,6 +167,7 @@
 |                    |Edgeos                        |[edgeos](/lib/oxidized/model/edgeos.rb)
 |                    |EdgeSwitch                    |[edgeswitch](/lib/oxidized/model/edgeswitch.rb)
 |                    |AirFiber                      |[airfiber](/lib/oxidized/model/airfiber.rb)
+|Uplink              |EP4440-DP                     |[EP4440](/lib/oxidized/model/uplinkolt.rb)             | |Might support all EP4440 series
 |VMWare              |NSX Edge (configuration)      |[nsxconfig](/lib/oxidized/model/nsxconfig.rb)
 |                    |NSX Edge (firewall rules)     |[nsxfirewall](/lib/oxidized/model/nsxfirewall.rb)
 |                    |NSX Distributed Firewall      |[nsxdfw](/lib/oxidized/model/nsxdfw.rb)

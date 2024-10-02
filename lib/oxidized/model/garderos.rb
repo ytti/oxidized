@@ -6,11 +6,11 @@ class Garderos < Oxidized::Model
 
   # remove all ANSI escape codes, as GRS uses them :-(
   # the prompt does not need to match escape codes, as they have been removed
-  expect %r{\e\[\d*m\r?} do |data, re|
+  expect /\e\[\d*m\r?/ do |data, re|
     data.gsub re, ''
   end
 
-  prompt %r{[\w-]+# }
+  prompt /[\w-]+# /
   comment '# '
 
   cmd :all do |cfg|

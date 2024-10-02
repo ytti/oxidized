@@ -13,7 +13,7 @@ module Oxidized
         Oxidized.asetus.user.source.csv.map.model = 1
         Oxidized.asetus.user.source.csv.gpg       = false
         Oxidized.asetus.save :user
-        raise NoConfig, 'no source csv config, edit ~/.config/oxidized/config'
+        raise NoConfig, "no source csv config, edit #{Oxidized::Config.configfile}"
       end
       require 'gpgme' if @cfg.gpg?
     end

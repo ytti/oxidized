@@ -30,7 +30,7 @@ describe Refinements do
     end
 
     it 'test cut_tail on default string' do
-      output = String.new
+      output = ''
       output = output.cut_tail
       _(output).must_equal ""
       _(output).must_be_instance_of String
@@ -54,7 +54,7 @@ describe Refinements do
     end
 
     it 'test cut_head on default string' do
-      output = String.new
+      output = ''
       output = output.cut_head
       _(output).must_equal ""
       _(output).must_be_instance_of String
@@ -70,7 +70,7 @@ describe Refinements do
     end
 
     it 'test cut_both on default string' do
-      output = String.new
+      output = ''
       output = output.cut_both
       _(output).must_equal ""
       _(output).must_be_instance_of String

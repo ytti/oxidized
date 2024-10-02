@@ -7,6 +7,7 @@ The format is based on [Keep a Changelog](https://keepachangelog.com/en/1.1.0/).
 ## [Unreleased]
 
 ### Added
+- model for uplink EP4440-DP OLT (@AAm-kun)
 - model for Siklu Multihaul TG radios (@bdg-robert)
 - fortios: variable `fullconfig` to get the configuration with default values. Fixes: #3159 (@robertcheramy)
 - model for VMWare NSX DFW (@elmobp)
@@ -29,6 +30,7 @@ The format is based on [Keep a Changelog](https://keepachangelog.com/en/1.1.0/).
 - saos: add inventory and software status collection (@grbeneke)
 - container-image: update to phusion/baseimage:noble-1.0.0 and include security upgrades at build time (@robertcheramy)
 - container-image: use ubuntu-packages instead of gems in order to reduce container image size (@robertcheramy)
+- edgecos.rb: hide temperature and fan speed (@dhooper6430)
 - cnos: show information before config, remove secrets only when told to do so (@robje)
 
 ### Fixed
@@ -41,6 +43,9 @@ The format is based on [Keep a Changelog](https://keepachangelog.com/en/1.1.0/).
 - rgos: also strip "System uptime" for installed modules (@spike77453)
 - fixed digest authentication when using http input (@spike77453)
 - fixed aosw prompt; now working with ArubaOS 8 (@mabezi, @robertcheramy)
+- routeros: fix system info for CHR. Fixes #3180 (@systeembeheerder)
+- removed hardcoded '~/.config/oxidized/config'. Fixes #3229 (@robertcheramy)
+- linuxgeneric: updated prompt to support '$' at the end (@robertcheramy)
 
 ## [0.30.1 – 2024-04-12]
 

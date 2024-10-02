@@ -10,7 +10,7 @@ module Oxidized
       Oxidized.setup_logger
       return unless @cfg.url.empty?
 
-      raise NoConfig, 'no source http url config, edit ~/.config/oxidized/config'
+      raise NoConfig, "no source http url config, edit #{Oxidized::Config.configfile}"
     end
 
     require "net/http"

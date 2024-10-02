@@ -17,6 +17,8 @@ module Oxidized
     def self.load(cmd_opts = {})
       usrdir = File.expand_path(cmd_opts[:home_dir] || Oxidized::Config::ROOT)
       cfgfile = cmd_opts[:config_file] || 'config'
+      # configuration file with full path as a class instance variable
+      @configfile = File.join(usrdir, cfgfile)
       asetus = Asetus.new(name: 'oxidized', load: false, key_to_s: true, usrdir: usrdir, cfgfile: cfgfile)
       Oxidized.asetus = asetus
 
@@ -65,12 +67,16 @@ module Oxidized
         raise InvalidConfig, "Error loading config: #{e.message}"
       end
 
-      raise NoConfig, 'edit ~/.config/oxidized/config' if asetus.create
+      raise NoConfig, "edit #{@configfile}" if asetus.create
 
       # override if comand line flag given
       asetus.cfg.debug = cmd_opts[:debug] if cmd_opts[:debug]
 
       asetus
+    end
+
+    class << self
+      attr_reader :configfile
     end
   end
 

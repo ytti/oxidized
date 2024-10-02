@@ -13,7 +13,7 @@ Gem::Specification.new do |s|
   s.summary           = 'feeble attempt at rancid'
   s.description       = 'software to fetch configuration from network devices and store them'
   s.rubyforge_project = s.name
-  s.files             = %x(git ls-files -z).split("\x0").reject { |f| f.match(%r{^(test|spec|features)/}) }
+  s.files             = %x(git ls-files -z).split("\x0").reject { |f| f.match(/^(test|spec|features)\//) }
   s.executables       = %w[oxidized]
   s.require_path      = 'lib'
 
@@ -39,10 +39,10 @@ Gem::Specification.new do |s|
   s.add_development_dependency 'mocha',               '~> 2.1'
   s.add_development_dependency 'pry',                 '~> 0.14.2'
   s.add_development_dependency 'rake',                '~> 13.0'
-  s.add_development_dependency 'rubocop',             '~> 1.65.1'
-  s.add_development_dependency 'rubocop-minitest',    '~> 0.35.0'
+  s.add_development_dependency 'rubocop',             '~> 1.66.1'
+  s.add_development_dependency 'rubocop-minitest',    '~> 0.36.0'
   s.add_development_dependency 'rubocop-rake',        '~> 0.6.0'
   s.add_development_dependency 'simplecov',           '~> 0.22.0'
   s.add_development_dependency 'simplecov-cobertura', '~> 2.1.0'
-  s.add_development_dependency 'simplecov-html',      '~> 0.12.3'
+  s.add_development_dependency 'simplecov-html',      '~> 0.13.1'
 end
