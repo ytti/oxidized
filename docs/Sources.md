@@ -1,5 +1,8 @@
 # Sources
 
+Note: in all sources, the map attribute `name` is mandatory. It is used to identify the node and
+for example choose the filename for the configuration output.
+
 ## Source: CSV
 
 One line per device, colon separated. If `ip` isn't present, a DNS lookup will be done against `name`.  For large installations, setting `ip` will dramatically reduce startup time.

@@ -105,3 +105,4 @@ Lint/EmptyBlock:
 require:
   - rubocop-rake
   - rubocop-minitest
+  - rubocop-sequel

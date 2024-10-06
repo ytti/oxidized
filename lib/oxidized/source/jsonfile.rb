@@ -8,7 +8,8 @@ module Oxidized
 
     def setup
       if @cfg.empty?
-        Oxidized.asetus.user.source.jsonfile.file      = File.join(Config::Root, 'router.json')
+        Oxidized.asetus.user.source.jsonfile.file      = File.join(Oxidized::Config::ROOT,
+                                                                   'router.json')
         Oxidized.asetus.user.source.jsonfile.map.name  = "name"
         Oxidized.asetus.user.source.jsonfile.map.model = "model"
         Oxidized.asetus.user.source.jsonfile.gpg       = false
@@ -16,6 +17,11 @@ module Oxidized
         raise NoConfig, "No source json config, edit #{Oxidized::Config.configfile}"
       end
       require 'gpgme' if @cfg.gpg?
+
+      # map.name is mandatory
+      return if @cfg.map.has_key?('name')
+
+      raise InvalidConfig, "map/name is a mandatory source attribute, edit #{Oxidized::Config.configfile}"
     end
 
     def load(*)

@@ -42,7 +42,11 @@ Gem::Specification.new do |s|
   s.add_development_dependency 'rubocop',             '~> 1.66.1'
   s.add_development_dependency 'rubocop-minitest',    '~> 0.36.0'
   s.add_development_dependency 'rubocop-rake',        '~> 0.6.0'
+  s.add_development_dependency 'rubocop-sequel'
   s.add_development_dependency 'simplecov',           '~> 0.22.0'
   s.add_development_dependency 'simplecov-cobertura', '~> 2.1.0'
   s.add_development_dependency 'simplecov-html',      '~> 0.13.1'
+
+  # Dependencies on optional libraries, used for unit tests
+  s.add_development_dependency 'sequel'
 end

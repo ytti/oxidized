@@ -7,15 +7,20 @@ module Oxidized
     end
 
     def setup
-      return unless @cfg.empty?
+      if @cfg.empty?
+        Oxidized.asetus.user.source.sql.adapter   = 'sqlite'
+        Oxidized.asetus.user.source.sql.database  = File.join(Config::ROOT, 'sqlite.db')
+        Oxidized.asetus.user.source.sql.table     = 'devices'
+        Oxidized.asetus.user.source.sql.map.name  = 'name'
+        Oxidized.asetus.user.source.sql.map.model = 'rancid'
+        Oxidized.asetus.save :user
+        raise NoConfig, "No source sql config, edit #{Oxidized::Config.configfile}"
+      end
 
-      Oxidized.asetus.user.source.sql.adapter   = 'sqlite'
-      Oxidized.asetus.user.source.sql.database  = File.join(Config::ROOT, 'sqlite.db')
-      Oxidized.asetus.user.source.sql.table     = 'devices'
-      Oxidized.asetus.user.source.sql.map.name  = 'name'
-      Oxidized.asetus.user.source.sql.map.model = 'rancid'
-      Oxidized.asetus.save :user
-      raise NoConfig, "no source sql config, edit #{Oxidized::Config.configfile}"
+      # map.name is mandatory
+      return if @cfg.map.has_key?('name')
+
+      raise InvalidConfig, "map/name is a mandatory source attribute, edit #{Oxidized::Config.configfile}"
     end
 
     def load(node_want = nil)

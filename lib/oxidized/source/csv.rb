@@ -16,6 +16,11 @@ module Oxidized
         raise NoConfig, "no source csv config, edit #{Oxidized::Config.configfile}"
       end
       require 'gpgme' if @cfg.gpg?
+
+      # map.name is mandatory
+      return if @cfg.map.has_key?('name')
+
+      raise InvalidConfig, "map/name is a mandatory source attribute, edit #{Oxidized::Config.configfile}"
     end
 
     def load(_node_want = nil)
