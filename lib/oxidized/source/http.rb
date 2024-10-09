@@ -1,5 +1,5 @@
 module Oxidized
-  class Source
+  module Source
     require "oxidized/source/jsonfile"
     class HTTP < JSONFile
       def initialize
