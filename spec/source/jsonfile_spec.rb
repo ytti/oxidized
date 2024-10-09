@@ -1,7 +1,7 @@
 require_relative '../spec_helper'
 require 'oxidized/source/jsonfile'
 
-describe Oxidized::JSONFile do
+describe Oxidized::Source::JSONFile do
   describe '#setup' do
     before(:each) do
       Asetus.any_instance.expects(:load)

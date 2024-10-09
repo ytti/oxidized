@@ -1,7 +1,7 @@
 require_relative '../spec_helper'
 require 'oxidized/source/sql'
 
-describe Oxidized::SQL do
+describe Oxidized::Source::SQL do
   describe '#setup' do
     before(:each) do
       Asetus.any_instance.expects(:load)

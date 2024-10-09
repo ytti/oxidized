@@ -1,7 +1,7 @@
 require_relative '../spec_helper'
 require 'oxidized/source/csv'
 
-describe Oxidized::CSV do
+describe Oxidized::Source::CSV do
   describe '#setup' do
     before(:each) do
       Asetus.any_instance.expects(:load)
