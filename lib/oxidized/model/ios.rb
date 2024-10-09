@@ -22,6 +22,8 @@ class IOS < Oxidized::Model
     # cfg.gsub! /\cH+/, ''              # example how to handle pager
     # get rid of errors for commands that don't work on some devices
     cfg.gsub! /^% Invalid input detected at '\^' marker\.$|^\s+\^$/, ''
+    # get rid of values of custom SNMP OID's
+    cfg.gsub! /^(\s+expression) \d+$/, '\\1 <value removed>'
     cfg.cut_both
   end
 
