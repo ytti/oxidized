@@ -23,9 +23,20 @@ class GithubRepo < Oxidized::Hook
     end
     remote = repo.remotes['origin']
 
-    fetch_and_merge_remote(repo, creds)
-
-    remote.push([repo.head.name], credentials: creds)
+    begin
+      fetch_and_merge_remote(repo, creds)
+      remote.push([repo.head.name], credentials: creds)
+    rescue Rugged::NetworkError => e
+      if e.message == 'unsupported URL protocol'
+        log "Rugged does not support the git URL '#{url}'.", :warn
+        unless Rugged.features.include?(:ssh)
+          log 'You may need to install Rugged with ssh support ' \
+              '(gem install rugged -- --with-ssh)', :warn
+        end
+      end
+      # re-raise exception for the calling method
+      raise
+    end
   end
 
   def fetch_and_merge_remote(repo, creds)

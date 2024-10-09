@@ -49,6 +49,7 @@ The format is based on [Keep a Changelog](https://keepachangelog.com/en/1.1.0/).
 - routeros: fix system info for CHR. Fixes #3180 (@systeembeheerder)
 - removed hardcoded '~/.config/oxidized/config'. Fixes #3229 (@robertcheramy)
 - linuxgeneric: updated prompt to support '$' at the end (@robertcheramy)
+- hook githubrepo: add a specific warning when rugged not installed with ssh support. Fixes #3211 (@robertcheramy)
 
 ## [0.30.1 – 2024-04-12]
 
