@@ -8,7 +8,11 @@ module Oxidized
       def load(dir, file)
         require File.join dir, file + '.rb'
         klass = nil
-        [Oxidized, Object].each do |mod|
+        # Search the object in the different namespaces
+        # - Most objects are in the namespace Oxidized
+        # - Source objects have their own namespace (Oxidized::Source)
+        # - Models have no namespace (Object)
+        [Oxidized, Oxidized::Source, Object].each do |mod|
           klass   = mod.constants.find { |const| const.to_s.casecmp(file).zero? }
           klass ||= mod.constants.find { |const| const.to_s.downcase == 'oxidized' + file.downcase }
           klass   = mod.const_get klass if klass

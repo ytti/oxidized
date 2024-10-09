@@ -1,7 +1,7 @@
 require_relative '../spec_helper'
 require 'oxidized/source/jsonfile'
 
-describe Oxidized::JSONFile do
+describe Oxidized::Source::JSONFile do
   describe '#setup' do
     before(:each) do
       Asetus.any_instance.expects(:load)
@@ -10,7 +10,7 @@ describe Oxidized::JSONFile do
       # Set :home_dir to make sure the OXIDIZED_HOME environment variable is not used
       Oxidized::Config.load({ home_dir: '/cfg_path/' })
 
-      @source = Oxidized::JSONFile.new
+      @source = Oxidized::Source::JSONFile.new
     end
 
     it 'raises Oxidized::NoConfig when no config is provided' do
