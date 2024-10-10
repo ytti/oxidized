@@ -69,8 +69,10 @@ module Oxidized
 
       if asetus.create
         puts "Configuration file created at #{@configfile}. Please edit it."
+      elsif !File.exist?(@configfile)
+        raise NoConfig, "Configuration file #{@configfile} is missing and could not be created."
       else
-        raise NoConfig, "Configuration file #{@configfile} is missing."
+        puts "Configuration file #{@configfile} already exists."
       end
 
       # override if comand line flag given
