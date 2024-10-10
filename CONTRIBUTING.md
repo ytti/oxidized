@@ -119,6 +119,8 @@ bundle config set --local path 'vendor/bundle'
 bundle install
 ```
 
+Note: if you need to install rugged with ssh support, you can tell bundler so with `bundle config build.rugged --with-ssh`. Reinstall rugged with `bundle pristine rugged`
+
 ### Run your code
 ```bash
 bundle exec bin/oxidized

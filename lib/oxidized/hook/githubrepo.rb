@@ -1,15 +1,21 @@
+require 'rugged'
+
 class GithubRepo < Oxidized::Hook
   def validate_cfg!
     raise KeyError, 'hook.remote_repo is required' unless cfg.has_key?('remote_repo')
   end
 
   def run_hook(ctx)
+    unless ctx.node.repo
+      log "Oxidized output is not git, can't push to remote", :error
+      return
+    end
     repo  = Rugged::Repository.new(ctx.node.repo)
     creds = credentials(ctx.node)
     url   = remote_repo(ctx.node)
 
     if url.nil? || url.empty?
-      log "No repository defined for #{ctx.node.group}/#{ctx.node.name}", :debug
+      log "No repository defined for #{ctx.node.group}/#{ctx.node.name}", :error
       return
     end
 
