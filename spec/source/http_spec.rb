@@ -15,7 +15,7 @@ describe Oxidized::Source::HTTP do
       # Set :home_dir to make sure the OXIDIZED_HOME environment variable is not used
       Oxidized::Config.load({ home_dir: '/cfg_path/' })
 
-      @source = Oxidized::HTTP.new
+      @source = Oxidized::Source::HTTP.new
     end
 
     it 'raises Oxidized::NoConfig when no config is provided' do

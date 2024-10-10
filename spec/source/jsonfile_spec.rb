@@ -10,7 +10,7 @@ describe Oxidized::Source::JSONFile do
       # Set :home_dir to make sure the OXIDIZED_HOME environment variable is not used
       Oxidized::Config.load({ home_dir: '/cfg_path/' })
 
-      @source = Oxidized::JSONFile.new
+      @source = Oxidized::Source::JSONFile.new
     end
 
     it 'raises Oxidized::NoConfig when no config is provided' do

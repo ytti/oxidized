@@ -10,7 +10,7 @@ describe Oxidized::Source::SQL do
       # Set :home_dir to make sure the OXIDIZED_HOME environment variable is not used
       Oxidized::Config.load({ home_dir: '/cfg_path/' })
 
-      @source = Oxidized::SQL.new
+      @source = Oxidized::Source::SQL.new
     end
 
     it 'raises Oxidized::NoConfig when no config is provided' do
