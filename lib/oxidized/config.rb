@@ -68,13 +68,14 @@ module Oxidized
       end
 
       if asetus.create
-        puts "Configuration file created at #{@configfile}. Please edit it."
+        Oxidized.logger.info "Configuration file created at #{@configfile}. Please edit it."
       elsif !File.exist?(@configfile)
+        Oxidized.logger.error "Configuration file #{@configfile} is missing and could not be created."
         raise NoConfig, "Configuration file #{@configfile} is missing and could not be created."
       else
-        puts "Configuration file #{@configfile} already exists."
+        Oxidized.logger.info "Configuration file #{@configfile} already exists."
       end
-
+      
       # override if comand line flag given
       asetus.cfg.debug = cmd_opts[:debug] if cmd_opts[:debug]
 
