@@ -48,6 +48,6 @@ Gem::Specification.new do |s|
   s.add_development_dependency 'simplecov-html',      '~> 0.13.1'
 
   # Dependencies on optional libraries, used for unit tests & development
-  s.add_development_dependency 'sequel',              '~> 5.63'
   s.add_development_dependency 'oxidized-web',        '>= 0.14.0'
+  s.add_development_dependency 'sequel',              '~> 5.63'
 end
