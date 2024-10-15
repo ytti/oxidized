@@ -2,6 +2,15 @@
 
 You can define an arbitrary number of hooks that subscribe to different events. The hook system is modular and different kind of hook types can be enabled.
 
+1. [Events](#events)
+2. Hook types
+ * [exec](#hook-type-exec)
+ * [githubrepo](#hook-type-githubrepo)
+ * [awssns](#hook-type-awssns)
+ * [slackdiff](#hook-type-slackdiff)
+ * [ciscosparkdiff](#ciscosparkdiff)
+ * [xmppdiff](#hook-type-xmppdiff)
+
 ## Configuration
 
 Following configuration keys need to be defined for all hooks:
@@ -183,6 +192,31 @@ hooks:
     publickey: /root/.ssh/id_rsa.pub
     privatekey: /root/.ssh/id_rsa
 ```
+
+### Custom branch name
+Githubrepo will use the branch name used in the
+[git output](Outputs.md#output-git) as a remote branch name. When creating the
+git repository for the first time, Oxidized uses the default branch name
+configured in git with `git config --global init.defaultBranch <Name>`. The
+default is `master`.
+
+If you need to rename the branch name after Oxidized has created it, you may do
+it manually. Be aware that you may break things. Make backups and do not
+complain if something goes wrong!
+
+1. Stop oxidized (no one should access the git repository while doing the
+following steps)
+2. Make a backup of your oxidized data, especially the git repository
+3. Change directory to your oxidized git repository (as configured in oxidized
+configuration file)
+4. Inspect the current branches with `git branch -avv`
+5. Rename the default branch with `git branch -m <NewName>`
+6. Remove the reference to the old remote branch  with
+   `git branch -r -d origin/<OldName>`
+6. Inspect the change with `git branch -avv`
+7. Restart oxidized - you're done!
+
+Note that you will also have to clean your remote git repository.
 
 ## Hook type: awssns
 
