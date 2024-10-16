@@ -52,6 +52,7 @@ The format is based on [Keep a Changelog](https://keepachangelog.com/en/1.1.0/).
 - linuxgeneric: updated prompt to support '$' at the end (@robertcheramy)
 - hook githubrepo: add a specific warning when rugged not installed with ssh support. Fixes #3211 (@robertcheramy)
 - hook githubrepo: works with custom branch names (@robertcheramy)
+- fixed aoscx model for 6400 switches to hide temperature and power
 
 ## [0.30.1 – 2024-04-12]
 
