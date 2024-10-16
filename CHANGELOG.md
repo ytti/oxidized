@@ -37,6 +37,7 @@ The format is based on [Keep a Changelog](https://keepachangelog.com/en/1.1.0/).
 - cnos: show information before config, remove secrets only when told to do so (@robje)
 
 ### Fixed
+- fixed error for ibos when remove_secret is set (@dminuoso)
 - fixed prompt for Watchguard FirewareOS not matching the regex when the node is managed and master (@benasse)
 - fixed prompt for vyos/vyatta to allow logins with non-priviliged accounts. Fixes #3111 (@h-lopez)
 - fixed power consumption included in ArubaOS-CX diffs starting with FL.10.13.xxx. Fixes #3142 (@terratalpi)
