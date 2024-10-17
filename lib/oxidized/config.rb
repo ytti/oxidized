@@ -67,8 +67,15 @@ module Oxidized
         raise InvalidConfig, "Error loading config: #{e.message}"
       end
 
-      raise NoConfig, "edit #{@configfile}" if asetus.create
-
+      if asetus.create
+        Oxidized.logger.info "Configuration file created at #{@configfile}. Please edit it."
+      elsif !File.exist?(@configfile)
+        Oxidized.logger.error "Configuration file #{@configfile} is missing and could not be created."
+        raise NoConfig, "Configuration file #{@configfile} is missing and could not be created."
+      else
+        Oxidized.logger.info "Configuration file #{@configfile} already exists."
+      end
+      
       # override if comand line flag given
       asetus.cfg.debug = cmd_opts[:debug] if cmd_opts[:debug]
 
