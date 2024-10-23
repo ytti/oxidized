@@ -34,6 +34,7 @@ The format is based on [Keep a Changelog](https://keepachangelog.com/en/1.1.0/).
 - container-image: use ubuntu-packages instead of gems in order to reduce container image size (@robertcheramy)
 - edgecos.rb: hide temperature and fan speed (@dhooper6430)
 - cnos: show information before config, remove secrets only when told to do so (@robje)
+- ios: remove values from custom SNMP OID's, set by an EEM script (@syn-bit)
 
 ### Fixed
 - fixed prompt for Watchguard FirewareOS not matching the regex when the node is managed and master (@benasse)
