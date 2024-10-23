@@ -124,6 +124,8 @@ class IOS < Oxidized::Model
       cfg.gsub! /^ tunnel mpls traffic-eng bandwidth[^\n]*\n*(
                     (?: [^\n]*\n*)*
                     tunnel mpls traffic-eng auto-bw)/mx, '\1'
+      # get rid of values of custom SNMP OID's
+      cfg.gsub! /^(\s+expression) \d+$/, '\\1 <value removed>'
       cfg
     end
   end
