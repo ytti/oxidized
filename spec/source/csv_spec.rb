@@ -1,7 +1,7 @@
 require_relative '../spec_helper'
 require 'oxidized/source/csv'
 
-describe Oxidized::CSV do
+describe Oxidized::Source::CSV do
   describe '#setup' do
     before(:each) do
       Asetus.any_instance.expects(:load)
@@ -10,7 +10,7 @@ describe Oxidized::CSV do
       # Set :home_dir to make sure the OXIDIZED_HOME environment variable is not used
       Oxidized::Config.load({ home_dir: '/cfg_path/' })
 
-      @source = Oxidized::CSV.new
+      @source = Oxidized::Source::CSV.new
     end
 
     it 'raises Oxidized::NoConfig when no config is provided' do
