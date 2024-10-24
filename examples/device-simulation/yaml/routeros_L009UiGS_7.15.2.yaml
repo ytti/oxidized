@@ -1,0 +1,27 @@
+---
+init_prompt: |-
+  \r\e[9999B\r\e[9999B\eZ  \e[6n
+commands:
+  /system resource print: |-
+  /system package update print: |-
+    \e[9999B
+    \r  MMM      MMM       KKK                          TTTTTTTTTTT      KKK
+    \r  MMMM    MMMM       KKK                          TTTTTTTTTTT      KKK
+    \r  MMM MMMM MMM  III  KKK  KKK  RRRRRR     OOOOOO      TTT     III  KKK  KKK
+    \r  MMM  MM  MMM  III  KKKKK     RRR  RRR  OOO  OOO     TTT     III  KKKKK
+    \r  MMM      MMM  III  KKK KKK   RRRRRR    OOO  OOO     TTT     III  KKK KKK
+    \r  MMM      MMM  III  KKK  KKK  RRR  RRR   OOOOOO      TTT     III  KKK  KKK
+    
+    \r  MikroTik RouterOS 7.15.2 (c) 1999-2024       https://www.mikrotik.com/
+    
+    Press F1 for help
+    
+    \r\r\r\r[user@router] >                                               \r[user@router] >\x20
+  /system history print without-paging: |-
+    /system history print without-paging
+  /export: |-
+    /export
+  quit: |-
+    qui\r[user@router] > /system history print without-paging/exportqu>\r< history print without-paging/exportquit                                      \r< history print without-paging/exportquit
+oxidized_output: |
+  !! needs to be written by hand or copy & paste from model output
