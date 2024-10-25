@@ -42,10 +42,13 @@ Run `device2yaml.rb` in the directory `/examples/device-simulation/`, the
 online help tells you the options.
 ```
 device-simulation$ ./device2yaml.rb
-Usage: model-yaml.rb [user@]host [options]
-    -o, --output file                Specify an output file instead of stdout
+Missing a host to connect to...
+
+Usage: device2yaml.rb [user@]host [options]
     -c, --cmdset file                Mandatory: specify the commands to be run
-    -t, --timout value               Specify the idle timeout beween commands (default: 5 seconds)
+    -o, --output file                Specify an output YAML-file
+    -t, --timeout value              Specify the idle timeout beween commands (default: 5 seconds)
+    -e, --exec-mode                  Run ssh in exec mode (without tty)
     -h, --help                       Print this help
 ```
 
@@ -68,6 +71,8 @@ this.
 - When run without the output argument, `device2yaml.rb` will only print the ssh
 output to the standard output. You must use `-o <model_HW_SW.yaml>` to store the
 collected data in a YAML file.
+- If your oxidized model uses ssh exec mode (look for `exec true` in the model),
+you will have to use the option `-e` to run device2yaml in ssh exec mode.
 
 Note that `device2yaml.rb` takes some time to run because of the idle
 timeout of (default) 5 seconds between each command. You can press the "Escape"
@@ -75,9 +80,10 @@ key if you know there is no more data to come for the current command (when you
 see the prompt for the next command), and the script will stop waiting and
 directly process the next command.
 
-Here is an example of how to run the script:
-```
+Here are two examples of how to run the script:
+```shell
 ./device2yaml.rb OX-SW123.sample.domain -c cmdsets/aoscx -o yaml/aoscx_R8N85A-C6000-48G-CL4_PL.10.08.1010.yaml
+./device2yaml.rb admin@r7 -c cmdsets/routeros -e -o yaml/routeros_CHR_7.10.1.yaml
 ```
 
 ### Publishing the YAML simulation file to oxidized
