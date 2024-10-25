@@ -1,6 +1,5 @@
 /system resource print
 /system package update print
 /system history print without-paging
-/export
+/export show-sensitive
 quit
-
