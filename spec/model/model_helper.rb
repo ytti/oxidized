@@ -4,6 +4,8 @@ require 'yaml'
 def init_model_helper
   Oxidized.asetus = Asetus.new
   # Set to true in your unit test if you want a lot of logs while debugging
+  # You will need to run Oxidized.setup_logger again inside your unit test
+  # after setting Oxidized.asetus.cfg.debug to true
   Oxidized.asetus.cfg.debug = false
   Oxidized.config.timeout = 5
   Oxidized.setup_logger
@@ -55,6 +57,10 @@ class MockSsh
 
   def exec!(cmd)
     Oxidized.logger.send(:debug, "exec! called with cmd #{cmd}")
+
+    # exec commands are send without \n, our @commands has \n integrated
+    cmd += "\n"
+
     raise "#{cmd} not defined" unless @commands.has_key?(cmd)
 
     Oxidized.logger.send(:debug, "exec! returns #{@commands[cmd]}")
