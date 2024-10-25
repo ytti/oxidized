@@ -1,7 +1,7 @@
 require_relative '../spec_helper'
 require 'oxidized/output/git'
 
-describe Oxidized::Git do
+describe Oxidized::Output::Git do
   describe '#yield_repo_and_path' do
     # Note that #yield_repo_and_path is private, so we can not call it directy
     # we use @git.send(:yield_repo_and_path, ...) to bypass the protection
@@ -14,7 +14,7 @@ describe Oxidized::Git do
       @mock_node.expect(:repo, '/tmp/oxidized.git')
       @mock_node.expect(:name, 'switch-42')
 
-      @git = Oxidized::Git.new
+      @git = Oxidized::Output::Git.new
     end
 
     it 'accepts group = nil' do

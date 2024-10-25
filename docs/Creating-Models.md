@@ -19,13 +19,13 @@ This methodology allows local site changes to be preserved during Oxidized versi
 An Oxidized model, at minimum, requires just three elements:
 
 * A model file, this file should be placed in the ~/.config/oxidized/model directory and named after the target OS type.
-* A class defined within this file with the same name as the file itself that inherits from `Oxidized::Model`, the base model class.
+* A class defined within this file with the same name as the file itself that inherits from `Oxidized::Models::Model`, the base model class.
 * At least one command that will be executed and the output of which will be collected by Oxidized.
 
 A bare-bone example for a fictional model running the OS type `rootware` could be introduced by creating the file `~/.config/oxidized/model/rootware.rb`, with the following content:
 
 ```ruby
-class RootWare < Oxidized::Model
+class RootWare < Oxidized::Models::Model
   using Refinements
   
   cmd 'show complete-config'

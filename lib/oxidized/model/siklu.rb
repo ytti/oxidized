@@ -1,19 +1,24 @@
-class Siklu < Oxidized::Model
-  using Refinements
+module Oxidized
+  module Models
+    class Siklu < Oxidized::Models::Model
+      using Refinements
 
-  # Siklu EtherHaul #
+      # @!visibility private
+      # Siklu EtherHaul #
 
-  prompt /^[\^M\s]{0,}[\w\-\s\.\"]+>$/
+      prompt /^[\^M\s]{0,}[\w\-\s\.\"]+>$/
 
-  cmd 'copy startup-configuration display' do |cfg|
-    cfg.each_line.to_a[2..2].join
-  end
+      cmd 'copy startup-configuration display' do |cfg|
+        cfg.each_line.to_a[2..2].join
+      end
 
-  cmd 'copy running-configuration display' do |cfg|
-    cfg.each_line.to_a[3..-2].join
-  end
+      cmd 'copy running-configuration display' do |cfg|
+        cfg.each_line.to_a[3..-2].join
+      end
 
-  cfg :ssh do
-    pre_logout 'exit'
+      cfg :ssh do
+        pre_logout 'exit'
+      end
+    end
   end
 end

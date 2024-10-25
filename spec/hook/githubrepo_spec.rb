@@ -2,13 +2,13 @@ require_relative '../spec_helper'
 require 'rugged'
 require 'oxidized/hook/githubrepo'
 
-describe GithubRepo do
+describe Oxidized::Hook::GithubRepo do
   let(:credentials) { mock }
   let(:remote) { mock }
   let(:remotes) { mock }
   let(:repo_head) { mock }
   let(:repo) { mock }
-  let(:gr) { GithubRepo.new }
+  let(:gr) { Oxidized::Hook::GithubRepo.new }
 
   before do
     Oxidized.asetus = Asetus.new

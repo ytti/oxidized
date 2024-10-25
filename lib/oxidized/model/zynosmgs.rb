@@ -1,32 +1,37 @@
-class ZyNOSMGS < Oxidized::Model
-  using Refinements
+module Oxidized
+  module Models
+    class ZyNOSMGS < Oxidized::Models::Model
+      using Refinements
 
-  PROMPT = /^(\w.*)>(.*)?$/
-  # Used in Zyxel MGS Series switches
+      PROMPT = /^(\w.*)>(.*)?$/
+      # @!visibility private
+      # Used in Zyxel MGS Series switches
 
-  prompt PROMPT
-  comment '! '
+      prompt PROMPT
+      comment '! '
 
-  cmd 'show version' do |cfg|
-    clear_output cfg
-  end
+      cmd 'show version' do |cfg|
+        clear_output cfg
+      end
 
-  cmd 'show running-config' do |cfg|
-    clear_output cfg
-  end
+      cmd 'show running-config' do |cfg|
+        clear_output cfg
+      end
 
-  cfg :telnet do
-    username /^User\s?name(\(1-32 chars\))?:/i
-    password /^Password(\(1-32 chars\))?:/i
-  end
+      cfg :telnet do
+        username /^User\s?name(\(1-32 chars\))?:/i
+        password /^Password(\(1-32 chars\))?:/i
+      end
 
-  cfg :telnet, :ssh do
-    pre_logout 'exit'
-  end
+      cfg :telnet, :ssh do
+        pre_logout 'exit'
+      end
 
-  private
+      private
 
-  def clear_output(output)
-    output.gsub PROMPT, ''
+      def clear_output(output)
+        output.gsub PROMPT, ''
+      end
+    end
   end
 end

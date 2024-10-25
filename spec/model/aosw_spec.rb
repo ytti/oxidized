@@ -19,7 +19,7 @@ describe 'Model aosw' do
 
   it "matches different prompts" do
     # Virtual controller - ArubaOS (MODEL: 515), Version 8.10.0.7 LSR
-    _('AAAA-AP123456# ').must_match AOSW.prompt
+    _('AAAA-AP123456# ').must_match Oxidized::Models::AOSW.prompt
 
     # Hardware controller- ArubaOS (MODEL: Aruba7210), Version 8.10.0.7 LSR
     # - (host) ^[mynode] – This indicates unsaved configuration.
@@ -31,14 +31,14 @@ describe 'Model aosw' do
     # There could be other values than [/], [mm] or [mynode]
     # Now to the test prompts:
     # Controller with saved configuration
-    _('(WPP-ArubaVMC) [mynode] #').must_match AOSW.prompt
+    _('(WPP-ArubaVMC) [mynode] #').must_match Oxidized::Models::AOSW.prompt
     # Controller with unsaved configuration
-    _('(AAAA-WLC42) ^[mynode] #').must_match AOSW.prompt
+    _('(AAAA-WLC42) ^[mynode] #').must_match Oxidized::Models::AOSW.prompt
     # Controller with available crash information
-    _('(AAAA-WLC42) *[mynode] #').must_match AOSW.prompt
+    _('(AAAA-WLC42) *[mynode] #').must_match Oxidized::Models::AOSW.prompt
     # Controller with crash information in path /
-    _('(AAAA-WLC42) *[/] #').must_match AOSW.prompt
+    _('(AAAA-WLC42) *[/] #').must_match Oxidized::Models::AOSW.prompt
     # Controller with saved configuration in path mm
-    _('(AAAA-WLC42) [mm] #').must_match AOSW.prompt
+    _('(AAAA-WLC42) [mm] #').must_match Oxidized::Models::AOSW.prompt
   end
 end

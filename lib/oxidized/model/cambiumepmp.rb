@@ -1,19 +1,24 @@
-class CambiumePMP < Oxidized::Model
-  using Refinements
+module Oxidized
+  module Models
+    class CambiumePMP < Oxidized::Models::Model
+      using Refinements
 
-  # Cambium ePMP Radios
+      # @!visibility private
+      # Cambium ePMP Radios
 
-  prompt /.*>/
+      prompt /.*>/
 
-  cmd :all do |cfg|
-    cfg.cut_both
-  end
+      cmd :all do |cfg|
+        cfg.cut_both
+      end
 
-  pre do
-    cmd 'config show json'
-  end
+      pre do
+        cmd 'config show json'
+      end
 
-  cfg :ssh do
-    pre_logout 'exit'
+      cfg :ssh do
+        pre_logout 'exit'
+      end
+    end
   end
 end

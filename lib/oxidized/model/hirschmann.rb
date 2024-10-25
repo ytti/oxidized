@@ -1,41 +1,46 @@
-class Hirschmann < Oxidized::Model
-  using Refinements
+module Oxidized
+  module Models
+    class Hirschmann < Oxidized::Models::Model
+      using Refinements
 
-  prompt /^[(\w\s)]+\s[>|#]+?$/
+      prompt /^[(\w\s)]+\s[>|#]+?$/
 
-  comment '## '
+      comment '## '
 
-  # Handle pager
-  expect /^--More--.*$/ do |data, re|
-    send 'a'
-    data.sub re, ''
-  end
+      # @!visibility private
+      # Handle pager
+      expect /^--More--.*$/ do |data, re|
+        send 'a'
+        data.sub re, ''
+      end
 
-  cmd :all do |cfg|
-    cfg.cut_both
-  end
+      cmd :all do |cfg|
+        cfg.cut_both
+      end
 
-  cmd 'show sysinfo' do |cfg|
-    cfg.gsub! /^System Up Time.*\n/, ""
-    cfg.gsub! /^System Date and Time.*\n/, ""
-    cfg.gsub! /^CPU Utilization.*\n/, ""
-    cfg.gsub! /^Memory.*\n/, ""
-    cfg.gsub! /^Average CPU Utilization.*\n/, ""
-    comment cfg
-  end
+      cmd 'show sysinfo' do |cfg|
+        cfg.gsub! /^System Up Time.*\n/, ""
+        cfg.gsub! /^System Date and Time.*\n/, ""
+        cfg.gsub! /^CPU Utilization.*\n/, ""
+        cfg.gsub! /^Memory.*\n/, ""
+        cfg.gsub! /^Average CPU Utilization.*\n/, ""
+        comment cfg
+      end
 
-  cmd 'show running-config' do |cfg|
-    cfg.gsub! /^users.*\n/, ""
-    cfg
-  end
+      cmd 'show running-config' do |cfg|
+        cfg.gsub! /^users.*\n/, ""
+        cfg
+      end
 
-  cfg :telnet do
-    username /^User:/
-    password /^Password:/
-  end
+      cfg :telnet do
+        username /^User:/
+        password /^Password:/
+      end
 
-  cfg :telnet, :ssh do
-    post_login 'enable'
-    pre_logout 'logout'
+      cfg :telnet, :ssh do
+        post_login 'enable'
+        pre_logout 'logout'
+      end
+    end
   end
 end

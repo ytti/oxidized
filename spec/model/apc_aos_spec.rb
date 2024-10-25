@@ -18,14 +18,14 @@ describe 'Model apc_aos' do
                                username: 'alma',
                                password: 'armud',
                                prompt:   'test_prompt')
-    Oxidized::FTP.any_instance.stubs(:connect).returns(true)
-    Oxidized::FTP.any_instance.stubs(:node).returns(@node)
-    Oxidized::FTP.any_instance.stubs(:connect_cli).returns(true)
-    Oxidized::FTP.any_instance.stubs(:disconnect).returns(true)
-    Oxidized::FTP.any_instance.stubs(:disconnect_cli).returns(true)
+    Oxidized::Input::FTP.any_instance.stubs(:connect).returns(true)
+    Oxidized::Input::FTP.any_instance.stubs(:node).returns(@node)
+    Oxidized::Input::FTP.any_instance.stubs(:connect_cli).returns(true)
+    Oxidized::Input::FTP.any_instance.stubs(:disconnect).returns(true)
+    Oxidized::Input::FTP.any_instance.stubs(:disconnect_cli).returns(true)
     # Make sure we only run "config.ini" an no other command
-    Oxidized::FTP.any_instance.expects(:cmd).never
-    Oxidized::FTP.any_instance.expects(:cmd).with("config.ini").returns(CONFIGURATION_FILE)
+    Oxidized::Input::FTP.any_instance.expects(:cmd).never
+    Oxidized::Input::FTP.any_instance.expects(:cmd).with("config.ini").returns(CONFIGURATION_FILE)
 
     status, result = @node.run
 
@@ -42,14 +42,14 @@ describe 'Model apc_aos' do
                                username: 'alma',
                                password: 'armud',
                                prompt:   'test_prompt')
-    Oxidized::SCP.any_instance.stubs(:connect).returns(true)
-    Oxidized::SCP.any_instance.stubs(:node).returns(@node)
-    Oxidized::SCP.any_instance.stubs(:connect_cli).returns(true)
-    Oxidized::SCP.any_instance.stubs(:disconnect).returns(true)
-    Oxidized::SCP.any_instance.stubs(:disconnect_cli).returns(true)
+    Oxidized::Input::SCP.any_instance.stubs(:connect).returns(true)
+    Oxidized::Input::SCP.any_instance.stubs(:node).returns(@node)
+    Oxidized::Input::SCP.any_instance.stubs(:connect_cli).returns(true)
+    Oxidized::Input::SCP.any_instance.stubs(:disconnect).returns(true)
+    Oxidized::Input::SCP.any_instance.stubs(:disconnect_cli).returns(true)
     # Make sure we only run "config.ini" an no other command
-    Oxidized::SCP.any_instance.expects(:cmd).never
-    Oxidized::SCP.any_instance.expects(:cmd).with("config.ini").returns(CONFIGURATION_FILE)
+    Oxidized::Input::SCP.any_instance.expects(:cmd).never
+    Oxidized::Input::SCP.any_instance.expects(:cmd).with("config.ini").returns(CONFIGURATION_FILE)
 
     status, result = @node.run
 

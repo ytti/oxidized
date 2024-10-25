@@ -1,7 +1,7 @@
 require_relative '../spec_helper'
 require 'oxidized/input/ssh'
 
-describe Oxidized::SSH do
+describe Oxidized::Input::SSH do
   before(:each) do
     Oxidized.asetus = Asetus.new
     Oxidized.asetus.cfg.debug = false
@@ -26,7 +26,7 @@ describe Oxidized::SSH do
                                  password: 'armud',
                                  vars:     { ssh_proxy: 'test.com' })
 
-      ssh = Oxidized::SSH.new
+      ssh = Oxidized::Input::SSH.new
 
       model = mock
       model.expects(:cfg).returns('ssh' => [])
@@ -62,7 +62,7 @@ describe Oxidized::SSH do
                                  password: 'armud',
                                  vars:     { ssh_proxy: 'test.com' })
 
-      ssh = Oxidized::SSH.new
+      ssh = Oxidized::Input::SSH.new
 
       model = mock
       model.expects(:cfg).returns('ssh' => [])

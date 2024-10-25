@@ -1,26 +1,30 @@
-class FortiWLC < Oxidized::Model
-  using Refinements
+module Oxidized
+  module Models
+    class FortiWLC < Oxidized::Models::Model
+      using Refinements
 
-  comment '# '
+      comment '# '
 
-  cmd :all do |cfg, cmdstring|
-    new_cfg = comment "COMMAND: #{cmdstring}\n"
-    new_cfg << cfg.each_line.to_a[1..-2].map { |line| line.gsub(/(conf_file_ver=)(.*)/, '\1<stripped>\3') }.join
-  end
+      cmd :all do |cfg, cmdstring|
+        new_cfg = comment "COMMAND: #{cmdstring}\n"
+        new_cfg << cfg.each_line.to_a[1..-2].map { |line| line.gsub(/(conf_file_ver=)(.*)/, '\1<stripped>\3') }.join
+      end
 
-  prompt /^([-\w.\/:?\[\]()]+[#>]\s?)$/
+      prompt /^([-\w.\/:?\[\]()]+[#>]\s?)$/
 
-  cmd 'show controller' do |cfg|
-    comment cfg
-  end
-  cmd 'show ap' do |cfg|
-    comment cfg
-  end
-  cmd 'show running-config' do |cfg|
-    comment cfg
-  end
+      cmd 'show controller' do |cfg|
+        comment cfg
+      end
+      cmd 'show ap' do |cfg|
+        comment cfg
+      end
+      cmd 'show running-config' do |cfg|
+        comment cfg
+      end
 
-  cfg :telnet, :ssh do
-    pre_logout "exit\n"
+      cfg :telnet, :ssh do
+        pre_logout "exit\n"
+      end
+    end
   end
 end

@@ -1,19 +1,23 @@
-class CiscoNGA < Oxidized::Model
-  using Refinements
+module Oxidized
+  module Models
+    class CiscoNGA < Oxidized::Models::Model
+      using Refinements
 
-  comment '# '
-  prompt /([\w.@-]+[#>]\s?)$/
+      comment '# '
+      prompt /([\w.@-]+[#>]\s?)$/
 
-  cmd 'show version' do |cfg|
-    comment cfg
-  end
+      cmd 'show version' do |cfg|
+        comment cfg
+      end
 
-  cmd 'show configuration' do |cfg|
-    cfg
-  end
+      cmd 'show configuration' do |cfg|
+        cfg
+      end
 
-  cfg :ssh do
-    post_login 'terminal length 0'
-    pre_logout 'exit'
+      cfg :ssh do
+        post_login 'terminal length 0'
+        pre_logout 'exit'
+      end
+    end
   end
 end

@@ -1,12 +1,24 @@
 module Oxidized
   require 'ipaddr'
   require 'oxidized/node'
-  class NotSupported < OxidizedError; end
-  class NodeNotFound < OxidizedError; end
+  require 'oxidized/error/notsupported'
+  require 'oxidized/error/nodenotfound'
 
+  # Represents a collection of network nodes in the Oxidized system.
   class Nodes < Array
-    attr_accessor :source, :jobs
+    # @!attribute [rw] source
+    #   @return [String] The source from which nodes are loaded.
+    attr_accessor :source
+
+    # @!attribute [rw] jobs
+    #   @return [Array<Job>] The jobs associated with the nodes.
+    attr_accessor :jobs
     alias put unshift
+
+    # Loads nodes from the configured source.
+    #
+    # @param node_want [String, nil] The specific node(s) to load (optional).
+    # @return [void]
     def load(node_want = nil)
       with_lock do
         new = []
@@ -15,6 +27,7 @@ module Oxidized
         Oxidized.logger.info "lib/oxidized/nodes.rb: Loading nodes"
         nodes = Oxidized.mgr.source[@source].new.load node_want
         nodes.each do |node|
+          # @!visibility private
           # we want to load specific node(s), not all of them
           next unless node_want? node_want, node
 
@@ -32,11 +45,17 @@ module Oxidized
       end
     end
 
+    # Checks if a node matches the specified criteria.
+    #
+    # @param node_want [String, nil] The criteria to match against.
+    # @param node [Hash{Symbol => Object}] The node to check.
+    # @return [Boolean] True if the node matches, false otherwise.
     def node_want?(node_want, node)
       return true unless node_want
 
       node_want_ip = (IPAddr.new(node_want) rescue false)
       name_is_ip   = (IPAddr.new(node[:name]) rescue false)
+      # @!visibility private
       # rubocop:todo Lint/DuplicateBranch
       if name_is_ip && (node_want_ip == node[:name])
         true
@@ -45,15 +64,23 @@ module Oxidized
       elsif node_want.match node[:name]
         true unless name_is_ip
       end
+      # @!visibility private
       # rubocop:enable Lint/DuplicateBranch
     end
 
+    # Lists all nodes in a serialized format.
+    #
+    # @return [Array<Hash>] The serialized node information.
     def list
       with_lock do
         map { |e| e.serialize }
       end
     end
 
+    # Shows the serialized information of a specific node.
+    #
+    # @param node [String] The name of the node to show.
+    # @return [Hash] The serialized node information.
     def show(node)
       with_lock do
         i = find_node_index node
@@ -61,13 +88,22 @@ module Oxidized
       end
     end
 
+    # Fetches the output for a specific node.
+    #
+    # @param node_name [String] The name of the node.
+    # @param group [String] The group associated with the node.
+    # @yield [node, output] Yields the node and its output object.
     def fetch(node_name, group)
       yield_node_output(node_name) do |node, output|
         output.fetch node, group
       end
     end
 
-    # @param node [String] name of the node moved into the head of array
+    # Moves a node to the head of the array for processing.
+    #
+    # @param node [String] The name of the node to move.
+    # @param opt [Hash{String => Object}] Options for updating the node.
+    # @return [void]
     def next(node, opt = {})
       return if running.find_index(node)
 
@@ -77,6 +113,7 @@ module Oxidized
         n.email = opt['email']
         n.msg  = opt['msg']
         n.from = opt['from']
+        # @!visibility private
         # set last job to nil so that the node is picked for immediate update
         n.last = nil
         put n
@@ -85,43 +122,74 @@ module Oxidized
     end
     alias top next
 
-    # @return [String] node from the head of the array
+    # Retrieves and removes the node from the head of the array.
+    #
+    # @return [Node] The node from the head of the array.
     def get
       with_lock do
         (self << shift).last
       end
     end
 
-    # @param node node whose index number in Nodes to find
-    # @return [Fixnum] index number of node in Nodes
+    # Finds the index of a node in the array.
+    #
+    # @param node [String] The name or IP of the node.
+    # @return [Integer] The index of the node in the array.
     def find_node_index(node)
       find_index(node) || raise(NodeNotFound, "unable to find '#{node}'")
     end
 
+    # Retrieves the version of a specific node.
+    #
+    # @param node_name [String] The name of the node.
+    # @param group [String] The group associated with the node.
+    # @yield [node, output] Yields the node and its output object.
     def version(node_name, group)
       yield_node_output(node_name) do |node, output|
         output.version node, group
       end
     end
 
+    # Gets the version of a specific node and its group.
+    #
+    # @param node_name [String] The name of the node.
+    # @param group [String] The group associated with the node.
+    # @param oid [String] The object ID.
+    # @yield [node, output] Yields the node and its output object.
     def get_version(node_name, group, oid)
       yield_node_output(node_name) do |node, output|
         output.get_version node, group, oid
       end
     end
 
+    # Gets the difference between two versions of a node.
+    #
+    # @param node_name [String] The name of the node.
+    # @param group [String] The group associated with the node.
+    # @param oid1 [String] The first object ID.
+    # @param oid2 [String] The second object ID.
+    # @yield [node, output] Yields the node and its output object.
     def get_diff(node_name, group, oid1, oid2)
       yield_node_output(node_name) do |node, output|
         output.get_diff node, group, oid1, oid2
       end
     end
 
+    # Finds the index of a node in the array.
+    #
+    # @param node [String] The name or IP of the node.
+    # @return [Integer] The index of the node in the array.
     def find_index(node)
       index { |e| [e.name, e.ip].include? node }
     end
 
     private
 
+    # Initializes the Nodes collection.
+    #
+    # @param opts [Hash{Symbol => Object}] Options for initialization.
+    # @option opts [String] :node The specific node to initialize (optional).
+    # @option opts [Array<Node>] :nodes Existing nodes to load (optional).
     def initialize(opts = {})
       super()
       node = opts.delete :node
@@ -133,33 +201,43 @@ module Oxidized
       end
     end
 
+    # Synchronizes access to the Nodes collection.
+    #
+    # @yield [void] The block to execute with a lock.
     def with_lock(...)
       @mutex.synchronize(...)
     end
 
-    # @param node node which is removed from nodes list
-    # @return [Node] deleted node
+    # Deletes a node from the collection.
+    #
+    # @param node [String] The name of the node to delete.
+    # @return [Node] The deleted node.
     def del(node)
       delete_at find_node_index(node)
     end
 
-    # @return [Nodes] list of nodes running now
+    # Retrieves nodes that are currently running.
+    #
+    # @return [Nodes] List of running nodes.
     def running
       Nodes.new nodes: select { |node| node.running? }
     end
 
-    # @return [Nodes] list of nodes waiting (not running)
+    # Retrieves nodes that are currently waiting (not running).
+    #
+    # @return [Nodes] List of waiting nodes.
     def waiting
       Nodes.new nodes: select { |node| not node.running? }
     end
 
-    # walks list of new nodes, if old node contains same name, adds last and
-    # stats information from old to new.
+    # Updates nodes with information from the old collection.
     #
     # @todo can we trust name to be unique identifier, what about when groups are used?
-    # @param [Array] nodes Array of nodes used to replace+update old
+    # @param nodes [Array<Node>] The new array of nodes.
+    # @return [void]
     def update_nodes(nodes)
       old = dup
+      # @!visibility private
       # load the Array "nodes" in self (the class Nodes inherits Array)
       replace(nodes)
       each do |node|
@@ -168,6 +246,7 @@ module Oxidized
           node.last  = old[i].last
         end
       rescue NodeNotFound
+        # @!visibility private
         # Do nothing:
         # when a node is not found, we have nothing to do:
         # it has already been loaded by replace(nodes) and there are no
@@ -176,6 +255,10 @@ module Oxidized
       sort_by! { |x| x.last.nil? ? Time.new(0) : x.last.end }
     end
 
+    # Yields the output for a specified node.
+    #
+    # @param node_name [String] The name of the node.
+    # @yield [node, output] Yields the node and its output object.
     def yield_node_output(node_name)
       with_lock do
         node = find { |n| n.name == node_name }

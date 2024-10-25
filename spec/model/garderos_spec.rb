@@ -13,7 +13,7 @@ describe 'model/Garderos' do
     # Note that the real prompt looks like "\e[4m\rLAB-R1234_Garderos#\e[m\x20"
     # The ANSI escape sequences are cleaned by the model (expect),
     # this is tested in the test 'runs on R7709 with OS 003_006_068'
-    _('LAB-R1234_Garderos# ').must_match Garderos.prompt
+    _('LAB-R1234_Garderos# ').must_match Oxidized::Models::Garderos.prompt
   end
 
   it 'runs on R7709 with OS 003_006_068' do
