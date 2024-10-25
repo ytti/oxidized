@@ -7,29 +7,33 @@ module Oxidized
 
       comment '! '
 
-      cmd :all do |cfg|
-        cfg.each_line.to_a[0..-2].join
-      end
+  cmd :secret do |cfg|
+    cfg.gsub! /^(snmp-server community).*/, '\\1 <configuration removed>'
+    cfg.gsub! /^(username .+ (password|secret) \d) .+/, '\\1 <secret hidden>'
+    cfg.gsub! /^(enable (password|secret)( level \d+)?( \d)?) .+/, '\\1 <secret hidden>'
+    cfg
+  end
 
-      cmd 'show running-config' do |cfg|
-        cfg.gsub!(/(snmp-server community )(\S+)/, '\1<hidden>')
-        cfg.gsub!(/key type private.+key string end/m, '<private key hidden>')
-        cfg
-      end
+  cmd :all do |cfg|
+    cfg = cfg.delete("\r")
+    cfg.cut_both
+  end
 
-      cmd 'show version' do |cfg|
-        cfg.gsub! /^(.* uptime is ).*\n/, '\1'
-        comment cfg
-      end
+  cmd 'show version' do |cfg|
+    cfg = cfg.each_line.reject { |line| line.match /\ uptime\ is\ / }.join
+    comment cfg
+  end
 
       cmd 'show transceiver' do |cfg|
         comment cfg
       end
 
-      cfg :telnet do
-        username /^Username:/
-        password /^Password:/
-      end
+  cmd 'show running-config' do |cfg|
+    # @!visibility private
+    # remove empty lines
+    cfg = cfg.each_line.reject { |line| line.match /^[\r\n\s\u0000#]+$/ }.join
+    cfg
+  end
 
       cfg :telnet, :ssh do
         post_login 'terminal length 0'

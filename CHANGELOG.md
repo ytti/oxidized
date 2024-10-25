@@ -7,6 +7,8 @@ The format is based on [Keep a Changelog](https://keepachangelog.com/en/1.1.0/).
 ## [Unreleased]
 
 ### Added
+- removed time command from uplink EP4440-DP OLT model 
+- model for uplink EP4440-DP OLT (@AAm-kun)
 - model for Siklu Multihaul TG radios (@bdg-robert)
 - fortios: variable `fullconfig` to get the configuration with default values. Fixes: #3159 (@robertcheramy)
 - model for VMWare NSX DFW (@elmobp)
@@ -14,6 +16,8 @@ The format is based on [Keep a Changelog](https://keepachangelog.com/en/1.1.0/).
 - cumulus: Add possibility to use NVUE (@lagertonne)
 - model for garderos (@robertcheramy)
 - unit tests framework for models with ssh input (@robertcheramy)
+- container-image: install x25519 gem package to support more ssh kex. Fixes #3070 (@benasse)
+- os6: Added support to Dell EMC Networking OS6 (@anubisg1)
 
 ### Changed
 - h3c: change prompt to expect either angle (user-view) or square (system-view) brackets (@nl987)
@@ -29,8 +33,12 @@ The format is based on [Keep a Changelog](https://keepachangelog.com/en/1.1.0/).
 - saos: add inventory and software status collection (@grbeneke)
 - container-image: update to phusion/baseimage:noble-1.0.0 and include security upgrades at build time (@robertcheramy)
 - container-image: use ubuntu-packages instead of gems in order to reduce container image size (@robertcheramy)
+- edgecos.rb: hide temperature and fan speed (@dhooper6430)
+- cnos: show information before config, remove secrets only when told to do so (@robje)
 
 ### Fixed
+- fixed error for ibos when remove_secret is set (@dminuoso)
+- fixed prompt for Watchguard FirewareOS not matching the regex when the node is managed and master (@benasse)
 - fixed prompt for vyos/vyatta to allow logins with non-priviliged accounts. Fixes #3111 (@h-lopez)
 - fixed power consumption included in ArubaOS-CX diffs starting with FL.10.13.xxx. Fixes #3142 (@terratalpi)
 - fixed oxidized-web getting "version not found" when fetching a version from git and no group is defined. Fixes #2222 (@robertcheramy)
@@ -41,6 +49,10 @@ The format is based on [Keep a Changelog](https://keepachangelog.com/en/1.1.0/).
 - fixed digest authentication when using http input (@spike77453)
 - fixed aosw prompt; now working with ArubaOS 8 (@mabezi, @robertcheramy)
 - routeros: fix system info for CHR. Fixes #3180 (@systeembeheerder)
+- removed hardcoded '~/.config/oxidized/config'. Fixes #3229 (@robertcheramy)
+- linuxgeneric: updated prompt to support '$' at the end (@robertcheramy)
+- hook githubrepo: add a specific warning when rugged not installed with ssh support. Fixes #3211 (@robertcheramy)
+- hook githubrepo: works with custom branch names (@robertcheramy)
 
 ## [0.30.1 – 2024-04-12]
 

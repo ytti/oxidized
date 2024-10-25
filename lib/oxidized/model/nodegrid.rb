@@ -7,8 +7,8 @@ module Oxidized
       # ZPE Nodegrid (Tested with Nodegrid Gate/Bold/NSR)
       # https://www.zpesystems.com/products/
 
-      prompt(%r{(?<!@)\[(.*?\s/)\]#})
-      comment '# '
+  prompt /(?<!@)\[(.*?\s\/)\]#/
+  comment '# '
 
       cmd 'show system/about/' do |cfg|
         comment cfg # Show System, Model, Software Version

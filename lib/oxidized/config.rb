@@ -43,8 +43,10 @@ module Oxidized
       # Determine the user directory and config file to use
       usrdir = File.expand_path(cmd_opts[:home_dir] || Oxidized::Config::ROOT)
       cfgfile = cmd_opts[:config_file] || 'config'
+
       # @!visibility private
-      # Initialize Asetus with the appropriate options
+      # Configuration file with full path as a class instance variable
+      @configfile = File.join(usrdir, cfgfile)
       asetus = Asetus.new(name: 'oxidized', load: false, key_to_s: true, usrdir: usrdir, cfgfile: cfgfile)
       Oxidized.asetus = asetus
 
@@ -108,15 +110,20 @@ module Oxidized
         raise InvalidConfig, "Error loading config: #{e.message}"
       end
 
+
       # @!visibility private
       # If the configuration is being created for the first time, raise NoConfig
-      raise NoConfig, "edit #{ROOT}/config" if asetus.create
+      raise NoConfig, "edit #{@configfile}" if asetus.create
 
       # @!visibility private
       # Override debug setting if provided in the command line options
       asetus.cfg.debug = cmd_opts[:debug] if cmd_opts[:debug]
 
       asetus
+    end
+
+    class << self
+      attr_reader :configfile
     end
   end
 

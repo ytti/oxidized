@@ -7,15 +7,15 @@ module Oxidized
       # Routers for harsh environments
       # grs = Garderos Router Software
 
-      # @!visibility private
-      # remove all ANSI escape codes, as GRS uses them :-(
-      # the prompt does not need to match escape codes, as they have been removed
-      expect %r{\e\[\d*m\r?} do |data, re|
-        data.gsub re, ''
-      end
+  # @!visibility private
+  # remove all ANSI escape codes, as GRS uses them :-(
+  # the prompt does not need to match escape codes, as they have been removed
+  expect /\e\[\d*m\r?/ do |data, re|
+    data.gsub re, ''
+  end
 
-      prompt %r{[\w-]+# }
-      comment '# '
+  prompt /[\w-]+# /
+  comment '# '
 
       cmd :all do |cfg|
         # @!visibility private

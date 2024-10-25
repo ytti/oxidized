@@ -28,7 +28,7 @@ module Oxidized
     class LinuxGeneric < Oxidized::Models::Model
       using Refinements
 
-      prompt /^(\w.*|\W.*)(:|#) /
+      prompt /^(\w.*|\W.*)[:#$] /
       comment '# '
 
       # @!visibility private

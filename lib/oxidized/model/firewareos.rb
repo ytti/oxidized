@@ -3,8 +3,18 @@ module Oxidized
     class FirewareOS < Oxidized::Models::Model
       using Refinements
 
-      prompt /^\[?\w*\]?\w*?(<[\w-]*>)?(#|>)\s*$/
-      comment  '-- '
+  # @!visibility private
+  # matched prompts:
+  # [FAULT]WG<managed-by-wsm><master>>
+  # WG<managed-by-wsm><master>>
+  # WG<managed-by-wsm>>
+  # [FAULT]WG<non-master>>
+  # [FAULT]WG>
+  # WG>
+
+  prompt /^\[?\w*\]?\w*?(?:<[\w-]+>)*(#|>)\s*$/
+
+  comment  '-- '
 
       cmd :all do |cfg|
         cfg.cut_both

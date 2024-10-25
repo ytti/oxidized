@@ -74,7 +74,7 @@ end
 
 # Not taking the whole configuration.
 # For now, the model does only mask the generation date
-# In the future, it may hide passwords, so I included a line with snmp comunity strings
+# In the future, it may hide passwords, so I included a line with snmp community strings
 CONFIGURATION_FILE = <<~HEREDOC.freeze
   ; Schneider Electric
   ; Network Management Card AOS v2.5.0.8

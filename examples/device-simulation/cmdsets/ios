@@ -1,0 +1,7 @@
+terminal length 0
+terminal width 0
+show version
+show vtp status
+show inventory
+show running-config
+exit

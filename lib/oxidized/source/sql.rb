@@ -9,21 +9,26 @@ module Oxidized
         raise OxidizedError, 'sequel not found: sudo gem install sequel'
       end
 
-      # Sets up the SQL source configuration with default values if none are provided.
-      #
-      # @return [void]
-      # @raise [NoConfig] If no SQL source configuration is found.
-      def setup
-        return unless @cfg.empty?
-
+    # Sets up the SQL source configuration with default values if none are provided.
+    #
+    # @return [void]
+    # @raise [NoConfig] If no SQL source configuration is found.
+    def setup
+      if @cfg.empty?
         Oxidized.asetus.user.source.sql.adapter   = 'sqlite'
         Oxidized.asetus.user.source.sql.database  = File.join(Config::ROOT, 'sqlite.db')
         Oxidized.asetus.user.source.sql.table     = 'devices'
         Oxidized.asetus.user.source.sql.map.name  = 'name'
         Oxidized.asetus.user.source.sql.map.model = 'rancid'
         Oxidized.asetus.save :user
-        raise NoConfig, 'no source sql config, edit ~/.config/oxidized/config'
+        raise NoConfig, "No source sql config, edit #{Oxidized::Config.configfile}"
       end
+
+      # map.name is mandatory
+      return if @cfg.map.has_key?('name')
+
+      raise InvalidConfig, "map/name is a mandatory source attribute, edit #{Oxidized::Config.configfile}"
+    end
 
       # Loads nodes from the SQL database based on the specified configuration.
       #

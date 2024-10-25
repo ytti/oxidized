@@ -11,12 +11,21 @@ module Oxidized
 
       attr_reader :commitref
 
-      # Initializes the Git output instance.
-      #
-      # @return [void]
-      def initialize
-        super
-        @cfg = Oxidized.config.output.git
+    # Initializes the Git output instance.
+    #
+    # @return [void]
+    def initialize
+      super
+      @cfg = Oxidized.config.output.git
+    end
+
+    def setup
+      if @cfg.empty?
+        Oxidized.asetus.user.output.git.user  = 'Oxidized'
+        Oxidized.asetus.user.output.git.email = 'o@example.com'
+        Oxidized.asetus.user.output.git.repo = File.join(Config::ROOT, 'oxidized.git')
+        Oxidized.asetus.save :user
+        raise NoConfig, "no output git config, edit #{Oxidized::Config.configfile}"
       end
 
       # Sets up the Git configuration for output.

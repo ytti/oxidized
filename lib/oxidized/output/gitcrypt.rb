@@ -12,17 +12,26 @@ module Oxidized
       # @return [String] The commit reference of the latest commit.
       attr_reader :commitref
 
-      # Initializes the GitCrypt output instance.
-      #
-      # @return [void]
-      def initialize
-        super
-        @cfg = Oxidized.config.output.gitcrypt
-        @gitcrypt_cmd = "/usr/bin/git-crypt"
-        @gitcrypt_init = @gitcrypt_cmd + " init"
-        @gitcrypt_unlock = @gitcrypt_cmd + " unlock"
-        @gitcrypt_lock = @gitcrypt_cmd + " lock"
-        @gitcrypt_adduser = @gitcrypt_cmd + " add-gpg-user --trusted "
+    # Initializes the GitCrypt output instance.
+    #
+    # @return [void]
+    def initialize
+      super
+      @cfg = Oxidized.config.output.gitcrypt
+      @gitcrypt_cmd = "/usr/bin/git-crypt"
+      @gitcrypt_init = @gitcrypt_cmd + " init"
+      @gitcrypt_unlock = @gitcrypt_cmd + " unlock"
+      @gitcrypt_lock = @gitcrypt_cmd + " lock"
+      @gitcrypt_adduser = @gitcrypt_cmd + " add-gpg-user --trusted "
+    end
+
+    def setup
+      if @cfg.empty?
+        Oxidized.asetus.user.output.gitcrypt.user  = 'Oxidized'
+        Oxidized.asetus.user.output.gitcrypt.email = 'o@example.com'
+        Oxidized.asetus.user.output.gitcrypt.repo = File.join(Config::ROOT, 'oxidized.git')
+        Oxidized.asetus.save :user
+        raise NoConfig, "no output git config, edit #{Oxidized::Config.configfile}"
       end
 
       # Sets up the GitCrypt configuration for output.

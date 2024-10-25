@@ -4,11 +4,14 @@ require 'oxidized/hook/githubrepo'
 
 describe Oxidized::Hook::GithubRepo do
   let(:credentials) { mock }
-  let(:remote) { mock }
-  let(:remotes) { mock }
-  let(:repo_head) { mock }
-  let(:repo) { mock }
+  let(:remote) { mock 'remote' }
+  let(:remotes) { mock 'remotes' }
+  let(:repo_head) { mock 'repo_head' }
+  let(:repo) { mock 'repo' }
   let(:gr) { Oxidized::Hook::GithubRepo.new }
+  let(:local_branch) { mock 'local_branch' }
+  let(:remote_branch) { mock 'remote_branch' }
+  let(:repo_branches) { mock 'repo_branches' }
 
   before do
     Oxidized.asetus = Asetus.new
@@ -32,44 +35,70 @@ describe Oxidized::Hook::GithubRepo do
   describe "#fetch_and_merge_remote" do
     before(:each) do
       Oxidized.config.hooks.github_repo_hook.remote_repo = 'git@github.com:username/foo.git'
-      repo_head.expects(:name).returns('refs/heads/master')
+      repo_head.expects(:name).returns('refs/heads/master').twice
       gr.cfg = Oxidized.config.hooks.github_repo_hook
+
+      # Call in fetch
+      repo.expects(:head).returns(repo_head)
+
+      # Calls in remote_branch(repo)
+      repo.expects(:head).returns(repo_head)
+      repo.expects(:branches).returns(repo_branches).twice
+      repo_branches.expects(:[]).with('refs/heads/master').returns(local_branch)
+      local_branch.expects(:name).returns('master')
+      repo_branches.expects(:[]).with('origin/master').returns(remote_branch)
+
+      # For merge_analysis
+      remote_branch.expects(:target_id).returns('111111')
     end
 
-    it "should not try to merge when there is no update in remote branch" do
+    it "should not try to merge when there is no need to" do
+      # Fetch returns without having fetched objects
       repo.expects(:fetch).with('origin', ['refs/heads/master'], credentials: credentials).returns(Hash.new(0))
-      repo.expects(:branches).never
-      repo.expects(:head).returns(repo_head)
+
+      # No need to merge
+      repo.expects(:merge_analysis).with('111111').returns([:up_to_date])
+
       _(gr.fetch_and_merge_remote(repo, credentials)).must_be_nil
     end
 
     describe "when there is update considering conflicts" do
       let(:merge_index) { mock }
-      let(:their_branch) { mock }
 
       before(:each) do
+        # Fetch returns with having fetched objects
         repo.expects(:fetch).with('origin', ['refs/heads/master'], credentials: credentials).returns(total_deltas: 1)
-        their_branch.expects(:target_id).returns(1)
-        repo_head.expects(:target_id).returns(2)
-        repo.expects(:merge_commits).with(2, 1).returns(merge_index)
-        repo.expects(:branches).returns("origin/master" => their_branch)
+
+        # SHA1 for merge - head and remote_branch
+        repo.expects(:head).returns(repo_head)
+        repo_head.expects(:target_id).returns('000000')
+        remote_branch.expects(:target_id).returns('111111')
+
+        # Need to merge
+        repo.expects(:merge_analysis).with('111111').returns([:normal])
+
+        # log message that we need to merge
+        remote_branch.expects(:name).returns('origin/master')
+
+        # try to merge
+        repo.expects(:merge_commits).with('000000', '111111').returns(merge_index)
       end
 
       it "should not try merging when there's conflict" do
-        repo.expects(:head).twice.returns(repo_head)
-        their_branch.expects(:name).returns("origin/master")
         merge_index.expects(:conflicts?).returns(true)
         Rugged::Commit.expects(:create).never
         _(gr.fetch_and_merge_remote(repo, credentials)).must_be_nil
       end
 
       it "should merge when there is no conflict" do
-        repo.expects(:head).times(3).returns(repo_head)
-        their_branch.expects(:target).returns("their_target")
-        their_branch.expects(:name).twice.returns("origin/master")
+        merge_index.expects(:conflicts?).returns(false)
+
+        # Mocks for Rugged::Commit.create
+        repo.expects(:head).returns(repo_head)
+        remote_branch.expects(:target).returns("their_target")
+        remote_branch.expects(:name).returns("origin/master")
         repo_head.expects(:target).returns("our_target")
         merge_index.expects(:write_tree).with(repo).returns("tree")
-        merge_index.expects(:conflicts?).returns(false)
         Rugged::Commit.expects(:create).with(repo,
                                              parents:    %w[our_target their_target],
                                              tree:       "tree",

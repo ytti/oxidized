@@ -25,10 +25,11 @@ module Oxidized
         #  community public read-only view all
         cfg.gsub! /^ community (\S+) (.*)/, ' community <hidden> \\2'
 
-        # @!visibility private
-        # radius server 10.1.1.1 secret public
-        cfg.gsub! /^radius server (\S+) secret (\S+)(.*)/, 'radius server \\1 secret <hidden> \\3'
-      end
+    # @!visibility private
+    # radius server 10.1.1.1 secret public
+    cfg.gsub! /^radius server (\S+) secret (\S+)(.*)/, 'radius server \\1 secret <hidden> \\3'
+    cfg
+  end
 
       cmd 'show version' do |cfg|
         cfg.gsub! /.*uptime is.*/, ''
