@@ -4,31 +4,13 @@ module Oxidized
   # This class handles loading device configurations from a specified
   # CSV file, including mapping of node parameters and support for
   # variable interpolation.
-  class CSV < Source
+  class CSV < Oxidized::Source::Source
     # Initializes a new instance of the CSV class.
     #
     # This constructor sets up the configuration for the CSV source.
     def initialize
       @cfg = Oxidized.config.source.csv
       super
-    end
-
-    def setup
-      if @cfg.empty?
-        Oxidized.asetus.user.source.csv.file      = File.join(Config::ROOT, 'router.db')
-        Oxidized.asetus.user.source.csv.delimiter = /:/
-        Oxidized.asetus.user.source.csv.map.name  = 0
-        Oxidized.asetus.user.source.csv.map.model = 1
-        Oxidized.asetus.user.source.csv.gpg       = false
-        Oxidized.asetus.save :user
-        raise NoConfig, "no source csv config, edit #{Oxidized::Config.configfile}"
-      end
-      require 'gpgme' if @cfg.gpg?
-
-      # map.name is mandatory
-      return if @cfg.map.has_key?('name')
-
-      raise InvalidConfig, "map/name is a mandatory source attribute, edit #{Oxidized::Config.configfile}"
     end
 
       # Sets up the CSV source configuration.
@@ -44,10 +26,14 @@ module Oxidized
           Oxidized.asetus.user.source.csv.map.model = 1
           Oxidized.asetus.user.source.csv.gpg       = false
           Oxidized.asetus.save :user
-          raise NoConfig, 'no source csv config, edit ~/.config/oxidized/config'
+          raise NoConfig, "no source csv config, edit #{Oxidized::Config.configfile}"
         end
         require 'gpgme' if @cfg.gpg?
-      end
+  
+        # map.name is mandatory
+        return if @cfg.map.has_key?('name')
+  
+        raise InvalidConfig, "map/name is a mandatory source attribute, edit #{Oxidized::Config.configfile}"
 
       # Loads the data from the configured CSV file.
       #

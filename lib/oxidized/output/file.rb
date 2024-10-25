@@ -96,6 +96,7 @@ module Oxidized
       rescue Errno::ENOENT
         nil
       end
+    end
 
       # Retrieves the version of a node's configuration.
       #

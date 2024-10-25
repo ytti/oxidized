@@ -19,15 +19,6 @@ module Oxidized
       @cfg = Oxidized.config.output.git
     end
 
-    def setup
-      if @cfg.empty?
-        Oxidized.asetus.user.output.git.user  = 'Oxidized'
-        Oxidized.asetus.user.output.git.email = 'o@example.com'
-        Oxidized.asetus.user.output.git.repo = File.join(Config::ROOT, 'oxidized.git')
-        Oxidized.asetus.save :user
-        raise NoConfig, "no output git config, edit #{Oxidized::Config.configfile}"
-      end
-
       # Sets up the Git configuration for output.
       #
       # @raise [NoConfig] if no output Git configuration is provided.
@@ -38,7 +29,7 @@ module Oxidized
           Oxidized.asetus.user.output.git.email = 'o@example.com'
           Oxidized.asetus.user.output.git.repo = File.join(Config::ROOT, 'oxidized.git')
           Oxidized.asetus.save :user
-          raise NoConfig, 'no output git config, edit ~/.config/oxidized/config'
+          raise NoConfig, "no output git config, edit #{Oxidized::Config.configfile}"
         end
 
         if @cfg.repo.respond_to?(:each)
