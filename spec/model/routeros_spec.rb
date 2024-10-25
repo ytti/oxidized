@@ -29,7 +29,7 @@ describe 'model/RouterOS' do
     status, result = @node.run
 
     _(status).must_equal :success
-    #result2file(result, 'model-output.txt')
+    # result2file(result, 'model-output.txt')
     _(result.to_cfg).must_equal mockmodel.oxidized_output
   end
 end
