@@ -43,11 +43,18 @@ module Oxidized
     #       fullconfig: true
     # ```
 
+    # Represents the FortiOS model.
+    #
+    # Handles configuration retrieval and processing for FortiOS devices.
+
     class FortiOS < Oxidized::Models::Model
       using Refinements
 
       comment '# '
 
+      # @!method prompt(regex)
+      #   Sets the prompt for the device.
+      #   @param regex [Regexp] The regular expression that matches the prompt.
       prompt /^([-\w.~]+(\s[(\w\-.)]+)?~?\s?[#>$]\s?)$/
 
       # @!visibility private

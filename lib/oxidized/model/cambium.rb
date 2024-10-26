@@ -1,5 +1,9 @@
 module Oxidized
   module Models
+    # Represents the Cambium model.
+    #
+    # Handles configuration retrieval and processing for Cambium devices.
+
     class Cambium < Oxidized::Models::Model
       using Refinements
 

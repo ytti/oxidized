@@ -1,5 +1,9 @@
 module Oxidized
   module Models
+    # Represents the ZyNOSGS model.
+    #
+    # Handles configuration retrieval and processing for ZyNOSGS devices.
+
     class ZyNOSGS < Oxidized::Models::Model
       using Refinements
 

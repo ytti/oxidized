@@ -12,6 +12,10 @@ module Oxidized
     #
     # ## Model-driven CLI in Nokia SR OS (starting from versions 16.1.R1)
     # New model `srosmd` is introduced which collects information in model-driven format.
+    # Represents the SROSMD model.
+    #
+    # Handles configuration retrieval and processing for SROSMD devices.
+
     class SROSMD < Oxidized::Models::Model
       using Refinements
 
@@ -24,6 +28,9 @@ module Oxidized
 
       comment '# '
 
+      # @!method prompt(regex)
+      #   Sets the prompt for the device.
+      #   @param regex [Regexp] The regular expression that matches the prompt.
       prompt /^([-\w.@:>*]+\s?[#>]\s?)$/
 
       cmd :all do |cfg, cmdstring|

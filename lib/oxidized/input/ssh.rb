@@ -42,7 +42,7 @@ module Oxidized
           begin
             login
           rescue Timeout::Error
-            raise PromptUndetect, [@output, 'not matching configured prompt', @node.prompt].join(' ')
+            raise Error::PromptUndetect, [@output, 'not matching configured prompt', @node.prompt].join(' ')
           end
         end
         connected?

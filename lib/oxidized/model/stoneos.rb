@@ -1,11 +1,18 @@
 module Oxidized
   module Models
+    # Represents the StoneOS model.
+    #
+    # Handles configuration retrieval and processing for StoneOS devices.
+
     class StoneOS < Oxidized::Models::Model
       using Refinements
 
       # @!visibility private
       # Hillstone Networks StoneOS software
 
+      # @!method prompt(regex)
+      #   Sets the prompt for the device.
+      #   @param regex [Regexp] The regular expression that matches the prompt.
       prompt /^\r?[\w.()-]+~?[#>](\s)?$/
       comment '# '
 

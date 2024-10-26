@@ -1,5 +1,9 @@
 module Oxidized
   module Models
+    # Represents the GcomBNPS model.
+    #
+    # Handles configuration retrieval and processing for GcomBNPS devices.
+
     class GcomBNPS < Oxidized::Models::Model
       using Refinements
 
@@ -10,6 +14,9 @@ module Oxidized
       # tested with:
       #  - S5330 (aka Fiberstore S3800)
 
+      # @!method prompt(regex)
+      #   Sets the prompt for the device.
+      #   @param regex [Regexp] The regular expression that matches the prompt.
       prompt /^\r?([\w.@()-]+?(\(1-\d+ chars\))?[#>:]\s?)$/ # also match SSH password promt (post_login commands are sent after the first prompt)
       comment '! '
 

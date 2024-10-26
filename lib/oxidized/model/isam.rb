@@ -1,11 +1,18 @@
 module Oxidized
   module Models
+    # Represents the ISAM model.
+    #
+    # Handles configuration retrieval and processing for ISAM devices.
+
     class ISAM < Oxidized::Models::Model
       using Refinements
 
       # @!visibility private
       # Alcatel ISAM 7302/7330 FTTN
 
+      # @!method prompt(regex)
+      #   Sets the prompt for the device.
+      #   @param regex [Regexp] The regular expression that matches the prompt.
       prompt /^([\w.:@-]+>#\s)$/
       comment '# '
 

@@ -52,6 +52,10 @@ module Oxidized
     #     password: apc-password
     #     input: ftp
     # ```
+    # Represents the Apc_aos model.
+    #
+    # Handles configuration retrieval and processing for Apc_aos devices.
+
     class Apc_aos < Oxidized::Models::Model # rubocop:disable Naming/ClassAndModuleCamelCase
       using Refinements
 

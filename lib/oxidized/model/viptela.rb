@@ -13,11 +13,18 @@ module Oxidized
     #
     # Back to [Model-Notes](README.md)
 
+    # Represents the Viptela model.
+    #
+    # Handles configuration retrieval and processing for Viptela devices.
+
     class Viptela < Oxidized::Models::Model
       using Refinements
       # @!visibility private
       # Cisco Vipetla
 
+      # @!method prompt(regex)
+      #   Sets the prompt for the device.
+      #   @param regex [Regexp] The regular expression that matches the prompt.
       prompt /[-\w]+#\s$/
       comment  '! '
 

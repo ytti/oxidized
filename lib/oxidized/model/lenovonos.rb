@@ -29,12 +29,26 @@ module Oxidized
     #
     # Back to [Model-Notes](README.md)
 
+    # Represents the LenovoNOS model.
+    #
+    # Handles configuration retrieval and processing for LenovoNOS devices.
+
     class LenovoNOS < Oxidized::Models::Model
       using Refinements
 
+      # @!method prompt(regex)
+      #   Sets the prompt for the device.
+      #   @param regex [Regexp] The regular expression that matches the prompt.
       prompt /^([\w.@()-]+[#>]\s?)$/
       comment '! '
 
+      # Adds extended comments to the configuration.
+      #
+      # This method appends a header and output, separated by newlines, and adds them as comments to the configuration.
+      #
+      # @param header [String] The header string to prepend to the output.
+      # @param output [String] The configuration output to be commented.
+      # @return [void]
       def comment_ext(header, output)
         data = ''
         data << header

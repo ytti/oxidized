@@ -1,4 +1,8 @@
 module Oxidized
+  # Handles configuration fetching from various sources.
+  #
+  # This module contains classes that define how configurations are retrieved
+  # from different sources such as Git repositories, HTTP endpoints, or databases.
   module Source
     # Manages the source of configuration data for Oxidized.
     #

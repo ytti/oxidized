@@ -1,9 +1,16 @@
 module Oxidized
   module Models
+    # Represents the ALTEONOS model.
+    #
+    # Handles configuration retrieval and processing for ALTEONOS devices.
+
     class ALTEONOS < Oxidized::Models::Model
       using Refinements
 
-      prompt  /^\(?.+\)?\s?[#>]/
+      # @!method prompt(regex)
+      #   Sets the prompt for the device.
+      #   @param regex [Regexp] The regular expression that matches the prompt.
+      prompt /^\(?.+\)?\s?[#>]/
 
       comment '! '
 

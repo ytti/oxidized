@@ -1,8 +1,15 @@
 module Oxidized
   module Models
+    # Represents the BR6910 model.
+    #
+    # Handles configuration retrieval and processing for BR6910 devices.
+
     class BR6910 < Oxidized::Models::Model
       using Refinements
 
+      # @!method prompt(regex)
+      #   Sets the prompt for the device.
+      #   @param regex [Regexp] The regular expression that matches the prompt.
       prompt /^([\w.@()-]+[#>]\s?)$/
       comment '! '
 

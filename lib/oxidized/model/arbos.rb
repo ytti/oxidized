@@ -12,12 +12,19 @@ module Oxidized
     #
     # Back to [Model-Notes](README.md)
 
+    # Represents the ARBOS model.
+    #
+    # Handles configuration retrieval and processing for ARBOS devices.
+
     class ARBOS < Oxidized::Models::Model
       using Refinements
 
       # @!visibility private
       # Arbor OS model #
 
+      # @!method prompt(regex)
+      #   Sets the prompt for the device.
+      #   @param regex [Regexp] The regular expression that matches the prompt.
       prompt /^[\S\s]+\n([\w.@-]+[:\/#>]+)\s?$/
       comment '# '
 

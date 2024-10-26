@@ -1,9 +1,17 @@
 module Oxidized
   module Models
+    # Represents the RAISECOM model.
+    #
+    # Handles configuration retrieval and processing for RAISECOM devices.
+
     class RAISECOM < Oxidized::Models::Model
       using Refinements
 
       comment '! '
+
+      # @!method prompt(regex)
+      #   Sets the prompt for the device.
+      #   @param regex [Regexp] The regular expression that matches the prompt.
       prompt /([\w.@-]+[#>]\s?)$/
 
       cmd 'show version' do |cfg|

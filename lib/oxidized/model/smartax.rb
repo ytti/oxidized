@@ -36,11 +36,19 @@ module Oxidized
     #
     # Back to [Model-Notes](README.md)
 
+    # Represents the SmartAX model.
+    #
+    # Handles configuration retrieval and processing for SmartAX devices.
+
     class SmartAX < Oxidized::Models::Model
       using Refinements
 
       # @!visibility private
       # Huawei SmartAX GPON/EPON/DOCSIS network access devices
+
+      # @!method prompt(regex)
+      #   Sets the prompt for the device.
+      #   @param regex [Regexp] The regular expression that matches the prompt.
       prompt /^([\w.-]+[>#])$/
 
       comment '#'

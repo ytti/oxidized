@@ -1,5 +1,9 @@
 module Oxidized
   module Models
+    # Represents the Openbsd model.
+    #
+    # Handles configuration retrieval and processing for Openbsd devices.
+
     class Openbsd < Oxidized::Models::Model
       using Refinements
 
@@ -8,6 +12,9 @@ module Oxidized
       # you can edit the one that your user uses, with root would be /root/.profile using the next PS1 def
       # export PS1="\033[32m\u@\h\033[00m:\033[36m\w\033[00m$ "
 
+      # @!method prompt(regex)
+      #   Sets the prompt for the device.
+      #   @param regex [Regexp] The regular expression that matches the prompt.
       prompt /^.+@.+:.+\$/
       comment '# '
 

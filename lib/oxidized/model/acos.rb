@@ -1,5 +1,9 @@
 module Oxidized
   module Models
+    # Represents the ACOS model.
+    #
+    # Handles configuration retrieval and processing for ACOS devices.
+
     class ACOS < Oxidized::Models::Model
       using Refinements
 
@@ -10,6 +14,10 @@ module Oxidized
 
       # @!visibility private
       # ACOS prompt changes depending on the state of the device
+
+      # @!method prompt(regex)
+      #   Sets the prompt for the device.
+      #   @param regex [Regexp] The regular expression that matches the prompt.
       prompt /^([-\w.\/:?\[\]()]+[#>]\s?)$/
 
       cmd :secret do |cfg|

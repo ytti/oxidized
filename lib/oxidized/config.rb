@@ -110,7 +110,6 @@ module Oxidized
         raise Error::InvalidConfig, "Error loading config: #{e.message}"
       end
 
-
       # @!visibility private
       # If the configuration is being created for the first time, raise NoConfig
       raise Error::NoConfig, "edit #{@configfile}" if asetus.create

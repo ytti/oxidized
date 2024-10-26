@@ -1,11 +1,18 @@
 module Oxidized
   module Models
+    # Represents the TELCO model.
+    #
+    # Handles configuration retrieval and processing for TELCO devices.
+
     class TELCO < Oxidized::Models::Model
       using Refinements
 
       # @!visibility private
       # Telco Systems T-Marc 3306
 
+      # @!method prompt(regex)
+      #   Sets the prompt for the device.
+      #   @param regex [Regexp] The regular expression that matches the prompt.
       prompt /^(\r?[\w.@_()-]+[#]\s?)$/
       comment '! '
 

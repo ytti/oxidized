@@ -9,9 +9,16 @@ module Oxidized
     # Switch ID       Hardware Version                Firmware Version
     # 0               MBM-XEM-002  (B6-01)            2.1.3-25
 
+    # Represents the AricentISS model.
+    #
+    # Handles configuration retrieval and processing for AricentISS devices.
+
     class AricentISS < Oxidized::Models::Model
       using Refinements
 
+      # @!method prompt(regex)
+      #   Sets the prompt for the device.
+      #   @param regex [Regexp] The regular expression that matches the prompt.
       prompt /^(\e\[27m)?[ \r]*[\w-]+# ?$/
 
       cfg :ssh do

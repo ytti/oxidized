@@ -4,9 +4,16 @@ module Oxidized
     # ECI Telecom Apollo
     # Tested on OPT9608 systems via SSH and telnet
 
+    # Represents the ECIapollo model.
+    #
+    # Handles configuration retrieval and processing for ECIapollo devices.
+
     class ECIapollo < Oxidized::Models::Model
       using Refinements
 
+      # @!method prompt(regex)
+      #   Sets the prompt for the device.
+      #   @param regex [Regexp] The regular expression that matches the prompt.
       prompt /^([\w.@()-]+[#>]\s?)$/
       comment '# '
 

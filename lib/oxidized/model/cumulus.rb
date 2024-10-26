@@ -52,9 +52,16 @@ module Oxidized
     #
     # Back to [Model-Notes](README.md)
 
+    # Represents the Cumulus model.
+    #
+    # Handles configuration retrieval and processing for Cumulus devices.
+
     class Cumulus < Oxidized::Models::Model
       using Refinements
 
+      # @!method prompt(regex)
+      #   Sets the prompt for the device.
+      #   @param regex [Regexp] The regular expression that matches the prompt.
       prompt /^(([\w.-]*)@(.*)):/
       comment '# '
 

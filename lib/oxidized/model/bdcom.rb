@@ -1,5 +1,9 @@
 module Oxidized
   module Models
+    # Represents the BDCOM model.
+    #
+    # Handles configuration retrieval and processing for BDCOM devices.
+
     class BDCOM < Oxidized::Models::Model
       using Refinements
 

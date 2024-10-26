@@ -1,5 +1,9 @@
 module Oxidized
   module Models
+    # Represents the FTOS model.
+    #
+    # Handles configuration retrieval and processing for FTOS devices.
+
     class FTOS < Oxidized::Models::Model
       using Refinements
 

@@ -1,11 +1,18 @@
 module Oxidized
   module Models
+    # Represents the XOS model.
+    #
+    # Handles configuration retrieval and processing for XOS devices.
+
     class XOS < Oxidized::Models::Model
       using Refinements
 
       # @!visibility private
       # Extreme Networks XOS
 
+      # @!method prompt(regex)
+      #   Sets the prompt for the device.
+      #   @param regex [Regexp] The regular expression that matches the prompt.
       prompt /^\s?\*?\s?[-\w]+\s?[-\w.~]+(:\d+)? [#>] $/
       comment  '# '
 

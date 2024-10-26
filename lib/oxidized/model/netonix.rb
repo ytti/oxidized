@@ -1,8 +1,15 @@
 module Oxidized
   module Models
+    # Represents the Netonix model.
+    #
+    # Handles configuration retrieval and processing for Netonix devices.
+
     class Netonix < Oxidized::Models::Model
       using Refinements
 
+      # @!method prompt(regex)
+      #   Sets the prompt for the device.
+      #   @param regex [Regexp] The regular expression that matches the prompt.
       prompt /^[\w\s\(\).@_\/:-]+#/
 
       cmd :all do |cfg|

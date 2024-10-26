@@ -1,11 +1,18 @@
 module Oxidized
   module Models
+    # Represents the AudioCodes model.
+    #
+    # Handles configuration retrieval and processing for AudioCodes devices.
+
     class AudioCodes < Oxidized::Models::Model
       using Refinements
 
       # @!visibility private
       # Pull config from AudioCodes Mediant devices from version > 7.0
 
+      # @!method prompt(regex)
+      #   Sets the prompt for the device.
+      #   @param regex [Regexp] The regular expression that matches the prompt.
       prompt /^\r?([\w.@() -]+[#>]\s?)$/
       comment '## '
 

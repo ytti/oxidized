@@ -29,6 +29,10 @@ module Oxidized
     # #  panos_api:
     # ```
 
+    # Represents the PanOS model.
+    #
+    # Handles configuration retrieval and processing for PanOS devices.
+
     class PanOS < Oxidized::Models::Model
       using Refinements
 
@@ -37,6 +41,9 @@ module Oxidized
 
       comment '! '
 
+      # @!method prompt(regex)
+      #   Sets the prompt for the device.
+      #   @param regex [Regexp] The regular expression that matches the prompt.
       prompt /^[\w.@:()-]+>\s?$/
 
       cmd :all do |cfg|

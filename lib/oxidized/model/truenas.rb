@@ -1,5 +1,9 @@
 module Oxidized
   module Models
+    # Represents the TrueNAS model.
+    #
+    # Handles configuration retrieval and processing for TrueNAS devices.
+
     class TrueNAS < Oxidized::Models::Model
       using Refinements
 

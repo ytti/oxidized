@@ -1,11 +1,18 @@
 module Oxidized
   module Models
+    # Represents the ACMEPACKET model.
+    #
+    # Handles configuration retrieval and processing for ACMEPACKET devices.
+
     class ACMEPACKET < Oxidized::Models::Model
       using Refinements
 
       # @!visibility private
       # Oracle ACME Packet 3k, 4k, 6k series
 
+      # @!method prompt(regex)
+      #   Sets the prompt for the device.
+      #   @param regex [Regexp] The regular expression that matches the prompt.
       prompt /^\r*([\w.@()-\/]+[#>]\s?)$/
 
       comment  '! '

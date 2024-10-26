@@ -1,10 +1,18 @@
 module Oxidized
   module Models
+    # Represents the AsyncOS model.
+    #
+    # Handles configuration retrieval and processing for AsyncOS devices.
+
     class AsyncOS < Oxidized::Models::Model
       using Refinements
 
       # @!visibility private
       # ESA prompt "(mail.example.com)> " or "mail.example.com> "
+
+      # @!method prompt(regex)
+      #   Sets the prompt for the device.
+      #   @param regex [Regexp] The regular expression that matches the prompt.
       prompt /^\r*([(]?[\w. ]+[)]?[#>]\s+)$/
       comment '! '
 

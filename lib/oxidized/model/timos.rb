@@ -1,11 +1,11 @@
 module Oxidized
   module Models
-    # @!visibility private
-    # Backward compatibility shim for deprecated model `timos`.
-    # Migrate your source from `timos` to `sros`.
-
     require_relative 'sros'
 
+    # Backward compatibility shim for deprecated model `timos`.
+    # Migrate your source from `timos` to `sros`.
+    #
+    # @deprecated Use `sros` instead.
     TiMOS = SROS
 
     Oxidized.logger.warn "Using deprecated model timos, use sros instead."

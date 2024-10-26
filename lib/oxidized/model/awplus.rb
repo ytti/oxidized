@@ -1,5 +1,9 @@
 module Oxidized
   module Models
+    # Represents the AWPlus model.
+    #
+    # Handles configuration retrieval and processing for AWPlus devices.
+
     class AWPlus < Oxidized::Models::Model
       using Refinements
 
@@ -7,6 +11,9 @@ module Oxidized
       # Allied Telesis Alliedware Plus Model#
       # https://www.alliedtelesis.com/products/software/AlliedWare-Plus
 
+      # @!method prompt(regex)
+      #   Sets the prompt for the device.
+      #   @param regex [Regexp] The regular expression that matches the prompt.
       prompt /^(\r?[\w.@:\/-]+[#>]\s?)$/
       comment '! '
 

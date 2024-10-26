@@ -1,8 +1,15 @@
 module Oxidized
   module Models
+    # Represents the Catos model.
+    #
+    # Handles configuration retrieval and processing for Catos devices.
+
     class Catos < Oxidized::Models::Model
       using Refinements
 
+      # @!method prompt(regex)
+      #   Sets the prompt for the device.
+      #   @param regex [Regexp] The regular expression that matches the prompt.
       prompt /^[\w.@-]+>\s?(\(enable\) )?$/
       comment '# '
 

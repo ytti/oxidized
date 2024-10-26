@@ -1,5 +1,8 @@
 module Oxidized
   module Models
+    # Represents the JunOS model.
+    #
+    # Handles configuration retrieval and processing for JunOS devices.
     # # JunOS Configuration
     #
     # Create login class cfg-view
@@ -38,6 +41,9 @@ module Oxidized
       using Refinements
       comment '# '
 
+      # Determines if the current session is a Telnet session.
+      #
+      # @return [MatchData, nil] Returns the MatchData if the session is Telnet, otherwise nil.
       def telnet
         @input.class.to_s.match(/Telnet/)
       end

@@ -12,9 +12,16 @@ module Oxidized
     # ```
     #
     # Back to [Model-Notes](README.md)
+    # Represents the ADVA model.
+    #
+    # Handles configuration retrieval and processing for ADVA devices.
+
     class ADVA < Oxidized::Models::Model
       using Refinements
 
+      # @!method prompt(regex)
+      #   Sets the prompt for the device.
+      #   @param regex [Regexp] The regular expression that matches the prompt.
       prompt /\w+-+[#>]\s?$/
       comment '# '
 

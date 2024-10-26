@@ -1,5 +1,9 @@
 module Oxidized
   module Models
+    # Represents the ZhoneOLT model.
+    #
+    # Handles configuration retrieval and processing for ZhoneOLT devices.
+
     class ZhoneOLT < Oxidized::Models::Model
       using Refinements
 
@@ -9,6 +13,10 @@ module Oxidized
       # @!visibility private
       # the prompt can be anything on zhone, but it defaults to 'zXX>' and we
       # always use hostname>
+
+      # @!method prompt(regex)
+      #   Sets the prompt for the device.
+      #   @param regex [Regexp] The regular expression that matches the prompt.
       prompt /^(\r*[\w.@():-]+[>]\s?)$/
       comment '# '
 

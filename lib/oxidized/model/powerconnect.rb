@@ -1,8 +1,15 @@
 module Oxidized
   module Models
+    # Represents the PowerConnect model.
+    #
+    # Handles configuration retrieval and processing for PowerConnect devices.
+
     class PowerConnect < Oxidized::Models::Model
       using Refinements
 
+      # @!method prompt(regex)
+      #   Sets the prompt for the device.
+      #   @param regex [Regexp] The regular expression that matches the prompt.
       prompt /^([\w\s.@-]+(\(\S*\))?[#>]\s?)$/ # allow spaces in hostname..dell does not limit it.. #
 
       comment '! '
@@ -57,6 +64,16 @@ module Oxidized
         pre_logout "logout"
         pre_logout "exit"
       end
+
+      # Cleans the configuration by removing unnecessary lines.
+      #
+      # This method processes the raw configuration data by:
+      # - Removing invalid input detections.
+      # - Stripping leading/trailing whitespace.
+      # - Removing empty lines.
+      #
+      # @param cfg [String] The raw configuration data.
+      # @return [String] The cleaned configuration data.
 
       def clean(cfg)
         out = []

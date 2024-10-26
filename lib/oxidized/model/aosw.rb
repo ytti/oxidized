@@ -1,5 +1,9 @@
 module Oxidized
   module Models
+    # Represents the AOSW model.
+    #
+    # Handles configuration retrieval and processing for AOSW devices.
+
     class AOSW < Oxidized::Models::Model
       using Refinements
 
@@ -20,6 +24,10 @@ module Oxidized
 
       # @!visibility private
       # see /spec/model/aosw_spec.rb for prompt examples
+
+      # @!method prompt(regex)
+      #   Sets the prompt for the device.
+      #   @param regex [Regexp] The regular expression that matches the prompt.
       prompt /^\(?[\w\:.@-]+\)? ?[*^]?(\[[\w\/]+\] ?)?[#>] ?$/
 
       # @!visibility private

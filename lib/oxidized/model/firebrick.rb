@@ -1,10 +1,18 @@
 module Oxidized
   module Models
+    # Represents the Firebrick model.
+    #
+    # Handles configuration retrieval and processing for Firebrick devices.
+
     class Firebrick < Oxidized::Models::Model
       using Refinements
 
       # @!visibility private
       # Firebrick #
+
+      # @!method prompt(regex)
+      #   Sets the prompt for the device.
+      #   @param regex [Regexp] The regular expression that matches the prompt.
       prompt /\x0a\x1b\x5b\x32\x4b\x0d.*>\s/
 
       cmd :all do |cfg|

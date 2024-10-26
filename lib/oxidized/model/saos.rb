@@ -1,5 +1,9 @@
 module Oxidized
   module Models
+    # Represents the SAOS model.
+    #
+    # Handles configuration retrieval and processing for SAOS devices.
+
     class SAOS < Oxidized::Models::Model
       using Refinements
 
@@ -8,6 +12,10 @@ module Oxidized
       # used for 6.x devices
 
       comment '! '
+
+      # @!method prompt(regex)
+      #   Sets the prompt for the device.
+      #   @param regex [Regexp] The regular expression that matches the prompt.
       prompt /^[\w-]+\*?>\s?/
 
       cmd :all do |cfg|

@@ -1,5 +1,9 @@
 module Oxidized
   module Models
+    # Represents the Alvarion model.
+    #
+    # Handles configuration retrieval and processing for Alvarion devices.
+
     class Alvarion < Oxidized::Models::Model
       using Refinements
 

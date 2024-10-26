@@ -1,5 +1,9 @@
 module Oxidized
   module Models
+    # Represents the RGOS model.
+    #
+    # Handles configuration retrieval and processing for RGOS devices.
+
     class RGOS < Oxidized::Models::Model
       using Refinements
 

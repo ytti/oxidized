@@ -1,10 +1,18 @@
 module Oxidized
   module Models
+    # Represents the CiscoSMA model.
+    #
+    # Handles configuration retrieval and processing for CiscoSMA devices.
+
     class CiscoSMA < Oxidized::Models::Model
       using Refinements
 
       # @!visibility private
       # SMA prompt "mail.example.com> "
+
+      # @!method prompt(regex)
+      #   Sets the prompt for the device.
+      #   @param regex [Regexp] The regular expression that matches the prompt.
       prompt /^\r*([-\w. ]+\.[-\w. ]+\.[-\w. ]+[#>]\s+)$/
       comment '! '
 

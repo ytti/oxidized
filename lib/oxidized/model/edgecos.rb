@@ -1,5 +1,9 @@
 module Oxidized
   module Models
+    # Represents the EdgeCOS model.
+    #
+    # Handles configuration retrieval and processing for EdgeCOS devices.
+
     class EdgeCOS < Oxidized::Models::Model
       using Refinements
 
@@ -35,12 +39,12 @@ module Oxidized
         cfg.cut_head
       end
 
-  cmd 'show system' do |cfg|
-    cfg.gsub! /^.*\sUp Time\s*:.*\n/i, ''
-    cfg.gsub! /(\sTemperature \d*:)\s*\d+ degrees/, '\\1 <temperature values hidden>'
-    cfg.gsub! /^!?\s*Fan \d+ speed:\s+\d+ rpm\s+Fan \d+ speed:\s+\d+ rpm\s+Fan \d+ speed:\s+\d+ rpm$/, '<fan speeds hidden>'
-    comment cfg
-  end
+      cmd 'show system' do |cfg|
+        cfg.gsub! /^.*\sUp Time\s*:.*\n/i, ''
+        cfg.gsub! /(\sTemperature \d*:)\s*\d+ degrees/, '\\1 <temperature values hidden>'
+        cfg.gsub! /^!?\s*Fan \d+ speed:\s+\d+ rpm\s+Fan \d+ speed:\s+\d+ rpm\s+Fan \d+ speed:\s+\d+ rpm$/, '<fan speeds hidden>'
+        comment cfg
+      end
 
       cmd 'show version' do |cfg|
         cfg.gsub! /^.*\suptime is.*\n/i, ''

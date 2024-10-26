@@ -1,11 +1,18 @@
 module Oxidized
   module Models
+    # Represents the HPEBladeSystem model.
+    #
+    # Handles configuration retrieval and processing for HPEBladeSystem devices.
+
     class HPEBladeSystem < Oxidized::Models::Model
       using Refinements
 
       # @!visibility private
       # HPE Onboard Administrator
 
+      # @!method prompt(regex)
+      #   Sets the prompt for the device.
+      #   @param regex [Regexp] The regular expression that matches the prompt.
       prompt /.*> /
       comment '# '
 

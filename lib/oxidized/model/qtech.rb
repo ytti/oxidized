@@ -1,5 +1,9 @@
 module Oxidized
   module Models
+    # Represents the QTECH model.
+    #
+    # Handles configuration retrieval and processing for QTECH devices.
+
     class QTECH < Oxidized::Models::Model
       using Refinements
 

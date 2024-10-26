@@ -1,5 +1,9 @@
 module Oxidized
   module Models
+    # Represents the CiscoVPN3k model.
+    #
+    # Handles configuration retrieval and processing for CiscoVPN3k devices.
+
     class CiscoVPN3k < Oxidized::Models::Model
       using Refinements
 

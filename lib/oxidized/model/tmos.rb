@@ -1,5 +1,9 @@
 module Oxidized
   module Models
+    # Represents the TMOS model.
+    #
+    # Handles configuration retrieval and processing for TMOS devices.
+
     class TMOS < Oxidized::Models::Model
       using Refinements
 

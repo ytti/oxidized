@@ -1,11 +1,18 @@
 module Oxidized
   module Models
+    # Represents the NOS model.
+    #
+    # Handles configuration retrieval and processing for NOS devices.
+
     class NOS < Oxidized::Models::Model
       using Refinements
 
       # @!visibility private
       # Brocade Network Operating System
 
+      # @!method prompt(regex)
+      #   Sets the prompt for the device.
+      #   @param regex [Regexp] The regular expression that matches the prompt.
       prompt /^(?:\e\[..h)?[\w.-]+# $/
       comment  '! '
 

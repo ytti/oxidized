@@ -1,8 +1,15 @@
 module Oxidized
   module Models
+    # Represents the NetScaler model.
+    #
+    # Handles configuration retrieval and processing for NetScaler devices.
+
     class NetScaler < Oxidized::Models::Model
       using Refinements
 
+      # @!method prompt(regex)
+      #   Sets the prompt for the device.
+      #   @param regex [Regexp] The regular expression that matches the prompt.
       prompt /^(.*[\w\.-]*>\s?)$/
       comment '# '
 
@@ -41,6 +48,11 @@ module Oxidized
         end
       end
 
+      # Single partition mode.
+      #
+      # Executes the 'show ns ns.conf' command on the device.
+      #
+      # @return [String] The configuration output.
       def single_partition
         # @!visibility private
         # Single partition mode
@@ -49,6 +61,11 @@ module Oxidized
         end
       end
 
+      # Multiple partition mode.
+      #
+      # Executes the 'show partition' command and retrieves configurations for all partitions.
+      #
+      # @return [String] The combined configuration output from all partitions.
       def multiple_partition
         # @!visibility private
         # Multiple partition mode

@@ -8,6 +8,10 @@ module Oxidized
     #
     # Back to [Model-Notes](README.md)
 
+    # Represents the SikluMHTG model.
+    #
+    # Handles configuration retrieval and processing for SikluMHTG devices.
+
     class SikluMHTG < Oxidized::Models::Model
       using Refinements
 
@@ -15,6 +19,9 @@ module Oxidized
       # Siklu MultiHaul TG#
       # Requires source to define the model as SikluMHTG #
 
+      # @!method prompt(regex)
+      #   Sets the prompt for the device.
+      #   @param regex [Regexp] The regular expression that matches the prompt.
       prompt /^\r?MH-[TN]\d{3}[\@][\w]{2,8}>$/
 
       expect /--More--/ do |data, re|

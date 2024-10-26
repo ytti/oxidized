@@ -1,11 +1,18 @@
 module Oxidized
   module Models
+    # Represents the Trango model.
+    #
+    # Handles configuration retrieval and processing for Trango devices.
+
     class Trango < Oxidized::Models::Model
       using Refinements
 
       # @!visibility private
       # take a Trangolink sysinfo output and turn it into a configuration file
 
+      # @!method prompt(regex)
+      #   Sets the prompt for the device.
+      #   @param regex [Regexp] The regular expression that matches the prompt.
       prompt /^#>\s?/
       comment '# '
 

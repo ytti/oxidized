@@ -10,6 +10,10 @@ module Oxidized
       raise Oxidized::OxidizedError, "mechanize not found: sudo gem install mechanize"
     end
 
+    # Represents the Mimosab11 model.
+    #
+    # Handles configuration retrieval and processing for Mimosab11 devices.
+
     class Mimosab11 < Oxidized::Models::Model
       using Refinements
       # @!visibility private

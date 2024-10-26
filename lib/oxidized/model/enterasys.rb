@@ -1,11 +1,18 @@
 module Oxidized
   module Models
+    # Represents the Enterasys model.
+    #
+    # Handles configuration retrieval and processing for Enterasys devices.
+
     class Enterasys < Oxidized::Models::Model
       using Refinements
 
       # @!visibility private
       # Enterasys B3/C3 models #
 
+      # @!method prompt(regex)
+      #   Sets the prompt for the device.
+      #   @param regex [Regexp] The regular expression that matches the prompt.
       prompt /^.+\w\((su|rw)\)->\s?$/
 
       comment '!'

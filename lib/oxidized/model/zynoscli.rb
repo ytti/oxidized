@@ -1,5 +1,9 @@
 module Oxidized
   module Models
+    # Represents the ZyNOSCLI model.
+    #
+    # Handles configuration retrieval and processing for ZyNOSCLI devices.
+
     class ZyNOSCLI < Oxidized::Models::Model
       using Refinements
 
@@ -8,6 +12,10 @@ module Oxidized
 
       # @!visibility private
       # Typical prompt "XGS4600#"
+
+      # @!method prompt(regex)
+      #   Sets the prompt for the device.
+      #   @param regex [Regexp] The regular expression that matches the prompt.
       prompt /^([\w.@()-]+[#>]\s\e7)$/
       comment  ';; '
 

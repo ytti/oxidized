@@ -1,11 +1,18 @@
 module Oxidized
   module Models
+    # Represents the ZTEOLT model.
+    #
+    # Handles configuration retrieval and processing for ZTEOLT devices.
+
     class ZTEOLT < Oxidized::Models::Model
       using Refinements
 
       # @!visibility private
       # Tested with C320 and C300 olt, firware 1.2.5P3 and 2.1.0
 
+      # @!method prompt(regex)
+      #   Sets the prompt for the device.
+      #   @param regex [Regexp] The regular expression that matches the prompt.
       prompt /^([\w.@()-]+[#>]\s?)$/
       comment  '! '
 

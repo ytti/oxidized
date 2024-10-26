@@ -1,8 +1,15 @@
 module Oxidized
   module Models
+    # Represents the OpenWrt model.
+    #
+    # Handles configuration retrieval and processing for OpenWrt devices.
+
     class OpenWrt < Oxidized::Models::Model
       using Refinements
 
+      # @!method prompt(regex)
+      #   Sets the prompt for the device.
+      #   @param regex [Regexp] The regular expression that matches the prompt.
       prompt /^[^#]+#/
       comment '#'
 

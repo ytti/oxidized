@@ -1,8 +1,15 @@
 module Oxidized
   module Models
+    # Represents the NecIX model.
+    #
+    # Handles configuration retrieval and processing for NecIX devices.
+
     class NecIX < Oxidized::Models::Model
       using Refinements
 
+      # @!method prompt(regex)
+      #   Sets the prompt for the device.
+      #   @param regex [Regexp] The regular expression that matches the prompt.
       prompt /^(\([\w.-]*\)\s[#$]|^\S+[$#]\s?)$/
       comment '! '
       expect /^--More--$/ do |data, re|

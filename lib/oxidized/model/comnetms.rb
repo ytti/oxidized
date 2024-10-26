@@ -1,10 +1,18 @@
 module Oxidized
   module Models
+    # Represents the ComnetMS model.
+    #
+    # Handles configuration retrieval and processing for ComnetMS devices.
+
     class ComnetMS < Oxidized::Models::Model
       using Refinements
 
       # @!visibility private
       # Comnet Microsemi Switch
+
+      # @!method prompt(regex)
+      #   Sets the prompt for the device.
+      #   @param regex [Regexp] The regular expression that matches the prompt.
       prompt /^\r?([\w.@()-]+[#>]\s?)$/
       comment  '! '
 

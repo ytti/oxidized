@@ -1,5 +1,9 @@
 module Oxidized
   module Models
+    # Represents the FabricOS model.
+    #
+    # Handles configuration retrieval and processing for FabricOS devices.
+
     class FabricOS < Oxidized::Models::Model
       using Refinements
 
@@ -7,6 +11,9 @@ module Oxidized
       # Brocade Fabric OS model #
       ## FIXME: Only ssh exec mode support, no telnet, no ssh screenscraping
 
+      # @!method prompt(regex)
+      #   Sets the prompt for the device.
+      #   @param regex [Regexp] The regular expression that matches the prompt.
       prompt /^([\w]+:+[\w]+[>]\s)$/
       comment '# '
 

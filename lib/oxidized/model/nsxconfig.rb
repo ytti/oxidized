@@ -1,6 +1,10 @@
 require 'net/http'
 module Oxidized
   module Models
+    # Represents the NSXConfig model.
+    #
+    # Handles configuration retrieval and processing for NSXConfig devices.
+
     class NSXConfig < Oxidized::Models::Model
       using Refinements
 

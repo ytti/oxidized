@@ -12,26 +12,17 @@ module Oxidized
       # @return [String] The commit reference of the latest commit.
       attr_reader :commitref
 
-    # Initializes the GitCrypt output instance.
-    #
-    # @return [void]
-    def initialize
-      super
-      @cfg = Oxidized.config.output.gitcrypt
-      @gitcrypt_cmd = "/usr/bin/git-crypt"
-      @gitcrypt_init = @gitcrypt_cmd + " init"
-      @gitcrypt_unlock = @gitcrypt_cmd + " unlock"
-      @gitcrypt_lock = @gitcrypt_cmd + " lock"
-      @gitcrypt_adduser = @gitcrypt_cmd + " add-gpg-user --trusted "
-    end
-
-    def setup
-      if @cfg.empty?
-        Oxidized.asetus.user.output.gitcrypt.user  = 'Oxidized'
-        Oxidized.asetus.user.output.gitcrypt.email = 'o@example.com'
-        Oxidized.asetus.user.output.gitcrypt.repo = File.join(Config::ROOT, 'oxidized.git')
-        Oxidized.asetus.save :user
-        raise NoConfig, "no output git config, edit #{Oxidized::Config.configfile}"
+      # Initializes the GitCrypt output instance.
+      #
+      # @return [void]
+      def initialize
+        super
+        @cfg = Oxidized.config.output.gitcrypt
+        @gitcrypt_cmd = "/usr/bin/git-crypt"
+        @gitcrypt_init = @gitcrypt_cmd + " init"
+        @gitcrypt_unlock = @gitcrypt_cmd + " unlock"
+        @gitcrypt_lock = @gitcrypt_cmd + " lock"
+        @gitcrypt_adduser = @gitcrypt_cmd + " add-gpg-user --trusted "
       end
 
       # Sets up the GitCrypt configuration for output.
@@ -44,7 +35,7 @@ module Oxidized
           Oxidized.asetus.user.output.gitcrypt.email = 'o@example.com'
           Oxidized.asetus.user.output.gitcrypt.repo = File.join(Config::ROOT, 'oxidized.git')
           Oxidized.asetus.save :user
-          raise NoConfig, 'no output git config, edit ~/.config/oxidized/config'
+          raise Error::NoConfig, "no output git config, edit #{Oxidized::Config.configfile}"
         end
 
         if @cfg.repo.respond_to?(:each)
@@ -270,7 +261,7 @@ module Oxidized
             grepo = Git.init repo
             crypt_init grepo
           rescue StandardError => create_error
-            raise GitCryptError, "first '#{e.message}' was raised while opening git repo, then '#{create_error.message}' was while trying to create git repo"
+            raise Error::GitCryptError, "first '#{e.message}' was raised while opening git repo, then '#{create_error.message}' was while trying to create git repo"
           end
           retry
         end

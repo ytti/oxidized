@@ -1,5 +1,9 @@
 module Oxidized
   module Models
+    # Represents the Enterasys800 model.
+    #
+    # Handles configuration retrieval and processing for Enterasys800 devices.
+
     class Enterasys800 < Oxidized::Models::Model
       using Refinements
 
@@ -8,6 +12,9 @@ module Oxidized
       # Tested with 08H20G4-24 Fast Ethernet Switch Firmware: Build 01.01.01.0017
       comment '# '
 
+      # @!method prompt(regex)
+      #   Sets the prompt for the device.
+      #   @param regex [Regexp] The regular expression that matches the prompt.
       prompt /([\w \(:.@-]+[#>]\s?)$/
 
       cfg :telnet do

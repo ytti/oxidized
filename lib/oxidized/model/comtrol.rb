@@ -1,5 +1,9 @@
 module Oxidized
   module Models
+    # Represents the Comtrol model.
+    #
+    # Handles configuration retrieval and processing for Comtrol devices.
+
     class Comtrol < Oxidized::Models::Model
       using Refinements
 
@@ -8,6 +12,10 @@ module Oxidized
 
       # @!visibility private
       # Typical prompt "<hostname>#"
+
+      # @!method prompt(regex)
+      #   Sets the prompt for the device.
+      #   @param regex [Regexp] The regular expression that matches the prompt.
       prompt /([#>]\s?)$/
       comment '! '
 

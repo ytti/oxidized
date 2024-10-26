@@ -1,11 +1,18 @@
 module Oxidized
   module Models
+    # Represents the Adtran model.
+    #
+    # Handles configuration retrieval and processing for Adtran devices.
+
     class Adtran < Oxidized::Models::Model
       using Refinements
 
       # @!visibility private
       # Adtran
 
+      # @!method prompt(regex)
+      #   Sets the prompt for the device.
+      #   @param regex [Regexp] The regular expression that matches the prompt.
       prompt /([\w.@-]+[#>]\s?)$/
 
       cmd :all do |cfg|

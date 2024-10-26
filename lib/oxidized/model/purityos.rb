@@ -1,11 +1,18 @@
 module Oxidized
   module Models
+    # Represents the PurityOS model.
+    #
+    # Handles configuration retrieval and processing for PurityOS devices.
+
     class PurityOS < Oxidized::Models::Model
       using Refinements
 
       # @!visibility private
       # Pure Storage Purity OS
 
+      # @!method prompt(regex)
+      #   Sets the prompt for the device.
+      #   @param regex [Regexp] The regular expression that matches the prompt.
       prompt /\w+@\S+(\s+\S+)*\s?>\s?$/
       comment '# '
 

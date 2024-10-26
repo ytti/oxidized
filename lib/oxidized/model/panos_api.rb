@@ -21,6 +21,10 @@ module Oxidized
       raise Oxidized::OxidizedError, 'nokogiri not found: sudo gem install nokogiri'
     end
 
+    # Represents the PanOS_API model.
+    #
+    # Handles configuration retrieval and processing for PanOS_API devices.
+
     class PanOS_API < Oxidized::Models::Model # rubocop:disable Naming/ClassAndModuleCamelCase
       using Refinements
 

@@ -8,6 +8,10 @@ module Oxidized
     # @!visibility private
     # Developed against SNR S2950-24G 7.0.3.5
 
+    # Represents the DCNOS model.
+    #
+    # Handles configuration retrieval and processing for DCNOS devices.
+
     class DCNOS < Oxidized::Models::Model
       using Refinements
 

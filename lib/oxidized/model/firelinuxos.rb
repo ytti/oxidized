@@ -1,11 +1,18 @@
 module Oxidized
   module Models
+    # Represents the FireLinuxOS model.
+    #
+    # Handles configuration retrieval and processing for FireLinuxOS devices.
+
     class FireLinuxOS < Oxidized::Models::Model
       using Refinements
 
       # @!visibility private
       # Fire Linux OS is what the new FTD (FirePOWER) series devices from Cisco run. At the backend, it's mostly identical to ASA's.
 
+      # @!method prompt(regex)
+      #   Sets the prompt for the device.
+      #   @param regex [Regexp] The regular expression that matches the prompt.
       prompt /^[#>]\(?.+\)?\s?/
       comment  '! '
 

@@ -1,8 +1,15 @@
 module Oxidized
   module Models
+    # Represents the FujitsuPY model.
+    #
+    # Handles configuration retrieval and processing for FujitsuPY devices.
+
     class FujitsuPY < Oxidized::Models::Model
       using Refinements
 
+      # @!method prompt(regex)
+      #   Sets the prompt for the device.
+      #   @param regex [Regexp] The regular expression that matches the prompt.
       prompt /^(\([\w.-]*\)\s#|^\S+#\s)$/
       comment  '! '
 

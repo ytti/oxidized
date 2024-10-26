@@ -1,11 +1,18 @@
 module Oxidized
   module Models
+    # Represents the Casa model.
+    #
+    # Handles configuration retrieval and processing for Casa devices.
+
     class Casa < Oxidized::Models::Model
       using Refinements
 
       # @!visibility private
       # Casa Systems CMTS
 
+      # @!method prompt(regex)
+      #   Sets the prompt for the device.
+      #   @param regex [Regexp] The regular expression that matches the prompt.
       prompt /^([\w.@()-]+[#>]\s?)$/
       comment '! '
 

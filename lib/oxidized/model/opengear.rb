@@ -1,10 +1,17 @@
 module Oxidized
   module Models
+    # Represents the OpenGear model.
+    #
+    # Handles configuration retrieval and processing for OpenGear devices.
+
     class OpenGear < Oxidized::Models::Model
       using Refinements
 
       comment '# '
 
+      # @!method prompt(regex)
+      #   Sets the prompt for the device.
+      #   @param regex [Regexp] The regular expression that matches the prompt.
       prompt /^(\$\s)$/
 
       cmd :secret do |cfg|

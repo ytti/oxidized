@@ -35,11 +35,18 @@ module Oxidized
     #
     # Back to [Model-Notes](README.md)
 
+    # Represents the VRP model.
+    #
+    # Handles configuration retrieval and processing for VRP devices.
+
     class VRP < Oxidized::Models::Model
       using Refinements
       # @!visibility private
       # Huawei VRP
 
+      # @!method prompt(regex)
+      #   Sets the prompt for the device.
+      #   @param regex [Regexp] The regular expression that matches the prompt.
       prompt /^.*(<[\w.-]+>)$/
       comment '# '
 

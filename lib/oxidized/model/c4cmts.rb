@@ -1,11 +1,18 @@
 module Oxidized
   module Models
+    # Represents the C4CMTS model.
+    #
+    # Handles configuration retrieval and processing for C4CMTS devices.
+
     class C4CMTS < Oxidized::Models::Model
       using Refinements
 
       # @!visibility private
       # Arris C4 CMTS
 
+      # @!method prompt(regex)
+      #   Sets the prompt for the device.
+      #   @param regex [Regexp] The regular expression that matches the prompt.
       prompt /^([\w.@:\/-]+[#>]\s?)$/
       comment  '! '
 

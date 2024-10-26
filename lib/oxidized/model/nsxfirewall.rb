@@ -1,6 +1,10 @@
 require 'net/http'
 module Oxidized
   module Models
+    # Represents the NSXFirewall model.
+    #
+    # Handles configuration retrieval and processing for NSXFirewall devices.
+
     class NSXFirewall < Oxidized::Models::Model
       using Refinements
 

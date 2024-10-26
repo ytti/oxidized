@@ -1,11 +1,18 @@
 module Oxidized
   module Models
+    # Represents the OneFinity model.
+    #
+    # Handles configuration retrieval and processing for OneFinity devices.
+
     class OneFinity < Oxidized::Models::Model
       using Refinements
 
       # @!visibility private
       # Fujitsu 1finity
 
+      # @!method prompt(regex)
+      #   Sets the prompt for the device.
+      #   @param regex [Regexp] The regular expression that matches the prompt.
       prompt /(\r?[\w.@_()-]+[>]\s?)$/
 
       cmd :all do |cfg|

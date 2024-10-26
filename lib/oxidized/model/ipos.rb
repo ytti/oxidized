@@ -1,5 +1,9 @@
 module Oxidized
   module Models
+    # Represents the IPOS model.
+    #
+    # Handles configuration retrieval and processing for IPOS devices.
+
     class IPOS < Oxidized::Models::Model
       using Refinements
 
@@ -7,6 +11,9 @@ module Oxidized
       # Ericsson SSR (IPOS)
       # Redback SE (SEOS)
 
+      # @!method prompt(regex)
+      #   Sets the prompt for the device.
+      #   @param regex [Regexp] The regular expression that matches the prompt.
       prompt /^([\[\]\w.@-]+[#:>]\s?)$/
       comment '! '
 

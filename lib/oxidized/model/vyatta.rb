@@ -1,11 +1,18 @@
 module Oxidized
   module Models
+    # Represents the Vyatta model.
+    #
+    # Handles configuration retrieval and processing for Vyatta devices.
+
     class Vyatta < Oxidized::Models::Model
       using Refinements
 
       # @!visibility private
       # Brocade Vyatta / VyOS model #
 
+      # @!method prompt(regex)
+      #   Sets the prompt for the device.
+      #   @param regex [Regexp] The regular expression that matches the prompt.
       prompt /@.*(:~\$|>)\s/
 
       cmd :all do |cfg|

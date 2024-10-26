@@ -2,6 +2,10 @@ require 'net/http'
 
 module Oxidized
   module Models
+    # Represents the NSXDfw model.
+    #
+    # Handles configuration retrieval and processing for NSXDfw devices.
+
     class NSXDfw < Oxidized::Models::Model
       using Refinements
 

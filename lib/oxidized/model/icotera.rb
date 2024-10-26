@@ -1,5 +1,9 @@
 module Oxidized
   module Models
+    # Represents the Icotera model.
+    #
+    # Handles configuration retrieval and processing for Icotera devices.
+
     class Icotera < Oxidized::Models::Model
       using Refinements
 

@@ -1,8 +1,15 @@
 module Oxidized
   module Models
+    # Represents the QuantaOS model.
+    #
+    # Handles configuration retrieval and processing for QuantaOS devices.
+
     class QuantaOS < Oxidized::Models::Model
       using Refinements
 
+      # @!method prompt(regex)
+      #   Sets the prompt for the device.
+      #   @param regex [Regexp] The regular expression that matches the prompt.
       prompt /^\((\w|\S)+\) (>|#)$/
       comment '! '
 

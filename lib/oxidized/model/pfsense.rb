@@ -1,5 +1,9 @@
 module Oxidized
   module Models
+    # Represents the PfSense model.
+    #
+    # Handles configuration retrieval and processing for PfSense devices.
+
     class PfSense < Oxidized::Models::Model
       using Refinements
 

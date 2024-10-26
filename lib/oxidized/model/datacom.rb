@@ -1,5 +1,9 @@
 module Oxidized
   module Models
+    # Represents the DataCom model.
+    #
+    # Handles configuration retrieval and processing for DataCom devices.
+
     class DataCom < Oxidized::Models::Model
       using Refinements
 

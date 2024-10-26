@@ -1,8 +1,15 @@
 module Oxidized
   module Models
+    # Represents the OneOS model.
+    #
+    # Handles configuration retrieval and processing for OneOS devices.
+
     class OneOS < Oxidized::Models::Model
       using Refinements
 
+      # @!method prompt(regex)
+      #   Sets the prompt for the device.
+      #   @param regex [Regexp] The regular expression that matches the prompt.
       prompt /^([\w.@()-]+#\s?)$/
       comment  '! '
 

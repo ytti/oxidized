@@ -1,5 +1,9 @@
 module Oxidized
   module Models
+    # Represents the GaiaOS model.
+    #
+    # Handles configuration retrieval and processing for GaiaOS devices.
+
     class GaiaOS < Oxidized::Models::Model
       using Refinements
 
@@ -8,6 +12,10 @@ module Oxidized
 
       # @!visibility private
       # Gaia Prompt
+
+      # @!method prompt(regex)
+      #   Sets the prompt for the device.
+      #   @param regex [Regexp] The regular expression that matches the prompt.
       prompt /^([\[\]\w.@:-]+[#>]\s?)$/
 
       # @!visibility private

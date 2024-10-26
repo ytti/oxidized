@@ -13,12 +13,19 @@ module Oxidized
     #
     # Back to [Model-Notes](README.md)
 
+    # Represents the EOS model.
+    #
+    # Handles configuration retrieval and processing for EOS devices.
+
     class EOS < Oxidized::Models::Model
       using Refinements
 
       # @!visibility private
       # Arista EOS model #
 
+      # @!method prompt(regex)
+      #   Sets the prompt for the device.
+      #   @param regex [Regexp] The regular expression that matches the prompt.
       prompt /^.+[#>]$/
 
       comment  '! '

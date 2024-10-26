@@ -25,9 +25,16 @@ module Oxidized
     #
     # Back to [Model-Notes](README.md)
 
+    # Represents the LinuxGeneric model.
+    #
+    # Handles configuration retrieval and processing for LinuxGeneric devices.
+
     class LinuxGeneric < Oxidized::Models::Model
       using Refinements
 
+      # @!method prompt(regex)
+      #   Sets the prompt for the device.
+      #   @param regex [Regexp] The regular expression that matches the prompt.
       prompt /^(\w.*|\W.*)[:#$] /
       comment '# '
 

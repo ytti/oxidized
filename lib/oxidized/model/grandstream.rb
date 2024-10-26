@@ -1,5 +1,9 @@
 module Oxidized
   module Models
+    # Represents the GrandStream model.
+    #
+    # Handles configuration retrieval and processing for GrandStream devices.
+
     class GrandStream < Oxidized::Models::Model
       using Refinements
 

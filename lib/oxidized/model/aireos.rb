@@ -1,5 +1,9 @@
 module Oxidized
   module Models
+    # Represents the Aireos model.
+    #
+    # Handles configuration retrieval and processing for Aireos devices.
+    #
     # # Cisco WLC Configuration
     #
     # Create a user with read-write privilege:
@@ -11,6 +15,7 @@ module Oxidized
     # Oxidized needs read-write privilege in order to execute 'config paging disable'.
     #
     # Back to [Model-Notes](README.md)
+
     class Aireos < Oxidized::Models::Model
       using Refinements
 
@@ -19,6 +24,10 @@ module Oxidized
       # Used in Cisco WLC 5500
 
       comment '# ' # this complains too, can't find real comment char
+
+      # @!method prompt(regex)
+      #   Sets the prompt for the device.
+      #   @param regex [Regexp] The regular expression that matches the prompt.
       prompt /^\([^)]+\)\s>/
 
       cmd :all do |cfg|
@@ -56,6 +65,15 @@ module Oxidized
         end
       end
 
+      # Cleans the configuration by removing unnecessary lines.
+      #
+      # This method processes the raw configuration data by:
+      # - Removing empty lines.
+      # - Removing lines matching specific rogue patterns.
+      # - Stripping leading carriage returns and whitespace.
+      #
+      # @param cfg [String] The raw configuration data.
+      # @return [String] The cleaned configuration data.
       def clean(cfg)
         out = []
         cfg.each_line do |line|

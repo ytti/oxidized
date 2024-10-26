@@ -1,5 +1,9 @@
 module Oxidized
   module Models
+    # Represents the MasterOS model.
+    #
+    # Handles configuration retrieval and processing for MasterOS devices.
+
     class MasterOS < Oxidized::Models::Model
       using Refinements
 

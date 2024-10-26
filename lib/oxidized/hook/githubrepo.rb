@@ -190,6 +190,6 @@ module Oxidized
         head_branch = repo.branches[repo.head.name]
         repo.branches['origin/' + head_branch.name]
       end
-  end
+    end
   end
 end

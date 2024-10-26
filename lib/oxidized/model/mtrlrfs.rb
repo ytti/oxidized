@@ -1,5 +1,9 @@
 module Oxidized
   module Models
+    # Represents the Mtrlrfs model.
+    #
+    # Handles configuration retrieval and processing for Mtrlrfs devices.
+
     class Mtrlrfs < Oxidized::Models::Model
       using Refinements
 

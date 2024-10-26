@@ -11,13 +11,13 @@ module Oxidized
 
       attr_reader :commitref
 
-    # Initializes the Git output instance.
-    #
-    # @return [void]
-    def initialize
-      super
-      @cfg = Oxidized.config.output.git
-    end
+      # Initializes the Git output instance.
+      #
+      # @return [void]
+      def initialize
+        super
+        @cfg = Oxidized.config.output.git
+      end
 
       # Sets up the Git configuration for output.
       #

@@ -1,10 +1,22 @@
 module Oxidized
   module Models
+    # Represents the TPLink model.
+    #
+    # Handles configuration retrieval and processing for TPLink devices.
+
     class TPLink < Oxidized::Models::Model
       using Refinements
 
       # @!visibility private
       # tp-link prompt
+
+      # @!method prompt(regex)
+      #   Sets the prompt for the device.
+      #   @param regex [Regexp] The regular expression that matches the prompt.
+      prompt
+      # @!method prompt(regex)
+      #   Sets the prompt for the device.
+      #   @param regex [Regexp] The regular expression that matches the prompt.
       prompt /^\r?([\w.@()-]+[#>]\s?)$/
       comment '! '
 

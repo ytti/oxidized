@@ -1,5 +1,9 @@
 module Oxidized
   module Models
+    # Represents the CiscoSMB model.
+    #
+    # Handles configuration retrieval and processing for CiscoSMB devices.
+
     class CiscoSMB < Oxidized::Models::Model
       using Refinements
 
@@ -7,6 +11,9 @@ module Oxidized
       # Cisco Small Business 300, 500, and ESW2 series switches
       # http://www.cisco.com/c/en/us/support/switches/small-business-300-series-managed-switches/products-release-notes-list.html
 
+      # @!method prompt(regex)
+      #   Sets the prompt for the device.
+      #   @param regex [Regexp] The regular expression that matches the prompt.
       prompt /^\r?([\w.@()-]+[#>]\s?)$/
       comment '! '
 

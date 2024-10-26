@@ -42,9 +42,16 @@ module Oxidized
     #
     # Back to [Model-Notes](README.md)
 
+    # Represents the ZyNOS model.
+    #
+    # Handles configuration retrieval and processing for ZyNOS devices.
+
     class ZyNOS < Oxidized::Models::Model
       using Refinements
 
+      # @!method prompt(regex)
+      #   Sets the prompt for the device.
+      #   @param regex [Regexp] The regular expression that matches the prompt.
       prompt /^([\w.@()-<]+[#>]\s?)$/
       # @!visibility private
       # if there is something you can not identify after prompt, uncomment next line and comment previous line

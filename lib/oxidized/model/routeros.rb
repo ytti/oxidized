@@ -16,9 +16,16 @@ module Oxidized
     #
     # Back to [Model-Notes](README.md)
 
+    # Represents the RouterOS model.
+    #
+    # Handles configuration retrieval and processing for RouterOS devices.
+
     class RouterOS < Oxidized::Models::Model
       using Refinements
 
+      # @!method prompt(regex)
+      #   Sets the prompt for the device.
+      #   @param regex [Regexp] The regular expression that matches the prompt.
       prompt /\[\w+@\S+(\s+\S+)*\]\s?>\s?$/
       comment "# "
 

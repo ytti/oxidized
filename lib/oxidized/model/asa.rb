@@ -1,5 +1,9 @@
 module Oxidized
   module Models
+    # Represents the ASA model.
+    #
+    # Handles configuration retrieval and processing for ASA devices.
+
     class ASA < Oxidized::Models::Model
       using Refinements
 
@@ -7,6 +11,9 @@ module Oxidized
       # Cisco ASA model #
       # Only SSH supported for the sake of security
 
+      # @!method prompt(regex)
+      #   Sets the prompt for the device.
+      #   @param regex [Regexp] The regular expression that matches the prompt.
       prompt /^\r*([\w.@()-\/]+[#>]\s?)$/
       comment  '! '
 

@@ -1,5 +1,9 @@
 module Oxidized
   module Models
+    # Represents the DNOS model.
+    #
+    # Handles configuration retrieval and processing for DNOS devices.
+
     class DNOS < Oxidized::Models::Model
       using Refinements
 

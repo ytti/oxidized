@@ -2,6 +2,10 @@ module Oxidized
   module Models
     # @!visibility private
     # For Zyxel OLTs series 1308
+    # Represents the Zy1308 model.
+    #
+    # Handles configuration retrieval and processing for Zy1308 devices.
+
     class Zy1308 < Oxidized::Models::Model
       using Refinements
 

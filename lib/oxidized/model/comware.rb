@@ -14,6 +14,10 @@ module Oxidized
     #
     # Back to [Model-Notes](README.md)
 
+    # Represents the Comware model.
+    #
+    # Handles configuration retrieval and processing for Comware devices.
+
     class Comware < Oxidized::Models::Model
       # @!visibility private
       # HP (A-series)/H3C/3Com Comware
@@ -21,6 +25,10 @@ module Oxidized
 
       # @!visibility private
       # sometimes the prompt might have a leading nul or trailing ASCII Bell (^G)
+
+      # @!method prompt(regex)
+      #   Sets the prompt for the device.
+      #   @param regex [Regexp] The regular expression that matches the prompt.
       prompt /^\0*(<[\w.-]+>).?$/
       comment '# '
 

@@ -1,11 +1,18 @@
 module Oxidized
   module Models
+    # Represents the SonicOS model.
+    #
+    # Handles configuration retrieval and processing for SonicOS devices.
+
     class SonicOS < Oxidized::Models::Model
       using Refinements
 
       # @!visibility private
       # Applies to Sonicwall NSA series firewalls
 
+      # @!method prompt(regex)
+      #   Sets the prompt for the device.
+      #   @param regex [Regexp] The regular expression that matches the prompt.
       prompt /^\w+@\w+[>]\(?.+\)?\s?/
       comment  '! '
 

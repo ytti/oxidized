@@ -1,11 +1,18 @@
 module Oxidized
   module Models
+    # Represents the Eltex model.
+    #
+    # Handles configuration retrieval and processing for Eltex devices.
+
     class Eltex < Oxidized::Models::Model
       using Refinements
 
       # @!visibility private
       # Tested with MES2324FB Version: 4.0.7.1 Build: 37 (master)
 
+      # @!method prompt(regex)
+      #   Sets the prompt for the device.
+      #   @param regex [Regexp] The regular expression that matches the prompt.
       prompt /^\s?[\w.@\(\)-]+[#>]\s?$/
       comment '! '
 

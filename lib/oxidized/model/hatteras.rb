@@ -1,11 +1,18 @@
 module Oxidized
   module Models
+    # Represents the Hatteras model.
+    #
+    # Handles configuration retrieval and processing for Hatteras devices.
+
     class Hatteras < Oxidized::Models::Model
       using Refinements
 
       # @!visibility private
       # Hatteras Networks
 
+      # @!method prompt(regex)
+      #   Sets the prompt for the device.
+      #   @param regex [Regexp] The regular expression that matches the prompt.
       prompt /^(\r?[\w.@()-]+[#>]\s?)$/
       comment '# '
 

@@ -1,11 +1,18 @@
 module Oxidized
   module Models
+    # Represents the DellX model.
+    #
+    # Handles configuration retrieval and processing for DellX devices.
+
     class DellX < Oxidized::Models::Model
       using Refinements
 
       # @!visibility private
       # Used in Dell X-Series Switches
 
+      # @!method prompt(regex)
+      #   Sets the prompt for the device.
+      #   @param regex [Regexp] The regular expression that matches the prompt.
       prompt /[#>]$/
 
       comment '! '

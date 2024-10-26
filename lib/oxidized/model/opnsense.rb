@@ -1,5 +1,9 @@
 module Oxidized
   module Models
+    # Represents the OpnSense model.
+    #
+    # Handles configuration retrieval and processing for OpnSense devices.
+
     class OpnSense < Oxidized::Models::Model
       using Refinements
 

@@ -1,5 +1,9 @@
 module Oxidized
   module Models
+    # Represents the Aoscx model.
+    #
+    # Handles configuration retrieval and processing for Aoscx devices.
+
     class Aoscx < Oxidized::Models::Model
       using Refinements
 
@@ -8,6 +12,10 @@ module Oxidized
       # ssh switches prompt may start with \r, followed by the prompt itself, regex ([\w\s.-]+[#>] ), which ends the line
       # telnet switchs may start with various vt100 control characters, regex (\e\[24;[0-9][hH]), follwed by the prompt, followed
       # by at least 3 other vt100 characters
+
+      # @!method prompt(regex)
+      #   Sets the prompt for the device.
+      #   @param regex [Regexp] The regular expression that matches the prompt.
       prompt /(^\r|\e\[24;[0-9][hH])?([\w\s.-]+[#>] )($|(\e\[24;[0-9][0-9]?[hH]){3})/
 
       comment '! '

@@ -1,10 +1,18 @@
 module Oxidized
   module Models
+    # Represents the Hios model.
+    #
+    # Handles configuration retrieval and processing for Hios devices.
+
     class Hios < Oxidized::Models::Model
       using Refinements
 
       # @!visibility private
       # Docker location: /var/lib/gems/2.7.0/gems/oxidized-0.28.0/lib/oxidized/model/hios.rb
+
+      # @!method prompt(regex)
+      #   Sets the prompt for the device.
+      #   @param regex [Regexp] The regular expression that matches the prompt.
       prompt /^\[[\w\s\W]+\][>|#]+?$/
 
       comment '## '

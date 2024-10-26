@@ -1,5 +1,9 @@
 module Oxidized
   module Models
+    # Represents the AOS7 model.
+    #
+    # Handles configuration retrieval and processing for AOS7 devices.
+
     class AOS7 < Oxidized::Models::Model
       using Refinements
 

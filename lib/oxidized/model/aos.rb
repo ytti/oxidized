@@ -1,5 +1,9 @@
 module Oxidized
   module Models
+    # Represents the AOS model.
+    #
+    # Handles configuration retrieval and processing for AOS devices.
+
     class AOS < Oxidized::Models::Model
       using Refinements
 

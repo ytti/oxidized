@@ -1,11 +1,18 @@
 module Oxidized
   module Models
+    # Represents the H3C model.
+    #
+    # Handles configuration retrieval and processing for H3C devices.
+
     class H3C < Oxidized::Models::Model
       using Refinements
 
       # @!visibility private
       # H3C
 
+      # @!method prompt(regex)
+      #   Sets the prompt for the device.
+      #   @param regex [Regexp] The regular expression that matches the prompt.
       prompt /^.*([<\[][\w.-]+[>\]])$/
       comment '# '
 

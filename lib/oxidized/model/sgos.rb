@@ -1,9 +1,17 @@
 module Oxidized
   module Models
+    # Represents the SGOS model.
+    #
+    # Handles configuration retrieval and processing for SGOS devices.
+
     class SGOS < Oxidized::Models::Model
       using Refinements
 
       comment '!- '
+
+      # @!method prompt(regex)
+      #   Sets the prompt for the device.
+      #   @param regex [Regexp] The regular expression that matches the prompt.
       prompt /\w+>|#/
 
       expect /--More--/ do |data, re|

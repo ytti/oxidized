@@ -17,6 +17,10 @@ module Oxidized
     #
     # Back to [Model-Notes](README.md)
 
+    # Represents the FSOS model.
+    #
+    # Handles configuration retrieval and processing for FSOS devices.
+
     class FSOS < Oxidized::Models::Model
       # @!visibility private
       # Fiberstore / fs.com

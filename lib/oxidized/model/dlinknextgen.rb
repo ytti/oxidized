@@ -1,5 +1,9 @@
 module Oxidized
   module Models
+    # Represents the DlinkNextGen model.
+    #
+    # Handles configuration retrieval and processing for DlinkNextGen devices.
+
     class DlinkNextGen < Oxidized::Models::Model
       using Refinements
 
@@ -7,6 +11,9 @@ module Oxidized
       # D-LINK next generation cli Switches
       # Add support DXS-1210-12SC
 
+      # @!method prompt(regex)
+      #   Sets the prompt for the device.
+      #   @param regex [Regexp] The regular expression that matches the prompt.
       prompt /[\w.@()\/-]+[#>]\s?$/
       comment '# '
 

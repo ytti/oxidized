@@ -1,5 +1,9 @@
 module Oxidized
   module Models
+    # Represents the Garderos model.
+    #
+    # Handles configuration retrieval and processing for Garderos devices.
+
     class Garderos < Oxidized::Models::Model
       using Refinements
       # @!visibility private
@@ -7,15 +11,18 @@ module Oxidized
       # Routers for harsh environments
       # grs = Garderos Router Software
 
-  # @!visibility private
-  # remove all ANSI escape codes, as GRS uses them :-(
-  # the prompt does not need to match escape codes, as they have been removed
-  expect /\e\[\d*m\r?/ do |data, re|
-    data.gsub re, ''
-  end
+      # @!visibility private
+      # remove all ANSI escape codes, as GRS uses them :-(
+      # the prompt does not need to match escape codes, as they have been removed
+      expect /\e\[\d*m\r?/ do |data, re|
+        data.gsub re, ''
+      end
 
-  prompt /[\w-]+# /
-  comment '# '
+      # @!method prompt(regex)
+      #   Sets the prompt for the device.
+      #   @param regex [Regexp] The regular expression that matches the prompt.
+      prompt /[\w-]+# /
+      comment '# '
 
       cmd :all do |cfg|
         # @!visibility private

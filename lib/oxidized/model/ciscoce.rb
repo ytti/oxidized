@@ -2,6 +2,10 @@ module Oxidized
   module Models
     # @!visibility private
     # Supporting Cisco Catalyst Express Switches and IOS using the basic web interface
+    # Represents the CiscoCE model.
+    #
+    # Handles configuration retrieval and processing for CiscoCE devices.
+
     class CiscoCE < Oxidized::Models::Model
       using Refinements
 

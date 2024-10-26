@@ -1,11 +1,18 @@
 module Oxidized
   module Models
+    # Represents the Airfiber model.
+    #
+    # Handles configuration retrieval and processing for Airfiber devices.
+
     class Airfiber < Oxidized::Models::Model
       using Refinements
 
       # @!visibility private
       # Ubiquiti Airfiber (tested with Airfiber 11FX)
 
+      # @!method prompt(regex)
+      #   Sets the prompt for the device.
+      #   @param regex [Regexp] The regular expression that matches the prompt.
       prompt /^AF[\w\.-]+#/i
 
       cmd :all do |cfg|

@@ -88,10 +88,18 @@ module Oxidized
     #
     # Back to [Model-Notes](README.md)
 
+    # Represents the Netgear model.
+    #
+    # Handles configuration retrieval and processing for Netgear devices.
+
     class Netgear < Oxidized::Models::Model
       using Refinements
 
       comment '!'
+
+      # @!method prompt(regex)
+      #   Sets the prompt for the device.
+      #   @param regex [Regexp] The regular expression that matches the prompt.
       prompt /^(\([\w\s\-\+.]+\)\s?[#>])$/
 
       cmd :secret do |cfg|

@@ -1,11 +1,18 @@
 module Oxidized
   module Models
+    # Represents the Edgeos model.
+    #
+    # Handles configuration retrieval and processing for Edgeos devices.
+
     class Edgeos < Oxidized::Models::Model
       using Refinements
 
       # @!visibility private
       # EdgeOS #
 
+      # @!method prompt(regex)
+      #   Sets the prompt for the device.
+      #   @param regex [Regexp] The regular expression that matches the prompt.
       prompt /@.*?:~\$\s/
 
       cmd :all do |cfg|

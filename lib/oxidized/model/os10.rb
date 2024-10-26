@@ -34,6 +34,10 @@ module Oxidized
     #
     # Back to [Model-Notes](README.md)
 
+    # Represents the OS10 model.
+    #
+    # Handles configuration retrieval and processing for OS10 devices.
+
     class OS10 < Oxidized::Models::Model
       using Refinements
 
