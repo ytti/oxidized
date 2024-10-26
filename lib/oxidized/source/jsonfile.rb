@@ -1,53 +1,41 @@
 module Oxidized
   module Source
-  # Manages the source of configuration data from a JSON file.
-  #
-  # This class handles loading device configurations from a specified JSON file,
-  # including variable interpolation and mapping of node parameters.
-  class JSONFile < Source
-    require "json"
-    # Initializes a new instance of the JSONFile class.
+    # Manages the source of configuration data from a JSON file.
     #
-    # This constructor sets up the configuration for the JSON file source.
-    def initialize
-      @cfg = Oxidized.config.source.jsonfile
-      super
-    end
-
-    def setup
-      if @cfg.empty?
-        Oxidized.asetus.user.source.jsonfile.file      = File.join(Oxidized::Config::ROOT,
-                                                                   'router.json')
-        Oxidized.asetus.user.source.jsonfile.map.name  = "name"
-        Oxidized.asetus.user.source.jsonfile.map.model = "model"
-        Oxidized.asetus.user.source.jsonfile.gpg       = false
-        Oxidized.asetus.save :user
-        raise NoConfig, "No source json config, edit #{Oxidized::Config.configfile}"
+    # This class handles loading device configurations from a specified JSON file,
+    # including variable interpolation and mapping of node parameters.
+    class JSONFile < Source
+      require "json"
+      # Initializes a new instance of the JSONFile class.
+      #
+      # This constructor sets up the configuration for the JSON file source.
+      def initialize
+        @cfg = Oxidized.config.source.jsonfile
+        super
       end
-      require 'gpgme' if @cfg.gpg?
-
-      # map.name is mandatory
-      return if @cfg.map.has_key?('name')
-
-      raise InvalidConfig, "map/name is a mandatory source attribute, edit #{Oxidized::Config.configfile}"
-    end
 
       # Sets up the JSON file source configuration.
       #
       # If no configuration is provided, it initializes default settings
       # and raises an exception if the configuration is still empty.
       #
-      # @raise [NoConfig] If no source JSON configuration is found.
+      # @raise [Error::NoConfig] If no source JSON configuration is found.
       def setup
         if @cfg.empty?
-          Oxidized.asetus.user.source.jsonfile.file      = File.join(Config::Root, 'router.json')
+          Oxidized.asetus.user.source.jsonfile.file      = File.join(Oxidized::Config::ROOT,
+                                                                     'router.json')
           Oxidized.asetus.user.source.jsonfile.map.name  = "name"
           Oxidized.asetus.user.source.jsonfile.map.model = "model"
           Oxidized.asetus.user.source.jsonfile.gpg       = false
           Oxidized.asetus.save :user
-          raise NoConfig, 'No source json config, edit ~/.config/oxidized/config'
+          raise Error::NoConfig, "No source json config, edit #{Oxidized::Config.configfile}"
         end
         require 'gpgme' if @cfg.gpg?
+
+        # map.name is mandatory
+        return if @cfg.map.has_key?('name')
+
+        raise Error::InvalidConfig, "map/name is a mandatory source attribute, edit #{Oxidized::Config.configfile}"
       end
 
       # Loads the data from the configured JSON file.
@@ -61,7 +49,7 @@ module Oxidized
         transform_json(data)
       end
 
-      private
+        private
 
       # Transforms the parsed JSON data into a structured format for nodes.
       #
@@ -93,6 +81,6 @@ module Oxidized
         end
         nodes
       end
+      end
     end
-  end
 end

@@ -30,7 +30,7 @@ module Oxidized
         begin
           require "mechanize"
         rescue LoadError
-          raise OxidizedError, "mechanize not found: sudo gem install mechanize"
+          raise Error::OxidizedError, "mechanize not found: sudo gem install mechanize"
         end
 
         @m = Mechanize.new

@@ -16,11 +16,11 @@ module Oxidized
       # Support for Mobility Access Switches tested with S2500-48P & S2500-24P running 7.4.1.4_54199 and S2500-24P running 7.4.1.7_57823
       # All IAPs connected to a Instant Controller will have the same config output. Only the controller needs to be monitored.
 
-  comment '# '
-  
-  # @!visibility private
-  # see /spec/model/aosw_spec.rb for prompt examples
-  prompt /^\(?[\w\:.@-]+\)? ?[*^]?(\[[\w\/]+\] ?)?[#>] ?$/
+      comment '# '
+
+      # @!visibility private
+      # see /spec/model/aosw_spec.rb for prompt examples
+      prompt /^\(?[\w\:.@-]+\)? ?[*^]?(\[[\w\/]+\] ?)?[#>] ?$/
 
       # @!visibility private
       # Ignore cariage returns - also for the prompt

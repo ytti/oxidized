@@ -45,15 +45,15 @@ module Oxidized
           return
         end
 
-            log "Pushing local repository(#{repo.path})..."
-            log "to remote: #{url}"
+        log "Pushing local repository(#{repo.path})..."
+        log "to remote: #{url}"
 
-            if repo.remotes['origin'].nil?
-              repo.remotes.create('origin', url)
-            elsif repo.remotes['origin'].url != url
-              repo.remotes.set_url('origin', url)
-            end
-            remote = repo.remotes['origin']
+        if repo.remotes['origin'].nil?
+          repo.remotes.create('origin', url)
+        elsif repo.remotes['origin'].url != url
+          repo.remotes.set_url('origin', url)
+        end
+        remote = repo.remotes['origin']
 
         begin
           fetch_and_merge_remote(repo, creds)
@@ -80,19 +80,19 @@ module Oxidized
         result = repo.fetch('origin', [repo.head.name], credentials: creds)
         log result.inspect, :debug
 
-    their_branch = remote_branch(repo)
+        their_branch = remote_branch(repo)
 
-    unless their_branch
-      log 'remote branch does not exist yet, nothing to merge', :debug
-      return
-    end
+        unless their_branch
+          log 'remote branch does not exist yet, nothing to merge', :debug
+          return
+        end
 
-    result = repo.merge_analysis(their_branch.target_id)
+        result = repo.merge_analysis(their_branch.target_id)
 
-    if result.include? :up_to_date
-      log 'nothing to merge', :debug
-      return
-    end
+        if result.include? :up_to_date
+          log 'nothing to merge', :debug
+          return
+        end
 
         log "merging fetched branch #{their_branch.name}", :debug
 
@@ -164,32 +164,32 @@ module Oxidized
           cfg.remote_repo[node.group].url
         end
       end
-    end
-  end
 
-  def rugged_sshkey(args = {})
-    git_user   = args[:git_user]
-    privkey    = args[:privkey]
-    pubkey     = args[:pubkey] || (privkey + '.pub')
-    Rugged::Credentials::SshKey.new(username:   git_user,
-                                    publickey:  File.expand_path(pubkey),
-                                    privatekey: File.expand_path(privkey),
-                                    passphrase: ENV.fetch("OXIDIZED_SSH_PASSPHRASE", nil))
-  end
+      def rugged_sshkey(args = {})
+        git_user   = args[:git_user]
+        privkey    = args[:privkey]
+        pubkey     = args[:pubkey] || (privkey + '.pub')
+        Rugged::Credentials::SshKey.new(username:   git_user,
+                                        publickey:  File.expand_path(pubkey),
+                                        privatekey: File.expand_path(privkey),
+                                        passphrase: ENV.fetch("OXIDIZED_SSH_PASSPHRASE", nil))
+      end
 
-  def remote_repo(node)
-    if node.group.nil? || cfg.remote_repo.is_a?(String)
-      cfg.remote_repo
-    elsif cfg.remote_repo[node.group].is_a?(String)
-      cfg.remote_repo[node.group]
-    elsif cfg.remote_repo[node.group].url.is_a?(String)
-      cfg.remote_repo[node.group].url
-    end
-  end
+      def remote_repo(node)
+        if node.group.nil? || cfg.remote_repo.is_a?(String)
+          cfg.remote_repo
+        elsif cfg.remote_repo[node.group].is_a?(String)
+          cfg.remote_repo[node.group]
+        elsif cfg.remote_repo[node.group].url.is_a?(String)
+          cfg.remote_repo[node.group].url
+        end
+      end
 
-  # Returns a Rugged::Branch to the remote branch or nil if it doen't exist
-  def remote_branch(repo)
-    head_branch = repo.branches[repo.head.name]
-    repo.branches['origin/' + head_branch.name]
+      # Returns a Rugged::Branch to the remote branch or nil if it doen't exist
+      def remote_branch(repo)
+        head_branch = repo.branches[repo.head.name]
+        repo.branches['origin/' + head_branch.name]
+      end
+  end
   end
 end

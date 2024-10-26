@@ -7,7 +7,7 @@ describe 'Oxidized::Config' do
       Asetus.any_instance.expects(:load)
       Asetus.any_instance.expects(:create).returns(true)
 
-      err = _(-> { Oxidized::Config.load }).must_raise Oxidized::NoConfig
+      err = _(-> { Oxidized::Config.load }).must_raise Oxidized::Error::NoConfig
       # We cannot test if the environment variable OXIDIZED_HOME is properly used.
       # Oxidized::Config uses OXIDIZED_HOME at loading (require 'oxidized/config'),
       # so we have no chance to manipulate it within this test (oxidized/condig can

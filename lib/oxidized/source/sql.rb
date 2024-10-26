@@ -6,7 +6,7 @@ module Oxidized
       begin
         require 'sequel'
       rescue LoadError
-        raise OxidizedError, 'sequel not found: sudo gem install sequel'
+        raise Error::OxidizedError, 'sequel not found: sudo gem install sequel'
       end
 
     # Sets up the SQL source configuration with default values if none are provided.
@@ -21,13 +21,13 @@ module Oxidized
         Oxidized.asetus.user.source.sql.map.name  = 'name'
         Oxidized.asetus.user.source.sql.map.model = 'rancid'
         Oxidized.asetus.save :user
-        raise NoConfig, "No source sql config, edit #{Oxidized::Config.configfile}"
+        raise Error::NoConfig, "No source sql config, edit #{Oxidized::Config.configfile}"
       end
 
       # map.name is mandatory
       return if @cfg.map.has_key?('name')
 
-      raise InvalidConfig, "map/name is a mandatory source attribute, edit #{Oxidized::Config.configfile}"
+      raise Error::InvalidConfig, "map/name is a mandatory source attribute, edit #{Oxidized::Config.configfile}"
     end
 
       # Loads nodes from the SQL database based on the specified configuration.
@@ -92,7 +92,7 @@ module Oxidized
         end
         Sequel.connect(options)
       rescue Sequel::AdapterNotFound => e
-        raise OxidizedError, "SQL adapter gem not installed: " + e.message
+        raise Error::OxidizedError, "SQL adapter gem not installed: " + e.message
       end
     end
   end

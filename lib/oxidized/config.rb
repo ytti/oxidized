@@ -107,13 +107,13 @@ module Oxidized
       begin
         asetus.load # load system+user configs, merge to Config.cfg
       rescue StandardError => e
-        raise InvalidConfig, "Error loading config: #{e.message}"
+        raise Error::InvalidConfig, "Error loading config: #{e.message}"
       end
 
 
       # @!visibility private
       # If the configuration is being created for the first time, raise NoConfig
-      raise NoConfig, "edit #{@configfile}" if asetus.create
+      raise Error::NoConfig, "edit #{@configfile}" if asetus.create
 
       # @!visibility private
       # Override debug setting if provided in the command line options

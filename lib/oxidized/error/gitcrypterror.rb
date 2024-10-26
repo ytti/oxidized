@@ -8,7 +8,7 @@ module Oxidized
     begin
       require 'git'
     rescue LoadError
-      raise OxidizedError, 'git not found: sudo gem install git'
+      raise Error::OxidizedError, 'git not found: sudo gem install git'
     end
   end
 end

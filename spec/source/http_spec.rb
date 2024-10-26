@@ -15,7 +15,7 @@ describe Oxidized::Source::HTTP do
       # Set :home_dir to make sure the OXIDIZED_HOME environment variable is not used
       Oxidized::Config.load({ home_dir: '/cfg_path/' })
 
-      @source = Oxidized::HTTP.new
+      @source = Oxidized::Source::HTTP.new
     end
 
     it 'raises Oxidized::NoConfig when no config is provided' do
@@ -24,7 +24,7 @@ describe Oxidized::Source::HTTP do
 
       Oxidized.config.source.http = ''
 
-      err = _(-> { @source.setup }).must_raise Oxidized::NoConfig
+      err = _(-> { @source.setup }).must_raise Oxidized::Error::NoConfig
       _(err.message).must_equal 'No source http config, edit /cfg_path/config'
     end
 
@@ -32,7 +32,7 @@ describe Oxidized::Source::HTTP do
       Asetus.any_instance.expects(:save).never
       Oxidized.config.source.http.secure = 'false'
 
-      err = _(-> { @source.setup }).must_raise Oxidized::InvalidConfig
+      err = _(-> { @source.setup }).must_raise Oxidized::Error::InvalidConfig
       _(err.message).must_equal 'url is a mandatory http source attribute, edit /cfg_path/config'
     end
 
@@ -40,7 +40,7 @@ describe Oxidized::Source::HTTP do
       Asetus.any_instance.expects(:save).never
       Oxidized.config.source.http.url = 'https://localhost/'
 
-      err = _(-> { @source.setup }).must_raise Oxidized::InvalidConfig
+      err = _(-> { @source.setup }).must_raise Oxidized::Error::InvalidConfig
       _(err.message).must_equal 'map/name is a mandatory source attribute, edit /cfg_path/config'
     end
 

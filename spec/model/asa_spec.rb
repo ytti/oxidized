@@ -9,8 +9,8 @@ describe 'model/ASA' do
   end
 
   it 'matches different prompts' do
-    _("\rLAB-ASA12-Oxidized-IPv6> ").must_match ASA.prompt
-    _("\rLAB-ASA12-Oxidized-IPv6# ").must_match ASA.prompt
+    _("\rLAB-ASA12-Oxidized-IPv6> ").must_match Oxidized::Models::ASA.prompt
+    _("\rLAB-ASA12-Oxidized-IPv6# ").must_match Oxidized::Models::ASA.prompt
   end
 
   it 'runs on 5515 with version 9.12(4)67' do

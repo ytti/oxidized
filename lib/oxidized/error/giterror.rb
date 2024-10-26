@@ -9,7 +9,7 @@ module Oxidized
     begin
       require 'rugged'
     rescue LoadError
-      raise OxidizedError, 'rugged not found: sudo gem install rugged'
+      raise Error::OxidizedError, 'rugged not found: sudo gem install rugged'
     end
   end
 end
