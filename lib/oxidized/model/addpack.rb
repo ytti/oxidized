@@ -1,26 +1,36 @@
-class AddPack < Oxidized::Model
-  # Used in AddPack Voip, such as AP100B, AP100_G2, AP700, AP1000, AP1100F
+module Oxidized
+  module Models
+    # Represents the AddPack model.
+    #
+    # Handles configuration retrieval and processing for AddPack devices.
 
-  using Refinements
-  PROMPT = /^.*[>#]\s?$/
+    class AddPack < Oxidized::Models::Model
+      # @!visibility private
+      # Used in AddPack Voip, such as AP100B, AP100_G2, AP700, AP1000, AP1100F
 
-  expect /-- [Mm]ore --/ do |data, re|
-    send ' '
-    data.sub re, ''
-  end
+      using Refinements
+      # Regular expression to match the device prompt.
+      PROMPT = /^.*[>#]\s?$/
 
-  prompt PROMPT
-  cmd 'enable'
+      expect /-- [Mm]ore --/ do |data, re|
+        send ' '
+        data.sub re, ''
+      end
 
-  cmd 'show running-config' do |cfg|
-    cfg.gsub! /^Building configuration.../, ''
-    cfg.gsub! /^*show running-config/, ''
-    cfg.gsub! PROMPT, ''
-    cfg
-  end
+      prompt PROMPT
+      cmd 'enable'
 
-  cfg :telnet do
-    username /[Ll]ogin:\s?/
-    password /[Pp]assword:\s?/
+      cmd 'show running-config' do |cfg|
+        cfg.gsub! /^Building configuration.../, ''
+        cfg.gsub! /^*show running-config/, ''
+        cfg.gsub! PROMPT, ''
+        cfg
+      end
+
+      cfg :telnet do
+        username /[Ll]ogin:\s?/
+        password /[Pp]assword:\s?/
+      end
+    end
   end
 end

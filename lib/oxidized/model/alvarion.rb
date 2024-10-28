@@ -1,13 +1,23 @@
-class Alvarion < Oxidized::Model
-  using Refinements
+module Oxidized
+  module Models
+    # Represents the Alvarion model.
+    #
+    # Handles configuration retrieval and processing for Alvarion devices.
 
-  # Used in Alvarion wisp equipment
+    class Alvarion < Oxidized::Models::Model
+      using Refinements
 
-  # Run this command as an instance of Model so we can access node
-  pre do
-    cmd "#{node.auth[:password]}.cfg"
-  end
+      # @!visibility private
+      # Used in Alvarion wisp equipment
 
-  cfg :tftp do
+      # @!visibility private
+      # Run this command as an instance of Model so we can access node
+      pre do
+        cmd "#{node.auth[:password]}.cfg"
+      end
+
+      cfg :tftp do
+      end
+    end
   end
 end

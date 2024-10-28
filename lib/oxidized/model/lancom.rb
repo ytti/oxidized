@@ -1,25 +1,37 @@
-class LANCOM < Oxidized::Model
-  using Refinements
+module Oxidized
+  module Models
+    # Represents the LANCOM model.
+    #
+    # Handles configuration retrieval and processing for LANCOM devices.
 
-  # LANCOM Systems GmbH
-  # tested on LANCOM 1781EF+ router using Lancom OS 10.32.0176RU9 / 21.04.2020
-  comment '# '
+    class LANCOM < Oxidized::Models::Model
+      using Refinements
 
-  prompt />\s?$/
+      # @!visibility private
+      # LANCOM Systems GmbH
+      # tested on LANCOM 1781EF+ router using Lancom OS 10.32.0176RU9 / 21.04.2020
+      comment '# '
 
-  cmd "sysinfo\r" do |cfg|
-    cfg.gsub! /^TIME:.*\n/, ''
-    comment cfg
-  end
+      # @!method prompt(regex)
+      #   Sets the prompt for the device.
+      #   @param regex [Regexp] The regular expression that matches the prompt.
+      prompt />\s?$/
 
-  cmd "readscript\r"
+      cmd "sysinfo\r" do |cfg|
+        cfg.gsub! /^TIME:.*\n/, ''
+        comment cfg
+      end
 
-  cfg :telnet do
-    username  /login:\s/
-    password  /^Password:\s/
-  end
+      cmd "readscript\r"
 
-  cfg :telnet, :ssh do
-    pre_logout "exit\r"
+      cfg :telnet do
+        username  /login:\s/
+        password  /^Password:\s/
+      end
+
+      cfg :telnet, :ssh do
+        pre_logout "exit\r"
+      end
+    end
   end
 end

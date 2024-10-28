@@ -1,23 +1,31 @@
-class TrueNAS < Oxidized::Model
-  using Refinements
+module Oxidized
+  module Models
+    # Represents the TrueNAS model.
+    #
+    # Handles configuration retrieval and processing for TrueNAS devices.
 
-  comment '# '
+    class TrueNAS < Oxidized::Models::Model
+      using Refinements
 
-  cmd('uname -a') { |cfg| comment cfg }
-  cmd('cat /etc/version') { |cfg| comment cfg }
-  cmd('sqlite3 "file:///data/freenas-v1.db?mode=ro&immutable=1" .dump') do |cfg|
-    cfg.lines.reject do |line|
-      line.match(/^INSERT INTO storage_replication /) ||
-        line.match(/^INSERT INTO system_alert /) || # ignore system alerts in db
-        line.match(/^INSERT INTO sqlite_sequence VALUES\('system_alert',/) # ignore system alerts in db
-    end.join
-  end
+      comment '# '
 
-  cfg :ssh do
-    exec true # don't run shell, run each command in exec channel
-  end
+      cmd('uname -a') { |cfg| comment cfg }
+      cmd('cat /etc/version') { |cfg| comment cfg }
+      cmd('sqlite3 "file:///data/freenas-v1.db?mode=ro&immutable=1" .dump') do |cfg|
+        cfg.lines.reject do |line|
+          line.match(/^INSERT INTO storage_replication /) ||
+            line.match(/^INSERT INTO system_alert /) || # ignore system alerts in db
+            line.match(/^INSERT INTO sqlite_sequence VALUES\('system_alert',/) # ignore system alerts in db
+        end.join
+      end
 
-  cfg :ssh do
-    pre_logout 'exit'
+      cfg :ssh do
+        exec true # don't run shell, run each command in exec channel
+      end
+
+      cfg :ssh do
+        pre_logout 'exit'
+      end
+    end
   end
 end

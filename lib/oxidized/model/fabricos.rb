@@ -1,22 +1,34 @@
-class FabricOS < Oxidized::Model
-  using Refinements
+module Oxidized
+  module Models
+    # Represents the FabricOS model.
+    #
+    # Handles configuration retrieval and processing for FabricOS devices.
 
-  # Brocade Fabric OS model #
-  ## FIXME: Only ssh exec mode support, no telnet, no ssh screenscraping
+    class FabricOS < Oxidized::Models::Model
+      using Refinements
 
-  prompt /^([\w]+:+[\w]+[>]\s)$/
-  comment '# '
+      # @!visibility private
+      # Brocade Fabric OS model #
+      ## FIXME: Only ssh exec mode support, no telnet, no ssh screenscraping
 
-  cmd 'chassisShow' do |cfg|
-    comment cfg.each_line.reject { |line| line.match(/Time Awake:/) || line.match(/Power Usage \(Watts\):/) || line.match(/Power Usage:/) || line.match(/Time Alive:/) || line.match(/Update:/) }.join
-  end
+      # @!method prompt(regex)
+      #   Sets the prompt for the device.
+      #   @param regex [Regexp] The regular expression that matches the prompt.
+      prompt /^([\w]+:+[\w]+[>]\s)$/
+      comment '# '
 
-  cmd 'configShow -all' do |cfg|
-    cfg = cfg.each_line.reject { |line| line.match /date = / }.join
-    cfg
-  end
+      cmd 'chassisShow' do |cfg|
+        comment cfg.each_line.reject { |line| line.match(/Time Awake:/) || line.match(/Power Usage \(Watts\):/) || line.match(/Power Usage:/) || line.match(/Time Alive:/) || line.match(/Update:/) }.join
+      end
 
-  cfg :ssh do
-    exec true # don't run shell, run each command in exec channel
+      cmd 'configShow -all' do |cfg|
+        cfg = cfg.each_line.reject { |line| line.match /date = / }.join
+        cfg
+      end
+
+      cfg :ssh do
+        exec true # don't run shell, run each command in exec channel
+      end
+    end
   end
 end

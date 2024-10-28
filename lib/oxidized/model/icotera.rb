@@ -1,29 +1,37 @@
-class Icotera < Oxidized::Model
-  using Refinements
+module Oxidized
+  module Models
+    # Represents the Icotera model.
+    #
+    # Handles configuration retrieval and processing for Icotera devices.
 
-  comment '## '
+    class Icotera < Oxidized::Models::Model
+      using Refinements
 
-  cmd :all do |cfg|
-    cfg.cut_both
-  end
+      comment '## '
 
-  cmd 'show management' do |cfg|
-    cfg.gsub! /^\s+System uptime.*\n/, ""
-    cfg.gsub! /^\s+Bytes in.*\n/, ""
-    cfg.gsub! /^\s+Pkts in.*\n/, ""
-    cfg.gsub! /^\s+Ucast in.*\n/, ""
-    cfg.gsub! /^\s+Bcast in.*\n/, ""
-    cfg.gsub! /^\s+Mcast in.*\n/, ""
-    cfg.gsub! /^\s+Ucast in pps.*\n/, ""
-    cfg.gsub! /^\s+Mcast in pps.*\n/, ""
-    cfg.gsub! /^\s+Total in bps.*\n/, ""
+      cmd :all do |cfg|
+        cfg.cut_both
+      end
 
-    comment cfg
-  end
+      cmd 'show management' do |cfg|
+        cfg.gsub! /^\s+System uptime.*\n/, ""
+        cfg.gsub! /^\s+Bytes in.*\n/, ""
+        cfg.gsub! /^\s+Pkts in.*\n/, ""
+        cfg.gsub! /^\s+Ucast in.*\n/, ""
+        cfg.gsub! /^\s+Bcast in.*\n/, ""
+        cfg.gsub! /^\s+Mcast in.*\n/, ""
+        cfg.gsub! /^\s+Ucast in pps.*\n/, ""
+        cfg.gsub! /^\s+Mcast in pps.*\n/, ""
+        cfg.gsub! /^\s+Total in bps.*\n/, ""
 
-  cmd 'copy progress screen'
+        comment cfg
+      end
 
-  cfg :ssh do
-    pre_logout 'exit'
+      cmd 'copy progress screen'
+
+      cfg :ssh do
+        pre_logout 'exit'
+      end
+    end
   end
 end

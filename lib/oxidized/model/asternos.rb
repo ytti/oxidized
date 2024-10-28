@@ -1,22 +1,35 @@
-class AsterNOS < Oxidized::Model
-  using Refinements
+module Oxidized
+  module Models
+    # Represents the AsterNOS model.
+    #
+    # Handles configuration retrieval and processing for AsterNOS devices.
 
-  prompt /^[^\$]+\$/
-  comment '# '
+    class AsterNOS < Oxidized::Models::Model
+      using Refinements
 
-  cmd :all do |cfg|
-    cfg.each_line.to_a[1..-2].join
-  end
+      # @!method prompt(regex)
+      #   Sets the prompt for the device.
+      #   @param regex [Regexp] The regular expression that matches the prompt.
+      prompt /^[^\$]+\$/
+      comment '# '
 
-  cmd 'show version' do |cfg|
-    # @model = Regexp.last_match(1) if cfg =~ /^Model: (\S+)/
-    comment cfg
-  end
+      cmd :all do |cfg|
+        cfg.each_line.to_a[1..-2].join
+      end
 
-  cmd "show runningconfiguration all"
+      cmd 'show version' do |cfg|
+        # @!visibility private
+        # @model = Regexp.last_match(1) if cfg =~ /^Model: (\S+)/
+        comment cfg
+      end
 
-  cfg :ssh do
-    # exec true
-    pre_logout 'exit'
+      cmd "show runningconfiguration all"
+
+      cfg :ssh do
+        # @!visibility private
+        # exec true
+        pre_logout 'exit'
+      end
+    end
   end
 end

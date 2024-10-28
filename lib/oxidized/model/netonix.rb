@@ -1,17 +1,28 @@
-class Netonix < Oxidized::Model
-  using Refinements
+module Oxidized
+  module Models
+    # Represents the Netonix model.
+    #
+    # Handles configuration retrieval and processing for Netonix devices.
 
-  prompt /^[\w\s\(\).@_\/:-]+#/
+    class Netonix < Oxidized::Models::Model
+      using Refinements
 
-  cmd :all do |cfg|
-    cfg.cut_both
-  end
+      # @!method prompt(regex)
+      #   Sets the prompt for the device.
+      #   @param regex [Regexp] The regular expression that matches the prompt.
+      prompt /^[\w\s\(\).@_\/:-]+#/
 
-  cmd 'cat config.json;echo'
+      cmd :all do |cfg|
+        cfg.cut_both
+      end
 
-  cfg :ssh do
-    post_login 'cmdline'
-    pre_logout 'exit'
-    pre_logout 'exit'
+      cmd 'cat config.json;echo'
+
+      cfg :ssh do
+        post_login 'cmdline'
+        pre_logout 'exit'
+        pre_logout 'exit'
+      end
+    end
   end
 end

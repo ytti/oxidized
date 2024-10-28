@@ -1,25 +1,33 @@
-class Cambium < Oxidized::Model
-  using Refinements
+module Oxidized
+  module Models
+    # Represents the Cambium model.
+    #
+    # Handles configuration retrieval and processing for Cambium devices.
 
-  cfg_cb = lambda do
-    c_page = @m.click @m_page.link_with(text: "Configuration")
-    u_page = @m.click c_page.link_with(text: "Unit Settings")
-    cfg    = @m.click u_page.link_with(text: /\.cfg$/)
-    cfg.body
-  end
+    class Cambium < Oxidized::Models::Model
+      using Refinements
 
-  cmd cfg_cb do |cfg|
-    cfg.gsub! /"cfgUtcTimestamp":.*?,\n/, ''
-    cfg
-  end
+      cfg_cb = lambda do
+        c_page = @m.click @m_page.link_with(text: "Configuration")
+        u_page = @m.click c_page.link_with(text: "Unit Settings")
+        cfg    = @m.click u_page.link_with(text: /\.cfg$/)
+        cfg.body
+      end
 
-  cfg :http do
-    @main_page = "/main.cgi"
-    define_singleton_method :login do
-      @m_page = @m_page.form_with(action: "login.cgi") do |form|
-        form.CanopyUsername = @node.auth[:username]
-        form.CanopyPassword = @node.auth[:password]
-      end.submit
+      cmd cfg_cb do |cfg|
+        cfg.gsub! /"cfgUtcTimestamp":.*?,\n/, ''
+        cfg
+      end
+
+      cfg :http do
+        @main_page = "/main.cgi"
+        define_singleton_method :login do
+          @m_page = @m_page.form_with(action: "login.cgi") do |form|
+            form.CanopyUsername = @node.auth[:username]
+            form.CanopyPassword = @node.auth[:password]
+          end.submit
+        end
+      end
     end
   end
 end

@@ -1,21 +1,34 @@
-class PurityOS < Oxidized::Model
-  using Refinements
+module Oxidized
+  module Models
+    # Represents the PurityOS model.
+    #
+    # Handles configuration retrieval and processing for PurityOS devices.
 
-  # Pure Storage Purity OS
+    class PurityOS < Oxidized::Models::Model
+      using Refinements
 
-  prompt /\w+@\S+(\s+\S+)*\s?>\s?$/
-  comment '# '
+      # @!visibility private
+      # Pure Storage Purity OS
 
-  cmd 'pureconfig list' do |cfg|
-    cfg.gsub! /^purealert flag \d+$/, ''
-    cfg.gsub! /(.*VEEAM-StorageLUNSnap-[0-9a-f].*)/, ''
-    cfg.gsub! /(.*VEEAM-ExportLUNSnap-[0-9A-F].*)/, ''
-    # remove empty lines
-    cfg.each_line.reject { |line| line.match /^[\r\n\s\u0000#]+$/ }.join
-  end
+      # @!method prompt(regex)
+      #   Sets the prompt for the device.
+      #   @param regex [Regexp] The regular expression that matches the prompt.
+      prompt /\w+@\S+(\s+\S+)*\s?>\s?$/
+      comment '# '
 
-  cfg :ssh do
-    pty_options(term: "dumb")
-    pre_logout 'exit'
+      cmd 'pureconfig list' do |cfg|
+        cfg.gsub! /^purealert flag \d+$/, ''
+        cfg.gsub! /(.*VEEAM-StorageLUNSnap-[0-9a-f].*)/, ''
+        cfg.gsub! /(.*VEEAM-ExportLUNSnap-[0-9A-F].*)/, ''
+        # @!visibility private
+        # remove empty lines
+        cfg.each_line.reject { |line| line.match /^[\r\n\s\u0000#]+$/ }.join
+      end
+
+      cfg :ssh do
+        pty_options(term: "dumb")
+        pre_logout 'exit'
+      end
+    end
   end
 end

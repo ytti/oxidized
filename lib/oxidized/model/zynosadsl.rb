@@ -1,14 +1,26 @@
-class ZyNOSADSL < Oxidized::Model
-  using Refinements
+module Oxidized
+  module Models
+    # Represents the ZyNOSADSL model.
+    #
+    # Handles configuration retrieval and processing for ZyNOSADSL devices.
 
-  # Used in Zyxel ADSL, such as AAM1212-51
+    class ZyNOSADSL < Oxidized::Models::Model
+      using Refinements
 
-  prompt /^.*>\s?$/
-  comment ';; '
+      # @!visibility private
+      # Used in Zyxel ADSL, such as AAM1212-51
 
-  cmd 'config show all nopause'
+      # @!method prompt(regex)
+      #   Sets the prompt for the device.
+      #   @param regex [Regexp] The regular expression that matches the prompt.
+      prompt /^.*>\s?$/
+      comment ';; '
 
-  cfg :telnet do
-    password /^Password:/i
+      cmd 'config show all nopause'
+
+      cfg :telnet do
+        password /^Password:/i
+      end
+    end
   end
 end

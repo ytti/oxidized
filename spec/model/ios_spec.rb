@@ -9,8 +9,8 @@ describe 'model/IOS' do
   end
 
   it 'matches different prompts' do
-    _('LAB-SW123_9200L#').must_match IOS.prompt
-    _('OXIDIZED-WLC1#').must_match IOS.prompt
+    _('LAB-SW123_9200L#').must_match Oxidized::Models::IOS.prompt
+    _('OXIDIZED-WLC1#').must_match Oxidized::Models::IOS.prompt
   end
 
   it 'runs on C9200L-24P-4G with IOS-XE 17.09.04a' do

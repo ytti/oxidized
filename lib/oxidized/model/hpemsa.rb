@@ -1,12 +1,23 @@
-class HpeMsa < Oxidized::Model
-  using Refinements
+module Oxidized
+  module Models
+    # Represents the HpeMsa model.
+    #
+    # Handles configuration retrieval and processing for HpeMsa devices.
 
-  prompt /^#\s?$/
+    class HpeMsa < Oxidized::Models::Model
+      using Refinements
 
-  cmd 'show configuration'
+      # @!method prompt(regex)
+      #   Sets the prompt for the device.
+      #   @param regex [Regexp] The regular expression that matches the prompt.
+      prompt /^#\s?$/
 
-  cfg :ssh do
-    post_login 'set cli-parameters pager disabled'
-    pre_logout 'exit'
+      cmd 'show configuration'
+
+      cfg :ssh do
+        post_login 'set cli-parameters pager disabled'
+        pre_logout 'exit'
+      end
+    end
   end
 end

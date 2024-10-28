@@ -1,46 +1,59 @@
-class SAOS < Oxidized::Model
-  using Refinements
+module Oxidized
+  module Models
+    # Represents the SAOS model.
+    #
+    # Handles configuration retrieval and processing for SAOS devices.
 
-  # Ciena SAOS switch
-  # used for 6.x devices
+    class SAOS < Oxidized::Models::Model
+      using Refinements
 
-  comment '! '
-  prompt /^[\w-]+\*?>\s?/
+      # @!visibility private
+      # Ciena SAOS switch
+      # used for 6.x devices
 
-  cmd :all do |cfg|
-    cfg.gsub! /(Waiting for )(accounting|authorization).*\n/, '' # Remove TACACS errors
-    cfg.cut_both
-  end
+      comment '! '
 
-  cmd 'chassis show device-id power' do |cfg|
-    comment cfg
-  end
+      # @!method prompt(regex)
+      #   Sets the prompt for the device.
+      #   @param regex [Regexp] The regular expression that matches the prompt.
+      prompt /^[\w-]+\*?>\s?/
 
-  cmd 'software show' do |cfg|
-    cfg.gsub! /^\| Bank status.*/, '| Bank status         : <removed>                                              |'
-    comment cfg
-  end
+      cmd :all do |cfg|
+        cfg.gsub! /(Waiting for )(accounting|authorization).*\n/, '' # Remove TACACS errors
+        cfg.cut_both
+      end
 
-  cmd 'port xcvr show' do |cfg|
-    cfg.gsub! /^SHELL PARSER FAILURE.*/, '' # Ignore command failure
-    cfg.gsub! /(\s\|.{10}\|)(Ena\s\s|\s\sDis|UCTF\s)(.*)/, '\1     \3' # Remove transient operational state
-    comment cfg
-  end
+      cmd 'chassis show device-id power' do |cfg|
+        comment cfg
+      end
 
-  cmd 'configuration show' do |cfg|
-    cfg.gsub! /^! Created: [^\n]*\n/, ''
-    cfg.gsub! /^! On terminal: [^\n]*\n/, ''
-    cfg
-  end
+      cmd 'software show' do |cfg|
+        cfg.gsub! /^\| Bank status.*/, '| Bank status         : <removed>                                              |'
+        comment cfg
+      end
 
-  cfg :telnet do
-    username /login:/
-    password /assword:/
-  end
+      cmd 'port xcvr show' do |cfg|
+        cfg.gsub! /^SHELL PARSER FAILURE.*/, '' # Ignore command failure
+        cfg.gsub! /(\s\|.{10}\|)(Ena\s\s|\s\sDis|UCTF\s)(.*)/, '\1     \3' # Remove transient operational state
+        comment cfg
+      end
 
-  cfg :telnet, :ssh do
-    post_login 'system shell set more off'
-    post_login 'system shell session set more off'
-    pre_logout 'exit'
+      cmd 'configuration show' do |cfg|
+        cfg.gsub! /^! Created: [^\n]*\n/, ''
+        cfg.gsub! /^! On terminal: [^\n]*\n/, ''
+        cfg
+      end
+
+      cfg :telnet do
+        username /login:/
+        password /assword:/
+      end
+
+      cfg :telnet, :ssh do
+        post_login 'system shell set more off'
+        post_login 'system shell session set more off'
+        pre_logout 'exit'
+      end
+    end
   end
 end

@@ -1,7 +1,7 @@
 require_relative '../spec_helper'
 require 'oxidized/output/file'
 
-describe 'Oxidized::OxidizedFile' do
+describe 'Oxidized::Output::OxidizedFile' do
   describe '#setup' do
     it 'raises Oxidized::NoConfig when no config is provided' do
       Asetus.any_instance.expects(:load)
@@ -13,9 +13,9 @@ describe 'Oxidized::OxidizedFile' do
       Oxidized::Config.load({ home_dir: '/cfg_path/' })
 
       Oxidized.config.output.file = ''
-      oxidized_file = Oxidized::OxidizedFile.new
+      oxidized_file = Oxidized::Output::OxidizedFile.new
 
-      err = _(-> { oxidized_file.setup }).must_raise Oxidized::NoConfig
+      err = _(-> { oxidized_file.setup }).must_raise Oxidized::Error::NoConfig
       _(err.message).must_match(/^no output file config, edit \/cfg_path\/config$/)
     end
   end

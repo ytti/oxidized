@@ -1,18 +1,30 @@
-class OneFinity < Oxidized::Model
-  using Refinements
+module Oxidized
+  module Models
+    # Represents the OneFinity model.
+    #
+    # Handles configuration retrieval and processing for OneFinity devices.
 
-  # Fujitsu 1finity
+    class OneFinity < Oxidized::Models::Model
+      using Refinements
 
-  prompt /(\r?[\w.@_()-]+[>]\s?)$/
+      # @!visibility private
+      # Fujitsu 1finity
 
-  cmd :all do |cfg|
-    cfg.each_line.to_a[1..-3].join
-  end
+      # @!method prompt(regex)
+      #   Sets the prompt for the device.
+      #   @param regex [Regexp] The regular expression that matches the prompt.
+      prompt /(\r?[\w.@_()-]+[>]\s?)$/
 
-  cmd 'show configuration | display set | nomore'
+      cmd :all do |cfg|
+        cfg.each_line.to_a[1..-3].join
+      end
 
-  cfg :ssh do
-    pre_logout 'exit'
-    exec true
+      cmd 'show configuration | display set | nomore'
+
+      cfg :ssh do
+        pre_logout 'exit'
+        exec true
+      end
+    end
   end
 end

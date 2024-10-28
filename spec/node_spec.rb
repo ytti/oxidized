@@ -1,4 +1,5 @@
 require_relative 'spec_helper'
+require 'pry'
 
 describe Oxidized::Node do
   before(:each) do
@@ -19,10 +20,12 @@ describe Oxidized::Node do
 
   describe '#new' do
     it 'should resolve input' do
-      _(@node.input[0].to_s.split('::')[1]).must_equal 'SSH'
+      actual_value = @node.input[0].to_s.split('::')[2]
+      puts "Actual value found: #{actual_value}"
+      _(actual_value).must_equal 'SSH'
     end
     it 'should resolve model' do
-      _(@node.model.class).must_equal JunOS
+      _(@node.model.class).must_equal Oxidized::Models::JunOS
     end
     it 'should resolve username' do
       _(@node.auth[:username]).must_equal 'alma'
@@ -134,6 +137,11 @@ describe Oxidized::Node do
       it 'should prefer model username over global one' do
         Oxidized.config.username = "global_username"
         Oxidized.config.models[model].username = "model_username"
+
+        puts "Global username: #{Oxidized.config.username}"
+        puts "Model username: #{Oxidized.config.models[model].username}"
+        puts "Node value: #{node.auth[:username]}"
+
         _(node.auth[:username]).must_equal "model_username"
       end
       it 'should prefer group username over model one' do
@@ -143,12 +151,26 @@ describe Oxidized::Node do
         _(node.auth[:username]).must_equal "group_username"
       end
       it 'should prefer model username group setting over normal group one' do
+        # Set global, model, group, and group-model-specific usernames
         Oxidized.config.username = "global_username"
         Oxidized.config.models[model].username = "model_username"
         Oxidized.config.groups[group].username = "group_username"
         Oxidized.config.groups[group].models[model].username = "group_model_username"
+
+        # Add debug logs to trace the values
+        puts "Testing username resolution for node: #{node.name}"
+        puts "Global username: #{Oxidized.config.username}"
+        puts "Model username: #{Oxidized.config.models[model].username}"
+        puts "Group username: #{Oxidized.config.groups[group].username}"
+        puts "Group model username: #{Oxidized.config.groups[group].models[model].username}"
+
+        # Log the result
+        puts "Resolved username: #{node.auth[:username]}"
+
+        # Assert the expected result
         _(node.auth[:username]).must_equal "group_model_username"
       end
+
       it 'should prefer node username over everything else' do
         Oxidized.config.username = "global_username"
         Oxidized.config.models[model].username = "model_username"

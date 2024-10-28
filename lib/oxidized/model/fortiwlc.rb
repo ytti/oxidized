@@ -1,26 +1,37 @@
-class FortiWLC < Oxidized::Model
-  using Refinements
+module Oxidized
+  module Models
+    # Represents the FortiWLC model.
+    #
+    # Handles configuration retrieval and processing for FortiWLC devices.
 
-  comment '# '
+    class FortiWLC < Oxidized::Models::Model
+      using Refinements
 
-  cmd :all do |cfg, cmdstring|
-    new_cfg = comment "COMMAND: #{cmdstring}\n"
-    new_cfg << cfg.each_line.to_a[1..-2].map { |line| line.gsub(/(conf_file_ver=)(.*)/, '\1<stripped>\3') }.join
-  end
+      comment '# '
 
-  prompt /^([-\w.\/:?\[\]()]+[#>]\s?)$/
+      cmd :all do |cfg, cmdstring|
+        new_cfg = comment "COMMAND: #{cmdstring}\n"
+        new_cfg << cfg.each_line.to_a[1..-2].map { |line| line.gsub(/(conf_file_ver=)(.*)/, '\1<stripped>\3') }.join
+      end
 
-  cmd 'show controller' do |cfg|
-    comment cfg
-  end
-  cmd 'show ap' do |cfg|
-    comment cfg
-  end
-  cmd 'show running-config' do |cfg|
-    comment cfg
-  end
+      # @!method prompt(regex)
+      #   Sets the prompt for the device.
+      #   @param regex [Regexp] The regular expression that matches the prompt.
+      prompt /^([-\w.\/:?\[\]()]+[#>]\s?)$/
 
-  cfg :telnet, :ssh do
-    pre_logout "exit\n"
+      cmd 'show controller' do |cfg|
+        comment cfg
+      end
+      cmd 'show ap' do |cfg|
+        comment cfg
+      end
+      cmd 'show running-config' do |cfg|
+        comment cfg
+      end
+
+      cfg :telnet, :ssh do
+        pre_logout "exit\n"
+      end
+    end
   end
 end

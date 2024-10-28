@@ -1,54 +1,69 @@
-class ZhoneOLT < Oxidized::Model
-  using Refinements
+module Oxidized
+  module Models
+    # Represents the ZhoneOLT model.
+    #
+    # Handles configuration retrieval and processing for ZhoneOLT devices.
 
-  # Zhone OLT/MetroE/DSL devices (ONT uses a completely different CLI)
+    class ZhoneOLT < Oxidized::Models::Model
+      using Refinements
 
-  # the prompt can be anything on zhone, but it defaults to 'zXX>' and we
-  # always use hostname>
-  prompt /^(\r*[\w.@():-]+[>]\s?)$/
-  comment '# '
+      # @!visibility private
+      # Zhone OLT/MetroE/DSL devices (ONT uses a completely different CLI)
 
-  cmd :secret do |cfg|
-    cfg.gsub! /^(set configsyncpasswd = ) \S+/, '\\1 <removed>'
-    cfg.gsub! /^(set user-pass = ) \S+/, '\\1 <removed>'
-    cfg.gsub! /^(set auth-key = ) \S+/, '\\1 <removed>'
-    cfg.gsub! /^(set priv-key = ) \S+/, '\\1 <removed>'
-    cfg.gsub! /^(set ftp-password = ) \S+/, '\\1 <removed>'
-    cfg.gsub! /^(set community-name = ) \S+/, '\\1 <removed>'
-    cfg.gsub! /^(set communityname = ) \S+/, '\\1 <removed>'
-    cfg
-  end
+      # @!visibility private
+      # the prompt can be anything on zhone, but it defaults to 'zXX>' and we
+      # always use hostname>
 
-  cmd :all do |cfg|
-    cfg.each_line.to_a[1..-2].map { |line| line.delete("\r").rstrip }.join("\n") + "\n"
-  end
+      # @!method prompt(regex)
+      #   Sets the prompt for the device.
+      #   @param regex [Regexp] The regular expression that matches the prompt.
+      prompt /^(\r*[\w.@():-]+[>]\s?)$/
+      comment '# '
 
-  cmd 'swversion' do |cfg|
-    comment cfg
-  end
+      cmd :secret do |cfg|
+        cfg.gsub! /^(set configsyncpasswd = ) \S+/, '\\1 <removed>'
+        cfg.gsub! /^(set user-pass = ) \S+/, '\\1 <removed>'
+        cfg.gsub! /^(set auth-key = ) \S+/, '\\1 <removed>'
+        cfg.gsub! /^(set priv-key = ) \S+/, '\\1 <removed>'
+        cfg.gsub! /^(set ftp-password = ) \S+/, '\\1 <removed>'
+        cfg.gsub! /^(set community-name = ) \S+/, '\\1 <removed>'
+        cfg.gsub! /^(set communityname = ) \S+/, '\\1 <removed>'
+        cfg
+      end
 
-  cmd 'slots' do |cfg|
-    comment cfg
-  end
+      cmd :all do |cfg|
+        cfg.each_line.to_a[1..-2].map { |line| line.delete("\r").rstrip }.join("\n") + "\n"
+      end
 
-  cmd 'eeshow card' do |cfg|
-    comment cfg
-  end
+      cmd 'swversion' do |cfg|
+        comment cfg
+      end
 
-  cmd 'ethrpshow' do |cfg|
-    cfg = cfg.each_line.select { |line| line.match /Vendor (Name|OUI|Part|Revision)|Serial Number|Manufacturing Date/ }.join
-    comment cfg
-  end
+      cmd 'slots' do |cfg|
+        comment cfg
+      end
 
-  cmd 'dump console' do |cfg|
-    cfg.each_line.reject { |line| line.match /To Abort the operation enter Ctrl-C/ }.join
-  end
+      cmd 'eeshow card' do |cfg|
+        comment cfg
+      end
 
-  # zhone technically supports ssh, but it locks up a ton.  Especially when
-  # showing large amounts of output, like "dump console"
-  cfg :telnet do
-    username /\r*login:/
-    password /\r*password:/
-    pre_logout 'logout'
+      cmd 'ethrpshow' do |cfg|
+        cfg = cfg.each_line.select { |line| line.match /Vendor (Name|OUI|Part|Revision)|Serial Number|Manufacturing Date/ }.join
+        comment cfg
+      end
+
+      cmd 'dump console' do |cfg|
+        cfg.each_line.reject { |line| line.match /To Abort the operation enter Ctrl-C/ }.join
+      end
+
+      # @!visibility private
+      # zhone technically supports ssh, but it locks up a ton.  Especially when
+      # showing large amounts of output, like "dump console"
+      cfg :telnet do
+        username /\r*login:/
+        password /\r*password:/
+        pre_logout 'logout'
+      end
+    end
   end
 end

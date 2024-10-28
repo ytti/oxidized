@@ -1,24 +1,36 @@
-class Airfiber < Oxidized::Model
-  using Refinements
+module Oxidized
+  module Models
+    # Represents the Airfiber model.
+    #
+    # Handles configuration retrieval and processing for Airfiber devices.
 
-  # Ubiquiti Airfiber (tested with Airfiber 11FX)
+    class Airfiber < Oxidized::Models::Model
+      using Refinements
 
-  prompt /^AF[\w\.-]+#/i
+      # @!visibility private
+      # Ubiquiti Airfiber (tested with Airfiber 11FX)
 
-  cmd :all do |cfg|
-    cfg.cut_both
-  end
+      # @!method prompt(regex)
+      #   Sets the prompt for the device.
+      #   @param regex [Regexp] The regular expression that matches the prompt.
+      prompt /^AF[\w\.-]+#/i
 
-  pre do
-    cmd 'cat /tmp/system.cfg'
-  end
+      cmd :all do |cfg|
+        cfg.cut_both
+      end
 
-  cfg :telnet do
-    username /^[\w\W]+\slogin:\s$/
-    password /^[p:P]assword:\s$/
-  end
+      pre do
+        cmd 'cat /tmp/system.cfg'
+      end
 
-  cfg :telnet, :ssh do
-    pre_logout 'exit'
+      cfg :telnet do
+        username /^[\w\W]+\slogin:\s$/
+        password /^[p:P]assword:\s$/
+      end
+
+      cfg :telnet, :ssh do
+        pre_logout 'exit'
+      end
+    end
   end
 end

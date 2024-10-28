@@ -1,19 +1,31 @@
-class CiscoNGA < Oxidized::Model
-  using Refinements
+module Oxidized
+  module Models
+    # Represents the CiscoNGA model.
+    #
+    # Handles configuration retrieval and processing for CiscoNGA devices.
 
-  comment '# '
-  prompt /([\w.@-]+[#>]\s?)$/
+    class CiscoNGA < Oxidized::Models::Model
+      using Refinements
 
-  cmd 'show version' do |cfg|
-    comment cfg
-  end
+      comment '# '
 
-  cmd 'show configuration' do |cfg|
-    cfg
-  end
+      # @!method prompt(regex)
+      #   Sets the prompt for the device.
+      #   @param regex [Regexp] The regular expression that matches the prompt.
+      prompt /([\w.@-]+[#>]\s?)$/
 
-  cfg :ssh do
-    post_login 'terminal length 0'
-    pre_logout 'exit'
+      cmd 'show version' do |cfg|
+        comment cfg
+      end
+
+      cmd 'show configuration' do |cfg|
+        cfg
+      end
+
+      cfg :ssh do
+        post_login 'terminal length 0'
+        pre_logout 'exit'
+      end
+    end
   end
 end

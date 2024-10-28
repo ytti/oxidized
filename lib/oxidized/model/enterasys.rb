@@ -1,45 +1,58 @@
-class Enterasys < Oxidized::Model
-  using Refinements
+module Oxidized
+  module Models
+    # Represents the Enterasys model.
+    #
+    # Handles configuration retrieval and processing for Enterasys devices.
 
-  # Enterasys B3/C3 models #
+    class Enterasys < Oxidized::Models::Model
+      using Refinements
 
-  prompt /^.+\w\((su|rw)\)->\s?$/
+      # @!visibility private
+      # Enterasys B3/C3 models #
 
-  comment '!'
+      # @!method prompt(regex)
+      #   Sets the prompt for the device.
+      #   @param regex [Regexp] The regular expression that matches the prompt.
+      prompt /^.+\w\((su|rw)\)->\s?$/
 
-  # Handle paging
-  expect /^--More--.*$/ do |data, re|
-    send ' '
-    data.sub re, ''
-  end
+      comment '!'
 
-  cmd :all do |cfg|
-    cfg.each_line.to_a[2..-3].map { |line| line.delete("\r").rstrip }.join("\n") + "\n"
-  end
+      # @!visibility private
+      # Handle paging
+      expect /^--More--.*$/ do |data, re|
+        send ' '
+        data.sub re, ''
+      end
 
-  cmd 'show system hardware' do |cfg|
-    comment cfg
-  end
+      cmd :all do |cfg|
+        cfg.each_line.to_a[2..-3].map { |line| line.delete("\r").rstrip }.join("\n") + "\n"
+      end
 
-  cmd 'show version' do |cfg|
-    comment cfg
-  end
+      cmd 'show system hardware' do |cfg|
+        comment cfg
+      end
 
-  cmd 'show config' do |cfg|
-    cfg.gsub! /^This command shows non-default configurations only./, ''
-    cfg.gsub! /^Use 'show config all' to show both default and non-default configurations./, ''
-    cfg.gsub! /^!|#.*/, ''
-    cfg.gsub! /^$\n/, ''
+      cmd 'show version' do |cfg|
+        comment cfg
+      end
 
-    cfg
-  end
+      cmd 'show config' do |cfg|
+        cfg.gsub! /^This command shows non-default configurations only./, ''
+        cfg.gsub! /^Use 'show config all' to show both default and non-default configurations./, ''
+        cfg.gsub! /^!|#.*/, ''
+        cfg.gsub! /^$\n/, ''
 
-  cfg :telnet do
-    username /^Username:/i
-    password /^Password:/i
-  end
+        cfg
+      end
 
-  cfg :telnet, :ssh do
-    pre_logout 'exit'
+      cfg :telnet do
+        username /^Username:/i
+        password /^Password:/i
+      end
+
+      cfg :telnet, :ssh do
+        pre_logout 'exit'
+      end
+    end
   end
 end

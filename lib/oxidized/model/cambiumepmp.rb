@@ -1,19 +1,31 @@
-class CambiumePMP < Oxidized::Model
-  using Refinements
+module Oxidized
+  module Models
+    # Represents the CambiumePMP model.
+    #
+    # Handles configuration retrieval and processing for CambiumePMP devices.
 
-  # Cambium ePMP Radios
+    class CambiumePMP < Oxidized::Models::Model
+      using Refinements
 
-  prompt /.*>/
+      # @!visibility private
+      # Cambium ePMP Radios
 
-  cmd :all do |cfg|
-    cfg.cut_both
-  end
+      # @!method prompt(regex)
+      #   Sets the prompt for the device.
+      #   @param regex [Regexp] The regular expression that matches the prompt.
+      prompt /.*>/
 
-  pre do
-    cmd 'config show json'
-  end
+      cmd :all do |cfg|
+        cfg.cut_both
+      end
 
-  cfg :ssh do
-    pre_logout 'exit'
+      pre do
+        cmd 'config show json'
+      end
+
+      cfg :ssh do
+        pre_logout 'exit'
+      end
+    end
   end
 end

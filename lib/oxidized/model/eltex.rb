@@ -1,52 +1,66 @@
-class Eltex < Oxidized::Model
-  using Refinements
+module Oxidized
+  module Models
+    # Represents the Eltex model.
+    #
+    # Handles configuration retrieval and processing for Eltex devices.
 
-  # Tested with MES2324FB Version: 4.0.7.1 Build: 37 (master)
+    class Eltex < Oxidized::Models::Model
+      using Refinements
 
-  prompt /^\s?[\w.@\(\)-]+[#>]\s?$/
-  comment '! '
+      # @!visibility private
+      # Tested with MES2324FB Version: 4.0.7.1 Build: 37 (master)
 
-  cmd :all do |cfg|
-    cfg.gsub! /^% Invalid input detected at '\^' marker\.$|^\s+\^$/, ''
-    cfg.cut_both
-  end
+      # @!method prompt(regex)
+      #   Sets the prompt for the device.
+      #   @param regex [Regexp] The regular expression that matches the prompt.
+      prompt /^\s?[\w.@\(\)-]+[#>]\s?$/
+      comment '! '
 
-  cmd :secret do |cfg|
-    cfg.gsub! /^(snmp-server community).*/, '\\1 <configuration removed>'
-    cfg.gsub! /^(enable (password|secret)( level \d+)? \d) .+/, '\\1 <secret hidden>'
-    cfg.gsub! /^(\s+(?:password|secret)) (?:\d )?\S+/, '\\1 <secret hidden>'
-    cfg.gsub! /^(tacacs-server (.+ )?key) .+/, '\\1 <secret hidden>'
-    cfg.gsub! /^((tacacs|radius) server [^\n]+\n(\s+[^\n]+\n)*\s+key) [^\n]+$/m, '\1 <secret hidden>'
-    cfg.gsub! /username (\S+) privilege (\d+) (\S+).*/, '<secret hidden>'
-    cfg.gsub! /^username \S+ password \d \S+/, '<secret hidden>'
-    cfg.gsub! /^enable password \d \S+/, '<secret hidden>'
-    cfg.gsub! /wpa-psk ascii \d \S+/, '<secret hidden>'
-    cfg
-  end
+      cmd :all do |cfg|
+        cfg.gsub! /^% Invalid input detected at '\^' marker\.$|^\s+\^$/, ''
+        cfg.cut_both
+      end
 
-  cmd 'show running-config' do |cfg|
-    cfg
-  end
+      cmd :secret do |cfg|
+        cfg.gsub! /^(snmp-server community).*/, '\\1 <configuration removed>'
+        cfg.gsub! /^(enable (password|secret)( level \d+)? \d) .+/, '\\1 <secret hidden>'
+        cfg.gsub! /^(\s+(?:password|secret)) (?:\d )?\S+/, '\\1 <secret hidden>'
+        cfg.gsub! /^(tacacs-server (.+ )?key) .+/, '\\1 <secret hidden>'
+        cfg.gsub! /^((tacacs|radius) server [^\n]+\n(\s+[^\n]+\n)*\s+key) [^\n]+$/m, '\1 <secret hidden>'
+        cfg.gsub! /username (\S+) privilege (\d+) (\S+).*/, '<secret hidden>'
+        cfg.gsub! /^username \S+ password \d \S+/, '<secret hidden>'
+        cfg.gsub! /^enable password \d \S+/, '<secret hidden>'
+        cfg.gsub! /wpa-psk ascii \d \S+/, '<secret hidden>'
+        cfg
+      end
 
-  cfg :telnet do
-    username /^(User Name):/
-    password /^Password:/
-  end
+      cmd 'show running-config' do |cfg|
+        cfg
+      end
 
-  cfg :telnet, :ssh do
-    # preferred way to handle additional passwords
-    post_login do
-      if vars(:enable) == true
-        cmd "enable"
-      elsif vars(:enable)
-        cmd "enable", /^[pP]assword:/
-        cmd vars(:enable)
+      cfg :telnet do
+        username /^(User Name):/
+        password /^Password:/
+      end
+
+      cfg :telnet, :ssh do
+        # @!visibility private
+        # preferred way to handle additional passwords
+        post_login do
+          if vars(:enable) == true
+            cmd "enable"
+          elsif vars(:enable)
+            cmd "enable", /^[pP]assword:/
+            cmd vars(:enable)
+          end
+        end
+        post_login 'terminal datadump'
+        # @!visibility private
+        # disable cli pagination for MES2424
+        post_login 'set cli pagination off'
+        pre_logout 'disable'
+        pre_logout 'exit'
       end
     end
-    post_login 'terminal datadump'
-    # disable cli pagination for MES2424
-    post_login 'set cli pagination off'
-    pre_logout 'disable'
-    pre_logout 'exit'
   end
 end

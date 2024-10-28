@@ -1,3 +1,6 @@
+# This module houses Oxidized-specific extensions and refinements
+# for various classes, enhancing their functionality within the
+# Oxidized application.
 module Refinements
   # Use the 'refine' keyword to define refinements for the String class
   refine String do

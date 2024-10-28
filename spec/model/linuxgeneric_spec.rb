@@ -9,6 +9,6 @@ describe 'model/LinuxGeneric' do
   end
 
   it 'matches different prompts' do
-    _('robert@gap:~$ ').must_match LinuxGeneric.prompt
+    _('robert@gap:~$ ').must_match Oxidized::Models::LinuxGeneric.prompt
   end
 end

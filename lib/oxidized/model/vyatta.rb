@@ -1,37 +1,49 @@
-class Vyatta < Oxidized::Model
-  using Refinements
+module Oxidized
+  module Models
+    # Represents the Vyatta model.
+    #
+    # Handles configuration retrieval and processing for Vyatta devices.
 
-  # Brocade Vyatta / VyOS model #
+    class Vyatta < Oxidized::Models::Model
+      using Refinements
 
-  prompt /@.*(:~\$|>)\s/
+      # @!visibility private
+      # Brocade Vyatta / VyOS model #
 
-  cmd :all do |cfg|
-    cfg.lines.to_a[1..-2].join
-  end
+      # @!method prompt(regex)
+      #   Sets the prompt for the device.
+      #   @param regex [Regexp] The regular expression that matches the prompt.
+      prompt /@.*(:~\$|>)\s/
 
-  cmd :secret do |cfg|
-    cfg.gsub! /encrypted-password (\S+).*/, 'encrypted-password <secret removed>'
-    cfg.gsub! /plaintext-password (\S+).*/, 'plaintext-password <secret removed>'
-    cfg.gsub! /password (\S+).*/, 'password <secret removed>'
-    cfg.gsub! /pre-shared-secret (\S+).*/, 'pre-shared-secret <secret removed>'
-    cfg.gsub! /community (\S+)/, 'community <hidden>'
-    cfg.gsub! /private-key (\S+).*/, 'private-key <secret removed>'
-    cfg.gsub! /preshared-key (\S+).*/, 'preshared-key <secret removed>'
-    cfg
-  end
+      cmd :all do |cfg|
+        cfg.lines.to_a[1..-2].join
+      end
 
-  cmd 'show version' do |cfg|
-    comment cfg
-  end
+      cmd :secret do |cfg|
+        cfg.gsub! /encrypted-password (\S+).*/, 'encrypted-password <secret removed>'
+        cfg.gsub! /plaintext-password (\S+).*/, 'plaintext-password <secret removed>'
+        cfg.gsub! /password (\S+).*/, 'password <secret removed>'
+        cfg.gsub! /pre-shared-secret (\S+).*/, 'pre-shared-secret <secret removed>'
+        cfg.gsub! /community (\S+)/, 'community <hidden>'
+        cfg.gsub! /private-key (\S+).*/, 'private-key <secret removed>'
+        cfg.gsub! /preshared-key (\S+).*/, 'preshared-key <secret removed>'
+        cfg
+      end
 
-  cmd 'show configuration commands | no-more'
+      cmd 'show version' do |cfg|
+        comment cfg
+      end
 
-  cfg :telnet do
-    username  /login:\s/
-    password  /^Password:\s/
-  end
+      cmd 'show configuration commands | no-more'
 
-  cfg :telnet, :ssh do
-    pre_logout 'exit'
+      cfg :telnet do
+        username  /login:\s/
+        password  /^Password:\s/
+      end
+
+      cfg :telnet, :ssh do
+        pre_logout 'exit'
+      end
+    end
   end
 end

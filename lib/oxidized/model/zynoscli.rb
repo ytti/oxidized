@@ -1,38 +1,53 @@
-class ZyNOSCLI < Oxidized::Model
-  using Refinements
+module Oxidized
+  module Models
+    # Represents the ZyNOSCLI model.
+    #
+    # Handles configuration retrieval and processing for ZyNOSCLI devices.
 
-  # Used in Zyxel DSLAMs, such as SAM1316
+    class ZyNOSCLI < Oxidized::Models::Model
+      using Refinements
 
-  # Typical prompt "XGS4600#"
-  prompt /^([\w.@()-]+[#>]\s\e7)$/
-  comment  ';; '
+      # @!visibility private
+      # Used in Zyxel DSLAMs, such as SAM1316
 
-  cmd :all do |cfg|
-    cfg.gsub! /^.*\e7/, ''
-  end
-  cmd 'show stacking'
+      # @!visibility private
+      # Typical prompt "XGS4600#"
 
-  cmd 'show version'
+      # @!method prompt(regex)
+      #   Sets the prompt for the device.
+      #   @param regex [Regexp] The regular expression that matches the prompt.
+      prompt /^([\w.@()-]+[#>]\s\e7)$/
+      comment  ';; '
 
-  cmd 'show running-config'
+      cmd :all do |cfg|
+        cfg.gsub! /^.*\e7/, ''
+      end
+      cmd 'show stacking'
 
-  cfg :telnet do
-    username /^User name:/i
-    password /^Password:/i
-  end
+      cmd 'show version'
 
-  cfg :telnet, :ssh do
-    if vars :enable
-      post_login do
-        send "enable\n"
-        # Interpret enable: true as meaning we won't be prompted for a password
-        unless vars(:enable).is_a? TrueClass
-          expect /[pP]assword:\s?$/
-          send vars(:enable) + "\n"
+      cmd 'show running-config'
+
+      cfg :telnet do
+        username /^User name:/i
+        password /^Password:/i
+      end
+
+      cfg :telnet, :ssh do
+        if vars :enable
+          post_login do
+            send "enable\n"
+            # @!visibility private
+            # Interpret enable: true as meaning we won't be prompted for a password
+            unless vars(:enable).is_a? TrueClass
+              expect /[pP]assword:\s?$/
+              send vars(:enable) + "\n"
+            end
+            expect /^.+[#]$/
+          end
         end
-        expect /^.+[#]$/
+        pre_logout 'exit'
       end
     end
-    pre_logout 'exit'
   end
 end

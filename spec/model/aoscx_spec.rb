@@ -9,7 +9,7 @@ describe 'model/Aoscx' do
   end
 
   it 'matches different prompts' do
-    _('LAB-SW1234# ').must_match Aoscx.prompt
+    _('LAB-SW1234# ').must_match Oxidized::Models::Aoscx.prompt
   end
 
   it 'runs on R8N85A (C6000-48G-CL4) with PL.10.08.1010' do

@@ -1,18 +1,29 @@
-class AxOS < Oxidized::Model
-  using Refinements
+module Oxidized
+  module Models
+    # Represents the AxOS model.
+    #
+    # Handles configuration retrieval and processing for AxOS devices.
 
-  prompt /(\x1b\[\?7h)?([\w.@()-]+[#]\s?)$/
-  comment '! '
+    class AxOS < Oxidized::Models::Model
+      using Refinements
 
-  cmd 'show running-config | nomore' do |cfg|
-    cfg.cut_head
-  end
+      # @!method prompt(regex)
+      #   Sets the prompt for the device.
+      #   @param regex [Regexp] The regular expression that matches the prompt.
+      prompt /(\x1b\[\?7h)?([\w.@()-]+[#]\s?)$/
+      comment '! '
 
-  cmd :all do |cfg|
-    cfg.cut_tail
-  end
+      cmd 'show running-config | nomore' do |cfg|
+        cfg.cut_head
+      end
 
-  cfg :ssh do
-    pre_logout 'exit'
+      cmd :all do |cfg|
+        cfg.cut_tail
+      end
+
+      cfg :ssh do
+        pre_logout 'exit'
+      end
+    end
   end
 end

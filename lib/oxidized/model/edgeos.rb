@@ -1,36 +1,48 @@
-class Edgeos < Oxidized::Model
-  using Refinements
+module Oxidized
+  module Models
+    # Represents the Edgeos model.
+    #
+    # Handles configuration retrieval and processing for Edgeos devices.
 
-  # EdgeOS #
+    class Edgeos < Oxidized::Models::Model
+      using Refinements
 
-  prompt /@.*?:~\$\s/
+      # @!visibility private
+      # EdgeOS #
 
-  cmd :all do |cfg|
-    cfg.lines.to_a[1..-2].join
-  end
+      # @!method prompt(regex)
+      #   Sets the prompt for the device.
+      #   @param regex [Regexp] The regular expression that matches the prompt.
+      prompt /@.*?:~\$\s/
 
-  cmd :secret do |cfg|
-    cfg.gsub! /encrypted-password (\S+).*/, 'encrypted-password <secret removed>'
-    cfg.gsub! /plaintext-password (\S+).*/, 'plaintext-password <secret removed>'
-    cfg.gsub! /password (\S+).*/, 'password <secret removed>'
-    cfg.gsub! /pre-shared-secret (\S+).*/, 'pre-shared-secret <secret removed>'
-    cfg.gsub! /community (\S+) {/, 'community <hidden> {'
-    cfg
-  end
+      cmd :all do |cfg|
+        cfg.lines.to_a[1..-2].join
+      end
 
-  cmd 'show version | no-more' do |cfg|
-    cfg.gsub! /^Uptime:\s.+/, ''
-    comment cfg
-  end
+      cmd :secret do |cfg|
+        cfg.gsub! /encrypted-password (\S+).*/, 'encrypted-password <secret removed>'
+        cfg.gsub! /plaintext-password (\S+).*/, 'plaintext-password <secret removed>'
+        cfg.gsub! /password (\S+).*/, 'password <secret removed>'
+        cfg.gsub! /pre-shared-secret (\S+).*/, 'pre-shared-secret <secret removed>'
+        cfg.gsub! /community (\S+) {/, 'community <hidden> {'
+        cfg
+      end
 
-  cmd 'show configuration commands | no-more'
+      cmd 'show version | no-more' do |cfg|
+        cfg.gsub! /^Uptime:\s.+/, ''
+        comment cfg
+      end
 
-  cfg :telnet do
-    username  /login:\s/
-    password  /^Password:\s/
-  end
+      cmd 'show configuration commands | no-more'
 
-  cfg :telnet, :ssh do
-    pre_logout 'exit'
+      cfg :telnet do
+        username  /login:\s/
+        password  /^Password:\s/
+      end
+
+      cfg :telnet, :ssh do
+        pre_logout 'exit'
+      end
+    end
   end
 end

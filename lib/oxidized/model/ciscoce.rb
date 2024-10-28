@@ -1,14 +1,23 @@
-# Supporting Cisco Catalyst Express Switches and IOS using the basic web interface
-class CiscoCE < Oxidized::Model
-  using Refinements
+module Oxidized
+  module Models
+    # @!visibility private
+    # Supporting Cisco Catalyst Express Switches and IOS using the basic web interface
+    # Represents the CiscoCE model.
+    #
+    # Handles configuration retrieval and processing for CiscoCE devices.
 
-  cmd "/level/15/exec/-/show/startup-config" do |cfg|
-    output = cfg.gsub(/\A.+<DL>(.+)<\/DL>.+\z/m, '\1') # Strip configuration file from within HTML response.
-    output
-  end
+    class CiscoCE < Oxidized::Models::Model
+      using Refinements
 
-  cfg :http do
-    @username = @node.auth[:username]
-    @password = @node.auth[:password]
+      cmd "/level/15/exec/-/show/startup-config" do |cfg|
+        output = cfg.gsub(/\A.+<DL>(.+)<\/DL>.+\z/m, '\1') # Strip configuration file from within HTML response.
+        output
+      end
+
+      cfg :http do
+        @username = @node.auth[:username]
+        @password = @node.auth[:password]
+      end
+    end
   end
 end

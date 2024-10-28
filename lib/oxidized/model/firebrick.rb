@@ -1,33 +1,47 @@
-class Firebrick < Oxidized::Model
-  using Refinements
+module Oxidized
+  module Models
+    # Represents the Firebrick model.
+    #
+    # Handles configuration retrieval and processing for Firebrick devices.
 
-  # Firebrick #
-  prompt /\x0a\x1b\x5b\x32\x4b\x0d.*>\s/
+    class Firebrick < Oxidized::Models::Model
+      using Refinements
 
-  cmd :all do |cfg|
-    # remove arbitrary whitespace after commands.
-    cfg.each_line.to_a[1..-2].drop_while { |e| e.match /^\s+$/ }.join
-  end
+      # @!visibility private
+      # Firebrick #
 
-  cmd 'show status' do |cfg|
-    cfg.gsub! "Status", ''
-    cfg.gsub! "------", ''
-    cfg.gsub! /Uptime.*/, ''
-    cfg.gsub! /Current time.*/, ''
-    cfg.gsub! /RAM.*/, ''
-    cfg.gsub! /Warranty.*/, ''
+      # @!method prompt(regex)
+      #   Sets the prompt for the device.
+      #   @param regex [Regexp] The regular expression that matches the prompt.
+      prompt /\x0a\x1b\x5b\x32\x4b\x0d.*>\s/
 
-    comment cfg
-  end
+      cmd :all do |cfg|
+        # @!visibility private
+        # remove arbitrary whitespace after commands.
+        cfg.each_line.to_a[1..-2].drop_while { |e| e.match /^\s+$/ }.join
+      end
 
-  cmd 'show configuration'
+      cmd 'show status' do |cfg|
+        cfg.gsub! "Status", ''
+        cfg.gsub! "------", ''
+        cfg.gsub! /Uptime.*/, ''
+        cfg.gsub! /Current time.*/, ''
+        cfg.gsub! /RAM.*/, ''
+        cfg.gsub! /Warranty.*/, ''
 
-  cfg :telnet do
-    username /Username:\s?/
-    password /Password:\s?/
-  end
+        comment cfg
+      end
 
-  cfg :telnet, :ssh do
-    pre_logout 'exit'
+      cmd 'show configuration'
+
+      cfg :telnet do
+        username /Username:\s?/
+        password /Password:\s?/
+      end
+
+      cfg :telnet, :ssh do
+        pre_logout 'exit'
+      end
+    end
   end
 end

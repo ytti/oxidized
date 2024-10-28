@@ -1,21 +1,33 @@
-class AEN < Oxidized::Model
-  using Refinements
+module Oxidized
+  module Models
+    # Represents the AEN model.
+    #
+    # Handles configuration retrieval and processing for AEN devices.
 
-  # Accedian
+    class AEN < Oxidized::Models::Model
+      using Refinements
 
-  comment '# '
+      # @!visibility private
+      # Accedian
 
-  prompt /^([-\w.\/:?\[\]()]+:\s?)$/
+      comment '# '
 
-  cmd 'configuration generate-script module all' do |cfg|
-    cfg
-  end
+      # @!method prompt(regex)
+      #   Sets the prompt for the device.
+      #   @param regex [Regexp] The regular expression that matches the prompt.
+      prompt /^([-\w.\/:?\[\]()]+:\s?)$/
 
-  cmd :all do |cfg|
-    cfg.cut_both
-  end
+      cmd 'configuration generate-script module all' do |cfg|
+        cfg
+      end
 
-  cfg :ssh do
-    pre_logout 'exit'
+      cmd :all do |cfg|
+        cfg.cut_both
+      end
+
+      cfg :ssh do
+        pre_logout 'exit'
+      end
+    end
   end
 end

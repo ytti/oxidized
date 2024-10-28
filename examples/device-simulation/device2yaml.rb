@@ -178,10 +178,10 @@ unless @exec_mode
       print data.gsub("\e", '\e')
     end
     ch.request_pty(term: 'vt100') do |_ch, success_pty|
-      raise NoShell, "Can't get PTY" unless success_pty
+      raise Error::NoShell, "Can't get PTY" unless success_pty
 
       ch.send_channel_request 'shell' do |_ch, success_shell|
-        raise NoShell, "Can't get shell" unless success_shell
+        raise Error::NoShell, "Can't get shell" unless success_shell
       end
     end
     ch.on_extended_data do |_ch, _type, data|

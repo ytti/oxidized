@@ -1,28 +1,52 @@
-class ARBOS < Oxidized::Model
-  using Refinements
+module Oxidized
+  module Models
+    # # Arbor Networks ArbOS notes
+    #
+    # If you are running ArbOS version 7 or lower then you may need to update the model to remove `exec true`:
+    #
+    # ```ruby
+    #   cfg :ssh do
+    #     pre_logout 'exit'
+    #   end
+    # ```
+    #
+    # Back to [Model-Notes](README.md)
 
-  # Arbor OS model #
+    # Represents the ARBOS model.
+    #
+    # Handles configuration retrieval and processing for ARBOS devices.
 
-  prompt /^[\S\s]+\n([\w.@-]+[:\/#>]+)\s?$/
-  comment '# '
+    class ARBOS < Oxidized::Models::Model
+      using Refinements
 
-  cmd 'system hardware' do |cfg|
-    cfg.gsub! /^Boot time:\s.+/, '' # Remove boot timer
-    cfg.gsub! /^Load averages:\s.+/, '' # Remove CPU load info
-    cfg = cfg.each_line.to_a[2..-1].join
-    comment cfg
-  end
+      # @!visibility private
+      # Arbor OS model #
 
-  cmd 'system version' do |cfg|
-    comment cfg
-  end
+      # @!method prompt(regex)
+      #   Sets the prompt for the device.
+      #   @param regex [Regexp] The regular expression that matches the prompt.
+      prompt /^[\S\s]+\n([\w.@-]+[:\/#>]+)\s?$/
+      comment '# '
 
-  cmd 'config show' do |cfg|
-    cfg
-  end
+      cmd 'system hardware' do |cfg|
+        cfg.gsub! /^Boot time:\s.+/, '' # Remove boot timer
+        cfg.gsub! /^Load averages:\s.+/, '' # Remove CPU load info
+        cfg = cfg.each_line.to_a[2..-1].join
+        comment cfg
+      end
 
-  cfg :ssh do
-    exec true
-    pre_logout 'exit'
+      cmd 'system version' do |cfg|
+        comment cfg
+      end
+
+      cmd 'config show' do |cfg|
+        cfg
+      end
+
+      cfg :ssh do
+        exec true
+        pre_logout 'exit'
+      end
+    end
   end
 end

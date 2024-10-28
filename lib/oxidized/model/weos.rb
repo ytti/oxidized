@@ -1,22 +1,34 @@
-class WEOS < Oxidized::Model
-  using Refinements
+module Oxidized
+  module Models
+    # Represents the WEOS model.
+    #
+    # Handles configuration retrieval and processing for WEOS devices.
 
-  # Westell WEOS, works with Westell 8178G, Westell 8266G
+    class WEOS < Oxidized::Models::Model
+      using Refinements
 
-  prompt /^(\s[\w.@-]+[#>]\s?)$/
+      # @!visibility private
+      # Westell WEOS, works with Westell 8178G, Westell 8266G
 
-  cmd :all do |cfg|
-    cfg.cut_both
-  end
+      # @!method prompt(regex)
+      #   Sets the prompt for the device.
+      #   @param regex [Regexp] The regular expression that matches the prompt.
+      prompt /^(\s[\w.@-]+[#>]\s?)$/
 
-  cmd 'show running-config' do |cfg|
-    cfg
-  end
+      cmd :all do |cfg|
+        cfg.cut_both
+      end
 
-  cfg :telnet do
-    username /login:/
-    password /assword:/
-    post_login 'cli more disable'
-    pre_logout 'logout'
+      cmd 'show running-config' do |cfg|
+        cfg
+      end
+
+      cfg :telnet do
+        username /login:/
+        password /assword:/
+        post_login 'cli more disable'
+        pre_logout 'logout'
+      end
+    end
   end
 end

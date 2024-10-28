@@ -1,40 +1,54 @@
-class Hios < Oxidized::Model
-  using Refinements
+module Oxidized
+  module Models
+    # Represents the Hios model.
+    #
+    # Handles configuration retrieval and processing for Hios devices.
 
-  ## Docker location: /var/lib/gems/2.7.0/gems/oxidized-0.28.0/lib/oxidized/model/hios.rb
-  prompt /^\[[\w\s\W]+\][>|#]+?$/
+    class Hios < Oxidized::Models::Model
+      using Refinements
 
-  comment '## '
+      # @!visibility private
+      # Docker location: /var/lib/gems/2.7.0/gems/oxidized-0.28.0/lib/oxidized/model/hios.rb
 
-  # Handle pager
-  expect /^--More--.*$/ do |data, re|
-    send 'n'
-    data.sub re, ''
-  end
+      # @!method prompt(regex)
+      #   Sets the prompt for the device.
+      #   @param regex [Regexp] The regular expression that matches the prompt.
+      prompt /^\[[\w\s\W]+\][>|#]+?$/
 
-  cmd :all do |cfg|
-    cfg.cut_both
-  end
+      comment '## '
 
-  cmd 'show system info' do |cfg|
-    cfg.gsub! /^System uptime.*\n/, ""
-    cfg.gsub! /^Operating hours.*\n/, ""
-    cfg.gsub! /^System date.*\n/, ""
-    cfg.gsub! /^Current temperature.*\n/, ""
-    comment cfg
-  end
+      # @!visibility private
+      # Handle pager
+      expect /^--More--.*$/ do |data, re|
+        send 'n'
+        data.sub re, ''
+      end
 
-  cmd 'show running-config script' do |cfg|
-    cfg
-  end
+      cmd :all do |cfg|
+        cfg.cut_both
+      end
 
-  cfg :telnet do
-    username /^User:/
-    password /^Password:/
-  end
+      cmd 'show system info' do |cfg|
+        cfg.gsub! /^System uptime.*\n/, ""
+        cfg.gsub! /^Operating hours.*\n/, ""
+        cfg.gsub! /^System date.*\n/, ""
+        cfg.gsub! /^Current temperature.*\n/, ""
+        comment cfg
+      end
 
-  cfg :telnet, :ssh do
-    post_login 'enable'
-    pre_logout "logout\nY\r\n"
+      cmd 'show running-config script' do |cfg|
+        cfg
+      end
+
+      cfg :telnet do
+        username /^User:/
+        password /^Password:/
+      end
+
+      cfg :telnet, :ssh do
+        post_login 'enable'
+        pre_logout "logout\nY\r\n"
+      end
+    end
   end
 end

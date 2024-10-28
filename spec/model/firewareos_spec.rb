@@ -15,11 +15,11 @@ describe 'Model firewareos' do
   end
 
   it "matches different prompts" do
-    _('[FAULT]WG<managed-by-wsm><master>>').must_match FirewareOS.prompt
-    _('WG<managed-by-wsm><master>>').must_match FirewareOS.prompt
-    _('WG<managed-by-wsm>>').must_match FirewareOS.prompt
-    _('[FAULT]WG<non-master>>').must_match FirewareOS.prompt
-    _('[FAULT]WG>').must_match FirewareOS.prompt
-    _('WG>').must_match FirewareOS.prompt
+    _('[FAULT]WG<managed-by-wsm><master>>').must_match Oxidized::Models::FirewareOS.prompt
+    _('WG<managed-by-wsm><master>>').must_match Oxidized::Models::FirewareOS.prompt
+    _('WG<managed-by-wsm>>').must_match Oxidized::Models::FirewareOS.prompt
+    _('[FAULT]WG<non-master>>').must_match Oxidized::Models::FirewareOS.prompt
+    _('[FAULT]WG>').must_match Oxidized::Models::FirewareOS.prompt
+    _('WG>').must_match Oxidized::Models::FirewareOS.prompt
   end
 end

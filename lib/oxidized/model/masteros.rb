@@ -1,46 +1,55 @@
-class MasterOS < Oxidized::Model
-  using Refinements
+module Oxidized
+  module Models
+    # Represents the MasterOS model.
+    #
+    # Handles configuration retrieval and processing for MasterOS devices.
 
-  # MRV MasterOS model #
+    class MasterOS < Oxidized::Models::Model
+      using Refinements
 
-  comment '!'
+      # @!visibility private
+      # MRV MasterOS model #
 
-  cmd :secret do |cfg|
-    cfg.gsub! /^(snmp-server community).*/, '\\1 <configuration removed>'
-    cfg.gsub! /username (\S+) password encrypted (\S+) class (\S+).*/, '<secret hidden>'
-    cfg
-  end
+      comment '!'
 
-  cmd :all do |cfg|
-    cfg.cut_both
-    cfg.gsub /^(! Configuration ).*/, '!'
-  end
+      cmd :secret do |cfg|
+        cfg.gsub! /^(snmp-server community).*/, '\\1 <configuration removed>'
+        cfg.gsub! /username (\S+) password encrypted (\S+) class (\S+).*/, '<secret hidden>'
+        cfg
+      end
 
-  cmd 'show inventory' do |cfg|
-    comment cfg.cut_tail
-  end
+      cmd :all do |cfg|
+        cfg.cut_both
+        cfg.gsub /^(! Configuration ).*/, '!'
+      end
 
-  cmd 'show plugins' do |cfg|
-    comment cfg
-  end
+      cmd 'show inventory' do |cfg|
+        comment cfg.cut_tail
+      end
 
-  cmd 'show hw-config' do |cfg|
-    comment cfg
-  end
+      cmd 'show plugins' do |cfg|
+        comment cfg
+      end
 
-  cmd 'show running-config' do |cfg|
-    cfg = cfg.each_line.to_a[3..-1].join
-    cfg
-  end
+      cmd 'show hw-config' do |cfg|
+        comment cfg
+      end
 
-  cfg :telnet, :ssh do
-    post_login 'no pager'
-    if vars :enable
-      post_login do
-        send "enable\n"
-        send vars(:enable) + "\n"
+      cmd 'show running-config' do |cfg|
+        cfg = cfg.each_line.to_a[3..-1].join
+        cfg
+      end
+
+      cfg :telnet, :ssh do
+        post_login 'no pager'
+        if vars :enable
+          post_login do
+            send "enable\n"
+            send vars(:enable) + "\n"
+          end
+        end
+        pre_logout 'exit'
       end
     end
-    pre_logout 'exit'
   end
 end
