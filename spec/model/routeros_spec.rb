@@ -21,4 +21,15 @@ describe 'model/RouterOS' do
     _(status).must_equal :success
     _(result.to_cfg).must_equal mockmodel.oxidized_output
   end
+
+  it 'runs on L009UiGS with 7.15.2' do
+    mockmodel = MockSsh.new('examples/device-simulation/yaml/routeros_L009UiGS_7.15.2.yaml')
+    Net::SSH.stubs(:start).returns mockmodel
+
+    status, result = @node.run
+
+    _(status).must_equal :success
+    # result2file(result, 'model-output.txt')
+    _(result.to_cfg).must_equal mockmodel.oxidized_output
+  end
 end
