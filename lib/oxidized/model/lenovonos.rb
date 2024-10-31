@@ -64,6 +64,7 @@ class LenovoNOS < Oxidized::Model
     cfg.gsub! /^Current configuration:[^\n]*\n/, ''
     if vars(:remove_unstable_lines) == true
       cfg.gsub! /(.* password )"[0-9a-f]+"(.*)/, '\\1<unstable line hidden>\\2'
+      cfg.gsub! /(.* administrator-password )"[0-9a-f]+"(.*)/, '\\1<unstable line hidden>\\2'
       cfg.gsub! /(.*ekey )"[0-9a-f]+"(.*)/, '\\1<unstable line hidden>\\2'
     end
     cfg
