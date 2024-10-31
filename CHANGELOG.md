@@ -35,6 +35,7 @@ The format is based on [Keep a Changelog](https://keepachangelog.com/en/1.1.0/).
 - container-image: use ubuntu-packages instead of gems in order to reduce container image size (@robertcheramy)
 - edgecos.rb: hide temperature and fan speed (@dhooper6430)
 - cnos: show information before config, remove secrets only when told to do so (@robje)
+- Updated slackdiff.rb to use new files.getUploadURLExternal slack file upload API instead of deprecated files.upload (@varesa)
 
 ### Fixed
 - fixed error for ibos when remove_secret is set (@dminuoso)
@@ -53,6 +54,7 @@ The format is based on [Keep a Changelog](https://keepachangelog.com/en/1.1.0/).
 - linuxgeneric: updated prompt to support '$' at the end (@robertcheramy)
 - hook githubrepo: add a specific warning when rugged not installed with ssh support. Fixes #3211 (@robertcheramy)
 - hook githubrepo: works with custom branch names (@robertcheramy)
+- ios: removes secrets when config has multiple snmp-server host lines. Fixes #3239 (@robertcheramy)
 
 ## [0.30.1 – 2024-04-12]
 
