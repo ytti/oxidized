@@ -42,6 +42,7 @@ class LenovoNOS < Oxidized::Model
     cfg = cfg.reject { |line| line.match /^Last boot:/ }
     cfg = cfg.reject { |line| line.match /^Temperature / }
     cfg = cfg.reject { |line| line.match /^Power Consumption/ }
+    cfg = cfg.reject { |line| line.match /^Fan/ }
 
     cfg = cfg.join
     comment_ext("=== show version ===", cfg)
