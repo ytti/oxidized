@@ -61,6 +61,9 @@ module Oxidized
       end
     end
 
+    # Returns the configuration of group/node_name
+    #
+    # #fetch is called by oxidzed-web
     def fetch(node_name, group)
       yield_node_output(node_name) do |node, output|
         output.fetch node, group
@@ -98,6 +101,9 @@ module Oxidized
       find_index(node) || raise(NodeNotFound, "unable to find '#{node}'")
     end
 
+    # Returns all stored versions of group/node_name
+    #
+    # Called by oxidized-web
     def version(node_name, group)
       yield_node_output(node_name) do |node, output|
         output.version node, group
