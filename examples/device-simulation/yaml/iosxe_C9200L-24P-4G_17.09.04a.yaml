@@ -209,6 +209,7 @@ commands:
     enable secret 9 $9$xxxSECRET_ENABLExxxxxxxxxxxxxx
     !
     username oxidized secret 9 $9$xxxxxxxxxxSECRET_OXIDIZEDxxxxxxxxx
+    username rocks secret 9 $9$xxxxxxxxxxSECRET_OXIDIZEDxxxxxxxxx
     !
     transceiver type all
      monitoring
@@ -275,7 +276,10 @@ commands:
     !
     snmp-server community public RW 5
     snmp-server location Here and there
-    snmp-server host 10.42.0.33 version 2c public\x20
+    snmp-server host 10.42.0.33 version 2c AAAAAAAAAABBBBBBBBBB\x20
+    snmp-server host 10.42.0.34 version 2c AAAAAAAAAABBBBBBBBBB\x20
+    snmp-server host 10.42.0.35 vrf Mgmt-vrf informs version 2c AAAAAAAAAABBBBBBBBBB  tty vtp
+    snmp-server host 10.42.0.36 vrf Mgmt-vrf informs version 3 auth oxidized  bfd bridge transceiver
     !
     !
     !
@@ -409,6 +413,7 @@ oxidized_output: |
   enable secret 9 $9$xxxSECRET_ENABLExxxxxxxxxxxxxx
   !
   username oxidized secret 9 $9$xxxxxxxxxxSECRET_OXIDIZEDxxxxxxxxx
+  username rocks secret 9 $9$xxxxxxxxxxSECRET_OXIDIZEDxxxxxxxxx
   !
   transceiver type all
    monitoring
@@ -475,7 +480,10 @@ oxidized_output: |
   !
   snmp-server community public RW 5
   snmp-server location Here and there
-  snmp-server host 10.42.0.33 version 2c public\x20
+  snmp-server host 10.42.0.33 version 2c AAAAAAAAAABBBBBBBBBB\x20
+  snmp-server host 10.42.0.34 version 2c AAAAAAAAAABBBBBBBBBB\x20
+  snmp-server host 10.42.0.35 vrf Mgmt-vrf informs version 2c AAAAAAAAAABBBBBBBBBB  tty vtp
+  snmp-server host 10.42.0.36 vrf Mgmt-vrf informs version 3 auth oxidized  bfd bridge transceiver
   !
   !
   !
