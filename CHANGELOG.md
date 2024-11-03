@@ -100,6 +100,8 @@ The format is based on [Keep a Changelog](https://keepachangelog.com/en/1.1.0/).
 - dlinknextgen removes user and snmp-server secrets (@tcrichton)
 - dnos: hide secrets in "ospf message-digest-key", "authentication-type" and "bsd-username" (@rybnico)
 - junos: Replace dynamic value in VMX-BANDWIDTH with count, hide ssh keys
+- lenovonos: Salt administrator-password line when remove_unstable_lines is set to True (@kani999)
+- lenovonos: Removes lines that started with Fan because RPM always changes. (@kani999)
 
 ### Fixed
 - fixed empty lines for ZyXEL GS1900 switches (@jluebbe)

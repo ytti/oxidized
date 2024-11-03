@@ -42,6 +42,7 @@ class LenovoNOS < Oxidized::Model
     cfg = cfg.reject { |line| line.match /^Last boot:/ }
     cfg = cfg.reject { |line| line.match /^Temperature / }
     cfg = cfg.reject { |line| line.match /^Power Consumption/ }
+    cfg = cfg.reject { |line| line.match /^Fan/ }
 
     cfg = cfg.join
     comment_ext("=== show version ===", cfg)
@@ -63,6 +64,7 @@ class LenovoNOS < Oxidized::Model
     cfg.gsub! /^Current configuration:[^\n]*\n/, ''
     if vars(:remove_unstable_lines) == true
       cfg.gsub! /(.* password )"[0-9a-f]+"(.*)/, '\\1<unstable line hidden>\\2'
+      cfg.gsub! /(.* administrator-password )"[0-9a-f]+"(.*)/, '\\1<unstable line hidden>\\2'
       cfg.gsub! /(.*ekey )"[0-9a-f]+"(.*)/, '\\1<unstable line hidden>\\2'
     end
     cfg
