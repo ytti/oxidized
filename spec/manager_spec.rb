@@ -13,6 +13,8 @@ describe Oxidized::Manager do
       Oxidized.config.source.csv.map.name = '0'
       result = Oxidized.mgr.add_source('csv')
       _(result['csv']).must_equal Oxidized::Source::CSV
+
+      Oxidized.config.source.http.url = 'http://localhost/nodes'
       result = Oxidized.mgr.add_source('http')
       _(result['http']).must_equal Oxidized::Source::HTTP
     end
