@@ -17,6 +17,7 @@ The format is based on [Keep a Changelog](https://keepachangelog.com/en/1.1.0/).
 - model for garderos (@robertcheramy)
 - unit tests framework for models with ssh input (@robertcheramy)
 - container-image: install x25519 gem package to support more ssh kex. Fixes #3070 (@benasse)
+- os6: Added support to Dell EMC Networking OS6 (@anubisg1)
 
 ### Changed
 - h3c: change prompt to expect either angle (user-view) or square (system-view) brackets (@nl987)
@@ -35,8 +36,10 @@ The format is based on [Keep a Changelog](https://keepachangelog.com/en/1.1.0/).
 - edgecos.rb: hide temperature and fan speed (@dhooper6430)
 - cnos: show information before config, remove secrets only when told to do so (@robje)
 - Updated source files to reference a Source module to avoid namespace duplication 
+- Updated slackdiff.rb to use new files.getUploadURLExternal slack file upload API instead of deprecated files.upload (@varesa)
 
 ### Fixed
+- fixed error for ibos when remove_secret is set (@dminuoso)
 - fixed prompt for Watchguard FirewareOS not matching the regex when the node is managed and master (@benasse)
 - fixed prompt for vyos/vyatta to allow logins with non-priviliged accounts. Fixes #3111 (@h-lopez)
 - fixed power consumption included in ArubaOS-CX diffs starting with FL.10.13.xxx. Fixes #3142 (@terratalpi)
@@ -51,6 +54,8 @@ The format is based on [Keep a Changelog](https://keepachangelog.com/en/1.1.0/).
 - removed hardcoded '~/.config/oxidized/config'. Fixes #3229 (@robertcheramy)
 - linuxgeneric: updated prompt to support '$' at the end (@robertcheramy)
 - hook githubrepo: add a specific warning when rugged not installed with ssh support. Fixes #3211 (@robertcheramy)
+- hook githubrepo: works with custom branch names (@robertcheramy)
+- ios: removes secrets when config has multiple snmp-server host lines. Fixes #3239 (@robertcheramy)
 
 ## [0.30.1 – 2024-04-12]
 
@@ -96,6 +101,8 @@ The format is based on [Keep a Changelog](https://keepachangelog.com/en/1.1.0/).
 - dlinknextgen removes user and snmp-server secrets (@tcrichton)
 - dnos: hide secrets in "ospf message-digest-key", "authentication-type" and "bsd-username" (@rybnico)
 - junos: Replace dynamic value in VMX-BANDWIDTH with count, hide ssh keys
+- lenovonos: Salt administrator-password line when remove_unstable_lines is set to True (@kani999)
+- lenovonos: Removes lines that started with Fan because RPM always changes. (@kani999)
 
 ### Fixed
 - fixed empty lines for ZyXEL GS1900 switches (@jluebbe)

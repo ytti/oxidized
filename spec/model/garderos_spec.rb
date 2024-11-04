@@ -17,7 +17,7 @@ describe 'model/Garderos' do
   end
 
   it 'runs on R7709 with OS 003_006_068' do
-    mockmodel = MockSsh.new('examples/model/garderos_R7709_003_006_068.yaml')
+    mockmodel = MockSsh.new('examples/device-simulation/yaml/garderos_R7709_003_006_068.yaml')
     Net::SSH.stubs(:start).returns mockmodel
 
     status, result = @node.run

@@ -93,8 +93,12 @@ Metrics/ClassLength:
 ## Metrics/CyclomaticComplexity:
 ##   Max: 7
 
+# The BlockLength metric does not apply to unit tests. They are in nature
+# long and not very pretty
 Metrics/BlockLength:
   Max: 150
+  Exclude:
+   - spec/**/*_spec.rb
 
 Metrics/ParameterLists:
   Max: 6

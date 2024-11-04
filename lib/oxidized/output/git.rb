@@ -60,11 +60,19 @@ module Oxidized
       update repo, file, outputs.to_cfg
     end
 
+    # Returns the configuration of group/node_name
+    #
+    # #fetch is called by Nodes#fetch
+    # Nodes#fetch creates a new Output object each time, so we cannot
+    # store the repo index in memory. But as we keep the repo index up
+    # to date on disk in #update_repo, we can read it from disk instead of
+    # rebuilding it each time.
     def fetch(node, group)
       repo, path = yield_repo_and_path(node, group)
       repo = Rugged::Repository.new repo
+      # Read the index from disk
       index = repo.index
-      index.read_tree repo.head.target.tree unless repo.empty?
+
       repo.read(index.get(path)[:oid]).data
     rescue StandardError
       'node not found'
@@ -172,11 +180,26 @@ module Oxidized
       end
     end
 
+    # Uploads data into file in the repo
+    #
+    # @param [String] file: the file to save the configuration to
+    # @param [String] data: the configuration to save
+    # @param [Rugged::Repository] repo: the git repository to use
+    #
+    # If Oxidized.config.output.git.single_repo = false (which is the default),
+    # there will one repository for each group.
+    #
+    # update_repo caches the index on disk. An index is usually used in a
+    # working directory and not in a bare repository, which confuses users.
+    # The alternative would be to rebuild the index each time, which a little
+    # time consuming. Caching the index in memory is difficult because a new
+    # Output object is created each time #store is called.
     def update_repo(repo, file, data)
       oid_old = repo.blob_at(repo.head.target_id, file) rescue nil
       return false if oid_old && (oid_old.content.b == data.b)
 
       oid = repo.write data, :blob
+      # Read the index from disk
       index = repo.index
       index.add path: file, oid: oid, mode: 0o100644
 

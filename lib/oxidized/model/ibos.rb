@@ -22,6 +22,7 @@ class IBOS < Oxidized::Model
 
     # radius server 10.1.1.1 secret public
     cfg.gsub! /^radius server (\S+) secret (\S+)(.*)/, 'radius server \\1 secret <hidden> \\3'
+    cfg
   end
 
   cmd 'show version' do |cfg|

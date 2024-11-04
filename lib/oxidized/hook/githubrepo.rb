@@ -1,15 +1,21 @@
+require 'rugged'
+
 class GithubRepo < Oxidized::Hook
   def validate_cfg!
     raise KeyError, 'hook.remote_repo is required' unless cfg.has_key?('remote_repo')
   end
 
   def run_hook(ctx)
+    unless ctx.node.repo
+      log "Oxidized output is not git, can't push to remote", :error
+      return
+    end
     repo  = Rugged::Repository.new(ctx.node.repo)
     creds = credentials(ctx.node)
     url   = remote_repo(ctx.node)
 
     if url.nil? || url.empty?
-      log "No repository defined for #{ctx.node.group}/#{ctx.node.name}", :debug
+      log "No repository defined for #{ctx.node.group}/#{ctx.node.name}", :error
       return
     end
 
@@ -43,12 +49,19 @@ class GithubRepo < Oxidized::Hook
     result = repo.fetch('origin', [repo.head.name], credentials: creds)
     log result.inspect, :debug
 
-    unless result[:total_deltas].positive?
-      log "nothing received after fetch", :debug
+    their_branch = remote_branch(repo)
+
+    unless their_branch
+      log 'remote branch does not exist yet, nothing to merge', :debug
       return
     end
 
-    their_branch = repo.branches["origin/master"]
+    result = repo.merge_analysis(their_branch.target_id)
+
+    if result.include? :up_to_date
+      log 'nothing to merge', :debug
+      return
+    end
 
     log "merging fetched branch #{their_branch.name}", :debug
 
@@ -107,5 +120,11 @@ class GithubRepo < Oxidized::Hook
     elsif cfg.remote_repo[node.group].url.is_a?(String)
       cfg.remote_repo[node.group].url
     end
+  end
+
+  # Returns a Rugged::Branch to the remote branch or nil if it doen't exist
+  def remote_branch(repo)
+    head_branch = repo.branches[repo.head.name]
+    repo.branches['origin/' + head_branch.name]
   end
 end

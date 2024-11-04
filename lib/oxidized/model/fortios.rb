@@ -22,6 +22,8 @@ class FortiOS < Oxidized::Model
   end
 
   cmd :secret do |cfg|
+    # Remove private key for encrypted configs
+    cfg.gsub! /^(\#private-encryption-key=).+/, '\\1 <configuration removed>'
     # ENC indicates an encrypted password, and secret indicates a secret string
     cfg.gsub! /(set .+ ENC) .+/, '\\1 <configuration removed>'
     cfg.gsub! /(set .*secret) .+/, '\\1 <configuration removed>'
