@@ -15,12 +15,14 @@ describe Oxidized::Manager do
       _(result['csv']).must_equal Oxidized::Source::CSV
 
       Oxidized.config.source.http.url = 'http://localhost/nodes'
+      Oxidized.config.source.http.map.name = 'name'
       result = Oxidized.mgr.add_source('http')
       _(result['http']).must_equal Oxidized::Source::HTTP
     end
 
     it 'differentiates between http classes' do
       Oxidized.config.source.http.url = 'http://localhost/nodes'
+      Oxidized.config.source.http.map.name = 'name'
       result = Oxidized.mgr.add_source('http')
       _(result['http']).must_equal Oxidized::Source::HTTP
 
