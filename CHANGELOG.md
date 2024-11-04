@@ -36,7 +36,7 @@ The format is based on [Keep a Changelog](https://keepachangelog.com/en/1.1.0/).
 - edgecos.rb: hide temperature and fan speed (@dhooper6430)
 - cnos: show information before config, remove secrets only when told to do so (@robje)
 - Updated slackdiff.rb to use new files.getUploadURLExternal slack file upload API instead of deprecated files.upload (@varesa)
-- Updated source files to reference a Source module to avoid namespace duplication 
+- Updated source/output files to reference a Source/Outputb module to avoid namespace duplication (@laf, @robertcheramy)
 
 ### Fixed
 - fixed error for ibos when remove_secret is set (@dminuoso)
