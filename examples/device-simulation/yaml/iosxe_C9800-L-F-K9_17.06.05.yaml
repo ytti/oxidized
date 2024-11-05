@@ -233,6 +233,18 @@ commands:
     ^C
     !
     ! ...
+    wlan test 1 test
+     security wpa psk set-key ascii 0 WLANSECR3T
+    wlan test-spaces 2 test-spaces
+     security wpa psk set-key ascii 0 WLAN SECR3T
+    wlan hex 1000 hex
+     security wpa psk set-key hex 0 7df35f90c92ecff2a803e79577b85e978edc0a76404f6cfb534df8d9f9f67beb
+    ap profile default-ap-profile
+     dot1x username dot1x-username password 0 DOT1XPASSW0RD
+     mgmtuser username apmgmtuser password 0 MGMTPASSW0RD secret 0 MGMTSECR3T
+    ap profile \"spaces profile\"
+     dot1x username dot1x-username password 0 DOT1X PASSW0RD
+     mgmtuser username username password 0 MGMT PASSW0RD secret 0 MGMT SECR3T
     netconf-yang
     end
     
@@ -388,6 +400,18 @@ oxidized_output: |
   ^C
   !
   ! ...
+  wlan test 1 test
+   security wpa psk set-key ascii 0 WLANSECR3T
+  wlan test-spaces 2 test-spaces
+   security wpa psk set-key ascii 0 WLAN SECR3T
+  wlan hex 1000 hex
+   security wpa psk set-key hex 0 7df35f90c92ecff2a803e79577b85e978edc0a76404f6cfb534df8d9f9f67beb
+  ap profile default-ap-profile
+   dot1x username dot1x-username password 0 DOT1XPASSW0RD
+   mgmtuser username apmgmtuser password 0 MGMTPASSW0RD secret 0 MGMTSECR3T
+  ap profile \"spaces profile\"
+   dot1x username dot1x-username password 0 DOT1X PASSW0RD
+   mgmtuser username username password 0 MGMT PASSW0RD secret 0 MGMT SECR3T
   netconf-yang
   end\n
 # End of YAML file
