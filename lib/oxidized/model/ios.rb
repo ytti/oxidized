@@ -44,6 +44,10 @@ class IOS < Oxidized::Model
     cfg.gsub! /^( +key-string) .+/, '\\1 <secret hidden>'
     cfg.gsub! /^((tacacs|radius) server [^\n]+\n( +[^\n]+\n)* +key) [^\n]+$/m, '\1 <secret hidden>'
     cfg.gsub! /^( +ppp (chap|pap) password \d) .+/, '\\1 <secret hidden>'
+    cfg.gsub! /^( +security wpa psk set-key (?:ascii|hex) \d) (.*)$/, '\\1 <secret hidden>'
+    cfg.gsub! /^( +dot1x username \S+ password \d) (.*)$/, '\\1 <secret hidden>'
+    cfg.gsub! /^( +mgmtuser username \S+ password \d) (.*) (secret \d) (.*)$/, '\\1 <secret hidden> \\3 <secret hidden>'
+    cfg.gsub! /^( +client \S+ server-key \d) (.*)$/, '\\1 <secret hidden>'
     cfg
   end
 
