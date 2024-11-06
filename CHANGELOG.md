@@ -57,7 +57,8 @@ The format is based on [Keep a Changelog](https://keepachangelog.com/en/1.1.0/).
 - hook githubrepo: add a specific warning when rugged not installed with ssh support. Fixes #3211 (@robertcheramy)
 - hook githubrepo: works with custom branch names (@robertcheramy)
 - ios: removes secrets when config has multiple snmp-server host lines. Fixes #3239 (@robertcheramy)
-- ios: fixed device specs on ASR900 Series (@robertcheramy, @roshnaraman)
+- ios: fixed device specs on ASR900 Series. Fixes #3297 (@robertcheramy, @roshnaraman)
+- netgear: prompt for gs752tpp. Fixes #3287 (@robertcheramy)
 
 ## [0.30.1 – 2024-04-12]
 

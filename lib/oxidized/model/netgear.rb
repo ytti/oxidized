@@ -2,7 +2,7 @@ class Netgear < Oxidized::Model
   using Refinements
 
   comment '!'
-  prompt /^(\([\w\s\-\+.]+\)\s?[#>])$/
+  prompt /^\(?[\w \-+.]+\)? ?[#>] ?$/
 
   cmd :secret do |cfg|
     cfg.gsub!(/password (\S+)/, 'password <hidden>')
