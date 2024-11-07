@@ -18,6 +18,7 @@ The format is based on [Keep a Changelog](https://keepachangelog.com/en/1.1.0/).
 - unit tests framework for models with ssh input (@robertcheramy)
 - container-image: install x25519 gem package to support more ssh kex. Fixes #3070 (@benasse)
 - os6: Added support to Dell EMC Networking OS6 (@anubisg1)
+- Update net-ssh to 7.3 to enable support for aes(128|256)gcm. Fixes #3168 (@jacobw)
 
 ### Changed
 - h3c: change prompt to expect either angle (user-view) or square (system-view) brackets (@nl987)
