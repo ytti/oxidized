@@ -6,6 +6,9 @@ A great place for users to get involved is the [GitHub issues](https://github.co
 Through the issues, you can interact with maintainers and other users. You can open an issue
 if you need help, but you can also help other users by reviewing their issues and commenting on them.
 
+Before writing an issue, please read our documentation on
+[how to write good issues](/docs/Issues.md).
+
 > ## Legal Notice
 > When submitting content to this project, you must agree that you have authored 100%
 > of the content, that you have the necessary rights to the content and that the
