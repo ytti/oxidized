@@ -7,6 +7,7 @@ The format is based on [Keep a Changelog](https://keepachangelog.com/en/1.1.0/).
 ## [Unreleased]
 
 ### Added
+- model for Riverbed Steelhead (@swaeltjie)
 - removed time command from uplink EP4440-DP OLT model 
 - model for uplink EP4440-DP OLT (@AAm-kun)
 - model for Siklu Multihaul TG radios (@bdg-robert)
