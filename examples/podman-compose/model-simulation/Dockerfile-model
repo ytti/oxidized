@@ -1,4 +1,4 @@
-FROM docker.io/phusion/baseimage:jammy-1.0.2
+FROM docker.io/phusion/baseimage:noble-1.0.0
 
 # Use baseimage-docker's init system.
 CMD ["/sbin/my_init"]

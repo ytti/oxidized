@@ -1,0 +1,56 @@
+---
+username: oxidized
+password: oxidized
+resolve_dns: true
+interval: 3600
+use_syslog: false
+debug: false
+threads: 30
+use_max_threads: true
+timeout: 20
+retries: 3
+prompt: !ruby/regexp /^([\w.@-]+[#>]\s?)$/
+rest: 0.0.0.0:8888
+next_adds_job: false
+vars: {}
+groups: {}
+group_map: {}
+models: {}
+pid: "~/.config/oxidized/pid"
+crash:
+  directory: "~/.config/oxidized/crashes"
+  hostnames: false
+stats:
+  history_size: 10
+input:
+  default: ssh
+  debug: false
+  ssh:
+    secure: false
+  ftp:
+    passive: true
+  utf8_encoded: true
+output:
+  default: git
+  git:
+    user: Oxidized
+    email: o@example.com
+    repo: "~/.config/oxidized/oxidized.git"
+source:
+  default: csv
+  csv:
+    file: "~/.config/oxidized/router.db"
+    delimiter: !ruby/regexp /:/
+    map:
+      name: 0
+      model: 1
+      ip: 2
+    gpg: false
+hooks:
+  push_to_remote:
+    type: githubrepo
+    events:
+    - post_store
+    remote_repo: git@gitserver:repo.git
+    username: git
+    password: git

@@ -16,6 +16,8 @@ EOF
 function show() {
   if [ "$*" == "version" ]; then
     echo "Version 1.2.3"
+    # Make the output change over time
+    date
   elif [ "$*" == "runningconfiguration all" ]; then
           cat << EOF
 ! begin of the configuration

@@ -1,5 +1,7 @@
-# Stage 1: Build x25519 and any necessary dependencies
-FROM docker.io/phusion/baseimage:noble-1.0.0 AS x25519-builder
+###################
+# Stage 1: Prebuild to save space in the final image.
+
+FROM docker.io/phusion/baseimage:noble-1.0.0 AS prebuilder
 
 # install necessary packages for building gems
 RUN apt-get update && apt-get install -y \
@@ -12,9 +14,23 @@ RUN apt-get update && apt-get install -y \
 RUN mkdir -p /usr/local/bundle
 ENV GEM_HOME=/usr/local/bundle
 
+###################
 # Install the x25519 gem
 RUN gem install x25519 --no-document
 
+###################
+# build oxidized
+COPY . /tmp/oxidized/
+WORKDIR /tmp/oxidized
+
+# docker automated build gets shallow copy, but non-shallow copy cannot be unshallowed
+RUN git fetch --unshallow || true
+
+# Ensure rugged is built with ssh support
+RUN rake build
+
+
+###################
 # Stage2: build an oxidized container from phusion/baseimage-docker and install x25519 from stage1
 FROM docker.io/phusion/baseimage:noble-1.0.0
 
@@ -71,7 +87,7 @@ RUN apt-get -yq update \
     && rm -rf /var/lib/apt/lists/*
 
 # copy the compiled gem from the builder stage
-COPY --from=x25519-builder /usr/local/bundle /usr/local/bundle
+COPY --from=prebuilder /usr/local/bundle /usr/local/bundle
 
 # Set environment variables for bundler
 ENV GEM_HOME="/usr/local/bundle"
@@ -84,17 +100,13 @@ RUN gem install --no-document \
     # dependencies for specific inputs
     net-tftp
 
-# build and install oxidized
-COPY . /tmp/oxidized/
-WORKDIR /tmp/oxidized
+# install oxidized from prebuilder
+# The Dockerfile ist version-independent, so use oxidized-*.gem to cach the gem
+RUN mkdir -p /tmp/oxidized
+COPY --from=prebuilder /tmp/oxidized/pkg/oxidized-*.gem /tmp/oxidized/
+RUN gem install /tmp/oxidized/oxidized-*.gem
 
-# docker automated build gets shallow copy, but non-shallow copy cannot be unshallowed
-RUN git fetch --unshallow || true
-
-# Ensure rugged is built with ssh support
-RUN CMAKE_FLAGS='-DUSE_SSH=ON' rake install
-
-# web interface
+# install oxidized-web
 RUN gem install oxidized-web --no-document
 
 # clean up
