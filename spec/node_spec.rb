@@ -19,7 +19,7 @@ describe Oxidized::Node do
 
   describe '#new' do
     it 'should resolve input' do
-      @node.input[0].to_s.split('::')[2].must_equal 'SSH'
+      _(_(@node.input[0].to_s.split('::')[2]).must_equal('SSH'))
     end
     it 'should resolve model' do
       _(@node.model.class).must_equal Oxidized::Models::JunOS
