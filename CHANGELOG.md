@@ -60,6 +60,7 @@ The format is based on [Keep a Changelog](https://keepachangelog.com/en/1.1.0/).
 - ios: removes secrets when config has multiple snmp-server host lines. Fixes #3239 (@robertcheramy)
 - ios: fixed device specs on ASR900 Series. Fixes #3297 (@robertcheramy, @roshnaraman)
 - netgear: prompt for gs752tpp. Fixes #3287 (@robertcheramy)
+- aoscx: fixed regex for 6400 switches to hide temperature and power (@steveneppler)
 
 ## [0.30.1 – 2024-04-12]
 

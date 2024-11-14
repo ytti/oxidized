@@ -5,6 +5,5 @@ show module
 show interface transceiver
 show system | exclude "Up Time" | exclude "CPU" | exclude "Memory" | exclude "Pkts .x" | exclude "Lowest" | exclude "Missed"
 show running-config
-# commands beyond the oxidized model
 show system
 exit
