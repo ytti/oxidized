@@ -2,6 +2,10 @@ module Oxidized
   module Models
     # @!visibility private
     # model for Centec Networks CNOS based switches
+
+    # Represents the CNOS model.
+    #
+    # Handles configuration retrieval and processing for CNOS devices.
     class CNOS < Oxidized::Models::Model
       using Refinements
 
@@ -39,9 +43,6 @@ module Oxidized
         post_login 'terminal length 0'
         pre_logout 'exit'
       end
-    end
-  end
-end
     end
   end
 end

@@ -35,40 +35,40 @@ module Oxidized
         return if @cfg.map.has_key?('name')
 
         raise Error::InvalidConfig, "map/name is a mandatory source attribute, edit #{Oxidized::Config.configfile}"
+      end
 
-        # Loads the data from the configured CSV file.
-        #
-        # @param _node_want [String, nil] Optional specific node to load (not used).
-        # @return [Array<Hash>] An array of hashes representing the nodes,
-        #   with parameters mapped according to the configuration.
-        def load(_node_want = nil)
-          nodes = []
-          open_file.each_line do |line|
-            next if line =~ /^\s*#/
+      # Loads the data from the configured CSV file.
+      #
+      # @param _node_want [String, nil] Optional specific node to load (not used).
+      # @return [Array<Hash>] An array of hashes representing the nodes,
+      #   with parameters mapped according to the configuration.
+      def load(_node_want = nil)
+        nodes = []
+        open_file.each_line do |line|
+          next if line =~ /^\s*#/
 
-            data = line.chomp.split(@cfg.delimiter, -1)
-            next if data.empty?
+          data = line.chomp.split(@cfg.delimiter, -1)
+          next if data.empty?
 
-            # @!visibility private
-            # map node parameters
-            keys = {}
-            @cfg.map.each do |key, position|
-              keys[key.to_sym] = node_var_interpolate data[position]
-            end
-            keys[:model] = map_model keys[:model] if keys.has_key? :model
-            keys[:group] = map_group keys[:group] if keys.has_key? :group
-
-            # map node specific vars
-            vars = {}
-            @cfg.vars_map.each do |key, position|
-              vars[key.to_sym] = node_var_interpolate data[position]
-            end
-            keys[:vars] = vars unless vars.empty?
-
-            nodes << keys
+          # @!visibility private
+          # map node parameters
+          keys = {}
+          @cfg.map.each do |key, position|
+            keys[key.to_sym] = node_var_interpolate data[position]
           end
-          nodes
+          keys[:model] = map_model keys[:model] if keys.has_key? :model
+          keys[:group] = map_group keys[:group] if keys.has_key? :group
+
+          # map node specific vars
+          vars = {}
+          @cfg.vars_map.each do |key, position|
+            vars[key.to_sym] = node_var_interpolate data[position]
+          end
+          keys[:vars] = vars unless vars.empty?
+
+          nodes << keys
         end
+        nodes
       end
     end
   end

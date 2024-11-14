@@ -309,13 +309,13 @@ module Oxidized
     # @return [Model] The resolved model.
     def resolve_model(opt)
       model = resolve_key :model, opt
-      @model_name = model  # Store the model name for later use
+      @model_name = model # Store the model name for later use
       unless Oxidized.mgr.model[model]
         Oxidized.logger.debug "lib/oxidized/node.rb: Loading model #{model.inspect}"
         Oxidized.mgr.add_model(model) || raise(ModelNotFound, "#{model} not found for node #{ip}")
       end
       Oxidized.mgr.model[model].new
-    end    
+    end
 
     # Resolves the repository for the node.
     #
@@ -351,24 +351,24 @@ module Oxidized
       # The priority is as follows: node -> group specific model -> group -> model -> global passed -> global
       key_sym = key.to_sym
       key_str = key.to_s
-      model_name = @model_name  # Use the stored model name
+      model_name = @model_name # Use the stored model name
       Oxidized.logger.debug "node.rb: resolving node key '#{key}', with passed global value of '#{global}' and node value '#{opt[key_sym]}'"
-    
+
       # Node
       if opt[key_sym]
         value = opt[key_sym]
         Oxidized.logger.debug "node.rb: setting node key '#{key}' to value '#{value}' from node"
-    
+
       # Group specific model
       elsif Oxidized.config.groups.has_key?(@group) && Oxidized.config.groups[@group].models.has_key?(model_name) && Oxidized.config.groups[@group].models[model_name].has_key?(key_str)
         value = Oxidized.config.groups[@group].models[model_name][key_str]
         Oxidized.logger.debug "node.rb: setting node key '#{key}' to value '#{value}' from model in group"
-    
+
       # Group
       elsif Oxidized.config.groups.has_key?(@group) && Oxidized.config.groups[@group].has_key?(key_str)
         value = Oxidized.config.groups[@group][key_str]
         Oxidized.logger.debug "node.rb: setting node key '#{key}' to value '#{value}' from group"
-    
+
       # Model
       elsif Oxidized.config.models.has_key?(model_name) && Oxidized.config.models[model_name].has_key?(key_str)
         value = Oxidized.config.models[model_name][key_str]
@@ -378,14 +378,14 @@ module Oxidized
       elsif global
         value = global
         Oxidized.logger.debug "node.rb: setting node key '#{key}' to value '#{value}' from passed global value"
-    
+
       # Global
       elsif Oxidized.config.has_key?(key_str)
         value = Oxidized.config[key_str]
         Oxidized.logger.debug "node.rb: setting node key '#{key}' to value '#{value}' from global"
       end
       value
-    end    
+    end
 
     # Determines if the output type is a Git repository.
     #

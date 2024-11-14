@@ -165,26 +165,6 @@ module Oxidized
         end
       end
 
-      def rugged_sshkey(args = {})
-        git_user   = args[:git_user]
-        privkey    = args[:privkey]
-        pubkey     = args[:pubkey] || (privkey + '.pub')
-        Rugged::Credentials::SshKey.new(username:   git_user,
-                                        publickey:  File.expand_path(pubkey),
-                                        privatekey: File.expand_path(privkey),
-                                        passphrase: ENV.fetch("OXIDIZED_SSH_PASSPHRASE", nil))
-      end
-
-      def remote_repo(node)
-        if node.group.nil? || cfg.remote_repo.is_a?(String)
-          cfg.remote_repo
-        elsif cfg.remote_repo[node.group].is_a?(String)
-          cfg.remote_repo[node.group]
-        elsif cfg.remote_repo[node.group].url.is_a?(String)
-          cfg.remote_repo[node.group].url
-        end
-      end
-
       # Returns a Rugged::Branch to the remote branch or nil if it doen't exist
       def remote_branch(repo)
         head_branch = repo.branches[repo.head.name]
