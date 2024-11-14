@@ -13,10 +13,6 @@ module Oxidized
       # @!method prompt(regex)
       #   Sets the prompt for the device.
       #   @param regex [Regexp] The regular expression that matches the prompt.
-      prompt
-      # @!method prompt(regex)
-      #   Sets the prompt for the device.
-      #   @param regex [Regexp] The regular expression that matches the prompt.
       prompt /^\r?([\w.@()-]+[#>]\s?)$/
       comment '! '
 
@@ -72,21 +68,6 @@ module Oxidized
       cfg :telnet, :ssh do
         username /^User ?[nN]ame:/
         password /^\r?Password:/
-      end
-
-      def log_hex(command)
-        hex_command = command.bytes.map { |b| b.to_s(16).rjust(2, '0') }.join(' ')
-        Oxidized.logger.debug "Command in hex: #{hex_command}"
-      end
-
-      def send(command)
-        log_hex(command)
-        super  # Call the original send method
-      end
-
-      def cmd(command)
-        log_hex(command)
-        super  # Call the original cmd method
       end
 
       cfg :telnet, :ssh do

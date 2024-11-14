@@ -66,6 +66,7 @@ module Oxidized
       comment '# '
 
       # @!visibility private
+      # add a comment in the final conf
       def add_comment(comment)
         "\n###### #{comment} ######\n"
       end

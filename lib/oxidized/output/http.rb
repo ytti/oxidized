@@ -6,47 +6,11 @@ module Oxidized
       # @return [String] The reference for the last commit or action performed.
       attr_reader :commitref
 
-    # Initializes the HTTP output.
-    # Loads the HTTP configuration from Oxidized.
-    def initialize
-      super
-      @cfg = Oxidized.config.output.http
-    end
-
-    def setup
-      return unless @cfg.empty?
-
-      CFGS.user.output.http.user = 'Oxidized'
-      CFGS.user.output.http.pasword = 'secret'
-      CFGS.user.output.http.url = 'http://localhost/web-api/oxidized'
-      CFGS.save :user
-      raise NoConfig, "no output http config, edit #{Oxidized::Config.configfile}"
-    end
-
-    require "net/http"
-    require "uri"
-    require "json"
-
-    def store(node, outputs, opt = {})
-      @commitref = nil
-      uri = URI.parse @cfg.url
-      http = Net::HTTP.new uri.host, uri.port
-      # http.use_ssl = true if uri.scheme = 'https'
-      req = Net::HTTP::Post.new(uri.request_uri, 'Content-Type' => 'application/json')
-      req.basic_auth @cfg.user, @cfg.password
-      req.body = generate_json(node, outputs, opt)
-      response = http.request req
-
-      case response.code.to_i
-      when 200 || 201
-        Oxidized.logger.info "Configuration http backup complete for #{node}"
-        p [:success]
-      when (400..499)
-        Oxidized.logger.info "Configuration http backup for #{node} failed status: #{response.body}"
-        p [:bad_request]
-      when (500..599)
-        p [:server_problems]
-        Oxidized.logger.info "Configuration http backup for #{node} failed status: #{response.body}"
+      # Initializes the HTTP output.
+      # Loads the HTTP configuration from Oxidized.
+      def initialize
+        super
+        @cfg = Oxidized.config.output.http
       end
 
       # Sets up the HTTP configuration. If the configuration is missing, default values are provided.
@@ -59,7 +23,7 @@ module Oxidized
         CFGS.user.output.http.pasword = 'secret'
         CFGS.user.output.http.url = 'http://localhost/web-api/oxidized'
         CFGS.save :user
-        raise NoConfig, 'no output http config, edit ~/.config/oxidized/config'
+        raise NoConfig, "no output http config, edit #{Oxidized::Config.configfile}"
       end
 
       require "net/http"
@@ -80,7 +44,7 @@ module Oxidized
       def store(node, outputs, opt = {})
         @commitref = nil
         uri = URI.parse @cfg.url
-        http = Net::HTTP.new uri.host, uri.port
+        http = Net::HTTP.new uri.host, uri.port 
         # @!visibility private
         # http.use_ssl = true if uri.scheme = 'https'
         req = Net::HTTP::Post.new(uri.request_uri, 'Content-Type' => 'application/json')

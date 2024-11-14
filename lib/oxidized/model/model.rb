@@ -213,8 +213,8 @@ module Oxidized
       #
       # @param args [Array] Arguments for the expectation.
       # @return [void]
-      def expect*args
-        self.class.expect(*args)
+      def expect(...)
+        self.class.expect(...)
       end
 
       # Returns the configuration methods.

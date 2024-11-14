@@ -23,9 +23,21 @@ module Oxidized
         # @raise [NoConfig] If no source HTTP URL configuration is found.
         def setup
           Oxidized.setup_logger
-          return unless @cfg.url.empty?
+          if @cfg.empty?
+            Oxidized.asetus.user.source.http.url       = 'https://url/api'
+            Oxidized.asetus.user.source.http.map.name  = 'name'
+            Oxidized.asetus.user.source.http.map.model = 'model'
+            Oxidized.asetus.save :user
 
-          raise Error::NoConfig, 'no source http url config, edit ~/.config/oxidized/config'
+          raise Error::NoConfig, "No source http config, edit #{Oxidized::Config.configfile}"
+        end
+
+        # check for mandatory attributes
+          if !@cfg.has_key?('url')
+            raise InvalidConfig, "url is a mandatory http source attribute, edit #{Oxidized::Config.configfile}"
+          elsif !@cfg.map.has_key?('name')
+            raise InvalidConfig, "map/name is a mandatory source attribute, edit #{Oxidized::Config.configfile}"
+          end
         end
 
         require "net/http"
@@ -93,6 +105,7 @@ module Oxidized
           @cfg.headers.each do |header, value|
             headers[header] = value
           end
+
           req_uri = uri.request_uri
           req_uri = "#{req_uri}/#{node_want}" if node_want
           request = Net::HTTP::Get.new(req_uri, headers)

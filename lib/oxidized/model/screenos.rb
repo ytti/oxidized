@@ -12,10 +12,6 @@ module Oxidized
 
       comment '! '
 
-      # @!method prompt(regex)
-      #   Sets the prompt for the device.
-      #   @param regex [Regexp] The regular expression that matches the prompt.
-      promptthod prompt(regex)
       #   Sets the prompt for the device.
       #   @param regex [Regexp] The regular expression that matches the prompt.
       prompt /^[\w.:()-]+->\s?$/

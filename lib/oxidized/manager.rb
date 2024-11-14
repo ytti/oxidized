@@ -17,7 +17,6 @@ module Oxidized
       # @return [Hash, false] A hash containing the file name and class if loaded successfully,
       #   or false if the component could not be loaded.
       def load(dir, file)
-        puts "Loading file: #{File.join(dir, file + '.rb')}"
         require File.join(dir, file + '.rb')
         klass = nil
         [Oxidized::Models, Oxidized::Input, Oxidized::Output, Oxidized::Source, Oxidized::Hook, Oxidized::Error, Oxidized, Object].each do |mod|
@@ -26,15 +25,10 @@ module Oxidized
           klass   = mod.const_get(klass) if klass
           break if klass
         end
-        puts "Class found: #{klass}"
         i = klass.new
         i.setup if i.respond_to?(:setup)
         { file => klass }
       rescue LoadError
-        puts "LoadError: Could not load file"
-        false
-      rescue NoMethodError => e
-        puts "NoMethodError: #{e.message}"
         false
       end
     end

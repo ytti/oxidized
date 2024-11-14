@@ -81,6 +81,6 @@ module Oxidized
         end
         nodes
       end
-      end
     end
+  end
 end

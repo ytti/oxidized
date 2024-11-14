@@ -75,18 +75,6 @@ module Oxidized
           @outputs = []
         end
       end
-
-      # Initializes the `Model` object, preparing it to interact with a device.
-      # Sets up an `Outputs` object to manage device configurations.
-      #
-      # @return [void]
-      def initialize
-        @outputs = Oxidized::Models::Model::Outputs.new
-      end
-
-      # @!attribute [r] Outputs
-      # @return [Outputs] The `Outputs` object for this model.
-      attr_reader :outputs
     end
   end
 end

@@ -98,6 +98,8 @@ module Oxidized
     # @return [void]
     def initialize(opt)
       Oxidized.logger.debug 'resolving DNS for %s...' % opt[:name]
+      # @!visibility private
+      # remove the prefix if an IP Address is provided with one as IPAddr converts it to a network address.
       ip_addr, = opt[:ip].to_s.split("/")
       Oxidized.logger.debug 'IPADDR %s' % ip_addr.to_s
       @name = opt[:name]
@@ -117,6 +119,8 @@ module Oxidized
       @err_type = nil
       @err_reason = nil
 
+      # @!visibility private
+      # model instance needs to access node instance
       @model.node = self
     end
 
@@ -309,7 +313,7 @@ module Oxidized
     # @return [Model] The resolved model.
     def resolve_model(opt)
       model = resolve_key :model, opt
-      @model_name = model # Store the model name for later use
+      @model_name = model
       unless Oxidized.mgr.model[model]
         Oxidized.logger.debug "lib/oxidized/node.rb: Loading model #{model.inspect}"
         Oxidized.mgr.add_model(model) || raise(ModelNotFound, "#{model} not found for node #{ip}")
@@ -351,7 +355,7 @@ module Oxidized
       # The priority is as follows: node -> group specific model -> group -> model -> global passed -> global
       key_sym = key.to_sym
       key_str = key.to_s
-      model_name = @model_name # Use the stored model name
+      model_name = @model_name
       Oxidized.logger.debug "node.rb: resolving node key '#{key}', with passed global value of '#{global}' and node value '#{opt[key_sym]}'"
 
       # Node

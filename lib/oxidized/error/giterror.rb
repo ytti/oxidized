@@ -1,5 +1,4 @@
 module Oxidized
-  # This module contains all model classes for errors
   module Error
     # Represents an error related to Git operations in Oxidized.
     #
