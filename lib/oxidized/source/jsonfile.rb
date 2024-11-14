@@ -49,7 +49,7 @@ module Oxidized
         transform_json(data)
       end
 
-        private
+      private
 
       # Transforms the parsed JSON data into a structured format for nodes.
       #

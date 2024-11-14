@@ -377,7 +377,7 @@ module Oxidized
       elsif Oxidized.config.models.has_key?(model_name) && Oxidized.config.models[model_name].has_key?(key_str)
         value = Oxidized.config.models[model_name][key_str]
         Oxidized.logger.debug "node.rb: setting node key '#{key}' to value '#{value}' from model"
-    
+
       # Global passed
       elsif global
         value = global

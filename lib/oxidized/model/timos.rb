@@ -4,7 +4,7 @@ module Oxidized
     # Migrate your source from `timos` to `sros`.
     #
     # @deprecated Use `sros` instead.
-    
+
     require_relative 'sros'
 
     TiMOS = SROS

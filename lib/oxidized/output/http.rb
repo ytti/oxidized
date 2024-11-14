@@ -44,7 +44,7 @@ module Oxidized
       def store(node, outputs, opt = {})
         @commitref = nil
         uri = URI.parse @cfg.url
-        http = Net::HTTP.new uri.host, uri.port 
+        http = Net::HTTP.new uri.host, uri.port
         # @!visibility private
         # http.use_ssl = true if uri.scheme = 'https'
         req = Net::HTTP::Post.new(uri.request_uri, 'Content-Type' => 'application/json')

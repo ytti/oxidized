@@ -6,7 +6,7 @@ module Oxidized
     # @deprecated Use `edgecos` instead
 
     require_relative 'edgecos'
-    
+
     Supermicro = EdgeCOS
 
     Oxidized.logger.warn "Using deprecated model supermicro, use edgecos instead."
