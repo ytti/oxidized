@@ -1,0 +1,5 @@
+terminal length 0
+show version
+show inventory
+show running-config
+exit
