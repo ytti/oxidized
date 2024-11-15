@@ -1,0 +1,11 @@
+environment more false
+show system information
+show card state
+show chassis
+file show bootlog.txt
+admin show configuration debug full-context
+file show config.dbg
+admin show configuration configure | match persistent-indices post-lines 10000
+admin show configuration bof full-context
+admin show configuration configure full-context
+logout
