@@ -1,6 +1,6 @@
 # Troubleshooting
 ## Table of contents
-1. [Connects but no/partial configuration collected](d#oxidized-connects-to-a-supported-device-but-no-or-partial-configuration-is-collected)
+1. [Connects but no/partial configuration collected](#oxidized-connects-to-a-supported-device-but-no-or-partial-configuration-is-collected)
 2. [No push to remote git repository](#oxidized-does-not-push-to-a-remote-git-repository-hook-githubrepo)
 3. [Git performance issues with large device counts](#git-performance-issues-with-large-device-counts)
 4. [Oxidized ignores the changes I made to its git repository](#oxidized-ignores-the-changes-i-made-to-its-git-repository)
