@@ -39,6 +39,7 @@ The format is based on [Keep a Changelog](https://keepachangelog.com/en/1.1.0/).
 - Updated slackdiff.rb to use new files.getUploadURLExternal slack file upload API instead of deprecated files.upload (@varesa)
 - Updated source/output files to reference a Source/Outputb module to avoid namespace duplication (@laf, @robertcheramy)
 - ios: Hide WLAN PSK, AP profile dot1x password, AP profile mgmtuser password/secret and radius COA server-key (@devon-mar)
+- ios: remove values from custom SNMP OID's, set by an EEM script (@syn-bit)
 
 ### Fixed
 - fixed error for ibos when remove_secret is set (@dminuoso)
