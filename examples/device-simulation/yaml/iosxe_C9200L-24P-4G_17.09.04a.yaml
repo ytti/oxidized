@@ -281,6 +281,10 @@ commands:
     snmp-server host 10.42.0.35 vrf Mgmt-vrf informs version 2c AAAAAAAAAABBBBBBBBBB  tty vtp
     snmp-server host 10.42.0.36 vrf Mgmt-vrf informs version 3 auth oxidized  bfd bridge transceiver
     !
+    snmp mib expression owner nat name 1
+      expression 42
+    snmp mib expression owner oxidized name rocks
+      expression 42
     !
     !
     !
@@ -485,6 +489,10 @@ oxidized_output: |
   snmp-server host 10.42.0.35 vrf Mgmt-vrf informs version 2c AAAAAAAAAABBBBBBBBBB  tty vtp
   snmp-server host 10.42.0.36 vrf Mgmt-vrf informs version 3 auth oxidized  bfd bridge transceiver
   !
+  snmp mib expression owner nat name 1
+    expression <value removed>
+  snmp mib expression owner oxidized name rocks
+    expression <value removed>
   !
   !
   !
