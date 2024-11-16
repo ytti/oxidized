@@ -82,13 +82,19 @@ end
 
 def yaml_output(prepend = '')
   # Now print the collected output to @output
+  firstline = true
+
   # as we want to prepend 'prepend' to each line, we need each_line and chomp
   # chomp removes the trainling \n
   @ssh_output.each_line(chomp: true) do |line|
     # encode line and remove the first and the trailing double quote
     line = line.dump[1..-2]
-    # Make sure leading spaces are coded with \0x20 or YAML won't work
-    line.gsub!(/^ /, '\x20')
+    if firstline
+      # Make sure the leading space of the first line (if present)
+      # is coded with \0x20 or YAML block scalars won't work
+      line.sub!(/^\A /, '\x20')
+      firstline = false
+    end
     # Make sure trailing white spaces are coded with \0x20
     line.gsub!(/ $/, '\x20')
     # prepend white spaces for the yaml block scalar
@@ -178,10 +184,10 @@ unless @exec_mode
       print data.gsub("\e", '\e')
     end
     ch.request_pty(term: 'vt100') do |_ch, success_pty|
-      raise NoShell, "Can't get PTY" unless success_pty
+      raise "Can't get PTY" unless success_pty
 
       ch.send_channel_request 'shell' do |_ch, success_shell|
-        raise NoShell, "Can't get shell" unless success_shell
+        raise "Can't get shell" unless success_shell
       end
     end
     ch.on_extended_data do |_ch, _type, data|
