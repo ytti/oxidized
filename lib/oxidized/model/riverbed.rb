@@ -1,7 +1,7 @@
 class Riverbed < Oxidized::Model
   using Refinements
 
-  # Define the prompt directly
+  # Define the prompt
   prompt /^.* *[\w-]+ *[#>] *$/
 
   # Define comment character
@@ -22,20 +22,19 @@ class Riverbed < Oxidized::Model
 
   # Get version information and output it as comments
   cmd 'show version' do |cfg|
-    cfg = cfg.cut_head
-    cfg.gsub!(prompt, '')
+    cfg = cfg.cut_both
 
     output = ''
     cfg.each_line do |line|
       line.strip!
-      output << comment("Product name: #{Regexp.last_match(1)}") + "\n" if line =~ /^Product name:\s+(.*)$/
-      output << comment("Product release: #{Regexp.last_match(1)}") + "\n" if line =~ /^Product release:\s+(.*)$/
-      output << comment("Build ID: #{Regexp.last_match(1)}") + "\n" if line =~ /^Build ID:\s+(.*)$/
-      output << comment("Build date: #{Regexp.last_match(1)}") + "\n" if line =~ /^Build date:\s+(.*)$/
-      output << comment("Build arch: #{Regexp.last_match(1)}") + "\n" if line =~ /^Build arch:\s+(.*)$/
-      output << comment("Built by: #{Regexp.last_match(1)}") + "\n" if line =~ /^Built by:\s+(.*)$/
-      output << comment("Product model: #{Regexp.last_match(1)}") + "\n" if line =~ /^Product model:\s+(.*)$/
-      output << comment("Number of CPUs: #{Regexp.last_match(1)}") + "\n" if line =~ /^Number of CPUs:\s+(.*)$/
+      output << comment("Product name: #{Regexp.last_match(1)}\n") if line =~ /^Product name:\s+(.*)$/
+      output << comment("Product release: #{Regexp.last_match(1)}\n") if line =~ /^Product release:\s+(.*)$/
+      output << comment("Build ID: #{Regexp.last_match(1)}\n") if line =~ /^Build ID:\s+(.*)$/
+      output << comment("Build date: #{Regexp.last_match(1)}\n") if line =~ /^Build date:\s+(.*)$/
+      output << comment("Build arch: #{Regexp.last_match(1)}\n") if line =~ /^Build arch:\s+(.*)$/
+      output << comment("Built by: #{Regexp.last_match(1)}\n") if line =~ /^Built by:\s+(.*)$/
+      output << comment("Product model: #{Regexp.last_match(1)}\n") if line =~ /^Product model:\s+(.*)$/
+      output << comment("Number of CPUs: #{Regexp.last_match(1)}\n") if line =~ /^Number of CPUs:\s+(.*)$/
     end
     output + "\n"
   end
@@ -47,14 +46,14 @@ class Riverbed < Oxidized::Model
     output = ''
     cfg.each_line do |line|
       line.strip!
-      output << comment("Hardware revision: #{Regexp.last_match(1)}") + "\n" if line =~ /^Hardware revision:\s+(.*)$/
-      output << comment("Mainboard: #{Regexp.last_match(1)}") + "\n" if line =~ /^Mainboard:\s+(.*)$/
+      output << comment("Hardware revision: #{Regexp.last_match(1)}\n") if line =~ /^Hardware revision:\s+(.*)$/
+      output << comment("Mainboard: #{Regexp.last_match(1)}\n") if line =~ /^Mainboard:\s+(.*)$/
       if line =~ /^Slot (\d+):\s+\.*\s+(.*)$/
         slot_number = Regexp.last_match(1)
         slot_info = Regexp.last_match(2)
-        output << comment("Slot #{slot_number}: #{slot_info}") + "\n"
+        output << comment("Slot #{slot_number}: #{slot_info}\n")
       end
-      output << comment("System led: #{Regexp.last_match(1)}") + "\n" if line =~ /^System led:\s+(.*)$/
+      output << comment("System led: #{Regexp.last_match(1)}\n") if line =~ /^System led:\s+(.*)$/
     end
     output + "\n"
   end
@@ -66,14 +65,14 @@ class Riverbed < Oxidized::Model
     output = ''
     cfg.each_line do |line|
       line.strip!
-      output << comment("Serial: #{Regexp.last_match(1)}") + "\n" if line =~ /^Serial:\s+(.*)$/
+      output << comment("Serial: #{Regexp.last_match(1)}\n") if line =~ /^Serial:\s+(.*)$/
     end
     output + "\n"
   end
 
   # Get the running configuration
   cmd 'show running-config' do |cfg|
-    cfg = cfg.cut_head.cut_tail
+    cfg = cfg.cut_both
 
     cfg = cfg.each_line.map do |line|
       if line =~ /^(.*##.*?##)(.*)$/
