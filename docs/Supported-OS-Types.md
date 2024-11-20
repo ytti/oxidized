@@ -20,8 +20,9 @@
 |Arbor Networks      |ArbOS                         |[arbos](/lib/oxidized/model/arbos.rb)            |                 |[ArbOS](Model-Notes/ArbOS.md)
 |Arista              |EOS                           |[eos](/lib/oxidized/model/eos.rb)                |                 |[EOS](Model-Notes/EOS.md)
 |Arris               |C4CMTS                        |[c4cmts](/lib/oxidized/model/c4cmts.rb)
-|Aruba               |AOS-CX                        |[aoscx](/lib/oxidized/model/aoscx.rb)            |@robertcheramy
-|                    |AOSW                          |[Aaosw](/lib/oxidized/model/aosw.rb)
+|Aruba               |AOS-CX                        |[aoscx](/lib/oxidized/model/aoscx.rb)            |@robertcheramy   |[HPE Aruba](Model-Notes/HPEAruba.md)
+|                    |AOSW                          |[aosw](/lib/oxidized/model/aosw.rb)                                |[HPE Aruba](Model-Notes/HPEAruba.md)
+|                    |ArubaInstant                  |[arubainstant](/lib/oxidized/model/arubainstant.rb)|@robertcheramy |[HPE Aruba](Model-Notes/HPEAruba.md)
 |Asterfusion         |AsterNOS                      |[asternos](/lib/oxidized/model/asternos.rb)
 |AudioCodes          |AudioCodes                    |[audiocodes](/lib/oxidized/model/audiocodes.rb)
 |                    |MediaPack MP-1xx, Mediant1000 |[audiocodesmp](/lib/oxidized/model/audiocodesmp.rb)
