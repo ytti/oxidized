@@ -67,7 +67,7 @@ class AOSW < Oxidized::Model
   end
 
   cmd 'show license passphrase' do |cfg|
-    cfg = "" if cfg.match(/(Invalid input detected at '\^' marker|Parse error)/) # Don't show for unsupported devices (IAP and MAS)
+    cfg = "" if cfg.match /(Invalid input detected at '\^' marker|Parse error)/ # Don't show for unsupported devices (IAP and MAS)
     rstrip_cfg comment cfg
   end
 
@@ -84,8 +84,8 @@ class AOSW < Oxidized::Model
   end
 
   cfg :telnet do
-    username(/^User:\s*/)
-    password(/^Password:\s*/)
+    username /^User:\s*/
+    password /^Password:\s*/
   end
 
   cfg :telnet, :ssh do

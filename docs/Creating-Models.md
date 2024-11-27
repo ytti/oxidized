@@ -96,7 +96,7 @@ using the same network device as you are.
 
 A good (and optional) practice for submissions is to provide a
 [unit test for your model](/spec/model). This reduces the risk that further
-developments don't break it, and facilitates debugging issues without having
+developments could break it, and facilitates debugging issues without having
 access to a physical network device for the model.
 
 In order to simulate the device in the unit test, you need a

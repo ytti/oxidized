@@ -10,8 +10,8 @@ describe 'Oxidized::Config' do
       err = _(-> { Oxidized::Config.load }).must_raise Oxidized::NoConfig
       # We cannot test if the environment variable OXIDIZED_HOME is properly used.
       # Oxidized::Config uses OXIDIZED_HOME at loading (require 'oxidized/config'),
-      # so we have no chance to manipulate it within this test (oxidized/condig can
-      # have been required in another test)
+      # so we have no chance to manipulate it within this test (oxidized/config can
+      # have already been required in another test)
       _(err.message).must_match(/^edit .*\/config$/)
     end
   end

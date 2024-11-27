@@ -5,15 +5,18 @@ This document is targeted at oxidized maintainers. It describes the release proc
 Run `git diff 0.30.0..master` (where `0.30.0` is to be changed to the last release) and review
 all the changes that have been done. Have a specific look at changes you don't understand.
 
+For a graphical compare, use `git difftool -d 0.30.0..master`.
+
 ## Test, test test!
 Test the git code and the container against as much device types an environments as you can.
 
 Do not integrate late PRs into master if they do not fix issues for the release. The must wait for the next release.
 
 ## Version numbering
-Oxidized versions are nummered like 0.major.minor
-- major is incremented when releasing new features. minor is then set to 0
-- minor is incremented when releasing fixes only, just after a major version.
+Oxidized versions are nummered like major.minor.patch
+- currently, the major version is 0.
+- minor is incremented when releasing new features.
+- patch is incremented when releasing fixes only.
 
 ## Release
 1. Checkout the master branch of oxidized. Make sure you are up to date with origin.

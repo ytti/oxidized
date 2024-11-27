@@ -1,6 +1,6 @@
 require_relative 'model_helper'
 
-describe 'model/IOS' do
+describe 'model/ArubaInstant' do
   before(:each) do
     init_model_helper
     @node = Oxidized::Node.new(name:  'example.com',
@@ -13,7 +13,7 @@ describe 'model/IOS' do
     _('AAAA-AP123456# ').must_match ArubaInstant.prompt
   end
 
-  it 'runs on IAP516 with 8.10.0.6' do
+  it 'runs on IAP515 with 8.10.0.6' do
     mockmodel = MockSsh.new('examples/device-simulation/yaml/arubainstant_IAP515_8.10.0.6_VWLC.yaml')
     Net::SSH.stubs(:start).returns mockmodel
 

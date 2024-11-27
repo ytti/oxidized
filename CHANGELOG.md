@@ -8,40 +8,41 @@ The format is based on [Keep a Changelog](https://keepachangelog.com/en/1.1.0/).
 
 ### Added
 - model for Riverbed Steelhead (@Swaeltjie)
-- removed time command from uplink EP4440-DP OLT model 
 - model for uplink EP4440-DP OLT (@AAm-kun)
 - model for Siklu Multihaul TG radios (@bdg-robert)
-- fortios: variable `fullconfig` to get the configuration with default values. Fixes: #3159 (@robertcheramy)
 - model for VMWare NSX DFW (@elmobp)
 - model for F5OS (@teunvink)
 - cumulus: Add possibility to use NVUE (@lagertonne)
 - model for garderos (@robertcheramy)
 - unit tests framework for models with ssh input (@robertcheramy)
-- container-image: install x25519 gem package to support more ssh kex. Fixes #3070 (@benasse)
 - os6: Added support to Dell EMC Networking OS6 (@anubisg1)
-- Update net-ssh to 7.3 to enable support for aes(128|256)gcm. Fixes #3168 (@jacobw)
 - model for HPE Aruba Networking Instant Mode (Aruba Instant). Fixes #3057 (@robertcheramy)
+- Add JSONFILE source (@sargon)
 
 ### Changed
 - h3c: change prompt to expect either angle (user-view) or square (system-view) brackets (@nl987)
 - xos: Hide radius and user secrets for XOS (@iriseden)
 - eos: Hide radius and snmp secrets for Arista EOS (@iriseden)
-- docker/podman: baseimage updated to phusion/baseimage:jammy-1.0.4
 - fortios: Hide date in acme certifcate comments (@systeembeheerder)
 - dlink: added support for 'enable admin' before getting configuration, if enable=true (@as8net)
 - dlinknextgen: strip uptime and ntp update time from config
 - Updated slackdiff.rb to use slack_ruby_client instead of slack-api (@Punicaa)
 - oxidized: options (such as credentials, etc.) now use the same resolution logic as variables and can also be defined per model in a group (@EinGlasVollKakao)
-- Add JSONFILE source (@sargon)
 - saos: add inventory and software status collection (@grbeneke)
 - container-image: update to phusion/baseimage:noble-1.0.0 and include security upgrades at build time (@robertcheramy)
 - container-image: use ubuntu-packages instead of gems in order to reduce container image size (@robertcheramy)
 - edgecos.rb: hide temperature and fan speed (@dhooper6430)
 - cnos: show information before config, remove secrets only when told to do so (@robje)
 - Updated slackdiff.rb to use new files.getUploadURLExternal slack file upload API instead of deprecated files.upload (@varesa)
-- Updated source/output files to reference a Source/Outputb module to avoid namespace duplication (@laf, @robertcheramy)
+- Updated source/output files to reference a Source/Output module to avoid namespace duplication (@laf, @robertcheramy)
 - ios: Hide WLAN PSK, AP profile dot1x password, AP profile mgmtuser password/secret and radius COA server-key (@devon-mar)
 - ios: remove values from custom SNMP OID's, set by an EEM script (@syn-bit)
+- Update net-ssh to 7.3 to enable support for aes(128|256)gcm. Fixes #3168 (@jacobw)
+- removed time command from uplink EP4440-DP OLT model
+- fortios: variable `fullconfig` to get the configuration with default values. Fixes: #3159 (@robertcheramy)
+- container-image: install x25519 gem package to support more ssh kex. Fixes #3070 (@benasse)
+- lenovonos: Salt administrator-password line when remove_unstable_lines is set to True (@kani999)
+- lenovonos: Removes lines that started with Fan because RPM always changes. (@kani999)
 
 ### Fixed
 - fixed error for ibos when remove_secret is set (@dminuoso)
@@ -50,7 +51,7 @@ The format is based on [Keep a Changelog](https://keepachangelog.com/en/1.1.0/).
 - fixed power consumption included in ArubaOS-CX diffs starting with FL.10.13.xxx. Fixes #3142 (@terratalpi)
 - fixed oxidized-web getting "version not found" when fetching a version from git and no group is defined. Fixes #2222 (@robertcheramy)
 - fixed telnet to disconnect gracefully even if it throws IOError while disconnect. Fixes #3212 (@ytti)
-- docs: run Git garbage collection to address performance issues. Fixes #3121 (@robertcheramy)
+- docs: run git garbage collection to address performance issues. Fixes #3121 (@robertcheramy)
 - saos: fixed handling of 'unsaved configuration' indicator in prompt (@grbeneke)
 - rgos: also strip "System uptime" for installed modules (@spike77453)
 - fixed digest authentication when using http input (@spike77453)
@@ -109,8 +110,6 @@ The format is based on [Keep a Changelog](https://keepachangelog.com/en/1.1.0/).
 - dlinknextgen removes user and snmp-server secrets (@tcrichton)
 - dnos: hide secrets in "ospf message-digest-key", "authentication-type" and "bsd-username" (@rybnico)
 - junos: Replace dynamic value in VMX-BANDWIDTH with count, hide ssh keys
-- lenovonos: Salt administrator-password line when remove_unstable_lines is set to True (@kani999)
-- lenovonos: Removes lines that started with Fan because RPM always changes. (@kani999)
 
 ### Fixed
 - fixed empty lines for ZyXEL GS1900 switches (@jluebbe)

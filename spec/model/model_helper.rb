@@ -14,9 +14,9 @@ def init_model_helper
   Oxidized::Node.any_instance.stubs(:resolve_output)
 end
 
-# save the result of a node.run into filename
+# save the result of a node.run into @filename
 # it is already formated for copy & paste into the YAML simulation file
-# result is dormated as it is returned by "status, result = @node.run"
+# @result is formated as it is returned by "status, result = @node.run"
 def result2file(result, filename)
   File.open(filename, 'w') do |file|
     # chomp: true removes the trailing \n after each line
@@ -48,8 +48,7 @@ class MockSsh
     @oxidized_output = interpolate_yaml(model['oxidized_output'])
   end
 
-  # We have to interpolate ourselves as yaml block scalars do not interpolate
-  # anything
+  # We have to interpolate as yaml block scalars don't interpolate anything
   def interpolate_yaml(text)
     # we just add double quotes and undump the result
     "\"#{text}\"".undump
@@ -58,7 +57,8 @@ class MockSsh
   def exec!(cmd)
     Oxidized.logger.send(:debug, "exec! called with cmd #{cmd}")
 
-    # exec commands are send without \n, our @commands has \n integrated
+    # exec commands are send without \n, the keys in @commands have a "\n"
+    # appended, so we search for cmd + "\n" in @commands
     cmd += "\n"
 
     raise "#{cmd} not defined" unless @commands.has_key?(cmd)
