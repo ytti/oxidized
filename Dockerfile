@@ -26,6 +26,9 @@ WORKDIR /tmp/oxidized
 # docker automated build gets shallow copy, but non-shallow copy cannot be unshallowed
 RUN git fetch --unshallow || true
 
+# Remove any older gems of oxidized
+RUN rm pkg/*
+
 # Ensure rugged is built with ssh support
 RUN rake build
 
