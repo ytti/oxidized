@@ -1,6 +1,6 @@
 # Oxidized
 
-![alt text]()
+![alt text](https://github.com/LaKishta/oxidized/blob/master/sick_logo.png)
 
 [![Build Status](https://github.com/ytti/oxidized/actions/workflows/ruby.yml/badge.svg)](https://github.com/ytti/oxidized/actions/workflows/ruby.yml)
 [![codecov.io](https://codecov.io/gh/ytti/oxidized/coverage.svg?branch=master)](https://codecov.io/gh/ytti/oxidized?branch=master)
