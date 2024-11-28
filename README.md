@@ -1,5 +1,7 @@
 # Oxidized
 
+![alt text]()
+
 [![Build Status](https://github.com/ytti/oxidized/actions/workflows/ruby.yml/badge.svg)](https://github.com/ytti/oxidized/actions/workflows/ruby.yml)
 [![codecov.io](https://codecov.io/gh/ytti/oxidized/coverage.svg?branch=master)](https://codecov.io/gh/ytti/oxidized?branch=master)
 [![Codacy Badge](https://api.codacy.com/project/badge/Grade/5a90cb22db6a4d5ea23ad0dfb53fe03a)](https://www.codacy.com/app/ytti/oxidized?utm_source=github.com&amp;utm_medium=referral&amp;utm_content=ytti/oxidized&amp;utm_campaign=Badge_Grade)
