@@ -15,7 +15,7 @@ describe GithubRepo do
 
   before do
     Oxidized.asetus = Asetus.new
-    Oxidized.config.log = '/dev/null'
+    Oxidized.config.log = File::NULL
     Oxidized.setup_logger
     Oxidized.config.output.default = 'git'
   end
