@@ -18,35 +18,35 @@ Oxidized versions are nummered like major.minor.patch
 - minor is incremented when releasing new features.
 - patch is incremented when releasing fixes only.
 
-## Release
+## Prepare the release in your working repository
 1. Checkout the master branch of oxidized. Make sure you are up to date with origin.
 2. Change the version in lib/oxidized/version.rb
 3. Change CHANGELOG.md to replace [Unreleased] with [0.xx.yy – 202Y-MM-DD]
 4. Run `git diff` to check your changes
 5. Commit the changes to the local git repository with a commit message “chore(release): release version 0.xx.yy”
 6. Tag the commit with `git tag -a 0.xx.yy -m "Release 0.xx.yy"`
-7. Push the change and the tag to github:
+7. Build the gem with ‘rake build’
+8. Run `git diff` to check if there have been more changes (there shouldn't)
+9. Install an test the gem locally
+```
+gem install --user-install pkg/oxidized-0.30.0.gem
+~/.local/share/gem/ruby/3.1.0/bin/oxidized
+```
+
+## Release in github
+Push the change and the tag to github:
 ```
 git push
 git push origin 0.xx.yy
 ```
 
-## Release in github
 Make a release from the tag in github
 - Thank the contributors
 - Only describe major changes, and refer to CHANGELOG.md
 - List new contributors (generated automatically)
 
 ## Release in rubygems
-1. Build the gem with ‘rake build’
-2. Install an test the gem locally
-```
-gem install --user-install pkg/oxidized-0.30.0.gem
-~/.local/share/gem/ruby/3.1.0/bin/oxidized
-```
-3. Push the gem with ‘rake push’
-
-You need an account at rubygems which is allowed to push oxidized
+Push the gem with ‘rake push’
 
 ## Release in docker.io
 The OCI-Containter is automatically build and pushed to docker.io by github
