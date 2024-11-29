@@ -39,7 +39,7 @@ Gem::Specification.new do |s|
   s.add_development_dependency 'mocha',               '~> 2.1'
   s.add_development_dependency 'pry',                 '~> 0.14.2'
   s.add_development_dependency 'rake',                '~> 13.0'
-  s.add_development_dependency 'rubocop',             '~> 1.68.0'
+  s.add_development_dependency 'rubocop',             '~> 1.69.0'
   s.add_development_dependency 'rubocop-minitest',    '~> 0.36.0'
   s.add_development_dependency 'rubocop-rake',        '~> 0.6.0'
   s.add_development_dependency 'rubocop-sequel',      '~> 0.3.3'
