@@ -54,6 +54,28 @@ The API documentation contains a list of [methods](https://github.com/ytti/oxidi
 
 A more fleshed out example can be found in the `IOS` and `JunOS` models.
 
+### Common task: mechanism for handling 'enable' mode
+The following code snippet demonstrates how to handle sending the 'enable'
+command and an enable password.
+
+This example is taken from the `IOS` model. It covers scenarios where users
+need to enable privileged mode, either without providing a password (by setting
+`enable: true` in the configuration) or with a password.
+
+```ruby
+  cfg :telnet, :ssh do
+    post_login do
+      if vars(:enable) == true
+        cmd "enable"
+      elsif vars(:enable)
+        cmd "enable", /^[pP]assword:/
+        cmd vars(:enable)
+      end
+    end
+  end
+```
+Note: remove `:telnet, ` if your device does not support telnet.
+
 ## Extending an existing model with a new command
 
 The example below can be used to extend the `JunOS` model to collect the output of `show interfaces diagnostics optics` and append the output to the configuration file as a comment. This command retrieves DOM information on pluggable optics present in a `JunOS`-powered chassis.

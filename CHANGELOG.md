@@ -11,7 +11,7 @@ The format is based on [Keep a Changelog](https://keepachangelog.com/en/1.1.0/).
 ### Changed
 
 ### Fixed
-
+- tplink: send 'enable' before the enable password. Fixes #3271 (@robertcheramy)
 
 
 ## [0.31.0 – 2024-11-29]

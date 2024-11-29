@@ -58,6 +58,7 @@ class TPLink < Oxidized::Model
       if vars(:enable) == true
         cmd "enable"
       elsif vars(:enable)
+        cmd "enable", /^[pP]assword:/
         cmd vars(:enable)
       end
     end
