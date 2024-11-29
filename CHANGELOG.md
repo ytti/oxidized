@@ -4,6 +4,16 @@ All notable changes to this project will be documented in this file.
 
 The format is based on [Keep a Changelog](https://keepachangelog.com/en/1.1.0/).
 
+## [Unreleased]
+
+### Added
+
+### Changed
+
+### Fixed
+
+
+
 ## [0.31.0 – 2024-11-29]
 
 ### Added
@@ -65,6 +75,7 @@ The format is based on [Keep a Changelog](https://keepachangelog.com/en/1.1.0/).
 - ios: fixed device specs on ASR900 Series. Fixes #3297 (@robertcheramy, @roshnaraman)
 - netgear: prompt for gs752tpp. Fixes #3287 (@robertcheramy)
 - aoscx: fixed regex for 6400 switches to hide temperature and power (@steveneppler)
+
 
 ## [0.30.1 – 2024-04-12]
 
