@@ -1,0 +1,3 @@
+cat /cf/conf/config.xml
+cat /etc/version
+exit
