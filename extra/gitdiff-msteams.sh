@@ -17,10 +17,10 @@
 # Add webhook to your MS Teams channel and set the next variable to the full url
 
 weburl="https://contoso.webhook.office.com/webhookb2/etc etc etc"
+NEWLINE=$'\n'
 
 postdata()
 {
-    COMMIT=$(git --bare --git-dir="${OX_REPO_NAME}" show --pretty='' --no-color "${OX_REPO_COMMITREF}" | jq --raw-input --slurp --compact-output)
     cat <<EOF
 {
    "type":"message",
@@ -77,7 +77,17 @@ postdata()
                             "size": "small"
                         }
                     ]
-                }
+                },
+                {
+                    "type": "ActionSet",
+                    "actions": [
+                        {
+                        "type": "Action.OpenUrl",
+                        "title": "Klik her for visning",
+                        "url": "https://internalgithub/org/oxidized/commit/${OX_REPO_COMMITREF}"
+                    }
+                ]
+            }
            ]
          }
       }
@@ -86,6 +96,13 @@ postdata()
 EOF
 }
 
-curl -i \
--H "Content-Type: application/json" \
--X POST --data "$(postdata)" "${weburl}"
+COMMIT=$(git --bare --git-dir="${OX_REPO_NAME}" show --pretty='' --no-color "${OX_REPO_COMMITREF}" | jq --raw-input --slurp --compact-output)
+
+size=$(postdata | wc -c)
+if [ "$size" -gt "15000" ]; then
+  COMMIT=$(git --bare --git-dir="${OX_REPO_NAME}" show --pretty='' --no-color "${OX_REPO_COMMITREF}" | head -n 20)
+  COMMIT+="$NEWLINE...$NEWLINE Shortened because of length"
+  COMMIT=$(echo "${COMMIT}" | jq --raw-input --slurp --compact-output )
+fi
+
+curl -i -H "Content-Type: application/json" -X POST --data "$(postdata)" "${weburl}"
