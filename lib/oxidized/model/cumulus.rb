@@ -1,7 +1,7 @@
 class Cumulus < Oxidized::Model
   using Refinements
 
-  prompt /^(([\w.-]*)@(.*)):/
+  prompt /^((\#?.*\[?\??\w*)@(.*)):/
   comment '# '
 
   # add a comment in the final conf
