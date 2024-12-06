@@ -12,6 +12,7 @@ The format is based on [Keep a Changelog](https://keepachangelog.com/en/1.1.0/).
 
 ### Fixed
 - tplink: send 'enable' before the enable password. Fixes #3271 (@robertcheramy)
+- asyncos: fix prompt for hostnames containing "-" . Fixes #3327 (@robertcheramy)
 
 
 ## [0.31.0 – 2024-11-29]
