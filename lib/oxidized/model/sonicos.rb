@@ -3,7 +3,7 @@ class SonicOS < Oxidized::Model
 
   # Applies to Sonicwall NSA series firewalls
 
-  prompt /^\w+@\w+[>]\(?.+\)?\s?/
+  prompt /^\w+@[\w\-]+[>]\(?.+\)?\s?/
   comment  '! '
 
   cmd :all do |cfg|
