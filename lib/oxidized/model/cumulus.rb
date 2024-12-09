@@ -1,7 +1,10 @@
 class Cumulus < Oxidized::Model
   using Refinements
 
-  prompt /^\[?[^h]+h(([\w.-]*)@(.*)):/
+  # (\e\[\?\d+h)? - optional ANSI escape code
+  # [\w.-]+@    - user@
+  # .+:.*# $    - host:path# <end of line>
+  prompt /^(\e\[\?\d+h)?[\w.-]+@.+:.*# $/
   comment '# '
 
   # add a comment in the final conf

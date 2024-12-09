@@ -19,3 +19,4 @@ cat /etc/cumulus/acl/policy.conf
 cat /etc/default/isc-dhcp-relay
 cat /etc/cumulus/etc.replace/os-release
 cl-license
+exit
