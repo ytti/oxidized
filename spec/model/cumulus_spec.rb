@@ -11,7 +11,12 @@ describe 'model/Cumulus' do
 
   it 'matches different prompts' do
     _('root@spine1-nyc2:~# ').must_match Cumulus.prompt
-    _("\e[?2004hroot@spine1-nyc2:~#\x20").must_match Cumulus.prompt
+
+    # Prompt with ESC Codes
+    prompt = "\e[?2004hroot@spine1-nyc2:~#\x20"
+    # Remove the ESC Codes
+    prompt = @node.model.expects prompt
+    _(prompt).must_match Cumulus.prompt
   end
 
   it 'runs on MSN2010 with Cumulus Linux 5.9.2 (nvue mode)' do

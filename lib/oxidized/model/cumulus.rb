@@ -1,10 +1,15 @@
 class Cumulus < Oxidized::Model
   using Refinements
 
-  # (\e\[\?\d+h)? - optional ANSI escape code
+  # Remove ANSI escape codes
+  expect /\e\[[0-?]*[ -\/]*[@-~]\r?/ do |data, re|
+    data.gsub re, ''
+  end
+
+  # The prompt has ANSI ESC codes, the are removed from the code above
   # [\w.-]+@    - user@
   # .+:.*# $    - host:path# <end of line>
-  prompt /^(\e\[\?\d+h)?[\w.-]+@.+:.*# $/
+  prompt /^[\w.-]+@.+:.*# $/
   comment '# '
 
   # add a comment in the final conf

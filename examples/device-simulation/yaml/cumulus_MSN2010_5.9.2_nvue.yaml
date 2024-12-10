@@ -217,7 +217,7 @@ commands:
   exit: |-
     exit
 oxidized_output: |
-  \e[?2004l\r- header:
+  - header:
       model: MSN2010
       nvue-api-version: nvue_v1
       rev-id: 1.0
