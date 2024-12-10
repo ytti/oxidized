@@ -77,7 +77,7 @@ need to enable privileged mode, either without providing a password (by setting
 Note: remove `:telnet, ` if your device does not support telnet.
 
 ### Common Task: remove ANSI escape codes
-> :warning: This common task is still experimental.
+> :warning: This common task is experimental.
 > If it does not work for you, please open an issue so that we can adapt the
 > code snippet.
 
@@ -89,15 +89,16 @@ You can remove most [ANSI escape codes](https://en.wikipedia.org/wiki/ANSI_escap
 code in your model:
 ```
   # Remove ANSI escape codes
-  expect /\e\[[0-?]*[ -\/]*[@-~]/ do |data, re|
+  expect /\e\[[0-?]*[ -\/]*[@-~]\r?/ do |data, re|
     data.gsub re, ''
   end
 ```
 Explanation of the Regular Expression:
-- `\e\[`  : Control Sequence Introducer (CSI), which starts with "ESC [".
-- `[0-?]*`: "parameter" bytes (range 0x30–0x3F, corresponding to ASCII `0–9:;<=>?`)
-- `[ -/]*`: "intermediate" bytes (range 0x20–0x2F, corresponding to ASCII ` !"#$%&'()*+,-./`)
-- `[@-~]` : the "final" byte (range 0x40–0x7E, corresponding to ASCII ``@A–Z[\]^_`a–z{|}~).[``)
+- `\e\[`   : Control Sequence Introducer (CSI), which starts with "ESC [".
+- `[0-?]*` : "Parameter" bytes (range 0x30–0x3F, corresponding to ASCII `0–9:;<=>?`).
+- `[ -\/]*`: "Intermediate" bytes (range 0x20–0x2F, corresponding to ASCII ` !"#$%&'()*+,-./`).
+- `[@-~]`  : The "final" byte (range 0x40–0x7E, corresponding to ASCII ``@A–Z[\]^_`a–z{|}~).[``).
+- `\r?`    : Some ESC codes include a carriage return, which we do not want in the resulting config.
 
 ## Extending an existing model with a new command
 
