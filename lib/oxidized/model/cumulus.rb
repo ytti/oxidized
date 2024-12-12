@@ -9,7 +9,7 @@ class Cumulus < Oxidized::Model
   # The prompt has ANSI ESC codes, the are removed from the code above
   # [\w.-]+@    - user@
   # .+:.*# $    - host:path# <end of line>
-  prompt /^[\w.-]+@.+:.*# $/
+  prompt /[\w.-]+@.+:.*[#$] $/
   comment '# '
 
   # add a comment in the final conf
