@@ -15,7 +15,7 @@ The format is based on [Keep a Changelog](https://keepachangelog.com/en/1.1.0/).
 - tplink: send 'enable' before the enable password. Fixes #3271 (@robertcheramy)
 - asyncos: fix prompt for hostnames containing "-" . Fixes #3327 (@robertcheramy)
 - sonicos: fix prompt for hostnames containing "-" . Fixes #3333 (@robertcheramy)
-
+- xos: Hide radius accounting secret
 
 ## [0.31.0 – 2024-11-29]
 
