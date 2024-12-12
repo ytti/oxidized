@@ -10,6 +10,7 @@ The format is based on [Keep a Changelog](https://keepachangelog.com/en/1.1.0/).
 - junos: add unit test (@systeembeheerder)
 
 ### Changed
+- sonicos: accept policy message. Fixes #3339 (@Steve-M-C, @robertcheramy)
 
 ### Fixed
 - tplink: send 'enable' before the enable password. Fixes #3271 (@robertcheramy)
