@@ -13,7 +13,7 @@ class XOS < Oxidized::Model
   end
 
   cmd :secret do |cfg|
-    cfg.gsub! /^(configure radius (netlogin|mgmt-access) (primary|secondary) shared-secret encrypted).+/, '\\1 <secret hidden>'
+    cfg.gsub! /^(configure (radius|radius-accounting) (netlogin|mgmt-access) (primary|secondary) shared-secret encrypted).+/, '\\1 <secret hidden>'
     cfg.gsub! /^(configure account admin encrypted).+/, '\\1 <secret hidden>'
     cfg.gsub! /^(create account (admin|user) (.+) encrypted).+/, '\\1 <secret hidden>'
     cfg
