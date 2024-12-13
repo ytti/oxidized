@@ -9,7 +9,7 @@ The format is based on [Keep a Changelog](https://keepachangelog.com/en/1.1.0/).
 - cumulus: to fix prompt issues, the prompt does not match on the leading
   newline anymore. We had to make the prompt regex more restrictive to avoid
   side effects. If you get into timeouts because of the new prompt, open an
-  issue   so that we can adapt the prompt to your needs.
+  issue so that we can adapt the prompt to your needs.
 
 ### Added
 - junos: add unit test (@systeembeheerder)

@@ -7,9 +7,12 @@ class Cumulus < Oxidized::Model
   end
 
   # The prompt has ANSI ESC codes, the are removed from the code above
-  # [\w.-]+@    - user@
-  # .+:.*# $    - host:path# <end of line>
-  prompt /[\w.-]+@.+:.*[#$] $/
+  # We do not match the line begining, as some commands end without \n
+  # [\w.-]+@[\w.-]+   : user@hostname
+  # (:mgmt)?          : optional when logged in out of band
+  # :~[#$] $          : end of prompt, containing the
+  #                     path, which is always ~ in our context
+  prompt /[\w.-]+@[\w.-]+(:mgmt)?:~[#$] $/
   comment '# '
 
   # add a comment in the final conf

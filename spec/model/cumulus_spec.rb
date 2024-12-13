@@ -11,6 +11,7 @@ describe 'model/Cumulus' do
 
   it 'matches different prompts' do
     _('root@spine1-nyc2:~# ').must_match Cumulus.prompt
+    # Prompts within mgmt vrf
     _('cumulus@cumulus:mgmt:~$ ').must_match Cumulus.prompt
     _('root@cumulus:mgmt:~# ').must_match Cumulus.prompt
 
