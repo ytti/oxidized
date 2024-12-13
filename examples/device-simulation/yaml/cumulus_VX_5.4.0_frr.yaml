@@ -18,9 +18,10 @@ commands:
   sudo su -: |-
     sudo su -
     [sudo] password for cumulus:\x20
-    root@cumulus:mgmt:~#\x20
   # this is the password of the unit test, send when enable = true
   armud:
+
+    root@cumulus:mgmt:~#\x20
   cat /etc/hostname: |-
     cat /etc/hostname
     cumulus
