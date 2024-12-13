@@ -5,14 +5,23 @@ All notable changes to this project will be documented in this file.
 The format is based on [Keep a Changelog](https://keepachangelog.com/en/1.1.0/).
 
 ## [Unreleased]
+### Release notes
+- cumulus: to fix prompt issues, the prompt does not match on the leading
+  newline anymore. We had to make the prompt regex more restrictive to avoid
+  side effects. If you get into timeouts because of the new prompt, open an
+  issue   so that we can adapt the prompt to your needs.
 
 ### Added
+- junos: add unit test (@systeembeheerder)
 
 ### Changed
-- cumulus: remove ANSI Escape codes (@alchemyx, @robertcheramy)
+- sonicos: accept policy message. Fixes #3339 (@Steve-M-C, @robertcheramy)
+- cumulus: remove ANSI Escape codes and fix prompt issues (@alchemyx, @robertcheramy)
 
 ### Fixed
 - tplink: send 'enable' before the enable password. Fixes #3271 (@robertcheramy)
+- asyncos: fix prompt for hostnames containing "-" . Fixes #3327 (@robertcheramy)
+- sonicos: fix prompt for hostnames containing "-" . Fixes #3333 (@robertcheramy)
 
 
 ## [0.31.0 – 2024-11-29]

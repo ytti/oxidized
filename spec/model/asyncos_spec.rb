@@ -11,7 +11,7 @@ describe 'model/AsyncOS' do
   it 'matches different prompts' do
     _('(mail.example.com)> ').must_match AsyncOS.prompt
     _('mail.example.com> ').must_match AsyncOS.prompt
-    # Devices running in cluster mode (see issue #3327)
-    _('(Machine hostname) ').must_match AsyncOS.prompt
+    # Issue #3327
+    _('(Machine xx-xx-x1xx1-xxxx-xxxx.xxxx.xxxxx.example.xxx)> ').must_match AsyncOS.prompt
   end
 end
