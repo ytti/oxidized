@@ -6,6 +6,6 @@ class Apc_aos < Oxidized::Model # rubocop:disable Naming/ClassAndModuleCamelCase
     cfg
   end
 
-  cfg :ftp do
+  cfg :ftp, :scp do
   end
 end

@@ -71,8 +71,7 @@ images: model-image gitserver-image oxidized-image
 
 # build the oxidized image from the curent repository
 oxidized-image:
-	podman image exists local/oxidized || \
-	  podman build -t local/oxidized ../../
+	  podman build -t oxidized:`git describe --tags` -t oxidized:latest ../../
 
 # removes the oxidized image
 oxidized-image-clean:
