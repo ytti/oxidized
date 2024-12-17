@@ -511,14 +511,15 @@ commands:
     # multiple times in this interval (valid values: 60-3600)
     #res_warn_msg_int=300
     root@cumulus:mgmt:~#\x20
-  cat /etc/cumulus/ports.conf: |-
+  cat /etc/cumulus/ports.conf; echo: |-
     cat /etc/cumulus/ports.conf
     # ports.conf --
     #
     #   configure port speed, aggregation, and subdivision.
     #
     #   The ports in Cumulus VX are not configurable from here.
-    #root@cumulus:mgmt:~#\x20
+    #
+    root@cumulus:mgmt:~#\x20
   cat /etc/cumulus/datapath/traffic.conf: |-
     cat /etc/cumulus/datapath/traffic.conf
     #
@@ -1195,6 +1196,7 @@ oxidized_output: |
   #   configure port speed, aggregation, and subdivision.
   #
   #   The ports in Cumulus VX are not configurable from here.
+  #
 
   ###### TRAFFIC ######
   #

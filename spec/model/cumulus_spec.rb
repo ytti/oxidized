@@ -15,9 +15,6 @@ describe 'model/Cumulus' do
     _('cumulus@cumulus:mgmt:~$ ').must_match Cumulus.prompt
     _('root@cumulus:mgmt:~# ').must_match Cumulus.prompt
 
-    # Prompt polluted by a previous command not ending with \n
-    _('#root@cumulus:mgmt:~# ').must_match Cumulus.prompt
-
     # Prompt with ESC Codes
     prompt = "\e[?2004hroot@spine1-nyc2:~# "
     # Remove the ESC Codes

@@ -11,8 +11,8 @@ class Cumulus < Oxidized::Model
   # [\w.-]+@[\w.-]+   : user@hostname
   # (:mgmt)?          : optional when logged in out of band
   # :~[#$] $          : end of prompt, containing the
-  #                     path, which is always ~ in our context
-  prompt /[\w.-]+@[\w.-]+(:mgmt)?:~[#$] $/
+  #                     path, which is always "~" in our context
+  prompt /^[\w.-]+@[\w.-]+(:mgmt)?:~[#$] $/
   comment '# '
 
   # add a comment in the final conf
@@ -90,7 +90,7 @@ class Cumulus < Oxidized::Model
       cfg += cmd 'cat /etc/cumulus/switchd.conf'
 
       cfg += add_comment 'PORTS'
-      cfg += cmd 'cat /etc/cumulus/ports.conf'
+      cfg += cmd "cat /etc/cumulus/ports.conf; echo"
 
       cfg += add_comment 'TRAFFIC'
       cfg += cmd 'cat /etc/cumulus/datapath/traffic.conf'
