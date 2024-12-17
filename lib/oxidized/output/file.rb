@@ -21,9 +21,9 @@ module Oxidized
 
       def store(node, outputs, opt = {})
         file = ::File.expand_path @cfg.directory
-        file = ::File.join ::File.dirname(file), opt[:group] if opt[:group]
+        file = ::File.join ::File.dirname(file), node.group if node.group
         FileUtils.mkdir_p file
-        file = ::File.join file, node
+        file = ::File.join file, node.name
         ::File.write(file, outputs.to_cfg)
         @commitref = file
       end
