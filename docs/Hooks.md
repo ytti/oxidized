@@ -259,13 +259,15 @@ gem install slack-ruby-client
 
 ### slackdiff hook configuration example
 
+> Please note that channel needs to be your Slack channel ID.
+
 ```yaml
 hooks:
   slack:
     type: slackdiff
     events: [post_store]
     token: SLACK_BOT_TOKEN
-    channel: "#network-changes"
+    channel: "CHANNEL_ID"
 ```
 
 The token parameter is a Slack API token that can be generated following [this tutorial](https://api.slack.com/tutorials/tracks/getting-a-token).  Until Slack stops supporting them, legacy tokens can also be used.
@@ -278,12 +280,12 @@ hooks:
     type: slackdiff
     events: [post_store]
     token: SLACK_BOT_TOKEN
-    channel: "#network-changes"
+    channel: "CHANNEL_ID"
     diff: false
     message: "%{node} %{group} %{model} updated https://git.intranet/network-changes/commit/%{commitref}"
 ```
 
-Note the channel name must be in quotes.
+Note the channel ID must be in quotes.
 
 A proxy can optionally be specified if needed to reach the Slack API endpoint.
 
@@ -293,7 +295,7 @@ hooks:
     type: slackdiff
     events: [post_store]
     token: SLACK_BOT_TOKEN
-    channel: "#network-changes"
+    channel: "#CHANNEL_ID"
     proxy: http://myproxy:8080
 ```
 
