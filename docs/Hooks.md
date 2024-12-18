@@ -259,7 +259,7 @@ gem install slack-ruby-client
 
 ### slackdiff hook configuration example
 
-> Please note that channel needs to be your Slack channel ID.
+> Please note that the channel needs to be your Slack channel ID.
 
 ```yaml
 hooks:
@@ -284,8 +284,6 @@ hooks:
     diff: false
     message: "%{node} %{group} %{model} updated https://git.intranet/network-changes/commit/%{commitref}"
 ```
-
-Note the channel ID must be in quotes.
 
 A proxy can optionally be specified if needed to reach the Slack API endpoint.
 
