@@ -4,13 +4,12 @@ require_relative 'model_helper'
 # Tries to simplify model testing for the simple/common case
 
 class ATOMS
-  DIRECTORY = 'examples/device-simulation/yaml/*:output.txt'.freeze
+  DIRECTORY = 'examples/device-simulation/yaml'.freeze
   def tests_get
     tests = []
-    Dir[DIRECTORY].each do |file|
-      directory = File.dirname(file)
+    Dir[File.join(DIRECTORY, '*:output.txt')].each do |file|
       model, desc, _type = *File.basename(file, '.txt').split(':')
-      tests << Test.new(model, desc, directory)
+      tests << Test.new(model, desc)
     end
     tests
   end
@@ -18,7 +17,7 @@ class ATOMS
   class Test
     attr_reader :model, :desc, :simulation, :output
 
-    def initialize(model, desc, directory)
+    def initialize(model, desc)
       @model = model
       @desc = desc
       @skip = false
@@ -26,8 +25,8 @@ class ATOMS
       simulation_file = [model, desc, 'simulation'].join(':') + '.yaml'
       output_file = [model, desc, 'output'].join(':') + '.txt'
 
-      @simulation = YAML.load_file(File.join(directory, simulation_file)) rescue nil
-      @output = File.read(File.join(directory, output_file)) rescue nil
+      @simulation = YAML.load_file(File.join(DIRECTORY, simulation_file)) rescue nil
+      @output = File.read(File.join(DIRECTORY, output_file)) rescue nil
 
       @skip = true unless @simulation && @output
     end
