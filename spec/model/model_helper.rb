@@ -90,15 +90,15 @@ class MockSsh2
   attr_reader :oxidized_output
 
   # Takes a yaml file with the data used to simulate the model
-  def initialize(simulation, expect)
+  def initialize(test)
     @commands = {}
-    model = YAML.load_file(simulation)
+    model = test.simulation
     model['commands'].each do |key, value|
       @commands[key + "\n"] = interpolate_yaml(value)
     end
 
     @init_prompt = interpolate_yaml(model['init_prompt'])
-    @oxidized_output = interpolate_yaml(YAML.load_file(expect)["oxidized_output"])
+    @oxidized_output = interpolate_yaml(test.output)
   end
 
   # We have to interpolate as yaml block scalars don't interpolate anything

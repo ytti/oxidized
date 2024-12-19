@@ -3,57 +3,52 @@ require_relative 'model_helper'
 # Automatic Trivial Oxidized Model Spec - ATOMS
 # Tries to simplify model testing for the simple/common case
 
-class Test
-  attr_reader :output_file, :simulation_file, :model, :desc
-  def initialize(output, simulation)
-    @output_file = output[:file]
-    @simulation_file = simulation[:file]
-    @model = output[:model]
-    @desc = output[:desc]
-  end
-end
-
 class ATOMS
-  DIRECTORY = 'examples/device-simulation/yaml/*'.freeze
+  DIRECTORY = 'examples/device-simulation/yaml/*:output.txt'.freeze
   def tests_get
-    files = []
     tests = []
     Dir[DIRECTORY].each do |file|
-      model, type, desc = *File.basename(file, '.yaml').split(':')
-      next unless %w[output simulation].include? type
-
-      files << {
-        file:  file,
-        model: model,
-        type:  type,
-        desc:  desc,
-        id:    model + desc
-      }
-    end
-    files.each do |file_o|
-      next unless file_o[:type] == 'output'
-
-      files.each do |file_s|
-        next unless file_s[:type] == 'simulation'
-
-        next unless file_s[:id] == file_o[:id]
-
-        tests << Test.new(file_o, file_s)
-      end
+      directory = File.dirname(file)
+      model, desc, _type = *File.basename(file, '.txt').split(':')
+      tests << Test.new(model, desc, directory)
     end
     tests
+  end
+
+  class Test
+    attr_reader :model, :desc, :simulation, :output
+
+    def initialize(model, desc, directory)
+      @model = model
+      @desc = desc
+      @skip = false
+
+      simulation_file = [model, desc, 'simulation'].join(':') + '.yaml'
+      output_file = [model, desc, 'output'].join(':') + '.txt'
+
+      @simulation = YAML.load_file(File.join(directory, simulation_file)) rescue nil
+      @output = File.read(File.join(directory, output_file)) rescue nil
+
+      @skip = true unless @simulation && @output
+    end
+
+    def skip?
+      @skip
+    end
   end
 end
 
 describe 'ATOMS tests' do
   atoms = ATOMS.new
   atoms.tests_get.each do |test|
+    next if test.skip?
+
     it "ATOMS ('#{test.model}' / '#{test.desc}') has expected output" do
       init_model_helper
       @node = Oxidized::Node.new(name:  'example.com',
                                  input: 'ssh',
                                  model: test.model)
-      mockmodel = MockSsh2.new(test.simulation_file, test.output_file)
+      mockmodel = MockSsh2.new(test)
       Net::SSH.stubs(:start).returns mockmodel
       status, result = @node.run
       _(status).must_equal :success
