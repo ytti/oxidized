@@ -1,0 +1,1385 @@
+---
+init_prompt: |-
+  Linux cumulus 5.10.0-cl-1-amd64 #1 SMP Debian 5.10.162-1+cl5.4.0u1 (2023-01-20) x86_64
+  
+  Welcome to NVIDIA Cumulus VX (TM)
+  
+  NVIDIA Cumulus VX (TM) is a community supported virtual appliance designed
+  for experiencing, testing and prototyping NVIDIA Cumulus' latest technology.
+  For any questions or technical support, visit our community site at:
+  https://www.nvidia.com/en-us/support
+  
+  The registered trademark Linux (R) is used pursuant to a sublicense from LMI,
+  the exclusive licensee of Linus Torvalds, owner of the mark on a world-wide
+  basis.
+  Last login: Thu Dec 12 20:44:26 2024 from 10.0.2.20\r
+  cumulus@cumulus:mgmt:~$\x20
+commands:
+  sudo su -: |-
+    sudo su -
+    [sudo] password for cumulus:\x20
+  # this is the password of the unit test, send when enable = true
+  armud:
+
+    root@cumulus:mgmt:~#\x20
+  cat /etc/hostname: |-
+    cat /etc/hostname
+    cumulus
+    root@cumulus:mgmt:~#\x20
+  cat /etc/hosts: |-
+    cat /etc/hosts
+    127.0.0.1\tlocalhost
+    ::1\t\tlocalhost ip6-localhost ip6-loopback
+    ff02::1\t\tip6-allnodes
+    ff02::2\t\tip6-allrouters
+    
+    127.0.1.1\tcumulus
+    root@cumulus:mgmt:~#\x20
+  grep -r "" /etc/network/interface* | cut -d "/" -f 4-: |-
+    grep -r \"\" /etc/network/interface* | cut -d \"/\" -f 4-
+    interfaces:# This file describes the network interfaces available on your system
+    interfaces:# and how to activate them. For more information, see interfaces(5).
+    interfaces:
+    interfaces:source /etc/network/interfaces.d/*.intf
+    interfaces:
+    interfaces:# The loopback network interface
+    interfaces:auto lo
+    interfaces:iface lo inet loopback
+    interfaces:
+    interfaces:# The primary network interface
+    interfaces:auto eth0
+    interfaces:iface eth0 inet static
+    interfaces:    vrf mgmt
+    interfaces:    address 10.0.2.103
+    interfaces:    netmask 255.255.255.0
+    interfaces:
+    interfaces:auto mgmt
+    interfaces:iface mgmt
+    interfaces:    address 127.0.0.1/8
+    interfaces:    address ::1/128
+    interfaces:    vrf-table auto
+    root@cumulus:mgmt:~#\x20
+  cat /etc/resolv.conf: |-
+    cat /etc/resolv.conf
+    nameserver 10.0.2.3 # vrf mgmt
+    root@cumulus:mgmt:~#\x20
+  cat /etc/ntp.conf: |-
+    cat /etc/ntp.conf
+    # /etc/ntp.conf, configuration for ntpd; see ntp.conf(5) for help
+    
+    driftfile /var/lib/ntp/ntp.drift
+    
+    # Leap seconds definition provided by tzdata
+    leapfile /usr/share/zoneinfo/leap-seconds.list
+    
+    # Enable this if you want statistics to be logged.
+    #statsdir /var/log/ntpstats/
+    
+    statistics loopstats peerstats clockstats
+    filegen loopstats file loopstats type day enable
+    filegen peerstats file peerstats type day enable
+    filegen clockstats file clockstats type day enable
+    
+    
+    # You do need to talk to an NTP server or two (or three).
+    #server ntp.your-provider.example
+    
+    # pool.ntp.org maps to about 1000 low-stratum NTP servers.  Your server will
+    # pick a different set every time it starts up.  Please consider joining the
+    # pool: <http://www.pool.ntp.org/join.html>
+    #
+    # Cumulus Networks has a designated pool.  Use \"server\" instead of \"pool\"
+    # to match older versions.
+    server 0.cumulusnetworks.pool.ntp.org iburst
+    server 1.cumulusnetworks.pool.ntp.org iburst
+    server 2.cumulusnetworks.pool.ntp.org iburst
+    server 3.cumulusnetworks.pool.ntp.org iburst
+    
+    
+    # Access control configuration; see /usr/share/doc/ntp-doc/html/accopt.html for
+    # details.  The web page <http://support.ntp.org/bin/view/Support/AccessRestrictions>
+    # might also be helpful.
+    #
+    # Note that \"restrict\" applies to both servers and clients, so a configuration
+    # that might be intended to block requests from certain clients could also end
+    # up blocking replies from your own upstream servers.
+    
+    # By default, exchange time with everybody, but don't allow configuration.
+    restrict -4 default kod notrap nomodify nopeer noquery limited
+    restrict -6 default kod notrap nomodify nopeer noquery limited
+    
+    # Local users may interrogate the ntp server more closely.
+    restrict 127.0.0.1
+    restrict ::1
+    
+    # Needed for adding pool entries
+    restrict source notrap nomodify noquery
+    
+    # Clients from this (example!) subnet have unlimited access, but only if
+    # cryptographically authenticated.
+    #restrict 192.168.123.0 mask 255.255.255.0 notrust
+    
+    
+    # If you want to provide time to your local subnet, change the next line.
+    # (Again, the address is an example only.)
+    #broadcast 192.168.123.255
+    
+    # If you want to listen to time broadcasts on your local subnet, de-comment the
+    # next lines.  Please do this only if you trust everybody on the network!
+    #disable auth
+    #broadcastclient
+    
+    # Specify eth0 interface; do not listen on switch ports
+    interface listen eth0
+    root@cumulus:mgmt:~#\x20
+  cat /etc/snmp/snmpd.conf: |-
+    cat /etc/snmp/snmpd.conf
+    #### Auto-generated config file: do not edit. ####
+    agentaddress 127.0.0.1
+    agentxperms 777 777 snmp snmp
+    agentxsocket /var/agentx/master
+    createuser _snmptrapusernameX
+    ifmib_max_num_ifaces 500
+    iquerysecname _snmptrapusernameX
+    master agentx
+    monitor -r 60 -o laNames -o laErrMessage \"laTable\" laErrorFlag != 0
+    pass -p 10 1.3.6.1.2.1.1.1 /usr/share/snmp/sysDescr_pass.py
+    pass_persist 1.2.840.10006.300.43 /usr/share/snmp/ieee8023_lag_pp.py
+    pass_persist 1.3.6.1.2.1.17 /usr/share/snmp/bridge_pp.py
+    pass_persist 1.3.6.1.2.1.31.1.1.1.18 /usr/share/snmp/snmpifAlias_pp.py
+    pass_persist 1.3.6.1.2.1.47 /usr/share/snmp/entity_pp.py
+    pass_persist 1.3.6.1.2.1.99 /usr/share/snmp/entity_sensor_pp.py
+    pass_persist 1.3.6.1.4.1.40310.1 /usr/share/snmp/resq_pp.py
+    pass_persist 1.3.6.1.4.1.40310.2 /usr/share/snmp/cl_drop_cntrs_pp.py
+    pass_persist 1.3.6.1.4.1.40310.3 /usr/share/snmp/cl_poe_pp.py
+    #pass_persist 1.3.6.1.4.1.40310.5 /usr/share/snmp/cumulus-status.py
+    #pass_persist 1.3.6.1.4.1.40310.6 /usr/share/snmp/cumulus-sensor.py
+    pass_persist 1.3.6.1.4.1.40310.7 /usr/share/snmp/vrf_bgpun_pp.py
+    rouser _snmptrapusernameX
+    sysobjectid 1.3.6.1.4.1.40310
+    sysservices 72
+    root@cumulus:mgmt:~#\x20
+  cat /etc/frr/daemons: |-
+    cat /etc/frr/daemons
+    # This file tells the frr package which daemons to start.
+    #
+    # Entries are in the format: <daemon>=(yes|no|priority)
+    #   0, \"no\"  = disabled
+    #   1, \"yes\" = highest priority
+    #   2 .. 10  = lower priorities
+    # Read /usr/share/doc/frr/README.Debian for details.
+    #
+    # Sample configurations for these daemons can be found in
+    # /usr/share/doc/frr/examples/.
+    #
+    # ATTENTION:
+    #
+    # When activating a daemon for the first time, a config file, even if it is
+    # empty, has to be present *and* be owned by the user and group \"frr\", else
+    # the daemon will not be started by /etc/init.d/frr. The permissions should
+    # be u=rw,g=r,o=.
+    # When using \"vtysh\" such a config file is also needed. It should be owned by
+    # group \"frrvty\" and set to ug=rw,o= though. Check /etc/pam.d/frr, too.
+    #
+    # The watchfrr daemon is always started. Per default in monitoring-only but
+    # that can be changed.
+    #
+    bgpd=no
+    ospfd=no
+    ospf6d=no
+    ripd=no
+    ripngd=no
+    isisd=no
+    fabricd=no
+    pimd=no
+    ldpd=no
+    nhrpd=no
+    eigrpd=no
+    babeld=no
+    sharpd=no
+    pbrd=no
+    fabricd=no
+    vrrpd=no
+    
+    #
+    # If this option is set the /etc/init.d/frr script automatically loads
+    # the config via \"vtysh -b\" when the servers are started.
+    # Check /etc/pam.d/frr if you intend to use \"vtysh\"!
+    #
+    vtysh_enable=yes
+    zebra_options=\"  -M cumulus_mlag -M snmp -A 127.0.0.1 -s 90000000\"
+    bgpd_options=\"   -M snmp -A 127.0.0.1\"
+    ospfd_options=\"  -M snmp -A 127.0.0.1\"
+    ospf6d_options=\" -M snmp -A ::1\"
+    ripd_options=\"   -A 127.0.0.1\"
+    ripngd_options=\" -A ::1\"
+    isisd_options=\"  -A 127.0.0.1\"
+    pimd_options=\"   -A 127.0.0.1\"
+    ldpd_options=\"   -A 127.0.0.1\"
+    nhrpd_options=\"  -A 127.0.0.1\"
+    eigrpd_options=\" -A 127.0.0.1\"
+    babeld_options=\" -A 127.0.0.1\"
+    sharpd_options=\" -A 127.0.0.1\"
+    pbrd_options=\"   -A 127.0.0.1\"
+    staticd_options=\"-A 127.0.0.1\"
+    fabricd_options=\"-A 127.0.0.1\"
+    vrrpd_options=\"  -A 127.0.0.1\"
+    
+    # configuration profile
+    #
+    #frr_profile=\"traditional\"
+    #frr_profile=\"datacenter\"
+    
+    #
+    # This is the maximum number of FD's that will be available.
+    # Upon startup this is read by the control files and ulimit
+    # is called.  Uncomment and use a reasonable value for your
+    # setup if you are expecting a large number of peers in
+    # say BGP.
+    #MAX_FDS=1024
+    
+    # The list of daemons to watch is automatically generated by the init script.
+    #watchfrr_options=\"\"
+    
+    # To make watchfrr create/join the specified netns, use the following option:
+    #watchfrr_options=\"--netns\"
+    # This only has an effect in /etc/frr/<somename>/daemons, and you need to
+    # start FRR with \"/usr/lib/frr/frrinit.sh start <somename>\".
+    
+    # for debugging purposes, you can specify a \"wrap\" command to start instead
+    # of starting the daemon directly, e.g. to use valgrind on ospfd:
+    #   ospfd_wrap=\"/usr/bin/valgrind\"
+    # or you can use \"all_wrap\" for all daemons, e.g. to use perf record:
+    #   all_wrap=\"/usr/bin/perf record --call-graph -\"
+    # the normal daemon command is added to this at the end.
+    root@cumulus:mgmt:~#\x20
+  cat /etc/frr/zebra.conf: |-
+    cat /etc/frr/zebra.conf
+    cat: /etc/frr/zebra.conf: No such file or directory
+    root@cumulus:mgmt:~#\x20
+  cat /etc/frr/bgpd.conf: |-
+    cat /etc/frr/bgpd.conf
+    cat: /etc/frr/bgpd.conf: No such file or directory
+    root@cumulus:mgmt:~#\x20
+  cat /etc/frr/ospfd.conf: |-
+    cat /etc/frr/ospfd.conf
+    cat: /etc/frr/ospfd.conf: No such file or directory
+    root@cumulus:mgmt:~#\x20
+  cat /etc/frr/ospf6d.conf: |-
+    cat /etc/frr/ospf6d.conf
+    cat: /etc/frr/ospf6d.conf: No such file or directory
+    root@cumulus:mgmt:~#\x20
+  cat /etc/frr/frr.conf: |-
+    cat /etc/frr/frr.conf
+    # default to using syslog. /etc/rsyslog.d/45-frr.conf places the log
+    # in /var/log/frr/frr.log
+    log syslog informational
+    root@cumulus:mgmt:~#\x20
+  cat /etc/motd: |-
+    cat /etc/motd
+    
+    Welcome to NVIDIA Cumulus VX (TM)
+    
+    NVIDIA Cumulus VX (TM) is a community supported virtual appliance designed
+    for experiencing, testing and prototyping NVIDIA Cumulus' latest technology.
+    For any questions or technical support, visit our community site at:
+    https://www.nvidia.com/en-us/support
+    
+    The registered trademark Linux (R) is used pursuant to a sublicense from LMI,
+    the exclusive licensee of Linus Torvalds, owner of the mark on a world-wide
+    basis.
+    root@cumulus:mgmt:~#\x20
+  cat /etc/passwd: |-
+    cat /etc/passwd
+    root:x:0:0:root:/root:/bin/bash
+    daemon:x:1:1:daemon:/usr/sbin:/usr/sbin/nologin
+    bin:x:2:2:bin:/bin:/usr/sbin/nologin
+    sys:x:3:3:sys:/dev:/usr/sbin/nologin
+    sync:x:4:65534:sync:/bin:/bin/sync
+    games:x:5:60:games:/usr/games:/usr/sbin/nologin
+    man:x:6:12:man:/var/cache/man:/usr/sbin/nologin
+    lp:x:7:7:lp:/var/spool/lpd:/usr/sbin/nologin
+    mail:x:8:8:mail:/var/mail:/usr/sbin/nologin
+    news:x:9:9:news:/var/spool/news:/usr/sbin/nologin
+    uucp:x:10:10:uucp:/var/spool/uucp:/usr/sbin/nologin
+    proxy:x:13:13:proxy:/bin:/usr/sbin/nologin
+    www-data:x:33:33:www-data:/var/www:/usr/sbin/nologin
+    backup:x:34:34:backup:/var/backups:/usr/sbin/nologin
+    list:x:38:38:Mailing List Manager:/var/list:/usr/sbin/nologin
+    irc:x:39:39:ircd:/var/run/ircd:/usr/sbin/nologin
+    gnats:x:41:41:Gnats Bug-Reporting System (admin):/var/lib/gnats:/usr/sbin/nologin
+    nobody:x:65534:65534:nobody:/nonexistent:/usr/sbin/nologin
+    systemd-timesync:x:100:102:systemd Time Synchronization,,,:/run/systemd:/usr/sbin/nologin
+    systemd-network:x:101:103:systemd Network Management,,,:/run/systemd:/usr/sbin/nologin
+    systemd-resolve:x:102:104:systemd Resolver,,,:/run/systemd:/usr/sbin/nologin
+    _apt:x:103:65534::/nonexistent:/usr/sbin/nologin
+    ntp:x:104:109::/nonexistent:/usr/sbin/nologin
+    messagebus:x:105:110::/nonexistent:/usr/sbin/nologin
+    uuidd:x:106:111::/run/uuidd:/usr/sbin/nologin
+    dnsmasq:x:107:65534:dnsmasq,,,:/var/lib/misc:/usr/sbin/nologin
+    snmp:x:108:112::/var/lib/snmp:/usr/sbin/nologin
+    _lldpd:x:109:113::/var/run/lldpd:/usr/sbin/nologin
+    sshd:x:110:65534::/run/sshd:/usr/sbin/nologin
+    nvue:x:999:997:NVIDIA User Experience:/run/nvue:/usr/sbin/nologin
+    frr:x:111:118:Frr routing suite,,,:/nonexistent:/usr/sbin/nologin
+    cumulus:x:1000:1000:cumulus,,,:/home/cumulus:/bin/bash
+    systemd-coredump:x:992:992:systemd Core Dumper:/:/usr/sbin/nologin
+    vboxadd:x:998:1::/var/run/vboxadd:/bin/false
+    root@cumulus:mgmt:~#\x20
+  cat /etc/cumulus/switchd.conf: |-
+    cat /etc/cumulus/switchd.conf
+    #
+    # /etc/cumulus/switchd.conf - switchd configuration file
+    #
+    
+    # Statistic poll interval (in msec)
+    #stats.poll_interval = 2000
+    
+    # Buffer utilization poll interval (in msec), 0 means disable
+    #buf_util.poll_interval = 0
+    
+    # Buffer utilization measurement interval (in mins)
+    #buf_util.measure_interval = 0
+    
+    # Optimize ACL HW resources for better utilization
+    #acl.optimize_hw = FALSE
+    
+    # Enable Flow based mirroring.
+    #acl.flow_based_mirroring = TRUE
+    
+    # Enable non atomic acl update
+    acl.non_atomic_update_mode = FALSE
+    
+    # Send ARPs for next hops
+    #arp.next_hops = TRUE
+    
+    # Kernel routing table ID, range 1 - 2^31, default 254
+    #route.table = 254
+    
+    # Maximum hardware neighbor table occupancy (percent of hardware table size)
+    #route.host_max_percent = 100
+    
+    # Coalescing reduction factor for accumulating changes to reduce CPU load
+    #coalescing.reducer = 1
+    
+    # Coalescing time limit, in seconds
+    #coalescing.timeout = 10
+    
+    # Ignore routes that point to non-swp interfaces
+    ignore_non_swps = TRUE
+    
+    # Disables restart after parity error
+    #disable_internal_parity_restart = TRUE
+    
+    # Disables restart after an unrecoverable hardware error
+    #disable_internal_hw_err_restart = FALSE
+    
+    # NAT configuration
+    # Enables NAT
+    #nat.static_enable = TRUE
+    #nat.dynamic_enable = TRUE
+    
+    # NAT age poll interval in minute(s) {minimum=1m, maximum=24h}
+    # Note: Configuration is allowed only when nat.dynamic_enable is enabled
+    #nat.age_poll_interval = 5
+    
+    # NAT table size limits in number of entries
+    # Note: Configuration is allowed only when nat.dynamic_enable is enabled
+    # table_size
+    # config_table_size
+    #nat.table_size = 1024
+    #nat.config_table_size = 64
+    
+    # Log messages using the given BACKEND=LEVEL,
+    # space separate multiple BACKEND=LEVEL pairs.
+    # BACKEND := {stderr, file:filename, syslog, program:executable},
+    # LEVEL := {CRIT, ERR, WARN, INFO, DEBUG}
+    # Prior to Cumulus Linux 2.5.4, file:/var/log/switchd.log=INFO was the default
+    logging = syslog=INFO
+    
+    # Storm Control setting on a port, in pps, 0 means disable
+    #interface.swp1.storm_control.broadcast = 400
+    #interface.swp1.storm_control.multicast = 3000
+    #interface.swp1.storm_control.unknown_unicast = 2000
+    
+    # Enable HW statistics
+    # level specifies type of stats needed per-hw resource type.
+    # LEVEL := {NONE, BRIEF, DETAIL}
+    #stats.vlan.aggregate = BRIEF
+    #stats.vxlan.aggregate = DETAIL
+    #stats.vxlan.member = BRIEF
+    
+    #stats.vlan.show_internal_vlans = FALSE
+    
+    # Virtual devices hw-stat poll interval (in seconds)
+    #stats.vdev_hw_poll_interval = 5
+    
+    # Internal VLAN range
+    # minimum range size is 2
+    #resv_vlan_range = 3725-3999
+    
+    # Netlink
+    # netlink socket buf size (130 * 1024 * 1024 = 130MB)
+    #netlink.buf_size=136314880
+    
+    # delete routes on interfaces when carrier is down
+    #route.delete_dead_routes = TRUE
+    
+    # default TTL to use in vxlan header
+    #vxlan.default_ttl = 64
+    
+    # bridge broadcast frame to cpu even if SVI is not enabled
+    #bridge.broadcast_frame_to_cpu = FALSE
+    
+    #IGMP snooping unregistered L2 multicast flood control
+    #
+    #Initialize prune module:
+    #bridge.unreg_mcast_init = FALSE
+    #
+    #Note:
+    #Below configuration allowed only when bridge.unreg_mcast_init is set to TRUE
+    #
+    #Set below to TRUE to enable unregistered L2 multicast prune to mrouter ports.
+    #Default is to flood the unregistered L2 multicast
+    #
+    #bridge.unreg_v4_mcast_prune = FALSE
+    #bridge.unreg_v6_mcast_prune = FALSE
+    
+    #netlink libnl logger [0-5]
+    #netlink.nl_logger = 0
+    
+    # default vxlan outer dscp action during encap
+    # {copy | set | derive}
+    # copy: only if inner packet is IP
+    # set: to specific value
+    # derive: from switch priority
+    #vxlan.def_encap_dscp_action = derive
+    
+    # default vxlan encap dscp value, only applicable if action is 'set'
+    #vxlan.def_encap_dscp_value =
+    
+    # default vxlan decap dscp/cos action
+    # {copy | preserve | derive}
+    # copy: only if inner packet is IP
+    # preserve: inner dscp unchanged
+    # derive: from switch priority
+    #vxlan.def_decap_dscp_action = derive
+    
+    # Enable send unknown ipmc to CPU
+    #ipmulticast.unknown_ipmc_to_cpu = FALSE
+    
+    #dynamic vrf route leak enable
+    #vrf_route_leak_enable_dynamic = FALSE
+    
+    #event queue depth value
+    #sync_queue_depth_val = 50000
+    
+    # configure the preference b/w route and neighbor with the same ip/mask
+    # { TRUE | FALSE | BOTH }
+    # TRUE:  prefer route over neigh
+    # FALSE: prefer neigh over route
+    # BOTH:  install both route and neigh, if route has null-nexthop
+    #route.route_preferred_over_neigh = TRUE
+    
+    #evpn.multihoming.enable=TRUE
+    #evpn.multihoming.shared_l2_groups=FALSE
+    #evpn.multihoming.shared_l3_groups=FALSE
+    #evpn.multihoming.fast_local_protect=FALSE
+    # split-horizon filter for evpn multihoming
+    # TRUE: filter only bum traffic from es-peer
+    # FALSE: filter all traffic from es-peer
+    #evpn.multihoming.bum_sph_filter = TRUE
+    
+    # frequent link flap protection:
+    # setting a link to protodown with reason of linkflap when the link
+    # has flapped link_flap_threshold times in the last link_flap_window
+    # seconds.
+    #
+    # Setting either threshold or window to 0 will disable the protection
+    #link_flap_window = 10
+    #link_flap_threshold = 5
+    
+    # Forwarding resource (routes, hosts, macs) usage warning messages:
+    #
+    # Precentage of a forwarding resource when crossed, generates warning
+    # (valid values: 50-95)
+    #res_usage_warn_threshold=90
+    #
+    # Time interval in seconds between resource warning messages - warning
+    # messages will be generated only once in the specified interval per
+    # resource type even if threshold falls below threshold and crosses it
+    # multiple times in this interval (valid values: 60-3600)
+    #res_warn_msg_int=300
+    root@cumulus:mgmt:~#\x20
+  cat /etc/cumulus/ports.conf; echo: |-
+    cat /etc/cumulus/ports.conf
+    # ports.conf --
+    #
+    #   configure port speed, aggregation, and subdivision.
+    #
+    #   The ports in Cumulus VX are not configurable from here.
+    #
+    root@cumulus:mgmt:~#\x20
+  cat /etc/cumulus/datapath/traffic.conf: |-
+    cat /etc/cumulus/datapath/traffic.conf
+    #
+    # /etc/cumulus/datapath/traffic.conf
+    #
+    # Copyright (c) 2021 NVIDIA CORPORATION & AFFILIATES. ALL RIGHTS RESERVED.
+    #
+    # This software product is a proprietary product of Nvidia Corporation
+    # and its affiliates (the \"Company\") and all right, title, and interest
+    # in and to the software product, including all associated intellectual
+    # property rights, are and shall remain exclusively with the Company.
+    #
+    # This software product is governed by the End User License Agreement
+    # provided with the software product.
+    # All Rights reserved.
+    
+    # To turn on/off Denial of service (DOS) prevention checks
+    dos_enable = false
+    
+    # Enable resilient hashing
+    #resilient_hash_enable = FALSE
+    
+    # Resilient hashing flowset entries per ECMP group
+    #\x20
+    # Mellanox Spectrum platforms:
+    # Valid values - 64, 512, 1024, 2048, 4096
+    #
+    # Mellanox Spectrum2/3 platforms
+    # Valid values -  64, 128, 256, 512, 1024, 2048, 4096
+    #
+    # resilient_hash_entries_ecmp = 64
+    
+    
+    # Enable symmetric hashing
+    #symmetric_hash_enable = TRUE
+    
+    # Set sflow/sample ingress cpu packet rate and burst in packets/sec
+    # Values: {0..16384}
+    #sflow.rate = 16384
+    #sflow.burst = 16384
+    
+    #Specify the maximum number of paths per route entry.
+    #  Maximum paths supported is 200.
+    #  Default value 0 takes the number of physical ports as the max path size.
+    #ecmp_max_paths = 0
+    
+    #Specify the hash seed for Equal cost multipath entries
+    # and for custom ecmp and lag hash
+    # Default value : random
+    # Value Rang: {0..4294967295}
+    #ecmp_hash_seed = 42
+    
+    # HASH config for  ECMP to enable custom fields
+    # Fields will be applicable for ECMP hash
+    # calculation
+    #Note : Currently supported only for MLX platform
+    # Uncomment to enable custom fields configured below
+    #hash_config.enable = true
+    
+    #hash Fields available ( assign true to enable)
+    #ip protocol
+    hash_config.ip_prot = true
+    #source ip
+    hash_config.sip = true
+    #destination ip
+    hash_config.dip = true
+    #source port
+    hash_config.sport = true
+    #destination port
+    hash_config.dport = true
+    #ipv6 flow label
+    hash_config.ip6_label = true
+    #ingress interface
+    hash_config.ing_intf = false
+    #GTP-U teid
+    hash_config.gtp_teid = false
+    
+    #inner fields for  IPv4-over-IPv6 and IPv6-over-IPv6
+    hash_config.inner_ip_prot = false
+    hash_config.inner_sip = false
+    hash_config.inner_dip = false
+    hash_config.inner_sport = false
+    hash_config.inner_dport = false
+    hash_config.inner_ip6_label = false
+    # Hash config end #
+    
+    
+    #LAG HASH config
+    #HASH config for LACP to enable custom fields
+    #Fields will be applicable for LAG hash
+    #calculation
+    #Uncomment to enable custom fields configured below
+    #lag_hash_config.enable = true
+    
+    lag_hash_config.smac = true
+    lag_hash_config.dmac = true
+    lag_hash_config.sip  = true
+    lag_hash_config.dip  = true
+    lag_hash_config.ether_type = true
+    lag_hash_config.vlan_id = true
+    lag_hash_config.sport = true
+    lag_hash_config.dport = true
+    lag_hash_config.ip_prot = true
+    #GTP-U teid
+    lag_hash_config.gtp_teid = false
+    
+    # Specify the forwarding table resource allocation profile, applicable
+    # only on platforms that support universal forwarding resources.
+    #
+    # /usr/cumulus/sbin/cl-resource-query reports the allocated table sizes
+    # based on the profile setting.
+    #
+    #   Values: one of { *** All Mellanox Spectrum platforms ***
+    #                   'default', 'l2-heavy', 'l2-heavy-1', 'l2-heavy-2',
+    #                   'v4-lpm-heavy', 'v4-lpm-heavy-1', 'v6-lpm-heavy',
+    #                   'rash-v4-lpm-heavy', 'rash-custom-profile1',
+    #                   'rash-custom-profile2', 'lpm-balanced'
+    #
+    #                   *** Mellanox Spectrum 1 platform only ***
+    #                   'mpls'
+    #
+    #                   *** Mellanox Spectrum 2/3 platforms only ***
+    #                   'ipmc-heavy', 'ipmc-max'
+    #                   'l2-heavy-3', 'v6-lpm-heavy-1'
+    #
+    #                   }
+    #
+    #   Default value: 'default'
+    #   Notes: some devices may support more modes, please consult user
+    #          guide for more details
+    #
+    forwarding_table.profile = default
+    
+    root@cumulus:mgmt:~#\x20
+  cat /etc/cumulus/acl/policy.conf: |-
+    cat /etc/cumulus/acl/policy.conf
+    #
+    # This file is a master file for acl policy file inclusion
+    # Copyright (C) 2020-2021 NVIDIA Corporation. ALL RIGHTS RESERVED.
+    # Copyright 2014, 2015, 2017, Cumulus Networks, Inc.  All rights reserved.
+    #
+    # Note: This is not a file where you list acl rules.
+    #
+    # This file can contain:
+    # - include lines with acl policy files
+    #   example:
+    #       include <filepath>
+    #
+    #   see manpage cl-acltool(5) and cl-acltool(8) for how to write policy files
+    #
+    
+    include /etc/cumulus/acl/policy.d/*.rules
+    root@cumulus:mgmt:~#\x20
+  cat /etc/default/isc-dhcp-relay: |-
+    cat /etc/default/isc-dhcp-relay
+    # Defaults for isc-dhcp-relay initscript
+    # sourced by /etc/init.d/isc-dhcp-relay
+    # installed at /etc/default/isc-dhcp-relay by the maintainer scripts
+    
+    #
+    # This is a POSIX shell fragment
+    #
+    
+    # What servers should the DHCP relay forward requests to?
+    SERVERS=\"\"
+    
+    # On what interfaces should the DHCP relay (dhrelay) serve DHCP requests?
+    # Always include the interface towards the DHCP server.
+    # This variable requires a -i for each interface configured above.
+    # This will be used in the actual dhcrelay command
+    # For example, \"-i eth0 -i eth1\"
+    INTF_CMD=\"\"
+    
+    # Additional options that are passed to the DHCP relay daemon?
+    OPTIONS=\"\"
+    root@cumulus:mgmt:~#\x20
+  cat /etc/cumulus/etc.replace/os-release: |-
+    cat /etc/cumulus/etc.replace/os-release
+    NAME=\"Cumulus Linux\"
+    VERSION_ID=5.4.0
+    VERSION=\"Cumulus Linux 5.4.0\"
+    PRETTY_NAME=\"Cumulus Linux\"
+    ID=cumulus-linux
+    ID_LIKE=debian
+    CPE_NAME=cpe:/o:cumulusnetworks:cumulus_linux:5.4.0
+    HOME_URL=\"http://www.cumulusnetworks.com/\"
+    SUPPORT_URL=\"http://support.cumulusnetworks.com/\"
+    root@cumulus:mgmt:~#\x20
+  cl-license: |-
+    cl-license
+    root@cumulus:mgmt:~#\x20
+  exit: |-
+    exit
+    logout
+    cumulus@cumulus:mgmt:~$\x20
+oxidized_output: |
+  \n###### THE HOSTNAME ######
+  cumulus
+
+  ###### THE HOSTS ######
+  127.0.0.1\tlocalhost
+  ::1\t\tlocalhost ip6-localhost ip6-loopback
+  ff02::1\t\tip6-allnodes
+  ff02::2\t\tip6-allrouters
+
+  127.0.1.1\tcumulus
+
+  ###### THE INTERFACES ######
+  interfaces:# This file describes the network interfaces available on your system
+  interfaces:# and how to activate them. For more information, see interfaces(5).
+  interfaces:
+  interfaces:source /etc/network/interfaces.d/*.intf
+  interfaces:
+  interfaces:# The loopback network interface
+  interfaces:auto lo
+  interfaces:iface lo inet loopback
+  interfaces:
+  interfaces:# The primary network interface
+  interfaces:auto eth0
+  interfaces:iface eth0 inet static
+  interfaces:    vrf mgmt
+  interfaces:    address 10.0.2.103
+  interfaces:    netmask 255.255.255.0
+  interfaces:
+  interfaces:auto mgmt
+  interfaces:iface mgmt
+  interfaces:    address 127.0.0.1/8
+  interfaces:    address ::1/128
+  interfaces:    vrf-table auto
+
+  ###### RESOLV.CONF ######
+  nameserver 10.0.2.3 # vrf mgmt
+
+  ###### NTP.CONF ######
+  # /etc/ntp.conf, configuration for ntpd; see ntp.conf(5) for help
+
+  driftfile /var/lib/ntp/ntp.drift
+
+  # Leap seconds definition provided by tzdata
+  leapfile /usr/share/zoneinfo/leap-seconds.list
+
+  # Enable this if you want statistics to be logged.
+  #statsdir /var/log/ntpstats/
+
+  statistics loopstats peerstats clockstats
+  filegen loopstats file loopstats type day enable
+  filegen peerstats file peerstats type day enable
+  filegen clockstats file clockstats type day enable
+
+
+  # You do need to talk to an NTP server or two (or three).
+  #server ntp.your-provider.example
+
+  # pool.ntp.org maps to about 1000 low-stratum NTP servers.  Your server will
+  # pick a different set every time it starts up.  Please consider joining the
+  # pool: <http://www.pool.ntp.org/join.html>
+  #
+  # Cumulus Networks has a designated pool.  Use \"server\" instead of \"pool\"
+  # to match older versions.
+  server 0.cumulusnetworks.pool.ntp.org iburst
+  server 1.cumulusnetworks.pool.ntp.org iburst
+  server 2.cumulusnetworks.pool.ntp.org iburst
+  server 3.cumulusnetworks.pool.ntp.org iburst
+
+
+  # Access control configuration; see /usr/share/doc/ntp-doc/html/accopt.html for
+  # details.  The web page <http://support.ntp.org/bin/view/Support/AccessRestrictions>
+  # might also be helpful.
+  #
+  # Note that \"restrict\" applies to both servers and clients, so a configuration
+  # that might be intended to block requests from certain clients could also end
+  # up blocking replies from your own upstream servers.
+
+  # By default, exchange time with everybody, but don't allow configuration.
+  restrict -4 default kod notrap nomodify nopeer noquery limited
+  restrict -6 default kod notrap nomodify nopeer noquery limited
+
+  # Local users may interrogate the ntp server more closely.
+  restrict 127.0.0.1
+  restrict ::1
+
+  # Needed for adding pool entries
+  restrict source notrap nomodify noquery
+
+  # Clients from this (example!) subnet have unlimited access, but only if
+  # cryptographically authenticated.
+  #restrict 192.168.123.0 mask 255.255.255.0 notrust
+
+
+  # If you want to provide time to your local subnet, change the next line.
+  # (Again, the address is an example only.)
+  #broadcast 192.168.123.255
+
+  # If you want to listen to time broadcasts on your local subnet, de-comment the
+  # next lines.  Please do this only if you trust everybody on the network!
+  #disable auth
+  #broadcastclient
+
+  # Specify eth0 interface; do not listen on switch ports
+  interface listen eth0
+
+  ###### SNMP settings ######
+  #### Auto-generated config file: do not edit. ####
+  agentaddress 127.0.0.1
+  agentxperms 777 777 snmp snmp
+  agentxsocket /var/agentx/master
+  createuser _snmptrapusernameX
+  ifmib_max_num_ifaces 500
+  iquerysecname _snmptrapusernameX
+  master agentx
+  monitor -r 60 -o laNames -o laErrMessage \"laTable\" laErrorFlag != 0
+  pass -p 10 1.3.6.1.2.1.1.1 /usr/share/snmp/sysDescr_pass.py
+  pass_persist 1.2.840.10006.300.43 /usr/share/snmp/ieee8023_lag_pp.py
+  pass_persist 1.3.6.1.2.1.17 /usr/share/snmp/bridge_pp.py
+  pass_persist 1.3.6.1.2.1.31.1.1.1.18 /usr/share/snmp/snmpifAlias_pp.py
+  pass_persist 1.3.6.1.2.1.47 /usr/share/snmp/entity_pp.py
+  pass_persist 1.3.6.1.2.1.99 /usr/share/snmp/entity_sensor_pp.py
+  pass_persist 1.3.6.1.4.1.40310.1 /usr/share/snmp/resq_pp.py
+  pass_persist 1.3.6.1.4.1.40310.2 /usr/share/snmp/cl_drop_cntrs_pp.py
+  pass_persist 1.3.6.1.4.1.40310.3 /usr/share/snmp/cl_poe_pp.py
+  #pass_persist 1.3.6.1.4.1.40310.5 /usr/share/snmp/cumulus-status.py
+  #pass_persist 1.3.6.1.4.1.40310.6 /usr/share/snmp/cumulus-sensor.py
+  pass_persist 1.3.6.1.4.1.40310.7 /usr/share/snmp/vrf_bgpun_pp.py
+  rouser _snmptrapusernameX
+  sysobjectid 1.3.6.1.4.1.40310
+  sysservices 72
+
+  ###### FRR DAEMONS ######
+  # This file tells the frr package which daemons to start.
+  #
+  # Entries are in the format: <daemon>=(yes|no|priority)
+  #   0, \"no\"  = disabled
+  #   1, \"yes\" = highest priority
+  #   2 .. 10  = lower priorities
+  # Read /usr/share/doc/frr/README.Debian for details.
+  #
+  # Sample configurations for these daemons can be found in
+  # /usr/share/doc/frr/examples/.
+  #
+  # ATTENTION:
+  #
+  # When activating a daemon for the first time, a config file, even if it is
+  # empty, has to be present *and* be owned by the user and group \"frr\", else
+  # the daemon will not be started by /etc/init.d/frr. The permissions should
+  # be u=rw,g=r,o=.
+  # When using \"vtysh\" such a config file is also needed. It should be owned by
+  # group \"frrvty\" and set to ug=rw,o= though. Check /etc/pam.d/frr, too.
+  #
+  # The watchfrr daemon is always started. Per default in monitoring-only but
+  # that can be changed.
+  #
+  bgpd=no
+  ospfd=no
+  ospf6d=no
+  ripd=no
+  ripngd=no
+  isisd=no
+  fabricd=no
+  pimd=no
+  ldpd=no
+  nhrpd=no
+  eigrpd=no
+  babeld=no
+  sharpd=no
+  pbrd=no
+  fabricd=no
+  vrrpd=no
+
+  #
+  # If this option is set the /etc/init.d/frr script automatically loads
+  # the config via \"vtysh -b\" when the servers are started.
+  # Check /etc/pam.d/frr if you intend to use \"vtysh\"!
+  #
+  vtysh_enable=yes
+  zebra_options=\"  -M cumulus_mlag -M snmp -A 127.0.0.1 -s 90000000\"
+  bgpd_options=\"   -M snmp -A 127.0.0.1\"
+  ospfd_options=\"  -M snmp -A 127.0.0.1\"
+  ospf6d_options=\" -M snmp -A ::1\"
+  ripd_options=\"   -A 127.0.0.1\"
+  ripngd_options=\" -A ::1\"
+  isisd_options=\"  -A 127.0.0.1\"
+  pimd_options=\"   -A 127.0.0.1\"
+  ldpd_options=\"   -A 127.0.0.1\"
+  nhrpd_options=\"  -A 127.0.0.1\"
+  eigrpd_options=\" -A 127.0.0.1\"
+  babeld_options=\" -A 127.0.0.1\"
+  sharpd_options=\" -A 127.0.0.1\"
+  pbrd_options=\"   -A 127.0.0.1\"
+  staticd_options=\"-A 127.0.0.1\"
+  fabricd_options=\"-A 127.0.0.1\"
+  vrrpd_options=\"  -A 127.0.0.1\"
+
+  # configuration profile
+  #
+  #frr_profile=\"traditional\"
+  #frr_profile=\"datacenter\"
+
+  #
+  # This is the maximum number of FD's that will be available.
+  # Upon startup this is read by the control files and ulimit
+  # is called.  Uncomment and use a reasonable value for your
+  # setup if you are expecting a large number of peers in
+  # say BGP.
+  #MAX_FDS=1024
+
+  # The list of daemons to watch is automatically generated by the init script.
+  #watchfrr_options=\"\"
+
+  # To make watchfrr create/join the specified netns, use the following option:
+  #watchfrr_options=\"--netns\"
+  # This only has an effect in /etc/frr/<somename>/daemons, and you need to
+  # start FRR with \"/usr/lib/frr/frrinit.sh start <somename>\".
+
+  # for debugging purposes, you can specify a \"wrap\" command to start instead
+  # of starting the daemon directly, e.g. to use valgrind on ospfd:
+  #   ospfd_wrap=\"/usr/bin/valgrind\"
+  # or you can use \"all_wrap\" for all daemons, e.g. to use perf record:
+  #   all_wrap=\"/usr/bin/perf record --call-graph -\"
+  # the normal daemon command is added to this at the end.
+
+  ###### FRR ZEBRA ######
+  cat: /etc/frr/zebra.conf: No such file or directory
+
+  ###### FRR BGP ######
+  cat: /etc/frr/bgpd.conf: No such file or directory
+
+  ###### FRR OSPF ######
+  cat: /etc/frr/ospfd.conf: No such file or directory
+
+  ###### FRR OSPF6 ######
+  cat: /etc/frr/ospf6d.conf: No such file or directory
+
+  ###### FRR CONF ######
+  # default to using syslog. /etc/rsyslog.d/45-frr.conf places the log
+  # in /var/log/frr/frr.log
+  log syslog informational
+
+  ###### MOTD ######
+
+  Welcome to NVIDIA Cumulus VX (TM)
+
+  NVIDIA Cumulus VX (TM) is a community supported virtual appliance designed
+  for experiencing, testing and prototyping NVIDIA Cumulus' latest technology.
+  For any questions or technical support, visit our community site at:
+  https://www.nvidia.com/en-us/support
+
+  The registered trademark Linux (R) is used pursuant to a sublicense from LMI,
+  the exclusive licensee of Linus Torvalds, owner of the mark on a world-wide
+  basis.
+
+  ###### PASSWD ######
+  root:x:0:0:root:/root:/bin/bash
+  daemon:x:1:1:daemon:/usr/sbin:/usr/sbin/nologin
+  bin:x:2:2:bin:/bin:/usr/sbin/nologin
+  sys:x:3:3:sys:/dev:/usr/sbin/nologin
+  sync:x:4:65534:sync:/bin:/bin/sync
+  games:x:5:60:games:/usr/games:/usr/sbin/nologin
+  man:x:6:12:man:/var/cache/man:/usr/sbin/nologin
+  lp:x:7:7:lp:/var/spool/lpd:/usr/sbin/nologin
+  mail:x:8:8:mail:/var/mail:/usr/sbin/nologin
+  news:x:9:9:news:/var/spool/news:/usr/sbin/nologin
+  uucp:x:10:10:uucp:/var/spool/uucp:/usr/sbin/nologin
+  proxy:x:13:13:proxy:/bin:/usr/sbin/nologin
+  www-data:x:33:33:www-data:/var/www:/usr/sbin/nologin
+  backup:x:34:34:backup:/var/backups:/usr/sbin/nologin
+  list:x:38:38:Mailing List Manager:/var/list:/usr/sbin/nologin
+  irc:x:39:39:ircd:/var/run/ircd:/usr/sbin/nologin
+  gnats:x:41:41:Gnats Bug-Reporting System (admin):/var/lib/gnats:/usr/sbin/nologin
+  nobody:x:65534:65534:nobody:/nonexistent:/usr/sbin/nologin
+  systemd-timesync:x:100:102:systemd Time Synchronization,,,:/run/systemd:/usr/sbin/nologin
+  systemd-network:x:101:103:systemd Network Management,,,:/run/systemd:/usr/sbin/nologin
+  systemd-resolve:x:102:104:systemd Resolver,,,:/run/systemd:/usr/sbin/nologin
+  _apt:x:103:65534::/nonexistent:/usr/sbin/nologin
+  ntp:x:104:109::/nonexistent:/usr/sbin/nologin
+  messagebus:x:105:110::/nonexistent:/usr/sbin/nologin
+  uuidd:x:106:111::/run/uuidd:/usr/sbin/nologin
+  dnsmasq:x:107:65534:dnsmasq,,,:/var/lib/misc:/usr/sbin/nologin
+  snmp:x:108:112::/var/lib/snmp:/usr/sbin/nologin
+  _lldpd:x:109:113::/var/run/lldpd:/usr/sbin/nologin
+  sshd:x:110:65534::/run/sshd:/usr/sbin/nologin
+  nvue:x:999:997:NVIDIA User Experience:/run/nvue:/usr/sbin/nologin
+  frr:x:111:118:Frr routing suite,,,:/nonexistent:/usr/sbin/nologin
+  cumulus:x:1000:1000:cumulus,,,:/home/cumulus:/bin/bash
+  systemd-coredump:x:992:992:systemd Core Dumper:/:/usr/sbin/nologin
+  vboxadd:x:998:1::/var/run/vboxadd:/bin/false
+
+  ###### SWITCHD ######
+  #
+  # /etc/cumulus/switchd.conf - switchd configuration file
+  #
+
+  # Statistic poll interval (in msec)
+  #stats.poll_interval = 2000
+
+  # Buffer utilization poll interval (in msec), 0 means disable
+  #buf_util.poll_interval = 0
+
+  # Buffer utilization measurement interval (in mins)
+  #buf_util.measure_interval = 0
+
+  # Optimize ACL HW resources for better utilization
+  #acl.optimize_hw = FALSE
+
+  # Enable Flow based mirroring.
+  #acl.flow_based_mirroring = TRUE
+
+  # Enable non atomic acl update
+  acl.non_atomic_update_mode = FALSE
+
+  # Send ARPs for next hops
+  #arp.next_hops = TRUE
+
+  # Kernel routing table ID, range 1 - 2^31, default 254
+  #route.table = 254
+
+  # Maximum hardware neighbor table occupancy (percent of hardware table size)
+  #route.host_max_percent = 100
+
+  # Coalescing reduction factor for accumulating changes to reduce CPU load
+  #coalescing.reducer = 1
+
+  # Coalescing time limit, in seconds
+  #coalescing.timeout = 10
+
+  # Ignore routes that point to non-swp interfaces
+  ignore_non_swps = TRUE
+
+  # Disables restart after parity error
+  #disable_internal_parity_restart = TRUE
+
+  # Disables restart after an unrecoverable hardware error
+  #disable_internal_hw_err_restart = FALSE
+
+  # NAT configuration
+  # Enables NAT
+  #nat.static_enable = TRUE
+  #nat.dynamic_enable = TRUE
+
+  # NAT age poll interval in minute(s) {minimum=1m, maximum=24h}
+  # Note: Configuration is allowed only when nat.dynamic_enable is enabled
+  #nat.age_poll_interval = 5
+
+  # NAT table size limits in number of entries
+  # Note: Configuration is allowed only when nat.dynamic_enable is enabled
+  # table_size
+  # config_table_size
+  #nat.table_size = 1024
+  #nat.config_table_size = 64
+
+  # Log messages using the given BACKEND=LEVEL,
+  # space separate multiple BACKEND=LEVEL pairs.
+  # BACKEND := {stderr, file:filename, syslog, program:executable},
+  # LEVEL := {CRIT, ERR, WARN, INFO, DEBUG}
+  # Prior to Cumulus Linux 2.5.4, file:/var/log/switchd.log=INFO was the default
+  logging = syslog=INFO
+
+  # Storm Control setting on a port, in pps, 0 means disable
+  #interface.swp1.storm_control.broadcast = 400
+  #interface.swp1.storm_control.multicast = 3000
+  #interface.swp1.storm_control.unknown_unicast = 2000
+
+  # Enable HW statistics
+  # level specifies type of stats needed per-hw resource type.
+  # LEVEL := {NONE, BRIEF, DETAIL}
+  #stats.vlan.aggregate = BRIEF
+  #stats.vxlan.aggregate = DETAIL
+  #stats.vxlan.member = BRIEF
+
+  #stats.vlan.show_internal_vlans = FALSE
+
+  # Virtual devices hw-stat poll interval (in seconds)
+  #stats.vdev_hw_poll_interval = 5
+
+  # Internal VLAN range
+  # minimum range size is 2
+  #resv_vlan_range = 3725-3999
+
+  # Netlink
+  # netlink socket buf size (130 * 1024 * 1024 = 130MB)
+  #netlink.buf_size=136314880
+
+  # delete routes on interfaces when carrier is down
+  #route.delete_dead_routes = TRUE
+
+  # default TTL to use in vxlan header
+  #vxlan.default_ttl = 64
+
+  # bridge broadcast frame to cpu even if SVI is not enabled
+  #bridge.broadcast_frame_to_cpu = FALSE
+
+  #IGMP snooping unregistered L2 multicast flood control
+  #
+  #Initialize prune module:
+  #bridge.unreg_mcast_init = FALSE
+  #
+  #Note:
+  #Below configuration allowed only when bridge.unreg_mcast_init is set to TRUE
+  #
+  #Set below to TRUE to enable unregistered L2 multicast prune to mrouter ports.
+  #Default is to flood the unregistered L2 multicast
+  #
+  #bridge.unreg_v4_mcast_prune = FALSE
+  #bridge.unreg_v6_mcast_prune = FALSE
+
+  #netlink libnl logger [0-5]
+  #netlink.nl_logger = 0
+
+  # default vxlan outer dscp action during encap
+  # {copy | set | derive}
+  # copy: only if inner packet is IP
+  # set: to specific value
+  # derive: from switch priority
+  #vxlan.def_encap_dscp_action = derive
+
+  # default vxlan encap dscp value, only applicable if action is 'set'
+  #vxlan.def_encap_dscp_value =
+
+  # default vxlan decap dscp/cos action
+  # {copy | preserve | derive}
+  # copy: only if inner packet is IP
+  # preserve: inner dscp unchanged
+  # derive: from switch priority
+  #vxlan.def_decap_dscp_action = derive
+
+  # Enable send unknown ipmc to CPU
+  #ipmulticast.unknown_ipmc_to_cpu = FALSE
+
+  #dynamic vrf route leak enable
+  #vrf_route_leak_enable_dynamic = FALSE
+
+  #event queue depth value
+  #sync_queue_depth_val = 50000
+
+  # configure the preference b/w route and neighbor with the same ip/mask
+  # { TRUE | FALSE | BOTH }
+  # TRUE:  prefer route over neigh
+  # FALSE: prefer neigh over route
+  # BOTH:  install both route and neigh, if route has null-nexthop
+  #route.route_preferred_over_neigh = TRUE
+
+  #evpn.multihoming.enable=TRUE
+  #evpn.multihoming.shared_l2_groups=FALSE
+  #evpn.multihoming.shared_l3_groups=FALSE
+  #evpn.multihoming.fast_local_protect=FALSE
+  # split-horizon filter for evpn multihoming
+  # TRUE: filter only bum traffic from es-peer
+  # FALSE: filter all traffic from es-peer
+  #evpn.multihoming.bum_sph_filter = TRUE
+
+  # frequent link flap protection:
+  # setting a link to protodown with reason of linkflap when the link
+  # has flapped link_flap_threshold times in the last link_flap_window
+  # seconds.
+  #
+  # Setting either threshold or window to 0 will disable the protection
+  #link_flap_window = 10
+  #link_flap_threshold = 5
+
+  # Forwarding resource (routes, hosts, macs) usage warning messages:
+  #
+  # Precentage of a forwarding resource when crossed, generates warning
+  # (valid values: 50-95)
+  #res_usage_warn_threshold=90
+  #
+  # Time interval in seconds between resource warning messages - warning
+  # messages will be generated only once in the specified interval per
+  # resource type even if threshold falls below threshold and crosses it
+  # multiple times in this interval (valid values: 60-3600)
+  #res_warn_msg_int=300
+
+  ###### PORTS ######
+  # ports.conf --
+  #
+  #   configure port speed, aggregation, and subdivision.
+  #
+  #   The ports in Cumulus VX are not configurable from here.
+  #
+
+  ###### TRAFFIC ######
+  #
+  # /etc/cumulus/datapath/traffic.conf
+  #
+  # Copyright (c) 2021 NVIDIA CORPORATION & AFFILIATES. ALL RIGHTS RESERVED.
+  #
+  # This software product is a proprietary product of Nvidia Corporation
+  # and its affiliates (the \"Company\") and all right, title, and interest
+  # in and to the software product, including all associated intellectual
+  # property rights, are and shall remain exclusively with the Company.
+  #
+  # This software product is governed by the End User License Agreement
+  # provided with the software product.
+  # All Rights reserved.
+
+  # To turn on/off Denial of service (DOS) prevention checks
+  dos_enable = false
+
+  # Enable resilient hashing
+  #resilient_hash_enable = FALSE
+
+  # Resilient hashing flowset entries per ECMP group
+  #\x20
+  # Mellanox Spectrum platforms:
+  # Valid values - 64, 512, 1024, 2048, 4096
+  #
+  # Mellanox Spectrum2/3 platforms
+  # Valid values -  64, 128, 256, 512, 1024, 2048, 4096
+  #
+  # resilient_hash_entries_ecmp = 64
+
+
+  # Enable symmetric hashing
+  #symmetric_hash_enable = TRUE
+
+  # Set sflow/sample ingress cpu packet rate and burst in packets/sec
+  # Values: {0..16384}
+  #sflow.rate = 16384
+  #sflow.burst = 16384
+
+  #Specify the maximum number of paths per route entry.
+  #  Maximum paths supported is 200.
+  #  Default value 0 takes the number of physical ports as the max path size.
+  #ecmp_max_paths = 0
+
+  #Specify the hash seed for Equal cost multipath entries
+  # and for custom ecmp and lag hash
+  # Default value : random
+  # Value Rang: {0..4294967295}
+  #ecmp_hash_seed = 42
+
+  # HASH config for  ECMP to enable custom fields
+  # Fields will be applicable for ECMP hash
+  # calculation
+  #Note : Currently supported only for MLX platform
+  # Uncomment to enable custom fields configured below
+  #hash_config.enable = true
+
+  #hash Fields available ( assign true to enable)
+  #ip protocol
+  hash_config.ip_prot = true
+  #source ip
+  hash_config.sip = true
+  #destination ip
+  hash_config.dip = true
+  #source port
+  hash_config.sport = true
+  #destination port
+  hash_config.dport = true
+  #ipv6 flow label
+  hash_config.ip6_label = true
+  #ingress interface
+  hash_config.ing_intf = false
+  #GTP-U teid
+  hash_config.gtp_teid = false
+
+  #inner fields for  IPv4-over-IPv6 and IPv6-over-IPv6
+  hash_config.inner_ip_prot = false
+  hash_config.inner_sip = false
+  hash_config.inner_dip = false
+  hash_config.inner_sport = false
+  hash_config.inner_dport = false
+  hash_config.inner_ip6_label = false
+  # Hash config end #
+
+
+  #LAG HASH config
+  #HASH config for LACP to enable custom fields
+  #Fields will be applicable for LAG hash
+  #calculation
+  #Uncomment to enable custom fields configured below
+  #lag_hash_config.enable = true
+
+  lag_hash_config.smac = true
+  lag_hash_config.dmac = true
+  lag_hash_config.sip  = true
+  lag_hash_config.dip  = true
+  lag_hash_config.ether_type = true
+  lag_hash_config.vlan_id = true
+  lag_hash_config.sport = true
+  lag_hash_config.dport = true
+  lag_hash_config.ip_prot = true
+  #GTP-U teid
+  lag_hash_config.gtp_teid = false
+
+  # Specify the forwarding table resource allocation profile, applicable
+  # only on platforms that support universal forwarding resources.
+  #
+  # /usr/cumulus/sbin/cl-resource-query reports the allocated table sizes
+  # based on the profile setting.
+  #
+  #   Values: one of { *** All Mellanox Spectrum platforms ***
+  #                   'default', 'l2-heavy', 'l2-heavy-1', 'l2-heavy-2',
+  #                   'v4-lpm-heavy', 'v4-lpm-heavy-1', 'v6-lpm-heavy',
+  #                   'rash-v4-lpm-heavy', 'rash-custom-profile1',
+  #                   'rash-custom-profile2', 'lpm-balanced'
+  #
+  #                   *** Mellanox Spectrum 1 platform only ***
+  #                   'mpls'
+  #
+  #                   *** Mellanox Spectrum 2/3 platforms only ***
+  #                   'ipmc-heavy', 'ipmc-max'
+  #                   'l2-heavy-3', 'v6-lpm-heavy-1'
+  #
+  #                   }
+  #
+  #   Default value: 'default'
+  #   Notes: some devices may support more modes, please consult user
+  #          guide for more details
+  #
+  forwarding_table.profile = default
+
+
+  ###### ACL ######
+  #
+  # This file is a master file for acl policy file inclusion
+  # Copyright (C) 2020-2021 NVIDIA Corporation. ALL RIGHTS RESERVED.
+  # Copyright 2014, 2015, 2017, Cumulus Networks, Inc.  All rights reserved.
+  #
+  # Note: This is not a file where you list acl rules.
+  #
+  # This file can contain:
+  # - include lines with acl policy files
+  #   example:
+  #       include <filepath>
+  #
+  #   see manpage cl-acltool(5) and cl-acltool(8) for how to write policy files
+  #
+
+  include /etc/cumulus/acl/policy.d/*.rules
+
+  ###### DHCP-RELAY ######
+  # Defaults for isc-dhcp-relay initscript
+  # sourced by /etc/init.d/isc-dhcp-relay
+  # installed at /etc/default/isc-dhcp-relay by the maintainer scripts
+
+  #
+  # This is a POSIX shell fragment
+  #
+
+  # What servers should the DHCP relay forward requests to?
+  SERVERS=\"\"
+
+  # On what interfaces should the DHCP relay (dhrelay) serve DHCP requests?
+  # Always include the interface towards the DHCP server.
+  # This variable requires a -i for each interface configured above.
+  # This will be used in the actual dhcrelay command
+  # For example, \"-i eth0 -i eth1\"
+  INTF_CMD=\"\"
+
+  # Additional options that are passed to the DHCP relay daemon?
+  OPTIONS=\"\"
+
+  ###### VERSION ######
+  NAME=\"Cumulus Linux\"
+  VERSION_ID=5.4.0
+  VERSION=\"Cumulus Linux 5.4.0\"
+  PRETTY_NAME=\"Cumulus Linux\"
+  ID=cumulus-linux
+  ID_LIKE=debian
+  CPE_NAME=cpe:/o:cumulusnetworks:cumulus_linux:5.4.0
+  HOME_URL=\"http://www.cumulusnetworks.com/\"
+  SUPPORT_URL=\"http://support.cumulusnetworks.com/\"
+
+  ###### License ######
