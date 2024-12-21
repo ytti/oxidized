@@ -5,7 +5,7 @@ require_relative 'model_helper'
 
 class ATOMS
   DIRECTORY = 'spec/model/data'.freeze
-  def tests_get
+  def self.tests_get
     tests = {
       output: [],
       prompt: []
@@ -79,8 +79,7 @@ class ATOMS
 end
 
 describe 'ATOMS tests' do
-  atoms = ATOMS.new
-  tests = atoms.tests_get
+  tests = ATOMS.tests_get
 
   tests[:output].each do |test|
     next if test.skip?
