@@ -36,6 +36,22 @@ class ATOMS
     def skip?
       @skip
     end
+
+    def get_filename(type)
+      ext = type == 'output' ? '.txt' : '.yaml'
+      [@model, @desc, type].join(':') + ext
+    end
+
+    def load_file(file_name)
+      ext = File.extname(file_name)
+      if ext == '.yaml'
+        YAML.load_file(File.join(DIRECTORY, file_name))
+      else
+        File.read(File.join(DIRECTORY, file_name))
+      end
+    rescue StandardError
+      nil
+    end
   end
 
   class TestOutput < Test
@@ -44,12 +60,8 @@ class ATOMS
     def initialize(model, desc)
       super
 
-      simulation_file = [model, desc, 'simulation'].join(':') + '.yaml'
-      output_file = [model, desc, 'output'].join(':') + '.txt'
-
-      @simulation = YAML.load_file(File.join(DIRECTORY, simulation_file)) rescue nil
-      @output = File.read(File.join(DIRECTORY, output_file)) rescue nil
-
+      @simulation = load_file(get_filename('simulation'))
+      @output = load_file(get_filename('output'))
       @skip = true unless @simulation && @output
     end
   end
@@ -60,9 +72,7 @@ class ATOMS
     def initialize(model, desc)
       super
 
-      data_file = [model, desc, 'prompt'].join(':') + '.yaml'
-      @data = YAML.load_file(File.join(DIRECTORY, data_file)) rescue nil
-
+      @data = load_file(get_filename('prompt'))
       @skip = true unless @data
     end
   end
