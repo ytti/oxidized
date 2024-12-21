@@ -87,37 +87,38 @@ class ATOMS
 end
 
 describe 'ATOMS tests' do
-  tests = ATOMS.tests_get
+  ATOMS.tests_get.each do |type, tests|
+    tests.each do |test|
+      test_string = "(#{test.model} / #{test.desc})"
 
-  tests[:output].each do |test|
-    next if test.skip?
-
-    before(:each) do
-      init_model_helper
-    end
-
-    it "ATOMS ('#{test.model}' / '#{test.desc}') has expected output" do
-      @node = Oxidized::Node.new(name:  'example.com',
-                                 input: 'ssh',
-                                 model: test.model)
-      mockmodel = MockSsh2.new(test)
-      Net::SSH.stubs(:start).returns mockmodel
-      status, result = @node.run
-      _(status).must_equal :success
-      _(result.to_cfg).must_equal mockmodel.oxidized_output
-    end
-  end
-
-  tests[:prompt].each do |test|
-    next if test.skip?
-
-    it "ATOMS ('#{test.model}' / '#{test.desc}') has working prompt detection" do
-      prompt_re = Object.const_get(test.model.upcase).prompt
-      test.pass.each do |want_pass|
-        _(want_pass).must_match prompt_re
+      before(:each) do
+        init_model_helper
+        @node = Oxidized::Node.new(name:  'example.com',
+                                   input: 'ssh',
+                                   model: test.model)
       end
-      test.fail.each do |want_fail|
-        _(want_fail).wont_match prompt_re
+
+      if type == :output
+        it "ATOMS #{test_string} has expected output" do
+          skip("check simulation+output data file for #{test_string}") if test.skip?
+          mockmodel = MockSsh2.new(test)
+          Net::SSH.stubs(:start).returns mockmodel
+          status, result = @node.run
+          _(status).must_equal :success
+          _(result.to_cfg).must_equal mockmodel.oxidized_output
+        end
+
+      elsif type == :prompt
+        it "ATOMS #{test_string} has working prompt detection" do
+          skip("check prompt data file for #{test_string}") if test.skip?
+          prompt_re = Object.const_get(test.model.upcase).prompt
+          test.pass.each do |want_pass|
+            _(want_pass).must_match prompt_re
+          end
+          test.fail.each do |want_fail|
+            _(want_fail).wont_match prompt_re
+          end
+        end
       end
     end
   end
