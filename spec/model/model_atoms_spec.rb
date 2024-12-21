@@ -75,6 +75,14 @@ class ATOMS
       @data = load_file(get_filename('prompt'))
       @skip = true unless @data
     end
+
+    def pass
+      @data['pass'] or []
+    end
+
+    def fail
+      @data['fail'] or []
+    end
   end
 end
 
@@ -105,10 +113,10 @@ describe 'ATOMS tests' do
 
     it "ATOMS ('#{test.model}' / '#{test.desc}') has working prompt detection" do
       prompt_re = Object.const_get(test.model.upcase).prompt
-      test.data['pass']&.each do |want_pass|
+      test.pass.each do |want_pass|
         _(want_pass).must_match prompt_re
       end
-      test.data['fail']&.each do |want_fail|
+      test.fail.each do |want_fail|
         _(want_fail).wont_match prompt_re
       end
     end
