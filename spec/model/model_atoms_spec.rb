@@ -5,20 +5,14 @@ require_relative 'model_helper'
 
 class ATOMS
   DIRECTORY = 'spec/model/data'.freeze
-  def self.tests_get
-    tests = []
 
-    Dir[File.join(DIRECTORY, '*:output.txt')].each do |file|
-      model, desc, type = *File.basename(file, '.txt').split(':')
-      tests << TestOutput.new(model, desc, type)
-    end
-
-    Dir[File.join(DIRECTORY, '*:prompt.yaml')].each do |file|
-      model, desc, type = *File.basename(file, '.yaml').split(':')
-      tests << TestPrompt.new(model, desc, type)
-    end
-
-    tests
+  def self.get
+    Test.subclasses.map do |test|
+      Dir[File.join(DIRECTORY, test::GLOB)].map do |file|
+        ext = File.extname(test::GLOB)
+        test.new(*File.basename(file, ext).split(':'))
+      end
+    end.flatten
   end
 
   class Test
@@ -42,11 +36,11 @@ class ATOMS
 
     def load_file(type = nil)
       file_name = get_filename((type or @type))
-      ext = File.extname(file_name)
-      if ext == '.yaml'
-        YAML.load_file(File.join(DIRECTORY, file_name))
+      file_name = File.join(DIRECTORY, file_name)
+      if File.extname(file_name) == '.yaml'
+        YAML.load_file(file_name)
       else
-        File.read(File.join(DIRECTORY, file_name))
+        File.read(file_name)
       end
     rescue StandardError
       nil
@@ -54,6 +48,7 @@ class ATOMS
   end
 
   class TestOutput < Test
+    GLOB = '*:output.txt'.freeze
     attr_reader :simulation, :output
 
     def initialize(model, desc, type)
@@ -66,6 +61,7 @@ class ATOMS
   end
 
   class TestPrompt < Test
+    GLOB = '*:prompt.yaml'.freeze
     attr_reader :data
 
     def initialize(model, desc, type)
@@ -86,7 +82,7 @@ class ATOMS
 end
 
 describe 'ATOMS tests' do
-  ATOMS.tests_get.each do |test|
+  ATOMS.get.each do |test|
     test_string = "ATOMS/#{test.type} (#{test.model} / #{test.desc})"
 
     before(:each) do
