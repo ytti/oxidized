@@ -16,8 +16,8 @@ class ATOMS
       tests[:output] << TestOutput.new(model, desc)
     end
 
-    Dir[File.join(DIRECTORY, '*:prompt.txt')].each do |file|
-      model, desc, _type = *File.basename(file, '.txt').split(':')
+    Dir[File.join(DIRECTORY, '*:prompt.yaml')].each do |file|
+      model, desc, _type = *File.basename(file, '.yaml').split(':')
       tests[:prompt] << TestPrompt.new(model, desc)
     end
 
@@ -84,8 +84,11 @@ describe 'ATOMS tests' do
   tests[:output].each do |test|
     next if test.skip?
 
-    it "ATOMS ('#{test.model}' / '#{test.desc}') has expected output" do
+    before(:each) do
       init_model_helper
+    end
+
+    it "ATOMS ('#{test.model}' / '#{test.desc}') has expected output" do
       @node = Oxidized::Node.new(name:  'example.com',
                                  input: 'ssh',
                                  model: test.model)
@@ -100,8 +103,8 @@ describe 'ATOMS tests' do
   tests[:prompt].each do |test|
     next if test.skip?
 
-    prompt_re = Object.const_get(test.model.upcase).prompt
     it "ATOMS ('#{test.model}' / '#{test.desc}') has working prompt detection" do
+      prompt_re = Object.const_get(test.model.upcase).prompt
       test.data['pass']&.each do |want_pass|
         _(want_pass).must_match prompt_re
       end
