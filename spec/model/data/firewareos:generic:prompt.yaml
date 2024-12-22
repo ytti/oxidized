@@ -1,0 +1,7 @@
+pass:
+  - '[FAULT]WG<managed-by-wsm><master>>'
+  - 'WG<managed-by-wsm><master>>'
+  - 'WG<managed-by-wsm>>'
+  - '[FAULT]WG<non-master>>'
+  - '[FAULT]WG>'
+  - 'WG>'

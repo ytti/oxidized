@@ -1,0 +1,8 @@
+pass:
+  # Prompt from Model-Notes
+  - '(GS748Tv4) #'
+  # Prompts interpreted from PR #2954
+  - '(GS748Tv4)#'
+  - '(GS748T -+.v4)#'
+  # Prompt from Issue #3287
+  - '10sw011# '

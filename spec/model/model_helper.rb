@@ -37,59 +37,6 @@ class MockSsh
   attr_reader :oxidized_output
 
   # Takes a yaml file with the data used to simulate the model
-  def initialize(yaml_model)
-    @commands = {}
-    model = YAML.load_file(yaml_model)
-    model['commands'].each do |key, value|
-      @commands[key + "\n"] = interpolate_yaml(value)
-    end
-
-    @init_prompt = interpolate_yaml(model['init_prompt'])
-    @oxidized_output = interpolate_yaml(model['oxidized_output'])
-  end
-
-  # We have to interpolate as yaml block scalars don't interpolate anything
-  def interpolate_yaml(text)
-    # we just add double quotes and undump the result
-    "\"#{text}\"".undump
-  end
-
-  def exec!(cmd)
-    Oxidized.logger.send(:debug, "exec! called with cmd #{cmd}")
-
-    # exec commands are send without \n, the keys in @commands have a "\n"
-    # appended, so we search for cmd + "\n" in @commands
-    cmd += "\n"
-
-    raise "#{cmd} not defined" unless @commands.has_key?(cmd)
-
-    Oxidized.logger.send(:debug, "exec! returns #{@commands[cmd]}")
-    @commands[cmd]
-  end
-
-  # Returns Net::SSH::Connection::Channel, which we simulate with MockChannel
-  def open_channel
-    @channel = MockChannel.new @commands
-    yield @channel
-    # Now simulate login with the initial @init_prompt
-    @channel.on_data_block.call(nil, @init_prompt)
-    # Return the simulated Net::SSH::Connection::Channel
-    @channel
-  end
-
-  def loop(*)
-    yield if block_given?
-  end
-
-  def closed?
-    false
-  end
-end
-
-class MockSsh2
-  attr_reader :oxidized_output
-
-  # Takes a yaml file with the data used to simulate the model
   def initialize(test)
     @commands = {}
     model = test.simulation
@@ -98,7 +45,7 @@ class MockSsh2
     end
 
     @init_prompt = interpolate_yaml(model['init_prompt'])
-    @oxidized_output = interpolate_yaml(test.output)
+    @oxidized_output = test.output
   end
 
   # We have to interpolate as yaml block scalars don't interpolate anything

@@ -1,0 +1,4 @@
+pass:
+  - '(mail.example.com)> '
+  - 'mail.example.com> '
+  - '(Machine xx-xx-x1xx1-xxxx-xxxx.xxxx.xxxxx.example.xxx)> ' # Issue 3327
