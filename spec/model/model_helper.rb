@@ -86,7 +86,6 @@ class MockSsh
   end
 end
 
-
 # Simulation of Net::SSH::Connection::Channel
 class MockChannel
   attr_accessor :on_data_block
