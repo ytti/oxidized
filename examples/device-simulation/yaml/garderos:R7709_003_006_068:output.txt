@@ -1,0 +1,41 @@
+# grs-gwuz-armel/003_005_068 (Garderos; 2021-04-30 16:19:35)
+# 
+# Serial  : R77079012345
+# Hardware: Model R-7700, Board GWUZ, Ethernet
+# 
+acl.ipv4.input.1.action=ACCEPT
+acl.ipv4.input.1.description=allow ssh from management
+acl.ipv4.input.1.dest-ports=22
+acl.ipv4.input.1.protocol=tcp
+acl.ipv4.input.1.source-network=10.42.0.0/24
+acl.ipv4.input.999.action=DROP
+hardware.rs-232.1.enable=true
+hardware.rs-232.1.name=ttyS0
+interface.eth.1.description=WAN
+interface.eth.1.ip-assignment=static
+interface.eth.1.ipv4=10.42.101.5/24
+interface.eth.1.name=eth1
+route.ipv4.1.gateway=10.42.101.1
+route.ipv4.1.network=10.0.0.0/8
+service.console.0.authenticate.0.client-ref=TACACS-1
+service.console.0.authenticate.0.type=tacacs+
+service.console.0.authenticate.1.client-ref=TACACS-2
+service.console.0.authenticate.1.type=tacacs+
+service.console.0.authenticate.2.type=local
+service.console.0.hardware-ref=ttyS0
+service.snmp.query-agent.enable=true
+service.snmp.query-agent.server.0.community.0.name=SECRET
+service.tacacs.client.0.name=TACACS-1
+service.tacacs.client.0.server.1.key={enc2}AAAAAAAAAABBBBBBBBBBCCCCCCCCCCDDDD
+service.tacacs.client.0.server.1.name=10.42.0.42
+service.tacacs.client.1.name=TACACS-2
+service.tacacs.client.1.server.1.key={enc2}AAAAAAAAAABBBBBBBBBBCCCCCCCCCCDDDD
+service.tacacs.client.1.server.1.name=10.42.0.43
+system.name=LAB-R1234_Garderos
+system.secret={enc2}AAAAAAAAAABBBBBBBBBBCCCCCCCCCCDDDDDDDDDD
+system.timezone=Europe/Berlin
+tunnel.ipsec.2.auth.psk.psk={enc2}AAAAAAAAAABBBBBBBBBBCCCCCCCCCCDDDD
+user.account.0.level=15
+user.account.0.name=oxidized
+user.account.0.password={sha256}AAAAAAAAAABBBBBBBBBBCCCCCCCCCCDDDDDDDDDD
+user.enable.0.password={sha256}AAAAAAAAAABBBBBBBBBBCCCCCCCCCCDDDDDDDDDD

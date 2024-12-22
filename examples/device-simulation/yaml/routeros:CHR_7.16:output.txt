@@ -1,0 +1,27 @@
+#                   version: 7.16 (stable)
+#          factory-software: 7.1
+#              total-memory: 384.0MiB
+#                       cpu: QEMU
+#                 cpu-count: 1
+#           total-hdd-space: 89.2MiB
+#         architecture-name: x86_64
+#                board-name: CHR QEMU Standard PC (i440FX + PIIX, 1996)
+#                  platform: MikroTik#   installed-version: 7.16# software id = 
+#
+/interface ethernet
+set [ find default-name=ether1 ] disable-running-check=no
+set [ find default-name=ether2 ] disable-running-check=no
+set [ find default-name=ether3 ] disable-running-check=no
+set [ find default-name=ether4 ] disable-running-check=no
+set [ find default-name=ether5 ] disable-running-check=no
+set [ find default-name=ether6 ] disable-running-check=no
+set [ find default-name=ether7 ] disable-running-check=no
+set [ find default-name=ether8 ] disable-running-check=no
+/port
+set 0 name=serial0
+/ip address
+add address=10.0.2.100/24 interface=ether1 network=10.0.2.0
+/ip dhcp-client
+add interface=ether1
+/system note
+set show-at-login=no
