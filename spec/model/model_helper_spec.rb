@@ -1,4 +1,5 @@
 require_relative 'model_helper'
+require_relative 'atoms'
 
 # This class is used to test the developpent of model_helper.rb
 # it uses the Garderos model, as model_helper.rb was deveopped with it
@@ -11,7 +12,7 @@ describe 'Model Helper' do
     @node = Oxidized::Node.new(name:  'example.com',
                                input: 'ssh',
                                model: 'garderos')
-    @mockmodel = MockSsh.new('examples/device-simulation/yaml/garderos_R7709_003_006_068.yaml')
+    @mockmodel = MockSsh.new(ATOMS::TestOutput.new('garderos', 'R7709_003_006_068'))
     Net::SSH.stubs(:start).returns @mockmodel
   end
 
