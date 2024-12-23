@@ -9,10 +9,9 @@ describe 'Model Helper' do
     # You can set debuging to true if you want to see debug messages
     # Oxidized.asetus.cfg.debug = true
     # Oxidized.setup_logger
-    @node = Oxidized::Node.new(name:  'example.com',
-                               input: 'ssh',
-                               model: 'garderos')
-    @mockmodel = MockSsh.new(ATOMS::TestOutput.new('garderos', 'R7709_003_006_068'))
+    @node = MockSsh.get_node('garderos')
+    @test = ATOMS::TestOutput.new('garderos', 'R7709_003_006_068')
+    @mockmodel = MockSsh.new(@test)
     Net::SSH.stubs(:start).returns @mockmodel
   end
 
@@ -29,6 +28,6 @@ describe 'Model Helper' do
     status, result = @node.run
 
     _(status).must_equal :success
-    _(result.to_cfg).must_equal @mockmodel.oxidized_output
+    _(result.to_cfg).must_equal @test.output
   end
 end
