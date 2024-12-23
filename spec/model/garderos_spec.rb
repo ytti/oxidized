@@ -3,9 +3,7 @@ require_relative 'model_helper'
 describe 'model/Garderos' do
   before(:each) do
     init_model_helper
-    @node = Oxidized::Node.new(name:  'example.com',
-                               input: 'ssh',
-                               model: 'garderos')
+    @node = MockSsh.get_node('garderos')
   end
 
   it 'matches different prompts' do

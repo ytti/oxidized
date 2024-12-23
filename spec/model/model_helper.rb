@@ -34,7 +34,20 @@ end
 
 # Class to Simulate Net::SSH::Connection::Session
 class MockSsh
-  attr_reader :oxidized_output
+  def self.get_node(model)
+    Oxidized::Node.new(name:  'example.com',
+                       input: 'ssh',
+                       model: model)
+  end
+
+  def self.get_result(context, test)
+    @node = get_node(test.model)
+    mockmodel = MockSsh.new(test)
+    Net::SSH.stubs(:start).returns mockmodel
+    status, result = @node.run
+    context._(status).must_equal :success # rubocop:disable Minitest/GlobalExpectations
+    result
+  end
 
   # Takes a yaml file with the data used to simulate the model
   def initialize(test)
@@ -45,7 +58,6 @@ class MockSsh
     end
 
     @init_prompt = interpolate_yaml(model['init_prompt'])
-    @oxidized_output = test.output
   end
 
   # We have to interpolate as yaml block scalars don't interpolate anything
