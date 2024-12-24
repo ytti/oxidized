@@ -10,7 +10,7 @@ describe 'Model Helper' do
     # Oxidized.setup_logger
     @node = MockSsh.get_node('garderos')
     @test = ATOMS::TestOutput.new('garderos', 'R7709_003_006_068')
-    @mockmodel = MockSsh.new(@test)
+    @mockmodel = MockSsh.new(@test.simulation)
     Net::SSH.stubs(:start).returns @mockmodel
   end
 
