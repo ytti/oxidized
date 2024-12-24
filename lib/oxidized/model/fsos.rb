@@ -13,6 +13,7 @@ class FSOS < Oxidized::Model
     cfg.gsub! /(secret \w+) (\S+).*/, '\\1 <secret hidden>'
     cfg.gsub! /(password \d+) (\S+).*/, '\\1 <secret hidden>'
     cfg.gsub! /(snmp-server community \d+) (\S+).*/, '\\1 <secret hidden>'
+    cfg.gsub! /^(.*key \d+) (\S+).*/, '\\1 <secret hidden>'
     cfg
   end
 
