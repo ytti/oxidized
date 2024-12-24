@@ -1,5 +1,4 @@
 require_relative 'model_helper'
-require_relative 'atoms'
 
 # This class is used to test the developpent of model_helper.rb
 # it uses the Garderos model, as model_helper.rb was deveopped with it

@@ -1,4 +1,5 @@
 require_relative '../spec_helper'
+require_relative 'atoms'
 require 'yaml'
 
 def init_model_helper

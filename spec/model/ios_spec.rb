@@ -1,5 +1,4 @@
 require_relative 'model_helper'
-require_relative 'atoms'
 
 describe 'model/IOS' do
   before { init_model_helper }

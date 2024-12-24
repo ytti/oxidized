@@ -1,5 +1,4 @@
 require_relative 'model_helper'
-require_relative 'atoms'
 
 describe 'ATOMS tests' do
   ATOMS.get.each do |test|
