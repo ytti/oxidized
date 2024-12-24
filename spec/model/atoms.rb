@@ -27,9 +27,13 @@ class ATOMS
       @skip
     end
 
+    def to_s(type = @type)
+      [@model, @desc, type].join(':')
+    end
+
     def get_filename(type)
       ext = type == 'output' ? '.txt' : '.yaml'
-      [@model, @desc, type].join(':') + ext
+      to_s(type) + ext
     end
 
     def load_file(type = nil)

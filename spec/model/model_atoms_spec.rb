@@ -2,20 +2,18 @@ require_relative 'model_helper'
 
 describe 'ATOMS tests' do
   ATOMS.get.each do |test|
-    test_string = "#{test.type}:#{test.model}:#{test.desc}"
-
     before { init_model_helper }
 
     if test.type == 'output'
-      it "#{test_string} has expected output" do
-        skip("check simulation+output data file for #{test_string}") if test.skip?
+      it "#{test} has expected output" do
+        skip("check simulation+output data file for #{test}") if test.skip?
         cfg = MockSsh.get_result(self, test).to_cfg
         _(cfg).must_match test.output
       end
 
     elsif test.type == 'prompt'
-      it "#{test_string} has working prompt detection" do
-        skip("check prompt data file for #{test_string}") if test.skip?
+      it "#{test} has working prompt detection" do
+        skip("check prompt data file for #{test}") if test.skip?
         @node = MockSsh.get_node(test.model)
         class_sym = Object.constants.find { |const| const.to_s.casecmp(test.model).zero? }
         prompt_re = Object.const_get(class_sym).prompt
