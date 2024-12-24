@@ -2,7 +2,7 @@ require_relative 'model_helper'
 
 describe 'ATOMS tests' do
   ATOMS.get.each do |test|
-    test_string = "ATOMS/#{test.type} (#{test.model} / #{test.desc})"
+    test_string = "#{test.type}:#{test.model}:#{test.desc}"
 
     before { init_model_helper }
 
