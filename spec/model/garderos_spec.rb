@@ -3,7 +3,7 @@ require_relative 'model_helper'
 describe 'model/Garderos' do
   before(:each) do
     init_model_helper
-    @node = MockSsh.get_node('garderos')
+    @node = MockSsh.get_node
   end
 
   it 'matches different prompts' do

@@ -5,8 +5,7 @@ describe 'model/IOS' do
 
   it 'removes secrets' do
     Oxidized.config.vars.remove_secret = true
-    test = ATOMS::TestOutput.new('ios', 'C9200L-24P-4G_17.09.04a')
-    cfg = MockSsh.get_result(self, test).to_cfg
+    cfg = MockSsh.get_result(self, 'C9200L-24P-4G_17.09.04a').to_cfg
 
     _(cfg).wont_match(/SECRET/)
     _(cfg).wont_match(/public/)
@@ -15,8 +14,7 @@ describe 'model/IOS' do
 
   it 'removes secrets from IOS-XE WLCs' do
     Oxidized.config.vars.remove_secret = true
-    test = ATOMS::TestOutput.new('ios', 'C9800-L-F-K9_17.06.05')
-    cfg = MockSsh.get_result(self, test).to_cfg
+    cfg = MockSsh.get_result(self, 'C9800-L-F-K9_17.06.05').to_cfg
 
     _(cfg).wont_match(/SECRET_REMOVED/)
     _(cfg).wont_match(/REMOVED_SECRET/)

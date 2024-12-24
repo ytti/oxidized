@@ -35,15 +35,22 @@ end
 
 # Class to Simulate Net::SSH::Connection::Session
 class MockSsh
-  def self.get_node(model)
+  def self.caller_model
+    File.basename(caller_locations[1].path).split('_').first
+  end
+
+  def self.get_node(model = nil)
+    model ||= caller_model
     Oxidized::Node.new(name:  'example.com',
                        input: 'ssh',
                        model: model)
   end
 
-  def self.get_result(context, test)
+  def self.get_result(context, test_or_desc)
+    test = test_or_desc
+    test = ATOMS::TestOutput.new(caller_model, test_or_desc) if test_or_desc.is_a?(String)
     @node = get_node(test.model)
-    mockmodel = MockSsh.new(test)
+    mockmodel = MockSsh.new(test.simulation)
     Net::SSH.stubs(:start).returns mockmodel
     status, result = @node.run
     context._(status).must_equal :success # rubocop:disable Minitest/GlobalExpectations
@@ -51,9 +58,8 @@ class MockSsh
   end
 
   # Takes a yaml file with the data used to simulate the model
-  def initialize(test)
+  def initialize(model)
     @commands = {}
-    model = test.simulation
     model['commands'].each do |key, value|
       @commands[key + "\n"] = interpolate_yaml(value)
     end

@@ -5,8 +5,7 @@ describe 'model/ArubaInstant' do
 
   it 'removes secrets' do
     Oxidized.config.vars.remove_secret = true
-    test = ATOMS::TestOutput.new('arubainstant', 'IAP515_8.10.0.6_VWLC')
-    cfg = MockSsh.get_result(self, test).to_cfg
+    cfg = MockSsh.get_result(self, 'IAP515_8.10.0.6_VWLC').to_cfg
 
     _(cfg).wont_match(/AAAAAAAAAABBBBBBBBBBCCCCCCCCCC/)
     _(cfg).must_match(/snmp-server host 10.10.42.12 version 2c <secret removed> inform/)
