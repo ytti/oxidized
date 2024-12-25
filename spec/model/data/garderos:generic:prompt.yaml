@@ -1,2 +1,4 @@
 pass:
   - "LAB-R1234_Garderos# "
+fail:
+  - "\e[4m\rLAB-R1234_Garderos#\e[m "
