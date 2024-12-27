@@ -4,10 +4,15 @@
 class ATOMS
   DIRECTORY = 'spec/model/data'.freeze
 
+  # Returns a list of tests matching the data files under ATOMS::DIRECTORY
   def self.get
+    # enumerates through the subclasses of Test (TestPrompt, TestOutput...)
     Test.subclasses.map do |test|
+      # For each file matching the pattern defined in the subclass,
+      # create a test
       Dir[File.join(DIRECTORY, test::GLOB)].map do |file|
         ext = File.extname(test::GLOB)
+        # 'model:desc:type.txt' => test.new('model', 'desc', 'type')
         test.new(*File.basename(file, ext).split(':'))
       end
     end.flatten
@@ -49,6 +54,18 @@ class ATOMS
     end
   end
 
+  # Support class for loading the YAML simulation file and the expected output
+  # file for a model unit test.
+  #
+  # The files are stored under ATOMS::DIRECTORY (spec/model/data) and follow the
+  # naming convention:
+  # - YAML Simulation: model:description:simulation.yaml
+  # - Expected Output: model:description:output.txt
+  #
+  # "description" is the name of the test case and is generally formatted as
+  # #hardware_#software or #model_#hardware_#software_#description.
+  #
+  # The test is skipped if one of the files is missing.
   class TestOutput < Test
     GLOB = '*:output.txt'.freeze
     attr_reader :simulation, :output
@@ -62,6 +79,16 @@ class ATOMS
     end
   end
 
+  # Support class for loading prompts to test as part of the model unit tests.
+  #
+  # The prompts are loaded from files stored under
+  # ATOMS::DIRECTORY (spec/model/data) and follow the naming convention:
+  # - model:description:prompt.yaml
+  #
+  # "description" is generally named 'generic', as all prompts for a model
+  # can be stored into as single YAML file.
+  #
+  # The test is skipped if the YAML file could not be loaded.
   class TestPrompt < Test
     GLOB = '*:prompt.yaml'.freeze
     attr_reader :data
