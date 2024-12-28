@@ -46,14 +46,14 @@ class MockSsh
                        model: model)
   end
 
-  def self.get_result(context, test_or_desc)
+  def self.get_result(test_context = nil, test_or_desc)
     test = test_or_desc
     test = ATOMS::TestOutput.new(caller_model, test_or_desc) if test_or_desc.is_a?(String)
     @node = get_node(test.model)
     mockmodel = MockSsh.new(test.simulation)
     Net::SSH.stubs(:start).returns mockmodel
     status, result = @node.run
-    context._(status).must_equal :success # rubocop:disable Minitest/GlobalExpectations
+    test_context&._(status)&.must_equal :success
     result
   end
 

@@ -1,7 +1,7 @@
 require_relative 'model_helper'
 
 describe 'ATOMS tests' do
-  ATOMS.get.each do |test|
+  ATOMS.all.each do |test|
     before { init_model_helper }
 
     if test.type == 'output'

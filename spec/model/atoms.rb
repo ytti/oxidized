@@ -1,19 +1,24 @@
 # Automatic Trivial Oxidized Model Spec - ATOMS
 # Tries to simplify model testing for the simple/common case
-
 class ATOMS
-  DIRECTORY = 'spec/model/data'.freeze
+  DIRECTORY = File.join(File.dirname(__FILE__), 'data').freeze
+  class ATOMSError < StandardError; end
 
-  def self.get
+  def self.all
     Test.subclasses.map do |test|
-      Dir[File.join(DIRECTORY, test::GLOB)].map do |file|
-        ext = File.extname(test::GLOB)
-        test.new(*File.basename(file, ext).split(':'))
-      end
+      get(test, test::GLOB)
     end.flatten
   end
 
+  def self.get(klass, glob)
+    Dir[File.join(DIRECTORY, glob)].map do |file|
+      ext = File.extname(glob)
+      klass.new(*File.basename(file, ext).split(':'))
+    end
+  end
+
   class Test
+    class TestError < ATOMSError; end
     attr_reader :model, :desc, :type
 
     def initialize(model, desc, type)
@@ -33,12 +38,11 @@ class ATOMS
 
     def get_filename(type)
       ext = type == 'output' ? '.txt' : '.yaml'
-      to_s(type) + ext
+      File.join(DIRECTORY, to_s(type) + ext)
     end
 
     def load_file(type = nil)
       file_name = get_filename((type or @type))
-      file_name = File.join(DIRECTORY, file_name)
       if File.extname(file_name) == '.yaml'
         YAML.load_file(file_name)
       else
@@ -51,14 +55,23 @@ class ATOMS
 
   class TestOutput < Test
     GLOB = '*:output.txt'.freeze
+    class TestOutputError < TestError; end
+    class OutputGenerationError < TestOutputError; end
     attr_reader :simulation, :output
 
     def initialize(model, desc, type = 'output')
       super
 
       @simulation = load_file('simulation')
-      @output = load_file
+      @output = load_file('output')
       @skip = true unless @simulation && @output
+    end
+
+    def generate(result_engine)
+      raise OutputGenerationError, 'FAIL, no simulation file' unless @simulation
+      raise OutputGenerationError, 'SKIP, output already exists' if @output
+
+      File.write(get_filename('output'), result_engine.get_result(nil, self).to_cfg)
     end
   end
 
