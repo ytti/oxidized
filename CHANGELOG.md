@@ -19,7 +19,7 @@ The format is based on [Keep a Changelog](https://keepachangelog.com/en/1.1.0/).
 - asyncos: fix prompt for hostnames containing "-" . Fixes #3327 (@robertcheramy)
 - sonicos: fix prompt for hostnames containing "-" . Fixes #3333 (@robertcheramy)
 - xos: Hide radius accounting secret
-- fsos: Hide AAA secrets
+- fsos: Hide AAA and SNMP secrets (@RayaneB35)
 
 ## [0.31.0 – 2024-11-29]
 
