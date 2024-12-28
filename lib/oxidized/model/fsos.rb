@@ -13,6 +13,8 @@ class FSOS < Oxidized::Model
     cfg.gsub! /(secret \w+) (\S+).*/, '\\1 <secret hidden>'
     cfg.gsub! /(password \d+) (\S+).*/, '\\1 <secret hidden>'
     cfg.gsub! /(snmp-server community \d+) (\S+).*/, '\\1 <secret hidden>'
+    cfg.gsub! /^(snmp-server host \S+( udp-port \d+)?( permit|deny \d+)?( informs?)?( traps?)?(( version v3 (priv|auth|noauth))|( version (v1|v2c))?)) +\S+( .*)?$*/, '\\1 <secret hidden>'
+    cfg.gsub! /^(snmp-server user \S+ \S+ v3( priv (des|aes128|aes256|aes256-c))?( auth (md5|sha|sha256) \d+)) +\S+( .*)?$*/, '\\1 <secret hidden>'
     cfg.gsub! /^(.*key \d+) (\S+).*/, '\\1 <secret hidden>'
     cfg
   end
