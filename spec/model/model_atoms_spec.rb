@@ -8,7 +8,7 @@ describe 'ATOMS tests' do
       it "#{test} has expected output" do
         skip("check simulation+output data file for #{test}") if test.skip?
         cfg = MockSsh.get_result(self, test).to_cfg
-        _(cfg).must_match test.output
+        _(cfg).must_equal test.output
       end
 
     elsif test.type == 'prompt'
