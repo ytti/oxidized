@@ -2,6 +2,7 @@ class FSOS < Oxidized::Model
   # Fiberstore / fs.com
   using Refinements
   comment '! '
+  prompt /^([\w.@()-]+[#>]\s?)$/
 
   # Handle paging
   expect /^ --More--.*$/ do |data, re|
@@ -40,7 +41,7 @@ class FSOS < Oxidized::Model
   cfg :telnet, :ssh do
     post_login 'enable'
     post_login 'terminal length 0'
-    post_login 'terminal width 256'
+    post_login 'terminal width 512'
     pre_logout 'exit'
     pre_logout 'exit'
   end
