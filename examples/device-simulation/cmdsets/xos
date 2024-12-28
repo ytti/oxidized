@@ -1,0 +1,10 @@
+disable clipaging
+show version
+show diagnostics
+show system
+show licenses
+show switch
+show configuration
+show policy detail
+exit
+n
