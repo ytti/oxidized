@@ -2,6 +2,15 @@
 init_prompt: |-
   FS-LAB-OXI#
 commands:
+  enable: |-
+    enable
+    FS-LAB-OXI#
+  terminal length 0: |-
+    terminal length 0
+    FS-LAB-OXI#
+  terminal width 512: |-
+    terminal width 512
+    FS-LAB-OXI#
   show version: |-
     show version
     Fiberstore Co., Limited Internetwork Operating System Software
