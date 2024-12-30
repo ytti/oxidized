@@ -1,4 +1,3 @@
----
 # Trailing white spaces are coded as \x20 because some editors automatically remove trailing white spaces
 init_prompt: |-
   \e[4m\rLAB-R1234_Garderos#\e[m\x20

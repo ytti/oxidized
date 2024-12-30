@@ -1,4 +1,3 @@
----
 init_prompt:
 commands:
   cat /conf/config.xml: |-
