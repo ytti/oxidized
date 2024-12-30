@@ -23,6 +23,10 @@ describe 'ATOMS tests' do
         test.fail.each do |want_fail|
           _(want_fail).wont_match prompt_re
         end
+        test.pass_with_expect.each do |want_pass_with_expect|
+          prompt = @node.model.expects want_pass_with_expect
+          _(prompt).must_match prompt_re
+        end
       end
     end
   end

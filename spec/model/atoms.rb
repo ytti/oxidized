@@ -4,7 +4,7 @@ class ATOMS
   DIRECTORY = File.join(File.dirname(__FILE__), 'data').freeze
   class ATOMSError < StandardError; end
 
-  # Returns a list of tests matching the data files under ATOMS::DIRECTORY
+  # Returns a list of all tests matching the data files under ATOMS::DIRECTORY
   def self.all
     # enumerates through the subclasses of Test (TestPrompt, TestOutput...)
     Test.subclasses.map do |test|
@@ -12,9 +12,15 @@ class ATOMS
     end.flatten
   end
 
+  # Returns an Array of ATOMS::Test instances of the subclass @klass matching
+  # the data files with a pattern @glob in ATOMS::DIRECTORY
+  #
+  # @klass is a subclass of ATOMS::Test (TestPrompt, TestOutput...)
+  # @glob is the pattern matching the test data.
+  #
+  # When called by ATOMS::all, @glob is @klass::GLOB
+  # When called by atoms_genrate.rb, @globs matches '*:simulation.yaml'
   def self.get(klass, glob)
-    # For each file matching the pattern defined in the subclass,
-    # create a test
     Dir[File.join(DIRECTORY, glob)].map do |file|
       ext = File.extname(glob)
       # 'model:desc:type.txt' => test.new('model', 'desc', 'type')
@@ -113,12 +119,20 @@ class ATOMS
       @skip = true unless @data
     end
 
+    # Returns all prompts which should pass
     def pass
       @data['pass'] or []
     end
 
+    # Returns all prompts which should fail
     def fail
       @data['fail'] or []
+    end
+
+    # Returns all prompts which should pass after Model::expects has been run
+    # on them
+    def pass_with_expect
+      @data['pass_with_expect'] or []
     end
   end
 end
