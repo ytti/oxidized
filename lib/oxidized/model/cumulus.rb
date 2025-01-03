@@ -6,12 +6,13 @@ class Cumulus < Oxidized::Model
     data.gsub re, ''
   end
 
-  # The prompt has ANSI ESC codes, the are removed from the code above
-  # We do not match the line begining, as some commands end without \n
+  # The prompt contains ANSI escape codes, which have already been removed
+  # from the expect call above
+  # ^                 : match begin of line, to have the most specific prompt
   # [\w.-]+@[\w.-]+   : user@hostname
   # (:mgmt)?          : optional when logged in out of band
-  # :~[#$] $          : end of prompt, containing the
-  #                     path, which is always "~" in our context
+  # :~[#$] $          : end of prompt, containing the linux path,
+  #                     which is always "~" in our context
   prompt /^[\w.-]+@[\w.-]+(:mgmt)?:~[#$] $/
   comment '# '
 
@@ -90,6 +91,8 @@ class Cumulus < Oxidized::Model
       cfg += cmd 'cat /etc/cumulus/switchd.conf'
 
       cfg += add_comment 'PORTS'
+      # in some configurations, ports.conf has no trailing Line Feed,
+      # which breaks the prompt, so we add one
       cfg += cmd "cat /etc/cumulus/ports.conf; echo"
 
       cfg += add_comment 'TRAFFIC'
