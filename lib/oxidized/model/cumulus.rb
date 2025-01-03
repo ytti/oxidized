@@ -1,7 +1,19 @@
 class Cumulus < Oxidized::Model
   using Refinements
 
-  prompt /^(([\w.-]*)@(.*)):/
+  # Remove ANSI escape codes
+  expect /\e\[[0-?]*[ -\/]*[@-~]\r?/ do |data, re|
+    data.gsub re, ''
+  end
+
+  # The prompt contains ANSI escape codes, which have already been removed
+  # from the expect call above
+  # ^                 : match begin of line, to have the most specific prompt
+  # [\w.-]+@[\w.-]+   : user@hostname
+  # (:mgmt)?          : optional when logged in out of band
+  # :~[#$] $          : end of prompt, containing the linux path,
+  #                     which is always "~" in our context
+  prompt /^[\w.-]+@[\w.-]+(:mgmt)?:~[#$] $/
   comment '# '
 
   # add a comment in the final conf
@@ -79,7 +91,9 @@ class Cumulus < Oxidized::Model
       cfg += cmd 'cat /etc/cumulus/switchd.conf'
 
       cfg += add_comment 'PORTS'
-      cfg += cmd 'cat /etc/cumulus/ports.conf'
+      # in some configurations, ports.conf has no trailing Line Feed,
+      # which breaks the prompt, so we add one
+      cfg += cmd "cat /etc/cumulus/ports.conf; echo"
 
       cfg += add_comment 'TRAFFIC'
       cfg += cmd 'cat /etc/cumulus/datapath/traffic.conf'

@@ -5,7 +5,6 @@ All notable changes to this project will be documented in this file.
 The format is based on [Keep a Changelog](https://keepachangelog.com/en/1.1.0/).
 
 ## [Unreleased]
-
 ### Added
 - junos: add unit test (@systeembeheerder)
 - apc_aos: support for scp (@robertcheramy)
@@ -13,6 +12,7 @@ The format is based on [Keep a Changelog](https://keepachangelog.com/en/1.1.0/).
 ### Changed
 - sonicos: accept policy message. Fixes #3339 (@Steve-M-C, @robertcheramy)
 - input/ssh: change input.debug to dump all characters and include sent commands. (@robertcheramy)
+- cumulus: remove ANSI Escape codes and fix prompt issues. The prompt is more specific now (@alchemyx, @robertcheramy)
 
 ### Fixed
 - tplink: send 'enable' before the enable password. Fixes #3271 (@robertcheramy)
