@@ -1,0 +1,7 @@
+enable
+terminal length 0
+terminal width 256
+show version
+show running-config
+exit
+exit
