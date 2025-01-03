@@ -50,6 +50,10 @@ class XOS < Oxidized::Model
     password /^\r*password:/
   end
 
+  cfg :ssh do
+    exec true
+  end
+
   cfg :telnet, :ssh do
     post_login do
       data = cmd 'disable clipaging session'
