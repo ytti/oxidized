@@ -143,13 +143,13 @@ class ATOMS
 
   class TestSecret < TestPassFail
     GLOB = '*:secret.yaml'.freeze
+    attr_reader :output_test
 
     def initialize(model, desc, type = 'secret')
       super
-    end
 
-    def output_test
-      TestOutput.new(@model, @desc, 'output')
+      @output_test = TestOutput.new(@model, @desc, 'output') rescue ni
+      @skip = true if @output_test.skip?
     end
   end
 end
