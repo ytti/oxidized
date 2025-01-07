@@ -7,9 +7,9 @@ class ATOMS
   # Returns a list of all tests matching the data files under ATOMS::DIRECTORY
   def self.all
     # enumerates through the subclasses of Test (TestPrompt, TestOutput...)
-    Test.subclasses.map do |test|
-      get(test, test::GLOB)
-    end.flatten
+    [Test, TestPassFail].map(&:subclasses).flatten.map do |test|
+      get(test, test::GLOB) if test::GLOB
+    end.flatten.compact
   end
 
   # Returns an Array of ATOMS::Test instances of the subclass @klass matching
@@ -108,31 +108,48 @@ class ATOMS
   # can be stored into as single YAML file.
   #
   # The test is skipped if the YAML file could not be loaded.
-  class TestPrompt < Test
-    GLOB = '*:prompt.yaml'.freeze
+  class TestPassFail < Test
+    GLOB = false # this is not an actual test, but a parent for prompt/secret
     attr_reader :data
 
-    def initialize(model, desc, type = 'prompt')
+    def initialize(model, desc, type)
       super
 
-      @data = load_file
+      @data = load_file(type)
       @skip = true unless @data
     end
 
-    # Returns all prompts which should pass
     def pass
       @data['pass'] or []
     end
 
-    # Returns all prompts which should fail
     def fail
       @data['fail'] or []
+    end
+  end
+
+  class TestPrompt < TestPassFail
+    GLOB = '*:prompt.yaml'.freeze
+    def initialize(model, desc, type = 'prompt')
+      super
     end
 
     # Returns all prompts which should pass after Model::expects has been run
     # on them
     def pass_with_expect
       @data['pass_with_expect'] or []
+    end
+  end
+
+  class TestSecret < TestPassFail
+    GLOB = '*:secret.yaml'.freeze
+
+    def initialize(model, desc, type = 'secret')
+      super
+    end
+
+    def output_test
+      TestOutput.new(@model, @desc, 'output')
     end
   end
 end
