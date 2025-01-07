@@ -148,7 +148,7 @@ class ATOMS
     def initialize(model, desc, type = 'secret')
       super
 
-      @output_test = TestOutput.new(@model, @desc, 'output') rescue ni
+      @output_test = TestOutput.new(@model, @desc, 'output')
       @skip = true if @output_test.skip?
     end
   end
