@@ -37,6 +37,7 @@ Gem::Specification.new do |s|
   s.add_development_dependency 'git',                 '~> 2'
   s.add_development_dependency 'minitest',            '~> 5.18'
   s.add_development_dependency 'mocha',               '~> 2.1'
+  s.add_development_dependency 'mutex_m'
   s.add_development_dependency 'pry',                 '~> 0.15.0'
   s.add_development_dependency 'rake',                '~> 13.0'
   s.add_development_dependency 'rubocop',             '~> 1.69.0'
@@ -46,7 +47,6 @@ Gem::Specification.new do |s|
   s.add_development_dependency 'simplecov',           '~> 0.22.0'
   s.add_development_dependency 'simplecov-cobertura', '~> 2.1.0'
   s.add_development_dependency 'simplecov-html',      '~> 0.13.1'
-  s.add_development_dependency 'mutex_m'
 
   # Dependencies on optional libraries, used for unit tests & development
   s.add_development_dependency 'oxidized-web',        '>= 0.14.0'
