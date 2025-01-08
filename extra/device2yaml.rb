@@ -13,79 +13,6 @@ require 'timeout'
 # This script is quick & dirty - it grew with the time an could be a project
 # for its own. It works, and that should be enough ;-)
 
-################# Command sets
-COMMANDSETS = {
-  aoscx:        ['no page',
-                 'show version',
-                 'show environment',
-                 'show module',
-                 'show interface transceiver',
-                 'show system | exclude "Up Time" | exclude "CPU" | exclude "Memory" | exclude "Pkts .x" | exclude "Lowest" | exclude "Missed"',
-                 'show running-config',
-                 # This command is not needed, but we may code the excludes
-                 # above in the model some tome
-                 'show system',
-                 'exit'],
-  asa:          ['enable',
-                 'terminal pager 0',
-                 'show mode',
-                 'show version',
-                 'show inventory',
-                 'more system:running-config',
-                 'exit'],
-  asyncos:      ['version', # I don not use %w here because of the formating
-                 'showconfig',
-                 'exit'],
-  arubainstant: ['show version',
-                 'show activate status',
-                 'show aps',
-                 'show running-config no-encrypt',
-                 'exit'],
-  ios:          ['terminal length 0',
-                 'terminal width 0',
-                 'show version',
-                 'show vtp status',
-                 'show inventory',
-                 'show running-config',
-                 'exit'],
-  junos:        ['set cli screen-length 0',
-                 'set cli screen-width 0',
-                 'show version',
-                 'show chassis hardware',
-                 'show system license',
-                 'show system license keys',
-                 'show configuration | display omit',
-                 'exit',
-                 ''],
-  nxos:         ['terminal length 0',
-                 'show version',
-                 'show inventory',
-                 'show running-config',
-                 'exit'],
-  opnsense:     ['cat /conf/config.xml',
-                 'opnsense-version || echo "OPNsense "`cat /usr/local/opnsense/version/opnsense`',
-                 'exit'],
-  pfsense:      ['cat /cf/conf/config.xml',
-                 'cat /etc/version',
-                 'exit'],
-  routeros:     ['/system resource print',
-                 '/system package update print',
-                 '/system history print without-paging',
-                 '/export show-sensitive',
-                 'quit'],
-  srosmd:       ['environment more false',
-                 'show system information',
-                 'show card state',
-                 'show chassis',
-                 'file show bootlog.txt',
-                 'admin show configuration debug full-context',
-                 'file show config.dbg',
-                 'admin show configuration configure | match persistent-indices post-lines 10000',
-                 'admin show configuration bof full-context',
-                 'admin show configuration configure full-context',
-                 'logout']
-}.freeze
-
 ################# Methods
 # Runs cmd in the ssh session, either im exec mode or with a tty
 # saves the output to @output
@@ -187,10 +114,23 @@ end
 # Define options
 options = {}
 optparse = OptionParser.new do |opts|
-  opts.banner = 'Usage: device2yaml.rb [user@]host [options]'
+  opts.banner = <<~HEREDOC
+    Usages:
+    - device2yaml.rb [user@]host -i file [options]
+    - device2yaml.rb [user@]host -c "command1
+      command2
+      command3" [options]
 
-  opts.on('-c', '--cmdset set', 'Mandatory: specify the commands to be run') do |set|
-    options[:cmdset] = set
+    -i and -c are mutualy exclusive, one must be specified
+
+    [options]:
+  HEREDOC
+
+  opts.on('-c', '--commands "command list"', 'specify the commands to be run') do |cmds|
+    options[:commands] = cmds
+  end
+  opts.on('-i', '--input file', 'Specify an input file for commands to be run') do |file|
+    options[:input] = file
   end
   opts.on('-o', '--output file', 'Specify an output YAML-file') do |file|
     options[:output] = file
@@ -226,22 +166,22 @@ end
 optparse.parse!
 
 # Get the commands to be run against ssh_host
-unless options[:cmdset]
-  puts 'Missing a command set, use option -c'
+# ^ = xor = exclusive or
+unless options[:commands].nil? ^ options[:input].nil?
+  puts "Please provide commands to be run against #{ssh_host} with either option -c or -i"
   puts
   puts optparse
   exit 1
 end
 
-unless COMMANDSETS.has_key?(options[:cmdset].to_sym)
-  puts "Unknown command set '#{options[:cmdset]}', edit device2yaml.rb to add " \
-       "it or use an implemented set:"
-  puts ">  #{COMMANDSETS.keys.join(' ')}"
-  exit 1
+if options[:commands]
+  ssh_commands = []
+  options[:commands].each_line(chomp: true) { |command| ssh_commands << command }
+elsif options[:input]
+  ssh_commands = File.read(options[:input]).split(/\n+|\r+/)
 end
 
-# make an array of commands to send, ignore empty lines
-ssh_commands = COMMANDSETS[options[:cmdset].to_sym]
+puts "Running #{ssh_commands} on #{ssh_user}@#{ssh_host}"
 
 # Defaut idle timeout: 5 seconds, as tests showed that 2 seconds is too short
 @idle_timeout = options[:timeout] || 5

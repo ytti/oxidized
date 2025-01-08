@@ -49,7 +49,7 @@ contributing code via a pull request (PR) or hiring a developer.
 
 ## Sumbit a YAML Simulation File
 To help developers troubleshoot device-specific issues, you may be asked to submit a
-[YAML simulation file](https://github.com/ytti/oxidized/blob/master/examples/device-simulation/README.md#creating-a-yaml-file-with-device2yamlrb) for your device.
+[YAML simulation file](/docs/DeviceSimulation.md#creating-a-yaml-file-with-device2yamlrb) for your device.
 
 Here's a brief overview how to do it, you can find more details in the link
 above.
@@ -63,22 +63,28 @@ sudo apt install git ruby-net-ssh
 ```
 git clone git@github.com:<your github user>/oxidized.git
 ```
-- run the device2yaml.rb script (you’ll be provided with the command set and
-  output filename to use)
+- run the extras/device2yaml.rb script (you’ll be provided with the command to
+run) from the repository root:
+
 ```
-cd oxidized/examples/device-simulation
-# Replace user and devicename to appropriate values
-./device2yaml.rb user@devicename -c cmdsets/ios -o yaml/asr900_26.8.1b.yaml
+extra/device2yaml.rb oxidized@r61 -c "terminal length 0
+terminal width 0
+show version
+show vtp status
+show inventory
+show running-config
+exit" -o spec/model/data/ios:C8200L_16.12.1:simulation.yaml
 ```
+
 - The script waits 5 seconds between commands, and outputs the response of the
   device. You can press "ESC" if you see the prompt and want to pass to next
   command without waiting for the timeout.
-- The result will be stored in `oxidized/examples/device-simulation/yaml/`.
+- The result will be stored in `spec/model/data/`.
 - Replace any sensitive information with placeholder values in the output file.
 - Commit & push the file to github
 ```
-git add yaml/asr900_26.8.1b.yaml
-git commit -m "Device simulation for ASR900"
+git add spec/model/data/ios:C8200L_16.12.1:simulation.yaml
+git commit -m "Device simulation for C8200L"
 git push
 ```
 - Create a pull request (PR) in GitHub, referencing the issue number (e.g.,

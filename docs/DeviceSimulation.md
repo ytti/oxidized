@@ -36,19 +36,28 @@ editors automatically remove trailing spaces, so we code them with \x20.
 Although a YAML file could be written by hand, this is quite a tedious task to
 catch all the extra codes and code them into YAML. This can be
 automated with the ruby script
-[device2yaml.rb](/extras/device2yaml.rb).
+[extras/device2yaml.rb](/extras/device2yaml.rb).
 
 `device2yaml.rb` needs ruby and the gem
 [net-ssh](https://rubygems.org/gems/net-ssh/) to run. On debian, you can install
 them with `sudo apt install ruby-net-ssh`
 
-Run `device2yaml.rb`, the online help tells you the options.
+Run `extras/device2yaml.rb`, the online help tells you the options.
 ```
 oxidized$ extra/device2yaml.rb
 Missing a host to connect to...
 
-Usage: device2yaml.rb [user@]host [options]
-    -c, --cmdset set                 Mandatory: specify the commands to be run
+Usages:
+- device2yaml.rb [user@]host -i file [options]
+- device2yaml.rb [user@]host -c "command1
+  command2
+  command3" [options]
+
+-i and -c are mutualy exclusive, one must be specified
+
+[options]:
+    -c, --commands "command list"    specify the commands to be run
+    -i, --input file                 Specify an input file for commands to be run
     -o, --output file                Specify an output YAML-file
     -t, --timeout value              Specify the idle timeout beween commands (default: 5 seconds)
     -e, --exec-mode                  Run ssh in exec mode (without tty)
@@ -59,16 +68,15 @@ Usage: device2yaml.rb [user@]host [options]
 password will be prompted interactively by the script. If you do not specify a
 user, it will use the user executing the script.
 - The commands that will be run on the device must be defined
-in `deviceyaml.rb`. If you specify an unknown commandset, you will be provided
-with a list of implemented ones. If you implement a new command set, it is
-important that you enter exactly the commands used by the oxidized model,
-and no abbreviation like `sh run`. Do not forget to insert the `post_login`
-commands at the beginning if the model has some and also the `pre_logout`
-commands at the end.
+in `deviceyaml.rb`. You can give the commands online with `-c` or read them
+from a file (one line per command) with `-i`. The commands should match exactly
+the one of the model (no abbreviations) and include the command of the
+`post_login` and `pre_logout` sections. When using -c and editing the command
+line, `CTRL-V CTRL-J` is very useful to add a new line.
 - `device2yaml.rb` waits an idle timeout after the last received data before
 sending the next command. The default is 5 seconds. If your device makes a
 longer pause than 5 seconds before or within a command, you will see that the
-output of the command is shortened or slips into the next command in the yaml
+output of the command is shortened or slips into the next command in the YAML
 file. You will have to change the idle timeout to a greater value to address
 this.
 - When run without the output argument, `device2yaml.rb` will only print the ssh
@@ -77,16 +85,21 @@ to store the collected data in a YAML file.
 - If your oxidized model uses ssh exec mode (look for `exec true` in the model),
 you will have to use the option `-e` to run device2yaml in ssh exec mode.
 
-Note that `extra/device2yaml.rb` takes some time to run because of the idle
+Note that `device2yaml.rb` takes some time to run because of the idle
 timeout of (default) 5 seconds between each command. You can press the "Escape"
 key if you know there is no more data to come for the current command (when you
 see the prompt for the next command), and the script will stop waiting and
 directly process the next command.
 
-Here are two examples of how to run the script:
+Running the script against an ios device would look like:
 ```shell
-extra/device2yaml.rb OX-SW123.sample.domain -c aoscx -o spec/model/data/aoscx:R8N85A-C6000-48G-CL4_PL.10.08.1010:simumation.yaml
-extra/device2yaml.rb admin@r7 -c routeros -e -o spec/model/data/routeros:CHR_7.10.1:simulation.yaml
+extra/device2yaml.rb oxidized@r61 -c "terminal length 0
+terminal width 0
+show version
+show vtp status
+show inventory
+show running-config
+exit" -o spec/model/data/ios:C8200L_16.12.1:simulation.yaml
 ```
 
 ### Publishing the YAML simulation file to oxidized
@@ -98,19 +111,15 @@ You should pay attention to removing or replacing anything you don't want to
 share with the rest of the world, for example:
 
 - Passwords
-- IP Adresses
+- IP Addresses
 - Serial numbers
 
 You can also shorten the configuration if you want - we don't need 48 times the
-same config for each interface, but it doesn't hurt either.
+same configuration for each interface, but it doesn't hurt either.
 
 Take your time, this is an important task: after you have
 uploaded your file on github, it may be impossible to remove it. You can use
 search/replace to make consistent and faster changes (change the hostname).
-
-You can leave the section `oxidized_output` unchanged, it is only used for
-[model unit tests](/spec/model). You will find an explanation of how to produce
-the `oxidized_output`-section in the README.md there.
 
 The YAML simulation files are stored under
 [/spec/model/data/](/spec/model/data/), with the naming convention

@@ -146,7 +146,7 @@ developments could break it, and facilitates debugging issues without having
 access to a physical network device for the model.
 
 In order to simulate the device in the unit test, you need a
-[YAML simulation file](/examples/device-simulation/), have a look at the
+[YAML simulation file](/docs/DeviceSimulation.md), have a look at the
 link for an explanation on how to create one.
 
 Creating the unit test itself is explained in
