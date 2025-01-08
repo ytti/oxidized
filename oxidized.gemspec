@@ -29,6 +29,7 @@ Gem::Specification.new do |s|
   s.add_dependency 'net-scp',              '~> 4.0'
   s.add_dependency 'net-ssh',              '~> 7.3'
   s.add_dependency 'net-telnet',           '~> 0.2'
+  s.add_dependency 'ostruct',              '~> 0.6'
   s.add_dependency 'psych',                '~> 5.0'
   s.add_dependency 'rugged',               '~> 1.6'
   s.add_dependency 'slop',                 '~> 4.6'
