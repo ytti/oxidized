@@ -74,6 +74,7 @@ task :chmod do
     extra/oxidized.runit
     extra/syslog.rb
     extra/update-ca-certificates.runit
+    extra/device2yaml.rb
   ]
   dirs = []
   %x(git ls-files -z).split("\x0").reject { |f| f.match(/^(test|spec|features)\//) }.each do |file|
