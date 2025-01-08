@@ -19,7 +19,11 @@ which we store all relevant information about the device. The most important
 information is the responses to the commands used in the oxidized models.
 
 The YAML simulation files are stored under
-[/examples/device-simulation/yaml/](/examples/device-simulation/yaml/).
+[/spec/model/data/](/spec/model/data/), with the naming convention
+`model:description:simulation.yaml`, in which `model` is the lowercase name
+of the oxidized model and `description` is the name of the test case and is
+generally formatted as #hardware_#software or
+#model_#hardware_#software_#description.
 
 ### Creating a YAML file with device2yaml.rb
 A device does not only output the ASCII text we can see in the console.
@@ -32,20 +36,19 @@ editors automatically remove trailing spaces, so we code them with \x20.
 Although a YAML file could be written by hand, this is quite a tedious task to
 catch all the extra codes and code them into YAML. This can be
 automated with the ruby script
-[device2yaml.rb](/examples/device-simulation/device2yaml.rb).
+[device2yaml.rb](/extras/device2yaml.rb).
 
 `device2yaml.rb` needs ruby and the gem
 [net-ssh](https://rubygems.org/gems/net-ssh/) to run. On debian, you can install
 them with `sudo apt install ruby-net-ssh`
 
-Run `device2yaml.rb` in the directory `/examples/device-simulation/`, the
-online help tells you the options.
+Run `device2yaml.rb`, the online help tells you the options.
 ```
-device-simulation$ ./device2yaml.rb
+oxidized$ extra/device2yaml.rb
 Missing a host to connect to...
 
 Usage: device2yaml.rb [user@]host [options]
-    -c, --cmdset file                Mandatory: specify the commands to be run
+    -c, --cmdset set                 Mandatory: specify the commands to be run
     -o, --output file                Specify an output YAML-file
     -t, --timeout value              Specify the idle timeout beween commands (default: 5 seconds)
     -e, --exec-mode                  Run ssh in exec mode (without tty)
@@ -55,13 +58,13 @@ Usage: device2yaml.rb [user@]host [options]
 - `[user@]host` specifies the user and host to connect to the device. The
 password will be prompted interactively by the script. If you do not specify a
 user, it will use the user executing the script.
-- You must list the commands you want to run on the device in a file. Just
-enter one command per line. It is important that you enter exactly the commands
-used by the oxidized model, and no abbreviation like `sh run`. Do not forget
-to insert the `post_login` commands at the beginning if the model has some and
-also the `pre_logout`commands at the end.
-Predefined command sets for some models are stored in
-`/examples/device-simulation/cmdsets`.
+- The commands that will be run on the device must be defined
+in `deviceyaml.rb`. If you specify an unknown commandset, you will be provided
+with a list of implemented ones. If you implement a new command set, it is
+important that you enter exactly the commands used by the oxidized model,
+and no abbreviation like `sh run`. Do not forget to insert the `post_login`
+commands at the beginning if the model has some and also the `pre_logout`
+commands at the end.
 - `device2yaml.rb` waits an idle timeout after the last received data before
 sending the next command. The default is 5 seconds. If your device makes a
 longer pause than 5 seconds before or within a command, you will see that the
@@ -69,12 +72,12 @@ output of the command is shortened or slips into the next command in the yaml
 file. You will have to change the idle timeout to a greater value to address
 this.
 - When run without the output argument, `device2yaml.rb` will only print the ssh
-output to the standard output. You must use `-o <model_HW_SW.yaml>` to store the
-collected data in a YAML file.
+output to the standard output. You must use `-o <model:HW_SW:simulation.yaml>`
+to store the collected data in a YAML file.
 - If your oxidized model uses ssh exec mode (look for `exec true` in the model),
 you will have to use the option `-e` to run device2yaml in ssh exec mode.
 
-Note that `device2yaml.rb` takes some time to run because of the idle
+Note that `extra/device2yaml.rb` takes some time to run because of the idle
 timeout of (default) 5 seconds between each command. You can press the "Escape"
 key if you know there is no more data to come for the current command (when you
 see the prompt for the next command), and the script will stop waiting and
@@ -82,8 +85,8 @@ directly process the next command.
 
 Here are two examples of how to run the script:
 ```shell
-./device2yaml.rb OX-SW123.sample.domain -c cmdsets/aoscx -o yaml/aoscx_R8N85A-C6000-48G-CL4_PL.10.08.1010.yaml
-./device2yaml.rb admin@r7 -c cmdsets/routeros -e -o yaml/routeros_CHR_7.10.1.yaml
+extra/device2yaml.rb OX-SW123.sample.domain -c aoscx -o spec/model/data/aoscx:R8N85A-C6000-48G-CL4_PL.10.08.1010:simumation.yaml
+extra/device2yaml.rb admin@r7 -c routeros -e -o spec/model/data/routeros:CHR_7.10.1:simulation.yaml
 ```
 
 ### Publishing the YAML simulation file to oxidized
@@ -109,23 +112,28 @@ You can leave the section `oxidized_output` unchanged, it is only used for
 [model unit tests](/spec/model). You will find an explanation of how to produce
 the `oxidized_output`-section in the README.md there.
 
-The YAML simulation file should be stored under
-[/examples/device-simulation/yaml/](/examples/device-simulation/yaml/. It
-should be named so that it can be easily recognized: model, hardware type,
-software version and optionally a description if you need to differentiate two
-YAML files:
+The YAML simulation files are stored under
+[/spec/model/data/](/spec/model/data/), with the naming convention
+`model:description:simulation.yaml`, in which `model` is the lowercase name
+of the oxidized model and `description` is the name of the test case and is
+generally formatted as #hardware_#software or
+#model_#hardware_#software_#description.
 
-- #model_#hardware_#software.yaml
-- #model_#hardware_#software_#description.yaml
+Using a correct name for the file is important in order to be included in
+automatic model unit tests.
 
 Examples:
 
-- garderos_R7709_003_006_068.yaml
-- iosxe_C9200L-24P-4G_17.09.04a.yaml
-- asa_5512_9.12-4-67_single-context.yaml
+- spec/model/data/aoscx:R0X25A-6410_FL.10.10.1100:simulation.yaml
+- spec/model/data/asa:5512_9.12-4-67_single-context:simulation.yaml
+- spec/model/data/ios:C9200L-24P-4G_17.09.04a:simulation.yaml
+
+
+When you are finished, commit and push to your forked repository on github, and
+submit a Pull Request. Thank you for your help!
 
 ### Interactive mode
-The `device2yaml.rb` script is a little dumb and needs some help, especially
+The `device2yaml.rb` script is dumb and sometimes needs some help, especially
 when having a device sending its output page by page and requiring you to press
 space for the next page. `device2yaml.rb` does not know how to handle this.
 
@@ -139,14 +147,10 @@ If you press the "Esc" key, `device2yaml.rb` will not wait for the idle timeout
 and will process the next command right away.
 
 ### YAML Format
-The yaml file has three sections:
+The yaml file has two sections:
 - init_prompt: describing the lines send by the device before we can send a
 command. It usually includes MOTD banners, and must include the first prompt.
 - commands: the commands the oxidized model sends to the network device and the
-expected output.
-- oxidized_output: the expected output of oxidized, so that you can compare it
-to the output generated by the unit test. This is optional and only used for
-unit tests.
 
 The outputs are multiline and use YAML block scalars (`|`), with the trailing \n
 removed (`-` after `|`). The outputs include the echo of the given command and
@@ -164,10 +168,6 @@ commands:
     \e[4m\rLAB-R1234_Garderos#\e[m\x20
 # ...
   exit: ""
-oxidized_output: |
-  # grs-gwuz-armel/003_005_068 (Garderos; 2021-04-30 16:19:35)
-  #\x20
-# ...
 ```
 
 

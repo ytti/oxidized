@@ -1,7 +1,0 @@
-enable
-terminal pager 0
-show mode
-show version
-show inventory
-more system:running-config
-exit
