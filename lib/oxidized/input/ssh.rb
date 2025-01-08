@@ -18,7 +18,7 @@ module Oxidized
 
     def connect(node)
       @node        = node
-      @output      = ''
+      @output      = String.new('')
       @pty_options = { term: "vt100" }
       @node.model.cfg['ssh'].each { |cb| instance_exec(&cb) }
       if Oxidized.config.input.debug?
@@ -109,7 +109,7 @@ module Oxidized
     end
 
     def cmd_shell(cmd, expect_re)
-      @output = ''
+      @output = String.new('')
       @ses.send_data cmd + "\n"
       @ses.process
       expect expect_re if expect_re
