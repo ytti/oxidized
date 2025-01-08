@@ -8,6 +8,7 @@ The format is based on [Keep a Changelog](https://keepachangelog.com/en/1.1.0/).
 ### Added
 - junos: add unit test (@systeembeheerder)
 - apc_aos: support for scp (@robertcheramy)
+- moxa : model for moxa switches (@Marc-79)
 
 ### Changed
 - sonicos: accept policy message. Fixes #3339 (@Steve-M-C, @robertcheramy)
