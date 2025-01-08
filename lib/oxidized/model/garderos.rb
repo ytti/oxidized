@@ -29,7 +29,7 @@ class Garderos < Oxidized::Model
   # If we have a radio modem installed, we'd like to list the SIM Card
   cmd 'show hardware wwan wwan0 sim' do |cfg|
     if cfg.start_with? 'Unknown command'
-      ''
+      String.new('')
     else
       comment "#{cfg}\n"
     end
