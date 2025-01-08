@@ -6,7 +6,7 @@ model with `_spec.rb` appended at the end.
 Although you can write your model unit test yourself according to your specific
 needs, we have a [helper](model_helper_spec.rb) which facilitates the task.
 
-You need a [YAML simulation file](/examples/device-simulation/) for your
+You need a [YAML simulation file](/docs/DeviceSimulation.md) for your
 device, stored under `/examples/device-simulation/. See the link on how to
 produce it.
 

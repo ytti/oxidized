@@ -8,9 +8,83 @@ require 'timeout'
 
 # This scripts logs in a network device and outputs a yaml file that can be
 # used for model unit tests in spec/model/
+# For more information, see docs/DeviceSimulation.md
 
 # This script is quick & dirty - it grew with the time an could be a project
 # for its own. It works, and that should be enough ;-)
+
+################# Command sets
+COMMANDSETS = {
+  aoscx:        ['no page',
+                 'show version',
+                 'show environment',
+                 'show module',
+                 'show interface transceiver',
+                 'show system | exclude "Up Time" | exclude "CPU" | exclude "Memory" | exclude "Pkts .x" | exclude "Lowest" | exclude "Missed"',
+                 'show running-config',
+                 # This command is not needed, but we may code the excludes
+                 # above in the model some tome
+                 'show system',
+                 'exit'],
+  asa:          ['enable',
+                 'terminal pager 0',
+                 'show mode',
+                 'show version',
+                 'show inventory',
+                 'more system:running-config',
+                 'exit'],
+  asyncos:      ['version', # I don not use %w here because of the formating
+                 'showconfig',
+                 'exit'],
+  arubainstant: ['show version',
+                 'show activate status',
+                 'show aps',
+                 'show running-config no-encrypt',
+                 'exit'],
+  ios:          ['terminal length 0',
+                 'terminal width 0',
+                 'show version',
+                 'show vtp status',
+                 'show inventory',
+                 'show running-config',
+                 'exit'],
+  junos:        ['set cli screen-length 0',
+                 'set cli screen-width 0',
+                 'show version',
+                 'show chassis hardware',
+                 'show system license',
+                 'show system license keys',
+                 'show configuration | display omit',
+                 'exit',
+                 ''],
+  nxos:         ['terminal length 0',
+                 'show version',
+                 'show inventory',
+                 'show running-config',
+                 'exit'],
+  opnsense:     ['cat /conf/config.xml',
+                 'opnsense-version || echo "OPNsense "`cat /usr/local/opnsense/version/opnsense`',
+                 'exit'],
+  pfsense:      ['cat /cf/conf/config.xml',
+                 'cat /etc/version',
+                 'exit'],
+  routeros:     ['/system resource print',
+                 '/system package update print',
+                 '/system history print without-paging',
+                 '/export show-sensitive',
+                 'quit'],
+  srosmd:       ['environment more false',
+                 'show system information',
+                 'show card state',
+                 'show chassis',
+                 'file show bootlog.txt',
+                 'admin show configuration debug full-context',
+                 'file show config.dbg',
+                 'admin show configuration configure | match persistent-indices post-lines 10000',
+                 'admin show configuration bof full-context',
+                 'admin show configuration configure full-context',
+                 'logout']
+}.freeze
 
 ################# Methods
 # Runs cmd in the ssh session, either im exec mode or with a tty
@@ -113,15 +187,16 @@ end
 # Define options
 options = {}
 optparse = OptionParser.new do |opts|
-  opts.banner = "Usage: device2yaml.rb [user@]host [options]"
+  opts.banner = 'Usage: device2yaml.rb [user@]host [options]'
 
-  opts.on('-c', '--cmdset file', 'Mandatory: specify the commands to be run') do |file|
-    options[:cmdset] = file
+  opts.on('-c', '--cmdset set', 'Mandatory: specify the commands to be run') do |set|
+    options[:cmdset] = set
   end
   opts.on('-o', '--output file', 'Specify an output YAML-file') do |file|
     options[:output] = file
   end
-  opts.on('-t', '--timeout value', Integer, 'Specify the idle timeout beween commands (default: 5 seconds)') do |timeout|
+  opts.on('-t', '--timeout value', Integer,
+          'Specify the idle timeout beween commands (default: 5 seconds)') do |timeout|
     options[:timeout] = timeout
   end
   opts.on('-e', '--exec-mode', 'Run ssh in exec mode (without tty)') { @exec_mode = true }
@@ -157,8 +232,16 @@ unless options[:cmdset]
   puts optparse
   exit 1
 end
+
+unless COMMANDSETS.has_key?(options[:cmdset].to_sym)
+  puts "Unknown command set '#{options[:cmdset]}', edit device2yaml.rb to add " \
+       "it or use an implemented set:"
+  puts ">  #{COMMANDSETS.keys.join(' ')}"
+  exit 1
+end
+
 # make an array of commands to send, ignore empty lines
-ssh_commands = File.read(options[:cmdset]).split(/\n+|\r+/)
+ssh_commands = COMMANDSETS[options[:cmdset].to_sym]
 
 # Defaut idle timeout: 5 seconds, as tests showed that 2 seconds is too short
 @idle_timeout = options[:timeout] || 5
@@ -209,7 +292,7 @@ else
   yaml_output '  '
 end
 
-@output&.puts "commands:"
+@output&.puts 'commands:'
 
 begin
   ssh_commands.each do |cmd|
@@ -218,8 +301,5 @@ begin
 rescue Errno::ECONNRESET, Net::SSH::Disconnect, IOError => e
   puts "### Connection closed with message: #{e.message}"
 end
-
-@output&.puts 'oxidized_output: |'
-@output&.puts '  !! needs to be written by hand or copy & paste from model output'
 
 cleanup

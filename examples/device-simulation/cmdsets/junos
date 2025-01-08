@@ -1,9 +1,0 @@
-set cli screen-length 0
-set cli screen-width 0
-show version
-show chassis hardware
-show system license
-show system license keys
-show configuration | display omit
-exit
-
