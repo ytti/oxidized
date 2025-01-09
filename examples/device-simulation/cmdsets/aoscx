@@ -1,9 +1,0 @@
-no page
-show version
-show environment
-show module
-show interface transceiver
-show system | exclude "Up Time" | exclude "CPU" | exclude "Memory" | exclude "Pkts .x" | exclude "Lowest" | exclude "Missed"
-show running-config
-show system
-exit

@@ -1,0 +1,94 @@
+# Aruba Operating System Software.
+# ArubaOS (MODEL: 515), Version 8.10.0.6 LSR
+# Website: http://www.arubanetworks.com
+# (c) Copyright 2023 Hewlett Packard Enterprise Development LP.
+# Compiled on 2023-02-14 at 18:20:29 PST (build 86193) by jenkins
+# FIPS Mode :disabled
+# 
+# 
+# IAP MAC Address          :54:d7:e3:00:11:22
+# IAP Serial Number        :CNQHAAAAAM
+# 
+# 
+# 4 Access Points
+# ---------------
+# Name           IP Address      Type         IPv6 Address  Serial #
+# ----           ----------      ----         ------------  --------
+# OXRO-AP111117  10.100.42.237*  515(indoor)  --            CNQHAAAAAM
+# OXRO-AP122229  10.100.42.242   315(indoor)  --            CNK9AAAAAN
+# OXRO-AP111118  10.100.42.241   515(indoor)  --            CNQHAAAAAW
+# OXRO-AP122223  10.100.42.238   315(indoor)  --            CNH6AAAAA6
+# 
+version 8.10.0.0-8.10.0
+syslocation OXIDIZED
+virtual-controller-country DE
+virtual-controller-key AAAAAAAAAABBBBBBBBBBCCCCCCCCCC
+name OXIDIZED-VC
+organization Oxidized-Rocks
+virtual-controller-ip 10.100.42.254
+syslog-server 10.10.42.11  
+terminal-access
+ntp-server 10.10.42.123
+clock timezone Berlin 01 00
+clock summer-time CEST recurring last sunday march 02:00 last sunday october 03:00
+rf-band all
+dynamic-radius-proxy
+
+allow-new-aps
+
+allowed-ap 54:d7:e3:00:11:22
+allowed-ap 54:d7:e3:00:11:24
+allowed-ap 7c:57:3c:00:11:2c
+allowed-ap e8:26:89:00:11:26
+
+
+snmp-server community AAAAAAAAAABBBBBBBBBBCCCCCCCCCC
+snmp-server host 10.10.42.12 version 2c AAAAAAAAAABBBBBBBBBBCCCCCCCCCC inform
+snmp-server host 10.10.42.13 version 2c AAAAAAAAAABBBBBBBBBBCCCCCCCCCC inform
+
+
+
+hash-mgmt-password
+hash-mgmt-user oxidized password hash AAAAAAAAAABBBBBBBBBBCCCCCCCCCC
+hash-mgmt-user rocks password hash AAAAAAAAAABBBBBBBBBBCCCCCCCCCC usertype read-only
+
+
+wlan access-rule default_wired_port_profile
+ index 0
+ rule any any match any any any permit
+
+wlan access-rule 123-OXI--ED
+ utf8
+ index 2
+ rule any any match any any any permit
+
+wlan ssid-profile 123-OXI--ED
+ enable
+ index 0
+ type employee
+ essid 123-OXI--ED
+ utf8
+ wpa-passphrase AAAAAAAAAABBBBBBBBBBCCCCCCCCCC
+ opmode wpa2-psk-aes
+ max-authentication-failures 0
+ vlan 123
+ dot11k
+ dot11v
+
+mgmt-auth-server tacacs2
+mgmt-auth-server tacacs1
+
+wlan tacacs-server tacacs1
+ ip 10.10.42.21
+ key AAAAAAAAAABBBBBBBBBBCCCCCCCCCC
+ timeout 5
+ session-authorization
+
+wlan tacacs-server tacacs2
+ ip 10.10.42.22
+ key AAAAAAAAAABBBBBBBBBBCCCCCCCCCC
+ timeout 5
+ session-authorization
+
+
+

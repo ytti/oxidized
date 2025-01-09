@@ -1,3 +1,0 @@
-cat /conf/config.xml
-opnsense-version || echo "OPNsense "`cat /usr/local/opnsense/version/opnsense`
-exit

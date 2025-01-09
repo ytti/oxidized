@@ -1,6 +1,0 @@
-show system
-show chassis
-show hardware-info
-show running-directory
-show configuration snapshot
-exit

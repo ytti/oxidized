@@ -132,32 +132,16 @@ Intuitively, it is also possible to:
 * Create a completely new model, with a new name, for a new operating system type.
 * Testing/validation of an updated model from the [Oxidized GitHub repo models](https://github.com/ytti/oxidized/tree/master/lib/oxidized/model) by placing an updated model in the proper location without disrupting the gem-supplied model files.
 
-## Create unit tests for the model
-> :warning: model unit tests are still a work in progress and need some polishing.
-
-If you want the model to be integrated into oxidized, you can
-[submit a pull request on github](https://github.com/ytti/oxidized/pulls).
+## Create Unit Tests for the Model
+If you want the model to be integrated into Oxidized, you can
+[submit a pull request on GitHub](https://github.com/ytti/oxidized/pulls).
 This is a greatly appreciated submission, as there are probably other users
 using the same network device as you are.
 
 A good (and optional) practice for submissions is to provide a
-[unit test for your model](/spec/model). This reduces the risk that further
-developments could break it, and facilitates debugging issues without having
-access to a physical network device for the model.
-
-In order to simulate the device in the unit test, you need a
-[YAML simulation file](/examples/device-simulation/), have a look at the
-link for an explanation on how to create one.
-
-Creating the unit test itself is explained in
-[README.md in the model unit test directory](/spec/model/README.md).
-
-Remember - producing a YAML simulation file and/or writing a unit test is
-optional.
-The most value comes from the YAML simulation file. The unit
-test can be written by someone else, but you need access to the device for the
-YAML simulation file. If you encounter problems, open an issue or ask for help
-in your pull request.
+[unit test for your model](/docs/ModelUnitTests.md). This reduces the risk that
+further developments could break it, and facilitates debugging issues without
+having access to a physical network device for the model.
 
 ## Advanced features
 

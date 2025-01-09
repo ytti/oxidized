@@ -1,4 +1,5 @@
 require_relative '../spec_helper'
+require_relative 'atoms'
 require 'yaml'
 
 def init_model_helper
@@ -34,18 +35,36 @@ end
 
 # Class to Simulate Net::SSH::Connection::Session
 class MockSsh
-  attr_reader :oxidized_output
+  def self.caller_model
+    File.basename(caller_locations[1].path).split('_').first
+  end
+
+  def self.get_node(model = nil)
+    model ||= caller_model
+    Oxidized::Node.new(name:  'example.com',
+                       input: 'ssh',
+                       model: model)
+  end
+
+  def self.get_result(test_context = nil, test_or_desc)
+    test = test_or_desc
+    test = ATOMS::TestOutput.new(caller_model, test_or_desc) if test_or_desc.is_a?(String)
+    @node = get_node(test.model)
+    mockmodel = MockSsh.new(test.simulation)
+    Net::SSH.stubs(:start).returns mockmodel
+    status, result = @node.run
+    test_context&._(status)&.must_equal :success
+    result
+  end
 
   # Takes a yaml file with the data used to simulate the model
-  def initialize(yaml_model)
+  def initialize(model)
     @commands = {}
-    model = YAML.load_file(yaml_model)
     model['commands'].each do |key, value|
       @commands[key + "\n"] = interpolate_yaml(value)
     end
 
     @init_prompt = interpolate_yaml(model['init_prompt'])
-    @oxidized_output = interpolate_yaml(model['oxidized_output'])
   end
 
   # We have to interpolate as yaml block scalars don't interpolate anything
