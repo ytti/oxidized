@@ -131,6 +131,9 @@ Tasks: TOP => test
 (See full trace by running task with --trace)
 ```
 
+If you want to be sure that your model has been tested, run
+`bundle exec rake test TESTOPTS="--verbose"` and search for your models unter
+`ATOMS tests`
 
 ## Device Prompt
 You can specify device prompts to test in a YAML file named
