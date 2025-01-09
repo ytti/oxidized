@@ -19,7 +19,7 @@ module Oxidized
       cfgfile = cmd_opts[:config_file] || 'config'
       # configuration file with full path as a class instance variable
       @configfile = File.join(usrdir, cfgfile)
-      asetus = Asetus.new(name: 'oxidized', load: false, key_to_s: true, usrdir: usrdir, cfgfile: cfgfile)
+      asetus = Asetus.new(name: 'oxidized', load: false, usrdir: usrdir, cfgfile: cfgfile)
       Oxidized.asetus = asetus
 
       asetus.default.username      = 'username'
