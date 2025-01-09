@@ -12,7 +12,7 @@ describe 'Model Cumulus' do
                                model: 'cumulus',
                                vars:  { cumulus_use_nvue: true })
 
-    model = YAML.load_file('spec/model/data/cumulus:MSN2010_5.9.2_nvue:simulation.yaml')
+    model = YAML.load_file('spec/model/data/cumulus:MSN2010_5.9.2_nvue:custom_simulation.yaml')
     mockmodel = MockSsh.new(model)
     Net::SSH.stubs(:start).returns mockmodel
 
@@ -32,7 +32,7 @@ describe 'Model Cumulus' do
                                vars:     { cumulus_routing_daemon: 'frr',
                                            enable:                 true })
 
-    model = YAML.load_file('spec/model/data/cumulus:VX_5.4.0_frr:simulation.yaml')
+    model = YAML.load_file('spec/model/data/cumulus:VX_5.4.0_frr:custom_simulation.yaml')
     mockmodel = MockSsh.new(model)
     Net::SSH.stubs(:start).returns mockmodel
 

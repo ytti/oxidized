@@ -1,6 +1,6 @@
 # Model Unit Tests
 Oxidized includes automated unit tests for its models, which require very little
-effort to use. There are three different unit tests for models:
+effort to use. There are three different default unit tests for models:
 - [Device Simulation](ModelUnitTests.md#device-simulation)
 - [Device Prompt](ModelUnitTests.md#device-prompt)
 - [Secrets](ModelUnitTests.md#secrets)
@@ -10,6 +10,9 @@ and the tests will be run automatically with `rake test`. See
 [CONTRIBUTING.md](/CONTRIBUTING.md) for explanations on how to set up a
 development environment. In the following examples, we use
 [Bundler](https://bundler.io/) and prefix all commands with `bundle exec`.
+
+In addition, you can write [custom unit tests](ModelUnitTests.md#custom-tests)
+for your model
 
 ## Device Simulation
 ### YAML Simulation File
@@ -173,3 +176,11 @@ pass:
   - 'hash-mgmt-user oxidized password hash <secret removed>'
   - 'hash-mgmt-user rocks password hash <secret removed> usertype read-only'
 ```
+
+## Custom tests
+When you write custom tests for your models, please do not use the filenames
+mentioned above, as it will interfere with the standard tests. If you need to
+store a custom simulation file, use `model:description:custom_simulation.yaml`.
+
+The [cumulus test](/spec/model/cumulus_spec.rb) is an example of a custom
+test.
