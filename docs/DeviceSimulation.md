@@ -36,13 +36,13 @@ editors automatically remove trailing spaces, so we code them with \x20.
 
 Although a YAML file could be written by hand, this is quite a tedious task to
 catch all the extra codes and code them into YAML. This can be automated with
-the Ruby script [extras/device2yaml.rb](/extras/device2yaml.rb).
+the Ruby script [extra/device2yaml.rb](/extra/device2yaml.rb).
 
 `device2yaml.rb` needs Ruby and the gem
 [net-ssh](https://rubygems.org/gems/net-ssh/) to run. On Debian, you can install
 them with `sudo apt install ruby-net-ssh`.
 
-Run `extras/device2yaml.rb`, the online help tells you the options.
+Run `extra/device2yaml.rb`, the online help tells you the options.
 ```
 oxidized$ extra/device2yaml.rb
 Missing a host to connect to...

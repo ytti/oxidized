@@ -38,7 +38,6 @@ Gem::Specification.new do |s|
   s.add_development_dependency 'git',                 '~> 2'
   s.add_development_dependency 'minitest',            '~> 5.25.4'
   s.add_development_dependency 'mocha',               '~> 2.1'
-  s.add_development_dependency 'mutex_m'
   s.add_development_dependency 'pry',                 '~> 0.15.0'
   s.add_development_dependency 'rake',                '~> 13.0'
   s.add_development_dependency 'rubocop',             '~> 1.69.0'

@@ -1,5 +1,5 @@
 # Automatic Trivial Oxidized Model Spec - ATOMS
-# Tries to simplify model testing for the simple/common case
+# Simple model testing for the simple/common case
 class ATOMS
   DIRECTORY = File.join(File.dirname(__FILE__), 'data').freeze
   class ATOMSError < StandardError; end
@@ -28,6 +28,7 @@ class ATOMS
     end
   end
 
+  # Abstract Class for loading test data
   class Test
     class TestError < ATOMSError; end
     attr_reader :model, :desc, :type
@@ -69,11 +70,11 @@ class ATOMS
   #
   # The files are stored under ATOMS::DIRECTORY (spec/model/data) and follow the
   # naming convention:
-  # - YAML Simulation: model:description:simulation.yaml
-  # - Expected Output: model:description:output.txt
+  # - YAML Simulation File: model:description:simulation.yaml
+  # - Expected Output:      model:description:output.txt
   #
   # "description" is the name of the test case and is generally formatted as
-  # #hardware_#software or #model_#hardware_#software_#description.
+  # #hardware_#software or #model_#hardware_#information.
   #
   # The test is skipped if one of the files is missing.
   class TestOutput < Test
@@ -98,16 +99,14 @@ class ATOMS
     end
   end
 
-  # Support class for loading prompts to test as part of the model unit tests.
+  # Extends ATOMS::Test to support tests that pass or must fail
   #
-  # The prompts are loaded from files stored under
-  # ATOMS::DIRECTORY (spec/model/data) and follow the naming convention:
-  # - model:description:prompt.yaml
+  # The tests are read from a YAML file, which contains two attributes:
+  # - pass: data for tests that should pass
+  # - fail: data for tests that should fail
   #
-  # "description" is generally named 'generic', as all prompts for a model
-  # can be stored into as single YAML file.
-  #
-  # The test is skipped if the YAML file could not be loaded.
+  # Each attribute contains a list of the data to test. These lists are stored
+  # in the instance variables @data['pass'] and @data['fail']
   class TestPassFail < Test
     GLOB = false # this is not an actual test, but a parent for prompt/secret
     attr_reader :data
@@ -128,6 +127,26 @@ class ATOMS
     end
   end
 
+  # Support class for loading prompts to test against the models.
+  #
+  # The prompts are loaded from files stored in the directory specified by
+  # ATOMS::DIRECTORY (spec/model/data) and follow the naming convention:
+  # model:description:prompt.yaml
+  #
+  # "description" is generally named 'generic', as all prompts for a model
+  # can be stored in a single YAML file.
+  #
+  # The test is skipped if the YAML file cannot be loaded.
+  #
+  # The tests are read from a YAML file, which contains three attributes:
+  # - pass: regexps that should pass
+  # - pass_with_expect: regexps that should pass after the expect commands
+  #   have been run
+  # - fail: regexps that should fail (without expect commands)
+  #
+  # Each attribute contains a list of the regexps to test. These lists are
+  # stored in the instance variables @data['pass'], @data['pass_with_expect'],
+  # and @data['fail'].
   class TestPrompt < TestPassFail
     GLOB = '*:prompt.yaml'.freeze
     def initialize(model, desc, type = 'prompt')
@@ -141,6 +160,27 @@ class ATOMS
     end
   end
 
+  # Support class for loading strings used to test the secret feature of the
+  # models.
+  #
+  # The test data is loaded from YAML files stored in the directory specified by
+  # ATOMS::DIRECTORY (spec/model/data) and follows the naming convention:
+  # model:description:secret.yaml
+  #
+  # "description" is the name of the test case and is generally formatted as
+  # #hardware_#software or #model_#hardware_#information. It must match the
+  # name of the corresponding YAML simulation file.
+  #
+  # The test is skipped if the YAML file cannot be loaded.
+  #
+  # The YAML file contains two attributes, each with a list of strings that
+  # should be present or absent in the output of the model when the secret
+  # feature is active:
+  # - pass: strings that should be present (replaced by secret)
+  # - fail: strings that should be absent (removed by secret)
+  #
+  # These lists are stored in the instance variable @data['pass'] and
+  # @data['fail'].
   class TestSecret < TestPassFail
     GLOB = '*:secret.yaml'.freeze
     attr_reader :output_test

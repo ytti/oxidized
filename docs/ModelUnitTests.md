@@ -1,5 +1,5 @@
 # Model Unit Tests
-Oxidized includes automated unit tests for its model, which require very little
+Oxidized includes automated unit tests for its models, which require very little
 effort to use. There are three different unit tests for models:
 - [Device Simulation](ModelUnitTests.md#device-simulation)
 - [Device Prompt](ModelUnitTests.md#device-prompt)

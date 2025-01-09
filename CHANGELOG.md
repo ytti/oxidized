@@ -15,7 +15,7 @@ The format is based on [Keep a Changelog](https://keepachangelog.com/en/1.1.0/).
 - input/ssh: change input.debug to dump all characters and include sent commands. (@robertcheramy)
 - cumulus: remove ANSI Escape codes and fix prompt issues. The prompt is more specific now (@alchemyx, @robertcheramy)
 - model unit tests: the tests are automated and simpler to use (@ytti, @robertcheramy)
-- device2yaml.rb: moved to extras, commands can be specified from the command line or from a file (no cmdsets provided anymore) (@robertcheramy)
+- device2yaml.rb: moved to extra/, commands can be specified from the command line or from a file (no cmdsets provided anymore) (@robertcheramy)
 
 ### Fixed
 - tplink: send 'enable' before the enable password. Fixes #3271 (@robertcheramy)

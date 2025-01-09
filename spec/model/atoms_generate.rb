@@ -1,6 +1,7 @@
 require_relative 'model_helper'
 
-# FIXME: refactor result generation/init_model_helper so that we don't need to run it inside test
+# We use empty tests because we need the mock / stub feature of minitest/mocha
+# to simulate SSH in order to generate the output
 describe('') do
   it('') do
     ATOMS.get(ATOMS::TestOutput, '*:simulation.yaml').each do |test|

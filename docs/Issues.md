@@ -63,7 +63,7 @@ sudo apt install git ruby-net-ssh
 ```
 git clone git@github.com:<your github user>/oxidized.git
 ```
-- run the extras/device2yaml.rb script (you’ll be provided with the command to
+- run the `extra/device2yaml.rb` script (you’ll be provided with the command to
 run) from the repository root:
 
 ```
