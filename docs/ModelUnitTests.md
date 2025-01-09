@@ -1,39 +1,38 @@
-# Model unit tests
-Oxidized includes automated unit tests for its model, wich require very few
-efforts to use. There are three different unit tests for models:
-- [device simulation](ModelUnitTests.md#device-simulation)
-- [device prompt](ModelUnitTests.md#device-prompt)
-- [secrets](ModelUnitTests.md#secrets)
+# Model Unit Tests
+Oxidized includes automated unit tests for its model, which require very little
+effort to use. There are three different unit tests for models:
+- [Device Simulation](ModelUnitTests.md#device-simulation)
+- [Device Prompt](ModelUnitTests.md#device-prompt)
+- [Secrets](ModelUnitTests.md#secrets)
 
-You only need to provide test files under [/spec/model/data](/spec/model/data)
-and the tests will be run automatically with `rake test`.
-See [CONTRIBUTING.md](/CONTRIBUTING.md) for explanations on how to run
-`rake test` in a development environment. In the following examples,
-we use [Bundler](https://bundler.io/) and prefix all commands with
-`bundle exec `.
+You only need to provide test files under [/spec/model/data](/spec/model/data),
+and the tests will be run automatically with `rake test`. See
+[CONTRIBUTING.md](/CONTRIBUTING.md) for explanations on how to set up a
+development environment. In the following examples, we use
+[Bundler](https://bundler.io/) and prefix all commands with `bundle exec`.
 
 ## Device Simulation
-### YAML simulation file
-You need a [YAML simulation file](/docs/DeviceSimulation.md) for your
-device, see the link on how to produce it.
+### YAML Simulation File
+You need a [YAML simulation file](/docs/DeviceSimulation.md) for your device.
+See the link for instructions on how to produce it.
 
 The YAML simulation files are stored under
 [/spec/model/data/](/spec/model/data/), with the naming convention
-`model:description:simulation.yaml`, in which `model` is the lowercase name
-of the oxidized model and `description` is the name of the test case and is
-generally formatted as #hardware_#software or
-#model_#hardware_#software_#description.
+`<model>:<description>:simulation.yaml`, where `<model>` is the lowercase name
+of the Oxidized model and `<description>` is the name of the test case.
+`<description>` is generally formatted as `<hardware>_<software>` or
+`<hardware>_<software>_<information>`.
 
-Using a correct name for the file is important in order to be included in
+Using a correct name for the file is important to ensure it is included in
 automatic model unit tests.
 
-### Expected output
-You need a second file wich contains the expected output, wich has the same
-name as the YAML simulation file but ends with `:output.txt`
-instead of `:simulation.yaml`
+### Expected Output
+You need a second file that contains the expected output, which has the same
+name as the YAML simulation file but ends with `:output.txt` instead of
+`:simulation.yaml`.
 
-You can automatically produce an output file based on the current model for
-all YAML simulation files missing an `:output.txt`:
+You can automatically produce an output file based on the current model for all
+YAML simulation files missing an `:output.txt`:
 ```shell
 bundle exec ruby spec/model/atoms_generate.rb
 ```
@@ -73,12 +72,12 @@ Coverage report generated for RSpec to /home/xxx/oxidized/coverage.
 Line Coverage: 58.02% (651 / 1122)
 ```
 
-### Running the tests
+### Running the Tests
 You can modify the `:output.txt` file to match your expectations and modify the
-model accordingly. run `bundle exec rake` to run the tests.
+model accordingly. Run `bundle exec rake` to run the tests.
 
-Here is an example when the output of the VTP command is missing in the
-expected output:
+Here is an example when the output of the VTP command is missing in the expected
+output:
 
 ```
 oxidized$ bundle exec rake test
@@ -133,14 +132,15 @@ Tasks: TOP => test
 ```
 
 
-## Device prompt
+## Device Prompt
 You can specify device prompts to test in a YAML file named
 `spec/model/data/<model>:generic:prompt.yaml`.
 
 The YAML file has three sections containing a list of prompts to test:
-- pass: these prompts will pass the prompt regexp
-- pass_with_expect: these prompts will pass the prompt regexp after having been cleaned by the expect commands.
-- fail: these prompts wil fail the prompt regexp
+- pass: these prompts will pass the prompt regexp.
+- pass_with_expect: these prompts will pass the prompt regexp after having been
+  cleaned by the expect commands.
+- fail: these prompts will fail the prompt regexp.
 
 Here is an example:
 ```yaml
@@ -154,13 +154,13 @@ fail:
 ```
 
 ## Secrets
-You can test if the model effectively remove secrets from your YAML simulation
+You can test if the model effectively removes secrets from your YAML simulation
 file with a YAML file named like the YAML simulation, but with the suffix
 `:secret.yaml`.
 
-The YAML file has three sections containing a list of strings to test:
-- fail: the test will fail if the output contains this strings
-- pass: the test will pass only if the output contain these strings
+The YAML file has two sections containing a list of strings to test:
+- fail: the test will fail if the output contains these strings.
+- pass: the test will pass only if the output contains these strings.
 
 ```yaml
 fail:
