@@ -226,6 +226,7 @@ source:
 model_map:
   cisco: ios
   juniper: junos
+  !ruby/regexp /procurve/: procurve
 ```
 
 ## Advanced Group Configuration

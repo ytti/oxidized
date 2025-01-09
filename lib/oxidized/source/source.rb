@@ -8,12 +8,20 @@ module Oxidized
         @group_map = Oxidized.config.group_map || {}
       end
 
+      def map_value(map_hash, original_value)
+        map_hash.each do |key, new_value|
+          mthd = key.instance_of?(Regexp) ? :match : :eql?
+          return new_value if original_value.send(mthd, key)
+        end
+        original_value
+      end
+
       def map_model(model)
-        @model_map.has_key?(model) ? @model_map[model] : model
+        map_value(@model_map, model)
       end
 
       def map_group(group)
-        @group_map.has_key?(group) ? @group_map[group] : group
+        map_value(@group_map, group)
       end
 
       def node_var_interpolate(var)
