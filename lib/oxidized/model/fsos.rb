@@ -2,6 +2,7 @@ class FSOS < Oxidized::Model
   # Fiberstore / fs.com
   using Refinements
   comment '! '
+  prompt /^([\w.@()-]+[#>]\s?)$/
 
   # Handle paging
   expect /^ --More--.*$/ do |data, re|
@@ -13,6 +14,9 @@ class FSOS < Oxidized::Model
     cfg.gsub! /(secret \w+) (\S+).*/, '\\1 <secret hidden>'
     cfg.gsub! /(password \d+) (\S+).*/, '\\1 <secret hidden>'
     cfg.gsub! /(snmp-server community \d+) (\S+).*/, '\\1 <secret hidden>'
+    cfg.gsub! /^(snmp-server host \S+( udp-port \d+)?( permit|deny \d+)?( informs?)?( traps?)?(( version v3 (priv|auth|noauth))|( version (v1|v2c))?)) +\S+( .*)?$*/, '\\1 <secret hidden>'
+    cfg.gsub! /^(snmp-server user \S+ \S+ v3( priv (des|aes128|aes256|aes256-c))?( auth (md5|sha|sha256) \d+)) +\S+( .*)?$*/, '\\1 <secret hidden>'
+    cfg.gsub! /^(.*key \d+) (\S+).*/, '\\1 <secret hidden>'
     cfg
   end
 
@@ -37,7 +41,7 @@ class FSOS < Oxidized::Model
   cfg :telnet, :ssh do
     post_login 'enable'
     post_login 'terminal length 0'
-    post_login 'terminal width 256'
+    post_login 'terminal width 512'
     pre_logout 'exit'
     pre_logout 'exit'
   end

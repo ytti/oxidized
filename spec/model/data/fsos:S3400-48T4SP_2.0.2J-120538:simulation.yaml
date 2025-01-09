@@ -1,0 +1,790 @@
+---
+init_prompt: |-
+  FS-LAB-OXI#
+commands:
+  enable: |-
+    enable
+    FS-LAB-OXI#
+  terminal length 0: |-
+    terminal length 0
+    FS-LAB-OXI#
+  terminal width 512: |-
+    terminal width 512
+    FS-LAB-OXI#
+  show version: |-
+    show version
+    Fiberstore Co., Limited Internetwork Operating System Software
+    S3400-48T4SP Software, Version 2.0.2J Build 120538, RELEASE SOFTWARE
+    Copyright (c) 2019 by FS.COM All Rights Reserved
+    Compiled: 2023-11-21 15:39:8 by SYS, Image text-base: 0x80010000
+    ROM: System Bootstrap, Version 0.1.3,hardware version:A
+    Serial num:CG2XXXXXX, ID num:2000000
+    System image file is \"Switch.bin\"
+    FS S3400-48T4SP RISC
+    262144K bytes of memory,16384K bytes of flash
+    Base ethernet MAC Address: 64:9d:99:23:25:04
+    snmp info:
+      vend_ID:52642   product_ID:445   system_ID:1.3.6.1.4.1.52642.1.445.0
+    FS-LAB-OXI uptime is 4:04:14:10, The current time: 2024-12-25 22:18:44
+     Reboot history information:
+      No. 1: System is rebooted by power-on
+      No. 2: System is rebooted by command at 2000-1-1 0:7:30, uptime 0:00:07:12
+      No. 3: System is rebooted by command at 2000-1-1 2:50:33, uptime 0:02:50:16
+    FS-LAB-OXI#
+  show running-config: |-
+    show running-config
+    Building configuration...
+
+
+
+    Current configuration:
+    !
+    !version 2.0.2J build 120538
+    service timestamps log date
+    service timestamps debug date
+    service password-encryption
+    logging trap debugging
+    !
+    !
+    hostname FS-LAB-OXI
+    !
+    !
+    lldp run
+    !
+    !
+    ip domain-list example.com
+    ip domain-list intra.example.com
+    ip name-server 1.1.1.1
+    ip name-server 8.8.8.8
+    !
+    !
+    !
+    !
+    spanning-tree mode mstp
+    !
+    dot1x enable
+    dot1x authen-type chap
+    dot1x re-authentication
+    dot1x timeout re-authperiod 604800
+    dot1x guest-vlan
+    dot1x mabformat 3
+    !
+    !
+    !
+    !
+    ip access-list standard ACL_SNMP
+    !
+    !
+    !
+    !
+    !
+    !
+    !
+    !
+    !
+    !
+    !
+    !
+    !
+    aaa authentication banner \"Use your Admin password.\"
+    aaa authentication fail-message \"Access is restricted to Admins!!\"
+    aaa authentication login default local group admin-radius continue-on-failed
+    aaa authentication enable default none
+    aaa authentication dot1x default group user-radius
+    aaa authorization exec default group admin-radius local
+    aaa accounting connection default start-stop group accounting-radius
+    !
+    username admin password 7 0932840928a209842390
+    username oxidized password 7 098234092384d92384f92384
+    !
+    !
+    !
+    !
+    interface Null0
+    !
+    interface GigaEthernet0/1
+     description \"USER\"
+     dot1x authentication method user-radius
+     dot1x port-control misc-mab
+     dot1x accounting method accounting-radius
+     dot1x accounting enable
+     spanning-tree bpdufilter enable
+     spanning-tree bpduguard enable
+     no lldp transmit
+     no lldp receive
+     storm-control broadcast threshold 200
+     poe disable
+    !
+    interface GigaEthernet0/2
+     description \"USER\"
+     dot1x authentication method user-radius
+     dot1x port-control misc-mab
+     dot1x accounting method accounting-radius
+     dot1x accounting enable
+     spanning-tree bpdufilter enable
+     spanning-tree bpduguard enable
+     no lldp transmit
+     no lldp receive
+     storm-control broadcast threshold 200
+     poe disable
+    !
+    interface GigaEthernet0/3
+     description \"USER\"
+     dot1x authentication method user-radius
+     dot1x port-control misc-mab
+     dot1x accounting method accounting-radius
+     dot1x accounting enable
+     spanning-tree bpdufilter enable
+     spanning-tree bpduguard enable
+     no lldp transmit
+     no lldp receive
+     storm-control broadcast threshold 200
+     poe disable
+    !
+    interface GigaEthernet0/4
+     description \"USER\"
+     dot1x authentication method user-radius
+     dot1x port-control misc-mab
+     dot1x accounting method accounting-radius
+     dot1x accounting enable
+     spanning-tree bpdufilter enable
+     spanning-tree bpduguard enable
+     no lldp transmit
+     no lldp receive
+     storm-control broadcast threshold 200
+     poe disable
+    !
+    interface GigaEthernet0/5
+     description \"USER\"
+     dot1x authentication method user-radius
+     dot1x port-control misc-mab
+     dot1x accounting method accounting-radius
+     dot1x accounting enable
+     spanning-tree bpdufilter enable
+     spanning-tree bpduguard enable
+     no lldp transmit
+     no lldp receive
+     storm-control broadcast threshold 200
+     poe disable
+    !
+    interface GigaEthernet0/6
+     description \"USER\"
+     dot1x authentication method user-radius
+     dot1x port-control misc-mab
+     dot1x accounting method accounting-radius
+     dot1x accounting enable
+     spanning-tree bpdufilter enable
+     spanning-tree bpduguard enable
+     no lldp transmit
+     no lldp receive
+     storm-control broadcast threshold 200
+     poe disable
+    !
+    interface GigaEthernet0/7
+     description \"USER\"
+     dot1x authentication method user-radius
+     dot1x port-control misc-mab
+     dot1x accounting method accounting-radius
+     dot1x accounting enable
+     spanning-tree bpdufilter enable
+     spanning-tree bpduguard enable
+     no lldp transmit
+     no lldp receive
+     storm-control broadcast threshold 200
+     poe disable
+    !
+    interface GigaEthernet0/8
+     description \"USER\"
+     dot1x authentication method user-radius
+     dot1x port-control misc-mab
+     dot1x accounting method accounting-radius
+     dot1x accounting enable
+     spanning-tree bpdufilter enable
+     spanning-tree bpduguard enable
+     no lldp transmit
+     no lldp receive
+     storm-control broadcast threshold 200
+     poe disable
+    !
+    interface GigaEthernet0/9
+     description \"USER\"
+     dot1x authentication method user-radius
+     dot1x port-control misc-mab
+     dot1x accounting method accounting-radius
+     dot1x accounting enable
+     spanning-tree bpdufilter enable
+     spanning-tree bpduguard enable
+     no lldp transmit
+     no lldp receive
+     storm-control broadcast threshold 200
+     poe disable
+    !
+    interface GigaEthernet0/10
+     description \"USER\"
+     dot1x authentication method user-radius
+     dot1x port-control misc-mab
+     dot1x accounting method accounting-radius
+     dot1x accounting enable
+     spanning-tree bpdufilter enable
+     spanning-tree bpduguard enable
+     no lldp transmit
+     no lldp receive
+     storm-control broadcast threshold 200
+     poe disable
+    !
+    interface GigaEthernet0/11
+     description \"USER\"
+     dot1x authentication method user-radius
+     dot1x port-control misc-mab
+     dot1x accounting method accounting-radius
+     dot1x accounting enable
+     spanning-tree bpdufilter enable
+     spanning-tree bpduguard enable
+     no lldp transmit
+     no lldp receive
+     storm-control broadcast threshold 200
+     poe disable
+    !
+    interface GigaEthernet0/12
+     description \"USER\"
+     dot1x authentication method user-radius
+     dot1x port-control misc-mab
+     dot1x accounting method accounting-radius
+     dot1x accounting enable
+     spanning-tree bpdufilter enable
+     spanning-tree bpduguard enable
+     no lldp transmit
+     no lldp receive
+     storm-control broadcast threshold 200
+     poe disable
+    !
+    interface GigaEthernet0/13
+     description \"USER\"
+     dot1x authentication method user-radius
+     dot1x port-control misc-mab
+     dot1x accounting method accounting-radius
+     dot1x accounting enable
+     spanning-tree bpdufilter enable
+     spanning-tree bpduguard enable
+     no lldp transmit
+     no lldp receive
+     storm-control broadcast threshold 200
+     poe disable
+    !
+    interface GigaEthernet0/14
+     description \"USER\"
+     dot1x authentication method user-radius
+     dot1x port-control misc-mab
+     dot1x accounting method accounting-radius
+     dot1x accounting enable
+     spanning-tree bpdufilter enable
+     spanning-tree bpduguard enable
+     no lldp transmit
+     no lldp receive
+     storm-control broadcast threshold 200
+     poe disable
+    !
+    interface GigaEthernet0/15
+     description \"USER\"
+     dot1x authentication method user-radius
+     dot1x port-control misc-mab
+     dot1x accounting method accounting-radius
+     dot1x accounting enable
+     spanning-tree bpdufilter enable
+     spanning-tree bpduguard enable
+     no lldp transmit
+     no lldp receive
+     storm-control broadcast threshold 200
+     poe disable
+    !
+    interface GigaEthernet0/16
+     description \"USER\"
+     dot1x authentication method user-radius
+     dot1x port-control misc-mab
+     dot1x accounting method accounting-radius
+     dot1x accounting enable
+     spanning-tree bpdufilter enable
+     spanning-tree bpduguard enable
+     no lldp transmit
+     no lldp receive
+     storm-control broadcast threshold 200
+     poe disable
+    !
+    interface GigaEthernet0/17
+     description \"USER\"
+     dot1x authentication method user-radius
+     dot1x port-control misc-mab
+     dot1x accounting method accounting-radius
+     dot1x accounting enable
+     spanning-tree bpdufilter enable
+     spanning-tree bpduguard enable
+     no lldp transmit
+     no lldp receive
+     storm-control broadcast threshold 200
+     poe disable
+    !
+    interface GigaEthernet0/18
+     description \"USER\"
+     dot1x authentication method user-radius
+     dot1x port-control misc-mab
+     dot1x accounting method accounting-radius
+     dot1x accounting enable
+     spanning-tree bpdufilter enable
+     spanning-tree bpduguard enable
+     no lldp transmit
+     no lldp receive
+     storm-control broadcast threshold 200
+     poe disable
+    !
+    interface GigaEthernet0/19
+     description \"USER\"
+     dot1x authentication method user-radius
+     dot1x port-control misc-mab
+     dot1x accounting method accounting-radius
+     dot1x accounting enable
+     spanning-tree bpdufilter enable
+     spanning-tree bpduguard enable
+     no lldp transmit
+     no lldp receive
+     storm-control broadcast threshold 200
+     poe disable
+    !
+    interface GigaEthernet0/20
+     description \"USER\"
+     dot1x authentication method user-radius
+     dot1x port-control misc-mab
+     dot1x accounting method accounting-radius
+     dot1x accounting enable
+     spanning-tree bpdufilter enable
+     spanning-tree bpduguard enable
+     no lldp transmit
+     no lldp receive
+     storm-control broadcast threshold 200
+     poe disable
+    !
+    interface GigaEthernet0/21
+     description \"USER\"
+     dot1x authentication method user-radius
+     dot1x port-control misc-mab
+     dot1x accounting method accounting-radius
+     dot1x accounting enable
+     spanning-tree bpdufilter enable
+     spanning-tree bpduguard enable
+     no lldp transmit
+     no lldp receive
+     storm-control broadcast threshold 200
+     poe disable
+    !
+    interface GigaEthernet0/22
+     description \"USER\"
+     dot1x authentication method user-radius
+     dot1x port-control misc-mab
+     dot1x accounting method accounting-radius
+     dot1x accounting enable
+     spanning-tree bpdufilter enable
+     spanning-tree bpduguard enable
+     no lldp transmit
+     no lldp receive
+     storm-control broadcast threshold 200
+     poe disable
+    !
+    interface GigaEthernet0/23
+     description \"USER\"
+     dot1x authentication method user-radius
+     dot1x port-control misc-mab
+     dot1x accounting method accounting-radius
+     dot1x accounting enable
+     spanning-tree bpdufilter enable
+     spanning-tree bpduguard enable
+     no lldp transmit
+     no lldp receive
+     storm-control broadcast threshold 200
+     poe disable
+    !
+    interface GigaEthernet0/24
+     description \"USER\"
+     dot1x authentication method user-radius
+     dot1x port-control misc-mab
+     dot1x accounting method accounting-radius
+     dot1x accounting enable
+     spanning-tree bpdufilter enable
+     spanning-tree bpduguard enable
+     no lldp transmit
+     no lldp receive
+     storm-control broadcast threshold 200
+     poe disable
+    !
+    interface GigaEthernet0/25
+     description \"USER\"
+     dot1x authentication method user-radius
+     dot1x port-control misc-mab
+     dot1x accounting method accounting-radius
+     dot1x accounting enable
+     spanning-tree bpdufilter enable
+     spanning-tree bpduguard enable
+     no lldp transmit
+     no lldp receive
+     storm-control broadcast threshold 200
+     poe disable
+    !
+    interface GigaEthernet0/26
+     description \"USER\"
+     dot1x authentication method user-radius
+     dot1x port-control misc-mab
+     dot1x accounting method accounting-radius
+     dot1x accounting enable
+     spanning-tree bpdufilter enable
+     spanning-tree bpduguard enable
+     no lldp transmit
+     no lldp receive
+     storm-control broadcast threshold 200
+     poe disable
+    !
+    interface GigaEthernet0/27
+     description \"USER\"
+     dot1x authentication method user-radius
+     dot1x port-control misc-mab
+     dot1x accounting method accounting-radius
+     dot1x accounting enable
+     spanning-tree bpdufilter enable
+     spanning-tree bpduguard enable
+     no lldp transmit
+     no lldp receive
+     storm-control broadcast threshold 200
+     poe disable
+    !
+    interface GigaEthernet0/28
+     description \"USER\"
+     dot1x authentication method user-radius
+     dot1x port-control misc-mab
+     dot1x accounting method accounting-radius
+     dot1x accounting enable
+     spanning-tree bpdufilter enable
+     spanning-tree bpduguard enable
+     no lldp transmit
+     no lldp receive
+     storm-control broadcast threshold 200
+     poe disable
+    !
+    interface GigaEthernet0/29
+     description \"USER\"
+     dot1x authentication method user-radius
+     dot1x port-control misc-mab
+     dot1x accounting method accounting-radius
+     dot1x accounting enable
+     spanning-tree bpdufilter enable
+     spanning-tree bpduguard enable
+     no lldp transmit
+     no lldp receive
+     storm-control broadcast threshold 200
+     poe disable
+    !
+    interface GigaEthernet0/30
+     description \"USER\"
+     dot1x authentication method user-radius
+     dot1x port-control misc-mab
+     dot1x accounting method accounting-radius
+     dot1x accounting enable
+     spanning-tree bpdufilter enable
+     spanning-tree bpduguard enable
+     no lldp transmit
+     no lldp receive
+     storm-control broadcast threshold 200
+     poe disable
+    !
+    interface GigaEthernet0/31
+     description \"USER\"
+     dot1x authentication method user-radius
+     dot1x port-control misc-mab
+     dot1x accounting method accounting-radius
+     dot1x accounting enable
+     spanning-tree bpdufilter enable
+     spanning-tree bpduguard enable
+     no lldp transmit
+     no lldp receive
+     storm-control broadcast threshold 200
+     poe disable
+    !
+    interface GigaEthernet0/32
+     description \"USER\"
+     dot1x authentication method user-radius
+     dot1x port-control misc-mab
+     dot1x accounting method accounting-radius
+     dot1x accounting enable
+     spanning-tree bpdufilter enable
+     spanning-tree bpduguard enable
+     no lldp transmit
+     no lldp receive
+     storm-control broadcast threshold 200
+     poe disable
+    !
+    interface GigaEthernet0/33
+     description \"USER\"
+     dot1x authentication method user-radius
+     dot1x port-control misc-mab
+     dot1x accounting method accounting-radius
+     dot1x accounting enable
+     spanning-tree bpdufilter enable
+     spanning-tree bpduguard enable
+     no lldp transmit
+     no lldp receive
+     storm-control broadcast threshold 200
+     poe disable
+    !
+    interface GigaEthernet0/34
+     description \"USER\"
+     dot1x authentication method user-radius
+     dot1x port-control misc-mab
+     dot1x accounting method accounting-radius
+     dot1x accounting enable
+     spanning-tree bpdufilter enable
+     spanning-tree bpduguard enable
+     no lldp transmit
+     no lldp receive
+     storm-control broadcast threshold 200
+     poe disable
+    !
+    interface GigaEthernet0/35
+     description \"USER\"
+     dot1x authentication method user-radius
+     dot1x port-control misc-mab
+     dot1x accounting method accounting-radius
+     dot1x accounting enable
+     spanning-tree bpdufilter enable
+     spanning-tree bpduguard enable
+     no lldp transmit
+     no lldp receive
+     storm-control broadcast threshold 200
+     poe disable
+    !
+    interface GigaEthernet0/36
+     description \"USER\"
+     dot1x authentication method user-radius
+     dot1x port-control misc-mab
+     dot1x accounting method accounting-radius
+     dot1x accounting enable
+     spanning-tree bpdufilter enable
+     spanning-tree bpduguard enable
+     no lldp transmit
+     no lldp receive
+     storm-control broadcast threshold 200
+     poe disable
+    !
+    interface GigaEthernet0/37
+     description \"USER\"
+     dot1x authentication method user-radius
+     dot1x port-control misc-mab
+     dot1x accounting method accounting-radius
+     dot1x accounting enable
+     spanning-tree bpdufilter enable
+     spanning-tree bpduguard enable
+     no lldp transmit
+     no lldp receive
+     storm-control broadcast threshold 200
+     poe disable
+    !
+    interface GigaEthernet0/38
+     description \"USER\"
+     dot1x authentication method user-radius
+     dot1x port-control misc-mab
+     dot1x accounting method accounting-radius
+     dot1x accounting enable
+     spanning-tree bpdufilter enable
+     spanning-tree bpduguard enable
+     no lldp transmit
+     no lldp receive
+     storm-control broadcast threshold 200
+     poe disable
+    !
+    interface GigaEthernet0/39
+     description \"USER\"
+     dot1x authentication method user-radius
+     dot1x port-control misc-mab
+     dot1x accounting method accounting-radius
+     dot1x accounting enable
+     spanning-tree bpdufilter enable
+     spanning-tree bpduguard enable
+     no lldp transmit
+     no lldp receive
+     storm-control broadcast threshold 200
+     poe disable
+    !
+    interface GigaEthernet0/40
+     description \"USER\"
+     dot1x authentication method user-radius
+     dot1x port-control misc-mab
+     dot1x accounting method accounting-radius
+     dot1x accounting enable
+     spanning-tree bpdufilter enable
+     spanning-tree bpduguard enable
+     no lldp transmit
+     no lldp receive
+     storm-control broadcast threshold 200
+     poe disable
+    !
+    interface GigaEthernet0/41
+     description \"TRUNK\"
+     spanning-tree bpdufilter enable
+     spanning-tree bpduguard enable
+     switchport trunk vlan-allowed 1201,1310-1311,2000-3999
+     switchport trunk vlan-untagged 1201
+     switchport mode trunk
+     switchport pvid 1201
+    !
+    interface GigaEthernet0/42
+     description \"TRUNK\"
+     spanning-tree bpdufilter enable
+     spanning-tree bpduguard enable
+     switchport trunk vlan-allowed 1201,1310-1311,2000-3999
+     switchport trunk vlan-untagged 1201
+     switchport mode trunk
+     switchport pvid 1201
+    !
+    interface GigaEthernet0/43
+     description \"TRUNK\"
+     spanning-tree bpdufilter enable
+     spanning-tree bpduguard enable
+     switchport trunk vlan-allowed 1201,1310-1311,2000-3999
+     switchport trunk vlan-untagged 1201
+     switchport mode trunk
+     switchport pvid 1201
+    !
+    interface GigaEthernet0/44
+     description \"TRUNK\"
+     spanning-tree bpdufilter enable
+     spanning-tree bpduguard enable
+     switchport trunk vlan-allowed 1201,1310-1311,2000-3999
+     switchport trunk vlan-untagged 1201
+     switchport mode trunk
+     switchport pvid 1201
+    !
+    interface GigaEthernet0/45
+     description \"TRUNK\"
+     spanning-tree bpdufilter enable
+     spanning-tree bpduguard enable
+     switchport trunk vlan-allowed 1201,1310-1311,2000-3999
+     switchport trunk vlan-untagged 1201
+     switchport mode trunk
+     switchport pvid 1201
+    !
+    interface GigaEthernet0/46
+     description \"TRUNK\"
+     spanning-tree bpdufilter enable
+     spanning-tree bpduguard enable
+     switchport trunk vlan-allowed 1201,1310-1311,2000-3999
+     switchport trunk vlan-untagged 1201
+     switchport mode trunk
+     switchport pvid 1201
+    !
+    interface GigaEthernet0/47
+     description \"TRUNK\"
+     spanning-tree bpdufilter enable
+     spanning-tree bpduguard enable
+     switchport trunk vlan-allowed 1201,1310-1311,2000-3999
+     switchport trunk vlan-untagged 1201
+     switchport mode trunk
+     switchport pvid 1201
+    !
+    interface GigaEthernet0/48
+     description \"TRUNK\"
+     spanning-tree bpdufilter enable
+     spanning-tree bpduguard enable
+     switchport trunk vlan-allowed 1201,1310-1311,2000-3999
+     switchport trunk vlan-untagged 1201
+     switchport mode trunk
+     switchport pvid 1201
+    !
+    interface TGigaEthernet0/1
+     shutdown
+    !
+    interface TGigaEthernet0/2
+     description \"UPLINK\"
+     switchport trunk vlan-allowed 1101,1201,1310-1311,2000-3999
+     switchport mode trunk
+    !
+    interface TGigaEthernet0/3
+     shutdown
+    !
+    interface TGigaEthernet0/4
+     shutdown
+    !
+    interface VLAN1101
+     description system_switch
+     ip address 172.16.57.3 255.255.128.0
+     no ip directed-broadcast
+     no ip route-cache
+    !
+    !
+    !
+    vlan 1101
+     name system_switch
+    !
+    vlan 1201
+     name trunk
+    !
+    vlan 1310
+     name management_sys
+    !
+    vlan 1311
+     name management_user
+    !
+    vlan 1,1101,1201,1310-1311,2000-3999
+    !
+    !
+    !
+    !
+    !
+    !
+    !
+    !
+    !
+    !
+    !
+    ip route default 172.16.127.254\x20
+    ip exf
+    !
+    ipv6 exf
+    !
+    no ip telnet enable
+    !
+    !
+    !
+    snmp-server group snmp-nms v3 priv read ro-view\x20
+    snmp-server user snmp-nms snmp-nms v3 priv aes256-c auth sha256 7 77fea4aabdfafba68e490caacf31b257cbf7db15179386c47c1c68e746e5f1c2 efa1f375d76194fa51a3556a97e641e61685f914d446979da50a551a4333ffd7\x20
+    snmp-server community 7 114f45314d581e RO ACL_SNMP
+    snmp-server contact admin@example.com
+    snmp-server host 192.168.1.3 public snmp
+    snmp-server location \"SAHARA [24.173223, -10.519086]\"
+    snmp-server encryption
+    snmp-server view ro-view iso included
+    snmp-server view ro-view system included
+    !
+    aaa group server radius admin-radius
+     server 1.2.3.4 key 7 09341b42313f535e30553d55283f4f60
+
+    !
+    aaa group server radius user-radius
+     server 1.2.3.5 key 7 040b2f2f3e474329544438545f
+
+     server 1.2.3.6 key 7 040b2f2f3e474329544438545f1c544759275040
+
+    !
+    aaa group server radius accounting-radius
+     server 1.2.3.4 key 7 09341b4231
+
+    !
+    !
+    ip sshd auth-retries 65500
+    ip sshd silence-period 0
+    ip sshd enable
+    ip sshd version 2
+    !
+    ntp server 185.254.101.25 version 4
+    ntp server 5.39.80.51 version 4
+    ntp server 82.65.248.56 version 4
+    !
+    !
+    !
+    FS-LAB-OXI#
+  exit: |-
+    exit

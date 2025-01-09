@@ -1,9 +1,8 @@
 inherit_from: .rubocop_todo.yml
 
-# Do not attempt to police vendored code
 AllCops:
   NewCops: enable
-  TargetRubyVersion: 3.1
+  # Do not attempt to police vendored code
   Exclude:
     - 'vendor/**/*'
 
