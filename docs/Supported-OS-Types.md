@@ -8,8 +8,8 @@
 |AddPack             |AddPack                       |[addpack](/lib/oxidized/model/addpack.rb)
 |Adtran              |Total Access (AOS)            |[adtran](/lib/oxidized/model/adtran.rb)
 |                    |ADVA                          |[adva](/lib/oxidized/model/adva.rb)              |                 |[ADVA](Model-Notes/ADVA.md)
-|Alcatel-Lucent      |AOS                           |[aos](/lib/oxidized/model/aos.rb)
-|                    |AOS7                          |[aos7](/lib/oxidized/model/aos7.rb)
+|Alcatel-Lucent      |AOS                           |[aos](/lib/oxidized/model/aos.rb)                |                 |AOS6 - vxworks-based
+|                    |AOS7                          |[aos7](/lib/oxidized/model/aos7.rb)              |                 |AOS7 and AOS8 - linux-based
 |                    |ISAM                          |[isam](/lib/oxidized/model/isam.rb)
 |                    |SR OS (Formerly TiMOS)        |[sros](/lib/oxidized/model/sros.rb)
 |                    |Wireless                      |[aosw](/lib/oxidized/model/aosw.rb)              |                 |Same model as Aruba Wireless
