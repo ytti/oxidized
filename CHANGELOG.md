@@ -23,6 +23,7 @@ The format is based on [Keep a Changelog](https://keepachangelog.com/en/1.1.0/).
 - sonicos: fix prompt for hostnames containing "-" . Fixes #3333 (@robertcheramy)
 - xos: Hide radius accounting secret
 - fsos: Hide AAA and SNMP secrets (@RayaneB35)
+- aos7: fix prompt for version 8.8x. Fixes #3351 (@robertcheramy)
 
 ## [0.31.0 – 2024-11-29]
 
