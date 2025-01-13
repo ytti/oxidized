@@ -81,27 +81,8 @@ module Oxidized
 
       # give a hash of all oid revision for the given node, and the date of the commit
       def version(node, group)
-        repo, path = yield_repo_and_path(node, group)
-
-        repo = Rugged::Repository.new repo
-        walker = Rugged::Walker.new(repo)
-        walker.sorting(Rugged::SORT_DATE)
-        walker.push(repo.head.target.oid)
-        i = -1
-        tab = []
-        walker.each do |commit|
-          # Diabled rubocop because the suggested .empty? does not work here.
-          next if commit.diff(paths: [path]).size.zero? # rubocop:disable Style/ZeroLengthPredicate
-
-          hash = {}
-          hash[:date] = commit.time.to_s
-          hash[:oid] = commit.oid
-          hash[:author] = commit.author
-          hash[:message] = commit.message
-          tab[i += 1] = hash
-        end
-        walker.reset
-        tab
+        repo_path, node_path = yield_repo_and_path(node, group)
+        self.class.hash_list(node_path, repo_path)
       rescue StandardError
         'node not found'
       end
@@ -141,6 +122,61 @@ module Oxidized
         diff_commits
       rescue StandardError
         'no diffs'
+      end
+
+      # Return the list of the configuration hashes for node_path in repo
+      def self.hash_list(node_path, repo_path)
+        update_cache(repo_path)
+        @gitcache[repo_path][:nodes][node_path] || []
+      end
+
+      # Update @gitcache, a class instance variable, ensuring persistence
+      # by saving the cache independently of object instances
+      def self.update_cache(repo_path)
+        # initialize our cache as a class instance variable
+        @gitcache ||= {}
+        # When single_repo == false, we have multiple repositories
+        unless @gitcache[repo_path]
+          @gitcache[repo_path] = {}
+          @gitcache[repo_path][:nodes] = {}
+          @gitcache[repo_path][:last_commit] = nil
+        end
+
+        repo = Rugged::Repository.new repo_path
+
+        walker = Rugged::Walker.new(repo)
+        walker.sorting(Rugged::SORT_DATE)
+        walker.push(repo.head.target.oid)
+
+        walker.each do |commit|
+          if commit.oid == @gitcache[repo_path][:last_commit]
+            # we have reached the last cached commit, so we're done
+            break
+          end
+
+          commit.diff.each_delta do |delta|
+            next unless delta.added? || delta.modified?
+
+            hash = {}
+            hash[:date] = commit.time.to_s
+            hash[:oid] = commit.oid
+            hash[:author] = commit.author
+            hash[:message] = commit.message
+            filename = delta.new_file[:path]
+            if @gitcache[repo_path][:nodes][filename]
+              @gitcache[repo_path][:nodes][filename].append hash
+            else
+              @gitcache[repo_path][:nodes][filename] = [hash]
+            end
+          end
+        end
+        # Store the most recent commit
+        @gitcache[repo_path][:last_commit] = repo.head.target.oid
+      end
+
+      # Currently only used in unit tests
+      def self.clear_cache
+        @gitcache = nil
       end
 
       private
