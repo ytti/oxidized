@@ -63,10 +63,10 @@ module Oxidized
         end
       end
 
-      def store(file, outputs, opt = {})
+      def store(node, outputs, opt = {})
         @msg   = opt[:msg]
-        @user  = opt[:user]  || @cfg.user
-        @email = opt[:email] || @cfg.email
+        @user  = node.user  || @cfg.user
+        @email = node.email || @cfg.email
         @opt   = opt
         @commitref = nil
         repo = @cfg.repo
@@ -76,17 +76,17 @@ module Oxidized
           type_repo = File.join(File.dirname(repo), type + '.git')
           outputs.type(type).each do |output|
             (type_cfg << output; next) unless output.name # rubocop:disable Style/Semicolon
-            type_file = file + '--' + output.name
+            type_file = node.name + '--' + output.name
             if @cfg.type_as_directory?
               type_file = type + '/' + type_file
               type_repo = repo
             end
             update type_repo, type_file, output
           end
-          update type_repo, file, type_cfg
+          update type_repo, node.name, type_cfg
         end
 
-        update repo, file, outputs.to_cfg
+        update repo, node.name, outputs.to_cfg
       end
 
       def fetch(node, group)
