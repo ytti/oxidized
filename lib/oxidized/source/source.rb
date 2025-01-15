@@ -8,12 +8,42 @@ module Oxidized
         @group_map = Oxidized.config.group_map || {}
       end
 
-      def map_model(model)
-        @model_map.has_key?(model) ? @model_map[model] : model
+      # common code of #map_model and #map_group
+      def map_value(map_hash, original_value)
+        map_hash.each do |key, new_value|
+          mthd = key.instance_of?(Regexp) ? :match : :eql?
+          return new_value if original_value.send(mthd, key)
+        end
+        original_value
       end
 
+      # search a match for model in the configuration and returns it.
+      # If no match is found, return model
+      #
+      # model can be matched against a string or a regexp:
+      #
+      # model_map:
+      #   cisco: ios
+      #   juniper: junos
+      #   !ruby/regexp /procurve/: procurve
+      def map_model(model)
+        map_value(@model_map, model)
+      end
+
+      # search a match for group in the configuration and returns it.
+      # If no match is found, return group
+      #
+      # group can be matched against a string or a regexp:
+      #
+      # group_map:
+      #   alias1: groupA
+      #   alias2: groupA
+      #   alias3: groupB
+      #   alias4: groupB
+      #   !ruby/regexp /specialgroup/: groupS
+      #   aliasN: groupZ
       def map_group(group)
-        @group_map.has_key?(group) ? @group_map[group] : group
+        map_value(@group_map, group)
       end
 
       def node_var_interpolate(var)
