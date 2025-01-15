@@ -38,6 +38,7 @@ class ASA < Oxidized::Model
     cfg = cfg.join
     cfg.gsub! /^Configuration has not been modified since last system restart.*\n/, ''
     cfg.gsub! /^Configuration last modified by.*\n/, ''
+    cfg.gsub! /^Start-up time.*\n/, ''
     comment cfg
   end
 
