@@ -39,5 +39,3 @@ jobs:
         reporter: github-pr-review
     - name: Run tests
       run: bundle exec rake
-    - uses: codecov/codecov-action@v5
-      if: ${{ always() }}
