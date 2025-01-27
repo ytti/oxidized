@@ -1,0 +1,60 @@
+#                   version: 7.10.1 (stable)
+#          factory-software: 7.1
+#              total-memory: 320.0MiB
+#                       cpu: QEMU
+#                 cpu-count: 1
+#           total-hdd-space: 89.2MiB
+#         architecture-name: x86_64
+#                board-name: CHR
+#                  platform: MikroTik#   installed-version: 7.10.1# software id = 
+#
+/interface ethernet
+set [ find default-name=ether1 ] disable-running-check=no
+set [ find default-name=ether2 ] disable-running-check=no
+set [ find default-name=ether3 ] disable-running-check=no
+set [ find default-name=ether4 ] disable-running-check=no
+set [ find default-name=ether5 ] disable-running-check=no
+set [ find default-name=ether6 ] disable-running-check=no
+set [ find default-name=ether7 ] disable-running-check=no
+set [ find default-name=ether8 ] disable-running-check=no
+/disk
+set slot1 slot=slot1 type=hardware
+set slot2 slot=slot2 type=hardware
+set slot3 slot=slot3 type=hardware
+set slot4 slot=slot4 type=hardware
+set slot5 slot=slot5 type=hardware
+set slot6 slot=slot6 type=hardware
+set slot7 slot=slot7 type=hardware
+set slot8 slot=slot8 type=hardware
+set slot9 slot=slot9 type=hardware
+set slot10 slot=slot10 type=hardware
+set slot11 slot=slot11 type=hardware
+set slot12 slot=slot12 type=hardware
+set slot13 slot=slot13 type=hardware
+set slot14 slot=slot14 type=hardware
+set slot15 slot=slot15 type=hardware
+set slot16 slot=slot16 type=hardware
+set slot17 slot=slot17 type=hardware
+set slot18 slot=slot18 type=hardware
+set slot19 slot=slot19 type=hardware
+set slot20 slot=slot20 type=hardware
+set slot21 slot=slot21 type=hardware
+set slot22 slot=slot22 type=hardware
+set slot23 slot=slot23 type=hardware
+set slot24 slot=slot24 type=hardware
+set slot25 slot=slot25 type=hardware
+set slot26 slot=slot26 type=hardware
+set slot27 slot=slot27 type=hardware
+set slot28 slot=slot28 type=hardware
+/interface wireless security-profiles
+set [ find default=yes ] supplicant-identity=MikroTik
+/port
+set 0 name=serial0
+/ip address
+add address=192.168.129.7/24 interface=ether1 network=192.168.129.0
+/ip dhcp-client
+add interface=ether1
+/ip ssh
+set always-allow-password-login=yes
+/system note
+set show-at-login=no

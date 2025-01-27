@@ -1,0 +1,518 @@
+! Cisco IOS XE Software, Version 16.08.01b
+! 
+! Image: Software: PPC_LINUX_IOSD-UNIVERSALK9_NPE-M, 16.8.1b, RELEASE SOFTWARE (fc1)
+! Image: Compiled: Sat 14-Apr-18 12:07 by mcpre
+! Image: bootflash:/asr920-universalk9_npe.16.08.01b.SPA.bin
+! Chassis type: ASR-920-24TZ-M
+! Memory: main 900278K/6147K
+! Processor ID: CAT12345699
+! CPU: Freescale P2020
+! Memory: nvram 32768K
+! 
+! VTP: show vtp status
+! 
+! NAME: "Chassis", DESCR: "Cisco ASR920 Series - 24GE Copper and 4-10GE - Modular PSU"
+! PID: ASR-920-24TZ-M    , VID: V01  , SN: abcdefgh
+! 
+! NAME: "Power Supply Module 0", DESCR: "ASR 920 250W DC Power Supply"
+! PID: ASR-920-PWR-D     , VID: V01  , SN: abcdefgh
+! 
+! NAME: "Power Supply Module 1", DESCR: "ASR 920 250W DC Power Supply"
+! PID: ASR-920-PWR-D     , VID: V01  , SN: abcdefgh
+! 
+! NAME: "Fan Tray", DESCR: "ASR 920 Fan tray"
+! PID: ASR-920-FAN-F     , VID: V01  , SN: ab12cdefgh
+! 
+! 
+!
+! Last configuration change at 11:54:34 UTC Thu Aug 29 2024 by 123456
+!
+version 16.8
+no service pad
+service tcp-keepalives-in
+service tcp-keepalives-out
+service timestamps debug datetime msec localtime show-timezone
+service timestamps log datetime msec localtime show-timezone
+service password-encryption
+service sequence-numbers
+no platform punt-keepalive disable-kernel-core
+platform bfd-debug-trace 1
+platform xconnect load-balance-hash-algo mac-ip-instanceid
+platform tcam-parity-error enable
+platform tcam-threshold alarm-frequency 1
+!
+hostname hostname
+!
+boot-start-marker
+boot-end-marker
+!
+!
+vrf definition Mgmt-intf
+ !
+ address-family ipv4
+ exit-address-family
+ !
+ address-family ipv6
+ exit-address-family
+!
+security passwords min-length 8
+logging buffered 200000
+enable secret 5 password
+!
+aaa new-model
+!
+!
+aaa group server tacacs+ DES_ACS_GROUP
+ server-private 111.111.111.111 key 7 ABCDEFGH1234
+ server-private 111.111.111.111 key 7 ABCDEFGH1234
+ server-private 111.111.111.111 key 7 ABCDEFGH1234
+ ip tacacs source-interface Loopback9
+!
+aaa authentication login default local group DES_ACS_GROUP
+aaa authentication login console local group DES_ACS_GROUP
+aaa authentication enable default group DES_ACS_GROUP enable
+aaa authorization console
+aaa authorization config-commands
+aaa authorization exec default local group DES_ACS_GROUP none 
+aaa authorization commands 0 default group DES_ACS_GROUP none 
+aaa authorization commands 1 default group DES_ACS_GROUP none 
+aaa authorization commands 15 default local group DES_ACS_GROUP none 
+aaa accounting exec default
+ action-type start-stop
+ group DES_ACS_GROUP
+!
+aaa accounting commands 0 default
+ action-type start-stop
+ group DES_ACS_GROUP
+!
+aaa accounting commands 1 default
+ action-type start-stop
+ group DES_ACS_GROUP
+!
+aaa accounting commands 15 default
+ action-type start-stop
+ group DES_ACS_GROUP
+!
+aaa accounting network default start-stop group DES_ACS_GROUP
+!
+!
+!
+!
+!
+aaa session-id common
+clock timezone UTC 10 0
+no ip source-route
+!
+!
+!
+!
+!
+!
+!
+no ip bootp server
+ip name-server 111.111.111.111 111.111.111.111
+no ip domain lookup
+ip domain name abcd.abcd
+ip multicast-routing distributed
+ip dhcp smart-relay
+!
+!
+!
+login block-for 15 attempts 3 within 15
+!
+!
+!
+!
+!
+!
+!
+!
+!
+multilink bundle-name authenticated
+!
+!
+!
+license udi pid ASR-920-24TZ-M sn 12334456
+no license smart enable
+archive
+ log config
+  hidekeys
+!
+!
+spanning-tree extend system-id
+sdm prefer default 
+diagnostic bootup level minimal
+!
+!
+username root secret 5 password
+!
+redundancy
+!
+!
+!
+!
+!
+transceiver type all
+ monitoring
+!
+lldp run
+!
+!
+class-map match-any RoIP-RTP-Class-In
+  description: test 123
+ match access-group name RoIP-RTP-Class
+class-map match-all RoIP-RTP-Class-Out
+  description: test 123
+ match dscp 45 
+class-map match-all Routing-and-Control
+  description: test 123
+ match dscp cs6 
+!
+!
+!
+!
+interface Loopback9
+ description: test 123
+ ip address 111.111.111.111 111.111.111.111
+!
+interface GigabitEthernet0/0/0
+ no ip address
+ shutdown
+ negotiation auto
+!
+interface GigabitEthernet0/0/1
+ description: test 123
+ bandwidth 100000
+ no ip address
+ negotiation auto
+ service-policy output shape-all
+ service instance 2 ethernet
+  encapsulation untagged
+  bridge-domain 2
+ !
+!
+interface GigabitEthernet0/0/2
+ description: test 123
+ bandwidth 100000
+ no ip address
+ negotiation auto
+ service-policy output shape-all
+ service instance 3 ethernet
+  encapsulation untagged
+  bridge-domain 3
+ !
+!
+interface GigabitEthernet0/0/3
+ description: test 123
+ bandwidth 100000
+ no ip address
+ negotiation auto
+ service-policy output shape-all
+ service instance 4 ethernet
+  encapsulation untagged
+  bridge-domain 4
+ !
+!
+interface GigabitEthernet0/0/4
+ no ip address
+ shutdown
+ negotiation auto
+!
+interface GigabitEthernet0/0/5
+ no ip address
+ shutdown
+ negotiation auto
+!
+interface GigabitEthernet0/0/6
+ description: test 123
+ no ip address
+ negotiation auto
+ service-policy input Classification-Marking-In
+ service instance 99 ethernet
+  encapsulation untagged
+  bridge-domain 99
+ !
+!
+interface GigabitEthernet0/0/7
+ no ip address
+ shutdown
+ negotiation auto
+!
+interface GigabitEthernet0/0/8
+ no ip address
+ shutdown
+ negotiation auto
+!
+interface GigabitEthernet0/0/9
+ no ip address
+ shutdown
+ negotiation auto
+!
+interface GigabitEthernet0/0/10
+ description: test 123
+ no ip address
+ negotiation auto
+ service-policy input Classification-Marking-In
+ service instance 99 ethernet
+  encapsulation untagged
+  bridge-domain 99
+ !
+!
+interface GigabitEthernet0/0/11
+ no ip address
+ shutdown
+ negotiation auto
+!
+interface GigabitEthernet0/0/12
+ no ip address
+ shutdown
+ negotiation auto
+!
+interface GigabitEthernet0/0/13
+ no ip address
+ shutdown
+ negotiation auto
+!
+interface GigabitEthernet0/0/14
+ no ip address
+ negotiation auto
+ service-policy input Classification-Marking-In
+ service instance 99 ethernet
+  description: test 123
+  encapsulation untagged
+  bridge-domain 99
+ !
+!
+interface GigabitEthernet0/0/15
+ no ip address
+ shutdown
+ negotiation auto
+!
+interface GigabitEthernet0/0/16
+ no ip address
+ shutdown
+ negotiation auto
+!
+interface GigabitEthernet0/0/17
+ description: test 123
+ no ip address
+ negotiation auto
+ service-policy input Classification-Marking-In
+ service instance 99 ethernet
+  encapsulation untagged
+  bridge-domain 99
+ !
+!
+interface GigabitEthernet0/0/18
+ description: test 123
+ no ip address
+ negotiation auto
+ service-policy input Classification-Marking-In
+ service instance 99 ethernet
+  encapsulation untagged
+  bridge-domain 99
+ !
+!
+interface GigabitEthernet0/0/19
+ no ip address
+ shutdown
+ negotiation auto
+!
+interface GigabitEthernet0/0/20
+ no ip address
+ shutdown
+ negotiation auto
+!
+interface GigabitEthernet0/0/21
+ no ip address
+ shutdown
+ negotiation auto
+!
+interface GigabitEthernet0/0/22
+ description: test 123
+ no ip address
+ shutdown
+ negotiation auto
+ service instance 99 ethernet
+  encapsulation untagged
+  bridge-domain 99
+ !
+!
+interface GigabitEthernet0/0/23
+ description: test 123
+ no ip address
+ negotiation auto
+ service instance 99 ethernet
+  encapsulation untagged
+  bridge-domain 99
+ !
+!
+interface TenGigabitEthernet0/0/24
+ no ip address
+ shutdown
+!
+interface TenGigabitEthernet0/0/25
+ no ip address
+ shutdown
+!
+interface TenGigabitEthernet0/0/26
+ no ip address
+ shutdown
+!
+interface TenGigabitEthernet0/0/27
+ no ip address
+ shutdown
+!
+interface GigabitEthernet0
+ vrf forwarding Mgmt-intf
+ no ip address
+ shutdown
+ negotiation auto
+!
+!
+ip access-list standard auth-SNMP
+ permit 111.111.111.111
+ permit 111.111.111.111
+ permit 111.111.111.111 111.111.111.111
+ deny   any log
+ip access-list standard auth-SNMPV2
+ permit 111.111.111.111
+ permit 111.111.111.111
+ permit 111.111.111.111 111.111.111.111
+ deny   any log
+ip access-list standard auth-SSH
+ permit 111.111.111.111
+ permit 111.111.111.111
+ permit 111.111.111.111 111.111.111.111
+ permit 111.111.111.111 111.111.111.111
+ permit 111.111.111.111 111.111.111.111
+ deny   any log
+!
+!
+logging origin-id hostname
+logging facility local6
+logging source-interface Loopback9
+logging host 111.111.111.111
+!
+snmp-server enable traps snmp authentication linkdown linkup coldstart warmstart
+snmp-server enable traps vrrp
+snmp-server enable traps ds1
+snmp-server enable traps ds3
+snmp-server enable traps call-home message-send-fail server-fail
+snmp-server enable traps tty
+snmp-server enable traps eigrp
+snmp-server enable traps ospf state-change
+snmp-server enable traps ospf errors
+snmp-server enable traps ospf retransmit
+snmp-server enable traps ospf lsa
+snmp-server enable traps ospf cisco-specific state-change nssa-trans-change
+snmp-server enable traps ospf cisco-specific state-change shamlink interface
+snmp-server enable traps ospf cisco-specific state-change shamlink neighbor
+snmp-server enable traps ospf cisco-specific errors
+snmp-server enable traps ospf cisco-specific retransmit
+snmp-server enable traps ospf cisco-specific lsa
+snmp-server enable traps license
+snmp-server enable traps smart-license
+snmp-server enable traps ike policy add
+snmp-server enable traps ike policy delete
+snmp-server enable traps ike tunnel start
+snmp-server enable traps ike tunnel stop
+snmp-server enable traps ipsec cryptomap add
+snmp-server enable traps ipsec cryptomap delete
+snmp-server enable traps ipsec cryptomap attach
+snmp-server enable traps ipsec cryptomap detach
+snmp-server enable traps ipsec tunnel start
+snmp-server enable traps ipsec tunnel stop
+snmp-server enable traps ipsec too-many-sas
+snmp-server enable traps atm subif
+snmp-server enable traps bfd
+snmp-server enable traps bgp cbgp2
+snmp-server enable traps config-copy
+snmp-server enable traps config
+snmp-server enable traps config-ctid
+snmp-server enable traps dhcp
+snmp-server enable traps otn
+snmp-server enable traps event-manager
+snmp-server enable traps hsrp
+snmp-server enable traps pimstdmib neighbor-loss invalid-register invalid-join-prune rp-mapping-change interface-election
+snmp-server enable traps ipmulticast
+snmp-server enable traps isis
+snmp-server enable traps msdp
+snmp-server enable traps ospfv3 state-change
+snmp-server enable traps ospfv3 errors
+snmp-server enable traps pim neighbor-change rp-mapping-change invalid-pim-message
+snmp-server enable traps ipsla
+snmp-server enable traps bridge newroot topologychange
+snmp-server enable traps stpx inconsistency root-inconsistency loop-inconsistency
+snmp-server enable traps syslog
+snmp-server enable traps pki
+snmp-server enable traps adslline
+snmp-server enable traps vdsl2line
+snmp-server enable traps ether-oam
+snmp-server enable traps ethernet cfm cc mep-up mep-down cross-connect loop config
+snmp-server enable traps ethernet cfm crosscheck mep-missing mep-unknown service-up
+snmp-server enable traps memory bufferpeak
+snmp-server enable traps entity-state
+snmp-server enable traps fru-ctrl
+snmp-server enable traps entity
+snmp-server enable traps cpu threshold
+snmp-server enable traps rep
+snmp-server enable traps vtp
+snmp-server enable traps vlancreate
+snmp-server enable traps vlandelete
+snmp-server enable traps sonet
+snmp-server enable traps cef resource-failure peer-state-change peer-fib-state-change inconsistency
+snmp-server enable traps lisp
+snmp-server enable traps entity-sensor
+snmp-server enable traps resource-policy
+snmp-server enable traps flash insertion removal lowspace
+snmp-server enable traps netsync
+snmp-server enable traps rsvp
+snmp-server enable traps cnpd
+!
+tacacs-server timeout 3
+!
+!
+!
+control-plane
+!
+banner motd ^C
+*******************************************************************************
+ 4.  The information contained in this computer network is confidential and
+     must not be disclosed to unauthorised persons. Unauthorised disclosure,
+     system disruption or any unauthorised modification may lead to prosecution.
+ 5.  Details of all transactions and accesses including user-ids, are
+     automatically recorded by the computer network and can be retrieved for
+     audit purposes. By accessing and using this computer network you are
+     consenting to security monitoring.
+********************************************************************************
+^C
+!
+line con 0
+ exec-timeout 20 0
+ logging synchronous
+ history size 50
+ transport preferred none
+ transport output none
+ stopbits 1
+line aux 0
+ no exec
+ stopbits 1
+line vty 0 4
+ exec-timeout 20 0
+ logging synchronous
+ history size 50
+ transport input ssh
+line vty 5 15
+ exec-timeout 20 0
+ logging synchronous
+ history size 50
+ transport input ssh
+!
+ntp server 111.111.111.111
+ntp server 111.111.111.111
+!
+
+!
+end
+

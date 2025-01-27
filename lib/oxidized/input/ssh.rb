@@ -18,10 +18,14 @@ module Oxidized
 
     def connect(node)
       @node        = node
-      @output      = ''
+      @output      = String.new('')
       @pty_options = { term: "vt100" }
       @node.model.cfg['ssh'].each { |cb| instance_exec(&cb) }
-      @log = File.open(Oxidized::Config::LOG + "/#{@node.ip}-ssh", 'w') if Oxidized.config.input.debug?
+      if Oxidized.config.input.debug?
+        logfile = Oxidized::Config::LOG + "/#{@node.ip}-ssh"
+        @log = File.open(logfile, 'w')
+        Oxidized.logger.debug "lib/oxidized/input/ssh.rb: I/O Debuging to #{logfile}"
+      end
 
       Oxidized.logger.debug "lib/oxidized/input/ssh.rb: Connecting to #{@node.name}"
       @ssh = Net::SSH.start(@node.ip, @node.auth[:username], make_ssh_opts)
@@ -41,7 +45,11 @@ module Oxidized
     end
 
     def cmd(cmd, expect = node.prompt)
-      Oxidized.logger.debug "lib/oxidized/input/ssh.rb #{cmd} @ #{node.name} with expect: #{expect.inspect}"
+      Oxidized.logger.debug "lib/oxidized/input/ssh.rb #{cmd.dump} @ #{node.name} with expect: #{expect.inspect}"
+      if Oxidized.config.input.debug?
+        @log.puts "sent #{cmd.dump}"
+        @log.flush
+      end
       cmd_output = if @exec
                      @ssh.exec! cmd
                    else
@@ -78,7 +86,7 @@ module Oxidized
       @ses = ssh.open_channel do |ch|
         ch.on_data do |_ch, data|
           if Oxidized.config.input.debug?
-            @log.print data
+            @log.puts "received #{data.dump}"
             @log.flush
           end
           @output << data
@@ -101,7 +109,7 @@ module Oxidized
     end
 
     def cmd_shell(cmd, expect_re)
-      @output = ''
+      @output = String.new('')
       @ses.send_data cmd + "\n"
       @ses.process
       expect expect_re if expect_re

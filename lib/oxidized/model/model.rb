@@ -184,7 +184,7 @@ module Oxidized
     end
 
     def comment(str)
-      data = ''
+      data = String.new('')
       str.each_line do |line|
         data << self.class.comment << line
       end
@@ -202,7 +202,7 @@ module Oxidized
       # Also, XML Comments must not contain --. So we put a space between
       # any double hyphens, by replacing any - that is followed by another -
       # with '- '
-      data = ''
+      data = String.new('')
       str.each_line do |_line|
         data << '<!-- ' << str.gsub(/-(?=-)/, '- ').chomp << " -->\n"
       end

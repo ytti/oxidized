@@ -3,8 +3,14 @@ class SonicOS < Oxidized::Model
 
   # Applies to Sonicwall NSA series firewalls
 
-  prompt /^\w+@\w+[>]\(?.+\)?\s?/
-  comment  '! '
+  prompt /^\w+@[\w\-]+[>]\(?.+\)?\s?/
+  comment '! '
+
+  # Accept policiy message (see Issue #3339). Tested on 6.5 and 7.1
+  expect /Accept The Policy Banner \(yes\)\?\r\nyes: $/ do |data, re|
+    send "yes\n"
+    data.sub re, ''
+  end
 
   cmd :all do |cfg|
     cfg.each_line.to_a[1..-2].join

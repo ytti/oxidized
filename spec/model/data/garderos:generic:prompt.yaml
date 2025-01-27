@@ -1,0 +1,7 @@
+pass:
+  - "LAB-R1234_Garderos# "
+pass_with_expect:
+  - "\e[4m\rLAB-R1234_Garderos#\e[m "
+fail:
+  - "\e[4m\rLAB-R1234_Garderos#\e[m "
+  - "#LAB#"

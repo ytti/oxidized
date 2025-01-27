@@ -6,7 +6,7 @@ module Oxidized
     require 'asetus'
 
     class Config
-      Root = Root = ENV['OXIDIZED_HOME'] || File.join(Dir.home, '.config', 'oxidized')
+      Root = ENV['OXIDIZED_HOME'] || File.join(Dir.home, '.config', 'oxidized')
     end
 
     CFGS = Asetus.new name: 'oxidized', load: false, key_to_s: true

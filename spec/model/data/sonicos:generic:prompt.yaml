@@ -1,0 +1,4 @@
+pass:
+  - 'admin@012345> '
+  # Issue #3333
+  - 'admin@host-with-minus> '

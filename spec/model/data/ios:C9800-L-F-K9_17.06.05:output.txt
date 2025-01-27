@@ -1,0 +1,164 @@
+! Cisco IOS XE Software, Version 17.06.05
+! 
+! Image: Software: C9800_IOSXE-K9, 17.6.5, RELEASE SOFTWARE (fc2)
+! Image: Compiled: Wed 25-Jan-23 16:09 by mcpre
+! Image: bootflash:C9800-L-universalk9_wlc.17.06.05.SPA.bin
+! Chassis type: C9800-L-F-K9
+! Memory: main 1688671K/6147K
+! Processor ID: FCL2XXXXXXX
+! CPU: KATAR
+! Memory: nvram 32768K
+! 
+! VTP: VTP Version capable             : 1 to 3
+! VTP: VTP version running             : 1
+! VTP: VTP Domain Name                 : 
+! VTP: VTP Pruning Mode                : Disabled (Operationally Disabled)
+! VTP: VTP Traps Generation            : Disabled
+! VTP: Device ID                       : 0845.d100.0000
+! VTP: Feature VLAN:
+! VTP: --------------
+! VTP: VTP Operating Mode                : Off
+! VTP: Maximum VLANs supported locally   : 1005
+! VTP: Number of existing VLANs          : 8
+! VTP: Configuration Revision            : 0
+! VTP: MD5 digest                        : 0x00 0x00 0x00 0x00 0x00 0x00 0x00 0x00 
+! VTP:                                     0x00 0x00 0x00 0x00 0x00 0x00 0x00 0x00 
+! 
+! NAME: "Chassis 1", DESCR: "Cisco C9800-L-F-K9 Chassis"
+! PID: C9800-L-F-K9      , VID: 01   , SN: FCL2XXXXXXX
+! 
+! NAME: "Chassis 1 Power Supply Module 0", DESCR: "Cisco Catalyst Wireless Controller 12V DC Generic Power Supply"
+! PID: PWR-12V           , VID:      , SN:            
+! 
+! NAME: "Chassis 1 Fan Tray", DESCR: "Cisco C9800-L-F-K9 Fan Tray"
+! PID: C9800-L-F-K9-FAN  , VID:      , SN:            
+! 
+! NAME: "module 0", DESCR: "Cisco C9800-L-F-K9 Modular Interface Processor"
+! PID: C9800-L-F-K9      , VID:      , SN:            
+! 
+! NAME: "SPA subslot 0/0", DESCR: "Front Panel bay-0 4 ports 2.5 Gigabitethernet Module"
+! PID: BUILT-IN-4x2_5GE  , VID: V01  , SN: N/A        
+! 
+! NAME: "SPA subslot 0/1", DESCR: "Front Panel bay-1 2 ports Ten/Gigabitethernet Module"
+! PID: BUILT-IN-2x10GE-F , VID: V01  , SN: N/A        
+! 
+! NAME: "module R0", DESCR: "Cisco C9800-L-F-K9 Route Processor"
+! PID: C9800-L-F-K9      , VID: 01   , SN: FCL2XXXXXXX
+! 
+! NAME: "module F0", DESCR: "Cisco C9800-L-F-K9 Embedded Services Processor"
+! PID: C9800-L-F-K9      , VID:      , SN:            
+! 
+! 
+!
+! NVRAM config last updated at 15:26:39 CET Wed Mar 13 2024 by oxidized
+!
+version 17.6
+service timestamps debug datetime localtime show-timezone year
+service timestamps log datetime localtime show-timezone year
+service password-encryption
+platform qos marker-statistics
+platform qos match-statistics per-filter
+!
+hostname OXIDIZED-WLC1
+!
+boot-start-marker
+boot system flash bootflash:C9800-L-universalk9_wlc.17.06.05.SPA.bin
+boot-end-marker
+!
+!
+vrf definition Mgmt-intf
+ !
+ address-family ipv4
+ exit-address-family
+ !
+ address-family ipv6
+ exit-address-family
+!
+logging monitor informational
+enable secret 9 $9$SECRET_REMOVED
+!
+!
+aaa server radius dynamic-author
+ client 10.42.0.7 server-key 7 REMOVED_SECRET
+!
+aaa session-id common
+clock timezone CET 1 0
+clock summer-time CET recurring last Sun Mar 2:00 last Sun Oct 2:00
+vtp mode off
+!
+!
+!
+!
+subscriber templating
+! 
+! 
+! 
+! 
+!
+!
+!
+!
+!
+interface TwoGigabitEthernet0/0/0
+ description Uplink
+ switchport trunk allowed vlan 2,3,4
+ switchport mode trunk
+ negotiation auto
+ no snmp trap link-status
+!
+interface TwoGigabitEthernet0/0/1
+ negotiation auto
+ no snmp trap link-status
+!
+! ...
+!
+interface TenGigabitEthernet0/1/0
+ no negotiation auto
+ no snmp trap link-status
+!
+interface TenGigabitEthernet0/1/1
+ no negotiation auto
+ no snmp trap link-status
+!
+interface GigabitEthernet0
+ description Mgmt
+ vrf forwarding Mgmt-intf
+ ip address 10.41.1.10 255.255.255.0
+ negotiation auto
+!
+interface Vlan1
+ no ip address
+ shutdown
+!
+ip http server
+ip http authentication aaa
+ip http secure-server
+ip http session-idle-timeout 900 
+ip http client source-interface GigabitEthernet0
+! ...
+ip route 0.0.0.0 0.0.0.0 10.41.2.1
+ip route vrf Mgmt-intf 0.0.0.0 0.0.0.0 10.41.1.1 250
+ip ssh version 2
+ip scp server enable
+!
+!
+banner login ^CThis is an actively monitored system!
+Unauthorized access prohibited!
+^C
+!
+! ...
+wlan test 1 test
+ security wpa psk set-key ascii 0 WLANSECR3T
+wlan test-spaces 2 test-spaces
+ security wpa psk set-key ascii 0 WLAN SECR3T
+wlan hex 1000 hex
+ security wpa psk set-key hex 0 7df35f90c92ecff2a803e79577b85e978edc0a76404f6cfb534df8d9f9f67beb
+ap profile default-ap-profile
+ dot1x username dot1x-username password 0 DOT1XPASSW0RD
+ mgmtuser username apmgmtuser password 0 MGMTPASSW0RD secret 0 MGMTSECR3T
+ap profile "spaces profile"
+ dot1x username dot1x-username password 0 DOT1X PASSW0RD
+ mgmtuser username username password 0 MGMT PASSW0RD secret 0 MGMT SECR3T
+netconf-yang
+end
+

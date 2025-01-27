@@ -174,7 +174,16 @@ input:
 
 ## Advanced Configuration
 
-Below is an advanced example configuration. You will be able to (optionally) override options per device. The router.db format used is `hostname:model:username:password:enable_password`. Hostname and model will be the only required options, all others override the global configuration sections.
+Below is an advanced example configuration.
+
+You will be able to (optionally) override options per device.
+The router.db format used is `hostname:model:username:password:enable_password`.
+Hostname and model will be the only required options, all others override the
+global configuration sections.
+
+Custom model names can be mapped to an oxidized model name with a string or
+a regular expression.
+
 
 ```yaml
 ---
@@ -226,6 +235,7 @@ source:
 model_map:
   cisco: ios
   juniper: junos
+  !ruby/regexp /procurve/: procurve
 ```
 
 ## Advanced Group Configuration
@@ -268,7 +278,8 @@ groups:
           ssh_keys: "~/.ssh/id_rsa_bar_vyatta"
 ```
 
-For mapping multiple group values to a common name
+For mapping multiple group values to a common name, you can use strings and
+regular expressions:
 
 ```yaml
 group_map:
@@ -276,6 +287,7 @@ group_map:
   alias2: groupA
   alias3: groupB
   alias4: groupB
+  !ruby/regexp /specialgroup/: groupS
   aliasN: groupZ
   # ...
 ```

@@ -117,7 +117,7 @@ class AOSW < Oxidized::Model
       next if line =~ /Output \d Config/i
       next if line =~ /(Tachometers|Temperatures|Voltages)/
       next if line =~ /((Card|CPU) Temperature|Chassis Fan|VMON1[0-9])/
-      next if line =~ /[0-9]+\s+(RPMS?|m?V|C)/i
+      next if line =~ /[0-9]+\s+(RPMS?|m?V|C|W)/i
 
       out << line.strip
     end

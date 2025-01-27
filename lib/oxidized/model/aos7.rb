@@ -4,6 +4,8 @@ class AOS7 < Oxidized::Model
   # Alcatel-Lucent Operating System Version 7 (Linux based)
   # used in OmniSwitch 6900/10k
 
+  prompt /^([\w.@-]+ ?[#>]\s?)$/
+
   comment  '! '
 
   cmd :all do |cfg, cmdstring|

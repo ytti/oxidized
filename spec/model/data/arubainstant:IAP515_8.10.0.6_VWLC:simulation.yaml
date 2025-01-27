@@ -1,0 +1,119 @@
+init_prompt: |-
+  
+  show tech-support and show tech-support supplemental are the two most useful outputs to collect for any kind of troubleshooting session.
+  
+  OXRO-AP111117#\x20
+commands:
+  show version: |-
+    show version
+    Aruba Operating System Software.
+    ArubaOS (MODEL: 515), Version 8.10.0.6 LSR
+    Website: http://www.arubanetworks.com
+    (c) Copyright 2023 Hewlett Packard Enterprise Development LP.
+    Compiled on 2023-02-14 at 18:20:29 PST (build 86193) by jenkins
+    FIPS Mode :disabled
+    
+    AP uptime is 2 days 16 hours 32 minutes 26 seconds
+    Reboot Time and Cause: AP rebooted Fri Nov 15 14:59:50 UTC 2024; UI cmd at uptime 94D 5H 6M 31S: reload
+    OXRO-AP111117#\x20
+  show activate status: |-
+    show activate status
+    \r
+    IAP MAC Address          :54:d7:e3:00:11:22
+    IAP Serial Number        :CNQHAAAAAM
+    Cloud Activation Key     :
+    Activate Server          :device.arubanetworks.com
+    Activate Status          :connection-failed
+    Activate fail reason     :dns error
+    Provision interval       :5 minutes
+    OXRO-AP111117#\x20
+  show aps: |-
+    show aps
+    \r
+    4 Access Points
+    ---------------
+    Name           IP Address      Mode    Spectrum  Clients  Type         IPv6 Address  Mesh Role  Zone  Serial #    radio0 Channel  radio0 Power (dBm)  radio0 Utilization (%)  radio0 Noise Floor (dBm)  radio1 Channel  radio1 Power (dBm)  radio1 Utilization (%)  radio1 Noise Floor (dBm)  radio2 Channel  radio2 Power (dBm)  radio2 Utilization (%)  radio2 Noise Floor (dBm)  Need Antenna Config  From Port  Config Id  Config Csum  Ext SSID Active  Age             Link Local IP Address  Uplink Port  Hierarchy Mode  Crash Info \x20
+    ----           ----------      ----    --------  -------  ----         ------------  ---------  ----  --------    --------------  ------------------  ----------------------  ------------------------  --------------  ------------------  ----------------------  ------------------------  --------------  ------------------  ----------------------  ------------------------  -------------------  ---------  ---------  -----------  ---------------  ---             ---------------------  -----------  --------------  ---------- \x20
+    OXRO-AP111117  10.100.42.237*  access  enable    0        515(indoor)  --            N/A        -     CNQHAAAAAM  36+             18                  3(good)                 -93(good)                 1               9                   7(good)                 -94(good)                 -               -                   -                       -                         No                   none       0          1721         enable           2d:16h:30m:30s  --                     eth0         member          No         \x20
+    OXRO-AP122229  10.100.42.242   access  enable    0        315(indoor)  --            N/A        -     CNK9AAAAAN  44+             18                  3(good)                 -89(good)                 6               9                   11(good)                -86(ok)                   -               -                   -                       -                         No                   none       0          1721         enable           2d:16h:30m:13s  --                     eth0         member          No         \x20
+    OXRO-AP111118  10.100.42.241   access  enable    0        515(indoor)  --            N/A        -     CNQHAAAAAW  100+            18                  6(good)                 -90(good)                 11              7                   12(good)                -95(good)                 -               -                   -                       -                         No                   none       0          1721         enable           2d:16h:30m:9s   --                     eth0         member          Yes        \x20
+    OXRO-AP122223  10.100.42.238   access  enable    0        315(indoor)  --            N/A        -     CNH6AAAAA6  60+             18                  3(good)                 -92(good)                 11              6                   14(good)                -91(good)                 -               -                   -                       -                         No                   none       0          1721         enable           2d:16h:26m:45s  --                     eth0         member          No         \x20
+    OXRO-AP111117#\x20
+  show running-config no-encrypt: |-
+    show running-config no-encrypt
+    version 8.10.0.0-8.10.0
+    syslocation OXIDIZED
+    virtual-controller-country DE
+    virtual-controller-key AAAAAAAAAABBBBBBBBBBCCCCCCCCCC
+    name OXIDIZED-VC
+    organization Oxidized-Rocks
+    virtual-controller-ip 10.100.42.254
+    syslog-server 10.10.42.11 \x20
+    terminal-access
+    ntp-server 10.10.42.123
+    clock timezone Berlin 01 00
+    clock summer-time CEST recurring last sunday march 02:00 last sunday october 03:00
+    rf-band all
+    dynamic-radius-proxy
+    
+    allow-new-aps
+    
+    allowed-ap 54:d7:e3:00:11:22
+    allowed-ap 54:d7:e3:00:11:24
+    allowed-ap 7c:57:3c:00:11:2c
+    allowed-ap e8:26:89:00:11:26
+    
+    
+    snmp-server community AAAAAAAAAABBBBBBBBBBCCCCCCCCCC
+    snmp-server host 10.10.42.12 version 2c AAAAAAAAAABBBBBBBBBBCCCCCCCCCC inform
+    snmp-server host 10.10.42.13 version 2c AAAAAAAAAABBBBBBBBBBCCCCCCCCCC inform
+    
+    
+    
+    hash-mgmt-password
+    hash-mgmt-user oxidized password hash AAAAAAAAAABBBBBBBBBBCCCCCCCCCC
+    hash-mgmt-user rocks password hash AAAAAAAAAABBBBBBBBBBCCCCCCCCCC usertype read-only
+    
+    
+    wlan access-rule default_wired_port_profile
+     index 0
+     rule any any match any any any permit
+    
+    wlan access-rule 123-OXI--ED
+     utf8
+     index 2
+     rule any any match any any any permit
+    
+    wlan ssid-profile 123-OXI--ED
+     enable
+     index 0
+     type employee
+     essid 123-OXI--ED
+     utf8
+     wpa-passphrase AAAAAAAAAABBBBBBBBBBCCCCCCCCCC
+     opmode wpa2-psk-aes
+     max-authentication-failures 0
+     vlan 123
+     dot11k
+     dot11v
+    
+    mgmt-auth-server tacacs2
+    mgmt-auth-server tacacs1
+    
+    wlan tacacs-server tacacs1
+     ip 10.10.42.21
+     key AAAAAAAAAABBBBBBBBBBCCCCCCCCCC
+     timeout 5
+     session-authorization
+    
+    wlan tacacs-server tacacs2
+     ip 10.10.42.22
+     key AAAAAAAAAABBBBBBBBBBCCCCCCCCCC
+     timeout 5
+     session-authorization
+    
+    
+    
+    OXRO-AP111117#\x20
+  exit: |-
+    exit
