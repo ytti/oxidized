@@ -18,11 +18,25 @@
 
 weburl="https://contoso.webhook.office.com/webhookb2/etc etc etc"
 GITURL="https://github.example.com/My-org/oxidized/commit/"
-
+INCLUDE_GITHUB_LINK=false
 # Max size before shortening
-MAXSIZE=20000
+MAXSIZE=27000
 # When shortening - how many lines to show
 SHORTLINES=30
+
+if [ "$INCLUDE_GITHUB_LINK" = true ]; then
+  github_action=",
+            { \"type\": \"ActionSet\",
+              \"actions\":
+               [
+                 {
+                 \"type\": \"Action.OpenUrl\",
+                 \"title\": \"Click to see diff in github\",
+                 \"url\": \"${GITURL}${OX_REPO_COMMITREF}\"
+                 }
+               ]
+             }"
+fi
 
 postdata()
 {
@@ -82,17 +96,7 @@ postdata()
                             "size": "small"
                         }
                     ]
-                },
-                {
-                    "type": "ActionSet",
-                    "actions": [
-                        {
-                        "type": "Action.OpenUrl",
-                        "title": "Click to see diff in github",
-                        "url": "${GITURL}${OX_REPO_COMMITREF}"
-                    }
-                ]
-            }
+                }${github_action}
            ]
          }
       }
