@@ -25,6 +25,7 @@ The format is based on [Keep a Changelog](https://keepachangelog.com/en/1.1.0/).
 - xos: Hide radius accounting secret
 - fsos: Hide AAA and SNMP secrets (@RayaneB35)
 - aos7: fix prompt for version 8.8x. Fixes #3351 (@robertcheramy)
+- aosw: Hide power measurements (@rouven0)
 
 ## [0.31.0 – 2024-11-29]
 
