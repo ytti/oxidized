@@ -21,8 +21,6 @@ GITURL="https://github.example.com/My-org/oxidized/commit/"
 INCLUDE_GITHUB_LINK=false
 # Max size before shortening
 MAXSIZE=27000
-# When shortening - how many lines to show
-SHORTLINES=30
 
 if [ "$INCLUDE_GITHUB_LINK" = true ]; then
   github_action=",
@@ -110,8 +108,8 @@ URL=""
 
 size=$(postdata | wc -c)
 if [ "$size" -gt "$MAXSIZE" ]; then
-  COMMIT=$(git --bare --git-dir="${OX_REPO_NAME}" show --pretty='' --no-color "${OX_REPO_COMMITREF}" | head -n $SHORTLINES)
-  COMMIT+="$NEWLINE...$NEWLINE Shortened because of length, see full diff by clicking below button"
+  COMMIT=$(git --bare --git-dir="${OX_REPO_NAME}" show --pretty='' --no-color "${OX_REPO_COMMITREF}" | head -c $MAXSIZE)
+  COMMIT+="$NEWLINE...$NEWLINE Shortened because of length"
   COMMIT=$(echo "${COMMIT}" | jq --raw-input --slurp --compact-output )
 fi
 
