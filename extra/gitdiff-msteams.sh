@@ -20,7 +20,7 @@ weburl="https://contoso.webhook.office.com/webhookb2/etc etc etc"
 GITURL="https://github.example.com/My-org/oxidized/commit/"
 INCLUDE_GITHUB_LINK=false
 # Max size before shortening
-MAXSIZE=27000
+MAXSIZE=24500
 
 if [ "$INCLUDE_GITHUB_LINK" = true ]; then
   github_action=",
