@@ -15,11 +15,13 @@
 #    timeout: 120
 #
 # Add webhook to your MS Teams channel and set the next variable to the full url
+# If INCLUDE_GITHUB_LINK is set to true, there will be a button that links to GITURL in the bottom of each teams post. the commit id is added at the end of the url.
+# MAXSIZE is set to respect the 28 KB limit for teams webhooks, but you might need to change it if you modify the Adaptive Card
 
 weburl="https://contoso.webhook.office.com/webhookb2/etc etc etc"
 GITURL="https://github.example.com/My-org/oxidized/commit/"
 INCLUDE_GITHUB_LINK=false
-# Max size before shortening
+# Max size for summary text.
 MAXSIZE=24500
 
 if [ "$INCLUDE_GITHUB_LINK" = true ]; then
