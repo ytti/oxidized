@@ -76,8 +76,7 @@ describe Oxidized::Output::Git do
       Oxidized::Output::Git.clear_cache
     end
 
-    it 'returns the new commits in the right sequence' do
-      skip 'not implemented yet'
+    it 'returns recent commits in the right order' do
       @repo.add_commit(%w[file1 file2], [], Time.new(2001), 'C0001')
       @repo.add_commit(['file3'], ['file1'], Time.new(2002), 'C0002')
       hashlist = Oxidized::Output::Git.hash_list('file1', '/tmp/o.git')
@@ -86,11 +85,14 @@ describe Oxidized::Output::Git do
       _(hashlist[1][:oid]).must_equal 'C0001'
 
       @repo.add_commit(['file3'], %w[file1 file2], Time.new(2003), 'C0003')
+      @repo.add_commit([], %w[file1], Time.new(2004), 'C0004')
       hashlist = Oxidized::Output::Git.hash_list('file1', '/tmp/o.git')
-      _(hashlist.length).must_equal 3
-      _(hashlist[0][:oid]).must_equal 'C0003'
-      _(hashlist[1][:oid]).must_equal 'C0002'
-      _(hashlist[2][:oid]).must_equal 'C0001'
+
+      _(hashlist.length).must_equal 4
+      _(hashlist[0][:oid]).must_equal 'C0004'
+      _(hashlist[1][:oid]).must_equal 'C0003'
+      _(hashlist[2][:oid]).must_equal 'C0002'
+      _(hashlist[3][:oid]).must_equal 'C0001'
     end
   end
 

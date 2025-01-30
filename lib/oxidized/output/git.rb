@@ -148,12 +148,15 @@ module Oxidized
         walker.sorting(Rugged::SORT_DATE)
         walker.push(repo.head.target.oid)
 
+        cache = {}
         walker.each do |commit|
           if commit.oid == @gitcache[repo_path][:last_commit]
             # we have reached the last cached commit, so we're done
             break
           end
 
+          # store the commits into a temporary cache. It will be prepended
+          # to @gitcache to preserve the order of the commits.
           commit.diff.each_delta do |delta|
             next unless delta.added? || delta.modified?
 
@@ -163,13 +166,24 @@ module Oxidized
             hash[:author] = commit.author
             hash[:message] = commit.message
             filename = delta.new_file[:path]
-            if @gitcache[repo_path][:nodes][filename]
-              @gitcache[repo_path][:nodes][filename].append hash
+            if cache[filename]
+              cache[filename].append hash
             else
-              @gitcache[repo_path][:nodes][filename] = [hash]
+              cache[filename] = [hash]
             end
           end
         end
+
+        cache.each_pair do |filename, hashlist|
+          if @gitcache[repo_path][:nodes][filename]
+            # using the splat operator (*) should be OK as hashlist should
+            # not be very big when working on deltas
+            @gitcache[repo_path][:nodes][filename].prepend(*hashlist)
+          else
+            @gitcache[repo_path][:nodes][filename] = hashlist
+          end
+        end
+
         # Store the most recent commit
         @gitcache[repo_path][:last_commit] = repo.head.target.oid
       end
