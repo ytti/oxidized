@@ -19,7 +19,9 @@ class EnterpriseSonic < Oxidized::Model
   end
 
   cfg :ssh do
-    post_login 'sonic-cli'
+    post_login do
+      cmd "sonic-cli"
+    end
     pre_logout 'exit'
   end
 end
