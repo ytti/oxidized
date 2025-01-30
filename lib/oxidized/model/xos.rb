@@ -3,7 +3,15 @@ class XOS < Oxidized::Model
 
   # Extreme Networks XOS
 
-  prompt /^\s?\*?\s?[-\w]+\s?[-\w.~]+(:\d+)? [#>] $/
+  # (\* )?        (opt) unsaved configuration
+  # (Slot-\d+ )?  (opt) slot for stacks
+  # (VPEX )?      (opt) VPEX = Virtual port extender
+  # \(?           (opt) parenthesis around hostname
+  # [\w\-.~]+     hostname
+  # \)?           (opt) parenthesis around hostname
+  # ([.:]\d+)?    (opt) prompt counting
+  #  [#>]         trailing text
+  prompt /^(\* )?(Slot-\d+ )?(VPEX )?\(?[\w\-.~]+\)?([.:]\d+)? [#>] $/
   comment  '# '
 
   cmd :all do |cfg|

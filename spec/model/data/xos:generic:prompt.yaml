@@ -1,0 +1,18 @@
+pass:
+  # Prompts from PR #2075
+  # unsaved config
+  - "* mydevice-eu-sw02 > "
+  # saved config
+  - "my-device02.1 # "
+  - "my-device02.2 # "
+  # old xos
+  - "ancient-device02:1 # "
+  # Prompts from issue #2107
+  - "Slot-1 stack_office_x3.1 # "
+  # Prompts from issue #2113
+  - "* sw0.l9.kv.1 # "
+  - "* sw0.l9.kv.2 # "
+  # Prompts from issue #3259
+  - "Slot-1 VPEX SW-00035-002.1 # "
+  - "(super-ancient-machine001) > "
+  - "(super-ancient-machine001) # "
