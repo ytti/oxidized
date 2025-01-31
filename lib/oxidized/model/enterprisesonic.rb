@@ -6,7 +6,8 @@ class EnterpriseSonic < Oxidized::Model
     data.gsub re, ''
   end
 
-  prompt /^(\w.*|\W.*)[:#$] /
+  # Matches both sonic-cli and linux terminal
+  prompt /^(?:[\w.-]+@[\w.-]+:[~\w\/-]+\$|[\w.-]+#)\s*/
   comment "# "
 
   cmd 'show running-configuration | no-more' do |cfg|
