@@ -10,19 +10,37 @@ class EnterpriseSonic < Oxidized::Model
   prompt /^(?:[\w.-]+@[\w.-]+:[~\w\/-]+\$|[\w.-]+#)\s*/
   comment "# "
 
-  cmd 'show running-configuration | no-more' do |cfg|
-    comment cfg
+  def add_comment(comment)
+    "\n##### #{comment} #####\n"
   end
 
-  cmd 'show version | no-more' do |cfg|
-    cfg = cfg.each_line.grep(/Software Version|Product|Distribution|Kernel|Config DB Version|Build Commit|Platform|HwSKU|ASIC|Hardware Version|Serial Number|Mfg/).join
-    comment cfg
+  post do
+    cmd 'show running-configuration' do |cfg|
+      add_comment('CONFIGURATION') + cfg
+    end
+  end
+
+  cmd 'show version' do |cfg|
+    cfg = cfg.each_line.reject { |line| line.match /Uptime/}.join
+    add_comment('VERSION') + cfg
+  end
+
+  cmd 'show platform syseeprom' do |cfg|
+    add_comment('SYSEEPROM') + cfg
+  end
+
+  cmd :all do |cfg|
+    cfg.cut_both
   end
 
   cfg :ssh do
-    post_login do
-      cmd "sonic-cli"
+    # if user logs in to linux == has admin rights
+    if vars(:admin) == true
+      post_login do
+        cmd "sonic-cli\n"
+      end
     end
+    post_login 'terminal length 0'
     pre_logout 'exit'
   end
 end
