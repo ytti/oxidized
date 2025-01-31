@@ -1,4 +1,4 @@
-class Enterprise_SONiC < Oxidized::Model
+class Enterprise_SONiC < Oxidized::Model # rubocop:disable Naming/ClassAndModuleCamelCase
   using Refinements
 
   # Remove ANSI escape codes
@@ -21,7 +21,7 @@ class Enterprise_SONiC < Oxidized::Model
   end
 
   cmd 'show version' do |cfg|
-    cfg = cfg.each_line.reject { |line| line.match /Uptime/}.join
+    cfg = cfg.each_line.reject { |line| line.match /Uptime/ }.join
     add_comment('VERSION') + cfg
   end
 
