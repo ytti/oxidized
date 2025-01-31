@@ -1,4 +1,4 @@
-class EnterpriseSonic < Oxidized::Model
+class Enterprise_SONiC < Oxidized::Model
   using Refinements
 
   # Remove ANSI escape codes
