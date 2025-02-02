@@ -64,8 +64,8 @@ module Oxidized
       # Returns the configuration of group/node_name
       #
       # #fetch is called by Nodes#fetch
-      # Nodes#fetch creates a new Output object each time, so we cannot
-      # store the repo index in memory. But as we keep the repo index up
+      # Nodes#fetch creates a new Output object each time, so it not easy
+      # to cache the repo index in memory. But as we keep the repo index up
       # to date on disk in #update_repo, we can read it from disk instead of
       # rebuilding it each time.
       def fetch(node, group)
@@ -79,7 +79,10 @@ module Oxidized
         'node not found'
       end
 
-      # give a hash of all oid revision for the given node, and the date of the commit
+      # give a hash of all oid revisions for the given node, and the date of
+      # the commit.
+      #
+      # Called by Nodes#version
       def version(node, group)
         repo_path, node_path = yield_repo_and_path(node, group)
         self.class.hash_list(node_path, repo_path)
@@ -124,7 +127,7 @@ module Oxidized
         'no diffs'
       end
 
-      # Return the list of the configuration hashes for node_path in repo
+      # Return the list of oids for node_path in the repository repo_path
       def self.hash_list(node_path, repo_path)
         update_cache(repo_path)
         @gitcache[repo_path][:nodes][node_path] || []
@@ -148,6 +151,8 @@ module Oxidized
         walker.sorting(Rugged::SORT_DATE)
         walker.push(repo.head.target.oid)
 
+        # We store the commits into a temporary cache. It will be prepended
+        # to @gitcache to preserve the order of the commits.
         cache = {}
         walker.each do |commit|
           if commit.oid == @gitcache[repo_path][:last_commit]
@@ -155,8 +160,6 @@ module Oxidized
             break
           end
 
-          # store the commits into a temporary cache. It will be prepended
-          # to @gitcache to preserve the order of the commits.
           commit.diff.each_delta do |delta|
             next unless delta.added? || delta.modified?
 
@@ -165,6 +168,7 @@ module Oxidized
             hash[:oid] = commit.oid
             hash[:author] = commit.author
             hash[:message] = commit.message
+
             filename = delta.new_file[:path]
             if cache[filename]
               cache[filename].append hash
@@ -231,14 +235,7 @@ module Oxidized
         end
       end
 
-      # Uploads data into file in the repo
-      #
-      # @param [String] file: the file to save the configuration to
-      # @param [String] data: the configuration to save
-      # @param [Rugged::Repository] repo: the git repository to use
-      #
-      # If Oxidized.config.output.git.single_repo = false (which is the default),
-      # there will one repository for each group.
+      # Uploads data into file in the repository repo
       #
       # update_repo caches the index on disk. An index is usually used in a
       # working directory and not in a bare repository, which confuses users.

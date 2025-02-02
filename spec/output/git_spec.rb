@@ -55,7 +55,8 @@ describe Oxidized::Output::Git do
 
     it 'returns a list of hashes' do
       @repo.add_commit(%w[file1 file2], [], Time.new(2001), 'C0001')
-      @repo.add_commit(['file3'], ['file1'], Time.new(2002), 'C0002')
+      @repo.add_commit([], ['file2'], Time.new(2002), 'C0002')
+      @repo.add_commit(['file3'], ['file1'], Time.new(2003), 'C0003')
 
       hashlist = Oxidized::Output::Git.hash_list('file1', '/tmp/o.git')
       _(hashlist.length).must_equal 2
@@ -71,9 +72,6 @@ describe Oxidized::Output::Git do
       CommitMock.any_instance.expects(:diff).never
       hashlist = Oxidized::Output::Git.hash_list('file1', '/tmp/o.git')
       _(hashlist.length).must_equal 2
-
-      # Clean the persistent cache at the end of the test
-      Oxidized::Output::Git.clear_cache
     end
 
     it 'returns recent commits in the right order' do
@@ -96,9 +94,75 @@ describe Oxidized::Output::Git do
     end
   end
 
-  describe '::version' do
+  describe '#version' do
+    after do
+      # Clean the persistent cache at the end of the test
+      Oxidized::Output::Git.clear_cache
+    end
+
     it 'works with single_repo=false' do
-      skip 'no test yet'
+      Oxidized.asetus = Asetus.new
+      Oxidized.config.output.git.single_repo = false
+
+      @repo_group1 = RepoMock.new
+      @repo_group1.add_commit(%w[node1 node2], [], Time.new(2001), 'C0001')
+      @repo_group1.add_commit([], ['node1'], Time.new(2002), 'C0002')
+      Rugged::Repository.expects(:new).with('/tmp/group1.git').returns(@repo_group1)
+      walker = WalkerMock.new(@repo_group1)
+      Rugged::Walker.expects(:new).with(@repo_group1).returns(walker)
+      @mock_node1 = mock('Oxidized::Node')
+      @mock_node1.expects(:repo).returns('/tmp/group1.git')
+      @mock_node1.expects(:name).returns('node1')
+
+      @repo_group2 = RepoMock.new
+      @repo_group2.add_commit(%w[node8 node9], [], Time.new(2008), 'C0008')
+      @repo_group2.add_commit([], ['node9'], Time.new(2009), 'C0009')
+      Rugged::Repository.expects(:new).with('/tmp/group2.git').returns(@repo_group2)
+      walker = WalkerMock.new(@repo_group2)
+      Rugged::Walker.expects(:new).with(@repo_group2).returns(walker)
+      @mock_node8 = mock('Oxidized::Node')
+      @mock_node8.expects(:repo).returns('/tmp/group2.git')
+      @mock_node8.expects(:name).returns('node8')
+
+      git = Oxidized::Output::Git.new
+
+      version_group1_node1 = git.version @mock_node1, 'group1'
+      _(version_group1_node1.length).must_equal 2
+
+      version_group2_node8 = git.version @mock_node8, 'group2'
+      _(version_group2_node8.length).must_equal 1
+    end
+
+    it 'works with single_repo=true' do
+      Oxidized.asetus = Asetus.new
+      Oxidized.config.output.git.single_repo = true
+
+      @repo = RepoMock.new
+      @repo.add_commit(%w[group1/node1 group1/node2],
+                       [], Time.new(2001), 'C0001')
+      @repo.add_commit([], ['group1/node1'], Time.new(2002), 'C0002')
+      @repo.add_commit(%w[group2/node8 group2/node9],
+                       [], Time.new(2008), 'C0008')
+      @repo.add_commit([], ['group2/node9'], Time.new(2009), 'C0009')
+
+      Rugged::Repository.expects(:new).with('/tmp/oxidized.git').returns(@repo).twice
+      walker = WalkerMock.new(@repo)
+      Rugged::Walker.expects(:new).with(@repo).returns(walker).twice
+      @mock_node1 = mock('Oxidized::Node')
+      @mock_node1.expects(:repo).returns('/tmp/oxidized.git')
+      @mock_node1.expects(:name).returns('node1').twice
+
+      @mock_node8 = mock('Oxidized::Node')
+      @mock_node8.expects(:repo).returns('/tmp/oxidized.git')
+      @mock_node8.expects(:name).returns('node8').twice
+
+      git = Oxidized::Output::Git.new
+
+      version_group1_node1 = git.version @mock_node1, 'group1'
+      _(version_group1_node1.length).must_equal 2
+
+      version_group2_node8 = git.version @mock_node8, 'group2'
+      _(version_group2_node8.length).must_equal 1
     end
   end
 end
