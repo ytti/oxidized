@@ -64,8 +64,8 @@ module Oxidized
       # Returns the configuration of group/node_name
       #
       # #fetch is called by Nodes#fetch
-      # Nodes#fetch creates a new Output object each time, so we cannot
-      # store the repo index in memory. But as we keep the repo index up
+      # Nodes#fetch creates a new Output object each time, so it not easy
+      # to cache the repo index in memory. But as we keep the repo index up
       # to date on disk in #update_repo, we can read it from disk instead of
       # rebuilding it each time.
       def fetch(node, group)
@@ -79,29 +79,13 @@ module Oxidized
         'node not found'
       end
 
-      # give a hash of all oid revision for the given node, and the date of the commit
+      # give a hash of all oid revisions for the given node, and the date of
+      # the commit.
+      #
+      # Called by Nodes#version
       def version(node, group)
-        repo, path = yield_repo_and_path(node, group)
-
-        repo = Rugged::Repository.new repo
-        walker = Rugged::Walker.new(repo)
-        walker.sorting(Rugged::SORT_DATE)
-        walker.push(repo.head.target.oid)
-        i = -1
-        tab = []
-        walker.each do |commit|
-          # Diabled rubocop because the suggested .empty? does not work here.
-          next if commit.diff(paths: [path]).size.zero? # rubocop:disable Style/ZeroLengthPredicate
-
-          hash = {}
-          hash[:date] = commit.time.to_s
-          hash[:oid] = commit.oid
-          hash[:author] = commit.author
-          hash[:message] = commit.message
-          tab[i += 1] = hash
-        end
-        walker.reset
-        tab
+        repo_path, node_path = yield_repo_and_path(node, group)
+        self.class.hash_list(node_path, repo_path)
       rescue StandardError
         'node not found'
       end
@@ -143,6 +127,76 @@ module Oxidized
         'no diffs'
       end
 
+      # Return the list of oids for node_path in the repository repo_path
+      def self.hash_list(node_path, repo_path)
+        update_cache(repo_path)
+        @gitcache[repo_path][:nodes][node_path] || []
+      end
+
+      # Update @gitcache, a class instance variable, ensuring persistence
+      # by saving the cache independently of object instances
+      def self.update_cache(repo_path)
+        # initialize our cache as a class instance variable
+        @gitcache ||= {}
+        # When single_repo == false, we have multiple repositories
+        unless @gitcache[repo_path]
+          @gitcache[repo_path] = {}
+          @gitcache[repo_path][:nodes] = {}
+          @gitcache[repo_path][:last_commit] = nil
+        end
+
+        repo = Rugged::Repository.new repo_path
+
+        walker = Rugged::Walker.new(repo)
+        walker.sorting(Rugged::SORT_DATE)
+        walker.push(repo.head.target.oid)
+
+        # We store the commits into a temporary cache. It will be prepended
+        # to @gitcache to preserve the order of the commits.
+        cache = {}
+        walker.each do |commit|
+          if commit.oid == @gitcache[repo_path][:last_commit]
+            # we have reached the last cached commit, so we're done
+            break
+          end
+
+          commit.diff.each_delta do |delta|
+            next unless delta.added? || delta.modified?
+
+            hash = {}
+            hash[:date] = commit.time.to_s
+            hash[:oid] = commit.oid
+            hash[:author] = commit.author
+            hash[:message] = commit.message
+
+            filename = delta.new_file[:path]
+            if cache[filename]
+              cache[filename].append hash
+            else
+              cache[filename] = [hash]
+            end
+          end
+        end
+
+        cache.each_pair do |filename, hashlist|
+          if @gitcache[repo_path][:nodes][filename]
+            # using the splat operator (*) should be OK as hashlist should
+            # not be very big when working on deltas
+            @gitcache[repo_path][:nodes][filename].prepend(*hashlist)
+          else
+            @gitcache[repo_path][:nodes][filename] = hashlist
+          end
+        end
+
+        # Store the most recent commit
+        @gitcache[repo_path][:last_commit] = repo.head.target.oid
+      end
+
+      # Currently only used in unit tests
+      def self.clear_cache
+        @gitcache = nil
+      end
+
       private
 
       def yield_repo_and_path(node, group)
@@ -181,14 +235,7 @@ module Oxidized
         end
       end
 
-      # Uploads data into file in the repo
-      #
-      # @param [String] file: the file to save the configuration to
-      # @param [String] data: the configuration to save
-      # @param [Rugged::Repository] repo: the git repository to use
-      #
-      # If Oxidized.config.output.git.single_repo = false (which is the default),
-      # there will one repository for each group.
+      # Uploads data into file in the repository repo
       #
       # update_repo caches the index on disk. An index is usually used in a
       # working directory and not in a bare repository, which confuses users.
