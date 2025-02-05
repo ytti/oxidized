@@ -11,6 +11,7 @@ The format is based on [Keep a Changelog](https://keepachangelog.com/en/1.1.0/).
 - apc_aos: support for scp (@robertcheramy)
 - config: allow model_map and group_map keys to be regexp. Fixes #3360 (@ytti)
 - enterprise_sonic: add new model enterprise_sonic (@ohai89)
+- model for Kornfeld Operating System(@yurenkov)
 
 ### Changed
 - sonicos: accept policy message. Fixes #3339 (@Steve-M-C, @robertcheramy)
