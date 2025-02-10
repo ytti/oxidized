@@ -19,6 +19,7 @@ The format is based on [Keep a Changelog](https://keepachangelog.com/en/1.1.0/).
 - cumulus: remove ANSI Escape codes and fix prompt issues. The prompt is more specific now (@alchemyx, @robertcheramy)
 - model unit tests: the tests are automated and simpler to use (@ytti, @robertcheramy)
 - device2yaml.rb: moved to extra/, commands can be specified from the command line or from a file (no cmdsets provided anymore) (@robertcheramy)
+- extra/gitdiff-msteams.sh: honor the 28KB size limit and add an optional link to GitHub (@mopi3456)
 
 ### Fixed
 - tplink: send 'enable' before the enable password. Fixes #3271 (@robertcheramy)
