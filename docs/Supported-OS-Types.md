@@ -175,6 +175,7 @@
 |                    |NSX Distributed Firewall      |[nsxdfw](/lib/oxidized/model/nsxdfw.rb)
 |Watchguard          |Fireware OS                   |[firewareos](/lib/oxidized/model/firewareos.rb)
 |Westell             |Westell 8178G, Westell 8266G  |[weos](/lib/oxidized/model/weos.rb)
+|Yadro               |KornfeldOS                    |[kornfeldos](/lib/oxidized/model/kornfeldos.rb) 
 |YAMAHA              |YAMAHA NVR/RTX Series         |[yamaha](/lib/oxidized/model/yamaha.rb)
 |Zhone               |Zhone (OLT and MX)            |[zhoneolt](/lib/oxidized/model/zhoneolt.rb)
 |ZPE                 |Nodegrid OS                   |[nodegrid](/lib/oxidized/model/nodegrid.rb)
