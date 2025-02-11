@@ -8,10 +8,6 @@ RUN apt-get update && apt-get install -y \
     build-essential \
     git \
     ruby-dev \
-    # Needed to build Net::SCP from https://github.com/robertcheramy/net-scp.git
-    # Can be removed after issue
-    # https://github.com/robertcheramy/net-scp/issues/1 is fixed
-    rubocop \
     && rm -rf /var/lib/apt/lists/*
 
 # create bundle directory
@@ -22,12 +18,6 @@ ENV GEM_HOME=/usr/local/bundle
 # Install the x25519 gem
 RUN gem install x25519 --no-document
 
-
-###################
-# build net-scp from https://github.com/robertcheramy/net-scp for APC devices
-WORKDIR /tmp/net-scp/
-RUN git clone -c advice.detachedHead=false --branch 4.0.3.fork --single-branch https://github.com/robertcheramy/net-scp.git /tmp/net-scp
-RUN rake build
 
 ###################
 # build oxidized
@@ -107,16 +97,14 @@ COPY --from=prebuilder /usr/local/bundle /usr/local/bundle
 ENV GEM_HOME="/usr/local/bundle"
 ENV PATH="$GEM_HOME/bin:$PATH"
 
-# Install previously built net-scp
-COPY --from=prebuilder /tmp/net-scp/pkg/net-scp-4.0.3.fork.gem /tmp/
-RUN gem install /tmp/net-scp-4.0.3.fork.gem
-
 # gems not available in ubuntu noble
 RUN gem install --no-document \
     # dependencies for hooks
     slack-ruby-client cisco_spark \
     # dependencies for specific inputs
-    net-tftp
+    net-tftp \
+    # Net scp is needed in Version >= 4.1.0, which is not available in ubuntu
+    net-scp
 
 # install oxidized from prebuilder
 # The Dockerfile ist version-independent, so use oxidized-*.gem to cach the gem
