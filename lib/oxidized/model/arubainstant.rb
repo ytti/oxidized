@@ -4,7 +4,7 @@ class ArubaInstant < Oxidized::Model
   # Aruba IAP, Instant Controller
 
   comment '# '
-  prompt(/^[\w\:.@-]+[#>] $/)
+  prompt(/^ ?[\w\:.@-]+[#>] $/)
 
   cmd :all do |cfg|
     # Remove command echo and prompt

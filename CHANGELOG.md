@@ -29,6 +29,7 @@ The format is based on [Keep a Changelog](https://keepachangelog.com/en/1.1.0/).
 - fsos: Hide AAA and SNMP secrets (@RayaneB35)
 - aos7: fix prompt for version 8.8x. Fixes #3351 (@robertcheramy)
 - aosw: Hide power measurements (@rouven0)
+- arubainstant: show version prepends a space to prompt when a core file is present. Fixes #3398 (@robertcheramy)
 
 ## [0.31.0 – 2024-11-29]
 
