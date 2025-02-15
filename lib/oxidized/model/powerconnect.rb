@@ -73,7 +73,8 @@ class PowerConnect < Oxidized::Model
       end
       out << line.strip
     end
-    out = out.reject { |line| line[/Up\sTime/] }
+    out = out.reject { |line| line[/Up\sTime/] }                                      # Filter out Up Time
+    out = out.map { |line| line.gsub(/(^\d{1,2}\s{15}\s+?)\s\d[\d\s]{2}/, '\1 XXX') } # Filter out changing temp
     out = comment out.join "\n"
     out << "\n"
   end
