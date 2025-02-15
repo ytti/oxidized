@@ -3,9 +3,9 @@ class StarOS < Oxidized::Model
   comment  '# '
 
   cmd :all do |cfg|
-      # get rid of errors for commands that don't work on some devices
-      cfg.gsub! /^% Invalid input detected at '\^' marker\.$|^\s+\^$/, ''
-      cfg.cut_both
+    # get rid of errors for commands that don't work on some devices
+    cfg.gsub! /^% Invalid input detected at '\^' marker\.$|^\s+\^$/, ''
+    cfg.cut_both
   end
 
   cmd :secret do |cfg|
@@ -82,7 +82,7 @@ class StarOS < Oxidized::Model
     comments = []
     comments << "\nAPN policy:\n"
     comments << state
-    comments << "\n"   
+    comments << "\n"
     comment comments.join "\n"
   end
   
