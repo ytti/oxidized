@@ -81,7 +81,7 @@ class PowerConnect < Oxidized::Model
       # This can only be a temperature, right? ;-)
       if match = line.match(/^(\d{1,2}) {3,}\d+ +(.*)$/)
         one, two = match.captures
-        line = "#{one}" + ' ' * (len1 - one.length) + "ZZZ" + ' ' * (len2 - 3) + "#{two}"
+        line = "#{one}" + ' ' * (len1 - one.length) + "XXX" + ' ' * (len2 - 3) + "#{two}"
       end
       out << line
     end
