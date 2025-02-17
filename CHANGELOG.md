@@ -4,7 +4,7 @@ All notable changes to this project will be documented in this file.
 
 The format is based on [Keep a Changelog](https://keepachangelog.com/en/1.1.0/).
 
-## [Unreleased]
+## [0.32.0 – 2025-02-17]
 This release fixes a security issue in oxidized-web, which is included in the
 Docker container of oxidized. If you are not using the Docker container but
 use oxidized-web, be sure to update your oxidized-web gem to 0.15.0.
@@ -33,6 +33,7 @@ use oxidized-web, be sure to update your oxidized-web gem to 0.15.0.
 - aos7: fix prompt for version 8.8x. Fixes #3351 (@robertcheramy)
 - aosw: Hide power measurements (@rouven0)
 - arubainstant: show version prepends a space to prompt when a core file is present. Fixes #3398 (@robertcheramy)
+
 
 ## [0.31.0 – 2024-11-29]
 
