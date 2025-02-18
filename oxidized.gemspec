@@ -21,7 +21,18 @@ Gem::Specification.new do |s|
 
   s.required_ruby_version = '>= 3.1'
 
-  s.add_dependency 'asetus',               '~> 0.1'
+  # Gemspec strategy
+  #
+  # For dependency and optional dependencies, we try to set the minimal
+  # dependency lower than the Ubuntu Noble or Debian Bookworm package version,
+  # so that native packages can be used.
+  # We limit the maximal version so that dependabot can warn about new versions
+  # and we can test them before activating them in Oxidized.
+  #
+  # development dependencies are set to the latest minor version of a library
+  # and updated after having tested them
+
+  s.add_dependency 'asetus',               '~> 0.4'
   s.add_dependency 'bcrypt_pbkdf',         '~> 1.0'
   s.add_dependency 'ed25519',              '~> 1.2'
   s.add_dependency 'net-ftp',              '~> 0.2'
@@ -41,8 +52,8 @@ Gem::Specification.new do |s|
   s.add_development_dependency 'pry',                 '~> 0.15.0'
   s.add_development_dependency 'rake',                '~> 13.0'
   s.add_development_dependency 'rubocop',             '~> 1.72.0'
-  s.add_development_dependency 'rubocop-minitest',    '~> 0.36.0'
-  s.add_development_dependency 'rubocop-rake',        '~> 0.6.0'
+  s.add_development_dependency 'rubocop-minitest',    '~> 0.37.0'
+  s.add_development_dependency 'rubocop-rake',        '~> 0.7.0'
   s.add_development_dependency 'rubocop-sequel',      '~> 0.3.3'
   s.add_development_dependency 'simplecov',           '~> 0.22.0'
   s.add_development_dependency 'simplecov-cobertura', '~> 2.1.0'
@@ -50,5 +61,5 @@ Gem::Specification.new do |s|
 
   # Dependencies on optional libraries, used for unit tests & development
   s.add_development_dependency 'oxidized-web',        '>= 0.15.0'
-  s.add_development_dependency 'sequel',              '~> 5.88.0'
+  s.add_development_dependency 'sequel',              '>= 5.63.0', '<= 5.89.0'
 end
