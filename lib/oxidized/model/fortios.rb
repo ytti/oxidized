@@ -3,7 +3,7 @@ class FortiOS < Oxidized::Model
 
   comment '# '
 
-  prompt /^([-\w.~]+(\s[(\w\-.)]+)?~?\s?[#>$]\s?)$/
+  prompt /^(\(\w\) )?([-\w.~]+(\s[(\w\-.)]+)?~?\s?[#>$]\s?)$/
 
   # When a post-login-banner is enabled, you have to press "a" to log in
   expect /^\(Press\s'a'\sto\saccept\):/ do |data, re|
@@ -39,11 +39,11 @@ class FortiOS < Oxidized::Model
 
   cmd 'get system status' do |cfg|
     @vdom_enabled = cfg.match /Virtual domain configuration: (enable|multiple)/
-    cfg.gsub! /(System time:).*/, '\\1 <stripped>'
+    cfg.gsub! /(System time:).*/i, '\\1 <stripped>'
     cfg.gsub! /(Cluster (?:uptime|state change time):).*/, '\\1 <stripped>'
     cfg.gsub! /(Current Time\s+:\s+)(.*)/, '\1<stripped>'
     cfg.gsub! /(Uptime:\s+)(.*)/, '\1<stripped>\3'
-    cfg.gsub! /(Last reboot:\s+)(.*)/, '\1<stripped>\3'
+    cfg.gsub! /(Last reboot:\s+)(.*)/i, '\1<stripped>\3'
     cfg.gsub! /(Disk Usage\s+:\s+)(.*)/, '\1<stripped>'
     cfg.gsub! /(^\S+ (?:disk|DB):\s+)(.*)/, '\1<stripped>\3'
     cfg.gsub! /(VM Registration:\s+)(.*)/, '\1<stripped>\3'
