@@ -11,6 +11,7 @@ The format is based on [Keep a Changelog](https://keepachangelog.com/en/1.1.0/).
 ### Changed
 
 ### Fixed
+- powerconnect: Hide enable, and line secrets. Further Fixes #1212 (#clifcox)
 
 
 ## [0.32.0 – 2025-02-17]
