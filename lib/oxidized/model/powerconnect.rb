@@ -57,7 +57,8 @@ class PowerConnect < Oxidized::Model
   end
 
   def clean(cfg)
-    out = []; len1 = len2 = skip_blocks = 0
+    out = []
+    len1 = len2 = skip_blocks = 0
 
     cfg.each_line do |line|
       # If this is a stackable switch we should skip this block of information
@@ -76,7 +77,8 @@ class PowerConnect < Oxidized::Model
       # The most recent set of dashes has the spacing we want to match
       if (match = line.match(/^(---+ +)(---+ +)/))
         one, two = match.captures
-        len1 = one.length; len2 = two.length
+        len1 = one.length
+        len2 = two.length
       end
       # This can only be a temperature, right? ;-)
       if (match = line.match(/^(\d{1,2}) {3,}\d+ +(.*)$/))
