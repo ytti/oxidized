@@ -11,6 +11,7 @@ The format is based on [Keep a Changelog](https://keepachangelog.com/en/1.1.0/).
 ### Changed
 
 ### Fixed
+- powerconnect: Hide enable, and line secrets. Further Fixes #1212 (#clifcox)
 
 
 ## [0.32.0 – 2025-02-17]
@@ -34,7 +35,6 @@ use oxidized-web, be sure to update your oxidized-web gem to 0.15.0.
 - extra/gitdiff-msteams.sh: honor the 28KB size limit and add an optional link to GitHub (@mopi3456)
 
 ### Fixed
-- powerconnect: Hide enable, and line secrets. Further Fixes #1212 (#clifcox)
 - tplink: send 'enable' before the enable password. Fixes #3271 (@robertcheramy)
 - asyncos: fix prompt for hostnames containing "-" . Fixes #3327 (@robertcheramy)
 - sonicos: fix prompt for hostnames containing "-" . Fixes #3333 (@robertcheramy)
