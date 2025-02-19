@@ -13,7 +13,7 @@ class PowerConnect < Oxidized::Model
   # Filter all command output
   cmd :all do |cfg|
     cfg.gsub! /\r+/, ''                     # Remove the CR characters echoed back from the commands
-    cfg.each_line.to_a[1..-2].join          # Drop the last line which is the next prompt
+    cfg.cut_tail                            # Drop the last line which is the next prompt
   end
 
   cmd :secret do |cfg|
