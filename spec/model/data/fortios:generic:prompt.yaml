@@ -1,0 +1,7 @@
+pass:
+  # FortiADC PR#3412
+  - '(M) redhat-lb-01 $ '
+  - '(P) test-adc-pri $ '
+  - '(S) test-adc-sec $ '
+  # FortiOS
+  - 'oxidized-Firewall123 # '

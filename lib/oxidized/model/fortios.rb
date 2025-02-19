@@ -3,7 +3,7 @@ class FortiOS < Oxidized::Model
 
   comment '# '
 
-  prompt /^(([-\w.~]+(\s[(\w\-.)]+)?~?\s?[#>$]\s?)|\(.\) ([^\s]+) [#$] )$/
+  prompt /^(\(\w\) )?([-\w.~]+(\s[(\w\-.)]+)?~?\s?[#>$]\s?)$/
 
   # When a post-login-banner is enabled, you have to press "a" to log in
   expect /^\(Press\s'a'\sto\saccept\):/ do |data, re|
