@@ -1,5 +1,12 @@
 inherit_from: .rubocop_todo.yml
 
+plugins:
+  - rubocop-rake
+  - rubocop-minitest
+
+require:
+  - rubocop-sequel
+
 AllCops:
   NewCops: enable
   # Do not attempt to police vendored code
@@ -104,8 +111,3 @@ Metrics/ParameterLists:
 
 Lint/EmptyBlock:
   Enabled: false
-
-require:
-  - rubocop-rake
-  - rubocop-minitest
-  - rubocop-sequel
