@@ -1,3 +1,5 @@
+# frozen_string_literal: true
+
 module Refinements
   # Use the 'refine' keyword to define refinements for the String class
   refine String do
