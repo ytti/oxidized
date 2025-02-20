@@ -7,8 +7,24 @@ all the changes that have been done. Have a specific look at changes you don't u
 
 For a graphical compare, use `git difftool -d 0.30.0..master`.
 
-## Test, test test!
-Test the git code and the container against as much device types an environments as you can.
+## Update the gem dependencies to the latest versions
+```
+bundle outaded
+bundle update
+bundle outaded
+```
+
+## Update rubocup .rubocop_todo.yml
+Run `bundle exec rubocop --auto-gen-config`,
+and make sure `bundle exec rake` passes after it.
+
+If you change some code => Restart the release process at the beginning ;-)
+
+## Make sure the file permissions are correct
+Run `bundle exec rake chmod`
+
+## Test !
+Test the git code and the container against as much device types and environments as you can.
 
 Do not integrate late PRs into master if they do not fix issues for the release. The must wait for the next release.
 
