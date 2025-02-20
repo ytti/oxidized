@@ -7,11 +7,24 @@ The format is based on [Keep a Changelog](https://keepachangelog.com/en/1.1.0/).
 ## [Unreleased]
 
 ### Added
+
+### Changed
+
+### Fixed
+- powerconnect: Hide enable, and line secrets. Further Fixes #1212 (#clifcox)
+
+
+## [0.32.0 – 2025-02-17]
+This release fixes a security issue in oxidized-web, which is included in the
+Docker container of oxidized. If you are not using the Docker container but
+use oxidized-web, be sure to update your oxidized-web gem to 0.15.0.
+
+### Added
 - junos: add unit test (@systeembeheerder)
 - apc_aos: support for scp (@robertcheramy)
 - config: allow model_map and group_map keys to be regexp. Fixes #3360 (@ytti)
 - enterprise_sonic: add new model enterprise_sonic (@ohai89)
-- model for Kornfeld Operating System(@yurenkov)
+- model for Kornfeld Operating System (@yurenkov)
 
 ### Changed
 - sonicos: accept policy message. Fixes #3339 (@Steve-M-C, @robertcheramy)
@@ -31,6 +44,7 @@ The format is based on [Keep a Changelog](https://keepachangelog.com/en/1.1.0/).
 - aos7: fix prompt for version 8.8x. Fixes #3351 (@robertcheramy)
 - aosw: Hide power measurements (@rouven0)
 - arubainstant: show version prepends a space to prompt when a core file is present. Fixes #3398 (@robertcheramy)
+
 
 ## [0.31.0 – 2024-11-29]
 
