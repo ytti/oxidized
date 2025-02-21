@@ -40,3 +40,5 @@ jobs:
           platforms: linux/amd64,linux/arm64
           push: true
           tags: ${{ steps.meta.outputs.tags }}
+          build-args: |
+            BUILDKIT_CONTEXT_KEEP_GIT_DIR=true
