@@ -4,7 +4,16 @@ All notable changes to this project will be documented in this file.
 
 The format is based on [Keep a Changelog](https://keepachangelog.com/en/1.1.0/).
 
-## [0.32.0 – 2025-02-20]
+## [Unreleased]
+
+### Added
+
+### Changed
+
+### Fixed
+
+
+## [0.32.1 – 2025-02-20]
 This minor release fixes a javascript issue in oxidized-web, which is included
 in the Docker container of oxidized.
 
