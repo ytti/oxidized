@@ -10,6 +10,7 @@ The format is based on [Keep a Changelog](https://keepachangelog.com/en/1.1.0/).
 
 ### Changed
 - docker image: updated github CI to explicitly build tag versions (@robertcheramy)
+- docker image: remove ubuntu user introduced in noble (@robertcheramy)
 
 ### Fixed
 

@@ -30,17 +30,21 @@ RUN git fetch --unshallow || true
 # Remove any older gems of oxidized if they exist
 RUN rm pkg/* || true
 
-# Ensure rugged is built with ssh support
+# Build oxidized
 RUN rake build
 
 
 ###################
-# Stage2: build an oxidized container from phusion/baseimage-docker and install x25519 from stage1
+# Stage2: build an oxidized container from phusion/baseimage-docker and install
+# gems from stage1
 FROM docker.io/phusion/baseimage:noble-1.0.0
 
 ENV DEBIAN_FRONTEND=noninteractive
 
 ##### Place "static" commands at the beginning to optimize image size and build speed
+# remove default ubuntu user
+RUN userdel -r ubuntu
+
 # add non-privileged user
 ARG UID=30000
 ARG GID=$UID
