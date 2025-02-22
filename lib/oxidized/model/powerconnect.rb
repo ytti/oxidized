@@ -5,7 +5,7 @@ class PowerConnect < Oxidized::Model
 
   comment '! '
 
-  expect /^\s*--More--\s+.*$/ do |data, re|
+  expect /\n\s*--More--\s+.*/ do |data, re| # Also grab the blank line above the --More--
     send ' '
     data.sub re, ''
   end

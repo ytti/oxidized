@@ -20,8 +20,8 @@ This minor release fixes a javascript issue in oxidized-web, which is included
 in the Docker container of oxidized.
 
 ### Fixed
+- powerconnect: Remove undesirable inserted blank lines during pagination. Fixes #3413 (@clifcox)
 - powerconnect: Hide enable, and line secrets. Further Fixes #1212 (#clifcox)
-
 
 ## [0.32.0 – 2025-02-17]
 This release fixes a security issue in oxidized-web, which is included in the
