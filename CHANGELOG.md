@@ -10,9 +10,11 @@ The format is based on [Keep a Changelog](https://keepachangelog.com/en/1.1.0/).
 
 ### Changed
 - docker image: updated github CI to explicitly build tag versions (@robertcheramy)
-- docker image: remove ubuntu user introduced in noble (@robertcheramy)
 
 ### Fixed
+- powerconnect: Remove undesirable inserted blank lines during pagination. Fixes #3413 (@clifcox)
+- docker image: remove ubuntu user introduced in noble (@robertcheramy)
+- docker image: correct rights under /home/oxidized (@robertcheramy)
 
 
 ## [0.32.1 – 2025-02-20]
@@ -20,7 +22,6 @@ This minor release fixes a javascript issue in oxidized-web, which is included
 in the Docker container of oxidized.
 
 ### Fixed
-- powerconnect: Remove undesirable inserted blank lines during pagination. Fixes #3413 (@clifcox)
 - powerconnect: Hide enable, and line secrets. Further Fixes #1212 (#clifcox)
 
 ## [0.32.0 – 2025-02-17]

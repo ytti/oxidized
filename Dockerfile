@@ -3,8 +3,10 @@
 
 FROM docker.io/phusion/baseimage:noble-1.0.0 AS prebuilder
 
+ENV DEBIAN_FRONTEND=noninteractive
+
 # install necessary packages for building gems
-RUN apt-get update && apt-get install -y \
+RUN apt-get -yq update && apt-get install -yq --no-install-recommends \
     build-essential \
     git \
     ruby-dev \
@@ -50,16 +52,17 @@ ARG UID=30000
 ARG GID=$UID
 RUN groupadd -g "${GID}" -r oxidized && useradd -u "${UID}" -r -m -d /home/oxidized -g oxidized oxidized
 
+
+##### MSMTP - Sending emails
 # link config for msmtp for easier use.
-RUN ln -s /home/oxidized/.config/oxidized/.msmtprc /home/oxidized/
-
-# create parent directory & touch required file
-RUN mkdir -p /home/oxidized/.config/oxidized/
-RUN touch /home/oxidized/.config/oxidized/.msmtprc
-
-# setup the access to the file
-RUN chmod 600 /home/oxidized/.msmtprc
-RUN chown oxidized:oxidized /home/oxidized/.msmtprc
+# /home/oxidized/.msmtprc is a symbolic link to /home/oxidized/.config/oxidized/.msmtprc
+# Create the files as the user oxidized
+RUN mkdir -p /home/oxidized/.config/oxidized/ && \
+    chmod -R ug=rwX,o= /home/oxidized/.config/ && \
+    touch /home/oxidized/.config/oxidized/.msmtprc && \
+    chmod -R u=rw,go= /home/oxidized/.config/oxidized/.msmtprc && \
+    ln -s /home/oxidized/.config/oxidized/.msmtprc /home/oxidized/ && \
+    chown -R oxidized:oxidized /home/oxidized/.config /home/oxidized/.msmtprc
 
 # add runit services
 COPY extra/oxidized.runit /etc/service/oxidized/run
