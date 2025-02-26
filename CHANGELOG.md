@@ -10,12 +10,15 @@ The format is based on [Keep a Changelog](https://keepachangelog.com/en/1.1.0/).
 
 ### Changed
 - docker image: updated github CI to explicitly build tag versions (@robertcheramy)
+- docker image: update rake build_container to match the tags of GitHub CI (@robertcheramy)
 
 ### Fixed
 - powerconnect: Remove undesirable inserted blank lines during pagination. Fixes #3413 (@clifcox)
-- docker image: remove ubuntu user introduced in noble (@robertcheramy)
-- docker image: correct rights under /home/oxidized (@robertcheramy)
-
+- docker image: remove ubuntu user introduced in noble. Fixes #3336 (@robertcheramy)
+- docker image: correct rights under /home/oxidized. Fixes #3336 (@robertcheramy)
+- docker image: revert the use of GEM_HOME. Fixes #3331 (@robertcheramy)
+- docker image: improve the documentation. Fixes #3336 (@robertcheramy)
+- docker image: remove examples/podman-compose as this is better documented in docs/Docker.md (@robertcheramy)
 
 ## [0.32.1 – 2025-02-20]
 This minor release fixes a javascript issue in oxidized-web, which is included
