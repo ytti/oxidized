@@ -95,15 +95,19 @@ end
 
 desc 'Build the container image with docker or podman'
 task :build_container do
+  branch_name = %x(git rev-parse --abbrev-ref HEAD).chop
+  sha_hash = %x(git rev-parse --short HEAD).chop
+  image_tag = "#{branch_name}-#{sha_hash}"
+
   # Prefer podman if available as it runs rootless
   if command_available?('podman')
-    sh 'podman build -t oxidized:`git describe --tags` -t oxidized:latest .'
+    sh "podman build -t oxidized:#{image_tag} -t oxidized:latest ."
   elsif command_available?('docker')
     if docker_needs_root?
       puts 'docker needs root to build the image. Using sudo...'
-      sh 'sudo docker build -t oxidized:`git describe --tags` -t oxidized:latest .'
+      sh 'sudo docker build -t oxidized:#{image_tag} -t oxidized:latest .'
     else
-      sh 'docker build -t oxidized:`git describe --tags` -t oxidized:latest .'
+      sh 'docker build -t oxidized:#{image_tag} -t oxidized:latest .'
     end
   else
     puts 'You need Podman or Docker to build the container image.'
