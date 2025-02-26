@@ -105,9 +105,9 @@ task :build_container do
   elsif command_available?('docker')
     if docker_needs_root?
       puts 'docker needs root to build the image. Using sudo...'
-      sh 'sudo docker build -t oxidized:#{image_tag} -t oxidized:latest .'
+      sh "sudo docker build -t oxidized:#{image_tag} -t oxidized:latest ."
     else
-      sh 'docker build -t oxidized:#{image_tag} -t oxidized:latest .'
+      sh "docker build -t oxidized:#{image_tag} -t oxidized:latest ."
     end
   else
     puts 'You need Podman or Docker to build the container image.'
