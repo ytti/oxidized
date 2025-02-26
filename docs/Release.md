@@ -23,10 +23,12 @@ If you change some code => Restart the release process at the beginning ;-)
 ## Make sure the file permissions are correct
 Run `bundle exec rake chmod`
 
-## Test !
-Test the git code and the container against as much device types and environments as you can.
+## Make sure you pass all GitHub CI
+They test different ruby versions, the docker build process and codeql.
 
-Do not integrate late PRs into master if they do not fix issues for the release. The must wait for the next release.
+## Test !
+Test the git code and the container against as much device types and
+environments as you can.
 
 ## Version numbering
 Oxidized versions are nummered like major.minor.patch
