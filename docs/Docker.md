@@ -3,7 +3,7 @@
 ## Docker image
 The official Docker image is automatically built and pushed to hub.docker.com
 as [oxidized/oxidized](https://hub.docker.com/r/oxidized/oxidized/) with a
-[GitHub CI](/.github/workflows/publishdocker).
+[GitHub CI](/.github/workflows/publishdocker.yml).
 
 There are three different types of tags:
 - Each commit to the master branch will be published with the tag
@@ -121,9 +121,9 @@ You can reiterate this process a few times, until oxidized is happy with the
 config, an then you're finished with setting up the environment.
 
 
-You also need to create the router.db file under
+You also need to create the `router.db` file under
 `~/oxidized-config/config/router.db` (see
-[CSV Source](docs/Sources.md#source-csv) for further info) or configure another
+[CSV Source](/docs/Sources.md#source-csv) for further info) or configure another
 source to suit your needs. Don't forget to set the file permissions (owner)
 properly!
 
@@ -199,7 +199,7 @@ can set the ssh passphrase with the environment variable
 ### podman & Debian Bookworm
 To install podman in Debian Bookwork, you need following packages:
 ```shell
-sudo apt install podman containers-storage podman-compose make
+sudo apt install podman containers-storage podman-compose
 ```
 
 Ensure Podman is using the overlay driver for image storage.
@@ -218,7 +218,7 @@ You should get this reply
   graphDriverName: overlay
 ```
 
-If not, the quick way I found to solve it is to delete `~/.local/share/containers/`.
+If not, a quick way to solve it is to delete `~/.local/share/containers/`.
 Beware - this will delete **all** your containers!
 
 ### Store the ssh keys a remote git repository
