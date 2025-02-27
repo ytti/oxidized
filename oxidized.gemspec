@@ -46,7 +46,7 @@ Gem::Specification.new do |s|
   s.add_dependency 'slop',                 '~> 4.6'
 
   s.add_development_dependency 'bundler',             '~> 2.2'
-  s.add_development_dependency 'git',                 '~> 2'
+  s.add_development_dependency 'git',                 '~> 3'
   s.add_development_dependency 'minitest',            '~> 5.25.4'
   s.add_development_dependency 'mocha',               '~> 2.1'
   s.add_development_dependency 'pry',                 '~> 0.15.0'
