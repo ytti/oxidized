@@ -4,9 +4,9 @@ All notable changes to this project will be documented in this file.
 
 The format is based on [Keep a Changelog](https://keepachangelog.com/en/1.1.0/).
 
-## [Unreleased]
-
-### Added
+## [0.32.2 – 2025-02-27]
+This patch release mainly fixes the docker building process, wich resulted in
+0.32.1 not beeing built.
 
 ### Changed
 - docker image: updated github CI to explicitly build tag versions (@robertcheramy)
@@ -21,12 +21,14 @@ The format is based on [Keep a Changelog](https://keepachangelog.com/en/1.1.0/).
 - docker image: improve the documentation. Fixes #3336 (@robertcheramy)
 - docker image: remove examples/podman-compose as this is better documented in docs/Docker.md (@robertcheramy)
 
+
 ## [0.32.1 – 2025-02-20]
-This minor release fixes a javascript issue in oxidized-web, which is included
+This patch release fixes a javascript issue in oxidized-web, which is included
 in the Docker container of oxidized.
 
 ### Fixed
 - powerconnect: Hide enable, and line secrets. Further Fixes #1212 (#clifcox)
+
 
 ## [0.32.0 – 2025-02-17]
 This release fixes a security issue in oxidized-web, which is included in the
