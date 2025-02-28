@@ -1,9 +1,6 @@
 # Oxidized
 
 [![Build Status](https://github.com/ytti/oxidized/actions/workflows/ruby.yml/badge.svg)](https://github.com/ytti/oxidized/actions/workflows/ruby.yml)
-[![codecov.io](https://codecov.io/gh/ytti/oxidized/coverage.svg?branch=master)](https://codecov.io/gh/ytti/oxidized?branch=master)
-[![Codacy Badge](https://api.codacy.com/project/badge/Grade/5a90cb22db6a4d5ea23ad0dfb53fe03a)](https://www.codacy.com/app/ytti/oxidized?utm_source=github.com&amp;utm_medium=referral&amp;utm_content=ytti/oxidized&amp;utm_campaign=Badge_Grade)
-[![Code Climate](https://codeclimate.com/github/ytti/oxidized/badges/gpa.svg)](https://codeclimate.com/github/ytti/oxidized)
 [![Gem Version](https://badge.fury.io/rb/oxidized.svg)](http://badge.fury.io/rb/oxidized)
 [![Join the chat at https://gitter.im/oxidized/Lobby](https://badges.gitter.im/oxidized/Lobby.svg)](https://gitter.im/oxidized/Lobby?utm_source=badge&utm_medium=badge&utm_campaign=pr-badge&utm_content=badge)
 
@@ -37,8 +34,7 @@ Check out the [Oxidized TREX 2014 presentation](http://youtu.be/kBQ_CTUuqeU?t=3h
     * [CentOS, Oracle Linux, Red Hat Linux](#centos-oracle-linux-red-hat-linux)
     * [FreeBSD](#freebsd)
     * [Build from Git](#build-from-git)
-    * [Docker](#running-with-docker)
-    * [Podman-Compose](#running-with-podman-compose)
+    * [Docker & Podman](docs/Docker.md)
     * [Installing Ruby 2.3 using RVM](#installing-ruby-23-using-rvm)
 3. [Initial Configuration](#configuration)
 4. [Configuration](docs/Configuration.md)
@@ -155,95 +151,8 @@ gem install bundler
 rake install
 ```
 
-### Running with Docker
-
-Currently, Docker Hub automatically builds the master branch for linux/amd64 and linux/arm64 platforms as [oxidized/oxidized](https://hub.docker.com/r/oxidized/oxidized/), you can make use of this container or build your own.
-
-To build your own, clone git repo:
-
-```shell
-git clone https://github.com/ytti/oxidized
-```
-
-Then, build the container locally (requires docker 17.05.0-ce or higher):
-
-```shell
-docker build -q -t oxidized/oxidized:latest oxidized/
-```
-
-Once you've built the container (or chosen to make use of the automatically built container in Docker Hub, which will be downloaded for you by docker on the first `run` command had you not built it), proceed as follows:
-
-Create a configuration directory in the host system:
-
-```shell
-mkdir /etc/oxidized
-```
-
-Run the container for the first time to initialize the config:
-
-_Note: this step in only required for creating the Oxidized configuration file and can be skipped if you already have one._
-
-```shell
-docker run --rm -v /etc/oxidized:/home/oxidized/.config/oxidized -p 8888:8888/tcp --user oxidized -t oxidized/oxidized:latest oxidized
-```
-
-If the RESTful API and Web Interface are enabled, on the docker host running the container
-edit `/etc/oxidized/config` and modify `rest: 127.0.0.1:8888` to `rest: 0.0.0.0:8888`. This will bind port 8888 to all interfaces, and expose the port so that it could be accessed externally. [(Issue #445)](https://github.com/ytti/oxidized/issues/445)
-
-Alternatively, you can use docker-compose to launch the oxidized container:
-
-```yaml
-# docker-compose.yml
-# docker-compose file example for oxidized that will start along with docker daemon
----
-version: "3"
-services:
-  oxidized:
-    restart: always
-    image: oxidized/oxidized:latest
-    ports:
-      - 8888:8888/tcp
-    environment:
-      CONFIG_RELOAD_INTERVAL: 600
-    volumes:
-       - config:/home/oxidized/.config/oxidized/
-volumes:
-  config:
-```
-
-Create the `/etc/oxidized/router.db` (see [CSV Source](docs/Sources.md#source-csv) for further info):
-
-```shell
-vim /etc/oxidized/router.db
-```
-
-Run container again to start oxidized with your configuration:
-
-```shell
-docker run -v /etc/oxidized:/home/oxidized/.config/oxidized -p 8888:8888/tcp -t oxidized/oxidized:latest
-oxidized[1]: Oxidized starting, running as pid 1
-oxidized[1]: Loaded 1 nodes
-Puma 2.13.4 starting...
-* Min threads: 0, max threads: 16
-* Environment: development
-* Listening on tcp://0.0.0.0:8888
-```
-
-If you want to have the config automatically reloaded (e.g. when using a http source that changes):
-
-```shell
-docker run -v /etc/oxidized:/home/oxidized/.config/oxidized -p 8888:8888/tcp -e CONFIG_RELOAD_INTERVAL=3600 -t oxidized/oxidized:latest
-```
-
-If you need to use an internal CA (e.g. to connect to an private github instance):
-
-```shell
-docker run -v /etc/oxidized:/home/oxidized/.config/oxidized -v /path/to/MY-CA.crt:/usr/local/share/ca-certificates/MY-CA.crt -p 8888:8888/tcp -e UPDATE_CA_CERTIFICATES=true -t oxidized/oxidized:latest
-```
-
-### Running with podman-compose
-Under [examples/podman-compose](examples/podman-compose), you will find a complete
-example of how to integrate the container into a docker-compose.yml file.
+### Running with Docker or Podman
+See [docs/Docker.md](docs/Docker.md)
 
 ### Installing Ruby 2.3 using RVM
 

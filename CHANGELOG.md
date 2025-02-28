@@ -4,11 +4,27 @@ All notable changes to this project will be documented in this file.
 
 The format is based on [Keep a Changelog](https://keepachangelog.com/en/1.1.0/).
 
-## [Unreleased]
-
-### Added
+## [0.32.2 – 2025-02-27]
+This patch release mainly fixes the docker building process, wich resulted in
+0.32.1 not beeing built.
 
 ### Changed
+- docker image: updated github CI to explicitly build tag versions (@robertcheramy)
+- docker image: update rake build_container to match the tags of GitHub CI (@robertcheramy)
+
+### Fixed
+- powerconnect: restore last line of command output, and remove spurious CR characters. Fixes #2692 (@clifcox)
+- powerconnect: Remove undesirable inserted blank lines during pagination. Fixes #3413 (@clifcox)
+- docker image: remove ubuntu user introduced in noble. Fixes #3336 (@robertcheramy)
+- docker image: correct rights under /home/oxidized. Fixes #3336 (@robertcheramy)
+- docker image: revert the use of GEM_HOME. Fixes #3331 (@robertcheramy)
+- docker image: improve the documentation. Fixes #3336 (@robertcheramy)
+- docker image: remove examples/podman-compose as this is better documented in docs/Docker.md (@robertcheramy)
+
+
+## [0.32.1 – 2025-02-20]
+This patch release fixes a javascript issue in oxidized-web, which is included
+in the Docker container of oxidized.
 
 ### Fixed
 - powerconnect: Hide enable, and line secrets. Further Fixes #1212 (#clifcox)

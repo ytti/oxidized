@@ -5,13 +5,15 @@ class PowerConnect < Oxidized::Model
 
   comment '! '
 
-  expect /^\s*--More--\s+.*$/ do |data, re|
+  expect /\n\s*--More--\s+.*/ do |data, re| # Also grab the blank line above the --More--
     send ' '
     data.sub re, ''
   end
 
+  # Filter all command output
   cmd :all do |cfg|
-    cfg.each_line.to_a[1..-3].join
+    cfg.gsub! /\r+/, ''                     # Remove the CR characters echoed back from the commands
+    cfg.cut_tail                            # Drop the last line which is the next prompt
   end
 
   cmd :secret do |cfg|
