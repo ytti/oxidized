@@ -101,11 +101,8 @@ module Oxidized
     end
 
     def cycle_finished?
-      if @jobs_done > @nodes.count
-        true
-      else
-        @jobs_done.positive? && (@jobs_done % @nodes.count).zero?
-      end
+      @jobs_done > @nodes.count ||
+        (@jobs_done.positive? && (@jobs_done % @nodes.count).zero?)
     end
 
     def run_done_hook

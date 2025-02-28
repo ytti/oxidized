@@ -9,21 +9,37 @@ The format is based on [Keep a Changelog](https://keepachangelog.com/en/1.1.0/).
 ### Added
 
 ### Changed
-- docker image: updated github CI to explicitly build tag versions (@robertcheramy)
 - fortios: support for FortiADC (@electrocret)
 
 ### Fixed
+- powerconnect: Mask the changing temperature issue for non-stacked switches. Fixes #2088 (@clifcox)
+
+
+## [0.32.2 – 2025-02-27]
+This patch release mainly fixes the docker building process, wich resulted in
+0.32.1 not beeing built.
+
+### Changed
+- docker image: updated github CI to explicitly build tag versions (@robertcheramy)
+- docker image: update rake build_container to match the tags of GitHub CI (@robertcheramy)
+
+### Fixed
+- powerconnect: restore last line of command output, and remove spurious CR characters. Fixes #2692 (@clifcox)
 - powerconnect: Remove undesirable inserted blank lines during pagination. Fixes #3413 (@clifcox)
-- docker image: remove ubuntu user introduced in noble (@robertcheramy)
-- docker image: correct rights under /home/oxidized (@robertcheramy)
+- docker image: remove ubuntu user introduced in noble. Fixes #3336 (@robertcheramy)
+- docker image: correct rights under /home/oxidized. Fixes #3336 (@robertcheramy)
+- docker image: revert the use of GEM_HOME. Fixes #3331 (@robertcheramy)
+- docker image: improve the documentation. Fixes #3336 (@robertcheramy)
+- docker image: remove examples/podman-compose as this is better documented in docs/Docker.md (@robertcheramy)
 
 
 ## [0.32.1 – 2025-02-20]
-This minor release fixes a javascript issue in oxidized-web, which is included
+This patch release fixes a javascript issue in oxidized-web, which is included
 in the Docker container of oxidized.
 
 ### Fixed
 - powerconnect: Hide enable, and line secrets. Further Fixes #1212 (#clifcox)
+
 
 ## [0.32.0 – 2025-02-17]
 This release fixes a security issue in oxidized-web, which is included in the
@@ -46,7 +62,6 @@ use oxidized-web, be sure to update your oxidized-web gem to 0.15.0.
 - extra/gitdiff-msteams.sh: honor the 28KB size limit and add an optional link to GitHub (@mopi3456)
 
 ### Fixed
-- powerconnect: restore last line of command output, and remove spurious CR characters. Fixes #2692 (@clifcox)
 - tplink: send 'enable' before the enable password. Fixes #3271 (@robertcheramy)
 - asyncos: fix prompt for hostnames containing "-" . Fixes #3327 (@robertcheramy)
 - sonicos: fix prompt for hostnames containing "-" . Fixes #3333 (@robertcheramy)

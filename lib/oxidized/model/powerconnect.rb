@@ -60,7 +60,8 @@ class PowerConnect < Oxidized::Model
 
   def clean(cfg)
     out = []
-    skip_blocks = 0
+    len1 = len2 = skip_blocks = 0
+
     cfg.each_line do |line|
       # If this is a stackable switch we should skip this block of information
       if line.match(/Up\sTime|Temperature|Power Suppl(ies|y)|Fans/i) && (@stackable == true)
@@ -73,9 +74,22 @@ class PowerConnect < Oxidized::Model
         skip_blocks -= 1 if /\S/ !~ line
         next
       end
-      out << line.strip
+      line = line.strip
+      # If the temps were not removed by skipping blocks, then mask them out wih XXX
+      # The most recent set of dashes has the spacing we want to match
+      if (match = line.match(/^(---+ +)(---+ +)/))
+        one, two = match.captures
+        len1 = one.length
+        len2 = two.length
+      end
+      # This can only be a temperature, right? ;-)
+      if (match = line.match(/^(\d{1,2}) {3,}\d+ (.*)$/))
+        one, two = match.captures
+        line = one.to_s + (' ' * (len1 - one.length)) + "XXX" + (' ' * (len2 - 3)) + two.to_s
+      end
+      out << line
     end
-    out = out.reject { |line| line[/Up\sTime/] }
+    out = out.reject { |line| line[/Up\sTime/] } # Filter out Up Time
     out = comment out.join "\n"
     out << "\n"
   end
