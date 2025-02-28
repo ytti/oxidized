@@ -4,6 +4,16 @@ All notable changes to this project will be documented in this file.
 
 The format is based on [Keep a Changelog](https://keepachangelog.com/en/1.1.0/).
 
+## [Unreleased]
+
+### Added
+
+### Changed
+
+### Fixed
+- powerconnect: Mask the changing temperature issue for non-stacked switches. Fixes #2088 (@clifcox)
+
+
 ## [0.32.2 – 2025-02-27]
 This patch release mainly fixes the docker building process, wich resulted in
 0.32.1 not beeing built.
@@ -51,7 +61,6 @@ use oxidized-web, be sure to update your oxidized-web gem to 0.15.0.
 - extra/gitdiff-msteams.sh: honor the 28KB size limit and add an optional link to GitHub (@mopi3456)
 
 ### Fixed
-- powerconnect: Mask the changing temperature issue for non-stacked switches. Fixes #2088 (@clifcox)
 - tplink: send 'enable' before the enable password. Fixes #3271 (@robertcheramy)
 - asyncos: fix prompt for hostnames containing "-" . Fixes #3327 (@robertcheramy)
 - sonicos: fix prompt for hostnames containing "-" . Fixes #3333 (@robertcheramy)
