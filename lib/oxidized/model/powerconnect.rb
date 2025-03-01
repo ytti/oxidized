@@ -35,7 +35,6 @@ class PowerConnect < Oxidized::Model
 
   cmd 'show running-config' do |cfg|
     cfg.sub(/^(sflow \S+ destination owner \S+ timeout )\d+$/, '! \1<timeout>') # Remove changing timeout
-    cfg
   end
 
   cfg :telnet, :ssh do
