@@ -32,7 +32,7 @@ COPY extra/update-ca-certificates.runit /etc/service/update-ca-certificates/run
 RUN apt-get -qy update \
     && apt-get -qy upgrade \
     && apt-get -qy --no-install-recommends install ruby \
-    # Build process of oxidized from git (beloww)
+    # Build process of oxidized from git (below)
     git \
     # Allow git send-email from docker image
     git-email libmailtools-perl \
