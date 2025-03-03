@@ -46,7 +46,7 @@ Gem::Specification.new do |s|
   s.add_dependency 'slop',                 '~> 4.6'
 
   s.add_development_dependency 'bundler',             '~> 2.2'
-  s.add_development_dependency 'git',                 '~> 2'
+  s.add_development_dependency 'git',                 '>= 2.0', '<=3.0'
   s.add_development_dependency 'minitest',            '~> 5.25.4'
   s.add_development_dependency 'mocha',               '~> 2.1'
   s.add_development_dependency 'pry',                 '~> 0.15.0'
@@ -59,5 +59,5 @@ Gem::Specification.new do |s|
 
   # Dependencies on optional libraries, used for unit tests & development
   s.add_development_dependency 'oxidized-web',        '>= 0.15.0'
-  s.add_development_dependency 'sequel',              '>= 5.63.0', '<= 5.89.0'
+  s.add_development_dependency 'sequel',              '>= 5.63.0', '<= 5.90.0'
 end
