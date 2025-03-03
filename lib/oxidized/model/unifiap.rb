@@ -83,7 +83,7 @@ class Unifiap < Oxidized::Model
       @ntpserver = true
       @sync = "Synchronized"
     end
-    comment "SKEWXY!!!!!!!!!!!!!!!    #{@skew}\n" # TEST TEST TEST
+    ""
   end
 
   # Now we can display it all as a banner
