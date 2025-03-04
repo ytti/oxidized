@@ -6,7 +6,8 @@ labels: bug
 assignees: ''
 
 ---
-[ ] I have read and understood [docs/Issues.md](/docs/Issues.md).
+<!-- Check the box [X] -->
+- [ ] I have read and understood [docs/Issues.md](/docs/Issues.md).
 
 **Describe the bug**
 A clear and concise description of what the bug is.
@@ -32,9 +33,10 @@ If applicable, add logs to help explain your problem.
 ```
 
 **Running environment (please complete the following information):**
- - OS: [e.g. Debian Bookworm, official container version xxx]
- - oxidized version: [e.g. 0.32.2]
- - oxidized-web version: [e.g. 0.15.1, if applicable]
+<!-- complete the following information and add further details if needed -->
+- OS: [e.g. Debian Bookworm, official container version xxx, ...]
+- oxidized version: [e.g. 0.32.2]
+- oxidized-web version: [e.g. 0.15.1, if applicable]
 
 **Additional context**
 Add any other context about the problem here.

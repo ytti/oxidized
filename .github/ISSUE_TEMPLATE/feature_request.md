@@ -6,7 +6,8 @@ labels: feature request
 assignees: ''
 
 ---
-[ ] I have read and understood [docs/Issues.md](/docs/Issues.md).
+<!-- Check the box [X] -->
+- [ ] I have read and understood [docs/Issues.md](/docs/Issues.md).
 
 **Is your feature request related to a problem? Please describe.**
 A clear and concise description of what the problem is. Ex. I'm always frustrated when [...]
