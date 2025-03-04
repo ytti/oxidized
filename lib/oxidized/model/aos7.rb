@@ -26,6 +26,9 @@ class AOS7 < Oxidized::Model
   end
 
   cmd 'show hardware-info' do |cfg|
+    # Remove extra lines occuring when the command runs slow
+    cfg.gsub! /^Please wait...\n/, ''
+    cfg.gsub! /^\n\n\n/, "\n\n"
     comment cfg
   end
 
