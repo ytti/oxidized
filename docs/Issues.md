@@ -11,6 +11,23 @@ Why write good issues?
 - By spending time to write a good issue, you save developers time, contributing
   to Oxidized’s progress without writing a line of code.
 
+## Rules
+The project receives too many incomplete issues, unnecessarily taking time that
+could be invested in new code. Therefore, issues will be worked on with the
+following rules:
+
+- Use the predefined templates for bugs, feature requests and support requests.
+- If you don't provide the necessary information (read this file, fill in the
+  questions in the templates), expect your issue to be closed without a comment.
+- Inactive issues will be marked "stale" automatically after 90 days. Issues
+  are not closed automatically; this is a manual action by a maintainer.
+- A feature requests may be closed after some time of inactivity, as obviously
+  no one has found the time to implement it. Consider contributing code in a
+  Pull Request instead.
+- While it is OK to ask for help (using the support request template), don't be
+  disappointed if no one finds the time to answer your question. Stale questions
+  (after 90 days) will be closed without a comment.
+
 ## Submit to the correct project
 Choose the appropriate GitHub project based on your issue:
 

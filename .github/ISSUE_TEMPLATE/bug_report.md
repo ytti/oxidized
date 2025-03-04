@@ -6,6 +6,7 @@ labels: bug
 assignees: ''
 
 ---
+[ ] I have read and understood [docs/Issues.md](/docs/Issues.md).
 
 **Describe the bug**
 A clear and concise description of what the bug is.
@@ -20,7 +21,7 @@ Steps to reproduce the behavior:
 **Expected behavior**
 A clear and concise description of what you expected to happen.
 
-**Logs**
+**Configuration**
 ```
 If applicable, publish your configuration.
 ```
