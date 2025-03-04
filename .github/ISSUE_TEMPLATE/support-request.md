@@ -7,7 +7,7 @@ assignees: ''
 
 ---
 <!-- Check the box [X] -->
-- [ ] I have read and understood [docs/Issues.md](/docs/Issues.md).
+- [ ] I have read and understood [docs/Issues.md](https://github.com/ytti/oxidized/blob/master/docs/Issues.md).
 
 **Describe the problem**
 A clear and concise description of what your problem is.
