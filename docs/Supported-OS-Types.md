@@ -169,6 +169,7 @@
 |                    |Edgeos                        |[edgeos](/lib/oxidized/model/edgeos.rb)
 |                    |EdgeSwitch                    |[edgeswitch](/lib/oxidized/model/edgeswitch.rb)
 |                    |AirFiber                      |[airfiber](/lib/oxidized/model/airfiber.rb)
+|                    |UnifiAP                       |[unifiap](/lib/oxidized/model/unifiap.rb)              |@clifcox      |Also suports AirOS, and some Unifi switches
 |Uplink              |EP4440-DP                     |[EP4440](/lib/oxidized/model/uplinkolt.rb)             | |Might support all EP4440 series
 |VMWare              |NSX Edge (configuration)      |[nsxconfig](/lib/oxidized/model/nsxconfig.rb)
 |                    |NSX Edge (firewall rules)     |[nsxfirewall](/lib/oxidized/model/nsxfirewall.rb)
