@@ -87,7 +87,8 @@ find an example how to do this under [examples/podman-compose](/examples/podman-
 
 ## Git performance issues with large device counts
 When you use git to store your configurations, the size of your repository will
-grow over time. This growth can lead to performance issues. To resolve these issues, you should perform a Git garbage collection on your repository.
+grow over time. This growth can lead to performance issues. To resolve these
+issues, you should perform a Git garbage collection on your repository.
 
 Follow these steps to do so:
 
@@ -96,6 +97,10 @@ Follow these steps to do so:
 3. Change directory your oxidized git repository (as configured in oxidized configuration file)
 4. Execute the command `git gc` to run the garbage collection
 5. Restart oxidized - you're done!
+
+Note that slow performance in oxidized-web when listing the versions of a device
+are due to the necessity to go through the whole git log to search for the
+versions. See Issue #3121, the fix will come with oxidized version 0.32.0.
 
 ## Oxidized ignores the changes I made to its git repository
 First of all: you shouldn't manipulate the git repository of oxidized. Don't
