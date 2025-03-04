@@ -34,7 +34,7 @@ class PowerConnect < Oxidized::Model
   end
 
   cmd 'show running-config' do |cfg|
-    cfg.sub(/^(sflow \S+ destination owner \S+ timeout )\d+$/, '! \1<timeout>')
+    cfg.sub(/^(sflow \S+ destination owner \S+ timeout )\d+$/, '! \1<timeout>') # Remove changing timeout
   end
 
   cfg :telnet, :ssh do
@@ -52,10 +52,15 @@ class PowerConnect < Oxidized::Model
       end
     end
 
-    post_login "terminal datadump"
-    post_login "terminal length 0"
-    pre_logout "logout"
-    pre_logout "exit"
+    post_login do
+      cmd "terminal datadump"
+      cmd "terminal length 0"
+    end
+    pre_logout do
+      send "exit\r"
+      sleep(0.25)
+      send "logout\r"
+    end
   end
 
   def clean(cfg)

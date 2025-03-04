@@ -17,6 +17,7 @@ The format is based on [Keep a Changelog](https://keepachangelog.com/en/1.1.0/).
 ### Fixed
 - powerconnect: Mask the changing temperature issue for non-stacked switches. Fixes #2088 (@clifcox)
 - Fix frozen string literals (@robertcheramy)
+- powerconnect: Cleanup login/logout logic. Fixes #3437 (@clifcox)
 
 ## [0.32.2 – 2025-02-27]
 This patch release mainly fixes the docker building process, wich resulted in
