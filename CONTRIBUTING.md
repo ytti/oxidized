@@ -1,14 +1,6 @@
 # Oxidized - Contributing Guide
 You can contribute to [Oxidized](https://github.com/ytti/oxidized/) in many ways, and first of all we'd like to thank you for taking your time to improve this great project!
 
-## Contribute as a user
-A great place for users to get involved is the [GitHub issues](https://github.com/ytti/oxidized/issues).
-Through the issues, you can interact with maintainers and other users. You can open an issue
-if you need help, but you can also help other users by reviewing their issues and commenting on them.
-
-Before writing an issue, please read our documentation on
-[how to write good issues](/docs/Issues.md).
-
 > ## Legal Notice
 > When submitting content to this project, you must agree that you have authored 100%
 > of the content, that you have the necessary rights to the content and that the
@@ -17,6 +9,16 @@ Before writing an issue, please read our documentation on
 > If you are employed, you probably need the permission from your employer to
 > contribute to open source projects.
 
+
+## Contribute as a user
+A great place for users to get involved is the [GitHub issues](https://github.com/ytti/oxidized/issues).
+Through the issues, you can interact with maintainers and other users. You can open an issue
+if you need help, but you can also help other users by reviewing their issues and commenting on them.
+
+Before writing an issue, please read our documentation on
+[how to write good issues](/docs/Issues.md).
+
+
 ## Contribute some content
 Content contributions are always welcome. You do not need to be a maintainer for this.
 You even do not need to be a ruby programmer, as an example, the documentation always needs some
@@ -24,6 +26,7 @@ enhancements :-)
 
 Contributions can be submitted through pull requests in github. For a full explanation how to
 contribute some content, see [How to contribute content](#how-to-contribute-content).
+
 
 ## Help Needed
 
