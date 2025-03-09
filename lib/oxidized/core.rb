@@ -23,15 +23,47 @@ module Oxidized
       end
       Signals.register_signal('HUP', reload_proc)
 
-      # Initialize REST API and webUI if requested
-      if Oxidized.config.rest?
+      # Load extentions, currently only oxidized-web
+      # We have different namespaces for oxidized-web, which needs to be
+      # adressed if we need a generic way to load extentions:
+      # - gem: oxidized-web
+      # - module: Oxidized::API
+      # - path: oxidized/web
+      # - entrypoint: Oxidized::API::Web.new(nodes, configuration)
+
+      # Warn about deprecated configuration
+      if Oxidized.config.rest? &&
+         Oxidized.config.extentions.has_key?('oxidized-web')
+        Oxidized.logger.warn(
+          'configuration: both "rest" and "extentions.oxidized-web" are ' \
+          'defined. "extentions.oxidized-web" will be used, remove "rest"'
+        )
+      end
+
+      # Initialize oxidized-web if requested
+      if Oxidized.config.extentions.has_key?('oxidized-web')
+        if Oxidized.config.extentions['oxidized-web'].load?
+          # This comment stops rubocop complaining about Style/IfUnlessModifier
+          configuration = Oxidized.config.extentions['oxidized-web']
+        end
+      elsif Oxidized.config.rest?
+        Oxidized.logger.warn(
+          'configuration: "rest" is depreacated. Migrate to ' \
+          '"extentions.oxidized-web"'
+        )
+        configuration = Oxidized.config.rest
+      end
+
+      if configuration
         begin
           require 'oxidized/web'
         rescue LoadError
-          raise OxidizedError, 'oxidized-web not found: sudo gem install oxidized-web - \
-          or disable web support by setting "rest: false" in your configuration'
+          raise OxidizedError,
+                'oxidized-web not found: install it or disable it by ' \
+                'removing "rest" and "extentions.oxidized-web" from your ' \
+                'configuration'
         end
-        @rest = API::Web.new nodes, Oxidized.config.rest
+        @rest = API::Web.new nodes, configuration
         @rest.run
       end
       run
