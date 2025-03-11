@@ -13,6 +13,7 @@ The format is based on [Keep a Changelog](https://keepachangelog.com/en/1.1.0/).
 - fortios: support for FortiADC (@electrocret)
 - output/git: cache commit log to improve performance of oxidized-web. Fixes #3121 (@robertcheramy)
 - digest auth handles special characters in passwords by itself (no need to url encode them manually) (@einglasvollkakao)
+- netgear: add pager-handler workaround, fixes: #2394 and #3341 (@candlerb, @syn-bit)
 
 ### Fixed
 - powerconnect: Mask the changing temperature issue for non-stacked switches. Fixes #2088 (@clifcox)
