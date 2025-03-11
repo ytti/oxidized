@@ -4,6 +4,12 @@ class Netgear < Oxidized::Model
   comment '!'
   prompt /^\(?[\w \-+.]+\)? ?[#>] ?$/
 
+  # Handle pager for "show version" on old Netgear models: #2394
+  expect /^--More-- or \(q\)uit$/ do |data, re|
+    send ' '
+    data.sub re, ''
+  end
+
   cmd :secret do |cfg|
     cfg.gsub!(/password (\S+)/, 'password <hidden>')
     cfg.gsub!(/encrypted (\S+)/, 'encrypted <hidden>')
