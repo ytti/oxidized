@@ -8,6 +8,7 @@ The format is based on [Keep a Changelog](https://keepachangelog.com/en/1.1.0/).
 ### Added
 - unifiap: new model for Unifi APs, switches, and AirOS APs (@clifcox)
 - github: Issue templates for bugs, feature requests and support requests (@robertcheramy)
+- model for Ingate Operating System (@thanegill)
 
 ### Changed
 - fortios: support for FortiADC (@electrocret)
