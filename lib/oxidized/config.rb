@@ -43,7 +43,7 @@ module Oxidized
       asetus.default.pid           = File.join(Oxidized::Config::ROOT, 'pid')
 
       # Extentions
-      asetus.default.extentions['oxidized-web'].load = true
+      asetus.default.extensions['oxidized-web'].load = false
 
       asetus.default.crash.directory = File.join(Oxidized::Config::ROOT, 'crashes')
       asetus.default.crash.hostnames = false

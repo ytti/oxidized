@@ -238,7 +238,7 @@ crash:
 vars:
   enable: S3cr3tx
 groups: {}
-extentions:
+extensions:
   oxidized-web:
     load: true
     # Bind to any IPv4 interface
@@ -385,30 +385,33 @@ More important options overwrite less important ones if they are set.
 ## oxidized-web: RESTful API and web interface
 
 The RESTful API and web interface are enabled by installing the `oxidized-web`
-gem and configuring the `extentions.oxidized-web:` section in the configuration
+gem and configuring the `extensions.oxidized-web:` section in the configuration
 file. You can set the following parameter:
-- load: `true`/`false`: Enables or disables the `oxidized-web` extention
+- `load`: `true`/`false`: Enables or disables the `oxidized-web` extension
   (default: `false`)
-- listen: Specifies the interface to bind to (default: `127.0.0.1`). Valid
+- `listen`: Specifies the interface to bind to (default: `127.0.0.1`). Valid
   options:
   - `127.0.0.1`: Allows IPv4 connections from localhost only
   - `'[::1]'`: Allows IPv6 connections from localhost only
   - `<IPv4-Address>` or `'[<IPv6-Address>]'`: Binds to a specific interface
   - `0.0.0.0`: Binds to any IPv4 interface
   - `'[::]'`:  Binds to any IPv4 and IPv6 interface
-- port: Specifies the TCP port to listen to (default: `8888`)
-- prefix: Defines a URL prefix (default: no prefix)
-- vhosts: A list of virtual hosts to listen to. If not specified, it will
+- `port`: Specifies the TCP port to listen to (default: `8888`)
+- `url_prefix`: Defines a URL prefix (default: no prefix)
+- `vhosts`: A list of virtual hosts to listen to. If not specified, it will
   respond to any virtual host.
 
 > [!NOTE]
 > The old syntax `rest: 127.0.0.1:8888/prefix` is still supported but
 > deprecated. It produces a warning and won't be suported in future releases.
+>
+> If the `rest` configuration is used, the extensions.oxidized-web will be
+> ignored.
 
 
 ```yaml
 # Listen on http://[::1]:8888/
-extentions:
+extensions:
   oxidized-web:
     load: true
     listen: '[::1]'
@@ -417,7 +420,7 @@ extentions:
 
 ```yaml
 # Listen on http://127.0.0.1:8888/
-extentions:
+extensions:
   oxidized-web:
     load: true
     listen: 127.0.0.1
@@ -426,7 +429,7 @@ extentions:
 
 ```yaml
 # Listen on http://[2001:db8:0:face:b001:0:dead:beaf]:8888/oxidized/
-extentions:
+extensions:
   oxidized-web:
     load: true
     listen: '[2001:db8:0:face:b001:0:dead:beaf]'
@@ -436,7 +439,7 @@ extentions:
 
 ```yaml
 # Listen on http://10.0.0.1:8000/oxidized/
-extentions:
+extensions:
   oxidized-web:
     load: true
     listen: 10.0.0.1
@@ -447,7 +450,7 @@ extentions:
 ```yaml
 # Listen on any interface to http://oxidized.rocks:8888 and
 # http://oxidized:8888
-extentions:
+extensions:
   oxidized-web:
     load: true
     listen: '[::]'

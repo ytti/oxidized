@@ -23,35 +23,24 @@ module Oxidized
       end
       Signals.register_signal('HUP', reload_proc)
 
-      # Load extentions, currently only oxidized-web
+      # Load extensions, currently only oxidized-web
       # We have different namespaces for oxidized-web, which needs to be
-      # adressed if we need a generic way to load extentions:
+      # adressed if we need a generic way to load extensions:
       # - gem: oxidized-web
       # - module: Oxidized::API
       # - path: oxidized/web
       # - entrypoint: Oxidized::API::Web.new(nodes, configuration)
 
-      # Warn about deprecated configuration
-      if Oxidized.config.rest? &&
-         Oxidized.config.extentions.has_key?('oxidized-web')
-        Oxidized.logger.warn(
-          'configuration: both "rest" and "extentions.oxidized-web" are ' \
-          'defined. "extentions.oxidized-web" will be used, remove "rest"'
-        )
-      end
-
       # Initialize oxidized-web if requested
-      if Oxidized.config.extentions.has_key?('oxidized-web')
-        if Oxidized.config.extentions['oxidized-web'].load?
-          # This comment stops rubocop complaining about Style/IfUnlessModifier
-          configuration = Oxidized.config.extentions['oxidized-web']
-        end
-      elsif Oxidized.config.rest?
+      if Oxidized.config.has_key? 'rest'
         Oxidized.logger.warn(
-          'configuration: "rest" is depreacated. Migrate to ' \
-          '"extentions.oxidized-web"'
+          'configuration: "rest" is deprecated. Migrate to ' \
+          '"extensions.oxidized-web" and remove "rest" from the configuration'
         )
         configuration = Oxidized.config.rest
+      elsif Oxidized.config.extensions['oxidized-web'].load?
+        # This comment stops rubocop complaining about Style/IfUnlessModifier
+        configuration = Oxidized.config.extensions['oxidized-web']
       end
 
       if configuration
@@ -60,7 +49,7 @@ module Oxidized
         rescue LoadError
           raise OxidizedError,
                 'oxidized-web not found: install it or disable it by ' \
-                'removing "rest" and "extentions.oxidized-web" from your ' \
+                'removing "rest" and "extensions.oxidized-web" from your ' \
                 'configuration'
         end
         @rest = API::Web.new nodes, configuration
