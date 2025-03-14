@@ -38,6 +38,7 @@ class IronWare < Oxidized::Model
     cfg.gsub! /\d* deg C/, '' # Fix for ADX temperature reporting
     cfg.gsub! /([\[]*)1([\]]*)<->([\[]*)2([\]]*)(<->([\[]*)3([\]]*))*/, ''
     cfg.gsub! /\d{2}\.\d deg-C/, 'XX.X deg-C'
+    cfg.gsub! /1XX.X/, 'XX.X'
     if cfg.include? "TEMPERATURE"
       sc = StringScanner.new cfg
       out = ''
