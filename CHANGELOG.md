@@ -10,6 +10,7 @@ The format is based on [Keep a Changelog](https://keepachangelog.com/en/1.1.0/).
 - github: Issue templates for bugs, feature requests and support requests (@robertcheramy)
 - model for Ingate Operating System (@thanegill)
 - model for Easton Gigabit Network Card (@thanegill)
+- aoss: new model for HPE Aruba Networking Switch Operating System (@themonkeybrain)
 
 ### Changed
 - fortios: support for FortiADC (@electrocret)

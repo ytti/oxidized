@@ -25,6 +25,12 @@ is the operating system for the newer CX-Series.
 
 The Oxidized model is [aoscx](/lib/oxidized/model/aoscx.rb).
 
+## HPE Aruba Networking Switch Operating System (AOS-S)
+[AOS-S](https://arubanetworking.hpe.com/techdocs/AOS-S/DocPortal/Content/home.htm)
+is the operating system for the older non-CX switches.
+
+The Oxidized model is [aoss](/lib/oxidized/model/aoss.rb).
+
 ## Older Models
 Older Devices like ProCurve or 3Com/Comware are listed under the Vendor "HP" in
 the [Supported OS Types](docs/Supported-OS-Types.md) list.
