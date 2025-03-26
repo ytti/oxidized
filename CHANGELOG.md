@@ -23,6 +23,7 @@ See [docs/Configuration.md](/docs/Configuration.md#oxidized-web-RESTful-API-and-
 - changed the configuration for oxidized-web from rest: to extensions.oxidized-web (@robertcheramy)
 - netgear: add pager-handler workaround, fixes: #2394 and #3341 (@candlerb, @syn-bit)
 - Output#version (git/gitcrypt) returns a Time object in its hash for more flexibility in oxidized-web (@robertcheramy)
+- ios: hide secret key of aaa radius (@martinberg, @robertcheramy)
 
 ### Fixed
 - powerconnect: Mask the changing temperature issue for non-stacked switches. Fixes #2088 (@clifcox)
