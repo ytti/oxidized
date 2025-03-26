@@ -10,6 +10,10 @@ configuration is still supported but deprecated. The new configuration works
 with oxidized-web 0.16.0 or later.
 See [docs/Configuration.md](/docs/Configuration.md#oxidized-web-RESTful-API-and-web-interface).
 
+The docker container includes
+[security fixes to ruby-rake](https://ubuntu.com/security/notices/USN-7366-1),
+so be sure to update to the latest version.
+
 ### Added
 - unifiap: new model for Unifi APs, switches, and AirOS APs (@clifcox)
 - github: Issue templates for bugs, feature requests and support requests (@robertcheramy)
@@ -19,11 +23,12 @@ See [docs/Configuration.md](/docs/Configuration.md#oxidized-web-RESTful-API-and-
 ### Changed
 - fortios: support for FortiADC (@electrocret)
 - output/git: cache commit log to improve performance of oxidized-web. Fixes #3121 (@robertcheramy)
-- digest auth handles special characters in passwords by itself (no need to url encode them manually) (@einglasvollkakao)
+- input/http: digest auth handles special characters in passwords by itself (no need to url encode them manually) (@einglasvollkakao)
 - changed the configuration for oxidized-web from rest: to extensions.oxidized-web (@robertcheramy)
 - netgear: add pager-handler workaround, fixes: #2394 and #3341 (@candlerb, @syn-bit)
 - Output#version (git/gitcrypt) returns a Time object in its hash for more flexibility in oxidized-web (@robertcheramy)
 - ios: hide secret key of aaa radius (@martinberg, @robertcheramy)
+- container: update to phusion/baseimage:noble-1.0.1 (@robertcheramy)
 
 ### Fixed
 - powerconnect: Mask the changing temperature issue for non-stacked switches. Fixes #2088 (@clifcox)
@@ -31,6 +36,7 @@ See [docs/Configuration.md](/docs/Configuration.md#oxidized-web-RESTful-API-and-
 - powerconnect: Cleanup login/logout logic. Fixes #3437 (@clifcox)
 - aos7: remove extra lines occuring when `show hardware-info` runs slow (@rouven0)
 - srosmd: add ignore regex for 64-bit system uptime (@emiliaaah)
+- removed some rubocop warnings (@robertcheramy)
 
 ## [0.32.2 – 2025-02-27]
 This patch release mainly fixes the docker building process, wich resulted in
