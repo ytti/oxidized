@@ -6,8 +6,9 @@ The format is based on [Keep a Changelog](https://keepachangelog.com/en/1.1.0/).
 
 ## [Unreleased]
 This release changes the way to configure oxidized-web. The old `rest`
-configuration is still supported but deprecated. See
-[docs/Configuration.md](/docs/Configuration.md#oxidized-web-RESTful-API-and-web-interface).
+configuration is still supported but deprecated. The new configuration works
+with oxidized-web 0.16.0 or later.
+See [docs/Configuration.md](/docs/Configuration.md#oxidized-web-RESTful-API-and-web-interface).
 
 ### Added
 - unifiap: new model for Unifi APs, switches, and AirOS APs (@clifcox)

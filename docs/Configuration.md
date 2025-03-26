@@ -408,6 +408,10 @@ file. You can set the following parameter:
 > If the `rest` configuration is used, the extensions.oxidized-web will be
 > ignored.
 
+> [!NOTE]
+> You need oxidized-web version 0.16.0 or later to use the
+> extentions.oxidized-web configuration
+
 
 ```yaml
 # Listen on http://[::1]:8888/
