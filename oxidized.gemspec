@@ -51,13 +51,13 @@ Gem::Specification.new do |s|
   s.add_development_dependency 'mocha',               '~> 2.1'
   s.add_development_dependency 'pry',                 '~> 0.15.0'
   s.add_development_dependency 'rake',                '~> 13.0'
-  s.add_development_dependency 'rubocop',             '~> 1.73.0'
+  s.add_development_dependency 'rubocop',             '~> 1.74.0'
   s.add_development_dependency 'rubocop-minitest',    '~> 0.37.0'
   s.add_development_dependency 'rubocop-rake',        '~> 0.7.0'
   s.add_development_dependency 'rubocop-sequel',      '~> 0.4.0'
   s.add_development_dependency 'simplecov',           '~> 0.22.0'
 
   # Dependencies on optional libraries, used for unit tests & development
-  s.add_development_dependency 'oxidized-web',        '>= 0.15.0'
+  s.add_development_dependency 'oxidized-web',        '>= 0.16.0'
   s.add_development_dependency 'sequel',              '>= 5.63.0', '<= 5.90.0'
 end

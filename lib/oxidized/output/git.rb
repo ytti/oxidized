@@ -164,7 +164,10 @@ module Oxidized
             next unless delta.added? || delta.modified?
 
             hash = {}
+            # We keep :date for reverse compatibility on oxidized-web <= 0.15.1
             hash[:date] = commit.time.to_s
+            # date as a Time instance for more flexibility in oxidized-web
+            hash[:time] = commit.time
             hash[:oid] = commit.oid
             hash[:author] = commit.author
             hash[:message] = commit.message

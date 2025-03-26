@@ -23,15 +23,36 @@ module Oxidized
       end
       Signals.register_signal('HUP', reload_proc)
 
-      # Initialize REST API and webUI if requested
-      if Oxidized.config.rest?
+      # Load extensions, currently only oxidized-web
+      # We have different namespaces for oxidized-web, which needs to be
+      # adressed if we need a generic way to load extensions:
+      # - gem: oxidized-web
+      # - module: Oxidized::API
+      # - path: oxidized/web
+      # - entrypoint: Oxidized::API::Web.new(nodes, configuration)
+
+      # Initialize oxidized-web if requested
+      if Oxidized.config.has_key? 'rest'
+        Oxidized.logger.warn(
+          'configuration: "rest" is deprecated. Migrate to ' \
+          '"extensions.oxidized-web" and remove "rest" from the configuration'
+        )
+        configuration = Oxidized.config.rest
+      elsif Oxidized.config.extensions['oxidized-web'].load?
+        # This comment stops rubocop complaining about Style/IfUnlessModifier
+        configuration = Oxidized.config.extensions['oxidized-web']
+      end
+
+      if configuration
         begin
           require 'oxidized/web'
         rescue LoadError
-          raise OxidizedError, 'oxidized-web not found: sudo gem install oxidized-web - \
-          or disable web support by setting "rest: false" in your configuration'
+          raise OxidizedError,
+                'oxidized-web not found: install it or disable it by ' \
+                'removing "rest" and "extensions.oxidized-web" from your ' \
+                'configuration'
         end
-        @rest = API::Web.new nodes, Oxidized.config.rest
+        @rest = API::Web.new nodes, configuration
         @rest.run
       end
       run

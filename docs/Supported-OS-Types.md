@@ -75,6 +75,7 @@
 |                    |Dell EMC Networking OS10      |[os10](/lib/oxidized/model/os10.rb)              |                 |[Dell EMC Networking OS10](Model-Notes/OS10.md)
 |D-Link              |D-Link                        |[dlink](/lib/oxidized/model/dlink.rb)
 |                    |D-Link cisco like CLI         |[dlinknextgen](/lib/oxidized/model/dlinknextgen.rb)
+|Eaton               |Gigabit Network Card          |[eatonnetwork](/lib/oxidized/model/eatonnetwork.rb) |@thanegill
 |ECI Telecom         |ECIapollo                     |[eciapollo](/lib/oxidized/model/eciapollo.rb)
 |EdgeCore            |ECS3510, ES3526XA-V2, ES3528M |[edgecos](/lib/oxidized/model/edgecos.rb)
 |Eltex               |Eltex                         |[eltex](/lib/oxidized/model/eltex.rb)
@@ -113,6 +114,7 @@
 |Huawei              |VRP                           |[vrp](/lib/oxidized/model/vrp.rb)                |                 |[VRP-Huawei](Model-Notes/VRP-Huawei.md)
 |                    |SmartAX series                |[smartax](/lib/oxidized/model/smartax.rb)        |                 |[SmartAX-Huawei](Model-Notes/SmartAX-Huawei.md)
 |Icotera             |6400 series                   |[icotera](/lib/oxidized/model/icotera.rb)
+|Ingate              |SIParator/Firewalls           |[ingate](/lib/oxidized/model/ingate.rb) |@thanegill
 |IP Infusion         |OcNOS                         |[ocnos](/lib/oxidized/model/ocnos.rb)
 |Juniper             |JunOS                         |[junos](/lib/oxidized/model/junos.rb)            |                 |[MX/QFX/EX/SRX/J Series](Model-Notes/JunOS.md)
 |                    |ScreenOS (Netscreen)          |[screenos](/lib/oxidized/model/screenos.rb)

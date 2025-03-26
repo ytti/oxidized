@@ -5,14 +5,24 @@ All notable changes to this project will be documented in this file.
 The format is based on [Keep a Changelog](https://keepachangelog.com/en/1.1.0/).
 
 ## [Unreleased]
+This release changes the way to configure oxidized-web. The old `rest`
+configuration is still supported but deprecated. The new configuration works
+with oxidized-web 0.16.0 or later.
+See [docs/Configuration.md](/docs/Configuration.md#oxidized-web-RESTful-API-and-web-interface).
+
 ### Added
 - unifiap: new model for Unifi APs, switches, and AirOS APs (@clifcox)
 - github: Issue templates for bugs, feature requests and support requests (@robertcheramy)
+- model for Ingate Operating System (@thanegill)
+- model for Easton Gigabit Network Card (@thanegill)
 
 ### Changed
 - fortios: support for FortiADC (@electrocret)
 - output/git: cache commit log to improve performance of oxidized-web. Fixes #3121 (@robertcheramy)
 - digest auth handles special characters in passwords by itself (no need to url encode them manually) (@einglasvollkakao)
+- changed the configuration for oxidized-web from rest: to extensions.oxidized-web (@robertcheramy)
+- netgear: add pager-handler workaround, fixes: #2394 and #3341 (@candlerb, @syn-bit)
+- Output#version (git/gitcrypt) returns a Time object in its hash for more flexibility in oxidized-web (@robertcheramy)
 - ios: hide secret key of aaa radius (@martinberg, @robertcheramy)
 
 ### Fixed
@@ -20,6 +30,7 @@ The format is based on [Keep a Changelog](https://keepachangelog.com/en/1.1.0/).
 - Fix frozen string literals (@robertcheramy)
 - powerconnect: Cleanup login/logout logic. Fixes #3437 (@clifcox)
 - aos7: remove extra lines occuring when `show hardware-info` runs slow (@rouven0)
+- srosmd: add ignore regex for 64-bit system uptime (@emiliaaah)
 
 ## [0.32.2 – 2025-02-27]
 This patch release mainly fixes the docker building process, wich resulted in
