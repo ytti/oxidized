@@ -2,7 +2,7 @@ require 'bundler/gem_tasks'
 require 'rake/testtask'
 require_relative 'lib/oxidized/version'
 
-gemspec = eval(File.read(Dir['*.gemspec'].first))
+gemspec = Gem::Specification.load(Dir['*.gemspec'].first)
 gemfile = [gemspec.name, gemspec.version].join('-') + '.gem'
 
 # Integrate Rubocop if available
@@ -40,11 +40,6 @@ task :version_set do
   Oxidized.version_set
   Bundler::GemHelper.instance.gemspec.version = Oxidized::VERSION
 end
-
-# desc 'Install gem'
-# task install: :build do
-#    system "sudo -Es sh -c \'umask 022; gem install gems/#{gemfile}\'"
-# end
 
 desc 'Remove gems'
 task :clean do

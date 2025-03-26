@@ -11,7 +11,7 @@ It is light and extensible and supports over 130 operating system types.
 Feature highlights:
 
 * Automatically adds/removes threads to meet configured retrieval interval
-* Restful API to a move node immediately to head-of-queue (GET/POST /node/next/[NODE])
+* Restful API to a move node immediately to head-of-queue (GET/PUT /node/next/[NODE])
 * Syslog udp+file example to catch config change events (IOS/JunOS) and trigger a config fetch
   * Will signal which IOS/JunOS user made the change, can then be used by output modules (via POST)
   * The `git` output module uses this info - 'git blame' will show who changed each line

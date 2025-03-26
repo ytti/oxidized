@@ -26,6 +26,7 @@ is the operating system for the newer CX-Series.
 The Oxidized model is [aoscx](/lib/oxidized/model/aoscx.rb).
 
 ## Older Models
-Older Devices like ProCurve or 3Com/Comware are listed under the Vendor "HP" in
-the [Supported OS Types](docs/Supported-OS-Types.md) list.
+Older Devices like [ProCurve](/lib/oxidized/model/procurve.rb) or 3Com/Comware
+are listed under the Vendor "HP" in the
+[Supported OS Types](/docs/Supported-OS-Types.md) list.
 
