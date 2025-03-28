@@ -74,8 +74,8 @@ class Unifiap < Oxidized::Model
     if cfg =~ /No such file/i
       if @ntpserver
         # Ok, now lets try getting the skew from the output of ntpclient
-        cmd "ntpclient -d -n -c 2 -i0 -h #{@ntpserver}" do |cfg|
-          @skew = ntpskew(cfg)
+        cmd "ntpclient -d -n -c 2 -i0 -h #{@ntpserver}" do |ntp_out|
+          @skew = ntpskew(ntp_out)
         end
         @sync = !@skew.nil? && @skew.to_f.abs < 1e6 ? "Synchronized" : "FAIL"
       end
