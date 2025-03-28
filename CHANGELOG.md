@@ -4,6 +4,15 @@ All notable changes to this project will be documented in this file.
 
 The format is based on [Keep a Changelog](https://keepachangelog.com/en/1.1.0/).
 
+## [Unreleased]
+
+### Added
+
+### Changed
+
+### Fixed
+- nxos: ignore bootflash size and permission errors (@rouven0)
+
 ## [0.33.0 - 2025-03-26]
 This release changes the way to configure oxidized-web. The old `rest`
 configuration is still supported but deprecated. The new configuration works
