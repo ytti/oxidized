@@ -99,8 +99,8 @@ Follow these steps to do so:
 5. Restart oxidized - you're done!
 
 Note that slow performance in oxidized-web when listing the versions of a device
-are due to the necessity to go through the whole git log to search for the
-versions. See Issue #3121, the fix will come with oxidized version 0.32.0.
+are due to the necessity to go through the whole git log to search the
+history. See Issue #3121, the fix will come with oxidized version 0.33.0.
 
 ## Oxidized ignores the changes I made to its git repository
 First of all: you shouldn't manipulate the git repository of oxidized. Don't

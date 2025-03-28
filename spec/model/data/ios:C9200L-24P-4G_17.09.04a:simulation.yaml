@@ -170,6 +170,9 @@ commands:
     aaa session-id common
     !
     !
+    aaa server radius dynamic-author
+     client 10.10.10.10 server-key AAAAAAAAAABBBBBBBBBB
+     client 10.10.20.20 server-key 7 AAAAAAAAAABBBBBBBBBB
     !
     clock timezone CET 1 0
     clock summer-time CEST recurring last Sun Mar 2:00 last Sun Oct 2:00

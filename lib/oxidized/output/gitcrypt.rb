@@ -114,7 +114,10 @@ module Oxidized
         tab = []
         walker.each do |commit|
           hash = {}
+          # We keep :date for reverse compatibility on oxidized-web <= 0.15.1
           hash[:date] = commit.date.to_s
+          # date as a Time instance for more flexibility in oxidized-web
+          hash[:time] = commit.date
           hash[:oid] = commit.objectish
           hash[:author] = commit.author
           hash[:message] = commit.message

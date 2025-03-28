@@ -12,7 +12,6 @@ Gem::Specification.new do |s|
   s.homepage          = 'http://github.com/ytti/oxidized'
   s.summary           = 'feeble attempt at rancid'
   s.description       = 'software to fetch configuration from network devices and store them'
-  s.rubyforge_project = s.name
   s.files             = %x(git ls-files -z).split("\x0").reject { |f| f.match(/^(test|spec|features)\//) }
   s.executables       = %w[oxidized]
   s.require_path      = 'lib'
@@ -58,6 +57,6 @@ Gem::Specification.new do |s|
   s.add_development_dependency 'simplecov',           '~> 0.22.0'
 
   # Dependencies on optional libraries, used for unit tests & development
-  s.add_development_dependency 'oxidized-web',        '>= 0.15.0'
+  s.add_development_dependency 'oxidized-web',        '~> 0.16'
   s.add_development_dependency 'sequel',              '>= 5.63.0', '<= 5.90.0'
 end
