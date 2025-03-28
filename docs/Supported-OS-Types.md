@@ -23,6 +23,7 @@
 |Aruba               |AOS-CX                        |[aoscx](/lib/oxidized/model/aoscx.rb)            |@robertcheramy   |[HPE Aruba](Model-Notes/HPEAruba.md)
 |                    |AOSW                          |[aosw](/lib/oxidized/model/aosw.rb)                                |[HPE Aruba](Model-Notes/HPEAruba.md)
 |                    |ArubaInstant                  |[arubainstant](/lib/oxidized/model/arubainstant.rb)|@robertcheramy |[HPE Aruba](Model-Notes/HPEAruba.md)
+|                    |ArubaOS-Switch                |[aoss](/lib/oxidized/model/aoss.rb)              |                 |[HPE Aruba](Model-Notes/HPEAruba.md)
 |Asterfusion         |AsterNOS                      |[asternos](/lib/oxidized/model/asternos.rb)
 |AudioCodes          |AudioCodes                    |[audiocodes](/lib/oxidized/model/audiocodes.rb)
 |                    |MediaPack MP-1xx, Mediant1000 |[audiocodesmp](/lib/oxidized/model/audiocodesmp.rb)
