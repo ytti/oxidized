@@ -423,3 +423,15 @@ commands:
     !
     end
     SSH@#HOSTNAME##
+  '': ''
+  skip-page-display: |-
+    skip-page-display
+    (fake response)
+    SSH@#HOSTNAME##
+  terminal length 0: |-
+    terminal length 0
+    (fake response)
+    SSH@#HOSTNAME##
+  "logout\nexit\nexit\n": |-
+    Bye! (fake resposnse)
+

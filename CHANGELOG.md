@@ -22,6 +22,7 @@ The format is based on [Keep a Changelog](https://keepachangelog.com/en/1.1.0/).
 - powerconnect: Cleanup login/logout logic. Fixes #3437 (@clifcox)
 - aos7: remove extra lines occuring when `show hardware-info` runs slow (@rouven0)
 - srosmd: add ignore regex for 64-bit system uptime (@emiliaaah)
+- ironware: mask temperatures with more than two digits (@merelissdgr)
 
 ## [0.32.2 – 2025-02-27]
 This patch release mainly fixes the docker building process, wich resulted in
