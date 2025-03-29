@@ -51,11 +51,12 @@ module Oxidized
 
   class SyslogMonitor
     MSG = {
-      ios:   /%SYS-(SW[0-9]+-)?5-CONFIG_I:/,
-      junos: 'UI_COMMIT:',
-      eos:   /%SYS-5-CONFIG_I:/,
-      nxos:  /%VSHD-5-VSHD_SYSLOG_CONFIG_I:/,
-      aruba: 'Notice-Type=\'Running'
+      ios:   /%SYS-(?:SW[0-9]+-)?5-CONFIG_I:\s+Configured from console by (?<user>\w+) on [^\s]+ \((?<from>[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3})\)/,
+      junos: /UI_COMMIT: User '(?<user>\w+)' requested 'commit' operation \(comment: (?<msg>.+)\)/,
+      eos:   /%SYS-5-CONFIG_I:\s+Configured from console by (?<user>\w+) on [^\s]+ \((?<from>[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3})\)/,
+      nxos:  /%VSHD-5-VSHD_SYSLOG_CONFIG_I: Configured from [^\s]+ by (?<user>\w+) on (?<from>[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3})/,
+      iosxr: /%MGBL-SYS-5-CONFIG_I : Configured from console by (?<user>\w+) on [^\s]+ \((?<from>[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3})\)/,
+      aruba: /Notice-Type='Running Config Change'.*User-Name='(?<user>\w+)'.*Remote-IP-Address='(?<from>[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3})'/
     }.freeze
 
     class << self
@@ -79,38 +80,25 @@ module Oxidized
       run io
     end
 
-    def rest(opt)
-      Oxidized::RestClient.next opt
-    end
-
-    def ios(log, index, **opts)
-      # TODO: we need to fetch 'ip/name' in mode == :file here
-      opts[:user] = log[index + 5]
-      opts[:from] = log[-1][1..-2]
-      opts
-    end
-    alias nxos ios
-    alias eos ios
-
-    def junos(log, index, **opts)
-      # TODO: we need to fetch 'ip/name' in mode == :file here
-      opts[:user] = log[index + 2][1..-2]
-      opts[:msg] = log[(index + 6)..-1].join(' ')[10..-2]
-      opts.delete(:msg) if opts[:msg] == 'none'
-      opts
-    end
-
-    def aruba(log, index, **opts)
-      opts.merge user: log[index + 2].split('=')[4].split(',')[0][1..-2]
-    end
-
     def handle_log(log, ipaddr)
-      log = log.to_s.split
-      index, vendor = MSG.find do |key, value|
-        index = log.find_index { |e| e.match value }
-        break index, key if index
+      vendor, match = nil, nil
+      MSG.each do |key, value|
+        vendor = key
+        break if (match = value.match log)
       end
-      rest send(vendor, log, index, ip: ipaddr, name: getname(ipaddr), model: vendor.to_s) if index
+      return unless vendor && match
+
+      # TODO: we need to fetch 'ip/name' in mode == :file here
+      Oxidized::RestClient.next(
+        {
+          ip:    ipaddr,
+          name:  getname(ipaddr),
+          model: vendor.to_s,
+          user:  match.named_captures.fetch("user", nil),
+          from:  match.named_captures.fetch("from", nil),
+          msg:   match.named_captures.fetch("msg", nil)
+        }
+      )
     end
 
     def run(io)
