@@ -29,6 +29,7 @@ so be sure to update to the latest version.
 - github: Issue templates for bugs, feature requests and support requests (@robertcheramy)
 - model for Ingate Operating System (@thanegill)
 - model for Easton Gigabit Network Card (@thanegill)
+- add iosxr support to SyslogMonitor
 
 ### Changed
 - fortios: support for FortiADC (@electrocret)
@@ -39,6 +40,7 @@ so be sure to update to the latest version.
 - Output#version (git/gitcrypt) returns a Time object in its hash for more flexibility in oxidized-web (@robertcheramy)
 - ios: hide secret key of aaa radius (@martinberg, @robertcheramy)
 - container: update to phusion/baseimage:noble-1.0.1 (@robertcheramy)
+- simplify SyslogMonitor code by using regular expressions for syslog message parsing
 
 ### Fixed
 - powerconnect: Mask the changing temperature issue for non-stacked switches. Fixes #2088 (@clifcox)
@@ -47,6 +49,7 @@ so be sure to update to the latest version.
 - aos7: remove extra lines occuring when `show hardware-info` runs slow (@rouven0)
 - srosmd: add ignore regex for 64-bit system uptime (@emiliaaah)
 - removed some rubocop warnings (@robertcheramy)
+- add content-type header for PUT request in rest client
 
 ## [0.32.2 – 2025-02-27]
 This patch release mainly fixes the docker building process, wich resulted in

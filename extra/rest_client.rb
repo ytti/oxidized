@@ -38,7 +38,8 @@ module Oxidized
 
     def next(opt)
       data = JSON.dump opt
-      @web.put PATH + '/node/next/' + opt[:name].to_s, data
+      headers = { 'content-type': 'application/json' }
+      @web.put PATH + '/node/next/' + opt[:name].to_s, data, headers
     end
   end
 end
