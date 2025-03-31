@@ -170,10 +170,17 @@ git push -u origin 1234-your-branch-name
 You can push as often as you wish. If you already opened a pull request, your pushed commits will automatically get updated there.
 
 ### Open a pull request
-Go to your github repository, and github will propose to create a pull request and will guide you.
+Go to your github repository, and github will propose to create a pull request
+and will guide you.
 
-We are happy that you are contributing to Oxidized. If something is not as it should be, a maintainer
-will probably ask you to change it when reviewing the pull request. And if your pull request breaks something, this can be fixed, so don't be shy, submit your code ;-)
+We are happy that you are contributing to Oxidized. If something is not as it
+should be, a maintainer will probably ask you to change it when reviewing the
+pull request. And if your pull request breaks something, this can be fixed, so
+don't be shy, submit your code ;-)
+
+Note: if the github CI fail on your pull request, fix the problems.
+A pull request with failed CI won't be merged into master, so maintainers may
+only review pull requests that have passed the CIs.
 
 ### Delete the branch from your repository
 When the pull request has been merged into main, github will ask if you want to delete your branch. Clean up and delete it, so that you can keep your fork clean and ready for new contributions.

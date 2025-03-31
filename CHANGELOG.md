@@ -5,7 +5,6 @@ All notable changes to this project will be documented in this file.
 The format is based on [Keep a Changelog](https://keepachangelog.com/en/1.1.0/).
 
 ## [Unreleased]
-
 ### Added
 - add iosxr support to SyslogMonitor (@deesel)
 
@@ -14,7 +13,9 @@ The format is based on [Keep a Changelog](https://keepachangelog.com/en/1.1.0/).
 ### Fixed
 - nxos: ignore bootflash size and permission errors (@rouven0)
 - githubrepo: explicitly tell when Rugged isn't installed with ssh support (@robertcheramy)
+- ironware: mask temperatures with more than two digits (@merelissdgr)
 - add content-type header for PUT request in rest client (@deesel)
+
 
 ## [0.33.0 - 2025-03-26]
 This release changes the way to configure oxidized-web. The old `rest`
@@ -49,6 +50,7 @@ so be sure to update to the latest version.
 - aos7: remove extra lines occuring when `show hardware-info` runs slow (@rouven0)
 - srosmd: add ignore regex for 64-bit system uptime (@emiliaaah)
 - removed some rubocop warnings (@robertcheramy)
+
 
 ## [0.32.2 – 2025-02-27]
 This patch release mainly fixes the docker building process, wich resulted in
