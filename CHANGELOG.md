@@ -5,12 +5,13 @@ All notable changes to this project will be documented in this file.
 The format is based on [Keep a Changelog](https://keepachangelog.com/en/1.1.0/).
 
 ## [Unreleased]
-
 ### Added
 
 ### Changed
 
 ### Fixed
+- nxos: ignore bootflash size and permission errors (@rouven0)
+- githubrepo: explicitly tell when Rugged isn't installed with ssh support (@robertcheramy)
 - ironware: mask temperatures with more than two digits (@merelissdgr)
 
 

@@ -36,8 +36,8 @@ class GithubRepo < Oxidized::Hook
       if e.message == 'unsupported URL protocol'
         log "Rugged does not support the git URL '#{url}'.", :warn
         unless Rugged.features.include?(:ssh)
-          log 'You may need to install Rugged with ssh support ' \
-              '(gem install rugged -- --with-ssh)', :warn
+          log "Note: Rugged isn't installed with ssh support. You may need " \
+              '"gem install rugged -- --with-ssh"', :warn
         end
       end
       # re-raise exception for the calling method

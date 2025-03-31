@@ -7,7 +7,8 @@ This guide provides tips on writing your issue to make it easier for the
 community and developers to understand and respond effectively.
 
 Why write good issues?
-- A clear and detailed issue improves the chances of getting your problem resolved.
+- A clear and detailed issue improves the chances of getting your problem
+  resolved.
 - By spending time to write a good issue, you save developers time, contributing
   to Oxidized’s progress without writing a line of code.
 
@@ -21,7 +22,7 @@ following rules:
   questions in the templates), expect your issue to be closed without a comment.
 - Inactive issues will be marked "stale" automatically after 90 days. Issues
   are not closed automatically; this is a manual action by a maintainer.
-- A feature requests may be closed after some time of inactivity, as obviously
+- A feature request may be closed after some time of inactivity, as obviously
   no one has found the time to implement it. Consider contributing code in a
   Pull Request instead.
 - While it is OK to ask for help (using the support request template), don't be
@@ -41,6 +42,13 @@ Choose the appropriate GitHub project based on your issue:
 - For issues with Oxidized itself, go to
   [oxidized](https://github.com/ytti/oxidized).
 
+## Use the latest version
+If you are using an old version of oxidized, you may encounter issues that have
+been solved. No support will be provided for older versions of oxidized.
+
+If you can, please also test against the latest git version, or at least read
+[CHANGELOG.md](/CHANGELOG.md) to see if your problem has been solved on master.
+
 ## Format your issue
 - Use [GitHub Markdown](https://docs.github.com/en/get-started/writing-on-github/getting-started-with-writing-and-formatting-on-github/basic-writing-and-formatting-syntax) to format your issue.
 - Preview your text before submitting to ensure it renders correctly.
@@ -53,6 +61,7 @@ Keep the title brief yet descriptive. Aim to summarize the main issue or request
 Include as many relevant details as possible. At a minimum, specify:
 
 - Oxidized version and operating system.
+- Which model (oxidized name AND Manufacturer name) is the issue about.
 - Relevant parts of your Oxidized configuration and a brief explanation of your setup.
 - Output of the error, if relevant.
 - For issues related to specific devices, consider creating a YAML Simulation file (instructions below).
