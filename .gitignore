@@ -13,6 +13,7 @@
 Gemfile.lock
 .ruby-version
 .sass-cache/
+.vscode/
 
 # Used by dotenv library to load environment variables.
 # .env

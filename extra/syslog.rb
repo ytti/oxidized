@@ -52,6 +52,7 @@ module Oxidized
   class SyslogMonitor
     MSG = {
       ios:   /%SYS-(SW[0-9]+-)?5-CONFIG_I:/,
+      iosxr: /%MGBL-SYS-5-CONFIG_I/,
       junos: 'UI_COMMIT:',
       eos:   /%SYS-5-CONFIG_I:/,
       nxos:  /%VSHD-5-VSHD_SYSLOG_CONFIG_I:/,
@@ -89,6 +90,7 @@ module Oxidized
       opts[:from] = log[-1][1..-2]
       opts
     end
+    alias iosxr ios
     alias nxos ios
     alias eos ios
 

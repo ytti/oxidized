@@ -6,6 +6,7 @@ The format is based on [Keep a Changelog](https://keepachangelog.com/en/1.1.0/).
 
 ## [Unreleased]
 ### Added
+- add iosxr support to SyslogMonitor (@deesel)
 
 ### Changed
 
@@ -13,6 +14,7 @@ The format is based on [Keep a Changelog](https://keepachangelog.com/en/1.1.0/).
 - nxos: ignore bootflash size and permission errors (@rouven0)
 - githubrepo: explicitly tell when Rugged isn't installed with ssh support (@robertcheramy)
 - ironware: mask temperatures with more than two digits (@merelissdgr)
+- add content-type header for PUT request in rest client (@deesel)
 
 
 ## [0.33.0 - 2025-03-26]
