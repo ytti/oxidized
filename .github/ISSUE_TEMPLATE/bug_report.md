@@ -33,10 +33,13 @@ If applicable, add logs to help explain your problem.
 ```
 
 **Running environment (please complete the following information):**
-<!-- complete the following information and add further details if needed -->
+<!-- complete the following information and add further details if needed.
+Always test the latest version of oxidized -->
 - OS: [e.g. Debian Bookworm, official container version xxx, ...]
 - oxidized version: [e.g. 0.32.2]
 - oxidized-web version: [e.g. 0.15.1, if applicable]
+- Manufacturer model an software version:
+- oxidized model name:
 
 **Additional context**
 Add any other context about the problem here.
