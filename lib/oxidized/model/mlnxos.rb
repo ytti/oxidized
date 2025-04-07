@@ -8,7 +8,7 @@ class MLNXOS < Oxidized::Model
   # "Normal" pager: "lines 183-204 "
   # Last pager:     "lines 256-269/269 (END) "
   expect /\e\[7mlines \d+-\d+( |\/\d+ \(END\) )/ do |data, re|
-    # send ' '
+    send ' '
     data.sub re, ''
   end
 
