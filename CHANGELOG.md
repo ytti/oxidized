@@ -15,6 +15,7 @@ The format is based on [Keep a Changelog](https://keepachangelog.com/en/1.1.0/).
 - githubrepo: explicitly tell when Rugged isn't installed with ssh support (@robertcheramy)
 - ironware: mask temperatures with more than two digits (@merelissdgr)
 - add content-type header for PUT request in rest client (@deesel)
+- mlnxos: handle ANSI-ESC Codes and pager requests. Fixes #3469 (@robertcheramy)
 
 
 ## [0.33.0 - 2025-03-26]
