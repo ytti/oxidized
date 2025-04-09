@@ -26,7 +26,7 @@ class NXOS < Oxidized::Model
     comment cfg.join
   end
 
-  cmd 'show inventory' do |cfg|
+  cmd 'show inventory all' do |cfg|
     cfg = filter cfg
     comment cfg
   end
