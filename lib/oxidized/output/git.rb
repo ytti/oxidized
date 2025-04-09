@@ -252,6 +252,7 @@ module Oxidized
         oid = repo.write data, :blob
         # Read the index from disk
         index = repo.index
+        index.read_tree repo.head.target.tree unless repo.empty?
         index.add path: file, oid: oid, mode: 0o100644
 
         repo.config['user.name']  = @user
