@@ -1,4 +1,4 @@
-FROM docker.io/phusion/baseimage:noble-1.0.1
+FROM docker.io/phusion/baseimage:noble-1.0.2
 
 ENV DEBIAN_FRONTEND=noninteractive
 
