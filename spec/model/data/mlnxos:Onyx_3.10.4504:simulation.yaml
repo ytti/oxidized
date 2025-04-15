@@ -1,0 +1,75 @@
+---
+init_prompt: |-
+  Last login: Tue Apr 15 09:49:23 BST 2025 from 10.20.30.40 on pts/1
+  Number of total successful connections since last 1 days: 1234
+  HPE Switch
+  \rMLNX01-1 [MLNX01: standby] >\x20
+commands:
+  show version: |-
+    show version\r
+    \e[?1h\e=\rProduct name:      Onyx
+    Product release:   3.10.4504
+    Build ID:          #1-dev
+    Build date:        2024-07-25 08:02:01
+    Target arch:       x86_64
+    Target hw:         x86_64
+    Built by:          sw-r2d2-bot@93c65e296280
+    Version summary:   X86_64 3.10.4504 2024-07-25 08:02:01 x86_64
+    
+    Product model:     x86onie
+    Host ID:           NA
+    System serial num: NA
+    System UUID:       NA
+    
+    Uptime:            19d 16h 42m 34.880s
+    CPU load averages: 0.26 / 0.25 / 0.27
+    Number of CPUs:    2
+    System memory:     3223 MB used / 4565 MB free / 7788 MB total
+    Swap:              0 MB used / 0 MB free / 0 MB total
+    \r\e[K\x00\x00\x00\x00\x00\x00\x00\x00\x00\x00\x00\x00\e[?1l\e>\rMLNX01-1 [MLNX01: standby] >\x20
+  show inventory: |-
+    show inventory\r
+    \e[?1h\e=\r-----------------------------------------------------------------------------
+    Module           Part Number        Serial Number        Asic Rev.    HW Rev.
+    -----------------------------------------------------------------------------
+    CHASSIS          Q2F22-63001        NA           N/A          BB
+    MGMT             Q2F22-63001        NA           1            BB
+    FAN1             841987-001         NA           N/A          A4
+    FAN2             841987-001         NA           N/A          A4
+    FAN3             841987-001         NA           N/A          A4
+    FAN4             841987-001         NA           N/A          A4
+    PS1              841985-001         NA           N/A          A3
+    PS2              841985-001         NA           N/A          A3
+    \r\e[K\x00\x00\x00\x00\x00\x00\x00\x00\x00\x00\x00\x00\e[?1l\e>\rMLNX01-1 [MLNX01: standby] >\x20
+  enable: |-
+    enable\r
+    \rMLNX01-1 [MLNX01: standby] #\x20
+  show running-config: |-
+    show running-config\r
+    \e[?1h\e=\r##
+    ## Running database \"MLNX01-1\"
+    ## Generated at 2025/04/15 10:23:14 +0100
+    ## Hostname: MLNX01-1
+    ## Product release: 3.10.4504
+    ##
+    
+    ##
+    ## Running-config temporary prefix mode setting
+    ##
+    no cli default prefix-modes enable
+    
+    ##
+    ## MLAG protocol
+    ##
+       protocol mlag
+      \x20
+    ##
+    ## Interface Ethernet configuration
+    ##
+       interface mlag-port-channel 1
+       interface mlag-port-channel 3
+       interface mlag-port-channel 5
+    \e[7m\x00\x00\x00\x00\x00\x00\x00\x00lines 1-23 \e[m\x00\x00\x00\x00\x00\x00\x00\x00\e[K\x00\x00\x00\x00\x00\x00\x00\x00\x00\x00\x00\x00
+  exit: |-
+    \r\e[K\x00\x00\x00\x00\x00\x00\x00\x00\x00\x00\x00\x00   interface mlag-port-channel 7
+    \e[7m\x00\x00\x00\x00\x00\x00\x00\x00lines 2-24 \e[m\x00\x00\x00\x00\x00\x00\x00\x00\e[K\x00\x00\x00\x00\x00\x00\x00\x00\x00\x00\x00\x00\a\r\e[K\x00\x00\x00\x00\x00\x00\x00\x00\x00\x00\x00\x00\e[7m\x00\x00\x00\x00\x00\x00\x00\x00lines 2-24 \e[m\x00\x00\x00\x00\x00\x00\x00\x00\e[K\x00\x00\x00\x00\x00\x00\x00\x00\x00\x00\x00\x00\a\r\e[K\x00\x00\x00\x00\x00\x00\x00\x00\x00\x00\x00\x00\e[7m\x00\x00\x00\x00\x00\x00\x00\x00lines 2-24 \e[m\x00\x00\x00\x00\x00\x00\x00\x00\e[K\x00\x00\x00\x00\x00\x00\x00\x00\x00\x00\x00\x00\r\e[K\x00\x00\x00\x00\x00\x00\x00\x00\x00\x00\x00\x00\e[7m\x00\x00\x00\x00\x00\x00\x00\x00Command not available  (press RETURN)\e[m\x00\x00\x00\x00\x00\x00\x00\x00\e[24;1H\x00\x00\x00\x00\x00\x00\x00\x00\x00\x00\x00\x00\x00\x00\x00\x00\x00\x00\x00\x00\x00\r\e[K\x00\x00\x00\x00\x00\x00\x00\x00\x00\x00\x00\x00\e[7m\x00\x00\x00\x00\x00\x00\x00\x00lines 2-24 \e[m\x00\x00\x00\x00\x00\x00\x00\x00\e[K\x00\x00\x00\x00\x00\x00\x00\x00\x00\x00\x00\x00
