@@ -9,6 +9,7 @@ The format is based on [Keep a Changelog](https://keepachangelog.com/en/1.1.0/).
 - add iosxr support to SyslogMonitor (@deesel)
 
 ### Changed
+- acos: remove free storage amount from show version. Fixes #3492 (@991jo)
 
 ### Fixed
 - nxos: ignore bootflash size and permission errors (@rouven0)
