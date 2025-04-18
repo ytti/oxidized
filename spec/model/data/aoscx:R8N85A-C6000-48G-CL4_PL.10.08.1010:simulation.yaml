@@ -4,10 +4,10 @@ init_prompt: |-
   User \"oxidized\" has logged in 18 times in the past 30 days
   OX-SW123#\x20
 commands:
-  no page: |-
+  "no page\n": |-
     no page
     OX-SW123#\x20
-  show version: |-
+  "show version\n": |-
     show version
     -----------------------------------------------------------------------------
     ArubaOS-CX
@@ -22,7 +22,7 @@ commands:
     Service OS Version : PL.01.09.0003                \x20
     BIOS Version       : PL.02.0002                   \x20
     OX-SW123#\x20
-  show environment: |-
+  "show environment\n": |-
     show environment
     show environment fan
     Fan information
@@ -69,7 +69,7 @@ commands:
     1/1-Switch-CPU-2                management-module    50.88 C    normal
     
     OX-SW123#\x20
-  show module: |-
+  "show module\n": |-
     show module
     
     Management Modules
@@ -91,11 +91,11 @@ commands:
     
     
     OX-SW123#\x20
-  show interface transceiver: |-
+  "show interface transceiver\n": |-
     show interface transceiver
     No pluggable modules found.
     OX-SW123#\x20
-  show system | exclude "Up Time" | exclude "CPU" | exclude "Memory" | exclude "Pkts .x" | exclude "Lowest" | exclude "Missed": |-
+  "show system | exclude \"Up Time\" | exclude \"CPU\" | exclude \"Memory\" | exclude \"Pkts .x\" | exclude \"Lowest\" | exclude \"Missed\"\n": |-
     show system | exclude \"Up Time\" | exclude \"CPU\" | exclude \"Memory\" | e\rexclude \"Pkts .x\" | exclude \"Lowest\" | exclude \"Missed\"
     Hostname           : OX-SW123                     \x20
     System Description : PL.10.08.1010                \x20
@@ -111,7 +111,7 @@ commands:
     Time Zone          : Europe/Berlin                \x20
     
     OX-SW123#\x20
-  show running-config: |-
+  "show running-config\n": |-
     show running-config
     Current configuration:
     !
@@ -225,7 +225,7 @@ commands:
     !
     https-server vrf default
     OX-SW123#\x20
-  show system: |-
+  "show system\n": |-
     show system
     Hostname           : OX-SW123                     \x20
     System Description : PL.10.08.1010                \x20
@@ -244,5 +244,5 @@ commands:
     CPU Util (%)       : 3                            \x20
     Memory Usage (%)   : 29                           \x20
     OX-SW123#\x20
-  exit: |-
+  "exit\n": |-
     exit

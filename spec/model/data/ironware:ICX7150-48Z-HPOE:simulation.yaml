@@ -2,7 +2,7 @@
 init_prompt: |-
   SSH@#HOSTNAME#
 commands:
-  show version: |-
+  "show version\n": |-
     show version
     
       Copyright (c) Ruckus Networks, Inc. All rights reserved.
@@ -67,7 +67,7 @@ commands:
     My stack unit ID = 1, bootup role = active
     
     SSH@#HOSTNAME#
-  show chassis: |-
+  "show chassis\n": |-
     show chassis
     
     The stack unit 1 chassis info:\x20
@@ -225,7 +225,7 @@ commands:
     \tShutdown level......: 105.0 deg-C
     Boot Prom MAC : fc5c.4536.2d92
     SSH@#HOSTNAME##\x20
-  show flash: |-
+  "show flash\n": |-
     show flash
     
     Stack unit 1:
@@ -256,7 +256,7 @@ commands:
       Compressed Sec Boot Code size = 786944, Version:10.1.25T225 (mnz10125)
       Code Flash Free Space = 1067159552
     SSH@#HOSTNAME##\x20
-  show module: |-
+  "show module\n": |-
     show module
     
            Module                                         Status Ports Starting MAC \x20
@@ -269,7 +269,7 @@ commands:
     U4:M1  ICX7150-48ZP POE 48-port Management Module       OK     48   fc5c.4536.2d92
     U4:M2  ICX7150-8X10GF 8-port 80G Module                 OK     8    fc5c.4536.2dc3
     SSH@#HOSTNAME##\x20
-  show running-config: |-
+  "show running-config\n": |-
     show running-config
     
     Current configuration:
@@ -423,15 +423,16 @@ commands:
     !
     end
     SSH@#HOSTNAME##
-  '': ''
-  skip-page-display: |-
+  "\n": |-
+    SSH@#HOSTNAME##
+  "skip-page-display\n": |-
     skip-page-display
     (fake response)
     SSH@#HOSTNAME##
-  terminal length 0: |-
+  "terminal length 0\n": |-
     terminal length 0
     (fake response)
     SSH@#HOSTNAME##
-  "logout\nexit\nexit\n": |-
+  "logout\nexit\nexit\n\n": |-
     Bye! (fake resposnse)
 

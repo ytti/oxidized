@@ -15,18 +15,18 @@ init_prompt: |-
   Last login: Thu Dec 12 20:44:26 2024 from 10.0.2.20\r
   cumulus@cumulus:mgmt:~$\x20
 commands:
-  sudo su -: |-
+  "sudo su -\n": |-
     sudo su -
     [sudo] password for cumulus:\x20
   # this is the password of the unit test, send when enable = true
-  armud:
+  "armud\n":
 
     root@cumulus:mgmt:~#\x20
-  cat /etc/hostname: |-
+  "cat /etc/hostname\n": |-
     cat /etc/hostname
     cumulus
     root@cumulus:mgmt:~#\x20
-  cat /etc/hosts: |-
+  "cat /etc/hosts\n": |-
     cat /etc/hosts
     127.0.0.1\tlocalhost
     ::1\t\tlocalhost ip6-localhost ip6-loopback
@@ -35,7 +35,7 @@ commands:
     
     127.0.1.1\tcumulus
     root@cumulus:mgmt:~#\x20
-  grep -r "" /etc/network/interface* | cut -d "/" -f 4-: |-
+  "grep -r \"\" /etc/network/interface* | cut -d \"/\" -f 4-\n": |-
     grep -r \"\" /etc/network/interface* | cut -d \"/\" -f 4-
     interfaces:# This file describes the network interfaces available on your system
     interfaces:# and how to activate them. For more information, see interfaces(5).
@@ -59,11 +59,11 @@ commands:
     interfaces:    address ::1/128
     interfaces:    vrf-table auto
     root@cumulus:mgmt:~#\x20
-  cat /etc/resolv.conf: |-
+  "cat /etc/resolv.conf\n": |-
     cat /etc/resolv.conf
     nameserver 10.0.2.3 # vrf mgmt
     root@cumulus:mgmt:~#\x20
-  cat /etc/ntp.conf: |-
+  "cat /etc/ntp.conf\n": |-
     cat /etc/ntp.conf
     # /etc/ntp.conf, configuration for ntpd; see ntp.conf(5) for help
     
@@ -132,7 +132,7 @@ commands:
     # Specify eth0 interface; do not listen on switch ports
     interface listen eth0
     root@cumulus:mgmt:~#\x20
-  cat /etc/snmp/snmpd.conf: |-
+  "cat /etc/snmp/snmpd.conf\n": |-
     cat /etc/snmp/snmpd.conf
     #### Auto-generated config file: do not edit. ####
     agentaddress 127.0.0.1
@@ -159,7 +159,7 @@ commands:
     sysobjectid 1.3.6.1.4.1.40310
     sysservices 72
     root@cumulus:mgmt:~#\x20
-  cat /etc/frr/daemons: |-
+  "cat /etc/frr/daemons\n": |-
     cat /etc/frr/daemons
     # This file tells the frr package which daemons to start.
     #
@@ -253,29 +253,29 @@ commands:
     #   all_wrap=\"/usr/bin/perf record --call-graph -\"
     # the normal daemon command is added to this at the end.
     root@cumulus:mgmt:~#\x20
-  cat /etc/frr/zebra.conf: |-
+  "cat /etc/frr/zebra.conf\n": |-
     cat /etc/frr/zebra.conf
     cat: /etc/frr/zebra.conf: No such file or directory
     root@cumulus:mgmt:~#\x20
-  cat /etc/frr/bgpd.conf: |-
+  "cat /etc/frr/bgpd.conf\n": |-
     cat /etc/frr/bgpd.conf
     cat: /etc/frr/bgpd.conf: No such file or directory
     root@cumulus:mgmt:~#\x20
-  cat /etc/frr/ospfd.conf: |-
+  "cat /etc/frr/ospfd.conf\n": |-
     cat /etc/frr/ospfd.conf
     cat: /etc/frr/ospfd.conf: No such file or directory
     root@cumulus:mgmt:~#\x20
-  cat /etc/frr/ospf6d.conf: |-
+  "cat /etc/frr/ospf6d.conf\n": |-
     cat /etc/frr/ospf6d.conf
     cat: /etc/frr/ospf6d.conf: No such file or directory
     root@cumulus:mgmt:~#\x20
-  cat /etc/frr/frr.conf: |-
+  "cat /etc/frr/frr.conf\n": |-
     cat /etc/frr/frr.conf
     # default to using syslog. /etc/rsyslog.d/45-frr.conf places the log
     # in /var/log/frr/frr.log
     log syslog informational
     root@cumulus:mgmt:~#\x20
-  cat /etc/motd: |-
+  "cat /etc/motd\n": |-
     cat /etc/motd
     
     Welcome to NVIDIA Cumulus VX (TM)
@@ -289,7 +289,7 @@ commands:
     the exclusive licensee of Linus Torvalds, owner of the mark on a world-wide
     basis.
     root@cumulus:mgmt:~#\x20
-  cat /etc/passwd: |-
+  "cat /etc/passwd\n": |-
     cat /etc/passwd
     root:x:0:0:root:/root:/bin/bash
     daemon:x:1:1:daemon:/usr/sbin:/usr/sbin/nologin
@@ -326,7 +326,7 @@ commands:
     systemd-coredump:x:992:992:systemd Core Dumper:/:/usr/sbin/nologin
     vboxadd:x:998:1::/var/run/vboxadd:/bin/false
     root@cumulus:mgmt:~#\x20
-  cat /etc/cumulus/switchd.conf: |-
+  "cat /etc/cumulus/switchd.conf\n": |-
     cat /etc/cumulus/switchd.conf
     #
     # /etc/cumulus/switchd.conf - switchd configuration file
@@ -511,7 +511,7 @@ commands:
     # multiple times in this interval (valid values: 60-3600)
     #res_warn_msg_int=300
     root@cumulus:mgmt:~#\x20
-  cat /etc/cumulus/ports.conf; echo: |-
+  "cat /etc/cumulus/ports.conf; echo\n": |-
     cat /etc/cumulus/ports.conf
     # ports.conf --
     #
@@ -520,7 +520,7 @@ commands:
     #   The ports in Cumulus VX are not configurable from here.
     #
     root@cumulus:mgmt:~#\x20
-  cat /etc/cumulus/datapath/traffic.conf: |-
+  "cat /etc/cumulus/datapath/traffic.conf\n": |-
     cat /etc/cumulus/datapath/traffic.conf
     #
     # /etc/cumulus/datapath/traffic.conf
@@ -654,7 +654,7 @@ commands:
     forwarding_table.profile = default
     
     root@cumulus:mgmt:~#\x20
-  cat /etc/cumulus/acl/policy.conf: |-
+  "cat /etc/cumulus/acl/policy.conf\n": |-
     cat /etc/cumulus/acl/policy.conf
     #
     # This file is a master file for acl policy file inclusion
@@ -673,7 +673,7 @@ commands:
     
     include /etc/cumulus/acl/policy.d/*.rules
     root@cumulus:mgmt:~#\x20
-  cat /etc/default/isc-dhcp-relay: |-
+  "cat /etc/default/isc-dhcp-relay\n": |-
     cat /etc/default/isc-dhcp-relay
     # Defaults for isc-dhcp-relay initscript
     # sourced by /etc/init.d/isc-dhcp-relay
@@ -696,7 +696,7 @@ commands:
     # Additional options that are passed to the DHCP relay daemon?
     OPTIONS=\"\"
     root@cumulus:mgmt:~#\x20
-  cat /etc/cumulus/etc.replace/os-release: |-
+  "cat /etc/cumulus/etc.replace/os-release\n": |-
     cat /etc/cumulus/etc.replace/os-release
     NAME=\"Cumulus Linux\"
     VERSION_ID=5.4.0
@@ -708,10 +708,10 @@ commands:
     HOME_URL=\"http://www.cumulusnetworks.com/\"
     SUPPORT_URL=\"http://support.cumulusnetworks.com/\"
     root@cumulus:mgmt:~#\x20
-  cl-license: |-
+  "cl-license\n": |-
     cl-license
     root@cumulus:mgmt:~#\x20
-  exit: |-
+  "exit\n": |-
     exit
     logout
     cumulus@cumulus:mgmt:~$\x20

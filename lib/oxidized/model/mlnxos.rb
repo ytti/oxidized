@@ -18,6 +18,8 @@ class MLNXOS < Oxidized::Model
   end
 
   cmd :all do |cfg|
+    cfg.gsub! "\e[m", '' # Remove reset formating
+    cfg.gsub! "\e[K", '' # Remove erase in line
     cfg.gsub! /.\x08/, '' # Remove Backspace char
     cfg.gsub! "\r", '' # Remove Cariage Return
     cfg.gsub! /^CPU load averages:\s.+/, '' # Omit constantly changing CPU info

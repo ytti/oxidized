@@ -5,13 +5,13 @@ init_prompt: |-
   ### ###
   LAB-SW123_9200L#
 commands:
-  terminal length 0: |-
+  "terminal length 0\n": |-
     terminal length 0
     LAB-SW123_9200L#
-  terminal width 0: |-
+  "terminal width 0\n": |-
     terminal width 0
     LAB-SW123_9200L#
-  show version: |-
+  "show version\n": |-
     show version
     Cisco IOS XE Software, Version 17.09.04a
     Cisco IOS Software [Cupertino], Catalyst L3 Switch Software (CAT9K_LITE_IOSXE), Version 17.9.4a, RELEASE SOFTWARE (fc3)
@@ -98,7 +98,7 @@ commands:
     Configuration register is 0x102
     
     LAB-SW123_9200L#
-  show vtp status: |-
+  "show vtp status\n": |-
     show vtp status
     VTP Version capable             : 1 to 3
     VTP version running             : 1
@@ -117,7 +117,7 @@ commands:
     MD5 digest                        : 0x35 0x00 0x00 0x00 0x00 0x00 0x7F 0xB4\x20
                                         0x07 0x00 0x00 0x00 0x00 0x00 0x09 0x6D\x20
     LAB-SW123_9200L#
-  show inventory: |-
+  "show inventory\n": |-
     show inventory
     NAME: \"c92xxL Stack\", DESCR: \"c92xxL Stack\"
     PID: C9200L-24P-4G     , VID: V01  , SN: JAE24FFFFFF
@@ -130,7 +130,7 @@ commands:
     
     
     LAB-SW123_9200L#
-  show running-config: |-
+  "show running-config\n": |-
     show running-config
     Building configuration...
     
@@ -308,4 +308,4 @@ commands:
     end
     
     LAB-SW123_9200L#
-  exit: |-
+  "exit\n": |-

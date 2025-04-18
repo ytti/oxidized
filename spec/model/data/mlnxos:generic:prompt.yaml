@@ -1,0 +1,3 @@
+pass:
+  - " [standalone: master] > "
+  - " [standalone: master] # "

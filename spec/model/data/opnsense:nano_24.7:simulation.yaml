@@ -1,7 +1,7 @@
 ---
 init_prompt:
 commands:
-  cat /conf/config.xml: |-
+  "cat /conf/config.xml\n": |-
     <?xml version=\"1.0\"?>
     <opnsense>
       <theme>opnsense</theme>
@@ -862,6 +862,6 @@ commands:
       </wizardtemp>
       <syslog/>
     </opnsense>
-  opnsense-version || echo "OPNsense "`cat /usr/local/opnsense/version/opnsense`: |-
+  "opnsense-version || echo \"OPNsense \"`cat /usr/local/opnsense/version/opnsense`\n": |-
     OPNsense 24.7
-  exit: |-
+  "exit\n": |-

@@ -4,10 +4,10 @@ init_prompt: |-
   User \"user\" has logged in 740 times in the past 30 days
   Switch-cx#\x20
 commands:
-  no page: |-
+  "no page\n": |-
     no page
     Switch-cx#\x20
-  show version: |-
+  "show version\n": |-
     show version
     -----------------------------------------------------------------------------
     ArubaOS-CX
@@ -22,7 +22,7 @@ commands:
     Service OS Version : FL.01.11.0001                \x20
     BIOS Version       : FL.01.0002                   \x20
     Switch-cx#\x20
-  show environment: |-
+  "show environment\n": |-
     show environment
     show environment fan
 
@@ -195,7 +195,7 @@ commands:
     1-PCIE-Management-2             chassis              28.12 C    normal
 
     Switch-cx#\x20
-  show module: |-
+  "show module\n": |-
     show module
 
     Management Modules
@@ -221,7 +221,7 @@ commands:
 
 
     Switch-cx#\x20
-  show interface transceiver: |-
+  "show interface transceiver\n": |-
     show interface transceiver
     ------------------------------------------------------------------
     Port      Type           Product      Serial          Part       \x20
@@ -276,7 +276,7 @@ commands:
     1/6/48    10G-SR         J9150D       CN00AAA0AA      1990-4634  \x20
 
     Switch-cx#\x20
-  show system | exclude "Up Time" | exclude "CPU" | exclude "Memory" | exclude "Pkts .x" | exclude "Lowest" | exclude "Missed": |-
+  "show system | exclude \"Up Time\" | exclude \"CPU\" | exclude \"Memory\" | exclude \"Pkts .x\" | exclude \"Lowest\" | exclude \"Missed\"\n": |-
     show system | exclude \"Up Time\" | exclude \"CPU\" | exclude \"Memor\rry\" | exclude \"Pkts .x\" | exclude \"Lowest\" | exclude \"Missed\"
     Hostname               : Switch-cx              \x20
     System Description     : FL.10.10.1100                \x20
@@ -292,7 +292,7 @@ commands:
     Time Zone              : America/Denver               \x20
 
     Switch-cx#\x20
-  show running-config: |-
+  "show running-config\n": |-
     show running-config
     Current configuration:
     !
@@ -1140,7 +1140,7 @@ commands:
     nae-script configuration_change_email false ...
     nae-script fault_finder_monitor false ...
     Switch-cx#\x20
-  show system: |-
+  "show system\n": |-
     show system
     Hostname               : Switch-cx              \x20
     System Description     : FL.10.10.1100                \x20
@@ -1161,5 +1161,5 @@ commands:
     CPU Util (% avg 5 min) : 25                           \x20
     Memory Usage (%)       : 22                           \x20
     Switch-cx#\x20
-  exit: |-
+  "exit\n": |-
     exit
