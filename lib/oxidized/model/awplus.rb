@@ -69,11 +69,11 @@ class AWPlus < Oxidized::Model
   # Main login config
   cfg :telnet, :ssh do
     post_login do
-      send "enable\n"
-      # Interpret enable: true as meaning we won't be prompted for a password
-      unless vars(:enable).is_a? TrueClass
-        expect /[pP]assword:\s?$/
-        send vars(:enable) + "\n"
+      if vars(:enable) == true
+        cmd "enable"
+      elsif vars(:enable)
+        cmd "enable", /^[pP]assword:/
+        cmd vars(:enable)
       end
       #      cmd 'terminal length 0' #set so the entire config is output without intervention.
     end
