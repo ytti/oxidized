@@ -7,7 +7,9 @@ init_prompt: |-
   
   \r [standalone: master] >\x20
 commands:
-  - "show version\n": |-
+- "terminal length 999\n": |-
+      \r\e[K\e[?1l\e>\r [standalone: master] >\x20
+- "show version\n": |-
       show version\r
       \e[?1h\e=\rProduct name:      Onyx
       Product release:   3.9.2504
