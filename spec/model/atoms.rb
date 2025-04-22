@@ -54,7 +54,7 @@ class ATOMS
     end
 
     def load_file(type = nil)
-      file_name = get_filename((type or @type))
+      file_name = get_filename(type || @type)
       if File.extname(file_name) == '.yaml'
         YAML.load_file(file_name)
       else
