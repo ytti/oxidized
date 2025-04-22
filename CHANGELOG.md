@@ -16,7 +16,7 @@ The format is based on [Keep a Changelog](https://keepachangelog.com/en/1.1.0/).
 - ironware: mask temperatures with more than two digits (@merelissdgr)
 - add content-type header for PUT request in rest client (@deesel)
 - docker: do not remove git. Fixes #3482 (@robertcheramy)
-
+- awplus: fix skip password when enable=true (@shigechika)
 
 ## [0.33.0 - 2025-03-26]
 This release changes the way to configure oxidized-web. The old `rest`
