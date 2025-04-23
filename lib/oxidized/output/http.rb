@@ -55,7 +55,8 @@ module Oxidized
           'group'  => opt[:group],
           'node'   => node,
           'config' => outputs.to_cfg
-          # actually we need to also iterate outputs, for other types like in gitlab. But most people don't use 'type' functionality.
+          # actually we need to also iterate outputs, for other types like in gitlab.
+          # But most people don't use 'type' functionality.
         )
       end
     end

@@ -8,8 +8,10 @@
 # set system syslog host SERVER interactive-commands notice
 # set system syslog host SERVER match "^mgd\[[0-9]+\]: UI_COMMIT: .*"
 
-# Ports < 1024 need extra privileges, use a port higher than this by setting the port option in your oxidized config file.
-# To use the default port for syslog (514) you shouldn't pass an argument, but you will need to allow this with:
+# Ports < 1024 need extra privileges, use a port higher than this by setting the
+# port option in your oxidized config file.
+# To use the default port for syslog (514) you shouldn't pass an argument, but
+# you will need to allow this with:
 # sudo setcap 'cap_net_bind_service=+ep' /usr/bin/ruby
 
 # Config options are:

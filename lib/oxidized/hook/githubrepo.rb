@@ -91,7 +91,9 @@ class GithubRepo < Oxidized::Hook
         pubkey = cfg.has_key?('publickey') ? cfg.publickey : nil
         log "Authenticating using ssh keys as '#{git_user}'", :debug
         rugged_sshkey(git_user: git_user, privkey: cfg.privatekey, pubkey: pubkey)
-      elsif cfg.has_key?('remote_repo') && cfg.remote_repo.has_key?(node.group) && cfg.remote_repo[node.group].has_key?('privatekey')
+      elsif cfg.has_key?('remote_repo') &&
+            cfg.remote_repo.has_key?(node.group) &&
+            cfg.remote_repo[node.group].has_key?('privatekey')
         pubkey = cfg.remote_repo[node.group].has_key?('publickey') ? cfg.remote_repo[node.group].publickey : nil
         log "Authenticating using ssh keys as '#{git_user}' for '#{node.group}/#{node.name}'", :debug
         rugged_sshkey(git_user: git_user, privkey: cfg.remote_repo[node.group].privatekey, pubkey: pubkey)

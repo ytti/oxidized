@@ -206,7 +206,8 @@ module Oxidized
             grepo = Git.init repo
             crypt_init grepo
           rescue StandardError => create_error
-            raise GitCryptError, "first '#{e.message}' was raised while opening git repo, then '#{create_error.message}' was while trying to create git repo"
+            raise GitCryptError, "first '#{e.message}' was raised while opening git repo, then " \
+                                 "'#{create_error.message}' was while trying to create git repo"
           end
           retry
         end

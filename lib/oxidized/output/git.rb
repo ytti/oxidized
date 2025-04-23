@@ -232,7 +232,8 @@ module Oxidized
           begin
             Rugged::Repository.init_at repo, :bare
           rescue StandardError => create_error
-            raise GitError, "first '#{e.message}' was raised while opening git repo, then '#{create_error.message}' was while trying to create git repo"
+            raise GitError, "first '#{e.message}' was raised while opening git repo, then '#{create_error.message}' " \
+                            "was while trying to create git repo"
           end
           retry
         end

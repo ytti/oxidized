@@ -21,7 +21,13 @@ Style/FrozenStringLiteralComment:
   Enabled: false
 
 Layout/LineLength:
-  Enabled: false
+  Enabled: true
+  IgnoreCopDirectives: false
+  Max: 120
+  # Too much models have long lines, which are unsafe to reduce without
+  # an existing model unit test.
+  Exclude:
+   - lib/oxidized/model/*.rb
 
 # We do not enforce the cop in the models as it would not work with the
 # DSL style of the models
