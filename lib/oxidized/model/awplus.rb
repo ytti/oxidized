@@ -69,12 +69,11 @@ class AWPlus < Oxidized::Model
   # Main login config
   cfg :telnet, :ssh do
     post_login do
-      if vars :enable
-        send "enable\n"
-        expect /^Password:\s/
-        cmd vars(:enable) + "\r\n"
-      else
-        cmd 'enable' # Required for Priv-Exec users without enable PW to be put into "enable mode".
+      if vars(:enable) == true
+        cmd "enable"
+      elsif vars(:enable)
+        cmd "enable", /^[pP]assword:/
+        cmd vars(:enable)
       end
       #      cmd 'terminal length 0' #set so the entire config is output without intervention.
     end

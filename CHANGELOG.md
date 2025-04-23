@@ -7,6 +7,7 @@ The format is based on [Keep a Changelog](https://keepachangelog.com/en/1.1.0/).
 ## [Unreleased]
 ### Added
 - add iosxr support to SyslogMonitor (@deesel)
+- add junos: support show chassis cluster when SRX series (@shigechika)
 
 ### Changed
 - acos: remove free storage amount from show version. Fixes #3492 (@991jo)
@@ -17,7 +18,8 @@ The format is based on [Keep a Changelog](https://keepachangelog.com/en/1.1.0/).
 - ironware: mask temperatures with more than two digits (@merelissdgr)
 - add content-type header for PUT request in rest client (@deesel)
 - docker: do not remove git. Fixes #3482 (@robertcheramy)
-
+- awplus: fix skip password when enable=true (@shigechika)
+- aosw: fix secret parsing (@rouven0)
 
 ## [0.33.0 - 2025-03-26]
 This release changes the way to configure oxidized-web. The old `rest`
