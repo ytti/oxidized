@@ -53,22 +53,26 @@ class AOSW < Oxidized::Model
   end
 
   cmd 'show inventory' do |cfg|
-    cfg = "" if cfg =~ /(Invalid input detected at '\^' marker|Parse error)/ # Don't show for unsupported devices (IAP and MAS)
+    # Don't show for unsupported devices (IAP and MAS)
+    cfg = "" if cfg =~ /(Invalid input detected at '\^' marker|Parse error)/
     rstrip_cfg clean cfg
   end
 
   cmd 'show slots' do |cfg|
-    cfg = "" if cfg =~ /(Invalid input detected at '\^' marker|Parse error)/ # Don't show for unsupported devices (IAP and MAS)
+    # Don't show for unsupported devices (IAP and MAS)
+    cfg = "" if cfg =~ /(Invalid input detected at '\^' marker|Parse error)/
     rstrip_cfg comment cfg
   end
 
   cmd 'show license' do |cfg|
-    cfg = "" if cfg =~ /(Invalid input detected at '\^' marker|Parse error)/ # Don't show for unsupported devices (IAP and MAS)
+    # Don't show for unsupported devices (IAP and MAS)
+    cfg = "" if cfg =~ /(Invalid input detected at '\^' marker|Parse error)/
     rstrip_cfg comment cfg
   end
 
   cmd 'show license passphrase' do |cfg|
-    cfg = "" if cfg.match /(Invalid input detected at '\^' marker|Parse error)/ # Don't show for unsupported devices (IAP and MAS)
+    # Don't show for unsupported devices (IAP and MAS)
+    cfg = "" if cfg.match /(Invalid input detected at '\^' marker|Parse error)/
     rstrip_cfg comment cfg
   end
 

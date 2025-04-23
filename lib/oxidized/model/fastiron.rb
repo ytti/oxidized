@@ -19,7 +19,9 @@ class FastIron < Oxidized::Model
     lines.each_with_index do |line, _i|
       comments << "Version: #{Regexp.last_match(1)}" if line =~ /^\s+SW: Version (.*)$/
 
-      comments << "Boot-Monitor Version: #{Regexp.last_match(1)}" if line =~ /^\s+Compressed Boot-Monitor Image size = \d+, Version:(.*)$/
+      if line =~ /^\s+Compressed Boot-Monitor Image size = \d+, Version:(.*)$/
+        comments << "Boot-Monitor Version: #{Regexp.last_match(1)}"
+      end
 
       comments << "Serial: #{Regexp.last_match(1)}" if line =~ /^\s+Serial  #:(.*)$/
     end
