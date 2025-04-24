@@ -32,7 +32,7 @@ describe GithubRepo do
     end
   end
 
-  describe "#fetch_and_merge_remote" do
+  describe '#fetch_and_merge_remote' do
     before(:each) do
       Oxidized.config.hooks.github_repo_hook.remote_repo = 'git@github.com:username/foo.git'
       repo_head.expects(:name).returns('refs/heads/master').twice
@@ -52,7 +52,7 @@ describe GithubRepo do
       remote_branch.expects(:target_id).returns('111111')
     end
 
-    it "should not try to merge when there is no need to" do
+    it 'should not try to merge when there is no need to' do
       # Fetch returns without having fetched objects
       repo.expects(:fetch).with('origin', ['refs/heads/master'], credentials: credentials).returns(Hash.new(0))
 
@@ -62,7 +62,7 @@ describe GithubRepo do
       _(gr.fetch_and_merge_remote(repo, credentials)).must_be_nil
     end
 
-    describe "when there is update considering conflicts" do
+    describe 'when there is update considering conflicts' do
       let(:merge_index) { mock }
 
       before(:each) do
@@ -90,26 +90,26 @@ describe GithubRepo do
         _(gr.fetch_and_merge_remote(repo, credentials)).must_be_nil
       end
 
-      it "should merge when there is no conflict" do
+      it 'should merge when there is no conflict' do
         merge_index.expects(:conflicts?).returns(false)
 
         # Mocks for Rugged::Commit.create
         repo.expects(:head).returns(repo_head)
-        remote_branch.expects(:target).returns("their_target")
-        remote_branch.expects(:name).returns("origin/master")
-        repo_head.expects(:target).returns("our_target")
-        merge_index.expects(:write_tree).with(repo).returns("tree")
+        remote_branch.expects(:target).returns('their_target')
+        remote_branch.expects(:name).returns('origin/master')
+        repo_head.expects(:target).returns('our_target')
+        merge_index.expects(:write_tree).with(repo).returns('tree')
         Rugged::Commit.expects(:create).with(repo,
                                              parents:    %w[our_target their_target],
-                                             tree:       "tree",
+                                             tree:       'tree',
                                              message:    "Merge remote-tracking branch 'origin/master'",
-                                             update_ref: "HEAD").returns(1)
+                                             update_ref: 'HEAD').returns(1)
         _(gr.fetch_and_merge_remote(repo, credentials)).must_equal 1
       end
     end
   end
 
-  describe "#run_hook" do
+  describe '#run_hook' do
     let(:group) { nil }
     let(:ctx) { OpenStruct.new(node: node) }
     let(:node) do
@@ -133,8 +133,8 @@ describe GithubRepo do
         Rugged::Repository.expects(:new).with('/foo.git').returns(repo)
       end
 
-      it "will push to the remote repository using https" do
-        skip "TODO TypeError: wrong argument type Mocha::Mock (expected Proc) when executing `gr.run_hook`"
+      it 'will push to the remote repository using https' do
+        skip 'TODO TypeError: wrong argument type Mocha::Mock (expected Proc) when executing `gr.run_hook`'
         Oxidized.config.hooks.github_repo_hook.remote_repo = 'https://github.com/username/foo.git'
         Oxidized.config.hooks.github_repo_hook.username = 'username'
         Oxidized.config.hooks.github_repo_hook.password = 'password'
@@ -143,8 +143,8 @@ describe GithubRepo do
         _(gr.run_hook(ctx)).must_equal true
       end
 
-      it "will push to the remote repository using ssh" do
-        skip "TODO TypeError: wrong argument type Mocha::Mock (expected Proc) when executing `gr.run_hook`"
+      it 'will push to the remote repository using ssh' do
+        skip 'TODO TypeError: wrong argument type Mocha::Mock (expected Proc) when executing `gr.run_hook`'
         Oxidized.config.hooks.github_repo_hook.remote_repo = 'git@github.com:username/foo.git'
         Proc.expects(:new).returns(credentials)
         gr.cfg = Oxidized.config.hooks.github_repo_hook
@@ -152,7 +152,7 @@ describe GithubRepo do
       end
     end
 
-    describe "when there are groups" do
+    describe 'when there are groups' do
       let(:group) { 'ggrroouupp' }
 
       before do
@@ -176,7 +176,7 @@ describe GithubRepo do
         end
 
         it 'will push to the node group repository' do
-          skip "TODO TypeError: wrong argument type Mocha::Mock (expected Proc) when executing `gr.run_hook`"
+          skip 'TODO TypeError: wrong argument type Mocha::Mock (expected Proc) when executing `gr.run_hook`'
           gr.cfg = Oxidized.config.hooks.github_repo_hook
           _(gr.run_hook(ctx)).must_equal true
         end
@@ -193,7 +193,7 @@ describe GithubRepo do
         end
 
         it 'will push to the correct repository' do
-          skip "TODO TypeError: wrong argument type Mocha::Mock (expected Proc) when executing `gr.run_hook`"
+          skip 'TODO TypeError: wrong argument type Mocha::Mock (expected Proc) when executing `gr.run_hook`'
           gr.cfg = Oxidized.config.hooks.github_repo_hook
           _(gr.run_hook(ctx)).must_equal true
         end

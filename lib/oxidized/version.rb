@@ -4,8 +4,8 @@ module Oxidized
   VERSION = '0.33.0'
   VERSION_FULL = '0.33.0'
   def self.version_set
-    version_full = %x(git describe --tags).chop rescue ""
-    version      = %x(git describe --tags --abbrev=0).chop rescue ""
+    version_full = %x(git describe --tags).chop rescue ''
+    version      = %x(git describe --tags --abbrev=0).chop rescue ''
 
     return false unless [version, version_full].none?(&:empty?)
 

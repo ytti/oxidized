@@ -13,9 +13,9 @@ class SlackDiff < Oxidized::Hook
 
   def slack_upload(client, title, content, channel)
     log "Posting diff as snippet to #{channel}"
-    upload_dest = client.files_getUploadURLExternal(filename:     "change",
+    upload_dest = client.files_getUploadURLExternal(filename:     'change',
                                                     length:       content.length,
-                                                    snippet_type: "diff")
+                                                    snippet_type: 'diff')
     file_uri = URI.parse(upload_dest[:upload_url])
 
     http = Net::HTTP.new(file_uri.host, file_uri.port)
@@ -37,20 +37,20 @@ class SlackDiff < Oxidized::Hook
 
   def run_hook(ctx)
     return unless ctx.node
-    return unless ctx.event.to_s == "post_store"
+    return unless ctx.event.to_s == 'post_store'
 
-    log "Connecting to slack"
+    log 'Connecting to slack'
     Slack::Web::Client.configure do |config|
       config.token = cfg.token
       config.proxy = cfg.proxy if cfg.has_key?('proxy')
     end
     client = Slack::Web::Client.new
     client.auth_test
-    log "Connected"
-    if cfg.has_key?("diff") ? cfg.diff : true
+    log 'Connected'
+    if cfg.has_key?('diff') ? cfg.diff : true
       gitoutput = ctx.node.output.new
       diff = gitoutput.get_diff ctx.node, ctx.node.group, ctx.commitref, nil
-      unless diff == "no diffs"
+      unless diff == 'no diffs'
         title = "#{ctx.node.name} #{ctx.node.group} #{ctx.node.model.class.name.to_s.downcase}"
         content = diff[:patch].lines.to_a[4..-1].join
         slack_upload(client, title, content, cfg.channel)
@@ -65,6 +65,6 @@ class SlackDiff < Oxidized::Hook
       log "Posting message to #{cfg.channel}"
       client.chat_postMessage(channel: cfg.channel, text: msg, as_user: true)
     end
-    log "Finished"
+    log 'Finished'
   end
 end

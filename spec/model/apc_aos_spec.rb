@@ -10,7 +10,7 @@ describe 'Model apc_aos' do
     Oxidized::Node.any_instance.stubs(:resolve_output)
   end
 
-  it "fetches the configuration with ftp" do
+  it 'fetches the configuration with ftp' do
     @node = Oxidized::Node.new(name:     'example.com',
                                input:    'ftp',
                                output:   'file',
@@ -25,7 +25,7 @@ describe 'Model apc_aos' do
     Oxidized::FTP.any_instance.stubs(:disconnect_cli).returns(true)
     # Make sure we only run "config.ini" an no other command
     Oxidized::FTP.any_instance.expects(:cmd).never
-    Oxidized::FTP.any_instance.expects(:cmd).with("config.ini").returns(CONFIGURATION_FILE)
+    Oxidized::FTP.any_instance.expects(:cmd).with('config.ini').returns(CONFIGURATION_FILE)
 
     status, result = @node.run
 
@@ -33,7 +33,7 @@ describe 'Model apc_aos' do
     _(result.to_cfg).must_equal EXPECTED_RESULT
   end
 
-  it "fetches the configuration with scp" do
+  it 'fetches the configuration with scp' do
     @node = Oxidized::Node.new(name:     'example.com',
                                input:    'scp',
                                output:   'file',
@@ -48,7 +48,7 @@ describe 'Model apc_aos' do
     Oxidized::SCP.any_instance.stubs(:disconnect_cli).returns(true)
     # Make sure we only run "config.ini" an no other command
     Oxidized::SCP.any_instance.expects(:cmd).never
-    Oxidized::SCP.any_instance.expects(:cmd).with("config.ini").returns(CONFIGURATION_FILE)
+    Oxidized::SCP.any_instance.expects(:cmd).with('config.ini').returns(CONFIGURATION_FILE)
 
     status, result = @node.run
 
@@ -56,7 +56,7 @@ describe 'Model apc_aos' do
     _(result.to_cfg).must_equal EXPECTED_RESULT
   end
 
-  it "does not fetch the configiguration with ssh" do
+  it 'does not fetch the configiguration with ssh' do
     @node = Oxidized::Node.new(name:     'example.com',
                                input:    'ssh',
                                output:   'file',

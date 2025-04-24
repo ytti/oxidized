@@ -1,6 +1,6 @@
 class NoopHook < Oxidized::Hook
   def validate_cfg!
-    log "Validate config"
+    log 'Validate config'
   end
 
   def run_hook(ctx)

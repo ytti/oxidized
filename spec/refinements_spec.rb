@@ -7,7 +7,7 @@ describe Refinements do
 
   describe '#init' do
     it 'initializer test' do
-      output = String.new("test")
+      output = String.new('test')
       _(output).must_equal 'test'
       _(output).must_be_instance_of String
       _(output.respond_to?(:cut_both)).must_equal true
@@ -22,9 +22,9 @@ describe Refinements do
     end
 
     it 'test cut_tail on empty string' do
-      output = String.new("")
+      output = String.new('')
       output = output.cut_tail
-      _(output).must_equal ""
+      _(output).must_equal ''
       _(output).must_be_instance_of String
       _(output.respond_to?(:cut_both)).must_equal true
     end
@@ -32,7 +32,7 @@ describe Refinements do
     it 'test cut_tail on default string' do
       output = ''
       output = output.cut_tail
-      _(output).must_equal ""
+      _(output).must_equal ''
       _(output).must_be_instance_of String
       _(output.respond_to?(:cut_both)).must_equal true
     end
@@ -46,9 +46,9 @@ describe Refinements do
     end
 
     it 'test cut_head on empty string' do
-      output = String.new("")
+      output = String.new('')
       output = output.cut_head
-      _(output).must_equal ""
+      _(output).must_equal ''
       _(output).must_be_instance_of String
       _(output.respond_to?(:cut_both)).must_equal true
     end
@@ -56,7 +56,7 @@ describe Refinements do
     it 'test cut_head on default string' do
       output = ''
       output = output.cut_head
-      _(output).must_equal ""
+      _(output).must_equal ''
       _(output).must_be_instance_of String
       _(output.respond_to?(:cut_both)).must_equal true
     end
@@ -72,38 +72,38 @@ describe Refinements do
     it 'test cut_both on default string' do
       output = ''
       output = output.cut_both
-      _(output).must_equal ""
+      _(output).must_equal ''
       _(output).must_be_instance_of String
       _(output.respond_to?(:cut_both)).must_equal true
     end
 
     it 'test cut_both on empty string' do
-      output = String.new("")
+      output = String.new('')
       output = output.cut_both
-      _(output).must_equal ""
+      _(output).must_equal ''
       _(output).must_be_instance_of String
       _(output.respond_to?(:cut_both)).must_equal true
     end
 
     it 'test process_cmd' do
-      output = String.new("test")
-      output.process_cmd("cmd_string")
-      _(output).must_equal "test"
+      output = String.new('test')
+      output.process_cmd('cmd_string')
+      _(output).must_equal 'test'
       _(output).must_be_instance_of String
       _(output.respond_to?(:cut_both)).must_equal true
-      _(output.cmd).must_equal "cmd_string"
-      _(output.name).must_equal "cmd_string"
+      _(output.cmd).must_equal 'cmd_string'
+      _(output.name).must_equal 'cmd_string'
     end
 
     it 'test process_cmd with name already set' do
-      output = String.new("test")
-      output.name = "name_string"
-      output.process_cmd("cmd_string")
-      _(output).must_equal "test"
+      output = String.new('test')
+      output.name = 'name_string'
+      output.process_cmd('cmd_string')
+      _(output).must_equal 'test'
       _(output).must_be_instance_of String
       _(output.respond_to?(:cut_both)).must_equal true
-      _(output.cmd).must_equal "cmd_string"
-      _(output.name).must_equal "name_string"
+      _(output.cmd).must_equal 'cmd_string'
+      _(output.name).must_equal 'name_string'
     end
   end
 

@@ -9,7 +9,7 @@ describe('') do
       begin
         init_model_helper
         test.generate(MockSsh)
-        puts "OK"
+        puts 'OK'
       rescue ATOMS::TestOutput::OutputGenerationError => e
         puts e.message
       end

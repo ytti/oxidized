@@ -68,7 +68,7 @@ class GithubRepo < Oxidized::Hook
     merge_index = repo.merge_commits(repo.head.target_id, their_branch.target_id)
 
     if merge_index.conflicts?
-      log("Conflicts detected, skipping Rugged::Commit.create", :warn)
+      log('Conflicts detected, skipping Rugged::Commit.create', :warn)
       return
     end
 
@@ -76,7 +76,7 @@ class GithubRepo < Oxidized::Hook
                           parents:    [repo.head.target, their_branch.target],
                           tree:       merge_index.write_tree(repo),
                           message:    "Merge remote-tracking branch '#{their_branch.name}'",
-                          update_ref: "HEAD")
+                          update_ref: 'HEAD')
   end
 
   private
@@ -111,7 +111,7 @@ class GithubRepo < Oxidized::Hook
     Rugged::Credentials::SshKey.new(username:   git_user,
                                     publickey:  File.expand_path(pubkey),
                                     privatekey: File.expand_path(privkey),
-                                    passphrase: ENV.fetch("OXIDIZED_SSH_PASSPHRASE", nil))
+                                    passphrase: ENV.fetch('OXIDIZED_SSH_PASSPHRASE', nil))
   end
 
   def remote_repo(node)

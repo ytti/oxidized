@@ -5,7 +5,7 @@ class XMPPDiff < Oxidized::Hook
   def connect
     @client = Jabber::Client.new(Jabber::JID.new(cfg.jid))
 
-    log "Connecting to XMPP"
+    log 'Connecting to XMPP'
     begin
       Timeout.timeout(15) do
         begin
@@ -15,25 +15,25 @@ class XMPPDiff < Oxidized::Hook
         end
         sleep 1
 
-        log "Authenticating to XMPP"
+        log 'Authenticating to XMPP'
         @client.auth(cfg.password)
         sleep 1
 
-        log "Connected to XMPP"
+        log 'Connected to XMPP'
 
         @muc = Jabber::MUC::SimpleMUCClient.new(@client)
-        @muc.join(cfg.channel + "/" + cfg.nick)
+        @muc.join(cfg.channel + '/' + cfg.nick)
 
         log "Joined #{cfg.channel}"
       end
     rescue Timeout::Error
-      log "timed out"
+      log 'timed out'
       @client = nil
       @muc = nil
     end
 
     @client.on_exception do
-      log "XMPP connection aborted, reconnecting"
+      log 'XMPP connection aborted, reconnecting'
       @client = nil
       @muc = nil
       connect
@@ -49,7 +49,7 @@ class XMPPDiff < Oxidized::Hook
 
   def run_hook(ctx)
     return unless ctx.node
-    return unless ctx.event.to_s == "post_store"
+    return unless ctx.event.to_s == 'post_store'
 
     begin
       Timeout.timeout(15) do
@@ -57,7 +57,7 @@ class XMPPDiff < Oxidized::Hook
         diff = gitoutput.get_diff ctx.node, ctx.node.group, ctx.commitref, nil
 
         interesting = diff[:patch].lines.to_a[4..-1].any? do |line|
-          ["+", "-"].include?(line[0]) && (not ["#", "!"].include?(line[1]))
+          ['+', '-'].include?(line[0]) && (not ['#', '!'].include?(line[1]))
         end
 
         if interesting
@@ -73,7 +73,7 @@ class XMPPDiff < Oxidized::Hook
         end
       end
     rescue Timeout::Error
-      log "timed out"
+      log 'timed out'
     end
   end
 end

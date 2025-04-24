@@ -128,34 +128,34 @@ describe Oxidized::Node do
 
     describe 'create node with different usernames defined on each level' do
       it 'should use global username if set' do
-        Oxidized.config.username = "global_username"
-        _(node.auth[:username]).must_equal "global_username"
+        Oxidized.config.username = 'global_username'
+        _(node.auth[:username]).must_equal 'global_username'
       end
       it 'should prefer model username over global one' do
-        Oxidized.config.username = "global_username"
-        Oxidized.config.models[model].username = "model_username"
-        _(node.auth[:username]).must_equal "model_username"
+        Oxidized.config.username = 'global_username'
+        Oxidized.config.models[model].username = 'model_username'
+        _(node.auth[:username]).must_equal 'model_username'
       end
       it 'should prefer group username over model one' do
-        Oxidized.config.username = "global_username"
-        Oxidized.config.models[model].username = "model_username"
-        Oxidized.config.groups[group].username = "group_username"
-        _(node.auth[:username]).must_equal "group_username"
+        Oxidized.config.username = 'global_username'
+        Oxidized.config.models[model].username = 'model_username'
+        Oxidized.config.groups[group].username = 'group_username'
+        _(node.auth[:username]).must_equal 'group_username'
       end
       it 'should prefer model username group setting over normal group one' do
-        Oxidized.config.username = "global_username"
-        Oxidized.config.models[model].username = "model_username"
-        Oxidized.config.groups[group].username = "group_username"
-        Oxidized.config.groups[group].models[model].username = "group_model_username"
-        _(node.auth[:username]).must_equal "group_model_username"
+        Oxidized.config.username = 'global_username'
+        Oxidized.config.models[model].username = 'model_username'
+        Oxidized.config.groups[group].username = 'group_username'
+        Oxidized.config.groups[group].models[model].username = 'group_model_username'
+        _(node.auth[:username]).must_equal 'group_model_username'
       end
       it 'should prefer node username over everything else' do
-        Oxidized.config.username = "global_username"
-        Oxidized.config.models[model].username = "model_username"
-        Oxidized.config.groups[group].username = "group_username"
-        Oxidized.config.groups[group].models[model].username = "group_model_username"
-        node = Oxidized::Node.new(ip: '127.0.0.1', group: group, model: model, username: "node_username")
-        _(node.auth[:username]).must_equal "node_username"
+        Oxidized.config.username = 'global_username'
+        Oxidized.config.models[model].username = 'model_username'
+        Oxidized.config.groups[group].username = 'group_username'
+        Oxidized.config.groups[group].models[model].username = 'group_model_username'
+        node = Oxidized::Node.new(ip: '127.0.0.1', group: group, model: model, username: 'node_username')
+        _(node.auth[:username]).must_equal 'node_username'
       end
     end
   end

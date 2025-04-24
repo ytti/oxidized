@@ -14,8 +14,8 @@ describe Oxidized::SSH do
     Resolv.any_instance.stubs(:getaddress).with('example.com').returns('192.0.2.2')
   end
 
-  describe "#connect" do
-    it "should use proxy command when proxy host given and connect by ip if resolve_dns is true" do
+  describe '#connect' do
+    it 'should use proxy command when proxy host given and connect by ip if resolve_dns is true' do
       Oxidized.config.resolve_dns = true
       @node = Oxidized::Node.new(name:     'example.com',
                                  input:    'ssh',
@@ -32,7 +32,7 @@ describe Oxidized::SSH do
       @node.expects(:model).returns(model).at_least_once
 
       proxy = mock
-      Net::SSH::Proxy::Command.expects(:new).with("ssh test.com -W [%h]:%p").returns(proxy)
+      Net::SSH::Proxy::Command.expects(:new).with('ssh test.com -W [%h]:%p').returns(proxy)
       ssh_options = {
         port:                            22,
         verify_host_key:                 Oxidized.config.input.ssh.secure ? :always : :never,
@@ -47,11 +47,11 @@ describe Oxidized::SSH do
       }
       Net::SSH.expects(:start).with('192.0.2.2', 'alma', ssh_options)
 
-      ssh.instance_variable_set("@exec", true)
+      ssh.instance_variable_set('@exec', true)
       ssh.connect(@node)
     end
 
-    it "should use proxy command when proxy host given and connect by name if resolve_dns is false" do
+    it 'should use proxy command when proxy host given and connect by name if resolve_dns is false' do
       Oxidized.config.resolve_dns = false
       @node = Oxidized::Node.new(name:     'example.com',
                                  input:    'ssh',
@@ -68,7 +68,7 @@ describe Oxidized::SSH do
       @node.expects(:model).returns(model).at_least_once
 
       proxy = mock
-      Net::SSH::Proxy::Command.expects(:new).with("ssh test.com -W [%h]:%p").returns(proxy)
+      Net::SSH::Proxy::Command.expects(:new).with('ssh test.com -W [%h]:%p').returns(proxy)
       ssh_options = {
         port:                            22,
         verify_host_key:                 Oxidized.config.input.ssh.secure ? :always : :never,
@@ -83,7 +83,7 @@ describe Oxidized::SSH do
       }
       Net::SSH.expects(:start).with('example.com', 'alma', ssh_options)
 
-      ssh.instance_variable_set("@exec", true)
+      ssh.instance_variable_set('@exec', true)
       ssh.connect(@node)
     end
   end

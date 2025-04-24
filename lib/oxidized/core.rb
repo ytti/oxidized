@@ -61,14 +61,14 @@ module Oxidized
     private
 
     def reload
-      Oxidized.logger.info("Reloading node list and log files")
+      Oxidized.logger.info('Reloading node list and log files')
       @worker.reload
       Oxidized.logger.reopen
       @need_reload = false
     end
 
     def run
-      Oxidized.logger.debug "lib/oxidized/core.rb: Starting the worker..."
+      Oxidized.logger.debug 'lib/oxidized/core.rb: Starting the worker...'
       loop do
         reload if @need_reload
         @worker.work

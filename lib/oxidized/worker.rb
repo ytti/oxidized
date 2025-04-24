@@ -93,7 +93,7 @@ module Oxidized
         # This would cause :nodes_done hook to desync from running at the end of the nodelist and
         # be fired when the @jobs_done > @nodes.count (could be mid-cycle on the next cycle).
         @jobs_done += 1
-        msg += ", retries exhausted, giving up"
+        msg += ', retries exhausted, giving up'
         node.retry = 0
         Oxidized.hooks.handle :node_fail, node: node,
                                           job:  job
@@ -107,7 +107,7 @@ module Oxidized
     end
 
     def run_done_hook
-      Oxidized.logger.debug "lib/oxidized/worker.rb: Running :nodes_done hook"
+      Oxidized.logger.debug 'lib/oxidized/worker.rb: Running :nodes_done hook'
       Oxidized.hooks.handle :nodes_done
     rescue StandardError => e
       # swallow the hook erros and continue as normal

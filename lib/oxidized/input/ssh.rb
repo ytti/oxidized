@@ -19,7 +19,7 @@ module Oxidized
     def connect(node)
       @node        = node
       @output      = String.new('')
-      @pty_options = { term: "vt100" }
+      @pty_options = { term: 'vt100' }
       @node.model.cfg['ssh'].each { |cb| instance_exec(&cb) }
       if Oxidized.config.input.debug?
         logfile = Oxidized::Config::LOG + "/#{@node.ip}-ssh"
@@ -166,8 +166,8 @@ module Oxidized
     def make_ssh_proxy_command(proxy_host, proxy_port, secure)
       return nil unless !proxy_host.nil? && !proxy_host.empty?
 
-      proxy_command =  "ssh "
-      proxy_command += "-o StrictHostKeyChecking=no " unless secure
+      proxy_command =  'ssh '
+      proxy_command += '-o StrictHostKeyChecking=no ' unless secure
       proxy_command += "-p #{proxy_port} "            if proxy_port
       proxy_command += "#{proxy_host} -W [%h]:%p"
       Net::SSH::Proxy::Command.new(proxy_command)

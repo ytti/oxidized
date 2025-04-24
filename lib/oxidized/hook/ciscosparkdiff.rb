@@ -12,17 +12,17 @@ class CiscoSparkDiff < Oxidized::Hook
 
   def run_hook(ctx)
     return unless ctx.node
-    return unless ctx.event.to_s == "post_store"
+    return unless ctx.event.to_s == 'post_store'
 
-    log "Connecting to Cisco Spark"
+    log 'Connecting to Cisco Spark'
     CiscoSpark.configure do |config|
       config.api_key = cfg.accesskey
       config.proxy = cfg.proxy if cfg.has_key?('proxy')
     end
     room = CiscoSpark::Room.new(id: cfg.space)
-    log "Connected"
+    log 'Connected'
 
-    if cfg.has_key?("diff") ? cfg.diff : true
+    if cfg.has_key?('diff') ? cfg.diff : true
       gitoutput = ctx.node.output.new
       diff = gitoutput.get_diff ctx.node, ctx.node.group, ctx.commitref, nil
       title = ctx.node.name.to_s
@@ -40,6 +40,6 @@ class CiscoSparkDiff < Oxidized::Hook
       room.send_message CiscoSpark::Message.new(text: msg)
     end
 
-    log "Finished"
+    log 'Finished'
   end
 end

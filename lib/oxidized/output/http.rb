@@ -18,9 +18,9 @@ module Oxidized
         raise NoConfig, "no output http config, edit #{Oxidized::Config.configfile}"
       end
 
-      require "net/http"
-      require "uri"
-      require "json"
+      require 'net/http'
+      require 'uri'
+      require 'json'
 
       def store(node, outputs, opt = {})
         @commitref = nil

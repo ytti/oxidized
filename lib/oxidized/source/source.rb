@@ -48,9 +48,9 @@ module Oxidized
 
       def node_var_interpolate(var)
         case var
-        when "nil"   then nil
-        when "false" then false
-        when "true"  then true
+        when 'nil'   then nil
+        when 'false' then false
+        when 'true'  then true
         else var
         end
       end
@@ -68,7 +68,7 @@ module Oxidized
       end
 
       def string_navigate_object(object, wants)
-        wants = wants.split(".").map do |want|
+        wants = wants.split('.').map do |want|
           head, match, _tail = want.partition(/\[\d+\]/)
           match.empty? ? head : [head, match[1..-2].to_i]
         end

@@ -9,17 +9,17 @@ class Exec < Oxidized::Hook
 
   def validate_cfg!
     # Syntax check
-    if cfg.has_key? "timeout"
+    if cfg.has_key? 'timeout'
       @timeout = cfg.timeout
-      raise "invalid timeout value" unless @timeout.is_a?(Integer) &&
+      raise 'invalid timeout value' unless @timeout.is_a?(Integer) &&
                                            @timeout.positive?
     end
 
-    @async = !!cfg.async if cfg.has_key? "async"
+    @async = !!cfg.async if cfg.has_key? 'async'
 
-    if cfg.has_key? "cmd"
+    if cfg.has_key? 'cmd'
       @cmd = cfg.cmd
-      raise "invalid cmd value" unless @cmd.is_a?(String) || @cmd.is_a?(Array)
+      raise 'invalid cmd value' unless @cmd.is_a?(String) || @cmd.is_a?(Array)
     end
   rescue RuntimeError => e
     raise ArgumentError,
@@ -49,7 +49,7 @@ class Exec < Oxidized::Hook
       end
     end
   rescue Timeout::Error
-    kill "TERM", pid
+    kill 'TERM', pid
     msg = "#{@cmd} timed out"
     log msg, :error
     raise Timeout::Error, msg
@@ -57,25 +57,25 @@ class Exec < Oxidized::Hook
 
   def make_env(ctx)
     env = {
-      "OX_EVENT" => ctx.event.to_s
+      'OX_EVENT' => ctx.event.to_s
     }
     if ctx.node
       env.merge!(
-        "OX_NODE_NAME"      => ctx.node.name.to_s,
-        "OX_NODE_IP"        => ctx.node.ip.to_s,
-        "OX_NODE_FROM"      => ctx.node.from.to_s,
-        "OX_NODE_MSG"       => ctx.node.msg.to_s,
-        "OX_NODE_GROUP"     => ctx.node.group.to_s,
-        "OX_NODE_MODEL"     => ctx.node.model.class.name,
-        "OX_REPO_COMMITREF" => ctx.commitref.to_s,
-        "OX_REPO_NAME"      => ctx.node.repo.to_s,
-        "OX_ERR_TYPE"       => ctx.node.err_type.to_s,
-        "OX_ERR_REASON"     => ctx.node.err_reason.to_s
+        'OX_NODE_NAME'      => ctx.node.name.to_s,
+        'OX_NODE_IP'        => ctx.node.ip.to_s,
+        'OX_NODE_FROM'      => ctx.node.from.to_s,
+        'OX_NODE_MSG'       => ctx.node.msg.to_s,
+        'OX_NODE_GROUP'     => ctx.node.group.to_s,
+        'OX_NODE_MODEL'     => ctx.node.model.class.name,
+        'OX_REPO_COMMITREF' => ctx.commitref.to_s,
+        'OX_REPO_NAME'      => ctx.node.repo.to_s,
+        'OX_ERR_TYPE'       => ctx.node.err_type.to_s,
+        'OX_ERR_REASON'     => ctx.node.err_reason.to_s
       )
     end
     if ctx.job
-      env["OX_JOB_STATUS"] = ctx.job.status.to_s
-      env["OX_JOB_TIME"] = ctx.job.time.to_s
+      env['OX_JOB_STATUS'] = ctx.job.status.to_s
+      env['OX_JOB_TIME'] = ctx.job.time.to_s
     end
     env
   end

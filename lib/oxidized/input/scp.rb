@@ -38,7 +38,7 @@ module Oxidized
     end
 
     def output
-      ""
+      ''
     end
 
     private
