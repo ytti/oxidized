@@ -31,7 +31,7 @@ module Oxidized
     end
 
     def connected?
-      @telnet && (not @telnet.sock.closed?)
+      @telnet && !@telnet.sock.closed?
     end
 
     def cmd(cmd_str, expect = @node.prompt)

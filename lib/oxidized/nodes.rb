@@ -156,7 +156,7 @@ module Oxidized
 
     # @return [Nodes] list of nodes waiting (not running)
     def waiting
-      Nodes.new nodes: select { |node| not node.running? }
+      Nodes.new nodes: select { |node| !node.running? }
     end
 
     # walks list of new nodes, if old node contains same name, adds last and

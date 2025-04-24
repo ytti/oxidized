@@ -29,7 +29,7 @@ module Oxidized
       def comment(str = "# ")
         @comment = if block_given?
                      yield
-                   elsif not @comment
+                   elsif !@comment
                      str
                    else
                      @comment

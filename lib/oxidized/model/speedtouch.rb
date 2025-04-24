@@ -11,16 +11,16 @@ class SpeedTouch < Oxidized::Model
 
   cmd ':env list' do |cfg|
     cfg.each_line.select do |line|
-      (not line.match /:env list$/) &&
-        (not line.match /{\w+}=>$/)
+      (!line.match /:env list$/) &&
+        (!line.match /{\w+}=>$/)
     end.join
     comment cfg
   end
 
   cmd ':config dump' do |cfg|
     cfg.each_line.select do |line|
-      (not line.match /:config dump$/) &&
-        (not line.match /{\w+}=>$/)
+      (!line.match /:config dump$/) &&
+        (!line.match /{\w+}=>$/)
     end.join
     cfg
   end

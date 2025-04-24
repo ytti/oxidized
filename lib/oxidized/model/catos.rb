@@ -21,7 +21,7 @@ class Catos < Oxidized::Model
 
   cmd 'show conf all' do |cfg|
     cfg = cfg.sub /^(#time: ).*/, '\1X'
-    cfg.each_line.drop_while { |line| not line.match /^begin/ }.join
+    cfg.each_line.drop_while { |line| !line.match /^begin/ }.join
   end
 
   cfg :telnet do

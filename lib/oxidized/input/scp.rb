@@ -25,7 +25,7 @@ module Oxidized
     end
 
     def connected?
-      @ssh && (not @ssh.closed?)
+      @ssh && !@ssh.closed?
     end
 
     def cmd(file)

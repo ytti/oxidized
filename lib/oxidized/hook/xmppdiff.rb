@@ -57,7 +57,7 @@ class XMPPDiff < Oxidized::Hook
         diff = gitoutput.get_diff ctx.node, ctx.node.group, ctx.commitref, nil
 
         interesting = diff[:patch].lines.to_a[4..-1].any? do |line|
-          ['+', '-'].include?(line[0]) && (not ['#', '!'].include?(line[1]))
+          ['+', '-'].include?(line[0]) && !['#', '!'].include?(line[1])
         end
 
         if interesting
