@@ -51,8 +51,9 @@ class MLNXOS < Oxidized::Model
 
   cfg :ssh do
     password /^Password:\s*/
-    # Reduce pager prompts to a minimum
-    post_login 'terminal length 999'
+    # The following command should reduce pager prompts to a minimum but
+    # it produces a flapping "cli default prefix-modes enable" in the configuration
+    # post_login 'terminal length 999'
     pre_logout "\nexit"
   end
 end
