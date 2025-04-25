@@ -26,8 +26,8 @@ Layout/LineLength:
   Enabled: true
   IgnoreCopDirectives: false
   Max: 120
-  # Too much models have long lines, which are unsafe to reduce without
-  # an existing model unit test.
+  # Too much models have long lines, which is unsafe to reduce without
+  # having an existing model unit test.
   Exclude:
    - lib/oxidized/model/*.rb
 
@@ -113,5 +113,11 @@ Metrics/BlockLength:
 Metrics/ParameterLists:
   Max: 6
 
+# Used in the models
 Lint/EmptyBlock:
   Enabled: false
+
+# Disable the cop as string concatenation is widely used in oxidized
+Style/StringConcatenation:
+  Enabled: false
+
