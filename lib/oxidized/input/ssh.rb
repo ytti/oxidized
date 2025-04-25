@@ -79,7 +79,13 @@ module Oxidized
       # These exceptions are intented and therefore not handled here
     ensure
       @log.close if Oxidized.config.input.debug?
-      (@ssh.close rescue true) unless @ssh.closed?
+      unless @ssh.closed?
+        begin
+          @ssh.close
+        rescue StandardError
+          # intentionally ignore the rescue
+        end
+      end
     end
 
     def shell_open(ssh)

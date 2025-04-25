@@ -105,7 +105,13 @@ def yaml_output(prepend = '')
 end
 
 def cleanup
-  (@ssh.close rescue true) unless @ssh.closed?
+  unless @ssh.closed?
+    begin
+      @ssh.close
+    rescue StandardError
+      # intentionally ignore the rescue
+    end
+  end
   @output&.close
 end
 

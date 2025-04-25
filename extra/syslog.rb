@@ -140,7 +140,11 @@ module Oxidized
       if Oxidized::CFG.syslogd.resolve == false
         ipaddr
       else
-        name = (Resolv.getname ipaddr.to_s rescue ipaddr)
+        begin
+          name = Resolv.getname ipaddr.to_s
+        rescue StandardError
+          name = ipaddr
+        end
         Oxidized::CFG.syslogd.dns_map.each { |re, sub| name.sub! Regexp.new(re.to_s), sub }
         name
       end

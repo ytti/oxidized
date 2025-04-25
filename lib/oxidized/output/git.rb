@@ -247,7 +247,11 @@ module Oxidized
       # time consuming. Caching the index in memory is difficult because a new
       # Output object is created each time #store is called.
       def update_repo(repo, file, data)
-        oid_old = repo.blob_at(repo.head.target_id, file) rescue nil
+        begin
+          oid_old = repo.blob_at(repo.head.target_id, file)
+        rescue StandardError
+          oid_old = nil
+        end
         return false if oid_old && (oid_old.content.b == data.b)
 
         oid = repo.write data, :blob

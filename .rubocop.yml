@@ -66,7 +66,7 @@ Style/HashEachMethods:
   Enabled: true
 
 Style/HashSyntax:
-  EnforcedShorthandSyntax: either
+  Enabled: true
 
 Style/HashTransformKeys:
   Enabled: true
@@ -79,7 +79,7 @@ Style/RegexpLiteral:
   AllowInnerSlashes: true
 
 Style/RescueModifier:
-  Enabled: false
+  Enabled: true
 
 Style/SymbolProc:
   Enabled: false
