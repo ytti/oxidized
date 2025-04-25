@@ -203,7 +203,8 @@ module Oxidized
       private
 
       def yield_repo_and_path(node, group)
-        repo, path = node.repo, node.name
+        repo = node.repo
+        path = node.name
 
         path = "#{group}/#{node.name}" if group && !group.empty? && @cfg.single_repo?
 

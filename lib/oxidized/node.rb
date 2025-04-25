@@ -41,7 +41,8 @@ module Oxidized
     end
 
     def run
-      status, config = :fail, nil
+      status = :fail
+      config = nil
       @input.each do |input|
         # don't try input if model is missing config block, we may need strong config to class_name map
         cfg_name = input.to_s.split('::').last.downcase

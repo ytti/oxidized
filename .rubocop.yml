@@ -81,6 +81,7 @@ Style/RegexpLiteral:
 Style/RescueModifier:
   Enabled: true
 
+# Intentionally left deactivated as used in the models
 Style/SymbolProc:
   Enabled: false
 
@@ -88,7 +89,7 @@ Style/Documentation:
   Enabled: false
 
 Style/ParallelAssignment:
-  Enabled: false
+  Enabled: true
 
 Metrics/MethodLength:
   Max: 50

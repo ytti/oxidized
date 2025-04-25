@@ -120,7 +120,8 @@ module Oxidized
     def run(io)
       loop do
         log = select [io]
-        log, ip = log.first.first, nil
+        log = log.first.first
+        ip = nil
         if @mode == :udp
           log, ip = log.recvfrom_nonblock 2000
           ip = ip.last
