@@ -7,15 +7,20 @@ The format is based on [Keep a Changelog](https://keepachangelog.com/en/1.1.0/).
 ## [Unreleased]
 ### Added
 - add iosxr support to SyslogMonitor (@deesel)
+- add junos: support show chassis cluster when SRX series (@shigechika)
+- add nxos: support for complete hardware inventory (@garryshtern)
 
 ### Changed
+- acos: remove free storage amount from show version. Fixes #3492 (@991jo)
 
 ### Fixed
 - nxos: ignore bootflash size and permission errors (@rouven0)
 - githubrepo: explicitly tell when Rugged isn't installed with ssh support (@robertcheramy)
 - ironware: mask temperatures with more than two digits (@merelissdgr)
 - add content-type header for PUT request in rest client (@deesel)
-
+- docker: do not remove git. Fixes #3482 (@robertcheramy)
+- awplus: fix skip password when enable=true (@shigechika)
+- aosw: fix secret parsing (@rouven0)
 
 ## [0.33.0 - 2025-03-26]
 This release changes the way to configure oxidized-web. The old `rest`

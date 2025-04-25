@@ -1,4 +1,4 @@
-FROM docker.io/phusion/baseimage:noble-1.0.1
+FROM docker.io/phusion/baseimage:noble-1.0.2
 
 ENV DEBIAN_FRONTEND=noninteractive
 
@@ -72,7 +72,7 @@ WORKDIR /tmp/oxidized
 # Install gems which needs a build environment
 RUN apt-get -qy update && \
     apt-get -qy install --no-install-recommends \
-                        build-essential git ruby-dev && \
+                        build-essential ruby-dev && \
     ##### X25519 (a.k.a. Curve25519) Elliptic Curve Diffie-Hellman
     gem install x25519 && \
     ##### build & install oxidized from the working repository
@@ -80,7 +80,7 @@ RUN apt-get -qy update && \
     git fetch --unshallow || true && \
     rake install && \
     # remove the packages we do not need.
-    apt-get -qy remove build-essential git ruby-dev && \
+    apt-get -qy remove build-essential ruby-dev && \
     apt-get -qy autoremove && \
     apt-get clean && \
     rm -rf /var/lib/apt/lists/*

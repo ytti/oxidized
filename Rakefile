@@ -90,7 +90,7 @@ end
 
 desc 'Build the container image with docker or podman'
 task :build_container do
-  branch_name = %x(git rev-parse --abbrev-ref HEAD).chop
+  branch_name = %x(git rev-parse --abbrev-ref HEAD).chop.gsub '/', '_'
   sha_hash = %x(git rev-parse --short HEAD).chop
   image_tag = "#{branch_name}-#{sha_hash}"
 

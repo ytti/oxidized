@@ -20,6 +20,7 @@ class ACOS < Oxidized::Model
     cfg.gsub! /\s(Memory).*/, ' \\1 <removed>'
     cfg.gsub! /\s(Current time is).*/, ' \\1 <removed>'
     cfg.gsub! /\s(The system has been up).*/, ' \\1 <removed>'
+    cfg.gsub! /\s(Hardware: \d+ CPUs\(Stepping \d+\). Single \d+G drive. Free storage is).*/, ' \\1 <removed>'
     comment cfg
   end
 
