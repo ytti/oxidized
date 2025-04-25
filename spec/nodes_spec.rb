@@ -4,7 +4,7 @@ describe Oxidized::Nodes do
   before(:each) do
     Resolv.any_instance.stubs(:getaddress)
     Oxidized.asetus = Asetus.new
-    Oxidized.asetus.cfg.debug = false
+    Oxidized.asetus.cfg.logger.level = :warn
     Oxidized.setup_logger
 
     opts = {

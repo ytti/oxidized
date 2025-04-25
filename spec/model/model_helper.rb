@@ -35,6 +35,8 @@ end
 
 # Class to Simulate Net::SSH::Connection::Session
 class MockSsh
+  include SemanticLogger::Loggable
+
   def self.caller_model
     File.basename(caller_locations[1].path).split('_').first
   end
@@ -74,7 +76,7 @@ class MockSsh
   end
 
   def exec!(cmd)
-    Oxidized.logger.send(:debug, "exec! called with cmd #{cmd}")
+    logger.debug "exec! called with cmd #{cmd}"
 
     # exec commands are send without \n, the keys in @commands have a "\n"
     # appended, so we search for cmd + "\n" in @commands
@@ -82,7 +84,7 @@ class MockSsh
 
     raise "#{cmd} not defined" unless @commands.has_key?(cmd)
 
-    Oxidized.logger.send(:debug, "exec! returns #{@commands[cmd]}")
+    logger.debug "exec! returns #{@commands[cmd]}"
     @commands[cmd]
   end
 
@@ -107,6 +109,8 @@ end
 
 # Simulation of Net::SSH::Connection::Channel
 class MockChannel
+  include SemanticLogger::Loggable
+
   attr_accessor :on_data_block
 
   def initialize(commands)
@@ -127,10 +131,10 @@ class MockChannel
   end
 
   def send_data(cmd)
-    Oxidized.logger.send(:debug, "send_data called with cmd #{cmd}")
+    logger.debug "send_data called with cmd #{cmd}"
     raise "#{cmd} not defined" unless @commands.has_key?(cmd)
 
-    Oxidized.logger.send(:debug, "send_data returns #{@commands[cmd]}")
+    logger.debug "send_data returns #{@commands[cmd]}"
     @on_data_block.call(nil, @commands[cmd])
   end
 

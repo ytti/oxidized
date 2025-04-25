@@ -8,7 +8,7 @@ class LinksysSRW < Oxidized::Model
   # Graphical login screen
   # Just login to get to Main Menu
   expect /Login Screen/ do
-    Oxidized.logger.send(:debug, "#{self.class.name}: Login Screen")
+    logger.debug "#{self.class.name}: Login Screen"
     # This is to ensure the whole thing have rendered before we send stuff
     sleep 0.2
     send 0x18.chr # CAN Cancel
@@ -21,14 +21,14 @@ class LinksysSRW < Oxidized::Model
 
   # Main menu, escape into Pre-cli-shell
   expect /Switch Main Menu/ do
-    Oxidized.logger.send(:debug, "#{self.class.name}: Switch menu")
+    logger.debug "#{self.class.name}: Switch menu"
     send 0x1a.chr # SUB Substitite ^z
     ''
   end
 
   # Pre-cli-shell, start lcli which is ios-ish
   expect />/ do
-    Oxidized.logger.send(:debug, "#{self.class.name}: >")
+    logger.debug "#{self.class.name}: >"
     send "lcli\r"
     ''
   end

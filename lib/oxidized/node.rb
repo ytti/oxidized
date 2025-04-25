@@ -6,15 +6,17 @@ module Oxidized
   class ModelNotFound  < OxidizedError; end
 
   class Node
+    include SemanticLogger::Loggable
+
     attr_reader :name, :ip, :model, :input, :output, :group, :auth, :prompt, :vars, :last, :repo
     attr_accessor :running, :user, :email, :msg, :from, :stats, :retry, :err_type, :err_reason
     alias running? running
 
     def initialize(opt)
-      Oxidized.logger.debug 'resolving DNS for %s...' % opt[:name]
+      logger.debug 'resolving DNS for %s...' % opt[:name]
       # remove the prefix if an IP Address is provided with one as IPAddr converts it to a network address.
       ip_addr, = opt[:ip].to_s.split("/")
-      Oxidized.logger.debug 'IPADDR %s' % ip_addr.to_s
+      logger.debug 'IPADDR %s' % ip_addr.to_s
       @name = opt[:name]
       @ip = IPAddr.new(ip_addr).to_s rescue nil
       @ip ||= Resolv.new.getaddress(@name) if Oxidized.config.resolve_dns?
@@ -45,11 +47,11 @@ module Oxidized
 
         @model.input = input = input.new
         if (config = run_input(input))
-          Oxidized.logger.debug "lib/oxidized/node.rb: #{input.class.name} ran for #{name} successfully"
+          logger.debug "lib/oxidized/node.rb: #{input.class.name} ran for #{name} successfully"
           status = :success
           break
         else
-          Oxidized.logger.debug "lib/oxidized/node.rb: #{input.class.name} failed for #{name}"
+          logger.debug "lib/oxidized/node.rb: #{input.class.name} failed for #{name}"
           status = :no_connection
         end
       end
@@ -75,13 +77,13 @@ module Oxidized
           level = rescue_fail[resc]
           resc  = " (rescued #{resc})"
         end
-        Oxidized.logger.send(level, '%s raised %s%s with msg "%s"' % [ip, err.class, resc, err.message])
+        logger.send(level, '%s raised %s%s with msg "%s"' % [ip, err.class, resc, err.message])
         @err_type = err.class.to_s
         @err_reason = err.message.to_s
         false
       rescue StandardError => e
         # Send a message in debug mode in case we are not able to create a crashfile
-        Oxidized.logger.send(:debug, '%s raised %s with msg "%s", creating crashfile' % [ip, e.class, e.message])
+        logger.error "#{ip} raised #{e.class} with msg #{e.message}, creating crashfile"
         crashdir  = Oxidized.config.crash.directory
         crashfile = Oxidized.config.crash.hostnames? ? name : ip.to_s
         FileUtils.mkdir_p(crashdir) unless File.directory?(crashdir)
@@ -92,7 +94,7 @@ module Oxidized
           fh.puts '-' * 50
           fh.puts e.backtrace
         end
-        Oxidized.logger.error '%s raised %s with msg "%s", %s saved' % [ip, e.class, e.message, crashfile]
+        logger.error '%s raised %s with msg "%s", %s saved' % [ip, e.class, e.message, crashfile]
         @err_type = e.class.to_s
         @err_reason = e.message.to_s
         false
@@ -177,7 +179,7 @@ module Oxidized
     def resolve_model(opt)
       model = resolve_key :model, opt
       unless Oxidized.mgr.model[model]
-        Oxidized.logger.debug "lib/oxidized/node.rb: Loading model #{model.inspect}"
+        logger.debug "lib/oxidized/node.rb: Loading model #{model.inspect}"
         Oxidized.mgr.add_model(model) || raise(ModelNotFound, "#{model} not found for node #{ip}")
       end
       Oxidized.mgr.model[model].new
@@ -205,37 +207,37 @@ module Oxidized
       key_sym = key.to_sym
       key_str = key.to_s
       model_name = @model.class.name.to_s.downcase
-      Oxidized.logger.debug "node.rb: resolving node key '#{key}', with passed global value of '#{global}' and node value '#{opt[key_sym]}'"
+      logger.debug "node.rb: resolving node key '#{key}', with passed global value of '#{global}' and node value '#{opt[key_sym]}'"
 
       # Node
       if opt[key_sym]
         value = opt[key_sym]
-        Oxidized.logger.debug "node.rb: setting node key '#{key}' to value '#{value}' from node"
+        logger.debug "node.rb: setting node key '#{key}' to value '#{value}' from node"
 
       # Group specific model
       elsif Oxidized.config.groups.has_key?(@group) && Oxidized.config.groups[@group].models.has_key?(model_name) && Oxidized.config.groups[@group].models[model_name].has_key?(key_str)
         value = Oxidized.config.groups[@group].models[model_name][key_str]
-        Oxidized.logger.debug "node.rb: setting node key '#{key}' to value '#{value}' from model in group"
+        logger.debug "node.rb: setting node key '#{key}' to value '#{value}' from model in group"
 
       # Group
       elsif Oxidized.config.groups.has_key?(@group) && Oxidized.config.groups[@group].has_key?(key_str)
         value = Oxidized.config.groups[@group][key_str]
-        Oxidized.logger.debug "node.rb: setting node key '#{key}' to value '#{value}' from group"
+        logger.debug "node.rb: setting node key '#{key}' to value '#{value}' from group"
 
       # Model
       elsif Oxidized.config.models.has_key?(model_name) && Oxidized.config.models[model_name].has_key?(key_str)
         value = Oxidized.config.models[model_name][key_str]
-        Oxidized.logger.debug "node.rb: setting node key '#{key}' to value '#{value}' from model"
+        logger.debug "node.rb: setting node key '#{key}' to value '#{value}' from model"
 
       # Global passed
       elsif global
         value = global
-        Oxidized.logger.debug "node.rb: setting node key '#{key}' to value '#{value}' from passed global value"
+        logger.debug "node.rb: setting node key '#{key}' to value '#{value}' from passed global value"
 
       # Global
       elsif Oxidized.config.has_key?(key_str)
         value = Oxidized.config[key_str]
-        Oxidized.logger.debug "node.rb: setting node key '#{key}' to value '#{value}' from global"
+        logger.debug "node.rb: setting node key '#{key}' to value '#{value}' from global"
       end
       value
     end

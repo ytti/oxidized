@@ -24,10 +24,10 @@ module Oxidized
       if Oxidized.config.input.debug?
         logfile = Oxidized::Config::LOG + "/#{@node.ip}-ssh"
         @log = File.open(logfile, 'w')
-        Oxidized.logger.debug "lib/oxidized/input/ssh.rb: I/O Debuging to #{logfile}"
+        logger.debug "lib/oxidized/input/ssh.rb: I/O Debuging to #{logfile}"
       end
 
-      Oxidized.logger.debug "lib/oxidized/input/ssh.rb: Connecting to #{@node.name}"
+      logger.debug "lib/oxidized/input/ssh.rb: Connecting to #{@node.name}"
       @ssh = Net::SSH.start(@node.ip, @node.auth[:username], make_ssh_opts)
       unless @exec
         shell_open @ssh
@@ -45,7 +45,7 @@ module Oxidized
     end
 
     def cmd(cmd, expect = node.prompt)
-      Oxidized.logger.debug "lib/oxidized/input/ssh.rb #{cmd.dump} @ #{node.name} with expect: #{expect.inspect}"
+      logger.debug "lib/oxidized/input/ssh.rb #{cmd.dump} @ #{node.name} with expect: #{expect.inspect}"
       if Oxidized.config.input.debug?
         @log.puts "sent #{cmd.dump}"
         @log.flush
@@ -118,7 +118,7 @@ module Oxidized
 
     def expect(*regexps)
       regexps = [regexps].flatten
-      Oxidized.logger.debug "lib/oxidized/input/ssh.rb: expecting #{regexps.inspect} at #{node.name}"
+      logger.debug "lib/oxidized/input/ssh.rb: expecting #{regexps.inspect} at #{node.name}"
       Timeout.timeout(Oxidized.config.timeout) do
         @ssh.loop(0.1) do
           sleep 0.1
@@ -145,7 +145,7 @@ module Oxidized
 
       auth_methods = vars(:auth_methods) || %w[none publickey password]
       ssh_opts[:auth_methods] = auth_methods
-      Oxidized.logger.debug "AUTH METHODS::#{auth_methods}"
+      logger.debug "AUTH METHODS::#{auth_methods}"
 
       ssh_opts[:proxy] = make_ssh_proxy_command(vars(:ssh_proxy), vars(:ssh_proxy_port), secure) if vars(:ssh_proxy)
 
@@ -156,7 +156,8 @@ module Oxidized
       ssh_opts[:hmac]       = vars(:ssh_hmac).split(/,\s*/)       if vars(:ssh_hmac)
 
       if Oxidized.config.input.debug?
-        ssh_opts[:logger]  = Oxidized.logger
+        # Log debug messages of Net::SSH as trace
+        ssh_opts[:logger]  = SemanticLogger::DebugAsTraceLogger.new("Net::SSH")
         ssh_opts[:verbose] = Logger::DEBUG
       end
 

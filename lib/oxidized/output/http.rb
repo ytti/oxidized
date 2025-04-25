@@ -34,14 +34,14 @@ module Oxidized
 
         case response.code.to_i
         when 200 || 201
-          Oxidized.logger.info "Configuration http backup complete for #{node}"
+          logger.info "Configuration http backup complete for #{node}"
           p [:success]
         when (400..499)
-          Oxidized.logger.info "Configuration http backup for #{node} failed status: #{response.body}"
+          logger.info "Configuration http backup for #{node} failed status: #{response.body}"
           p [:bad_request]
         when (500..599)
           p [:server_problems]
-          Oxidized.logger.info "Configuration http backup for #{node} failed status: #{response.body}"
+          logger.info "Configuration http backup for #{node} failed status: #{response.body}"
         end
       end
 

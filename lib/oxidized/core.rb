@@ -6,6 +6,8 @@ module Oxidized
   end
 
   class Core
+    include SemanticLogger::Loggable
+
     class NoNodesFound < OxidizedError; end
 
     def initialize(_args)
@@ -33,7 +35,7 @@ module Oxidized
 
       # Initialize oxidized-web if requested
       if Oxidized.config.has_key? 'rest'
-        Oxidized.logger.warn(
+        logger.warn(
           'configuration: "rest" is deprecated. Migrate to ' \
           '"extensions.oxidized-web" and remove "rest" from the configuration'
         )
@@ -61,14 +63,13 @@ module Oxidized
     private
 
     def reload
-      Oxidized.logger.info("Reloading node list and log files")
+      logger.info("Reloading node list")
       @worker.reload
-      Oxidized.logger.reopen
       @need_reload = false
     end
 
     def run
-      Oxidized.logger.debug "lib/oxidized/core.rb: Starting the worker..."
+      logger.debug "lib/oxidized/core.rb: Starting the worker..."
       loop do
         reload if @need_reload
         @worker.work

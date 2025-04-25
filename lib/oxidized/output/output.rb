@@ -1,6 +1,8 @@
 module Oxidized
   module Output
     class Output
+      include SemanticLogger::Loggable
+
       class NoConfig < OxidizedError; end
 
       def cfg_to_str(cfg)

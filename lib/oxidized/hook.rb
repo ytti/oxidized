@@ -1,5 +1,7 @@
 module Oxidized
   class HookManager
+    include SemanticLogger::Loggable
+
     class << self
       def from_config(cfg)
         mgr = new
@@ -47,7 +49,7 @@ module Oxidized
       hook.cfg = cfg
 
       @registered_hooks[event] << RegisteredHook.new(name, hook)
-      Oxidized.logger.debug "Hook #{name.inspect} registered #{hook.class} for event #{event.inspect}"
+      logger.debug "Hook #{name.inspect} registered #{hook.class} for event #{event.inspect}"
     end
 
     def handle(event, ctx_params = {})
@@ -57,14 +59,16 @@ module Oxidized
       @registered_hooks[event].each do |r_hook|
         r_hook.hook.run_hook ctx
       rescue StandardError => e
-        Oxidized.logger.error "Hook #{r_hook.name} (#{r_hook.hook}) failed " \
-                              "(#{e.inspect}) for event #{event.inspect}"
+        logger.error "Hook #{r_hook.name} (#{r_hook.hook}) failed " \
+                     "(#{e.inspect}) for event #{event.inspect}"
       end
     end
   end
 
   # Hook abstract base class
   class Hook
+    include SemanticLogger::Loggable
+
     attr_reader :cfg
 
     def cfg=(cfg)
@@ -77,7 +81,7 @@ module Oxidized
     end
 
     def log(msg, level = :info)
-      Oxidized.logger.send(level, "#{self.class.name}: #{msg}")
+      logger.send(level, "#{self.class.name}: #{msg}")
     end
   end
 end
