@@ -3,14 +3,15 @@ require_relative 'spec_helper'
 describe Oxidized do
   describe '#setup_logger' do
     before(:each) do
+      # Reset SemanticLogger settings changed by other tests
+      SemanticLogger.clear_appenders!
+      SemanticLogger.default_level = :info
       Oxidized.asetus = Asetus.new
     end
 
     after(:each) do
       SemanticLogger.clear_appenders!
       SemanticLogger.default_level = :info
-      # Reset the logger created by SemanticLogger::Loggable
-      Oxidized.logger = nil
     end
 
     it "creates an appender when no config is specified" do
