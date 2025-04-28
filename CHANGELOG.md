@@ -12,11 +12,13 @@ The format is based on [Keep a Changelog](https://keepachangelog.com/en/1.1.0/).
 
 ### Changed
 - acos: remove free storage amount from show version. Fixes #3492 (@991jo)
-- Housekeeping in the code:
+- Housekeeping in the code. Although done carefully and baked with unit tests,
+  these changes may have introduced new bugs in the code. On the long term,
+  they will improve the quality of the code.
   - Maximal line length: 120 char
   - Prefer single-quoted strings when no interpolation or special symbols.
   - Ruboocop fixes: Style/ParallelAssignment, Style/RescueModifier,
-    Use ! instead of not.
+    Style/Not, Rake/DuplicateTask
 
 ### Fixed
 - nxos: ignore bootflash size and permission errors (@rouven0)
