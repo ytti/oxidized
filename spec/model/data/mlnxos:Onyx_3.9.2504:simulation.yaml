@@ -7,8 +7,8 @@ init_prompt: |-
   
   \r [standalone: master] >\x20
 commands:
-  # - "terminal length 999\n": |-
-  #     \r\e[K\e[?1l\e>\r [standalone: master] >\x20
+  - "no cli session paging enable\n": |-
+      \r\e[K\e[?1l\e>\r [standalone: master] >\x20
   - "show version\n": |-
       show version\r
       \e[?1h\e=\rProduct name:      Onyx
@@ -142,10 +142,22 @@ commands:
       ##
       cli default prefix-modes enable
       
-      \e[7mlines 256-269/269 (END)\x20
-  - " ": |-
-      \e[m\e[K\r
-      \e[K\r\e[K\e[?1l\e>\r [standalone: master] #\x20
-  - "\nexit\n": |-
-      Fake exit message
+      ##### Konfiguration from issue #3469
+      \r
+      ##\r
+      ## X.509 certificates configuration\r
+      ##\r
+      #\r
+      # Certificate name system-self-signed, ID aaaaaaaaaaaaa\r
+      # (public-cert config omitted since private-key config is hidden)\r
+      \r
+      ##\r
+      ## Persistent prefix mode setting\r
+      ##\r
+      cli default prefix-modes enable\r
+      \r
       
+      \rhsb2-slf-3-6 [standalone: master] #\x20
+  - "\nexit\n": |-
+      \r\r
+      \rhsb2-slf-3-6 [standalone: master] # exit\r\r\n

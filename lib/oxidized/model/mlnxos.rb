@@ -1,7 +1,7 @@
 class MLNXOS < Oxidized::Model
   using Refinements
 
-  prompt /([\w.@()-\[:\s\]]+[#>]\s)$/
+  prompt /^\r?(\e.+\e>\r)?\S* \[\S+: (master|standby)\] [#>] $/
   comment '## '
 
   # Pager Handling
@@ -51,9 +51,7 @@ class MLNXOS < Oxidized::Model
 
   cfg :ssh do
     password /^Password:\s*/
-    # The following command should reduce pager prompts to a minimum but
-    # it produces a flapping "cli default prefix-modes enable" in the configuration
-    # post_login 'terminal length 999'
+    post_login 'no cli session paging enable'
     pre_logout "\nexit"
   end
 end

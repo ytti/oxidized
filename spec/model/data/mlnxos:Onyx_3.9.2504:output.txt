@@ -87,3 +87,17 @@ no what-just-happened forwarding enable
 ##
 cli default prefix-modes enable
 
+##### Konfiguration from issue #3469
+
+##
+## X.509 certificates configuration
+##
+#
+# Certificate name system-self-signed, ID aaaaaaaaaaaaa
+# (public-cert config omitted since private-key config is hidden)
+
+##
+## Persistent prefix mode setting
+##
+cli default prefix-modes enable
+
