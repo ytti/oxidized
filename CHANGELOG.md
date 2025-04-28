@@ -12,6 +12,11 @@ The format is based on [Keep a Changelog](https://keepachangelog.com/en/1.1.0/).
 
 ### Changed
 - acos: remove free storage amount from show version. Fixes #3492 (@991jo)
+- Housekeeping in the code:
+  - Maximal line length: 120 char
+  - Prefer single-quoted strings when no interpolation or special symbols.
+  - Ruboocop fixes: Style/ParallelAssignment, Style/RescueModifier,
+    Use ! instead of not.
 
 ### Fixed
 - nxos: ignore bootflash size and permission errors (@rouven0)
@@ -21,6 +26,7 @@ The format is based on [Keep a Changelog](https://keepachangelog.com/en/1.1.0/).
 - docker: do not remove git. Fixes #3482 (@robertcheramy)
 - awplus: fix skip password when enable=true (@shigechika)
 - aosw: fix secret parsing (@rouven0)
+- AricentISS: fix codeQL alert #15 (@robertcheramy)
 
 ## [0.33.0 - 2025-03-26]
 This release changes the way to configure oxidized-web. The old `rest`
