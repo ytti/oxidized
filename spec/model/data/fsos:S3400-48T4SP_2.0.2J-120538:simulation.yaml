@@ -2,16 +2,16 @@
 init_prompt: |-
   FS-LAB-OXI#
 commands:
-  enable: |-
+  "enable\n": |-
     enable
     FS-LAB-OXI#
-  terminal length 0: |-
+  "terminal length 0\n": |-
     terminal length 0
     FS-LAB-OXI#
-  terminal width 512: |-
+  "terminal width 512\n": |-
     terminal width 512
     FS-LAB-OXI#
-  show version: |-
+  "show version\n": |-
     show version
     Fiberstore Co., Limited Internetwork Operating System Software
     S3400-48T4SP Software, Version 2.0.2J Build 120538, RELEASE SOFTWARE
@@ -31,7 +31,7 @@ commands:
       No. 2: System is rebooted by command at 2000-1-1 0:7:30, uptime 0:00:07:12
       No. 3: System is rebooted by command at 2000-1-1 2:50:33, uptime 0:02:50:16
     FS-LAB-OXI#
-  show running-config: |-
+  "show running-config\n": |-
     show running-config
     Building configuration...
 
@@ -786,5 +786,5 @@ commands:
     !
     !
     FS-LAB-OXI#
-  exit: |-
+  "exit\n": |-
     exit

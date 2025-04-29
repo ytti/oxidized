@@ -9,18 +9,18 @@ init_prompt: |-
   Type help or '?' for a list of available commands.
   \rLAB-ASA12-Oxidized-IPv6>\x20
 commands:
-  enable: |-
+  "enable\n": |-
     enable
     Password: ******************
     \rLAB-ASA12-Oxidized-IPv6#\x20
-  terminal pager 0: |-
+  "terminal pager 0\n": |-
     terminal pager 0
     \rLAB-ASA12-Oxidized-IPv6#\x20
-  show mode: |-
+  "show mode\n": |-
     show mode
     Security context mode: single\x20
     \rLAB-ASA12-Oxidized-IPv6#\x20
-  show version: |-
+  "show version\n": |-
     show version
     
     Cisco Adaptive Security Appliance Software Version 9.12(4)67\x20
@@ -90,14 +90,14 @@ commands:
     Key version         : A
     
     Configuration has not been modified since last system restart.
-    \rLAB-ASA12-Oxidized-IPv6#  \x20
-  show inventory: |-
+    \rLAB-ASA12-Oxidized-IPv6#\x20
+  "show inventory\n": |-
     show inventory
     Name: \"Chassis\", DESCR: \"ASA 5512-X with SW, 6 GE Data, 1 GE Mgmt, AC\"
     PID: ASA5512           , VID: V01     , SN: FGL17AAAAAA
     
     \rLAB-ASA12-Oxidized-IPv6#\x20
-  'more system:running-config': |-
+  "more system:running-config\n": |-
     more system:running-config
     : Saved
     
@@ -281,5 +281,5 @@ commands:
     Cryptochecksum:dddddddddffffffffffffffeeeeeeeee
     : end
     
-    \rLAB-ASA12-Oxidized-IPv6#     \x20
-  exit: |-
+    \rLAB-ASA12-Oxidized-IPv6#\x20
+  "exit\n": |-

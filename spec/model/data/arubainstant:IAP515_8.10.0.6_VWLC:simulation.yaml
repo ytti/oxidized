@@ -4,7 +4,7 @@ init_prompt: |-
   
   OXRO-AP111117#\x20
 commands:
-  show version: |-
+  "show version\n": |-
     show version
     Aruba Operating System Software.
     ArubaOS (MODEL: 515), Version 8.10.0.6 LSR
@@ -16,7 +16,7 @@ commands:
     AP uptime is 2 days 16 hours 32 minutes 26 seconds
     Reboot Time and Cause: AP rebooted Fri Nov 15 14:59:50 UTC 2024; UI cmd at uptime 94D 5H 6M 31S: reload
     OXRO-AP111117#\x20
-  show activate status: |-
+  "show activate status\n": |-
     show activate status
     \r
     IAP MAC Address          :54:d7:e3:00:11:22
@@ -27,7 +27,7 @@ commands:
     Activate fail reason     :dns error
     Provision interval       :5 minutes
     OXRO-AP111117#\x20
-  show aps: |-
+  "show aps\n": |-
     show aps
     \r
     4 Access Points
@@ -39,7 +39,7 @@ commands:
     OXRO-AP111118  10.100.42.241   access  enable    0        515(indoor)  --            N/A        -     CNQHAAAAAW  100+            18                  6(good)                 -90(good)                 11              7                   12(good)                -95(good)                 -               -                   -                       -                         No                   none       0          1721         enable           2d:16h:30m:9s   --                     eth0         member          Yes        \x20
     OXRO-AP122223  10.100.42.238   access  enable    0        315(indoor)  --            N/A        -     CNH6AAAAA6  60+             18                  3(good)                 -92(good)                 11              6                   14(good)                -91(good)                 -               -                   -                       -                         No                   none       0          1721         enable           2d:16h:26m:45s  --                     eth0         member          No         \x20
     OXRO-AP111117#\x20
-  show running-config no-encrypt: |-
+  "show running-config no-encrypt\n": |-
     show running-config no-encrypt
     version 8.10.0.0-8.10.0
     syslocation OXIDIZED
@@ -115,5 +115,5 @@ commands:
     
     
     OXRO-AP111117#\x20
-  exit: |-
+  "exit\n": |-
     exit

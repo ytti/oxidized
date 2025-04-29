@@ -15,7 +15,7 @@ init_prompt: |-
   access to this equipment if you need authorization.
   \e[?2004hroot@spine1-nyc2:~#\x20
 commands:
-  nv config show --color off: |-
+  "nv config show --color off\n": |-
     nv config show --color off
     \e[?2004l\r- header:
         model: MSN2010
@@ -214,7 +214,7 @@ commands:
                     description: spine leaf bgp peer-group
                     remote-as: external
     \e[?2004hroot@spine1-nyc2:~#\x20
-  exit: |-
+  "exit\n": |-
     exit
 oxidized_output: |
   - header:

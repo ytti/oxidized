@@ -1,6 +1,6 @@
 init_prompt:
 commands:
-  /system resource print: |-
+  "/system resource print\n": |-
     \x20                  uptime: 58m18s
     \x20                 version: 7.10.1 (stable)
     \x20              build-time: Jun/27/2023 09:03:02
@@ -19,13 +19,13 @@ commands:
     \x20              board-name: CHR
     \x20                platform: MikroTik
     
-  /system package update print: |-
+  "/system package update print\n": |-
     \x20           channel: stable
     \x20 installed-version: 7.10.1
     
-  /system history print without-paging: |-
+  "/system history print without-paging\n": |-
     
-  /export show-sensitive: |-
+  "/export show-sensitive\n": |-
     # 2024-10-25 06:08:35 by RouterOS 7.10.1
     # software id =\x20
     #
@@ -79,5 +79,5 @@ commands:
     set always-allow-password-login=yes
     /system note
     set show-at-login=no
-  quit: |-
+  "quit\n": |-
     interrupted

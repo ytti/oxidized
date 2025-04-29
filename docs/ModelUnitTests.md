@@ -138,6 +138,16 @@ If you want to be sure that your model has been tested, run
 `bundle exec rake test TESTOPTS="--verbose"` and search for your models unter
 `ATOMS tests`
 
+### Running only one test
+If you want to run only one test while debuging your model, you can select it
+with the option `--name=/regexp/`:
+```
+bundle exec rake test TESTOPTS="--verbose --name=/ios:C9800.*output/"
+```
+
+You can also set `Oxidized.asetus.cfg.debug = true` in
+`spec/model/model_helper.rb` to activate debug logs.
+
 ## Device Prompt
 You can specify device prompts to test in a YAML file named
 `spec/model/data/<model>:generic:prompt.yaml`.
