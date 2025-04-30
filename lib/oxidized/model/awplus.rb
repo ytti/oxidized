@@ -73,7 +73,7 @@ class AWPlus < Oxidized::Model
         cmd "enable"
       elsif vars(:enable)
         cmd "enable", /^[pP]assword:/
-        cmd vars(:enable)
+        cmd vars(:enable) + "\r\n"
       end
       #      cmd 'terminal length 0' #set so the entire config is output without intervention.
     end
