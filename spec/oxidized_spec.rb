@@ -102,7 +102,7 @@ describe Oxidized do
     end
 
     it "raises an InvalidConfig when the appender type is unknown" do
-      err = _{ Oxidized.setup_appender('type' => 'invalid') }.must_raise Oxidized::InvalidConfig
+      err = _ { Oxidized.setup_appender('type' => 'invalid') }.must_raise Oxidized::InvalidConfig
       _(err.message).must_equal 'Unknown logger invalid, edit /cfg_path/config'
     end
   end

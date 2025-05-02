@@ -61,6 +61,7 @@ Usages:
     -o, --output file                Specify an output YAML-file
     -t, --timeout value              Specify the idle timeout beween commands (default: 5 seconds)
     -e, --exec-mode                  Run ssh in exec mode (without tty)
+    -u, --unordered                  The YAML simulation should not enforce an order of the commands
     -h, --help                       Print this help
 ```
 
@@ -84,6 +85,12 @@ output to the standard output. You must use `-o <model:HW_SW:simulation.yaml>`
 to store the collected data in a YAML file.
 - If your Oxidized model uses SSH exec mode (look for `exec true` in the model),
 you will have to use the option `-e` to run `device2yaml.rb` in SSH exec mode.
+- The default behavior is to create a YAML file in which the commands must
+  appear in the order used in the Oxidized model. This is useful for simulating
+  devices that paginate output. To allow any order or include more commands than
+  the model uses, use the option `-u`. Note that the `unordered` mode may not
+  produce a useful YAML file when combined whith user input (see
+  [Interactive Mode](#interactive-mode) below).
 
 Note that `device2yaml.rb` takes some time to run because of the idle timeout of
 (default) 5 seconds between each command. You can press the "Escape" key if you
@@ -152,6 +159,11 @@ will be sent to the remote device. So you can press space or 'n' to get the next
 page.
 
 You can also use this to enter an enable password.
+
+Every key press will be recorded in the YAML file, so that it can be used
+in the simulation afterwards, especialy for devices that paginate output. You
+may need to clean the YAML file manually if you don't want some input (such
+as passwords) to be included.
 
 If you press the "Esc" key, `device2yaml.rb` will not wait for the idle timeout
 and will process the next command right away.

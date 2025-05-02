@@ -1,6 +1,6 @@
 init_prompt:
 commands:
-  cat /conf/config.xml: |-
+  "cat /conf/config.xml\n": |-
     <?xml version=\"1.0\"?>
     <opnsense>
       <theme>opnsense</theme>
@@ -995,6 +995,6 @@ commands:
         </gateway_item>
       </gateways>
     </opnsense>
-  opnsense-version || echo "OPNsense "`cat /usr/local/opnsense/version/opnsense`: |-
+  "opnsense-version || echo \"OPNsense \"`cat /usr/local/opnsense/version/opnsense`\n": |-
     OPNsense 23.7
-  exit: |-
+  "exit\n": |-

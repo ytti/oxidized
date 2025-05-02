@@ -3,24 +3,24 @@ init_prompt: |-
   --- JUNOS 22.4R3-S2.11 built 2024-05-10 20:45:39 UTC
   oxidized>\x20
 commands:
-  set cli screen-length 0: |-
+  "set cli screen-length 0\n": |-
     set cli screen-length 0\x20
     Screen length set to 0
     
     oxidized>\x20
-  set cli screen-width 0: |-
+  "set cli screen-width 0\n": |-
     set cli screen-width 0\x20
     Screen width set to 0
     
     oxidized>\x20
-  show version: |-
+  "show version\n": |-
     show version\x20
     Model: srx300
     Junos: 22.4R3-S2.11
     JUNOS Software Release [22.4R3-S2.11]
     
     oxidized>\x20
-  show chassis hardware: |-
+  "show chassis hardware\n": |-
     show chassis hardware\x20
     Hardware inventory:
     Item             Version  Part number  Serial number     Description
@@ -32,7 +32,7 @@ commands:
     Power Supply 0 \x20
     
     oxidized>\x20
-  show system license: |-
+  "show system license\n": |-
     show system license\x20
     License usage:\x20
                                      Licenses     Licenses    Licenses
@@ -44,11 +44,11 @@ commands:
     Licenses installed: none
     
     oxidized>\x20
-  show system license keys: |-
+  "show system license keys\n": |-
     show system license keys\x20
     
     oxidized>\x20
-  show configuration | display omit: |-
+  "show configuration | display omit\n": |-
     show configuration | display omit\x20
     ## Last commit: 2024-12-06 11:41:05 UTC by root
     version 22.4R3-S2.11;
@@ -340,7 +340,7 @@ commands:
     }
     
     oxidized>\x20
-  show chassis cluster status: |-
+  "show chassis cluster status\n": |-
     show chassis cluster status\x20
     Monitor Failure codes:
         CS  Cold Sync monitoring        FL  Fabric Connection monitoring
@@ -363,5 +363,5 @@ commands:
     node0  200      primary              no      no       None
     node1  101      secondary            no      no       None
     oxidized>\x20
-  exit: |-
+  "exit\n": |-
     exit\x20

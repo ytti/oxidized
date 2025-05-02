@@ -2,21 +2,21 @@
 init_prompt: |-
   \e[4m\rLAB-R1234_Garderos#\e[m\x20
 commands:
-  show system version: |-
+  "show system version\n": |-
     show system version
     grs-gwuz-armel/003_005_068 (Garderos; 2021-04-30 16:19:35)
     \e[4m\rLAB-R1234_Garderos#\e[m\x20
-  show system serial: |-
+  "show system serial\n": |-
     show system serial
     Serial  : R77079012345
     Hardware: Model R-7700, Board GWUZ, Ethernet
     \e[4m\rLAB-R1234_Garderos#\e[m\x20
-  show hardware wwan wwan0 sim: |-
+  "show hardware wwan wwan0 sim\n": |-
     show hardware wwan wwan0 sim
     Unknown command 'wwan'.
     \e[4m\rLAB-R1234_Garderos#\e[m\x20
   # This is a not working configuration - but it shows everything we need to make unit tests
-  show configuration running: |-
+  "show configuration running\n": |-
     show configuration running
     acl.ipv4.input.1.action=ACCEPT
     acl.ipv4.input.1.description=allow ssh from management
@@ -55,4 +55,4 @@ commands:
     user.account.0.password={sha256}AAAAAAAAAABBBBBBBBBBCCCCCCCCCCDDDDDDDDDD
     user.enable.0.password={sha256}AAAAAAAAAABBBBBBBBBBCCCCCCCCCCDDDDDDDDDD
     \e[4m\rLAB-R1234_Garderos#\e[m\x20
-  exit: ""
+  "exit\n": ""
