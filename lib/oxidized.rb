@@ -74,8 +74,6 @@ module Oxidized
     when 'syslog'
       params = { appender: :syslog }
     else
-      SemanticLogger.add_appender(io: $stderr)
-      logger.fatal("Unknown logger '#{appender['type']}', check configuration")
       raise InvalidConfig, "Unknown logger #{appender['type']}, edit #{Oxidized::Config.configfile}"
     end
     params[:level] = appender['level'] if appender.has_key?('level')

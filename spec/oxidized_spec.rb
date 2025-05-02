@@ -87,4 +87,23 @@ describe Oxidized do
       _(SemanticLogger.default_level).must_equal :trace
     end
   end
+  describe '#setup_appender' do
+    before(:each) do
+      # Reset SemanticLogger settings changed by other tests
+      SemanticLogger.clear_appenders!
+
+      Asetus.any_instance.expects(:load)
+      Asetus.any_instance.expects(:create).returns(false)
+      # Set :home_dir to make sure the OXIDIZED_HOME environment variable is not used
+      Oxidized::Config.load({ home_dir: '/cfg_path/' })
+    end
+    after(:each) do
+      SemanticLogger.clear_appenders!
+    end
+
+    it "raises an InvalidConfig when the appender type is unknown" do
+      err = _{ Oxidized.setup_appender('type' => 'invalid') }.must_raise Oxidized::InvalidConfig
+      _(err.message).must_equal 'Unknown logger invalid, edit /cfg_path/config'
+    end
+  end
 end
