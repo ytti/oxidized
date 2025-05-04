@@ -1,0 +1,103 @@
+## Product release:   3.9.2504
+## Build ID:          #1-dev
+## Build date:        2021-04-29 06:31:55
+## Target arch:       x86_64
+## Target hw:         x86_64
+## Built by:          sw-r2d2-bot@26dc75704811
+## Version summary:   X86_64 3.9.2504 2021-04-29 06:31:55 x86_64
+## 
+## Product model:     x86onie
+## 
+## 
+## 
+## Number of CPUs:    2
+## 
+## Module           Part Number        Serial Number        Asic Rev.    HW Rev.
+## Running database "initial"
+
+## Hostname: 
+## Product release: 3.9.2504
+##
+
+##
+## Running-config temporary prefix mode setting
+##
+no cli default prefix-modes enable
+
+##
+## Interface Ethernet buffer configuration
+##
+   roce lossy
+   
+##
+   interface ethernet 1/15 shutdown
+##  
+   interface ethernet 1/28 ip address primary  
+   interface ethernet 1/1-1/32 traffic-class 3 congestion-control ecn minimum-relative 75 maximum-relative 95
+   
+##
+## Telemetry configuration
+##
+no what-just-happened acl enable
+no what-just-happened forwarding enable
+   
+   
+   ip prefix-list DH3 bulk-mode
+   
+##
+   
+##
+## BGP configuration
+##
+   protocol bgp
+   router bgp 0 vrf default router-id 10.23.2.13 force
+   router bgp 0 vrf defa
+   
+   
+   
+   logging vrf default 10.2.13.49
+   
+   yV/gr   
+   
+# radius-server key ********
+   tacacs-server vrf default enable
+# tacacs-server key ********
+   
+##
+## AAA configuration
+##
+   
+##
+## Password restriction configuration
+##
+   
+##
+   
+   
+   
+##
+## SSH and Key configuration
+##
+   ssh client user oxidized authorized-key sshv2 
+   
+##
+
+##
+## Persistent prefix mode setting
+##
+cli default prefix-modes enable
+
+##### Konfiguration from issue #3469
+
+##
+## X.509 certificates configuration
+##
+#
+# Certificate name system-self-signed, ID aaaaaaaaaaaaa
+# (public-cert config omitted since private-key config is hidden)
+
+##
+## Persistent prefix mode setting
+##
+cli default prefix-modes enable
+

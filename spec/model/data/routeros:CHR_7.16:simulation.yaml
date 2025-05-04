@@ -1,6 +1,6 @@
 init_prompt:
 commands:
-  /system resource print: |-
+  "/system resource print\n": |-
     \x20                  uptime: 32m36s
                       version: 7.16 (stable)
                    build-time: 2024-09-20 13:00:27
@@ -19,13 +19,12 @@ commands:
                    board-name: CHR QEMU Standard PC (i440FX + PIIX, 1996)
                      platform: MikroTik
     
-  /system package update print: |-
+  "/system package update print\n": |-
     \x20           channel: stable
       installed-version: 7.16
     
-  /system history print without-paging: |-
-    
-  /export show-sensitive: |-
+  "/system history print without-paging\n":
+  "/export show-sensitive\n": |-
     # 2024-11-16 06:25:32 by RouterOS 7.16
     # software id =\x20
     #
@@ -46,5 +45,5 @@ commands:
     add interface=ether1
     /system note
     set show-at-login=no
-  quit: |-
+  "quit\n": |-
     interrupted

@@ -1,6 +1,6 @@
 init_prompt:
 commands:
-  /system resource print: |-
+  "/system resource print\n": |-
     \x20                  uptime: 14w1d19h55m4s
     \x20                 version: 7.15.2 (stable)
     \x20              build-time: 2024-06-26 11:42:37
@@ -20,13 +20,13 @@ commands:
     \x20              board-name: L009UiGS
     \x20                platform: MikroTik
     
-  /system package update print: |-
+  "/system package update print\n": |-
     \x20           channel: stable
     \x20 installed-version: 7.15.2
     \x20    latest-version: 7.15.3
     \x20            status: New version is available
     
-  /system history print without-paging: |-
+  "/system history print without-paging\n": |-
     Flags: U - UNDOABLE
     Columns: ACTION, BY, POLICY, TIME
     \x20 ACTION                            BY           POLICY  TIME              \x20
@@ -35,7 +35,7 @@ commands:
     U bridge port changed               user  write   2024-07-31 09:32:50
     U detect-internet settings changed  user  write   2024-07-31 09:28:59
     
-  /export show-sensitive: |-
+  "/export show-sensitive\n": |-
     # 2024-10-25 12:09:43 by RouterOS 7.15.2
     # software id = A0AA-AAA0
     #
@@ -212,5 +212,5 @@ commands:
     set allowed-interface-list=LAN
     /tool mac-server mac-winbox
     set allowed-interface-list=LAN
-  quit: |-
+  "quit\n": |-
     interrupted
