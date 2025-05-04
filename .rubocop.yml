@@ -56,6 +56,9 @@ Layout/HashAlignment:
 Style/CommandLiteral:
   EnforcedStyle: percent_x
 
+Style/ConditionalAssignment:
+  Enabled: false
+
 Style/FormatString:
   EnforcedStyle: percent
 
@@ -99,9 +102,6 @@ Metrics/AbcSize:
 
 Metrics/ClassLength:
   Max: 200
-
-## Metrics/CyclomaticComplexity:
-##   Max: 7
 
 # The BlockLength metric does not apply to unit tests. They are in nature
 # long and not very pretty

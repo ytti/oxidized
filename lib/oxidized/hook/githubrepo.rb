@@ -6,6 +6,11 @@ class GithubRepo < Oxidized::Hook
   end
 
   def run_hook(ctx)
+    unless ctx.node
+      log 'GithubRepo.run_hook: no node provided', :error
+      return
+    end
+
     unless ctx.node.repo
       log "Oxidized output is not git, can't push to remote", :error
       return

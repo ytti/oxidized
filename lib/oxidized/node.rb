@@ -127,14 +127,10 @@ module Oxidized
       h
     end
 
+    JobStruct = Struct.new(:start, :end, :status, :time)
     def last=(job)
       if job
-        ostruct = OpenStruct.new
-        ostruct.start  = job.start
-        ostruct.end    = job.end
-        ostruct.status = job.status
-        ostruct.time   = job.time
-        @last = ostruct
+        @last = JobStruct.new(job.start, job.end, job.status, job.time)
       else
         @last = nil
       end

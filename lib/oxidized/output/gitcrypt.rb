@@ -25,17 +25,17 @@ module Oxidized
         if @cfg.empty?
           Oxidized.asetus.user.output.gitcrypt.user  = 'Oxidized'
           Oxidized.asetus.user.output.gitcrypt.email = 'o@example.com'
-          Oxidized.asetus.user.output.gitcrypt.repo = File.join(Config::ROOT, 'oxidized.git')
+          Oxidized.asetus.user.output.gitcrypt.repo = ::File.join(Config::ROOT, 'oxidized.git')
           Oxidized.asetus.save :user
           raise NoConfig, "no output git config, edit #{Oxidized::Config.configfile}"
         end
 
         if @cfg.repo.respond_to?(:each)
           @cfg.repo.each do |group, repo|
-            @cfg.repo["#{group}="] = File.expand_path repo
+            @cfg.repo["#{group}="] = ::File.expand_path repo
           end
         else
-          @cfg.repo = File.expand_path @cfg.repo
+          @cfg.repo = ::File.expand_path @cfg.repo
         end
       end
 
@@ -45,7 +45,7 @@ module Oxidized
           @cfg.users.each do |user|
             system("#{@gitcrypt_adduser} #{user}")
           end
-          File.write('.gitattributes', "* filter=git-crypt diff=git-crypt\n.gitattributes !filter !diff")
+          ::File.write('.gitattributes', "* filter=git-crypt diff=git-crypt\n.gitattributes !filter !diff")
           repo.add('.gitattributes')
           repo.commit('Initial commit: crypt all config files')
         end
@@ -73,7 +73,7 @@ module Oxidized
 
         outputs.types.each do |type|
           type_cfg = ''
-          type_repo = File.join(File.dirname(repo), type + '.git')
+          type_repo = ::File.join(::File.dirname(repo), type + '.git')
           outputs.type(type).each do |output|
             (type_cfg << output; next) unless output.name # rubocop:disable Style/Semicolon
             type_file = file + '--' + output.name
@@ -95,9 +95,9 @@ module Oxidized
         unlock repo
         index = repo.index
         # Empty repo ?
-        raise 'Empty git repo' if File.exist?(index.path)
+        raise 'Empty git repo' if ::File.exist?(index.path)
 
-        File.read path
+        ::File.read path
         lock repo
       rescue StandardError
         'node not found'
@@ -189,10 +189,10 @@ module Oxidized
 
         if @opt[:group]
           if @cfg.single_repo?
-            file = File.join @opt[:group], file
+            file = ::File.join @opt[:group], file
           else
             repo = if repo.is_a?(::String)
-                     File.join File.dirname(repo), @opt[:group] + '.git'
+                     ::File.join ::File.dirname(repo), @opt[:group] + '.git'
                    else
                      repo[@opt[:group]]
                    end
@@ -220,7 +220,7 @@ module Oxidized
         grepo.config('user.email', email)
         grepo.chdir do
           unlock grepo
-          File.write(file, data)
+          ::File.write(file, data)
           grepo.add(file)
           if grepo.status[file].nil? || !grepo.status[file].type.nil?
             grepo.commit(msg)

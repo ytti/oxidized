@@ -14,7 +14,9 @@ module Oxidized
 
     # HookContext is passed to each hook. It can contain anything related to the
     # event in question. At least it contains the event name
-    class HookContext < OpenStruct; end
+    # The argument keyword_init: true is needed for ruby < 3.2 and can be
+    # dropped with the support of ruby 3.1
+    HookContext = Struct.new(:event, :node, :job, :commitref, keyword_init: true)
 
     # RegisteredHook is a container for a Hook instance
     RegisteredHook = Struct.new(:name, :hook)
