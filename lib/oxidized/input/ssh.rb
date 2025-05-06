@@ -112,7 +112,7 @@ module Oxidized
 
     def cmd_shell(cmd, expect_re)
       @output = String.new('')
-      @ses.send_data cmd + "\n"
+      @ses.send_data cmd + newline
       @ses.process
       expect expect_re if expect_re
       @output
