@@ -68,6 +68,7 @@ class AWPlus < Oxidized::Model
       cmd "enable", /^[pP]assword:/
       cmd vars(:enable) + (cr ? "\r" : "")
     end
+    # cmd 'terminal length 0' # set so the entire config is output without intervention.
   end
 
   # Config required for telnet to detect username & password prompt.
@@ -78,12 +79,18 @@ class AWPlus < Oxidized::Model
     password /^Password:\s/
 
     post_login { instance_exec(false, &enable_cmd) }
-    pre_logout { send "exit\r\n" }
+    pre_logout do
+      # cmd 'terminal no length' # sets term length back to default on exit.
+      send "exit\r\n"
+    end
   end
 
   # Config required for ssh to send CR after enable password.
   cfg :ssh do
     post_login { instance_exec(true, &enable_cmd) }
-    pre_logout { send "exit\r\n" }
+    pre_logout do
+      # cmd 'terminal no length' # sets term length back to default on exit.
+      send "exit\r\n"
+    end
   end
 end
