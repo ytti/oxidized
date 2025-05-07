@@ -9,6 +9,7 @@ The format is based on [Keep a Changelog](https://keepachangelog.com/en/1.1.0/).
 - add iosxr support to SyslogMonitor (@deesel)
 - add junos: support show chassis cluster when SRX series (@shigechika)
 - add nxos: support for complete hardware inventory (@garryshtern)
+- ssh: support 'newline "string"' cfg block method to allow defining \r\n newline (@ytti)
 
 ### Changed
 - acos: remove free storage amount from show version. Fixes #3492 (@991jo)
@@ -32,6 +33,7 @@ The format is based on [Keep a Changelog](https://keepachangelog.com/en/1.1.0/).
   reengineered, open an issue if you experience timeouts. Fixes #3469 (@robertcheramy)
 - AricentISS: fix codeQL alert #15 (@robertcheramy)
 - Update installation instructions on Rocky Linux 9. Fixes #3368 (@robertcheramy)
+- awplus: fix enable password when supplied (@sgsimpson)
 
 
 ## [0.33.0 - 2025-03-26]
