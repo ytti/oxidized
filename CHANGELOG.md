@@ -18,7 +18,7 @@ The format is based on [Keep a Changelog](https://keepachangelog.com/en/1.1.0/).
   - Maximal line length: 120 char
   - Prefer single-quoted strings when no interpolation or special symbols.
   - Ruboocop fixes: Style/ParallelAssignment, Style/RescueModifier,
-    Style/Not, Rake/DuplicateTask
+    Style/Not, Rake/DuplicateTask, Style/OpenStructUse
 
 ### Fixed
 - nxos: ignore bootflash size and permission errors (@rouven0)
@@ -31,6 +31,7 @@ The format is based on [Keep a Changelog](https://keepachangelog.com/en/1.1.0/).
 - mlnxos: handle ANSI-ESC codes and pager requests. The prompt has been
   reengineered, open an issue if you experience timeouts. Fixes #3469 (@robertcheramy)
 - AricentISS: fix codeQL alert #15 (@robertcheramy)
+- Update installation instructions on Rocky Linux 9. Fixes #3368 (@robertcheramy)
 
 
 ## [0.33.0 - 2025-03-26]
