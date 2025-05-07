@@ -25,6 +25,7 @@ The format is based on [Keep a Changelog](https://keepachangelog.com/en/1.1.0/).
 - mlnxos: handle ANSI-ESC codes and pager requests. The prompt has been
   reengineered, open an issue if you experience timeouts. Fixes #3469 (@robertcheramy)
 - awplus: fix enable password when supplied (@sgsimpson)
+- fabricos: remove power supply input voltage from `chassisShow` output (@hops)
 
 
 ## [0.33.0 - 2025-03-26]
