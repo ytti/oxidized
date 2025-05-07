@@ -52,6 +52,10 @@ module Oxidized
         @password || (@password = regex)
       end
 
+      def newline(newline_str = "\n")
+        @newline || (@newline = newline_str)
+      end
+
       def login
         match_re = [@node.prompt]
         match_re << @username if @username
