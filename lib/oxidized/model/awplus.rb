@@ -61,13 +61,16 @@ class AWPlus < Oxidized::Model
     cfg
   end
 
-  # Config required for telnet to detect username prompt
+  # Config required for telnet to detect username & password prompt.
   cfg :telnet do
     username /login:\s/
+    password /^Password:\s/
   end
 
-  # Main login config
+  # Config required for ssh to specify newline characters.
   cfg :telnet, :ssh do
+    newline "\r\n"
+
     post_login do
       if vars(:enable) == true
         cmd "enable"
@@ -75,10 +78,11 @@ class AWPlus < Oxidized::Model
         cmd "enable", /^[pP]assword:/
         cmd vars(:enable)
       end
-      #      cmd 'terminal length 0' #set so the entire config is output without intervention.
+      # cmd 'terminal length 0' # set so the entire config is output without intervention.
     end
+
     pre_logout do
-      #      cmd 'terminal no length' #Sets term length back to default on exit.
+      # cmd 'terminal no length' # sets term length back to default on exit.
       send "exit\r\n"
     end
   end
