@@ -35,16 +35,8 @@ module Oxidized
     def node_want?(node_want, node)
       return true unless node_want
 
-      begin
-        node_want_ip = IPAddr.new(node_want)
-      rescue StandardError
-        node_want_ip = false
-      end
-      begin
-        name_is_ip = IPAddr.new(node[:name])
-      rescue StandardError
-        name_is_ip = false
-      end
+      node_want_ip = (IPAddr.new(node_want) rescue false)
+      name_is_ip   = (IPAddr.new(node[:name]) rescue false)
       # rubocop:todo Lint/DuplicateBranch
       if name_is_ip && (node_want_ip == node[:name])
         true

@@ -82,13 +82,7 @@ module Oxidized
       Oxidized.logger.debug "ssh: #{@node.name} timed out while disconnecting"
     ensure
       @log.close if Oxidized.config.input.debug?
-      unless @ssh.closed?
-        begin
-          @ssh.close
-        rescue StandardError
-          # intentionally ignore the rescue
-        end
-      end
+      (@ssh.close rescue true) unless @ssh.closed?
     end
 
     def shell_open(ssh)

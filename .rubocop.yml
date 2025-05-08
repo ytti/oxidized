@@ -73,7 +73,7 @@ Style/HashEachMethods:
   Enabled: true
 
 Style/HashSyntax:
-  Enabled: true
+  EnforcedShorthandSyntax: either
 
 Style/HashTransformKeys:
   Enabled: true
@@ -85,8 +85,9 @@ Style/RegexpLiteral:
   EnforcedStyle: slashes
   AllowInnerSlashes: true
 
+# Explicitly allow the use of rescue as a Modifier
 Style/RescueModifier:
-  Enabled: true
+  Enabled: false
 
 # Intentionally left deactivated as used in the models
 Style/SymbolProc:

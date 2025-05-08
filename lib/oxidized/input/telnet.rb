@@ -67,13 +67,7 @@ module Oxidized
       # This exception is intented and therefore not handled here
     ensure
       @log.close if Oxidized.config.input.debug?
-      unless @telnet.sock.closed?
-        begin
-          @telnet.close
-        rescue StandardError
-          # intentionally ignore the rescue
-        end
-      end
+      (@telnet.close rescue true) unless @telnet.sock.closed?
     end
   end
 end

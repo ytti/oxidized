@@ -5,11 +5,7 @@ begin
   Oxidized::CLI.new.run
 rescue StandardError => e
   warn e
-  begin
-    debug = Oxidized.config.debug
-  rescue StandardError
-    debug = true
-  end
+  debug = Oxidized.config.debug rescue true
   raise if debug
 
   exit 1
