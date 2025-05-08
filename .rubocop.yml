@@ -15,9 +15,7 @@ Gemspec/DevelopmentDependencies:
   EnforcedStyle: gemspec
 
 Style/StringLiterals:
-  Enabled: true
-  Exclude:
-   - lib/oxidized/model/*.rb
+  Enabled: false
 
 Style/FrozenStringLiteralComment:
   Enabled: false

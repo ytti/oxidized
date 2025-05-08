@@ -12,7 +12,7 @@ module Oxidized
         new = []
         @source = Oxidized.config.source.default
         Oxidized.mgr.add_source(@source) || raise(MethodNotFound, "cannot load node source '#{@source}', not found")
-        Oxidized.logger.info 'lib/oxidized/nodes.rb: Loading nodes'
+        Oxidized.logger.info "lib/oxidized/nodes.rb: Loading nodes"
         nodes = Oxidized.mgr.source[@source].new.load node_want
         nodes.each do |node|
           # we want to load specific node(s), not all of them

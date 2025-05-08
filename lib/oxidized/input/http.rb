@@ -1,8 +1,8 @@
 module Oxidized
-  require 'oxidized/input/cli'
-  require 'net/http'
-  require 'json'
-  require 'net/http/digest_auth'
+  require "oxidized/input/cli"
+  require "net/http"
+  require "json"
+  require "net/http/digest_auth"
 
   class HTTP < Input
     include Input::CLI
@@ -13,15 +13,15 @@ module Oxidized
       @username = nil
       @password = nil
       @headers = {}
-      @log = File.open(Oxidized::Config::LOG + "/#{@node.ip}-http", 'w') if Oxidized.config.input.debug?
-      @node.model.cfg['http'].each { |cb| instance_exec(&cb) }
+      @log = File.open(Oxidized::Config::LOG + "/#{@node.ip}-http", "w") if Oxidized.config.input.debug?
+      @node.model.cfg["http"].each { |cb| instance_exec(&cb) }
 
       return true unless @main_page && defined?(login)
 
       begin
-        require 'mechanize'
+        require "mechanize"
       rescue LoadError
-        raise OxidizedError, 'mechanize not found: sudo gem install mechanize'
+        raise OxidizedError, "mechanize not found: sudo gem install mechanize"
       end
 
       @m = Mechanize.new
@@ -48,7 +48,7 @@ module Oxidized
     private
 
     def get_http(path)
-      schema = @secure ? 'https://' : 'http://'
+      schema = @secure ? "https://" : "http://"
       uri = URI("#{schema}#{@node.ip}#{path}")
 
       Oxidized.logger.debug "Making request to: #{uri}"
@@ -60,12 +60,12 @@ module Oxidized
       if res.code == '401' && res['www-authenticate']&.include?('Digest')
         uri.user = @username
         uri.password = URI.encode_www_form_component(@password)
-        Oxidized.logger.debug 'Server requires Digest authentication'
+        Oxidized.logger.debug "Server requires Digest authentication"
         auth = Net::HTTP::DigestAuth.new.auth_header(uri, res['www-authenticate'], 'GET')
 
         res = make_request(uri, ssl_verify, 'Authorization' => auth)
       elsif @username && @password
-        Oxidized.logger.debug 'Falling back to Basic authentication'
+        Oxidized.logger.debug "Falling back to Basic authentication"
         res = make_request(uri, ssl_verify, 'Authorization' => basic_auth_header)
       end
 
@@ -74,7 +74,7 @@ module Oxidized
     end
 
     def make_request(uri, ssl_verify, extra_headers = {})
-      Net::HTTP.start(uri.hostname, uri.port, use_ssl: uri.scheme == 'https', verify_mode: ssl_verify) do |http|
+      Net::HTTP.start(uri.hostname, uri.port, use_ssl: uri.scheme == "https", verify_mode: ssl_verify) do |http|
         req = Net::HTTP::Get.new(uri)
         @headers.merge(extra_headers).each { |header, value| req.add_field(header, value) }
         Oxidized.logger.debug "Sending request with headers: #{@headers.merge(extra_headers)}"
@@ -83,7 +83,7 @@ module Oxidized
     end
 
     def basic_auth_header
-      'Basic ' + ["#{@username}:#{@password}"].pack('m').delete("\r\n")
+      "Basic " + ["#{@username}:#{@password}"].pack('m').delete("\r\n")
     end
 
     def log(str)

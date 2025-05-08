@@ -53,26 +53,26 @@ describe Oxidized::Source::HTTP do
     end
   end
 
-  describe '#string_navigate_object' do
+  describe "#string_navigate_object" do
     h1 = {}
-    h1['inventory'] = [{ 'ip' => '10.10.10.10' }]
-    h1['jotain'] = { '2' => 'jotain' }
-    it 'should be able to navigate multilevel-hash' do
+    h1["inventory"] = [{ "ip" => "10.10.10.10" }]
+    h1["jotain"] = { "2" => "jotain" }
+    it "should be able to navigate multilevel-hash" do
       http = Oxidized::Source::HTTP.new
       _(http.class).must_equal Oxidized::Source::HTTP
-      _(http.send(:string_navigate_object, h1, 'jotain.2')).must_equal 'jotain'
+      _(http.send(:string_navigate_object, h1, "jotain.2")).must_equal "jotain"
     end
-    it 'should be able to navigate multilevel-hash' do
-      _(Oxidized::Source::HTTP.new.send(:string_navigate_object, h1, 'jotain.2')).must_equal 'jotain'
+    it "should be able to navigate multilevel-hash" do
+      _(Oxidized::Source::HTTP.new.send(:string_navigate_object, h1, "jotain.2")).must_equal "jotain"
     end
-    it 'should be able to navigate hash/array combination' do
-      _(Oxidized::Source::HTTP.new.send(:string_navigate_object, h1, 'inventory[0].ip')).must_equal '10.10.10.10'
+    it "should be able to navigate hash/array combination" do
+      _(Oxidized::Source::HTTP.new.send(:string_navigate_object, h1, "inventory[0].ip")).must_equal "10.10.10.10"
     end
-    it 'should return nil on non-existing string key' do
-      _(Oxidized::Source::HTTP.new.send(:string_navigate_object, h1, 'jotain.3')).must_be_nil
+    it "should return nil on non-existing string key" do
+      _(Oxidized::Source::HTTP.new.send(:string_navigate_object, h1, "jotain.3")).must_be_nil
     end
-    it 'should return nil on non-existing array index' do
-      _(Oxidized::Source::HTTP.new.send(:string_navigate_object, h1, 'inventory[3]')).must_be_nil
+    it "should return nil on non-existing array index" do
+      _(Oxidized::Source::HTTP.new.send(:string_navigate_object, h1, "inventory[3]")).must_be_nil
     end
   end
 end

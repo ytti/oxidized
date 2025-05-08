@@ -75,7 +75,7 @@ module Oxidized
         end
         Sequel.connect(options)
       rescue Sequel::AdapterNotFound => e
-        raise OxidizedError, 'SQL adapter gem not installed: ' + e.message
+        raise OxidizedError, "SQL adapter gem not installed: " + e.message
       end
     end
   end

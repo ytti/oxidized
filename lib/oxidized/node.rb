@@ -13,7 +13,7 @@ module Oxidized
     def initialize(opt)
       Oxidized.logger.debug 'resolving DNS for %s...' % opt[:name]
       # remove the prefix if an IP Address is provided with one as IPAddr converts it to a network address.
-      ip_addr, = opt[:ip].to_s.split('/')
+      ip_addr, = opt[:ip].to_s.split("/")
       Oxidized.logger.debug 'IPADDR %s' % ip_addr.to_s
       @name = opt[:name]
       @ip = IPAddr.new(ip_addr).to_s rescue nil
@@ -248,7 +248,7 @@ module Oxidized
 
     def git_type(opt)
       type = opt[:output] || Oxidized.config.output.default
-      return nil unless type[0..2] == 'git'
+      return nil unless type[0..2] == "git"
 
       type
     end

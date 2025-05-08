@@ -5,7 +5,7 @@ module Puma
     class << self
       alias os_trap trap
       def Signal.trap(sig, &block)
-        sigshortname = sig.gsub 'SIG', ''
+        sigshortname = sig.gsub "SIG", ''
         Oxidized::Signals.register_signal(sig, block) unless sigshortname.eql? 'HUP'
       end
     end
@@ -20,7 +20,7 @@ module Oxidized
 
       def register_signal(sig, procobj)
         # Compute short name of the signal (without SIG prefix)
-        sigshortname = sig.gsub 'SIG', ''
+        sigshortname = sig.gsub "SIG", ''
         signum = Signal.list[sigshortname]
 
         # Register the handler with OS

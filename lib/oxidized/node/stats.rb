@@ -50,7 +50,7 @@ module Oxidized
 
       def initialize
         @history_size = Oxidized.config.stats.history_size? || MAX_STAT
-        @mtimes = Array.new(@history_size, 'unknown')
+        @mtimes = Array.new(@history_size, "unknown")
         @stats  = {}
         @stats[:counter] = Hash.new 0
       end

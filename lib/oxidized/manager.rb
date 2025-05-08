@@ -34,23 +34,23 @@ module Oxidized
     end
 
     def add_input(name)
-      loader @input, Config::INPUT_DIR, 'input', name, Oxidized
+      loader @input, Config::INPUT_DIR, "input", name, Oxidized
     end
 
     def add_output(name)
-      loader @output, Config::OUTPUT_DIR, 'output', name, Oxidized::Output
+      loader @output, Config::OUTPUT_DIR, "output", name, Oxidized::Output
     end
 
     def add_source(name)
-      loader @source, Config::SOURCE_DIR, 'source', name, Oxidized::Source
+      loader @source, Config::SOURCE_DIR, "source", name, Oxidized::Source
     end
 
     def add_model(name)
-      loader @model, Config::MODEL_DIR, 'model', name, Object
+      loader @model, Config::MODEL_DIR, "model", name, Object
     end
 
     def add_hook(name)
-      loader @hook, Config::HOOK_DIR, 'hook', name, Object
+      loader @hook, Config::HOOK_DIR, "hook", name, Object
     end
 
     private
@@ -58,7 +58,7 @@ module Oxidized
     # if local version of file exists, load it, else load global - return falsy value if nothing loaded
     def loader(hash, global_dir, local_dir, name, namespace)
       dir   = File.join(Config::ROOT, local_dir)
-      map   = Manager.load(dir, name, namespace) if File.exist? File.join(dir, name + '.rb')
+      map   = Manager.load(dir, name, namespace) if File.exist? File.join(dir, name + ".rb")
       map ||= Manager.load(global_dir, name, namespace)
       hash.merge!(map) if map
     end

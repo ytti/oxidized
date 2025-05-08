@@ -14,11 +14,11 @@ module Oxidized
       def initialize
         super
         @cfg = Oxidized.config.output.gitcrypt
-        @gitcrypt_cmd = '/usr/bin/git-crypt'
-        @gitcrypt_init = @gitcrypt_cmd + ' init'
-        @gitcrypt_unlock = @gitcrypt_cmd + ' unlock'
-        @gitcrypt_lock = @gitcrypt_cmd + ' lock'
-        @gitcrypt_adduser = @gitcrypt_cmd + ' add-gpg-user --trusted '
+        @gitcrypt_cmd = "/usr/bin/git-crypt"
+        @gitcrypt_init = @gitcrypt_cmd + " init"
+        @gitcrypt_unlock = @gitcrypt_cmd + " unlock"
+        @gitcrypt_lock = @gitcrypt_cmd + " lock"
+        @gitcrypt_adduser = @gitcrypt_cmd + " add-gpg-user --trusted "
       end
 
       def setup
@@ -45,9 +45,9 @@ module Oxidized
           @cfg.users.each do |user|
             system("#{@gitcrypt_adduser} #{user}")
           end
-          ::File.write('.gitattributes', "* filter=git-crypt diff=git-crypt\n.gitattributes !filter !diff")
-          repo.add('.gitattributes')
-          repo.commit('Initial commit: crypt all config files')
+          ::File.write(".gitattributes", "* filter=git-crypt diff=git-crypt\n.gitattributes !filter !diff")
+          repo.add(".gitattributes")
+          repo.commit("Initial commit: crypt all config files")
         end
       end
 

@@ -1,7 +1,7 @@
 module Oxidized
   module Source
     class JSONFile < Source
-      require 'json'
+      require "json"
       def initialize
         @cfg = Oxidized.config.source.jsonfile
         super
@@ -11,8 +11,8 @@ module Oxidized
         if @cfg.empty?
           Oxidized.asetus.user.source.jsonfile.file      = File.join(Oxidized::Config::ROOT,
                                                                      'router.json')
-          Oxidized.asetus.user.source.jsonfile.map.name  = 'name'
-          Oxidized.asetus.user.source.jsonfile.map.model = 'model'
+          Oxidized.asetus.user.source.jsonfile.map.name  = "name"
+          Oxidized.asetus.user.source.jsonfile.map.model = "model"
           Oxidized.asetus.user.source.jsonfile.gpg       = false
           Oxidized.asetus.save :user
           raise NoConfig, "No source json config, edit #{Oxidized::Config.configfile}"

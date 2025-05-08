@@ -79,16 +79,16 @@ module Net
     attr_reader :output
 
     def oxidized_expect(options) ## rubocop:disable Metrics/PerceivedComplexity
-      model    = @options['Model']
-      @log     = @options['Log']
+      model    = @options["Model"]
+      @log     = @options["Log"]
 
       expects  = [options[:expect]].flatten
-      time_out = options[:timeout] || @options['Timeout'] || Oxidized.config.timeout?
+      time_out = options[:timeout] || @options["Timeout"] || Oxidized.config.timeout?
 
       Timeout.timeout(time_out) do
-        line = ''
-        rest = ''
-        buf  = ''
+        line = ""
+        rest = ""
+        buf  = ""
         loop do
           c = @sock.readpartial(1024 * 1024)
           @output = c
