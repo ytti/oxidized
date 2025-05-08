@@ -33,7 +33,7 @@ class RouterOS < Oxidized::Model
     Oxidized.logger.debug "lib/oxidized/model/routeros.rb: running /export for routeros version #{@ros_version}"
     run_cmd = if vars(:remove_secret)
                 '/export hide-sensitive'
-              elsif !@ros_version.nil? && (@ros_version >= 7)
+              elsif (not @ros_version.nil?) && (@ros_version >= 7)
                 '/export show-sensitive'
               else
                 '/export'

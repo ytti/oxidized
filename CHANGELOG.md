@@ -19,7 +19,7 @@ The format is based on [Keep a Changelog](https://keepachangelog.com/en/1.1.0/).
   - Maximal line length: 120 char
   - Prefer single-quoted strings when no interpolation or special symbols.
   - Ruboocop fixes: Style/ParallelAssignment, Style/RescueModifier,
-    Style/Not, Rake/DuplicateTask, Style/OpenStructUse
+    Rake/DuplicateTask, Style/OpenStructUse
 
 ### Fixed
 - nxos: ignore bootflash size and permission errors (@rouven0)

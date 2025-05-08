@@ -46,7 +46,7 @@ module Oxidized
       @input.each do |input|
         # don't try input if model is missing config block, we may need strong config to class_name map
         cfg_name = input.to_s.split('::').last.downcase
-        next unless @model.cfg[cfg_name] && !@model.cfg[cfg_name].empty?
+        next unless @model.cfg[cfg_name] && (not @model.cfg[cfg_name].empty?)
 
         @model.input = input = input.new
         if (config = run_input(input))
