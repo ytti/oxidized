@@ -22,7 +22,8 @@ module Oxidized
       def connect_cli
         Oxidized.logger.debug "lib/oxidized/input/cli.rb: Running post_login commands at #{node.name}"
         @post_login.each do |command, block|
-          Oxidized.logger.debug "lib/oxidized/input/cli.rb: Running post_login command: #{command.inspect}, block: #{block.inspect} at #{node.name}"
+          Oxidized.logger.debug "lib/oxidized/input/cli.rb: Running post_login command: #{command.inspect}, " \
+                                "block: #{block.inspect} at #{node.name}"
           block ? block.call : (cmd command)
         end
       end

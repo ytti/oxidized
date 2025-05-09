@@ -59,7 +59,8 @@ class SlackDiff < Oxidized::Hook
     # message custom formatted - optional
     if cfg.message?
       log cfg.message
-      msg = cfg.message % { node: ctx.node.name.to_s, group: ctx.node.group.to_s, commitref: ctx.commitref, model: ctx.node.model.class.name.to_s.downcase }
+      msg = cfg.message % { node: ctx.node.name.to_s, group: ctx.node.group.to_s, commitref: ctx.commitref,
+                            model: ctx.node.model.class.name.to_s.downcase }
       log msg
       log "Posting message to #{cfg.channel}"
       client.chat_postMessage(channel: cfg.channel, text: msg, as_user: true)

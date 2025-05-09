@@ -37,7 +37,7 @@ class AricentISS < Oxidized::Model
   cmd 'show system information' do |cfg|
     cfg.sub! /^Device Up Time.*\n/, ''
     cfg.delete! "\r"
-    comment(cfg).gsub(/ +$/, '')
+    comment(cfg).rstrip
   end
 
   cmd 'show running-config' do |cfg|
@@ -53,6 +53,6 @@ class AricentISS < Oxidized::Model
       end
 
       l
-    end.join.gsub(/ +$/, '')
+    end.join.rstrip
   end
 end

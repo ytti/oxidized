@@ -8,7 +8,8 @@ class NSXDfw < Oxidized::Model
     domains.each do |domain|
       domain_config[domain['id']] = {}
       policies_data = cmd "/policy/api/v1/infra/domains/#{domain['id']}/security-policies/"
-      policies = JSON.parse(policies_data.encode('UTF-8', { invalid: :replace, undef: :replace, replace: '?' }))["results"]
+      policies = JSON.parse(policies_data.encode('UTF-8',
+                                                 { invalid: :replace, undef: :replace, replace: '?' }))["results"]
       policies_config = {}
       policies.each do |policy|
         rules_data = cmd "/policy/api/v1/infra/domains/#{domain['id']}/security-policies/#{policy['id']}/rules"

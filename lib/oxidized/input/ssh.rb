@@ -76,7 +76,8 @@ module Oxidized
       # if disconnect does not disconnect us, give up after timeout
       Timeout.timeout(Oxidized.config.timeout) { @ssh.loop }
     rescue Errno::ECONNRESET, Net::SSH::Disconnect, IOError => e
-      Oxidized.logger.debug "ssh: the other side closed the connection while disconnecting, rasing #{e.class} with #{e.messages}"
+      Oxidized.logger.debug 'ssh: the other side closed the connection while ' \
+                            "disconnecting, rasing #{e.class} with #{e.messages}"
     rescue Timeout::Error
       Oxidized.logger.debug "ssh: #{@node.name} timed out while disconnecting"
     ensure

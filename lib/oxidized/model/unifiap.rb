@@ -31,7 +31,9 @@ class Unifiap < Oxidized::Model
 
   # Next see if we can get our IP and host name out of /etc/hosts
   cmd 'cat /etc/hosts' do |cfg|
-    cfg = cfg.split("\n").reject { |line| line[/^\s*(127|0000:0000:0000:0000:0000:0000:0000:0001|0:0:0:0:0:0:0:1|::1)/] }
+    cfg = cfg.split("\n").reject do |line|
+      line[/^\s*(127|0000:0000:0000:0000:0000:0000:0000:0001|0:0:0:0:0:0:0:1|::1)/]
+    end
     cfg.select do |line|
       if (match = line.match(/(\d+\.\d+\.\d+\.\d+)\s+(\S+)/))
         @ip, @hostname = match.captures
