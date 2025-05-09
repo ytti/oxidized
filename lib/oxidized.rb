@@ -71,6 +71,8 @@ module Oxidized
       params = { file_name: File.expand_path(appender['file']) }
     when 'stderr'
       params = { io: $stderr }
+    when 'stdout'
+      params = { io: $stdout }
     when 'syslog'
       params = { appender: :syslog }
     else

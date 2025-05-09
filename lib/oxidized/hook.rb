@@ -79,9 +79,5 @@ module Oxidized
     def run_hook(_ctx)
       raise NotImplementedError
     end
-
-    def log(msg, level = :info)
-      logger.send(level, "#{self.class.name}: #{msg}")
-    end
   end
 end
