@@ -14,6 +14,8 @@ AllCops:
 Gemspec/DevelopmentDependencies:
   EnforcedStyle: gemspec
 
+# We prefer to use ”” by default and use ’’ to signal that interpolation is
+# intentionally turned off, but we don't enforce it.
 Style/StringLiterals:
   Enabled: false
 
