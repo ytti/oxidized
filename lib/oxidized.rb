@@ -74,7 +74,7 @@ module Oxidized
     when 'stdout'
       params = { io: $stdout }
     when 'syslog'
-      params = { appender: :syslog, application: "oxidized"}
+      params = { appender: :syslog, application: "oxidized" }
     else
       raise InvalidConfig, "Unknown logger #{appender['type']}, edit #{Oxidized::Config.configfile}"
     end

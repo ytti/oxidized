@@ -36,7 +36,7 @@ class GithubRepo < Oxidized::Hook
         logger.warn "Rugged does not support the git URL '#{url}'."
         unless Rugged.features.include?(:ssh)
           logger.warn "Note: Rugged isn't installed with ssh support. You may need " \
-              '"gem install rugged -- --with-ssh"'
+                      '"gem install rugged -- --with-ssh"'
         end
       end
       # re-raise exception for the calling method
