@@ -28,6 +28,7 @@ The format is based on [Keep a Changelog](https://keepachangelog.com/en/1.1.0/).
 - AricentISS: fix codeQL alert #15 (@robertcheramy)
 - Update installation instructions on Rocky Linux 9. Fixes #3368 (@robertcheramy)
 - awplus: fix enable password when supplied (@sgsimpson)
+- Polynomial regular expression in node.rb / Code scanning alert #40 (@robertcheramy)
 
 
 ## [0.33.0 - 2025-03-26]
