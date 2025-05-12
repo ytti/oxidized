@@ -501,3 +501,56 @@ You can use some environment variables to change default root directories values
 
 * `OXIDIZED_HOME` may be used to set oxidized configuration directory, which defaults to `~/.config/oxidized`
 * `OXIDIZED_LOGS` may be used to set oxidzied logs and crash directories root, which default to `~/.config/oxidized`
+
+## Logging
+Oxidized supports parallel logging to different systems (appenders). The following
+appenders are currently supported:
+- `stderr`: log to standard error (this is the default)
+- `stdout`: log to standard output
+- `file`: log to a file
+- `syslog`: log to syslog
+
+> `stderr` and `stdout` are mutually exclusive and will produce a warning if used
+> simultaneously.
+
+> You can configure as many file appenders as you wish.
+
+You can set a log level globally and/or for each appender.
+- The global log level will limit which log level is accepted. The default global
+  log level is :info.
+- The appender log level limits the log level produced by the appender. The
+  default is `:trace`.
+
+
+> Available log levels: `:trace`, `:debug`, `:info`, `:warn`,
+> `:error` and `:fatal`
+
+Here is a configuration example logging `:error` to syslog, `:warn` to stdout
+and `:info` to `~/.config/oxidized/info.log`:
+
+```yaml
+logger:
+  # Default level
+  # level: :info
+  appenders:
+    - type: syslog
+      level: :error
+    - type: stdout
+      level: :warn
+    - type: file
+      # Default level is :trace, so we get the logs in the default level (:info)
+      file: ~/.config/oxidized/info.log
+```
+
+If you want to log :trace to a file and `:info` to stdout, you must set the
+global log level to `:trace`, and limit the stdout appender to `:info`:
+
+```yaml
+logger:
+  level: :trace
+  appenders:
+    - type: stdout
+      level: :info
+    - type: file
+      file: ~/.config/oxidized/trace.log
+```
