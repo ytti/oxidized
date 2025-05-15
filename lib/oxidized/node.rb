@@ -157,7 +157,8 @@ module Oxidized
 
     def resolve_input(opt)
       inputs = resolve_key :input, opt, Oxidized.config.input.default
-      inputs.split(/\s*,\s*/).map do |input|
+      inputs.split(',').map do |input|
+        input.strip!
         unless Oxidized.mgr.input[input]
           Oxidized.mgr.add_input(input) || raise(MethodNotFound, "#{input} not found for node #{ip}")
         end
