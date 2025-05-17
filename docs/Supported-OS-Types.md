@@ -131,7 +131,7 @@
 |MRV                 |MasterOS                      |[masteros](/lib/oxidized/model/masteros.rb)
 |                    |FiberDriver                   |[fiberdriver](/lib/oxidized/model/fiberdriver.rb)
 |NEC                 |NEC IX                        |[necix](/lib/oxidized/model/necix.rb)
-|Netgate             |TNSR                          |[tnsr](/lib/oxidized/model/tnsr.rb)
+|Netgate             |TNSR                          |[tnsr](/lib/oxidized/model/tnsr.rb)              |@Vantomas
 |Netgear             |Netgear switches              |[netgear](/lib/oxidized/model/netgear.rb)        |                 |[Netgear](Model-Notes/Netgear.md)
 |Netonix             |WISP Switch (As Netonix)      |[netonix](/lib/oxidized/model/netonix.rb)
 |Nokia (formerly TiMetra, Alcatel, Alcatel-Lucent)|SR OS (TiMOS)|[sros](/lib/oxidized/model/sros.rb)  |                 |[Nokia ISAM](Model-Notes/Nokia.md)
