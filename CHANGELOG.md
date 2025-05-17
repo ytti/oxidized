@@ -10,6 +10,7 @@ The format is based on [Keep a Changelog](https://keepachangelog.com/en/1.1.0/).
 - add junos: support show chassis cluster when SRX series (@shigechika)
 - add nxos: support for complete hardware inventory (@garryshtern)
 - ssh: support 'newline "string"' cfg block method to allow defining \r\n newline (@ytti)
+- model for Netgate TNSR (@Vantomas)
 
 ### Changed
 - acos: remove free storage amount from show version. Fixes #3492 (@991jo)
