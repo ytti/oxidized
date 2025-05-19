@@ -29,7 +29,8 @@ The format is based on [Keep a Changelog](https://keepachangelog.com/en/1.1.0/).
 - Update installation instructions on Rocky Linux 9. Fixes #3368 (@robertcheramy)
 - awplus: fix enable password when supplied (@sgsimpson)
 - node.rb: remove Polynomial regular expression / Fixes Code scanning alert #40 (@robertcheramy)
-- asa: remove Inefficient regular expression / Fixes Code scanning alert #5 and #6 (@robertcheramy)
+- asa: remove inefficient regular expression / Fixes Code scanning alert #5 and #6 (@robertcheramy)
+- sonicos: remove inefficient regular expression / Fixes code scanning alert #4 and #11 (@robertcheramy)
 
 
 ## [0.33.0 - 2025-03-26]
