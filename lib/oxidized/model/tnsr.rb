@@ -34,17 +34,8 @@ class TNSR < Oxidized::Model
   end
 
   cmd :secret do |cfg|
-    # verified against tnsr
-    cfg.gsub! /(password \d+) (\S+).*/, '\\1 <secret hidden>'
-    cfg.gsub! /^(snmp community community-name ).*/, '\\1 <configuration removed>'
-
-    # not verified, taken from eos model for similarity
-    cfg.gsub! /(secret \w+) (\S+).*/, '\\1 <secret hidden>'
-    cfg.gsub! /^(enable (?:secret|password)).*/, '\\1 <configuration removed>'
-    cfg.gsub! /^(tacacs-server key \d+).*/, '\\1 <configuration removed>'
-    cfg.gsub! /^(radius-server .+ key \d) \S+/, '\\1 <radius secret hidden>'
-    cfg.gsub! /( {6}key) (\h+ 7) (\h+).*/, '\\1 <secret hidden>'
-    cfg.gsub! /(localized|auth (md5|sha\d{0,3})|priv (des|aes\d{0,3})) \S+/, '\\1 <secret hidden>'
+    cfg.gsub! /(password( \d+)?) (\S+).*/, '\\1 <secret hidden>'
+    cfg.gsub! /^(snmp community community-name )\S+ (.*)?/, '\\1 <configuration removed> \\2'
     cfg
   end
 
