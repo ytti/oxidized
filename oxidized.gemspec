@@ -57,5 +57,5 @@ Gem::Specification.new do |s|
 
   # Dependencies on optional libraries, used for unit tests & development
   s.add_development_dependency 'oxidized-web',        '~> 0.16'
-  s.add_development_dependency 'sequel',              '>= 5.63.0', '<= 5.92.0'
+  s.add_development_dependency 'sequel',              '>= 5.63.0', '<= 5.94.0'
 end
