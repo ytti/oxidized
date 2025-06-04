@@ -10,6 +10,7 @@ module Oxidized
     attr_accessor :running, :user, :email, :msg, :from, :stats, :retry, :err_type, :err_reason
     alias running? running
 
+    # opt is a hash with the node parameters given in the source (:name, :group, :ip...)
     def initialize(opt)
       Oxidized.logger.debug 'resolving DNS for %s...' % opt[:name]
       # remove the prefix if an IP Address is provided with one as IPAddr converts it to a network address.

@@ -10,6 +10,41 @@ output:
     directory: /var/lib/oxidized/configs
 ```
 
+### Groups
+If you use groups, the nodes will be stored in folders named after the
+groups. The folder are stored one level above the folder for configurations
+without groups.
+
+Example:
+```
+/var/lib/oxidized/
++ configs/     # Configurations of groupless nodes
++ group1/      # Configurations of nodes in group1
++ group2/      # Configurations of nodes in group2
+```
+
+### Clean obsolete nodes
+The `file` output can automatically remove the configuration of nodes not
+present in the [source](Sources.md) anymore.
+
+Be warned that this might be a dangerous operation: oxidized will remove **any**
+file not matching the hostname of the nodes configured in the source.
+
+When using groups, it will remove any files not matching the hostnames of the
+nodes out of the groups folders (which are on the same level as the default
+folder). As a safety measure, Oxidized will only clean configuration out of
+active groups. If the group `example` isn't used anymore, oxidized won't clean
+the configurations out of the folder `../example/`.
+
+```yaml
+output:
+  default: file
+  clean_obsolete_nodes: true
+  file:
+    directory: "~/.config/oxidized/configs/default"
+```
+
+
 ## Output: Git
 
 This uses the rugged/libgit2 interface. So you should remember that normal Git hooks will not be executed.

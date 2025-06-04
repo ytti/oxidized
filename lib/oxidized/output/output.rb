@@ -1,10 +1,22 @@
 module Oxidized
   module Output
+    def self.clean_obsolete_nodes(active_nodes)
+      return unless Oxidized.config.output.clean_obsolete_nodes?
+
+      output_name = Oxidized.config.output.default
+      output = Oxidized.mgr.add_output output_name
+      output[output_name].clean_obsolete_nodes(active_nodes)
+    end
+
     class Output
       class NoConfig < OxidizedError; end
 
       def cfg_to_str(cfg)
         cfg.select { |h| h[:type] == 'cfg' }.map { |h| h[:data] }.join
+      end
+
+      def self.clean_obsolete_nodes(active_nodes)
+        # Not implemented
       end
     end
   end
