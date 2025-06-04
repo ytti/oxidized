@@ -22,11 +22,22 @@ init_prompt: |-
   ******************************************************************************
   (Metro_Switch_A_1)>
 commands:
-  enable: |-
+  "enable\n": |-
     enable
     
     (Metro_Switch_A_1)#
-  show running-config: |-
+  "terminal length 0\n": |-
+    terminal length 0
+    (Metro_Switch_A_1)#
+  "show bootvar\n": |-
+    show bootvar
+    ! Fake ouput for show bootvar used for simulation
+    (Metro_Switch_A_1)#
+  "show fiber-ports optical-transceiver-info all\n": |-
+    show fiber-ports optical-transceiver-info all
+    ! Fake ouput for show fiber-ports optical-transceiver-info all used for simulation
+    (Metro_Switch_A_1)#
+  "show running-config\n": |-
     show running-config
     
     !Current Configuration:
@@ -51,7 +62,6 @@ commands:
     ip name server 10.0.0.100 10.0.0.101 
     logging persistent 4
     username \"admin\" password redacted encryption-type aes level 15 encrypted
-    --More-- or (q)uit\r                  \r
     
     line console
     exit
@@ -74,7 +84,7 @@ commands:
     exit
     port-channel name 1/10 MCC-IP-ISL1
     interface 0/13
-    --More-- or (q)uit\r                  \raddport 1/10
+    addport 1/10
     exit
     interface 0/14
     addport 1/10
@@ -97,7 +107,7 @@ commands:
     exit
     
     class-map match-all c4
-    --More-- or (q)uit\r                  \rmatch cos 4
+    match cos 4
     !match ip dscp 32(cs4)
     match ip dscp 32
     exit
@@ -120,7 +130,7 @@ commands:
     exit
     
     class-map match-all StorageDst
-    --More-- or (q)uit\r                  \rmatch protocol tcp
+    match protocol tcp
     match dstl4port 65200
     exit
     
@@ -143,7 +153,7 @@ commands:
     exit
     
     policy-map InClusterRdma in
-    --More-- or (q)uit\r                  \rclass CLUSTER_RDMA
+    class CLUSTER_RDMA
     assign-queue 2
     police-simple rate-percent 60 64 conform-action transmit violate-action transmit
     exit
@@ -166,7 +176,7 @@ commands:
     police-simple rate-percent 60 64 conform-action transmit violate-action transmit
     exit
     
-    --More-- or (q)uit\r                  \rclass c5
+    class c5
     assign-queue 5
     police-simple rate-percent 60 64 conform-action transmit violate-action transmit
     exit
@@ -189,7 +199,7 @@ commands:
     class CLUSTER
     assign-queue 0
     police-simple rate-percent 40 64 conform-action transmit violate-action transmit
-    --More-- or (q)uit\r                  \rexit
+    exit
     
     exit
     
@@ -212,7 +222,7 @@ commands:
     class StorageSrc
     assign-queue 4
     police-simple rate-percent 40 64 conform-action transmit violate-action transmit
-    --More-- or (q)uit\r                  \rexit
+    exit
     
     class StorageDst
     assign-queue 4
@@ -235,7 +245,7 @@ commands:
     random-detect queue-parms 4 min-thresh 40 70 50 50 max-thresh 41 100 100 100 drop-prob 3 5 10 50 ecn
     random-detect queue-parms 5 min-thresh 80 70 50 50 max-thresh 100 100 100 100 drop-prob 3 5 10 50 ecn
     cos-queue min-bandwidth 30 0 0 0 30 40 0 0
-    --More-- or (q)uit\r                  \rcos-queue random-detect 0 5
+    cos-queue random-detect 0 5
     
     interface 0/1
     description \"Unused ports\"
@@ -258,7 +268,7 @@ commands:
     spanning-tree edgeport
     mtu 9216
     exit
-    --More-- or (q)uit\r                  \r
+    
     
     
     interface 0/4
@@ -281,7 +291,7 @@ commands:
     description \"Unused ports\"
     spanning-tree edgeport
     mtu 9216
-    --More-- or (q)uit\r                  \rexit
+    exit
     
     
     
@@ -304,7 +314,7 @@ commands:
     interface 0/9
     service-policy in InShared
     no shutdown
-    --More-- or (q)uit\r                  \rdescription \"Shared Intra-Cluster/MetroCluster Node Port, MetroCluster 1\"
+    description \"Shared Intra-Cluster/MetroCluster Node Port, MetroCluster 1\"
     spanning-tree edgeport
     mtu 9216
     switchport mode trunk
@@ -327,7 +337,7 @@ commands:
     switchport trunk allowed vlan 10,103
     vlan participation include 10,103
     vlan tagging 10,103
-    --More-- or (q)uit\r                  \rexit
+    exit
     
     
     
@@ -350,7 +360,7 @@ commands:
     interface 0/13
     no shutdown
     description \"MetroCluster ISL Port\"
-    --More-- or (q)uit\r                  \rmtu 9216
+    mtu 9216
     exit
     
     
@@ -373,7 +383,7 @@ commands:
     description \"MetroCluster ISL Port\"
     mtu 9216
     exit
-    --More-- or (q)uit\r                  \r
+    
     
     
     interface 0/55
@@ -396,7 +406,7 @@ commands:
     service-policy in InClusterRdma
     description \"Intra-Cluster ISL\"
     no port-channel static
-    --More-- or (q)uit\r                  \rmtu 9216
+    mtu 9216
     switchport mode trunk
     switchport trunk allowed vlan 1,103
     vlan participation include 103
@@ -419,7 +429,7 @@ commands:
     
     errdisable recovery cause link-flap
     errdisable recovery interval 30
-    --More-- or (q)uit\r                  \rrouter ospf
+    router ospf
     exit
     ipv6 router ospf
     exit
@@ -431,4 +441,4 @@ commands:
     ip ssh server enable
     
     (Metro_Switch_A_1)#
-  quit: |-
+  "logout\n": |-
