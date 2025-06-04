@@ -159,4 +159,25 @@ describe Oxidized::Node do
       end
     end
   end
+
+  describe '#resolve_input' do
+    it 'resolves input.default without whitespaces' do
+      Oxidized.config.input.default = 'ssh,telnet,ftp'
+
+      input_classes = @node.send(:resolve_input, {})
+      _(input_classes[0]).must_equal Oxidized::SSH
+      _(input_classes[1]).must_equal Oxidized::Telnet
+      _(input_classes[2]).must_equal Oxidized::FTP
+    end
+
+    it 'resolves input.default without whitespaces' do
+      Oxidized.config.input.default = "ssh  , \ttelnet, ftp ,scp"
+
+      input_classes = @node.send(:resolve_input, {})
+      _(input_classes[0]).must_equal Oxidized::SSH
+      _(input_classes[1]).must_equal Oxidized::Telnet
+      _(input_classes[2]).must_equal Oxidized::FTP
+      _(input_classes[3]).must_equal Oxidized::SCP
+    end
+  end
 end

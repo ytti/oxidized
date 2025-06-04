@@ -75,7 +75,9 @@ class Procurve < Oxidized::Model
 
   # not supported on all models
   cmd 'show system information' do |cfg|
-    cfg = cfg.each_line.reject { |line| line.match /(.*CPU.*)|(.*Up Time.*)|(.*Total.*)|(.*Free.*)|(.*Lowest.*)|(.*Missed.*)/ }
+    cfg = cfg.each_line.reject do |line|
+      line.match /(.*CPU.*)|(.*Up Time.*)|(.*Total.*)|(.*Free.*)|(.*Lowest.*)|(.*Missed.*)/
+    end
     cfg = cfg.join
     comment cfg
   end

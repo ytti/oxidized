@@ -17,7 +17,8 @@ module Oxidized
       @jobs.work
 
       while @jobs.size < @jobs.want
-        Oxidized.logger.debug "lib/oxidized/worker.rb: Jobs running: #{@jobs.size} of #{@jobs.want} - ended: #{@jobs_done} of #{@nodes.size}"
+        Oxidized.logger.debug "lib/oxidized/worker.rb: Jobs running: #{@jobs.size} of #{@jobs.want} - ended: " \
+                              "#{@jobs_done} of #{@nodes.size}"
         # ask for next node in queue non destructive way
         nextnode = @nodes.first
         unless nextnode.last.nil?

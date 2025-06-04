@@ -1,0 +1,163 @@
+---
+init_prompt: |-
+  Last login: Mon Mar 31 08:42:24 EDT 2025 from 10.201.1.200 on pts/0
+  Number of total successful connections since last 1 days: 2798
+  
+  Mellanox Switch
+  
+  \r [standalone: master] >\x20
+commands:
+  - "no cli session paging enable\n": |-
+      \r\e[K\e[?1l\e>\r [standalone: master] >\x20
+  - "show version\n": |-
+      show version\r
+      \e[?1h\e=\rProduct name:      Onyx
+      Product release:   3.9.2504
+      Build ID:          #1-dev
+      Build date:        2021-04-29 06:31:55
+      Target arch:       x86_64
+      Target hw:         x86_64
+      Built by:          sw-r2d2-bot@26dc75704811
+      Version summary:   X86_64 3.9.2504 2021-04-29 06:31:55 x86_64
+      
+      Product model:     x86onie
+      
+      Uptime:            103d 15h 38m 24.640s
+      CPU load averages: 0.03 / 0.06 / 0.07
+      Number of CPUs:    2
+      System memory:     2792 MB used / 4997 MB free / 7789 MB total
+      Swap:              0 MB used / 0 MB free / 0 MB total
+      \r\e[K\e[?1l\e>\r [standalone: master] >\x20
+  - "show inventory\n": |-
+      show inventory\r
+      \e[?1h\e=\r-----------------------------------------------------------------------------
+      Module           Part Number        Serial Number        Asic Rev.    HW Rev.
+      -----------------------------------------------------------------------------
+      \r\e[K\e[?1l\e>\r [standalone: master] >\x20
+  - "enable\n": |-
+      enable\r
+      \r [standalone: master] #\x20
+  - "show running-config\n": |-
+      show running-config\r
+      \e[?1h\e=\r##
+      ## Running database \"initial\"
+      ## Generated at 2025/03/31 08:48:03 -0400
+      ## Hostname: 
+      ## Product release: 3.9.2504
+      ##
+      
+      ##
+      ## Running-config temporary prefix mode setting
+      ##
+      no cli default prefix-modes enable
+      
+      ##
+      ## Interface Ethernet buffer configuration
+      ##
+         roce lossy
+        \x20
+      ##
+      \e[7mlines 1-23\x20
+  - " ": |-
+      \e[m\e[K\r\e[K   interface ethernet 1/15 shutdown
+      \e[7mlines 3-25\x20
+  - " ": |-
+      \e[m\e[K\r\e[K## \x20
+      \e[7mlines 26-48\x20
+  - " ": |-
+      \e[m\e[K\r\e[K   interface ethernet 1/28 ip address primary \x20
+         interface ethernet 1/1-1/32 traffic-class 3 congestion-control ecn minimum-re \blative 75 maximum-relative 95
+        \x20
+      ##
+      ## Telemetry configuration
+      ##
+      no what-just-happened acl enable
+      \e[7mlines 49-70\x20
+  - " ": |-
+      \e[m\e[K\r\e[Kno what-just-happened forwarding enable
+      \x20 \x20
+        \x20
+      \e[7mlines 71-93\x20
+  - " ": |-
+      \e[m\e[K\r\e[K   ip prefix-list DH3 bulk-mode
+      \x20 \x20
+      ##
+        \x20
+      ##
+      ## BGP configuration
+      ##
+         protocol bgp
+      \e[7mlines 94-116\x20
+  - " ": |-
+      \e[m\e[K\r\e[K   router bgp 0 vrf default router-id 10.23.2.13 force
+      \e[7mlines 117-139\x20
+  - " ": |-
+      \e[m\e[K\r\e[K   router bgp 0 vrf defa
+      \x20 \x20
+        \x20
+        \x20
+      \e[7mlines 140-162\x20
+  - " ": |-
+      \e[m\e[K\r\e[K   logging vrf default 10.2.13.49
+      \x20 \x20
+          \b\e[7mlines 163-183 \e[m\e[K\r\e[KyV/gr
+  - " ": |-
+      \x20   \b
+        \x20
+      \e[7mlines 183-204\x20
+  - " ": |-
+      \e[m\e[K\r\e[K# radius-server key ********
+      \x20  tacacs-server vrf default enable
+      # tacacs-server key ********
+        \x20
+      ##
+      ## AAA configuration
+      ##
+        \x20
+      ##
+      ## Password restriction configuration
+      ##
+        \x20
+      ##
+      \e[7mlines 205-227\x20
+  - " ": |-
+      \e[m\e[K\r\e[K  \x20
+      \x20 \x20
+        \x20
+      ##
+      ## SSH and Key configuration
+      \e[7mlines 228-250\x20
+  - " ": |-
+      \e[m\e[K\r\e[K##
+      \e[7mlines 251-254\x20
+  - " ": |-
+      \e[m\e[K\r\e[K   ssh client user oxidized authorized-key sshv2\x20
+      \x20 \x20
+      ##
+      \e[7mlines 255-263\x20
+  - " ": |-
+      \e[m\e[K\r\e[K
+      ##
+      ## Persistent prefix mode setting
+      ##
+      cli default prefix-modes enable
+      
+      ##### Konfiguration from issue #3469
+      \r
+      ##\r
+      ## X.509 certificates configuration\r
+      ##\r
+      #\r
+      # Certificate name system-self-signed, ID aaaaaaaaaaaaa\r
+      # (public-cert config omitted since private-key config is hidden)\r
+      \r
+      ##\r
+      ## Persistent prefix mode setting\r
+      ##\r
+      cli default prefix-modes enable\r
+      \r
+      
+      \rhsb2-slf-3-6 [standalone: master] #\x20
+  - "\nexit\n": |-
+      \r\r
+      \rhsb2-slf-3-6 [standalone: master] # exit\r\r\n

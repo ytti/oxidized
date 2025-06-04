@@ -27,7 +27,9 @@ class VRP < Oxidized::Model
   end
 
   cmd 'display version' do |cfg|
-    cfg = cfg.each_line.reject { |l| l.match /uptime|^\d\d\d\d-\d\d-\d\d \d\d:\d\d:\d\d(\.\d\d\d)? ?(\+\d\d:\d\d)?$/ }.join
+    cfg = cfg.each_line.reject do |l|
+      l.match /uptime|^\d\d\d\d-\d\d-\d\d \d\d:\d\d:\d\d(\.\d\d\d)? ?(\+\d\d:\d\d)?$/
+    end.join
     comment cfg
   end
 

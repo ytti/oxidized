@@ -1,21 +1,27 @@
 class MLNXOS < Oxidized::Model
   using Refinements
 
-  prompt /([\w.@()-\[:\s\]]+[#>]\s)$/
+  prompt /^\r?(\e.+\e>\r)?\S* \[\S+: (master|standby)\] [#>] $/
   comment '## '
 
   # Pager Handling
-  expect /.+lines\s\d+-\d+([\s]|\/\d+\s\(END\)\s).+$/ do |data, re|
+  # "Normal" pager: "lines 183-204 "
+  # Last pager:     "lines 256-269/269 (END) "
+  expect /\e\[7mlines \d+-\d+( |\/\d+ \(END\) )/ do |data, re|
     send ' '
     data.sub re, ''
   end
 
+  # Remove ANSI escape codes
+  expect /\e\[[0-?]*[ -\/]*[@-~]\r?/ do |data, re|
+    data.sub re, ''
+  end
+
   cmd :all do |cfg|
-    cfg.gsub! /\[\?1h=\r/, '' # Pager Handling
-    cfg.gsub! /\[24;1H/, '' # Pager Handling
-    cfg.gsub! /\r\[K/, '' # Pager Handling
-    cfg.gsub! /\[K/, '' # Pager Handling
-    cfg.gsub! /\s/, '' # Linebreak Handling
+    cfg.gsub! "\e[m", '' # Remove reset formating
+    cfg.gsub! "\e[K", '' # Remove erase in line
+    cfg.gsub! /.\x08/, '' # Remove Backspace char
+    cfg.gsub! "\r", '' # Remove Cariage Return
     cfg.gsub! /^CPU load averages:\s.+/, '' # Omit constantly changing CPU info
     cfg.gsub! /^System memory:\s.+/, '' # Omit constantly changing memory info
     cfg.gsub! /^Uptime:\s.+/, '' # Omit constantly changing uptime info
@@ -45,6 +51,7 @@ class MLNXOS < Oxidized::Model
 
   cfg :ssh do
     password /^Password:\s*/
+    post_login 'no cli session paging enable'
     pre_logout "\nexit"
   end
 end

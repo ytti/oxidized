@@ -6,24 +6,21 @@ require 'optparse'
 require 'etc'
 require 'timeout'
 
-# This scripts logs in a network device and outputs a yaml file that can be
+# This script logs in a network device and outputs a YAML file that can be
 # used for model unit tests in spec/model/
 # For more information, see docs/DeviceSimulation.md
-
-# This script is quick & dirty - it grew with the time an could be a project
-# for its own. It works, and that should be enough ;-)
 
 ################# Methods
 # Runs cmd in the ssh session, either im exec mode or with a tty
 # saves the output to @output
 def ssh_exec(cmd)
-  puts "\n### Sending #{cmd}..."
-  @output&.puts "  #{cmd}: |-"
+  puts "\n### Sending #{cmd.dump}..."
+  @output&.puts "  #{@sequence_prepend_command}#{cmd.dump}: |-"
 
   if @exec_mode
-    @ssh_output = @ssh.exec! cmd + "\n"
+    @ssh_output = @ssh.exec! cmd
   else
-    @ses.send_data cmd + "\n"
+    @ses.send_data cmd
     shell_wait
   end
   yaml_output('    ')
@@ -68,7 +65,14 @@ def shell_wait
           puts "\n### ESC pressed, skipping idle timeout"
           return false
         else
-          # if not, send the char through ssh
+          # if not, record the char and send the char through ssh
+          puts "\n### #{char.dump} pressed"
+          yaml_output('    ')
+          @output&.puts "  #{@sequence_prepend_command}#{char.dump}: |-"
+          @ssh_output = ''
+          start_time = Time.now
+          @ssh_output_length = @ssh_output.length
+
           @ses.send_data char
         end
       end
@@ -84,6 +88,8 @@ end
 def yaml_output(prepend = '')
   # Now print the collected output to @output
   firstline = true
+
+  prepend = @sequence_prepend_output + prepend
 
   # as we want to prepend 'prepend' to each line, we need each_line and chomp
   # chomp removes the trainling \n
@@ -113,6 +119,9 @@ end
 
 # Define options
 options = {}
+@sequence_prepend_command = '- '
+@sequence_prepend_output = '  '
+
 optparse = OptionParser.new do |opts|
   opts.banner = <<~HEREDOC
     Usages:
@@ -140,6 +149,10 @@ optparse = OptionParser.new do |opts|
     options[:timeout] = timeout
   end
   opts.on('-e', '--exec-mode', 'Run ssh in exec mode (without tty)') { @exec_mode = true }
+  opts.on('-u', '--unordered', 'The YAML simulation should not enforce an order of the commands') do
+    @sequence_prepend_command = ''
+    @sequence_prepend_output = ''
+  end
   opts.on '-h', '--help', 'Print this help' do
     puts opts
     exit
@@ -182,6 +195,8 @@ elsif options[:input]
 end
 
 puts "Running #{ssh_commands} on #{ssh_user}@#{ssh_host}"
+# Add \n to each command
+ssh_commands.map! { |s| s + "\n" }
 
 # Defaut idle timeout: 5 seconds, as tests showed that 2 seconds is too short
 @idle_timeout = options[:timeout] || 5

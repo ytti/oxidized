@@ -176,6 +176,11 @@ aaa-server TACACS (management) host 10.42.0.12
  key AAAAAAAAAABBBBBBBBBBCCCCCCCCCC
 aaa-server TACACS (management) host 10.42.0.13
  key AAAAAAAAAABBBBBBBBBBCCCCCCCCCC
+aaa-server SERVER-TAG host 10.42.0.14
+ key AAAAAAAAAABBBBBBBBBBCCCCCCCCCC
+aaa-server AD_SERVER host 10.42.0.13
+ server-port 636
+ key AAAAAAAAAABBBBBBBBBBCCCCCCCCCC
 user-identity default-domain LOCAL
 aaa authentication http console TACACS LOCAL
 aaa authentication enable console TACACS LOCAL

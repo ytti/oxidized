@@ -1,6 +1,6 @@
 init_prompt:
 commands:
-  cat /cf/conf/config.xml: |-
+  "cat /cf/conf/config.xml\n": |-
     <?xml version=\"1.0\"?>
     <pfsense>
     \t<version>23.3</version>
@@ -304,6 +304,6 @@ commands:
     \t</wizardtemp>
     \t<ppps></ppps>
     </pfsense>
-  cat /etc/version: |-
+  "cat /etc/version\n": |-
     2.7.2-RELEASE
-  exit: |-
+  "exit\n": |-

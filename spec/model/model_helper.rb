@@ -13,6 +13,9 @@ def init_model_helper
 
   Oxidized::Node.any_instance.stubs(:resolve_repo)
   Oxidized::Node.any_instance.stubs(:resolve_output)
+
+  # Speed up the tests, do not sleep in the SSH#expect loop
+  Object.any_instance.stubs(:sleep)
 end
 
 # save the result of a node.run into @filename
@@ -59,31 +62,45 @@ class MockSsh
 
   # Takes a yaml file with the data used to simulate the model
   def initialize(model)
-    @commands = {}
-    model['commands'].each do |key, value|
-      @commands[key + "\n"] = interpolate_yaml(value)
+    if model['commands'].is_a?(Hash)
+      @commands = model['commands'].transform_values(&method(:interpolate_yaml))
+    elsif model['commands'].is_a?(Array)
+      @commands = []
+      model['commands'].each do |c|
+        @commands << c.transform_values(&method(:interpolate_yaml))
+      end
+    else
+      raise 'MockSsh#initialize: no commands in the simulation file'
     end
 
     @init_prompt = interpolate_yaml(model['init_prompt'])
   end
 
-  # We have to interpolate as yaml block scalars don't interpolate anything
+  # interpret escaped characters in the YAML block scalar
   def interpolate_yaml(text)
-    # we just add double quotes and undump the result
     "\"#{text}\"".undump
   end
 
   def exec!(cmd)
-    Oxidized.logger.send(:debug, "exec! called with cmd #{cmd}")
+    Oxidized.logger.send(:debug, "exec! called with cmd #{cmd.dump}")
 
     # exec commands are send without \n, the keys in @commands have a "\n"
     # appended, so we search for cmd + "\n" in @commands
     cmd += "\n"
 
-    raise "#{cmd} not defined" unless @commands.has_key?(cmd)
+    if @commands.is_a?(Array)
+      raise 'MockSsh#exec!: no more commands left' if @commands.empty?
 
-    Oxidized.logger.send(:debug, "exec! returns #{@commands[cmd]}")
-    @commands[cmd]
+      command, response = @commands.shift.first
+      raise "MockSsh#exec!: Need #{cmd.dump} but simulation provides #{command.dump}" unless cmd == command
+    else
+      raise "MockSsh#exec!: #{cmd.dump} not defined" unless @commands.has_key?(cmd)
+
+      response = @commands[cmd]
+    end
+
+    Oxidized.logger.send(:debug, "MockSsh#exec! #{cmd.dump} returns #{response.dump}")
+    response
   end
 
   # Returns Net::SSH::Connection::Channel, which we simulate with MockChannel
@@ -97,7 +114,15 @@ class MockSsh
   end
 
   def loop(*)
-    yield if block_given?
+    # When in exec mode, no channel is created, so the loop can exit directly
+    return unless @channel
+    # When no block is given, Oxidized::SSH is disconnecting
+    return unless block_given?
+
+    Kernel.loop do
+      @channel.receive
+      break unless yield
+    end
   end
 
   def closed?
@@ -111,6 +136,11 @@ class MockChannel
 
   def initialize(commands)
     @commands = commands
+    @queue = ''
+  end
+
+  def commands_left?
+    @commands.is_a?(Hash) || (@commands.is_a?(Array) && !@commands.empty?)
   end
 
   # Saves the block for later use in #send_data
@@ -126,12 +156,32 @@ class MockChannel
     yield nil, true
   end
 
-  def send_data(cmd)
-    Oxidized.logger.send(:debug, "send_data called with cmd #{cmd}")
-    raise "#{cmd} not defined" unless @commands.has_key?(cmd)
+  def receive
+    return if @queue.empty?
 
-    Oxidized.logger.send(:debug, "send_data returns #{@commands[cmd]}")
-    @on_data_block.call(nil, @commands[cmd])
+    # Send data from @queue but clear it first to prevent new data to be lost
+    data = @queue
+    @queue = ''
+    @on_data_block.call(nil, data)
+  end
+
+  def send_data(cmd)
+    Oxidized.logger.send(:debug, "send_data called with cmd #{cmd.dump}")
+
+    if @commands.is_a?(Array)
+      raise 'MockChannel#send_data: no more commands left' if @commands.empty?
+
+      command, response = @commands.shift.first
+      raise "MockChannel#send_data: #{cmd.dump} but simulation provides #{command.dump}" unless cmd == command
+    else
+      raise "MockChannel#send_data: Command #{cmd.dump} not defined" unless @commands.has_key?(cmd)
+
+      response = @commands[cmd]
+    end
+
+    Oxidized.logger.send(:debug, "MockChannel#send_data #{cmd.dump} returns #{response.dump}")
+
+    @queue << response
   end
 
   def process; end

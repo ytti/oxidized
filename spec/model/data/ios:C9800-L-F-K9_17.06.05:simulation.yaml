@@ -1,13 +1,13 @@
 init_prompt: |-
   OXIDIZED-WLC1#
 commands:
-  terminal length 0: |-
+  "terminal length 0\n": |-
     terminal length 0
     OXIDIZED-WLC1#
-  terminal width 0: |-
+  "terminal width 0\n": |-
     terminal width 0
     OXIDIZED-WLC1#
-  show version: |-
+  "show version\n": |-
     show version
     Cisco IOS XE Software, Version 17.06.05
     Cisco IOS Software [Bengaluru], C9800 Software (C9800_IOSXE-K9), Version 17.6.5, RELEASE SOFTWARE (fc2)
@@ -81,7 +81,7 @@ commands:
     Configuration register is 0x2102
     
     OXIDIZED-WLC1#
-  show vtp status: |-
+  "show vtp status\n": |-
     show vtp status
     VTP Version capable             : 1 to 3
     VTP version running             : 1
@@ -100,7 +100,7 @@ commands:
     MD5 digest                        : 0x00 0x00 0x00 0x00 0x00 0x00 0x00 0x00\x20
                                         0x00 0x00 0x00 0x00 0x00 0x00 0x00 0x00\x20
     OXIDIZED-WLC1#
-  show inventory: |-
+  "show inventory\n": |-
     show inventory
     NAME: \"Chassis 1\", DESCR: \"Cisco C9800-L-F-K9 Chassis\"
     PID: C9800-L-F-K9      , VID: 01   , SN: FCL2XXXXXXX
@@ -128,7 +128,7 @@ commands:
     
     
     OXIDIZED-WLC1#
-  show running-config: |-
+  "show running-config\n": |-
     show running-config
     Building configuration...
     
@@ -248,4 +248,4 @@ commands:
     end
     
     OXIDIZED-WLC1#
-  exit: |-
+  "exit\n": |-

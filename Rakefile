@@ -10,7 +10,6 @@ begin
   require 'rubocop/rake_task'
 
   RuboCop::RakeTask.new
-  task(:default).prerequisites << task(:rubocop)
 rescue LoadError
   task :rubocop do
     puts 'Install rubocop to run its rake tasks'
@@ -110,4 +109,4 @@ task :build_container do
   end
 end
 
-task default: :test
+task default: %i[rubocop test]
