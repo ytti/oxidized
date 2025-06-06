@@ -43,7 +43,7 @@ class Unifiap < Oxidized::Model
   end
 
   # We check here to see if we succeeded with /etc/hosts. If not, then we try again with ifconfig, and /tmp/system.cfg
-  cmd do
+  cmd 'echo' do
     unless @ip
       cmd 'ifconfig br0' do |cfg|
         @ip = Regexp.last_match(1) if cfg =~ /inet addr:\s*(\d+\.\d+\.\d+\.\d+)/i
@@ -89,7 +89,7 @@ class Unifiap < Oxidized::Model
   end
 
   # Now we can display it all as a banner
-  cmd do
+  cmd 'echo' do
     out = []
     out << "*************************"
     out << "Model:       #{@model}"
