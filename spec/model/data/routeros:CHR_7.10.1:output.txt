@@ -6,8 +6,16 @@
 #           total-hdd-space: 89.2MiB
 #         architecture-name: x86_64
 #                board-name: CHR
-#                  platform: MikroTik#   installed-version: 7.10.1# software id = 
+#                  platform: MikroTik
+#   installed-version: 7.10.1
+# Flags: U - UNDOABLE
+# Columns: ACTION, BY, POLICY, TIME
+#   ACTION                            BY           POLICY  TIME
+# U bridge port changed               user  write   2024-07-31 09:33:47
+# software id = XX-XX
 #
+# model = XXX
+# serial number = XXX
 /interface ethernet
 set [ find default-name=ether1 ] disable-running-check=no
 set [ find default-name=ether2 ] disable-running-check=no
