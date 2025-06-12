@@ -37,8 +37,6 @@ describe Oxidized::Config::Vars do
     Oxidized.config.vars = {
       "enable" => "enable_vars"
     }
-    Oxidized::Node.any_instance.stubs(:resolve_repo)
-    Oxidized::Node.any_instance.stubs(:resolve_input)
     Oxidized::Node.any_instance.stubs(:resolve_output)
   end
 
