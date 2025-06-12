@@ -70,5 +70,12 @@ describe Oxidized::Config::Vars do
       Oxidized.config.models["junos"].vars.delete("enable")
       _(vars("enable")).must_equal "enable_vars"
     end
+    it "returns nil on missing [node, group model, group, model, vars]" do
+      Oxidized.config.groups["foo"].models["junos"].vars.delete("enable")
+      Oxidized.config.groups["foo"].vars.delete("enable")
+      Oxidized.config.models["junos"].vars.delete("enable")
+      Oxidized.config.vars.delete("enable")
+      _(vars("enable")).must_equal nil
+    end
   end
 end
