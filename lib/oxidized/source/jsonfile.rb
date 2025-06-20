@@ -50,7 +50,7 @@ module Oxidized
           # map node specific vars
           vars = {}
           @cfg.vars_map.each do |key, want_position|
-            vars[key.to_sym] = node_var_interpolate string_navigate_object(node, want_position)
+            vars[key.to_s] = node_var_interpolate string_navigate_object(node, want_position)
           end
           keys[:vars] = vars unless vars.empty?
 
