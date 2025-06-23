@@ -47,7 +47,8 @@ output:
 
 ## Output: Git
 
-This uses the rugged/libgit2 interface. So you should remember that normal Git hooks will not be executed.
+This uses the rugged/libgit2 interface. So you should remember that normal Git
+hooks will not be executed.
 
 For a single repository containing all devices:
 
@@ -98,7 +99,42 @@ output:
 
 ```
 
-Over time, your Git repository will expand, potentially leading to performance issues. For instructions on how to address this, see [git performance issues with large device counts](Troubleshooting.md#git-performance-issues-with-large-device-counts).
+### Git performance issues with large device counts
+When you use git to store your configurations, the size of your repository will
+grow over time. This growth can lead to performance issues. If you encounter
+such issues, you should perform a Git garbage collection on your repository.
+
+Follow these steps to do so:
+
+1. Stop oxidized (no one should access the git repository while running garbage
+   collection)
+2. Make a backup of your oxidized data, especially the Git repository
+3. Change directory your oxidized git repository (as configured in oxidized
+   configuration file)
+4. Execute the command `git gc` to run the garbage collection
+5. Restart oxidized - you're done!
+
+### Clean obsolete nodes
+The `git` output can automatically remove the configuration of nodes not
+present in the [source](Sources.md) anymore.
+
+> :warning: Restrictions: this currently only works with `single_repo: true`
+> and without [output types](#output-types).
+>
+> There will be no warnings when using output types. Do not use in combination!
+
+Oxidized will remove **any** file not matching the group and hostname of the
+nodes configured in the source and will commit the change in the git
+repository.
+
+```yaml
+output:
+  default: git
+  clean_obsolete_nodes: true
+  git:
+    single_repo: true
+    repo: "~/.config/oxidized/devices.git"
+```
 
 ## Output: Git-Crypt
 

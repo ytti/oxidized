@@ -53,7 +53,7 @@ describe 'Oxidized::Output::File' do
     end
   end
 
-  describe '#clean_obsolete_nodes' do
+  describe 'clean_obsolete_nodes' do
     before do
       Oxidized.asetus = Asetus.new
       Oxidized.config.output.file.directory = '/fakefs'

@@ -1,7 +1,7 @@
 require_relative 'git_helper'
 
 describe Oxidized::Output::Git do
-  describe '#yield_repo_and_path' do
+  describe 'yield_repo_and_path' do
     # Note that #yield_repo_and_path is private, so we can not call it directy
     # we use @git.send(:yield_repo_and_path, ...) to bypass the protection
     before do
@@ -40,7 +40,7 @@ describe Oxidized::Output::Git do
     end
   end
 
-  describe '::hash_list' do
+  describe 'hash_list' do
     before do
       @repo = RepoMock.new
       Rugged::Repository.stubs(:new).returns(@repo)
@@ -94,7 +94,7 @@ describe Oxidized::Output::Git do
     end
   end
 
-  describe '#version' do
+  describe 'version' do
     after do
       # Clean the persistent cache at the end of the test
       Oxidized::Output::Git.clear_cache
@@ -163,6 +163,89 @@ describe Oxidized::Output::Git do
 
       version_group2_node8 = git.version @mock_node8, 'group2'
       _(version_group2_node8.length).must_equal 1
+    end
+  end
+
+  describe 'clean_obsolete_nodes with single_repo = true' do
+    before do
+      Oxidized.asetus = Asetus.new
+
+      Oxidized.config.output.git.user = 'Oxidized'
+      Oxidized.config.output.git.email = 'oxidized@example.com'
+      Oxidized.config.output.git.repo = '/gitrepo'
+      Oxidized.config.output.git.single_repo = true
+
+      Oxidized.asetus.cfg.debug = false
+      Oxidized.asetus.cfg.log = File::NULL
+      Oxidized.setup_logger
+
+      @opts = {
+        input:  'ssh',
+        output: 'git',
+        model:  'ios'
+      }
+    end
+
+    it "does nothing when the repo dir doesn't exists" do
+      File.expects(:directory?).with('/gitrepo').returns(false)
+      Rugged::Repository.expects(:new).never
+
+      Oxidized::Output::Git.clean_obsolete_nodes([])
+    end
+    it "does nothing when the repo is empty" do
+      File.expects(:directory?).with('/gitrepo').returns(true)
+      mock_repo = mock('Rugged::Repository')
+      Rugged::Repository.expects(:new).returns(mock_repo)
+      mock_repo.expects(:empty?).returns(true)
+
+      Oxidized::Output::Git.clean_obsolete_nodes([])
+    end
+
+    it "removes obsolete configuration files" do
+      File.expects(:directory?).with('/gitrepo').returns(true)
+
+      mock_repo = mock('Rugged::Repository')
+      Rugged::Repository.expects(:new).returns(mock_repo)
+      mock_repo.expects(:empty?).returns(false)
+
+      nodes = %w[node1 node2].map { |e| Oxidized::Node.new(@opts.merge(name: e)) }
+      nodes += %w[node11].map { |e| Oxidized::Node.new(@opts.merge(name: e, group: 'gr1')) }
+      nodes += %w[node121].map { |e| Oxidized::Node.new(@opts.merge(name: e, group: 'gr1/gr2')) }
+
+      mock_tree = mock('Tree')
+      mock_repo.expects(:last_commit).returns(stub(tree: mock_tree))
+
+      mock_tree.expects(:walk_blobs).multiple_yields(
+        ['', { name: 'node1' }],
+        ['', { name: 'node2' }],
+        ['', { name: 'node3' }],
+        ['gr1', { name: 'node11' }],
+        ['gr1', { name: 'node12' }],
+        ['gr1/gr2', { name: 'node121' }],
+        ['gr1/gr2', { name: 'node122' }]
+      )
+
+      mock_index = mock('Index')
+      mock_repo.expects(:index).returns(mock_index)
+      mock_index.expects(:remove).with('node3')
+      mock_index.expects(:remove).with('gr1/node12')
+      mock_index.expects(:remove).with('gr1/gr2/node122')
+
+      mock_repo.expects(:config).twice.returns({})
+      mock_index.expects(:write_tree).returns('tree_sha')
+      mock_repo.expects(:head).returns(stub(target: 'head_sha'))
+
+      Rugged::Commit.expects(:create).with(
+        mock_repo,
+        message:    includes('Removing 3 obsolete configs'),
+        tree:       'tree_sha',
+        parents:    ['head_sha'],
+        update_ref: 'HEAD'
+      )
+
+      mock_index.expects(:write)
+
+      Oxidized::Output::Git.clean_obsolete_nodes(nodes)
     end
   end
 end
