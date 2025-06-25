@@ -11,8 +11,8 @@ output:
 ```
 
 ### Groups
-If you use groups, the nodes will be stored in folders named after the
-groups. The folder are stored one level above the folder for configurations
+If you use groups, the nodes will be stored in directories named after the
+groups. The directories are stored one level above the directory for configurations
 without groups.
 
 Example:
@@ -32,10 +32,10 @@ longer present in the [source](Sources.md).
 > in the source.
 
 When using groups, it will remove any files not matching the hostnames of the
-nodes from the groups folders (which are on the same level as the default
-folder). As a safety measure, oxidized will only clean configuration out of
+nodes from the groups directories (which are on the same level as the default
+directory). As a safety measure, oxidized will only clean configuration out of
 active groups. If the group `example` isn't used anymore, oxidized won't clean
-the configurations out of the folder `../example/`.
+the configurations out of the directory `../example/`.
 
 Configuration:
 
@@ -129,7 +129,7 @@ longer present in the [source](Sources.md).
 > - oxidized will refuse to remove old configurations
 >   when saving  [output types](#output-types) in a subdirectory of the git
 >   repository (`type_as_directory: true`), or it would remove the output
->   type folders
+>   type directories
 
 Oxidized will remove **any** file within the git repository not matching the
 group and hostname of the nodes configured in the source and will then commit

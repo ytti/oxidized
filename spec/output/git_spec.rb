@@ -1,7 +1,7 @@
 require_relative 'git_helper'
 
 describe Oxidized::Output::Git do
-  describe 'yield_repo_and_path' do
+  describe '#yield_repo_and_path' do
     # Note that #yield_repo_and_path is private, so we can not call it directy
     # we use @git.send(:yield_repo_and_path, ...) to bypass the protection
     before do
@@ -40,7 +40,7 @@ describe Oxidized::Output::Git do
     end
   end
 
-  describe 'hash_list' do
+  describe '.hash_list' do
     before do
       @repo = RepoMock.new
       Rugged::Repository.stubs(:new).returns(@repo)
@@ -94,7 +94,7 @@ describe Oxidized::Output::Git do
     end
   end
 
-  describe 'version' do
+  describe '#version' do
     after do
       # Clean the persistent cache at the end of the test
       Oxidized::Output::Git.clear_cache
@@ -166,7 +166,7 @@ describe Oxidized::Output::Git do
     end
   end
 
-  describe 'clean_obsolete_nodes' do
+  describe '.clean_obsolete_nodes' do
     before do
       Oxidized.asetus = Asetus.new
 
@@ -175,7 +175,6 @@ describe Oxidized::Output::Git do
       Oxidized.config.output.git.repo = '/gitrepo'
 
       Oxidized.asetus.cfg.debug = false
-      Oxidized.asetus.cfg.log = File::NULL
       Oxidized.setup_logger
 
       @opts = {
@@ -204,6 +203,9 @@ describe Oxidized::Output::Git do
 
     it "does nothing without single_repo = true" do
       Rugged::Repository.expects(:new).never
+      Oxidized.logger.expects(:warn)
+              .with("clean_obsolete_nodes is not implemented for multiple " \
+                    "git repositories")
 
       Oxidized::Output::Git.clean_obsolete_nodes([])
     end
@@ -212,6 +214,9 @@ describe Oxidized::Output::Git do
       Oxidized.config.output.git.single_repo = true
       Oxidized.config.output.git.type_as_directory = true
       Rugged::Repository.expects(:new).never
+      Oxidized.logger.expects(:warn)
+              .with("clean_obsolete_nodes is not implemented for output " \
+                    "types as a directory within the git repository")
 
       Oxidized::Output::Git.clean_obsolete_nodes([])
     end
@@ -258,8 +263,34 @@ describe Oxidized::Output::Git do
         parents:    ['head_sha'],
         update_ref: 'HEAD'
       )
+      Oxidized.logger.expects(:info)
+              .with("clean_obsolete_nodes: removing 3 obsolete configs")
 
       mock_index.expects(:write)
+
+      Oxidized::Output::Git.clean_obsolete_nodes(nodes)
+    end
+
+    it "does nothing if there is nothing to delete" do
+      Oxidized.config.output.git.single_repo = true
+      File.expects(:directory?).with('/gitrepo').returns(true)
+
+      mock_repo = mock('Rugged::Repository')
+      Rugged::Repository.expects(:new).returns(mock_repo)
+      mock_repo.expects(:empty?).returns(false)
+
+      nodes = %w[node1 node2].map { |e| Oxidized::Node.new(@opts.merge(name: e)) }
+
+      mock_tree = mock('Tree')
+      mock_repo.expects(:last_commit).returns(stub(tree: mock_tree))
+
+      mock_tree.expects(:walk_blobs).multiple_yields(
+        ['', { name: 'node1' }],
+        ['', { name: 'node2' }]
+      )
+
+      mock_repo.expects(:index).never
+      Rugged::Commit.expects(:create).never
 
       Oxidized::Output::Git.clean_obsolete_nodes(nodes)
     end

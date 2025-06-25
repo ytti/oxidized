@@ -2,7 +2,7 @@ require_relative '../spec_helper'
 require 'oxidized/output/file'
 
 describe 'Oxidized::Output::File' do
-  describe 'setup' do
+  describe '#setup' do
     it 'raises Oxidized::NoConfig when no config is provided' do
       Asetus.any_instance.expects(:load)
       Asetus.any_instance.expects(:create).returns(false)
@@ -20,7 +20,7 @@ describe 'Oxidized::Output::File' do
     end
   end
 
-  describe 'store' do
+  describe '#store' do
     before do
       Oxidized.asetus = Asetus.new
       Oxidized.asetus.cfg.debug = false
@@ -29,7 +29,7 @@ describe 'Oxidized::Output::File' do
       @outputs = Oxidized::Model::Outputs.new
       @outputs << 'configuration'
     end
-    it 'stores configurations in the configured folder' do
+    it 'stores configurations in the configured directory' do
       Dir.mktmpdir do |temp_dir|
         Oxidized.config.output.file.directory = temp_dir
 
@@ -40,7 +40,7 @@ describe 'Oxidized::Output::File' do
       end
     end
 
-    it 'stores group configurations in the parent folder' do
+    it 'stores group configurations in the parent directory' do
       Dir.mktmpdir do |temp_dir|
         config_dir = File.join(temp_dir, 'configs')
         Oxidized.config.output.file.directory = config_dir
@@ -55,7 +55,7 @@ describe 'Oxidized::Output::File' do
     end
   end
 
-  describe 'clean_obsolete_nodes' do
+  describe '.clean_obsolete_nodes' do
     before do
       Oxidized.asetus = Asetus.new
       Oxidized.asetus.cfg.debug = false

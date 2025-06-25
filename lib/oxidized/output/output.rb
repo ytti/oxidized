@@ -15,8 +15,9 @@ module Oxidized
         cfg.select { |h| h[:type] == 'cfg' }.map { |h| h[:data] }.join
       end
 
-      def self.clean_obsolete_nodes(active_nodes)
-        # Not implemented
+      def self.clean_obsolete_nodes(_active_nodes)
+        Oxidized.logger.warn "clean_obsolete_nodes is not implemented for " \
+                             "#{name}"
       end
     end
   end

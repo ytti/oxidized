@@ -36,7 +36,7 @@ module Oxidized
         node_name = node.name
 
         if group # group is explicitly defined by user
-          cfg_dir = ::File.join :File.dirname(cfg_dir), group
+          cfg_dir = ::File.join ::File.dirname(cfg_dir), group
           ::File.read ::File.join(cfg_dir, node_name)
         elsif ::File.exist? ::File.join(cfg_dir, node_name) # node configuration file is stored on base directory
           ::File.read ::File.join(cfg_dir, node_name)

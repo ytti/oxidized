@@ -27,7 +27,10 @@ Welcome to the advanced nuclear launchinator 5A-X20. Proceed with caution.
 SEKRET-5A-X20#
 ```
 
-Review the relevant device model file and identify the defined prompt. You can find the device models in the `lib/oxidized/model` sub-folder of the repository. For example, the Cisco IOS model, `ios.rb` may use the following prompt:
+Review the relevant device model file and identify the defined prompt. You can
+find the device models in the `lib/oxidized/model` subdirectory of the
+repository. For example, the Cisco IOS model, `ios.rb` may use the following
+prompt:
 
 ```text
   prompt /^([\w.@()-]+[#>]\s?)$/
