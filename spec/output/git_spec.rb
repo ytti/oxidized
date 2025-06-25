@@ -166,14 +166,13 @@ describe Oxidized::Output::Git do
     end
   end
 
-  describe 'clean_obsolete_nodes with single_repo = true' do
+  describe 'clean_obsolete_nodes' do
     before do
       Oxidized.asetus = Asetus.new
 
       Oxidized.config.output.git.user = 'Oxidized'
       Oxidized.config.output.git.email = 'oxidized@example.com'
       Oxidized.config.output.git.repo = '/gitrepo'
-      Oxidized.config.output.git.single_repo = true
 
       Oxidized.asetus.cfg.debug = false
       Oxidized.asetus.cfg.log = File::NULL
@@ -187,12 +186,14 @@ describe Oxidized::Output::Git do
     end
 
     it "does nothing when the repo dir doesn't exists" do
+      Oxidized.config.output.git.single_repo = true
       File.expects(:directory?).with('/gitrepo').returns(false)
       Rugged::Repository.expects(:new).never
 
       Oxidized::Output::Git.clean_obsolete_nodes([])
     end
     it "does nothing when the repo is empty" do
+      Oxidized.config.output.git.single_repo = true
       File.expects(:directory?).with('/gitrepo').returns(true)
       mock_repo = mock('Rugged::Repository')
       Rugged::Repository.expects(:new).returns(mock_repo)
@@ -201,7 +202,22 @@ describe Oxidized::Output::Git do
       Oxidized::Output::Git.clean_obsolete_nodes([])
     end
 
+    it "does nothing without single_repo = true" do
+      Rugged::Repository.expects(:new).never
+
+      Oxidized::Output::Git.clean_obsolete_nodes([])
+    end
+
+    it "does nothing when type_as_directory = true" do
+      Oxidized.config.output.git.single_repo = true
+      Oxidized.config.output.git.type_as_directory = true
+      Rugged::Repository.expects(:new).never
+
+      Oxidized::Output::Git.clean_obsolete_nodes([])
+    end
+
     it "removes obsolete configuration files" do
+      Oxidized.config.output.git.single_repo = true
       File.expects(:directory?).with('/gitrepo').returns(true)
 
       mock_repo = mock('Rugged::Repository')

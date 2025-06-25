@@ -20,7 +20,7 @@ module Oxidized
       end
 
       # node: node name (String)
-      # outputs: Oxidized::Outputs
+      # outputs: Oxidized::Models::Outputs
       # opts: hash of node vars
       def store(node, outputs, opt = {})
         file = ::File.expand_path @cfg.directory

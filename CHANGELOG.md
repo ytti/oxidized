@@ -11,7 +11,7 @@ The format is based on [Keep a Changelog](https://keepachangelog.com/en/1.1.0/).
 - add nxos: support for complete hardware inventory (@garryshtern)
 - ssh: support 'newline "string"' cfg block method to allow defining \r\n newline (@ytti)
 - model for Netgate TNSR (@Vantomas)
-- ouput/file: clean node configurations which are not listed in the source anymore. (@robertcheramy)
+- ouput/file, output/git: clean node configurations which are not listed in the source anymore. Fixes: #1805 (@robertcheramy)
 
 ### Changed
 - acos: remove free storage amount from show version. Fixes #3492 (@991jo)

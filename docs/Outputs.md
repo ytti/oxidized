@@ -24,17 +24,20 @@ Example:
 ```
 
 ### Clean obsolete nodes
-The `file` output can automatically remove the configuration of nodes not
-present in the [source](Sources.md) anymore.
+The `file` output can automatically remove the configuration of nodes no
+longer present in the [source](Sources.md).
 
-Be warned that this might be a dangerous operation: oxidized will remove **any**
-file not matching the hostname of the nodes configured in the source.
+> :warning: **Warning:** this might be a dangerous operation: oxidized
+> will remove **any** file not matching the hostname of the nodes configured
+> in the source.
 
 When using groups, it will remove any files not matching the hostnames of the
-nodes out of the groups folders (which are on the same level as the default
-folder). As a safety measure, Oxidized will only clean configuration out of
+nodes from the groups folders (which are on the same level as the default
+folder). As a safety measure, oxidized will only clean configuration out of
 active groups. If the group `example` isn't used anymore, oxidized won't clean
 the configurations out of the folder `../example/`.
+
+Configuration:
 
 ```yaml
 output:
@@ -101,7 +104,7 @@ output:
 
 ### Git performance issues with large device counts
 When you use git to store your configurations, the size of your repository will
-grow over time. This growth can lead to performance issues. If you encounter
+grow over time. This growth may lead to performance issues. If you encounter
 such issues, you should perform a Git garbage collection on your repository.
 
 Follow these steps to do so:
@@ -114,18 +117,25 @@ Follow these steps to do so:
 4. Execute the command `git gc` to run the garbage collection
 5. Restart oxidized - you're done!
 
+
 ### Clean obsolete nodes
-The `git` output can automatically remove the configuration of nodes not
-present in the [source](Sources.md) anymore.
+The `git` output can automatically remove the configuration of nodes no
+longer present in the [source](Sources.md).
 
-> :warning: Restrictions: this currently only works with `single_repo: true`
-> and without [output types](#output-types).
->
-> There will be no warnings when using output types. Do not use in combination!
+> :warning: **Limitations**
+> - this currently only works with `single_repo: true`
+> - it will ignore configurations saved as [output types](#output-types) in
+>   a separate repository.
+> - oxidized will refuse to remove old configurations
+>   when saving  [output types](#output-types) in a subdirectory of the git
+>   repository (`type_as_directory: true`), or it would remove the output
+>   type folders
 
-Oxidized will remove **any** file not matching the group and hostname of the
-nodes configured in the source and will commit the change in the git
-repository.
+Oxidized will remove **any** file within the git repository not matching the
+group and hostname of the nodes configured in the source and will then commit
+the change into git.
+
+Configuration:
 
 ```yaml
 output:

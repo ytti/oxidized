@@ -211,6 +211,13 @@ module Oxidized
           return
         end
 
+        if git_config.type_as_directory?
+          Oxidized.logger.warn "clean_obsolete_nodes is not implemented for " \
+                               "output types as a directory within the git " \
+                               "repository"
+          return
+        end
+
         # The repo might not exist on the first run
         return unless ::File.directory?(repo_path)
 
