@@ -8,11 +8,6 @@ class SAOS10 < Oxidized::Model
     cfg.cut_both
   end
 
-  # cmd 'show system hostname' do |cfg|
-  #  @hostname = Regexp.last_match(1) if cfg =~ /^| Hostname | (\S+) |/
-  #  comment cfg
-  # end
-
   cmd('show system hostname') { |cfg| comment cfg }
 
   cmd('show system components') { |cfg| comment cfg }
@@ -34,8 +29,6 @@ class SAOS10 < Oxidized::Model
 
   cfg :telnet, :ssh do
     post_login 'set session more off'
-    #post_login 'system shell set more off'
-    #post_login 'system shell session set more off'
     pre_logout 'exit'
   end
 end
