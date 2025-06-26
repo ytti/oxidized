@@ -306,23 +306,3 @@ protocols {
         interface all;
     }
 }
-# Monitor Failure codes:
-#     CS  Cold Sync monitoring        FL  Fabric Connection monitoring
-#     GR  GRES monitoring             HW  Hardware monitoring
-#     IF  Interface monitoring        IP  IP monitoring
-#     LB  Loopback monitoring         MB  Mbuf monitoring
-#     NH  Nexthop monitoring          NP  NPC monitoring
-#     SP  SPU monitoring              SM  Schedule monitoring
-#     CF  Config Sync monitoring      RE  Relinquish monitoring
-#     IS  IRQ storm
-# 
-# Cluster ID: 1
-# Node   Priority Status               Preempt Manual   Monitor-failures
-# 
-# Redundancy group: 0 , Failover count: 1
-# node0  200      primary              no      no       None
-# node1  100      secondary            no      no       None
-# 
-# Redundancy group: 1 , Failover count: 2
-# node0  200      primary              no      no       None
-# node1  101      secondary            no      no       None

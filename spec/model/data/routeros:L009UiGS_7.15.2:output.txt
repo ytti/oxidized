@@ -6,14 +6,16 @@
 #           total-hdd-space: 128.0MiB
 #         architecture-name: arm
 #                board-name: L009UiGS
-#                  platform: MikroTik#   installed-version: 7.15.2
+#                  platform: MikroTik
+#   installed-version: 7.15.2
 # Flags: U - UNDOABLE
 # Columns: ACTION, BY, POLICY, TIME
-#   ACTION                            BY           POLICY  TIME               
+#   ACTION                            BY           POLICY  TIME
 # U bridge port changed               user  write   2024-07-31 09:33:47
 # U bridge port changed               user  write   2024-07-31 09:32:52
 # U bridge port changed               user  write   2024-07-31 09:32:50
-# U detect-internet settings changed  user  write   2024-07-31 09:28:59# software id = A0AA-AAA0
+# U detect-internet settings changed  user  write   2024-07-31 09:28:59
+# software id = A0AA-AAA0
 #
 # model = L009UiGS
 # serial number = AA111AAAAAA
