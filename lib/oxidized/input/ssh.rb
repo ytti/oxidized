@@ -16,7 +16,7 @@ module Oxidized
     include Input::CLI
     class NoShell < OxidizedError; end
 
-    def connect(node)
+    def connect(node) # rubocop:disable Naming/PredicateMethod
       @node        = node
       @output      = String.new('')
       @pty_options = { term: "vt100" }

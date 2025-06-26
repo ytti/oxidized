@@ -19,6 +19,9 @@ module Oxidized
         raise NoConfig, "no output file config, edit #{Oxidized::Config.configfile}"
       end
 
+      # node: node name (String)
+      # outputs: Oxidized::Models::Outputs
+      # opts: hash of node vars
       def store(node, outputs, opt = {})
         file = ::File.expand_path @cfg.directory
         file = ::File.join ::File.dirname(file), opt[:group] if opt[:group]
@@ -52,6 +55,31 @@ module Oxidized
 
       def get_version(_node, _group, _oid)
         'not supported'
+      end
+
+      def self.node_path(node_name, group_name = nil)
+        cfg_dir = ::File.expand_path Oxidized.config.output.file.directory
+
+        if group_name
+          ::File.join ::File.dirname(cfg_dir), group_name, node_name
+        else
+          ::File.join cfg_dir, node_name
+        end
+      end
+
+      def self.clean_obsolete_nodes(active_nodes)
+        cfg_dir = ::File.expand_path Oxidized.config.output.file.directory
+        dir_base = ::File.dirname(cfg_dir)
+        default_dir = ::File.basename(cfg_dir)
+
+        keep_files = active_nodes.map { |n| node_path(n.name, n.group) }
+        active_groups = active_nodes.map(&:group).compact.uniq
+
+        [default_dir, *active_groups].each do |group|
+          Dir.glob(::File.join(dir_base, group, "*")).each do |file|
+            ::File.delete(file) if ::File.file?(file) && !keep_files.include?(file)
+          end
+        end
       end
     end
   end
