@@ -21,6 +21,7 @@ class Vyatta < Oxidized::Model
   end
 
   cmd 'show version' do |cfg|
+    cfg.gsub! /^Uptime[^\n]*\n/, ''
     comment cfg
   end
 
