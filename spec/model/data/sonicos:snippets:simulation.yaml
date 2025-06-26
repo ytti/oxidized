@@ -1,0 +1,19 @@
+# This is no real simulation file. It is used to test some regexp
+# with snippets taken from old issues
+init_prompt: |-
+  Hello!
+  admin@012345>\x20
+commands:
+  "no cli pager session\n": |-
+    no cli pager session
+    admin@012345>\x20
+  "show version\n": |-
+    show version
+    # Example config line on NSA 4650 running SonicOS 6.5.4.10-95n from Issue #2699
+    system-uptime \"1 Day, 23 Hours, 32 Minutes, 10 Seconds\"
+    admin@012345>\x20
+  "show current-config\n": |-
+    show current-config
+    admin@012345>\x20
+  "exit\n": |-
+    Bye ;-)

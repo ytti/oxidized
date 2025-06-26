@@ -1,0 +1,401 @@
+! ! Fake ouput for show bootvar used for simulation
+! ! Fake ouput for show fiber-ports optical-transceiver-info all used for simulation
+
+!Current Configuration:
+!
+!System Description "EFOS, 3.12.0.1, Linux 5.4.2-c92ac1fd, 2016.05.00.06"
+!System Software Version "3.12.0.1"
+!Cut-through mode is configured as enabled
+!Additional Packages     BGP-4,QOS,Multicast,IPv6,Routing,Data Center
+!
+hostname "Metro_Switch_A_1"
+serviceport protocol none
+serviceport ip 10.0.0.37 255.255.255.0 10.0.0.1
+vlan database
+vlan 10,103
+exit
+
+configure
+clock timezone 1 minutes 0
+ip domain name "domain.local"
+ip name server 10.0.0.100 10.0.0.101 
+logging persistent 4
+username "admin" password redacted encryption-type aes level 15 encrypted
+
+line console
+exit
+
+line telnet
+exit
+
+line ssh
+exit
+
+spanning-tree bpduguard
+spanning-tree mode pvst
+no port-channel resilient-hashing
+port-channel name 1/1 Cluster-ISL
+interface 0/55
+addport 1/1
+exit
+interface 0/56
+addport 1/1
+exit
+port-channel name 1/10 MCC-IP-ISL1
+interface 0/13
+addport 1/10
+exit
+interface 0/14
+addport 1/10
+exit
+interface 0/15
+addport 1/10
+exit
+interface 0/16
+addport 1/10
+exit
+ntp server ntp.neas.local
+
+snmp-server sysname "Metro_Switch_A_1"
+!
+snmp-server community "public" ro
+class-map match-all c5
+match cos 5
+!match ip dscp 40(cs5)
+match ip dscp 40
+exit
+
+class-map match-all c4
+match cos 4
+!match ip dscp 32(cs4)
+match ip dscp 32
+exit
+
+class-map match-all CLUSTER
+!match ip dscp 0(be/cs0)
+match ip dscp 0
+match cos 0
+exit
+
+class-map match-all CLUSTER_RDMA
+!match ip dscp 16(cs2)
+match ip dscp 16
+match cos 2
+exit
+
+class-map match-all StorageSrc
+match protocol tcp
+match srcl4port 62500
+exit
+
+class-map match-all StorageDst
+match protocol tcp
+match dstl4port 65200
+exit
+
+class-map match-all RdmaSrc
+match protocol tcp
+match srcl4port 10006
+exit
+
+class-map match-all RdmaDst
+match protocol tcp
+match dstl4port 10006
+exit
+
+policy-map InCluster in
+class CLUSTER
+assign-queue 0
+police-simple rate-percent 100 64 conform-action transmit violate-action transmit
+exit
+
+exit
+
+policy-map InClusterRdma in
+class CLUSTER_RDMA
+assign-queue 2
+police-simple rate-percent 60 64 conform-action transmit violate-action transmit
+exit
+
+class CLUSTER
+assign-queue 0
+police-simple rate-percent 60 64 conform-action transmit violate-action transmit
+exit
+
+exit
+
+policy-map InShared in
+class RdmaSrc
+assign-queue 5
+police-simple rate-percent 60 64 conform-action transmit violate-action transmit
+exit
+
+class RdmaDst
+assign-queue 5
+police-simple rate-percent 60 64 conform-action transmit violate-action transmit
+exit
+
+class c5
+assign-queue 5
+police-simple rate-percent 60 64 conform-action transmit violate-action transmit
+exit
+
+class StorageSrc
+assign-queue 4
+police-simple rate-percent 40 64 conform-action transmit violate-action transmit
+exit
+
+class StorageDst
+assign-queue 4
+police-simple rate-percent 40 64 conform-action transmit violate-action transmit
+exit
+
+class c4
+assign-queue 4
+police-simple rate-percent 40 64 conform-action transmit violate-action transmit
+exit
+
+class CLUSTER
+assign-queue 0
+police-simple rate-percent 40 64 conform-action transmit violate-action transmit
+exit
+
+exit
+
+policy-map InMetroCluster in
+class RdmaSrc
+assign-queue 5
+police-simple rate-percent 60 64 conform-action transmit violate-action transmit
+exit
+
+class RdmaDst
+assign-queue 5
+police-simple rate-percent 60 64 conform-action transmit violate-action transmit
+exit
+
+class c5
+assign-queue 5
+police-simple rate-percent 60 64 conform-action transmit violate-action transmit
+exit
+
+class StorageSrc
+assign-queue 4
+police-simple rate-percent 40 64 conform-action transmit violate-action transmit
+exit
+
+class StorageDst
+assign-queue 4
+police-simple rate-percent 40 64 conform-action transmit violate-action transmit
+exit
+
+class c4
+assign-queue 4
+police-simple rate-percent 60 64 conform-action transmit violate-action transmit
+exit
+
+exit
+
+classofservice dot1p-mapping 0 0
+classofservice dot1p-mapping 4 4
+classofservice dot1p-mapping 5 5
+classofservice dot1p-mapping 6 6
+classofservice dot1p-mapping 7 7
+random-detect queue-parms 0 min-thresh 12 70 50 50 max-thresh 13 100 100 100 drop-prob 100 5 10 50 ecn
+random-detect queue-parms 4 min-thresh 40 70 50 50 max-thresh 41 100 100 100 drop-prob 3 5 10 50 ecn
+random-detect queue-parms 5 min-thresh 80 70 50 50 max-thresh 100 100 100 100 drop-prob 3 5 10 50 ecn
+cos-queue min-bandwidth 30 0 0 0 30 40 0 0
+cos-queue random-detect 0 5
+
+interface 0/1
+description "Unused ports"
+spanning-tree edgeport
+mtu 9216
+exit
+
+
+
+interface 0/2
+description "Unused ports"
+spanning-tree edgeport
+mtu 9216
+exit
+
+
+
+interface 0/3
+description "Unused ports"
+spanning-tree edgeport
+mtu 9216
+exit
+
+
+
+interface 0/4
+description "Unused ports"
+spanning-tree edgeport
+mtu 9216
+exit
+
+
+
+interface 0/5
+description "Unused ports"
+spanning-tree edgeport
+mtu 9216
+exit
+
+
+
+interface 0/6
+description "Unused ports"
+spanning-tree edgeport
+mtu 9216
+exit
+
+
+
+interface 0/7
+description "Unused ports"
+spanning-tree edgeport
+mtu 9216
+exit
+
+
+
+interface 0/8
+description "Unused ports"
+spanning-tree edgeport
+mtu 9216
+exit
+
+
+
+interface 0/9
+service-policy in InShared
+no shutdown
+description "Shared Intra-Cluster/MetroCluster Node Port, MetroCluster 1"
+spanning-tree edgeport
+mtu 9216
+switchport mode trunk
+switchport trunk native vlan 103
+switchport trunk allowed vlan 10,103
+vlan participation include 10,103
+vlan tagging 10,103
+exit
+
+
+
+interface 0/10
+service-policy in InShared
+no shutdown
+description "Shared Intra-Cluster/MetroCluster Node Port, MetroCluster 1"
+spanning-tree edgeport
+mtu 9216
+switchport mode trunk
+switchport trunk native vlan 103
+switchport trunk allowed vlan 10,103
+vlan participation include 10,103
+vlan tagging 10,103
+exit
+
+
+
+interface 0/11
+description "Unused ports"
+spanning-tree edgeport
+mtu 9216
+exit
+
+
+
+interface 0/12
+description "Unused ports"
+spanning-tree edgeport
+mtu 9216
+exit
+
+
+
+interface 0/13
+no shutdown
+description "MetroCluster ISL Port"
+mtu 9216
+exit
+
+
+
+interface 0/14
+description "MetroCluster ISL Port"
+mtu 9216
+exit
+
+
+
+interface 0/15
+description "MetroCluster ISL Port"
+mtu 9216
+exit
+
+
+
+interface 0/16
+description "MetroCluster ISL Port"
+mtu 9216
+exit
+
+
+
+interface 0/55
+no shutdown
+description "Intra-Cluster ISL Port"
+mtu 9216
+exit
+
+
+
+interface 0/56
+no shutdown
+description "Intra-Cluster ISL Port"
+mtu 9216
+exit
+
+
+
+interface 1/1
+service-policy in InClusterRdma
+description "Intra-Cluster ISL"
+no port-channel static
+mtu 9216
+switchport mode trunk
+switchport trunk allowed vlan 1,103
+vlan participation include 103
+vlan tagging 103
+exit
+
+
+
+interface 1/10
+service-policy in InMetroCluster
+description "MetroCluster ISL"
+no port-channel static
+mtu 9216
+switchport mode trunk
+switchport trunk allowed vlan 10
+vlan participation include 10
+vlan tagging 10
+exit
+
+
+errdisable recovery cause link-flap
+errdisable recovery interval 30
+router ospf
+exit
+ipv6 router ospf
+exit
+no isdp advertise-v2
+isdp timer 5
+exit
+
+no ip http secure-server
+ip ssh server enable
+
