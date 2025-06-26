@@ -1,10 +1,6 @@
-# show version
 # Model: srx300
 # Junos: 22.4R3-S2.11
 # JUNOS Software Release [22.4R3-S2.11]
-# 
-# oxidized>
-# show chassis hardware
 # Hardware inventory:
 # Item             Version  Part number  Serial number     Description
 # Chassis                                AA0000AA0000      SRX300
@@ -13,9 +9,6 @@
 #   PIC 0                                                  6xGE,2xGE SFP Base PIC
 #     Xcvr 6       REV 01   740-031850   S2001411089       SFP-LX10
 # Power Supply 0
-# 
-# oxidized>
-# show system license
 # License usage:
 #                                  Licenses     Licenses    Licenses
 # 				  Feature      Feature     Feature
@@ -25,11 +18,6 @@
 # 
 # Licenses installed: none
 # 
-# oxidized>
-# show system license keys
-# 
-# oxidized>
-show configuration | display omit
 ## Last commit: 2024-12-06 11:41:05 UTC by root
 version 22.4R3-S2.11;
 system {
@@ -318,5 +306,3 @@ protocols {
         interface all;
     }
 }
-
-oxidized>

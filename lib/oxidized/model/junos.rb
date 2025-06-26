@@ -34,7 +34,7 @@ class JunOS < Oxidized::Model
       out << cmd('show virtual-chassis') { |cfg| comment cfg }
     when /^srx/
       out << cmd('show chassis cluster status') do |cfg|
-        cfg.include?('error: Chassis cluster is not enabled.') ? '' : comment(cfg)
+        cfg.lines.count <= 1 && cfg.include?("error:") ? '' : comment(cfg)
       end
     end
     out
