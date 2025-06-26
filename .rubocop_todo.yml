@@ -16,6 +16,7 @@ Metrics/AbcSize:
 Metrics/ClassLength:
   Exclude:
     - 'lib/oxidized/node.rb'
+    - 'lib/oxidized/output/git.rb'
 
 # Offense count: 19
 # Configuration parameters: AllowedMethods, AllowedPatterns.

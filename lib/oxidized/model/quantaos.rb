@@ -1,15 +1,17 @@
 class QuantaOS < Oxidized::Model
   using Refinements
 
-  prompt /^\((\w|\S)+\) (>|#)$/
+  prompt /^\(\S+\) (>|#)$/
   comment '! '
 
+  cmd :all do |cfg|
+    # Remove command echo and prompt
+    cfg.cut_both
+  end
+
   cmd 'show run' do |cfg|
-    cfg.each_line.select do |line|
-      (not line.match /^!.*$/) &&
-        (not line.match /^\((\w|\S)+\) (>|#)$/) &&
-        (not line.match /^show run$/)
-    end.join
+    # Remove commented lines
+    cfg.lines.grep_v(/^!/).join
   end
 
   cfg :telnet do
