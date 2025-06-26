@@ -303,7 +303,7 @@ module Oxidized
       # The alternative would be to rebuild the index each time, which a little
       # time consuming. Caching the index in memory is difficult because a new
       # Output object is created each time #store is called.
-      def update_repo(repo, file, data)
+      def update_repo(repo, file, data) # rubocop:disable Naming/PredicateMethod
         oid_old = repo.blob_at(repo.head.target_id, file) rescue nil
         return false if oid_old && (oid_old.content.b == data.b)
 
