@@ -36,6 +36,7 @@ The format is based on [Keep a Changelog](https://keepachangelog.com/en/1.1.0/).
 - sonicos: remove inefficient regular expression / Fixes code scanning alert #4 and #11 (@robertcheramy)
 - quantaos: remove inefficient regular expression / Fixes code scanning alerts 9 and 10 (@robertcheramy)
 - fabricos: remove power supply input voltage from `chassisShow` output (@hops)
+- vyatta: Ignore system uptime in `show version` on Edgerouter devices (@shanemcc)
 
 
 ## [0.33.0 - 2025-03-26]
