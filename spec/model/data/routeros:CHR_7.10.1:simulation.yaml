@@ -18,17 +18,23 @@ commands:
     \x20       architecture-name: x86_64
     \x20              board-name: CHR
     \x20                platform: MikroTik
-    
+
   "/system package update print\n": |-
     \x20           channel: stable
     \x20 installed-version: 7.10.1
-    
+
   "/system history print without-paging\n": |-
-    
+    Flags: U - UNDOABLE
+    Columns: ACTION, BY, POLICY, TIME
+    \x20 ACTION                            BY           POLICY  TIME              \x20
+    U bridge port changed               user  write   2024-07-31 09:33:47
+
   "/export show-sensitive\n": |-
     # 2024-10-25 06:08:35 by RouterOS 7.10.1
-    # software id =\x20
+    # software id = XX-XX\x20
     #
+    # model = XXX
+    # serial number = XXX
     /interface ethernet
     set [ find default-name=ether1 ] disable-running-check=no
     set [ find default-name=ether2 ] disable-running-check=no

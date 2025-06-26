@@ -12,6 +12,7 @@ The format is based on [Keep a Changelog](https://keepachangelog.com/en/1.1.0/).
 - ssh: support 'newline "string"' cfg block method to allow defining \r\n newline (@ytti)
 - model for Netgate TNSR (@Vantomas)
 - efos: New model for Brocade Enhanced Fabric OS. Fixes #3477 (@sorano, @cetjcm, @robertcheramy)
+- ouput/file, output/git: clean node configurations which are not listed in the source anymore. Fixes: #1805 (@robertcheramy)
 - sixwind: New model to support 6WIND Virtual Service Router (@hcaldicott)
 
 ### Changed
@@ -32,8 +33,12 @@ The format is based on [Keep a Changelog](https://keepachangelog.com/en/1.1.0/).
 - Update installation instructions on Rocky Linux 9. Fixes #3368 (@robertcheramy)
 - awplus: fix enable password when supplied (@sgsimpson)
 - node.rb: remove Polynomial regular expression / Fixes Code scanning alert #40 (@robertcheramy)
-- asa: remove Inefficient regular expression / Fixes Code scanning alert #5 and #6 (@robertcheramy)
+- asa: remove inefficient regular expression / Fixes Code scanning alert #5 and #6 (@robertcheramy)
+- sonicos: remove inefficient regular expression / Fixes code scanning alert #4 and #11 (@robertcheramy)
 - quantaos: remove inefficient regular expression / Fixes code scanning alerts 9 and 10 (@robertcheramy)
+- fabricos: remove power supply input voltage from `chassisShow` output (@hops)
+- vyatta: Ignore system uptime in `show version` on Edgerouter devices (@shanemcc)
+- netgear: include running-config in config output (@bradleywehmeier)
 
 
 ## [0.33.0 - 2025-03-26]

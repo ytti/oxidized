@@ -6,7 +6,7 @@ module Oxidized
     include Input::CLI
     attr_reader :telnet
 
-    def connect(node)
+    def connect(node) # rubocop:disable Naming/PredicateMethod
       @node    = node
       @timeout = Oxidized.config.timeout
       @node.model.cfg['telnet'].each { |cb| instance_exec(&cb) }
