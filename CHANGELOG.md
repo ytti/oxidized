@@ -41,6 +41,7 @@ The format is based on [Keep a Changelog](https://keepachangelog.com/en/1.1.0/).
 - fabricos: remove power supply input voltage from `chassisShow` output (@hops)
 - vyatta: Ignore system uptime in `show version` on Edgerouter devices (@shanemcc)
 - netgear: include running-config in config output (@bradleywehmeier)
+- eltex: remove inefficient regular expression / Fixes code scanning alert 7 / See Issue #3513 (@robertcheramy)
 
 
 ## [0.33.0 - 2025-03-26]
