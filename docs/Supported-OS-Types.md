@@ -45,6 +45,7 @@
 |Centec Networks     |CNOS                          |[cnos](/lib/oxidized/model/cnos.rb)
 |Check Point         |GaiaOS                        |[gaiaos](/lib/oxidized/model/gaiaos.rb)
 |Ciena               |SAOS                          |[saos](/lib/oxidized/model/saos.rb)
+|                    |SAOS10                        |[saos10](/lib/oxidized/model/saos10.rb)
 |Cisco               |ACSW                          |[acsw](/lib/oxidized/model/acsw.rb)
 |                    |AireOS                        |[aireos](/lib/oxidized/model/aireos.rb)          |                 |[AireOS](Model-Notes/AireOS.md)
 |                    |ASA                           |[asa](/lib/oxidized/model/asa.rb)                |@robertcheramy

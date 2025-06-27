@@ -14,6 +14,8 @@ The format is based on [Keep a Changelog](https://keepachangelog.com/en/1.1.0/).
 - efos: New model for Brocade Enhanced Fabric OS. Fixes #3477 (@sorano, @cetjcm, @robertcheramy)
 - ouput/file, output/git: clean node configurations which are not listed in the source anymore. Fixes: #1805 (@robertcheramy)
 - sixwind: New model to support 6WIND Virtual Service Router (@hcaldicott)
+- model for saos10 (@penfold1972)
+
 
 ### Changed
 - acos: remove free storage amount from show version. Fixes #3492 (@991jo)
