@@ -64,6 +64,20 @@ describe Oxidized::Node do
       fails = after_fails - before_fails
       _(fails).must_equal 1
     end
+
+    it 'should warn when no suitable input has been found' do
+      node = Oxidized::Node.new(name:     'example.com',
+                                input:    'http',
+                                output:   'git',
+                                model:    'junos',
+                                username: 'alma',
+                                password: 'armud',
+                                prompt:   'test_prompt')
+      Oxidized.logger.expects(:error)
+              .with("No suitable input found for example.com")
+      status, = node.run
+      _(status).must_equal :fail
+    end
   end
 
   describe '#repo' do

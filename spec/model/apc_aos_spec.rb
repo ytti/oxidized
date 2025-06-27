@@ -64,6 +64,8 @@ describe 'Model apc_aos' do
                                username: 'alma',
                                password: 'armud',
                                prompt:   'test_prompt')
+    Oxidized.logger.expects(:error)
+            .with("No suitable input found for example.com")
 
     status, = @node.run
 
