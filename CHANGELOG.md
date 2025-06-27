@@ -43,6 +43,7 @@ The format is based on [Keep a Changelog](https://keepachangelog.com/en/1.1.0/).
 - netgear: include running-config in config output (@bradleywehmeier)
 - eltex: remove inefficient regular expression / Fixes code scanning alert 7 / See Issue #3513 (@robertcheramy)
 - tmos: remove deprecated secrets (@rouven0)
+- log an error when no suitable input is found for a node. Fixes: #3346 (@robertcheramy) 
 
 
 ## [0.33.0 - 2025-03-26]
