@@ -37,6 +37,7 @@ module Oxidized
     # many times, especialy from the specs.
     SemanticLogger.clear_appenders!
     SemanticLogger.default_level = :info
+    SemanticLogger.add_signal_handler
     self.logger = nil
 
     if config.has_key?('use_syslog') && config.use_syslog

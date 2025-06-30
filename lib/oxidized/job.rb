@@ -5,8 +5,9 @@ module Oxidized
     attr_reader :start, :end, :status, :time, :node, :config
 
     def initialize(node)
-      @node         = node
-      @start        = Time.now.utc
+      @node = node
+      @start = Time.now.utc
+      self.name = "Oxidized::Job '#{@node.name}'"
       super do
         logger.debug "lib/oxidized/job.rb: Starting fetching process for #{@node.name} at #{Time.now.utc}"
         @status, @config = @node.run

@@ -557,3 +557,40 @@ logger:
     - type: file
       file: ~/.config/oxidized/trace.log
 ```
+
+### Change log level
+You can change the global log level of oxidized by sending a SIGUSR2 to
+the process:
+```
+kill -SIGUSR2 424242
+```
+It will rotate between the log levels and log a warning with the new level
+(you won't see the warning when the log level is `:fatal` or `:error`):
+```
+2025-06-30 15:25:27.972881 W [109750:2640] SemanticLogger -- Changed global default log level to :warn
+```
+
+If you specified a log level for an appender, this log level won't be
+changed.
+
+> :warning: **Warning** This currently does not work when oxidized-web is used
+> and will kill the whole oxidized application. This will be corrected in a
+> future release of oxidized-web.
+
+### Dump running threads
+With the SIGTTIN signal, oxidized will log a backtrace for each of its threads.
+```
+kill -SIGTTIN 424242
+```
+
+The threads used to fetch the configs are named `Oxidized::Job 'hostname'`:
+
+```
+2025-06-30 15:32:22.293047 W [110549:2640 core.rb:76] Thread Dump -- Backtrace:
+/home/xxx/oxidized/lib/oxidized/core.rb:76:in `sleep'
+/home/xxx/oxidized/lib/oxidized/core.rb:76:in `block in run'
+(...)
+2025-06-30 15:32:22.293409 W [110549:Oxidized::Job 'host2' ssh.rb:127] Thread Dump -- Backtrace:
+/home/xxx/oxidized/lib/oxidized/input/ssh.rb:127:in `sleep'
+/home/xxx/oxidized/lib/oxidized/input/ssh.rb:127:in `block (2 levels) in expect'
+```
