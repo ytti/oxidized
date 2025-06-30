@@ -1,0 +1,24 @@
+# This is no real simulation file. It is used to test some regexp
+# in the model
+init_prompt: |-
+  Hello!
+  (some_prompt) >
+commands:
+  "enable\n": |-
+    enter your enable password:
+  "\n": "\n(some_prompt) #"
+  "terminal length 0\n": |-
+    terminal length 0
+    (some_prompt) #
+  "show run\n": |-
+    show run
+    ! Running config
+    ! Comments are removed
+    This line is not removed
+    (some_prompt) #
+  "show current-config\n": |-
+    show current-config
+    (some_prompt) #
+  "quit\n": |-
+    Bye ;-)
+  "n\n":

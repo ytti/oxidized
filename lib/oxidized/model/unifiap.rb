@@ -31,7 +31,9 @@ class Unifiap < Oxidized::Model
 
   # Next see if we can get our IP and host name out of /etc/hosts
   cmd 'cat /etc/hosts' do |cfg|
-    cfg = cfg.split("\n").reject { |line| line[/^\s*(127|0000:0000:0000:0000:0000:0000:0000:0001|0:0:0:0:0:0:0:1|::1)/] }
+    cfg = cfg.split("\n").reject do |line|
+      line[/^\s*(127|0000:0000:0000:0000:0000:0000:0000:0001|0:0:0:0:0:0:0:1|::1)/]
+    end
     cfg.select do |line|
       if (match = line.match(/(\d+\.\d+\.\d+\.\d+)\s+(\S+)/))
         @ip, @hostname = match.captures
@@ -41,7 +43,7 @@ class Unifiap < Oxidized::Model
   end
 
   # We check here to see if we succeeded with /etc/hosts. If not, then we try again with ifconfig, and /tmp/system.cfg
-  cmd do
+  cmd 'echo' do
     unless @ip
       cmd 'ifconfig br0' do |cfg|
         @ip = Regexp.last_match(1) if cfg =~ /inet addr:\s*(\d+\.\d+\.\d+\.\d+)/i
@@ -87,7 +89,7 @@ class Unifiap < Oxidized::Model
   end
 
   # Now we can display it all as a banner
-  cmd do
+  cmd 'echo' do
     out = []
     out << "*************************"
     out << "Model:       #{@model}"

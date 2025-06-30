@@ -1,0 +1,1877 @@
+---
+init_prompt: |-
+    Welcome to Netgate TNSR Version: 25.02-2
+    
+    \t* Documentation:  https://docs.netgate.com/tnsr/en/latest/
+    \t* Support:        https://www.netgate.com/support
+    
+       _          __________
+     _| |_ _ __  | ___ _ __ |
+    |_  __| '_ \\ |/ __| '__||
+      | |_| | | ||\\__ \\ |   |
+       \\__|_| |_|||___/_|   |
+                 |__________|
+    
+    
+    
+    Version: 25.02-2
+    
+    For information see 'show documentation'
+    
+    \rtnsr-dev-25-02 tnsr#\x20
+commands:
+  - "show version all\n": |-
+      show version all
+      \r                tnsr-release 25.02-2
+                            cligen 7.2.0-2+tnsr-v25.02-2+jammy
+                            clixon 7.2.0-10+tnsr-v25.02-2+jammy
+                            davici 1.4-36+tnsr-v25.02-2+jammy
+                        libdaq3t64 3.0.17-3+tnsr-v25.02-2+jammy
+                        libikemgmt 1.2.1-41+tnsr-v25.02-2+jammy
+                         libnfmgmt 1.0.1-60+tnsr-v25.02-2+jammy
+                         libnlmgmt 1.0.1-66+tnsr-v25.02-2+jammy
+                        libntpmgmt 1.0.1-36+tnsr-v25.02-2+jammy
+                      libtnsrinfra 0.0.1-80+tnsr-v25.02-2+jammy
+                        libvppmgmt 1.2.1-755+tnsr-v25.02-2+jammy
+                       libyang2t64 2.1.148-4+tnsr-v25.02-2+jammy
+                netgate-dpdk-kmods 21.06-45+tnsr-v25.02-2+jammy
+                       netgate-frr 10.2-135+tnsr-v25.02-2+jammy
+          netgate-kea-dhcp4-server 2.6.1-4+tnsr-v25.02-2+jammy
+             netgate-libhyperscan5 5.6.1-16+tnsr-v25.02-2+jammy
+                     netgate-snmpd 5.8-27+tnsr-v25.02-2+jammy
+                netgate-strongswan 6.0.0-44+tnsr-v25.02-2+jammy
+                     snmp-subagent 1.0.2-45+tnsr-v25.02-2+jammy
+                            snort3 3.6.0.0-4+tnsr-v25.02-2+jammy
+                              tnsr 25.02-2
+                       tnsr-config 0.1-217+tnsr-v25.02-2+jammy
+                          tnsr-gui 0.0.1-593+tnsr-v25.02-2+jammy
+      --More--
+  - " ": |-
+      \b\b\b\b\b\b\b\b        \b\b\b\b\b\b\b\b                         vpp 24.10-175+tnsr-v25.02-2+jammy+D24.07
+      \rtnsr-dev-25-02 tnsr#\x20
+  - "show configuration running cli\n": |-
+      show configuration running cli
+      \rconfiguration history enable
+      
+      nacm disable
+      nacm read-default deny
+      nacm write-default deny
+      nacm exec-default deny
+      nacm group admin
+          member root
+          member tnsr
+      exit
+      nacm group nagios
+          member nagios
+      exit
+      nacm rule-list admin-rules
+          group admin
+          rule permit-all
+              module *
+              access-operations *
+              action permit
+          exit
+      exit
+      nacm rule-list nagios-rules
+          group nagios
+      --More--
+  - " ": |-
+      \b\b\b\b\b\b\b\b        \b\b\b\b\b\b\b\b    rule permit-bgp
+              module netgate-bgp
+              rpc bgp-show
+              access-operations exec
+              action permit
+          exit
+      exit
+      nacm enable
+      system kernel arguments manual iommu=pt default_hugepagesz=1G hugepagesz=1G hugepages=32 isolcpus=0-7 numa_balancing=disable nosoftlockup
+      system kernel modules vfio noiommu
+      
+      sysctl vm nr_hugepages 1024
+      sysctl vm nr_overcommit_hugepages 256
+      sysctl vm max_map_count 65530
+      sysctl kernel shmmax 2147483648
+      
+      system dns-resolver dataplane
+          server dns-ipv6 abcd:abcd:a::a
+      exit
+      system dns-resolver host
+          server dns-ipv4 10.0.0.1
+          server dns-ipv6 abcd:abcd:a::a
+      --More--
+  - " ": |-
+      \b\b\b\b\b\b\b\b        \b\b\b\b\b\b\b\bexit
+      auth user nagios
+          password $6$REMOVED123.REMOVED/123
+      exit
+      
+      host interface eno1
+          enable
+          ip dhcp-client enable
+      exit
+      
+      host route table default
+          interface eno1
+              route 0.0.0.0/0
+                  via 10.0.0.1
+              exit
+              route ::/0
+                  via abcd:abcd:a::a
+              exit
+          exit
+      exit
+      
+      --More--
+  - " ": |-
+      \b\b\b\b\b\b\b\b        \b\b\b\b\b\b\b\brestconf
+          enable true
+          global authentication-type client-certificate
+          global server-certificate restconf
+          global server-key restconf
+          global server-ca-cert-path restconf-CA
+          server host 0.0.0.0 443 true
+      exit
+      
+      dataplane cpu main-core 0
+      dataplane cpu corelist-workers 1
+      dataplane cpu corelist-workers 2
+      dataplane cpu corelist-workers 3
+      dataplane cpu corelist-workers 4
+      dataplane cpu corelist-workers 5
+      dataplane cpu corelist-workers 6
+      dataplane cpu corelist-workers 7
+      dataplane ethernet default-mtu 1500
+      dataplane dpdk dev 0000:41:00.0 network name Twe1/0/4
+      dataplane dpdk dev 0000:41:00.0 network num-rx-desc 4096
+      dataplane dpdk dev 0000:41:00.0 network num-tx-desc 4096
+      dataplane dpdk dev 0000:41:00.1 network name Twe1/0/3
+      dataplane dpdk dev 0000:41:00.1 network num-rx-desc 4096
+      --More--
+  - " ": |-
+      \b\b\b\b\b\b\b\b        \b\b\b\b\b\b\b\bdataplane dpdk dev 0000:41:00.1 network num-tx-desc 4096
+      dataplane dpdk dev 0000:41:00.2 network name Twe1/0/2
+      dataplane dpdk dev 0000:41:00.2 network num-rx-desc 4096
+      dataplane dpdk dev 0000:41:00.2 network num-tx-desc 4096
+      dataplane dpdk dev 0000:41:00.3 network name Twe1/0/1
+      dataplane dpdk dev 0000:41:00.3 network num-rx-desc 4096
+      dataplane dpdk dev 0000:41:00.3 network num-tx-desc 4096
+      dataplane dpdk dev 0000:81:00.0 network name Twe2/0/4
+      dataplane dpdk dev 0000:81:00.0 network num-rx-desc 4096
+      dataplane dpdk dev 0000:81:00.0 network num-tx-desc 4096
+      dataplane dpdk dev 0000:81:00.1 network name Twe2/0/3
+      dataplane dpdk dev 0000:81:00.1 network num-rx-desc 4096
+      dataplane dpdk dev 0000:81:00.1 network num-tx-desc 4096
+      dataplane dpdk dev 0000:81:00.2 network name Twe2/0/2
+      dataplane dpdk dev 0000:81:00.2 network num-rx-desc 4096
+      dataplane dpdk dev 0000:81:00.2 network num-tx-desc 4096
+      dataplane dpdk dev 0000:81:00.3 network name Twe2/0/1
+      dataplane dpdk dev 0000:81:00.3 network num-rx-desc 4096
+      dataplane dpdk dev 0000:81:00.3 network num-tx-desc 4096
+      dataplane dpdk uio-driver vfio-pci
+      dataplane dpdk iova-mode pa
+      dataplane memory main-heap-size 8G
+      dataplane memory main-heap-page-size 1g
+      --More--
+  - " ": |-
+      \b\b\b\b\b\b\b\b        \b\b\b\b\b\b\b\bdataplane api-segment api-size 256M
+      dataplane api-segment global-size 512M
+      dataplane api-segment api-pvt-heap-size 128K
+      dataplane api-segment global-pvt-heap-size 128K
+      dataplane buffers buffers-per-numa 32768
+      dataplane statseg heap-size 2G
+      dataplane logging default-syslog-log-level notice
+      dataplane linux-cp nl-rx-buffer-size 536870912
+      
+      interface bond 14
+          mode lacp
+          load-balance l23
+      exit
+      interface bond 10001
+          mode lacp
+          load-balance l23
+      exit
+      interface bond 10002
+          mode lacp
+          load-balance l23
+      exit
+      interface bond 10003
+          mode lacp
+      --More--
+  - " ": |-
+      \b\b\b\b\b\b\b\b        \b\b\b\b\b\b\b\b    load-balance l23
+      exit
+      
+      
+      nat global-options nat44 max-translations-per-thread 128000
+      nat global-options nat44 enabled false
+      
+      route table default
+          id 0
+      exit
+      
+      
+      ipfix exporter tnsr
+          source 10.0.0.1
+          collector 10.0.0.1 port 22001
+          pmtu 1400
+          template-interval 20
+          checksum true
+      exit
+      ipfix observation-point tnsr
+          interface BondEthernet10001
+          interface BondEthernet10003
+          interface BondEthernet10002
+      --More--
+  - " ": |-
+      \b\b\b\b\b\b\b\b        \b\b\b\b\b\b\b\b    interface Twe1/0/2
+          interface Twe2/0/2
+          direction both
+      exit
+      ipfix selection-process tnsr
+          selector ipv4
+      exit
+      
+      interface subif BondEthernet14 111
+          exact-match
+          outer-dot1q 111
+      exit
+      interface subif BondEthernet10003 1901
+          exact-match
+          outer-dot1q 1901
+      exit
+      interface subif Twe2/0/2 972
+          exact-match
+          outer-dot1q 972
+      exit
+      
+      vpf options
+          startup max-connections-per-thread ip4 131072
+      --More--
+  - " ": |-
+      \b\b\b\b\b\b\b\b        \b\b\b\b\b\b\b\b    startup max-connections-per-thread ip6 32768
+          startup port-mapping min-port 1024
+          startup port-mapping max-port 49151
+          runtime drop-options ip4 false
+          runtime drop-options ip6 false
+          runtime timeouts generic closed 0
+          runtime timeouts generic new 30
+          runtime timeouts generic established 60
+          runtime timeouts tcp closed 10
+          runtime timeouts tcp new 30
+          runtime timeouts tcp established 86400
+          runtime timeouts tcp half-closed 21600
+          runtime timeouts tcp time-wait 240
+          runtime tcp strict-rst-order true
+          runtime tcp max-ack-win 66000
+      exit
+      
+      vpf ipfix
+          domain 1
+          src-port 4739
+      exit
+      
+      interface BondEthernet14
+      --More--
+  - " ": |-
+      \b\b\b\b\b\b\b\b        \b\b\b\b\b\b\b\b    description po101.sw14
+          enable
+          ipv6 router-advertisements
+              send-advertisements false
+              max-rtr-adv-interval 600
+              managed-flag false
+              other-config-flag false
+          exit
+          detailed-stats enable
+      exit
+      interface BondEthernet14.111
+          description VLAN111
+          enable
+          ip address 10.0.0.1/28
+          ipv6 address abcd:abcd::a/112
+          ipv6 router-advertisements
+              send-advertisements false
+              max-rtr-adv-interval 600
+              managed-flag false
+              other-config-flag false
+          exit
+          detailed-stats enable
+      exit
+      --More--
+  - " ": |-
+      \b\b\b\b\b\b\b\b        \b\b\b\b\b\b\b\binterface BondEthernet10001
+          description PNI AS10001
+          enable
+          ip address 10.0.0.1/31
+          ipv6 address abcd:abcd:a:a::a/127
+          ipv6 router-advertisements
+              send-advertisements false
+              max-rtr-adv-interval 600
+              managed-flag false
+              other-config-flag false
+          exit
+          detailed-stats enable
+      exit
+      interface BondEthernet10003
+          description PNI AS10003
+          enable
+          ipv6 router-advertisements
+              send-advertisements false
+              max-rtr-adv-interval 600
+              managed-flag false
+              other-config-flag false
+          exit
+          detailed-stats enable
+      --More--
+  - " ": |-
+      \b\b\b\b\b\b\b\b        \b\b\b\b\b\b\b\bexit
+      interface BondEthernet10003.1901
+          description BGP VLAN AS10003
+          enable
+          ip address 10.0.0.1/30
+          ipv6 address abcd:abcd::a:a:a/124
+          ipv6 router-advertisements
+              send-advertisements false
+              max-rtr-adv-interval 600
+              managed-flag false
+              other-config-flag false
+          exit
+          detailed-stats enable
+      exit
+      interface BondEthernet10002
+          description PNI AS10002
+          enable
+          ip address 10.0.0.1/31
+          ipv6 address abcd:abcd:a:a:a::a/127
+          ipv6 router-advertisements
+              send-advertisements false
+              max-rtr-adv-interval 600
+              managed-flag false
+      --More--
+  - " ": |-
+      \b\b\b\b\b\b\b\b        \b\b\b\b\b\b\b\b        other-config-flag false
+          exit
+          detailed-stats enable
+      exit
+      interface Twe1/0/1
+          description PNI AS10003
+          enable
+          ipv6 router-advertisements
+              send-advertisements false
+              max-rtr-adv-interval 600
+              managed-flag false
+              other-config-flag false
+          exit
+          detailed-stats enable
+          bond 10003
+      exit
+      interface Twe1/0/2
+          description PNI AS10008
+          enable
+          ip address 10.0.0.1/22
+          ipv6 address abcd:abcd:a::a:a/64
+          ipv6 router-advertisements
+              send-advertisements false
+      --More--
+  - " ": |-
+      \b\b\b\b\b\b\b\b        \b\b\b\b\b\b\b\b        max-rtr-adv-interval 600
+              managed-flag false
+              other-config-flag false
+          exit
+          detailed-stats enable
+      exit
+      interface Twe1/0/3
+          description PNI AS10002
+          enable
+          ipv6 router-advertisements
+              send-advertisements false
+              max-rtr-adv-interval 600
+              managed-flag false
+              other-config-flag false
+          exit
+          detailed-stats enable
+          bond 10002
+      exit
+      interface Twe1/0/4
+          description et43.sw14
+          enable
+          ipv6 router-advertisements
+              send-advertisements false
+      --More--
+  - " ": |-
+      \b\b\b\b\b\b\b\b        \b\b\b\b\b\b\b\b        max-rtr-adv-interval 600
+              managed-flag false
+              other-config-flag false
+          exit
+          detailed-stats enable
+          bond 14
+      exit
+      interface Twe2/0/1
+          description PNI AS10003
+          enable
+          ipv6 router-advertisements
+              send-advertisements false
+              max-rtr-adv-interval 600
+              managed-flag false
+              other-config-flag false
+          exit
+          detailed-stats enable
+          bond 10003
+      exit
+      interface Twe2/0/2
+          description PNI AS10011
+          enable
+          ipv6 router-advertisements
+      --More--
+  - " ": |-
+      \b\b\b\b\b\b\b\b        \b\b\b\b\b\b\b\b        send-advertisements false
+              max-rtr-adv-interval 600
+              managed-flag false
+              other-config-flag false
+          exit
+          detailed-stats enable
+      exit
+      interface Twe2/0/2.972
+          description BGP VLAN AS10004
+          enable
+          ip address 10.0.0.1/29
+          ipv6 router-advertisements
+              send-advertisements false
+              max-rtr-adv-interval 600
+              managed-flag false
+              other-config-flag false
+          exit
+          detailed-stats enable
+      exit
+      interface Twe2/0/3
+          description PNI AS10001
+          enable
+          ipv6 router-advertisements
+      --More--
+  - " ": |-
+      \b\b\b\b\b\b\b\b        \b\b\b\b\b\b\b\b        send-advertisements false
+              max-rtr-adv-interval 600
+              managed-flag false
+              other-config-flag false
+          exit
+          detailed-stats enable
+          bond 10001
+      exit
+      interface Twe2/0/4
+          description et44.sw14
+          enable
+          ipv6 router-advertisements
+              send-advertisements false
+              max-rtr-adv-interval 600
+              managed-flag false
+              other-config-flag false
+          exit
+          detailed-stats enable
+          bond 14
+      exit
+      
+      nat ipfix logging domain 1
+      nat ipfix logging src-port 4739
+      --More--
+  - " ": |-
+      \b\b\b\b\b\b\b\b        \b\b\b\b\b\b\b\bnat nat64 map parameters
+          security-check enable
+      exit
+      
+      neighbor cache-options ipv4 max-number 50000
+      neighbor cache-options ipv4 max-age 300
+      neighbor cache-options ipv6 max-number 50000
+      neighbor cache-options ipv6 max-age 300
+      
+      interface BondEthernet14
+      exit
+      interface BondEthernet14.111
+      exit
+      interface BondEthernet10001
+      exit
+      interface BondEthernet10003
+      exit
+      interface BondEthernet10003.1901
+      exit
+      interface BondEthernet10002
+      exit
+      interface Twe1/0/1
+      exit
+      --More--
+  - " ": |-
+      \b\b\b\b\b\b\b\b        \b\b\b\b\b\b\b\binterface Twe1/0/2
+      exit
+      interface Twe1/0/3
+      exit
+      interface Twe1/0/4
+      exit
+      interface Twe2/0/1
+      exit
+      interface Twe2/0/2
+      exit
+      interface Twe2/0/2.972
+      exit
+      interface Twe2/0/3
+      exit
+      interface Twe2/0/4
+      exit
+      
+      route table default
+          id 0
+          route 0.0.0.0/0
+              next-hop 0 via null-send-unreach
+          exit
+          route ::/0
+      --More--
+  - " ": |-
+      \b\b\b\b\b\b\b\b        \b\b\b\b\b\b\b\b        next-hop 0 via null-send-unreach
+          exit
+      exit
+      
+      
+      route dynamic prefix-list v4-ABCD-NETWORKS
+          sequence 10 permit 10.0.0.0/22 le 32 ge 0
+          sequence 20 permit 10.0.0.0/25 le 32 ge 0
+      exit
+      route dynamic prefix-list v4-EXPORTED-NETWORKS
+          sequence 10 permit 10.0.0.0/22 le 0 ge 0
+          sequence 20 permit 10.0.0.0/22 le 0 ge 0
+          sequence 30 permit 10.0.0.0/23 le 0 ge 0
+      exit
+      route dynamic prefix-list v4-MARTIAN-NETWORKS
+          sequence 20 permit 10.0.0.0/8 le 32 ge 0
+          sequence 30 permit 127.0.0.0/8 le 32 ge 0
+          sequence 40 permit 169.254.0.0/16 le 32 ge 0
+          sequence 50 permit 172.16.0.0/12 le 32 ge 0
+          sequence 60 permit 192.168.0.0/16 le 32 ge 0
+          sequence 70 permit 224.0.0.0/4 le 32 ge 0
+          sequence 80 permit 240.0.0.0/7 le 32 ge 0
+      exit
+      --More--
+  - " ": |-
+      \b\b\b\b\b\b\b\b        \b\b\b\b\b\b\b\broute dynamic prefix-list v6-EXPORTED-NETWORKS
+          sequence 10 permit abcd:abcd::/32 le 0 ge 0
+          sequence 20 permit abcd:abcd::/32 le 0 ge 0
+      exit
+      route dynamic prefix-list v6-MARTIAN-NETWORKS
+          sequence 10 permit fe00::/8 le 128 ge 0
+          sequence 20 permit ::/8 le 128 ge 0
+          sequence 30 permit 2002::/17 le 128 ge 0
+          sequence 40 permit 2001::/33 le 128 ge 0
+          sequence 50 permit 2001:db8::/32 le 128 ge 0
+          sequence 60 permit 3ffe::/16 le 128 ge 0
+      exit
+      
+      route dynamic manager
+      exit
+      
+      route dynamic bgp
+          as-path path-as10001
+              rule 10 permit ^10001
+          exit
+          as-path path-as10005
+              rule 10 permit ^10005
+          exit
+      --More--
+  - " ": |-
+      \b\b\b\b\b\b\b\b        \b\b\b\b\b\b\b\b    as-path path-as10011
+              rule 10 permit ^10011
+          exit
+          as-path path-as10009
+              rule 10 permit ^$
+          exit
+          as-path path-as10012
+              rule 10 permit ^10012
+          exit
+          as-path path-as10003
+              rule 10 permit ^10003
+          exit
+          as-path path-as10013
+              rule 10 permit ^10013
+          exit
+          as-path path-as10002
+              rule 10 permit ^10002
+          exit
+          as-path path-as10008
+              rule 10 permit ^10008
+          exit
+          as-path path-as10007
+              rule 10 permit ^10007
+      --More--
+  - " ": |-
+      \b\b\b\b\b\b\b\b        \b\b\b\b\b\b\b\b    exit
+          as-path path-as10010
+              rule 10 permit ^10010
+          exit
+      exit
+      
+      route dynamic route-map ebgp-ix-as10005-v4-in
+          description eBGP IX AS10005 IPv4 in
+          sequence 10
+              policy permit
+              call ebgp-peer-v4-in
+          exit
+          sequence 20
+              policy permit
+              match as-path path-as10005
+          exit
+          sequence 30
+              policy deny
+          exit
+      exit
+      route dynamic route-map ebgp-ix-as10005-v4-out
+          description eBGP IX AS10005 IPv4 out
+          sequence 10
+      --More--
+  - " ": |-
+      \b\b\b\b\b\b\b\b        \b\b\b\b\b\b\b\b        policy permit
+              call ebgp-peer-v4-out
+          exit
+          sequence 20
+              policy deny
+          exit
+      exit
+      route dynamic route-map ebgp-ix-as10005-v6-in
+          description eBGP IX AS10005 IPv6 in
+          sequence 10
+              policy permit
+              call ebgp-peer-v6-in
+          exit
+          sequence 20
+              policy permit
+              match as-path path-as10005
+          exit
+          sequence 30
+              policy deny
+          exit
+      exit
+      route dynamic route-map ebgp-ix-as10005-v6-out
+          description eBGP IX AS10005 IPv6 out
+      --More--
+  - " ": |-
+      \b\b\b\b\b\b\b\b        \b\b\b\b\b\b\b\b    sequence 10
+              policy permit
+              call ebgp-peer-v6-out
+          exit
+          sequence 20
+              policy deny
+          exit
+      exit
+      route dynamic route-map ebgp-ix-as10006-v4-in
+          description eBGP IX AS10006 IX RouteServer IPv4 in
+          sequence 10
+              policy permit
+              call ebgp-peer-v4-in
+          exit
+          sequence 20
+              policy deny
+          exit
+      exit
+      route dynamic route-map ebgp-ix-as10006-v4-out
+          description eBGP IX AS10006 IX RouteServer IPv4 out
+          sequence 10
+              policy permit
+              call ebgp-peer-v4-out
+      --More--
+  - " ": |-
+      \b\b\b\b\b\b\b\b        \b\b\b\b\b\b\b\b    exit
+          sequence 20
+              policy deny
+          exit
+      exit
+      route dynamic route-map ebgp-ix-as10006-v6-in
+          description eBGP IX AS10006 IX RouteServer IPv6 in
+          sequence 10
+              policy permit
+              call ebgp-peer-v6-in
+          exit
+          sequence 20
+              policy deny
+          exit
+      exit
+      route dynamic route-map ebgp-ix-as10006-v6-out
+          description eBGP IX AS10006 IX RouteServer IPv6 out
+          sequence 10
+              policy permit
+              call ebgp-peer-v6-out
+          exit
+          sequence 20
+              policy deny
+      --More--
+  - " ": |-
+      \b\b\b\b\b\b\b\b        \b\b\b\b\b\b\b\b    exit
+      exit
+      route dynamic route-map ebgp-ix-as10008-v4-in
+          description eBGP IX AS10008 IX IPv4 in
+          sequence 10
+              policy permit
+              call ebgp-peer-v4-in
+          exit
+          sequence 20
+              policy permit
+              match as-path path-as10008
+          exit
+          sequence 30
+              policy deny
+          exit
+      exit
+      route dynamic route-map ebgp-ix-as10008-v4-out
+          description eBGP IX AS10008 IX IPv4 out
+          sequence 10
+              policy permit
+              call ebgp-peer-v4-out
+          exit
+          sequence 20
+      --More--
+  - " ": |-
+      \b\b\b\b\b\b\b\b        \b\b\b\b\b\b\b\b        policy deny
+          exit
+      exit
+      route dynamic route-map ebgp-ix-as10008-v6-in
+          description eBGP IX AS10008 IX IPv6 in
+          sequence 10
+              policy permit
+              call ebgp-peer-v6-in
+          exit
+          sequence 20
+              policy permit
+              match as-path path-as10008
+          exit
+          sequence 30
+              policy deny
+          exit
+      exit
+      route dynamic route-map ebgp-ix-as10008-v6-out
+          description eBGP IX AS10008 IX IPv6 out
+          sequence 10
+              policy permit
+              call ebgp-peer-v6-out
+          exit
+      --More--
+  - " ": |-
+      \b\b\b\b\b\b\b\b        \b\b\b\b\b\b\b\b    sequence 20
+              policy deny
+          exit
+      exit
+      route dynamic route-map ebgp-ix-as10007-v4-in
+          description eBGP IX AS10007 IPv4 in
+          sequence 10
+              policy permit
+              call ebgp-peer-v4-in
+          exit
+          sequence 20
+              policy permit
+              match as-path path-as10007
+          exit
+          sequence 30
+              policy deny
+          exit
+      exit
+      route dynamic route-map ebgp-ix-as10007-v4-out
+          description eBGP IX AS10007 IPv4 out
+          sequence 10
+              policy permit
+              call ebgp-peer-v4-out
+      --More--
+  - " ": |-
+      \b\b\b\b\b\b\b\b        \b\b\b\b\b\b\b\b    exit
+          sequence 20
+              policy deny
+          exit
+      exit
+      route dynamic route-map ebgp-ix-as10007-v6-in
+          description eBGP IX AS10007 IPv6 in
+          sequence 10
+              policy permit
+              call ebgp-peer-v6-in
+          exit
+          sequence 20
+              policy permit
+              match as-path path-as10007
+          exit
+          sequence 30
+              policy deny
+          exit
+      exit
+      route dynamic route-map ebgp-ix-as10007-v6-out
+          description eBGP IX AS10007 IPv6 out
+          sequence 10
+              policy permit
+      --More--
+  - " ": |-
+      \b\b\b\b\b\b\b\b        \b\b\b\b\b\b\b\b        call ebgp-peer-v6-out
+          exit
+          sequence 20
+              policy deny
+          exit
+      exit
+      route dynamic route-map ebgp-ix-as10010-v4-in
+          description eBGP IX AS10010 IPv4 in
+          sequence 10
+              policy permit
+              call ebgp-peer-v4-in
+          exit
+          sequence 20
+              policy permit
+              match as-path path-as10010
+          exit
+          sequence 30
+              policy deny
+          exit
+      exit
+      route dynamic route-map ebgp-ix-as10010-v4-out
+          description eBGP IX AS10010 IPv4 out
+          sequence 10
+      --More--
+  - " ": |-
+      \b\b\b\b\b\b\b\b        \b\b\b\b\b\b\b\b        policy permit
+              call ebgp-peer-v4-out
+          exit
+          sequence 20
+              policy deny
+          exit
+      exit
+      route dynamic route-map ebgp-ix-as10010-v6-in
+          description eBGP IX AS10010 IPv6 in
+          sequence 10
+              policy permit
+              call ebgp-peer-v6-in
+          exit
+          sequence 20
+              policy permit
+              match as-path path-as10010
+          exit
+          sequence 30
+              policy deny
+          exit
+      exit
+      route dynamic route-map ebgp-ix-as10010-v6-out
+          description eBGP IX AS10010 IPv6 out
+      --More--
+  - " ": |-
+      \b\b\b\b\b\b\b\b        \b\b\b\b\b\b\b\b    sequence 10
+              policy permit
+              call ebgp-peer-v6-out
+          exit
+          sequence 20
+              policy deny
+          exit
+      exit
+      route dynamic route-map ebgp-peer-v4-in
+          description eBGP Peer Template IPv4 in
+          sequence 10
+              policy deny
+              match ip address prefix-list v4-MARTIAN-NETWORKS
+          exit
+          sequence 20
+              policy permit
+          exit
+      exit
+      route dynamic route-map ebgp-peer-v4-out
+          description eBGP Peer Template IPv4 out
+          sequence 10
+              policy deny
+              match ip address prefix-list v4-MARTIAN-NETWORKS
+      --More--
+  - " ": |-
+      \b\b\b\b\b\b\b\b        \b\b\b\b\b\b\b\b    exit
+          sequence 20
+              policy permit
+              description AS10009
+              match ip address prefix-list v4-EXPORTED-NETWORKS
+              match as-path path-as10009
+          exit
+          sequence 21
+              policy permit
+              description AS10012
+              match ip address prefix-list v4-EXPORTED-NETWORKS
+              match as-path path-as10012
+          exit
+          sequence 22
+              policy permit
+              description AS10013
+              match ip address prefix-list v4-EXPORTED-NETWORKS
+              match as-path path-as10013
+          exit
+          sequence 30
+              policy deny
+          exit
+      exit
+      --More--
+  - " ": |-
+      \b\b\b\b\b\b\b\b        \b\b\b\b\b\b\b\broute dynamic route-map ebgp-peer-v6-in
+          description eBGP Peer Template IPv6 in
+          sequence 10
+              policy deny
+              match ipv6 address prefix-list v6-MARTIAN-NETWORKS
+          exit
+          sequence 20
+              policy permit
+          exit
+      exit
+      route dynamic route-map ebgp-peer-v6-out
+          description eBGP Peer Template IPv6 out
+          sequence 10
+              policy deny
+              match ipv6 address prefix-list v6-MARTIAN-NETWORKS
+          exit
+          sequence 20
+              policy permit
+              description AS10009
+              match ipv6 address prefix-list v6-EXPORTED-NETWORKS
+              match as-path path-as10009
+          exit
+          sequence 21
+      --More--
+  - " ": |-
+      \b\b\b\b\b\b\b\b        \b\b\b\b\b\b\b\b        policy permit
+              description AS10012
+              match ipv6 address prefix-list v6-EXPORTED-NETWORKS
+              match as-path path-as10012
+          exit
+          sequence 22
+              policy permit
+              description AS10013
+              match ipv6 address prefix-list v6-EXPORTED-NETWORKS
+              match as-path path-as10013
+          exit
+          sequence 30
+              policy deny
+          exit
+      exit
+      route dynamic route-map ebgp-pni-as10001-v4-in
+          description eBGP PNI AS10001 IPv4 in
+          sequence 10
+              policy permit
+              call ebgp-peer-v4-in
+              on-match next
+          exit
+          sequence 20
+      --More--
+  - " ": |-
+      \b\b\b\b\b\b\b\b        \b\b\b\b\b\b\b\b        policy permit
+              match as-path path-as10001
+              set local-preference 150
+          exit
+          sequence 30
+              policy deny
+          exit
+      exit
+      route dynamic route-map ebgp-pni-as10001-v4-out
+          description eBGP PNI AS10001 IPv4 out
+          sequence 10
+              policy permit
+              call ebgp-peer-v4-out
+          exit
+          sequence 20
+              policy deny
+          exit
+      exit
+      route dynamic route-map ebgp-pni-as10001-v6-in
+          description eBGP PNI AS10001 IPv6 in
+          sequence 10
+              policy permit
+              call ebgp-peer-v6-in
+      --More--
+  - " ": |-
+      \b\b\b\b\b\b\b\b        \b\b\b\b\b\b\b\b        on-match next
+          exit
+          sequence 20
+              policy permit
+              match as-path path-as10001
+              set local-preference 150
+          exit
+          sequence 30
+              policy deny
+          exit
+      exit
+      route dynamic route-map ebgp-pni-as10001-v6-out
+          description eBGP PNI AS10001 IPv6 out
+          sequence 10
+              policy permit
+              call ebgp-peer-v6-out
+          exit
+          sequence 20
+              policy deny
+          exit
+      exit
+      route dynamic route-map ebgp-pni-as10011-v4-in
+          description eBGP PNI AS10011 IPv4 in
+      --More--
+  - " ": |-
+      \b\b\b\b\b\b\b\b        \b\b\b\b\b\b\b\b    sequence 10
+              policy permit
+              call ebgp-peer-v4-in
+          exit
+          sequence 20
+              policy permit
+              match as-path path-as10011
+          exit
+          sequence 30
+              policy deny
+          exit
+      exit
+      route dynamic route-map ebgp-pni-as10011-v4-out
+          description eBGP PNI AS10011 IPv4 out
+          sequence 10
+              policy permit
+              call ebgp-peer-v4-out
+          exit
+          sequence 20
+              policy deny
+          exit
+      exit
+      route dynamic route-map ebgp-pni-as10003-v4-in
+      --More--
+  - " ": |-
+      \b\b\b\b\b\b\b\b        \b\b\b\b\b\b\b\b    description eBGP PNI AS10003 IPv4 in
+          sequence 10
+              policy permit
+              call ebgp-peer-v4-in
+          exit
+          sequence 20
+              policy permit
+              match as-path path-as10003
+          exit
+          sequence 30
+              policy deny
+          exit
+      exit
+      route dynamic route-map ebgp-pni-as10003-v4-out
+          description eBGP PNI AS10003 IPv4 out
+          sequence 10
+              policy permit
+              call ebgp-peer-v4-out
+          exit
+          sequence 20
+              policy deny
+          exit
+      exit
+      --More--
+  - " ": |-
+      \b\b\b\b\b\b\b\b        \b\b\b\b\b\b\b\broute dynamic route-map ebgp-pni-as10003-v6-in
+          description eBGP PNI AS10003 IPv6 in
+          sequence 10
+              policy permit
+              call ebgp-peer-v6-in
+          exit
+          sequence 20
+              policy permit
+              match as-path path-as10003
+          exit
+          sequence 30
+              policy deny
+          exit
+      exit
+      route dynamic route-map ebgp-pni-as10003-v6-out
+          description eBGP PNI AS10003 IPv6 out
+          sequence 10
+              policy permit
+              call ebgp-peer-v6-out
+          exit
+          sequence 20
+              policy deny
+          exit
+      --More--
+  - " ": |-
+      \b\b\b\b\b\b\b\b        \b\b\b\b\b\b\b\bexit
+      route dynamic route-map ebgp-pni-as10002-v4-in
+          description eBGP PNI AS10002 IPv4 in
+          sequence 10
+              policy permit
+              call ebgp-peer-v4-in
+          exit
+          sequence 20
+              policy permit
+              match as-path path-as10002
+          exit
+          sequence 30
+              policy deny
+          exit
+      exit
+      route dynamic route-map ebgp-pni-as10002-v4-out
+          description eBGP PNI AS10002 IPv4 out
+          sequence 10
+              policy permit
+              call ebgp-peer-v4-out
+          exit
+          sequence 20
+              policy deny
+      --More--
+  - " ": |-
+      \b\b\b\b\b\b\b\b        \b\b\b\b\b\b\b\b    exit
+      exit
+      route dynamic route-map ebgp-pni-as10002-v6-in
+          description eBGP PNI AS10002 IPv6 in
+          sequence 10
+              policy permit
+              call ebgp-peer-v6-in
+          exit
+          sequence 20
+              policy permit
+              match as-path path-as10002
+          exit
+          sequence 30
+              policy deny
+          exit
+      exit
+      route dynamic route-map ebgp-pni-as10002-v6-out
+          description eBGP PNI AS10002 IPv6 out
+          sequence 10
+              policy permit
+              call ebgp-peer-v6-out
+          exit
+          sequence 20
+      --More--
+  - " ": |-
+      \b\b\b\b\b\b\b\b        \b\b\b\b\b\b\b\b        policy deny
+          exit
+      exit
+      route dynamic route-map ibgp-bgp-as10009-v4-in
+          description iBGP BGP AS10009 IPv4 in
+          sequence 10
+              policy permit
+              call ibgp-peer-v4-in
+          exit
+          sequence 20
+              policy deny
+          exit
+      exit
+      route dynamic route-map ibgp-bgp-as10009-v4-out
+          description iBGP BGP AS10009 IPv4 out
+          sequence 10
+              policy permit
+              call ibgp-peer-v4-out
+          exit
+          sequence 20
+              policy deny
+          exit
+      exit
+      --More--
+  - " ": |-
+      \b\b\b\b\b\b\b\b        \b\b\b\b\b\b\b\broute dynamic route-map ibgp-bgp-as10009-v6-in
+          description iBGP BGP AS10009 IPv6 in
+          sequence 10
+              policy permit
+              call ibgp-peer-v6-in
+          exit
+          sequence 20
+              policy deny
+          exit
+      exit
+      route dynamic route-map ibgp-bgp-as10009-v6-out
+          description iBGP BGP AS10009 IPv6 out
+          sequence 10
+              policy permit
+              call ibgp-peer-v6-out
+          exit
+          sequence 20
+              policy deny
+          exit
+      exit
+      route dynamic route-map ibgp-peer-v4-in
+          description iBGP Peer Template IPv4 in
+          sequence 10
+      --More--
+  - " ": |-
+      \b\b\b\b\b\b\b\b        \b\b\b\b\b\b\b\b        policy permit
+          exit
+      exit
+      route dynamic route-map ibgp-peer-v4-out
+          description iBGP Peer Template IPv4 out
+          sequence 10
+              policy permit
+          exit
+      exit
+      route dynamic route-map ibgp-peer-v6-in
+          description iBGP Peer Template IPv6 in
+          sequence 10
+              policy permit
+          exit
+      exit
+      route dynamic route-map ibgp-peer-v6-out
+          description iBGP Peer Template IPv6 out
+          sequence 10
+              policy permit
+          exit
+      exit
+      
+      route dynamic bgp
+      --More--
+  - " ": |-
+      \b\b\b\b\b\b\b\b        \b\b\b\b\b\b\b\b    enable
+          server vrf default
+              as-number 10009
+              neighbor ebgp-ix-as10005-v4
+                  description eBGP IX AS10005 IPv4 peers
+                  remote-as 10005
+                  enable
+                  update-source Twe1/0/2
+              exit
+              neighbor ebgp-ix-as10005-v6
+                  description eBGP IX AS10005 IPv6 peers
+                  remote-as 10005
+                  enable
+                  update-source Twe1/0/2
+              exit
+              neighbor ebgp-ix-as10006-v4
+                  description eBGP IX AS10006 IX RouteServer IPv4 peers
+                  remote-as 10006
+                  enable
+                  update-source Twe1/0/2
+              exit
+              neighbor ebgp-ix-as10006-v6
+                  description eBGP IX AS10006 IX RouteServer IPv6 peers
+      --More--
+  - " ": |-
+      \b\b\b\b\b\b\b\b        \b\b\b\b\b\b\b\b            remote-as 10006
+                  enable
+                  update-source Twe1/0/2
+              exit
+              neighbor ebgp-ix-as10008-v4
+                  description eBGP IX AS10008 IX IPv4 peers
+                  remote-as 10008
+                  enable
+                  update-source Twe1/0/2
+              exit
+              neighbor ebgp-ix-as10008-v6
+                  description eBGP IX AS10008 IX IPv6 peers
+                  remote-as 10008
+                  enable
+                  update-source Twe1/0/2
+              exit
+              neighbor ebgp-ix-as10007-v4
+                  description eBGP IX AS10007 IPv4 peers
+                  remote-as 10007
+                  enable
+                  update-source Twe1/0/2
+              exit
+              neighbor ebgp-ix-as10007-v6
+      --More--
+  - " ": |-
+      \b\b\b\b\b\b\b\b        \b\b\b\b\b\b\b\b            description eBGP IX AS10007 IPv6 peers
+                  remote-as 10007
+                  enable
+                  update-source Twe1/0/2
+              exit
+              neighbor ebgp-ix-as10010-v4
+                  description eBGP IX AS10010 IPv4 peers
+                  remote-as 10010
+                  enable
+                  update-source Twe1/0/2
+              exit
+              neighbor ebgp-ix-as10010-v6
+                  description eBGP IX AS10010 IPv6 peers
+                  remote-as 10010
+                  enable
+                  update-source Twe1/0/2
+              exit
+              neighbor ebgp-pni-as10001-v4
+                  description eBGP PNI AS10001 IPv4 peers
+                  remote-as 10001
+                  enable
+                  update-source BondEthernet10001
+              exit
+      --More--
+  - " ": |-
+      \b\b\b\b\b\b\b\b        \b\b\b\b\b\b\b\b        neighbor ebgp-pni-as10001-v6
+                  description eBGP PNI AS10001 IPv6 peers
+                  remote-as 10001
+                  enable
+                  update-source BondEthernet10001
+              exit
+              neighbor ebgp-pni-as10011-v4
+                  description eBGP PNI AS10011 IPv4 peers
+                  remote-as 10011
+                  enable
+                  update-source Twe2/0/2.972
+              exit
+              neighbor ebgp-pni-as10003-v4
+                  description eBGP PNI AS10003 IPv4 peers
+                  remote-as 10003
+                  enable
+                  update-source BondEthernet10003.1901
+              exit
+              neighbor ebgp-pni-as10003-v6
+                  description eBGP PNI AS10003 IPv6 peers
+                  remote-as 10003
+                  enable
+                  update-source BondEthernet10003.1901
+      --More--
+  - " ": |-
+      \b\b\b\b\b\b\b\b        \b\b\b\b\b\b\b\b        exit
+              neighbor ebgp-pni-as10002-v4
+                  description eBGP PNI AS10002 IPv4 peers
+                  remote-as 10002
+                  enable
+                  update-source BondEthernet10002
+              exit
+              neighbor ebgp-pni-as10002-v6
+                  description eBGP PNI AS10002 IPv6 peers
+                  remote-as 10002
+                  enable
+                  update-source BondEthernet10002
+              exit
+              neighbor ibgp-bgp-as10009-v4
+                  description iBGP BGP IPv4 peers
+                  remote-as 10009
+                  enable
+                  update-source BondEthernet14.111
+              exit
+              neighbor ibgp-bgp-as10009-v6
+                  description iBGP BGP IPv6 peers
+                  remote-as 10009
+                  enable
+      --More--
+  - " ": |-
+      \b\b\b\b\b\b\b\b        \b\b\b\b\b\b\b\b            update-source BondEthernet14.111
+              exit
+              neighbor 10.0.0.1
+                  description IX 1
+                  peer-group ebgp-ix-as10005-v4
+                  enable
+              exit
+              neighbor 10.0.0.1
+                  description IX 2
+                  peer-group ebgp-ix-as10005-v4
+                  enable
+              exit
+              neighbor abcd:abcd::a
+                  description IX 1
+                  peer-group ebgp-ix-as10005-v6
+                  enable
+              exit
+              neighbor abcd:abcd::a
+                  description IX 2
+                  peer-group ebgp-ix-as10005-v6
+                  enable
+              exit
+              neighbor 10.0.0.1
+      --More--
+  - " ": |-
+      \b\b\b\b\b\b\b\b        \b\b\b\b\b\b\b\b            description IX IXRS RS1
+                  no enforce-first-as
+                  peer-group ebgp-ix-as10006-v4
+                  enable
+              exit
+              neighbor 10.0.0.1
+                  description IX IXRS RS2
+                  no enforce-first-as
+                  peer-group ebgp-ix-as10006-v4
+                  enable
+              exit
+              neighbor 10.0.0.1
+                  description IX IXRS RC
+                  no enforce-first-as
+                  peer-group ebgp-ix-as10006-v4
+                  enable
+              exit
+              neighbor abcd:abcd::a
+                  description IX IXRS RC
+                  no enforce-first-as
+                  peer-group ebgp-ix-as10006-v6
+                  enable
+              exit
+      --More--
+  - " ": |-
+      \b\b\b\b\b\b\b\b        \b\b\b\b\b\b\b\b        neighbor abcd:abcd::a
+                  description IX IXRS RS1
+                  no enforce-first-as
+                  peer-group ebgp-ix-as10006-v6
+                  enable
+              exit
+              neighbor abcd:abcd::a
+                  description IX IXRS RS2
+                  no enforce-first-as
+                  peer-group ebgp-ix-as10006-v6
+                  enable
+              exit
+              neighbor 10.0.0.1
+                  description IX 1
+                  peer-group ebgp-ix-as10008-v4
+                  enable
+              exit
+              neighbor 10.0.0.1
+                  description IX 2
+                  peer-group ebgp-ix-as10008-v4
+                  enable
+              exit
+              neighbor abcd:abcd::a
+      --More--
+  - " ": |-
+      \b\b\b\b\b\b\b\b        \b\b\b\b\b\b\b\b            description IX 1
+                  peer-group ebgp-ix-as10008-v6
+                  enable
+              exit
+              neighbor abcd:abcd::a
+                  description IX 2
+                  peer-group ebgp-ix-as10008-v6
+                  enable
+              exit
+              neighbor 10.0.0.1
+                  description IX
+                  peer-group ebgp-ix-as10007-v4
+                  enable
+              exit
+              neighbor abcd:abcd::a
+                  description IX
+                  peer-group ebgp-ix-as10007-v6
+                  enable
+              exit
+              neighbor 10.0.0.1
+                  description IX 1
+                  peer-group ebgp-ix-as10010-v4
+                  enable
+      --More--
+  - " ": |-
+      \b\b\b\b\b\b\b\b        \b\b\b\b\b\b\b\b        exit
+              neighbor 10.0.0.1
+                  description IX 2
+                  peer-group ebgp-ix-as10010-v4
+                  enable
+              exit
+              neighbor abcd:abcd::a
+                  description IX 1
+                  peer-group ebgp-ix-as10010-v6
+                  enable
+              exit
+              neighbor abcd:abcd::a
+                  description IX 2
+                  peer-group ebgp-ix-as10010-v6
+                  enable
+              exit
+              neighbor 10.0.0.1
+                  description PNI 1
+                  password abcdABCD1234!@#
+                  peer-group ebgp-pni-as10001-v4
+                  enable
+              exit
+              neighbor abcd:abcd::a
+      --More--
+  - " ": |-
+      \b\b\b\b\b\b\b\b        \b\b\b\b\b\b\b\b            description PNI 1
+                  password abcdABCD1234!@#
+                  peer-group ebgp-pni-as10001-v6
+                  enable
+              exit
+              neighbor 10.0.0.1
+                  description PNI
+                  peer-group ebgp-pni-as10011-v4
+                  enable
+              exit
+              neighbor 10.0.0.1
+                  bfd enabled true
+                  description PNI
+                  peer-group ebgp-pni-as10003-v4
+                  enable
+              exit
+              neighbor abcd:abcd::a
+                  description PNI
+                  peer-group ebgp-pni-as10003-v6
+                  enable
+              exit
+              neighbor 10.0.0.1
+                  description PNI 1
+      --More--
+  - " ": |-
+      \b\b\b\b\b\b\b\b        \b\b\b\b\b\b\b\b            peer-group ebgp-pni-as10002-v4
+                  enable
+              exit
+              neighbor abcd:abcd::a
+                  description PNI 1
+                  peer-group ebgp-pni-as10002-v6
+                  enable
+              exit
+              neighbor 10.0.0.1
+                  description iBGP bgp
+                  peer-group ibgp-bgp-as10009-v4
+                  enable
+              exit
+              neighbor 10.0.0.1
+                  description iBGP bgp
+                  peer-group ibgp-bgp-as10009-v4
+                  enable
+              exit
+              neighbor 10.0.0.1
+                  description iBGP bgp
+                  peer-group ibgp-bgp-as10009-v4
+                  enable
+              exit
+      --More--
+  - " ": |-
+      \b\b\b\b\b\b\b\b        \b\b\b\b\b\b\b\b        neighbor 10.0.0.1
+                  description iBGP bgp
+                  peer-group ibgp-bgp-as10009-v4
+                  enable
+              exit
+              neighbor 10.0.0.1
+                  description iBGP igw
+                  peer-group ibgp-bgp-as10009-v4
+                  enable
+              exit
+              neighbor 10.0.0.1
+                  description iBGP igw
+                  peer-group ibgp-bgp-as10009-v4
+                  enable
+              exit
+              neighbor 10.0.0.1
+                  description iBGP igw
+                  peer-group ibgp-bgp-as10009-v4
+                  enable
+              exit
+              neighbor 10.0.0.1
+                  description iBGP igw
+                  peer-group ibgp-bgp-as10009-v4
+      --More--
+  - " ": |-
+      \b\b\b\b\b\b\b\b        \b\b\b\b\b\b\b\b            enable
+              exit
+              neighbor abcd:abcd::a
+                  description iBGP igw
+                  peer-group ibgp-bgp-as10009-v6
+                  enable
+              exit
+              neighbor abcd:abcd::a
+                  description iBGP igw
+                  peer-group ibgp-bgp-as10009-v6
+                  enable
+              exit
+              neighbor abcd:abcd::a
+                  description iBGP igw
+                  peer-group ibgp-bgp-as10009-v6
+                  enable
+              exit
+              neighbor abcd:abcd::a
+                  description iBGP igw
+                  peer-group ibgp-bgp-as10009-v6
+                  enable
+              exit
+              neighbor abcd:abcd::a
+      --More--
+  - " ": |-
+      \b\b\b\b\b\b\b\b        \b\b\b\b\b\b\b\b            description iBGP bgp
+                  peer-group ibgp-bgp-as10009-v6
+                  enable
+              exit
+              neighbor abcd:abcd::a
+                  description iBGP bgp
+                  peer-group ibgp-bgp-as10009-v6
+                  enable
+              exit
+              neighbor abcd:abcd::a
+                  description iBGP bgp
+                  peer-group ibgp-bgp-as10009-v6
+                  enable
+              exit
+              neighbor abcd:abcd::a
+                  description iBGP bgp
+                  peer-group ibgp-bgp-as10009-v6
+                  enable
+              exit
+              no ipv4-unicast-enabled
+              router-id 10.0.0.1
+              graceful-restart notification
+              address-family ipv4 unicast
+      --More--
+  - " ": |-
+      \b\b\b\b\b\b\b\b        \b\b\b\b\b\b\b\b            neighbor ebgp-ix-as10005-v4
+                      activate
+                      route-map ebgp-ix-as10005-v4-in in
+                      route-map ebgp-ix-as10005-v4-out out
+                      send-community standard
+                      send-community large
+                      send-community extended
+                      soft-reconfiguration inbound
+                  exit
+                  neighbor ebgp-ix-as10006-v4
+                      activate
+                      route-map ebgp-ix-as10006-v4-in in
+                      route-map ebgp-ix-as10006-v4-out out
+                      send-community standard
+                      send-community large
+                      send-community extended
+                      soft-reconfiguration inbound
+                  exit
+                  neighbor ebgp-ix-as10008-v4
+                      activate
+                      route-map ebgp-ix-as10008-v4-in in
+                      route-map ebgp-ix-as10008-v4-out out
+                      send-community standard
+      --More--
+  - " ": |-
+      \b\b\b\b\b\b\b\b        \b\b\b\b\b\b\b\b                send-community large
+                      send-community extended
+                      soft-reconfiguration inbound
+                  exit
+                  neighbor ebgp-ix-as10007-v4
+                      activate
+                      route-map ebgp-ix-as10007-v4-in in
+                      route-map ebgp-ix-as10007-v4-out out
+                      send-community standard
+                      send-community large
+                      send-community extended
+                      soft-reconfiguration inbound
+                  exit
+                  neighbor ebgp-ix-as10010-v4
+                      activate
+                      route-map ebgp-ix-as10010-v4-in in
+                      route-map ebgp-ix-as10010-v4-out out
+                      send-community standard
+                      send-community large
+                      send-community extended
+                      soft-reconfiguration inbound
+                  exit
+                  neighbor ebgp-pni-as10001-v4
+      --More--
+  - " ": |-
+      \b\b\b\b\b\b\b\b        \b\b\b\b\b\b\b\b                activate
+                      route-map ebgp-pni-as10001-v4-in in
+                      route-map ebgp-pni-as10001-v4-out out
+                      send-community standard
+                      send-community large
+                      send-community extended
+                      soft-reconfiguration inbound
+                  exit
+                  neighbor ebgp-pni-as10011-v4
+                      activate
+                      route-map ebgp-pni-as10011-v4-in in
+                      route-map ebgp-pni-as10011-v4-out out
+                      send-community standard
+                      send-community large
+                      send-community extended
+                      soft-reconfiguration inbound
+                  exit
+                  neighbor ebgp-pni-as10003-v4
+                      activate
+                      route-map ebgp-pni-as10003-v4-in in
+                      route-map ebgp-pni-as10003-v4-out out
+                      send-community standard
+                      send-community large
+      --More--
+  - " ": |-
+      \b\b\b\b\b\b\b\b        \b\b\b\b\b\b\b\b                send-community extended
+                      soft-reconfiguration inbound
+                  exit
+                  neighbor ebgp-pni-as10002-v4
+                      activate
+                      route-map ebgp-pni-as10002-v4-in in
+                      route-map ebgp-pni-as10002-v4-out out
+                      send-community standard
+                      send-community large
+                      send-community extended
+                      soft-reconfiguration inbound
+                  exit
+                  neighbor ibgp-bgp-as10009-v4
+                      activate
+                      route-map ibgp-bgp-as10009-v4-in in
+                      route-map ibgp-bgp-as10009-v4-out out
+                      send-community standard
+                      send-community large
+                      send-community extended
+                      soft-reconfiguration inbound
+                  exit
+              exit
+              address-family ipv6 unicast
+      --More--
+  - " ": |-
+      \b\b\b\b\b\b\b\b        \b\b\b\b\b\b\b\b            neighbor ebgp-ix-as10005-v6
+                      activate
+                      route-map ebgp-ix-as10005-v6-in in
+                      route-map ebgp-ix-as10005-v6-out out
+                      send-community standard
+                      send-community large
+                      send-community extended
+                      soft-reconfiguration inbound
+                  exit
+                  neighbor ebgp-ix-as10006-v6
+                      activate
+                      route-map ebgp-ix-as10006-v6-in in
+                      route-map ebgp-ix-as10006-v6-out out
+                      send-community standard
+                      send-community large
+                      send-community extended
+                      soft-reconfiguration inbound
+                  exit
+                  neighbor ebgp-ix-as10008-v6
+                      activate
+                      route-map ebgp-ix-as10008-v6-in in
+                      route-map ebgp-ix-as10008-v6-out out
+                      send-community standard
+      --More--
+  - " ": |-
+      \b\b\b\b\b\b\b\b        \b\b\b\b\b\b\b\b                send-community large
+                      send-community extended
+                      soft-reconfiguration inbound
+                  exit
+                  neighbor ebgp-ix-as10007-v6
+                      activate
+                      route-map ebgp-ix-as10007-v6-in in
+                      route-map ebgp-ix-as10007-v6-out out
+                      send-community standard
+                      send-community large
+                      send-community extended
+                      soft-reconfiguration inbound
+                  exit
+                  neighbor ebgp-ix-as10010-v6
+                      activate
+                      route-map ebgp-ix-as10010-v6-in in
+                      route-map ebgp-ix-as10010-v6-out out
+                      send-community standard
+                      send-community large
+                      send-community extended
+                      soft-reconfiguration inbound
+                  exit
+                  neighbor ebgp-pni-as10001-v6
+      --More--
+  - " ": |-
+      \b\b\b\b\b\b\b\b        \b\b\b\b\b\b\b\b                activate
+                      route-map ebgp-pni-as10001-v6-in in
+                      route-map ebgp-pni-as10001-v6-out out
+                      send-community standard
+                      send-community large
+                      send-community extended
+                      soft-reconfiguration inbound
+                  exit
+                  neighbor ebgp-pni-as10003-v6
+                      activate
+                      route-map ebgp-pni-as10003-v6-in in
+                      route-map ebgp-pni-as10003-v6-out out
+                      send-community standard
+                      send-community large
+                      send-community extended
+                      soft-reconfiguration inbound
+                  exit
+                  neighbor ebgp-pni-as10002-v6
+                      activate
+                      route-map ebgp-pni-as10002-v6-in in
+                      route-map ebgp-pni-as10002-v6-out out
+                      send-community standard
+                      send-community large
+      --More--
+  - " ": |-
+      \b\b\b\b\b\b\b\b        \b\b\b\b\b\b\b\b                send-community extended
+                      soft-reconfiguration inbound
+                  exit
+                  neighbor ibgp-bgp-as10009-v6
+                      activate
+                      route-map ibgp-bgp-as10009-v6-in in
+                      route-map ibgp-bgp-as10009-v6-out out
+                      send-community standard
+                      send-community large
+                      send-community extended
+                      soft-reconfiguration inbound
+                  exit
+              exit
+          exit
+          rpki
+              expire-interval 7200
+              polling-period 3600
+              retry-interval 600
+          exit
+      exit
+      
+      route dynamic ospf6
+          enable
+      --More--
+  - " ": |-
+      \b\b\b\b\b\b\b\b        \b\b\b\b\b\b\b\b    interface BondEthernet14.111
+              cost outgoing 50
+              bfd enabled true
+          exit
+          interface BondEthernet10001
+              passive
+          exit
+          interface BondEthernet10003.1901
+              passive
+          exit
+          interface BondEthernet10002
+              passive
+          exit
+          interface Twe1/0/2
+              passive
+          exit
+          interface Twe2/0/2.972
+              passive
+          exit
+          server vrf default
+              interface BondEthernet14.111 area 0.0.0.0
+              interface BondEthernet10001 area 0.0.0.0
+              interface BondEthernet10003.1901 area 0.0.0.0
+      --More--
+  - " ": |-
+      \b\b\b\b\b\b\b\b        \b\b\b\b\b\b\b\b        interface BondEthernet10002 area 0.0.0.0
+              interface Twe1/0/2 area 0.0.0.0
+              interface Twe2/0/2.972 area 0.0.0.0
+              ospf6 router-id 10.0.0.1
+          exit
+      exit
+      
+      route dynamic ospf
+          enable
+          interface BondEthernet14.111
+              ip address * area 0.0.0.0
+              ip address * cost 50
+              ip bfd enabled true
+          exit
+          interface BondEthernet10001
+              ip address * area 0.0.0.0
+          exit
+          interface BondEthernet10003.1901
+              ip address * area 0.0.0.0
+          exit
+          interface BondEthernet10002
+              ip address * area 0.0.0.0
+          exit
+      --More--
+  - " ": |-
+      \b\b\b\b\b\b\b\b        \b\b\b\b\b\b\b\b    interface Twe1/0/2
+              ip address * area 0.0.0.0
+          exit
+          interface Twe2/0/2.972
+              ip address * area 0.0.0.0
+          exit
+          server vrf default
+              ospf router-id 10.0.0.1
+              passive-interface BondEthernet10001
+              passive-interface BondEthernet10003.1901
+              passive-interface BondEthernet32934
+              passive-interface Twe1/0/2
+              passive-interface Twe2/0/2.972
+          exit
+      exit
+      
+      route dynamic rip
+      exit
+      
+      dhcp4 server
+          authoritative true
+          lease persist true
+          lease lfc-interval 3600
+      --More--
+  - " ": |-
+      \b\b\b\b\b\b\b\b        \b\b\b\b\b\b\b\b    interface socket raw
+      exit
+      
+      unbound server
+          do-ip4
+          do-tcp
+          do-udp
+          harden glue
+          hide identity
+          port outgoing range 4096
+      exit
+      
+      snmp host enable
+      snmp dataplane disable
+      snmp community community-name public source 10.0.0.1/32 security-name Cacti
+      snmp group group-name ROGroup security-name Cacti security-model v2c
+      snmp view view-name systemview view-type included oid .1
+      snmp access group-name ROGroup prefix exact model any level noauth read systemview write none
+      
+      
+      
+      --More--
+  - " ": |-
+      \b\b\b\b\b\b\b\b        \b\b\b\b\b\b\b\b\rbgp01 tnsr#\x20
+  - "exit\n": |-
+      exit
+      \r

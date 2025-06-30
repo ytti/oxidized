@@ -31,11 +31,10 @@ Check out the [Oxidized TREX 2014 presentation](http://youtu.be/kBQ_CTUuqeU?t=3h
 1. [Supported OS Types](docs/Supported-OS-Types.md)
 2. [Installation](#installation)
     * [Debian and Ubuntu](#debian-and-ubuntu)
-    * [CentOS, Oracle Linux, Red Hat Linux](#centos-oracle-linux-red-hat-linux)
+    * [Rocky Linux, Red Hat Enterprise Linux](#rocky-linux-red-hat-enterprise-linux)
     * [FreeBSD](#freebsd)
     * [Build from Git](#build-from-git)
     * [Docker & Podman](docs/Docker.md)
-    * [Installing Ruby 2.3 using RVM](#installing-ruby-23-using-rvm)
 3. [Initial Configuration](#configuration)
 4. [Configuration](docs/Configuration.md)
     * [Debugging](docs/Configuration.md#debugging)
@@ -88,55 +87,77 @@ Install the dependencies:
 apt-get install ruby ruby-dev libsqlite3-dev libssl-dev pkg-config cmake libssh2-1-dev libicu-dev zlib1g-dev g++ libyaml-dev
 ```
 
-Finally, install the gems:
+Finally, install Oxidized:
 
 ```shell
 gem install oxidized
-gem install oxidized-script oxidized-web # If you don't install oxidized-web, ensure "rest" is removed from your Oxidized config.
 ```
 
-### CentOS, Oracle Linux, Red Hat Linux
+You can also install one or both of the optional gems. They are not required
+to run Oxidized:
+```shell
+gem install oxidized-web    # Web interface and rest API
+gem install oxidized-script # Script-based input/output extensions
+```
 
-On CentOS 6 and 7 / RHEL 6 and 7, begin by installing Ruby 3.1 via RVM by following the instructions:
+### Rocky Linux, Red Hat Enterprise Linux
+These instructions has been verified on Rocky Linux 9.3 and Fedora.
 
-Make sure you dont have any leftover ruby:
-```yum erase ruby```
+On Rocky Linux 9, you need to install/enable EPEL, CRB and Ruby 3.1:
+```shell
+dnf install epel-release
+dnf config-manager --set-enabled crb
+dnf module enable ruby:3.1
+```
 
-Then, install gpg key and rvm
+Then you need the required packages for oxidized:
+```shell
+dnf -y install ruby ruby-devel sqlite-devel openssl-devel pkgconf-pkg-config  cmake libssh-devel libicu-devel zlib-devel gcc-c++ libyaml-devel which
+```
+
+Finally, install Oxidized:
 
 ```shell
-sudo gpg --keyserver hkp://keys.gnupg.net --recv-keys 409B6B1796C275462A1703113804BB82D39DC0E3 7D2BAF1CF37B13E2069D6956105BD0E739499BDB
-curl -sSL https://get.rvm.io | bash -s stable
-source /etc/profile.d/rvm.sh
-rvm requirements run
-rvm install 3.1
-rvm use 3.1
+gem install oxidized
 ```
 
-Install oxidized requirements:
-```yum install make cmake which sqlite-devel openssl-devel libssh2-devel gcc libicu-devel gcc-c++```
-
-Install the gems:
-```gem install oxidized oxidized-web```
-
-You need to wrap the gem and reference the wrap in the systemctl service file:
-```rvm wrapper oxidized```
-
-You can see where the wrapped gem is via
-```rvm wrapper show oxidized```
-Use that path in the oxidized.service file, restart the systemctl daemon, run oxidized by hand once, edit config file, start service.
+You can also install one or both of the optional gems. They are not required
+to run Oxidized:
+```shell
+gem install oxidized-web    # Web interface and rest API
+gem install oxidized-script # Script-based input/output extensions
+```
 
 ### FreeBSD
+These installation instructions have been tested on FreeBSD 14.2, but
+oxidized itself has not been tested on it.
 
-[Use RVM to install Ruby v2.3](#installing-ruby-23-using-rvm), then install all required packages and gems:
-
+First install ruby and rubyXX-gems (Find out the name of the package with `pkg search gems`):
 ```shell
-pkg install cmake pkgconf
-gem install oxidized
-gem install oxidized-script oxidized-web
+pkg instal ruby
+pkg instal ruby32-gems
 ```
 
-Oxidized is also available via [FreeBSD ports](https://bugs.freebsd.org/bugzilla/show_bug.cgi?id=203374):
+Then install the dependencies of oxidized an oxidized-web:
+```shell
+pkg install ruby ruby-gems git sqlite3 libssh2 cmake pkgconf gmake
+pkg install libyaml icu   # Dependencies for oxidized-web
+```
+
+Finally, install Oxidized:
+
+```shell
+gem install oxidized
+```
+
+You can also install one or both of the optional gems. They are not required
+to run Oxidized:
+```shell
+gem install oxidized-web    # Web interface and rest API
+gem install oxidized-script # Script-based input/output extensions
+```
+
+Oxidized is also available via [FreeBSD ports](https://ports.freebsd.org/cgi/ports.cgi?query=oxidized):
 
 ```shell
 pkg install rubygem-oxidized rubygem-oxidized-script rubygem-oxidized-web
@@ -153,30 +174,6 @@ rake install
 
 ### Running with Docker or Podman
 See [docs/Docker.md](docs/Docker.md)
-
-### Installing Ruby 2.3 using RVM
-
-Install Ruby 2.3 build dependencies
-
-```shell
-yum install curl gcc-c++ patch readline readline-devel zlib zlib-devel
-yum install libyaml-devel libffi-devel openssl-devel make cmake
-yum install bzip2 autoconf automake libtool bison iconv-devel libssh2-devel libicu-devel
-```
-
-Install RVM
-
-```shell
-curl -L get.rvm.io | bash -s stable
-```
-
-Setup RVM environment and compile and install Ruby 2.3 and set it as default
-
-```shell
-source /etc/profile.d/rvm.sh
-rvm install 2.3
-rvm use --default 2.3
-```
 
 ## Configuration
 

@@ -4,24 +4,17 @@ init_prompt: |-
   oxidized>\x20
 commands:
   "set cli screen-length 0\n": |-
-    set cli screen-length 0\x20
     Screen length set to 0
     
-    oxidized>\x20
   "set cli screen-width 0\n": |-
-    set cli screen-width 0\x20
     Screen width set to 0
     
-    oxidized>\x20
   "show version\n": |-
-    show version\x20
     Model: srx300
     Junos: 22.4R3-S2.11
     JUNOS Software Release [22.4R3-S2.11]
     
-    oxidized>\x20
   "show chassis hardware\n": |-
-    show chassis hardware\x20
     Hardware inventory:
     Item             Version  Part number  Serial number     Description
     Chassis                                AA0000AA0000      SRX300
@@ -31,9 +24,7 @@ commands:
         Xcvr 6       REV 01   740-031850   S2001411089       SFP-LX10
     Power Supply 0 \x20
     
-    oxidized>\x20
   "show system license\n": |-
-    show system license\x20
     License usage:\x20
                                      Licenses     Licenses    Licenses
     \t\t\t\t  Feature      Feature     Feature
@@ -43,13 +34,9 @@ commands:
     
     Licenses installed: none
     
-    oxidized>\x20
   "show system license keys\n": |-
-    show system license keys\x20
     
-    oxidized>\x20
   "show configuration | display omit\n": |-
-    show configuration | display omit\x20
     ## Last commit: 2024-12-06 11:41:05 UTC by root
     version 22.4R3-S2.11;
     system {
@@ -339,29 +326,6 @@ commands:
         }
     }
     
-    oxidized>\x20
   "show chassis cluster status\n": |-
-    show chassis cluster status\x20
-    Monitor Failure codes:
-        CS  Cold Sync monitoring        FL  Fabric Connection monitoring
-        GR  GRES monitoring             HW  Hardware monitoring
-        IF  Interface monitoring        IP  IP monitoring
-        LB  Loopback monitoring         MB  Mbuf monitoring
-        NH  Nexthop monitoring          NP  NPC monitoring
-        SP  SPU monitoring              SM  Schedule monitoring
-        CF  Config Sync monitoring      RE  Relinquish monitoring
-        IS  IRQ storm
-    
-    Cluster ID: 1
-    Node   Priority Status               Preempt Manual   Monitor-failures
-    
-    Redundancy group: 0 , Failover count: 1
-    node0  200      primary              no      no       None
-    node1  100      secondary            no      no       None
-    
-    Redundancy group: 1 , Failover count: 2
-    node0  200      primary              no      no       None
-    node1  101      secondary            no      no       None
-    oxidized>\x20
-  "exit\n": |-
-    exit\x20
+    # error: Chassis cluster is not enabled.
+  "exit\n": ""

@@ -16,7 +16,9 @@ class QTECH < Oxidized::Model
   end
 
   cmd 'show version' do |cfg|
-    comment cfg.each_line.reject { |line| line.match /^  (Copyright |All rights reserved$|Uptime is |Last reboot is )/ }.join
+    comment cfg.each_line.reject { |line|
+      line.match /^  (Copyright |All rights reserved$|Uptime is |Last reboot is )/
+    }.join
   end
 
   cmd 'show running-config' do |cfg|

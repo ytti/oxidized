@@ -12,6 +12,7 @@ module Oxidized
     attr_accessor :running, :user, :email, :msg, :from, :stats, :retry, :err_type, :err_reason
     alias running? running
 
+    # opt is a hash with the node parameters given in the source (:name, :group, :ip...)
     def initialize(opt)
       logger.debug 'resolving DNS for %s...' % opt[:name]
       # remove the prefix if an IP Address is provided with one as IPAddr converts it to a network address.
@@ -39,7 +40,8 @@ module Oxidized
     end
 
     def run
-      status, config = :fail, nil
+      status = :fail
+      config = nil
       @input.each do |input|
         # don't try input if model is missing config block, we may need strong config to class_name map
         cfg_name = input.to_s.split('::').last.downcase
@@ -55,6 +57,8 @@ module Oxidized
           status = :no_connection
         end
       end
+      Oxidized.logger.error "No suitable input found for #{name}" unless @model.input
+
       @model.input = nil
       [status, config]
     end
@@ -124,14 +128,10 @@ module Oxidized
       h
     end
 
+    JobStruct = Struct.new(:start, :end, :status, :time)
     def last=(job)
       if job
-        ostruct = OpenStruct.new
-        ostruct.start  = job.start
-        ostruct.end    = job.end
-        ostruct.status = job.status
-        ostruct.time   = job.time
-        @last = ostruct
+        @last = JobStruct.new(job.start, job.end, job.status, job.time)
       else
         @last = nil
       end
@@ -162,8 +162,11 @@ module Oxidized
 
     def resolve_input(opt)
       inputs = resolve_key :input, opt, Oxidized.config.input.default
-      inputs.split(/\s*,\s*/).map do |input|
-        Oxidized.mgr.add_input(input) || raise(MethodNotFound, "#{input} not found for node #{ip}") unless Oxidized.mgr.input[input]
+      inputs.split(',').map do |input|
+        input.strip!
+        unless Oxidized.mgr.input[input]
+          Oxidized.mgr.add_input(input) || raise(MethodNotFound, "#{input} not found for node #{ip}")
+        end
 
         Oxidized.mgr.input[input]
       end
@@ -171,7 +174,10 @@ module Oxidized
 
     def resolve_output(opt)
       output = resolve_key :output, opt, Oxidized.config.output.default
-      Oxidized.mgr.add_output(output) || raise(MethodNotFound, "#{output} not found for node #{ip}") unless Oxidized.mgr.output[output]
+      unless Oxidized.mgr.output[output]
+        Oxidized.mgr.add_output(output) || raise(MethodNotFound,
+                                                 "#{output} not found for node #{ip}")
+      end
 
       Oxidized.mgr.output[output]
     end
@@ -202,12 +208,14 @@ module Oxidized
     end
 
     def resolve_key(key, opt, global = nil)
-      # resolve key: the priority is as follows: node -> group specific model -> group -> model -> global passed -> global
+      # resolve key: the priority is as follows:
+      # node -> group specific model -> group -> model -> global passed -> global
       # where node has the highest priority (= if defined, overwrites other values)
       key_sym = key.to_sym
       key_str = key.to_s
       model_name = @model.class.name.to_s.downcase
-      logger.debug "node.rb: resolving node key '#{key}', with passed global value of '#{global}' and node value '#{opt[key_sym]}'"
+      logger.debug "node.rb: resolving node key '#{key}', with passed global value of '#{global}' " \
+                            "and node value '#{opt[key_sym]}'"
 
       # Node
       if opt[key_sym]
@@ -215,7 +223,9 @@ module Oxidized
         logger.debug "node.rb: setting node key '#{key}' to value '#{value}' from node"
 
       # Group specific model
-      elsif Oxidized.config.groups.has_key?(@group) && Oxidized.config.groups[@group].models.has_key?(model_name) && Oxidized.config.groups[@group].models[model_name].has_key?(key_str)
+      elsif Oxidized.config.groups.has_key?(@group) &&
+            Oxidized.config.groups[@group].models.has_key?(model_name) &&
+            Oxidized.config.groups[@group].models[model_name].has_key?(key_str)
         value = Oxidized.config.groups[@group].models[model_name][key_str]
         logger.debug "node.rb: setting node key '#{key}' to value '#{value}' from model in group"
 

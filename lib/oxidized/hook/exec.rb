@@ -38,7 +38,8 @@ class Exec < Oxidized::Hook
   end
 
   def run_cmd!(env)
-    pid, status = nil, nil
+    pid = nil
+    status = nil
     Timeout.timeout(@timeout) do
       pid = spawn env, @cmd, unsetenv_others: true
       pid, status = wait2 pid

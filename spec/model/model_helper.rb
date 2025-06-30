@@ -72,7 +72,7 @@ class MockSsh
         @commands << c.transform_values(&method(:interpolate_yaml))
       end
     else
-      raise "MockSsh#initialize: no commands in the simulation file"
+      raise 'MockSsh#initialize: no commands in the simulation file'
     end
 
     @init_prompt = interpolate_yaml(model['init_prompt'])
@@ -91,7 +91,7 @@ class MockSsh
     cmd += "\n"
 
     if @commands.is_a?(Array)
-      raise "MockSsh#exec!: no more commands left" if @commands.empty?
+      raise 'MockSsh#exec!: no more commands left' if @commands.empty?
 
       command, response = @commands.shift.first
       raise "MockSsh#exec!: Need #{cmd.dump} but simulation provides #{command.dump}" unless cmd == command
@@ -173,7 +173,7 @@ class MockChannel
     logger.debug("send_data called with cmd #{cmd.dump}")
 
     if @commands.is_a?(Array)
-      raise "MockChannel#send_data: no more commands left" if @commands.empty?
+      raise 'MockChannel#send_data: no more commands left' if @commands.empty?
 
       command, response = @commands.shift.first
       raise "MockChannel#send_data: #{cmd.dump} but simulation provides #{command.dump}" unless cmd == command

@@ -9,9 +9,19 @@ The format is based on [Keep a Changelog](https://keepachangelog.com/en/1.1.0/).
 - add iosxr support to SyslogMonitor (@deesel)
 - add junos: support show chassis cluster when SRX series (@shigechika)
 - add nxos: support for complete hardware inventory (@garryshtern)
+- ssh: support 'newline "string"' cfg block method to allow defining \r\n newline (@ytti)
+- model for Netgate TNSR (@Vantomas)
+- efos: New model for Brocade Enhanced Fabric OS. Fixes #3477 (@sorano, @cetjcm, @robertcheramy)
+- ouput/file, output/git: clean node configurations which are not listed in the source anymore. Fixes: #1805 (@robertcheramy)
+- sixwind: New model to support 6WIND Virtual Service Router (@hcaldicott)
+- model for saos10 (@penfold1972)
+
 
 ### Changed
 - acos: remove free storage amount from show version. Fixes #3492 (@991jo)
+- Housekeeping in the code: Maximal line length: 120 char + Rubocop fixes (@robertcheramy)
+- spec/model/data uses # instead of : as a separator in the filename, so we can
+  git clone unter Windows. Fixes: #3481 (@robertcheramy)
 - logging: rework of the logging system, uses Semantic Logger (@robertcheramy)
 
 ### Fixed
@@ -24,6 +34,19 @@ The format is based on [Keep a Changelog](https://keepachangelog.com/en/1.1.0/).
 - aosw: fix secret parsing (@rouven0)
 - mlnxos: handle ANSI-ESC codes and pager requests. The prompt has been
   reengineered, open an issue if you experience timeouts. Fixes #3469 (@robertcheramy)
+- AricentISS: fix codeQL alert #15 (@robertcheramy)
+- Update installation instructions on Rocky Linux 9. Fixes #3368 (@robertcheramy)
+- awplus: fix enable password when supplied (@sgsimpson)
+- node.rb: remove Polynomial regular expression / Fixes Code scanning alert #40 (@robertcheramy)
+- asa: remove inefficient regular expression / Fixes Code scanning alert #5 and #6 (@robertcheramy)
+- sonicos: remove inefficient regular expression / Fixes code scanning alert #4 and #11 (@robertcheramy)
+- quantaos: remove inefficient regular expression / Fixes code scanning alerts 9 and 10 (@robertcheramy)
+- fabricos: remove power supply input voltage from `chassisShow` output (@hops)
+- vyatta: Ignore system uptime in `show version` on Edgerouter devices (@shanemcc)
+- netgear: include running-config in config output (@bradleywehmeier)
+- eltex: remove inefficient regular expression / Fixes code scanning alert 7 / See Issue #3513 (@robertcheramy)
+- tmos: remove deprecated secrets (@rouven0)
+- log an error when no suitable input is found for a node. Fixes: #3346 (@robertcheramy) 
 
 
 ## [0.33.0 - 2025-03-26]

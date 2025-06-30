@@ -16,7 +16,7 @@ module Oxidized
     include Input::CLI
     class NoShell < OxidizedError; end
 
-    def connect(node)
+    def connect(node) # rubocop:disable Naming/PredicateMethod
       @node        = node
       @output      = String.new('')
       @pty_options = { term: "vt100" }
@@ -76,7 +76,8 @@ module Oxidized
       # if disconnect does not disconnect us, give up after timeout
       Timeout.timeout(Oxidized.config.timeout) { @ssh.loop }
     rescue Errno::ECONNRESET, Net::SSH::Disconnect, IOError => e
-      Oxidized.logger.debug "ssh: the other side closed the connection while disconnecting, rasing #{e.class} with #{e.messages}"
+      Oxidized.logger.debug 'ssh: the other side closed the connection while ' \
+                            "disconnecting, rasing #{e.class} with #{e.messages}"
     rescue Timeout::Error
       Oxidized.logger.debug "ssh: #{@node.name} timed out while disconnecting"
     ensure
@@ -112,7 +113,7 @@ module Oxidized
 
     def cmd_shell(cmd, expect_re)
       @output = String.new('')
-      @ses.send_data cmd + "\n"
+      @ses.send_data cmd + newline
       @ses.process
       expect expect_re if expect_re
       @output

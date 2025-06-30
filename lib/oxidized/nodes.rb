@@ -30,6 +30,7 @@ module Oxidized
           end
         end
         size.zero? ? replace(new) : update_nodes(new)
+        Output.clean_obsolete_nodes(self) if node_want.nil?
         logger.info "lib/oxidized/nodes.rb: Loaded #{size} nodes"
       end
     end
