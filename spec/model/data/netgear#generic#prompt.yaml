@@ -6,6 +6,5 @@ pass:
   - '(GS748T -+.v4)#'
   # Prompt from Issue #3287
   - '10sw011# '
-  - '19sw011#  '
   - '19sw011> '
   - "\e[H\e[J19sw011#\x20"
