@@ -205,15 +205,14 @@ module Oxidized
         repo_path = git_config.repo
 
         unless git_config.single_repo?
-          Oxidized.logger.warn "clean_obsolete_nodes is not implemented for " \
-                               "multiple git repositories"
+          logger.warn "clean_obsolete_nodes is not implemented for " \
+                      "multiple git repositories"
           return
         end
 
         if git_config.type_as_directory?
-          Oxidized.logger.warn "clean_obsolete_nodes is not implemented for " \
-                               "output types as a directory within the git " \
-                               "repository"
+          logger.warn "clean_obsolete_nodes is not implemented for output " \
+                      "types as a directory within the git repository"
           return
         end
 
@@ -237,8 +236,8 @@ module Oxidized
 
         return if files_to_delete.empty?
 
-        Oxidized.logger.info "clean_obsolete_nodes: removing " \
-                             "#{files_to_delete.size} obsolete configs"
+        logger.info "clean_obsolete_nodes: removing " \
+                    "#{files_to_delete.size} obsolete configs"
         index = repo.index
 
         files_to_delete.each { |file_path| index.remove(file_path) }

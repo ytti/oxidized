@@ -203,9 +203,9 @@ describe Oxidized::Output::Git do
 
     it "does nothing without single_repo = true" do
       Rugged::Repository.expects(:new).never
-      Oxidized.logger.expects(:warn)
-              .with("clean_obsolete_nodes is not implemented for multiple " \
-                    "git repositories")
+      Oxidized::Output::Git.logger.expects(:warn)
+                           .with("clean_obsolete_nodes is not implemented for " \
+                                 "multiple git repositories")
 
       Oxidized::Output::Git.clean_obsolete_nodes([])
     end
@@ -214,9 +214,9 @@ describe Oxidized::Output::Git do
       Oxidized.config.output.git.single_repo = true
       Oxidized.config.output.git.type_as_directory = true
       Rugged::Repository.expects(:new).never
-      Oxidized.logger.expects(:warn)
-              .with("clean_obsolete_nodes is not implemented for output " \
-                    "types as a directory within the git repository")
+      Oxidized::Output::Git.logger.expects(:warn)
+                           .with("clean_obsolete_nodes is not implemented for output " \
+                                 "types as a directory within the git repository")
 
       Oxidized::Output::Git.clean_obsolete_nodes([])
     end
@@ -263,8 +263,8 @@ describe Oxidized::Output::Git do
         parents:    ['head_sha'],
         update_ref: 'HEAD'
       )
-      Oxidized.logger.expects(:info)
-              .with("clean_obsolete_nodes: removing 3 obsolete configs")
+      Oxidized::Output::Git.logger.expects(:info)
+                           .with("clean_obsolete_nodes: removing 3 obsolete configs")
 
       mock_index.expects(:write)
 

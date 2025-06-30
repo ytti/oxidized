@@ -18,8 +18,7 @@ module Oxidized
       end
 
       def self.clean_obsolete_nodes(_active_nodes)
-        Oxidized.logger.warn "clean_obsolete_nodes is not implemented for " \
-                             "#{name}"
+        logger.warn "clean_obsolete_nodes is not implemented for #{name}"
       end
     end
   end

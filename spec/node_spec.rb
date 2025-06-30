@@ -73,8 +73,8 @@ describe Oxidized::Node do
                                 username: 'alma',
                                 password: 'armud',
                                 prompt:   'test_prompt')
-      Oxidized.logger.expects(:error)
-              .with("No suitable input found for example.com")
+      Oxidized::Node.logger.expects(:error)
+                    .with("No suitable input found for example.com")
       status, = node.run
       _(status).must_equal :fail
     end

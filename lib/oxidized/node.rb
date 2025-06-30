@@ -57,7 +57,7 @@ module Oxidized
           status = :no_connection
         end
       end
-      Oxidized.logger.error "No suitable input found for #{name}" unless @model.input
+      logger.error "No suitable input found for #{name}" unless @model.input
 
       @model.input = nil
       [status, config]
