@@ -503,8 +503,8 @@ You can use some environment variables to change default root directories values
 * `OXIDIZED_LOGS` may be used to set oxidzied logs and crash directories root, which default to `~/.config/oxidized`
 
 ## Logging
-Oxidized supports parallel logging to different systems (appenders). The following
-appenders are currently supported:
+Oxidized supports parallel logging to different systems (appenders). The
+following appenders are currently supported:
 - `stderr`: log to standard error (this is the default)
 - `stdout`: log to standard output
 - `file`: log to a file
@@ -513,11 +513,14 @@ appenders are currently supported:
 > `stderr` and `stdout` are mutually exclusive and will produce a warning if used
 > simultaneously.
 
+> Note: `syslog` currently produces two timestamps because of an issue in
+> [Sematic Logger](https://github.com/reidmorrison/semantic_logger/issues/316).
+
 > You can configure as many file appenders as you wish.
 
 You can set a log level globally and/or for each appender.
-- The global log level will limit which log level is accepted. The default global
-  log level is :info.
+- The global log level will limit which log level is accepted. The default
+  global log level is :info.
 - The appender log level limits the log level produced by the appender. The
   default is `:trace`.
 

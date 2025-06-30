@@ -12,6 +12,7 @@ The format is based on [Keep a Changelog](https://keepachangelog.com/en/1.1.0/).
 
 ### Changed
 - acos: remove free storage amount from show version. Fixes #3492 (@991jo)
+- logging: rework of the logging system, uses Semantic Logger (@robertcheramy)
 
 ### Fixed
 - nxos: ignore bootflash size and permission errors (@rouven0)
