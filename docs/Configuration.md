@@ -519,10 +519,14 @@ following appenders are currently supported:
 > You can configure as many file appenders as you wish.
 
 You can set a log level globally and/or for each appender.
-- The global log level will limit which log level is accepted. The default
-  global log level is :info.
-- The appender log level limits the log level produced by the appender. The
-  default is `:trace`.
+- The global log level will limit which log messages are accepted, depending
+  on their level.
+  - The default global log level is `:info`.
+  - If you set `debug: true` in the configuration, the global log level will be
+    forced to `:debug`.
+- The appender log level limits which log messages are displayed by the
+  appender, depending on their level.
+  - The default is `:trace`.
 
 
 > Available log levels: `:trace`, `:debug`, `:info`, `:warn`,

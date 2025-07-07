@@ -63,6 +63,7 @@ module Oxidized
 
     return if %i[trace debug].include?(SemanticLogger.default_level)
 
+    # override config.logger.level when debug is true
     SemanticLogger.default_level = :debug if config.debug?
   end
 
