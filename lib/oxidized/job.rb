@@ -9,11 +9,11 @@ module Oxidized
       @start = Time.now.utc
       self.name = "Oxidized::Job '#{@node.name}'"
       super do
-        logger.debug "lib/oxidized/job.rb: Starting fetching process for #{@node.name} at #{Time.now.utc}"
+        logger.debug "Starting fetching process for #{@node.name} at #{Time.now.utc}"
         @status, @config = @node.run
         @end             = Time.now.utc
         @time            = @end - @start
-        logger.debug "lib/oxidized/job.rb: Config fetched for #{@node.name} at #{@end}"
+        logger.debug "Config fetched for #{@node.name} at #{@end}"
       end
     end
   end

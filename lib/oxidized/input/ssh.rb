@@ -24,10 +24,10 @@ module Oxidized
       if Oxidized.config.input.debug?
         logfile = Oxidized::Config::LOG + "/#{@node.ip}-ssh"
         @log = File.open(logfile, 'w')
-        logger.debug "lib/oxidized/input/ssh.rb: I/O Debuging to #{logfile}"
+        logger.debug "I/O Debuging to #{logfile}"
       end
 
-      logger.debug "lib/oxidized/input/ssh.rb: Connecting to #{@node.name}"
+      logger.debug "Connecting to #{@node.name}"
       @ssh = Net::SSH.start(@node.ip, @node.auth[:username], make_ssh_opts)
       unless @exec
         shell_open @ssh
@@ -45,7 +45,7 @@ module Oxidized
     end
 
     def cmd(cmd, expect = node.prompt)
-      logger.debug "lib/oxidized/input/ssh.rb #{cmd.dump} @ #{node.name} with expect: #{expect.inspect}"
+      logger.debug "Sending '#{cmd.dump}' @ #{node.name} with expect: #{expect.inspect}"
       if Oxidized.config.input.debug?
         @log.puts "sent #{cmd.dump}"
         @log.flush
@@ -76,10 +76,10 @@ module Oxidized
       # if disconnect does not disconnect us, give up after timeout
       Timeout.timeout(Oxidized.config.timeout) { @ssh.loop }
     rescue Errno::ECONNRESET, Net::SSH::Disconnect, IOError => e
-      logger.debug 'ssh: the other side closed the connection while ' \
+      logger.debug 'The other side closed the connection while ' \
                    "disconnecting, rasing #{e.class} with #{e.messages}"
     rescue Timeout::Error
-      logger.debug "ssh: #{@node.name} timed out while disconnecting"
+      logger.debug "#{@node.name} timed out while disconnecting"
     ensure
       @log.close if Oxidized.config.input.debug?
       (@ssh.close rescue true) unless @ssh.closed?
@@ -121,7 +121,7 @@ module Oxidized
 
     def expect(*regexps)
       regexps = [regexps].flatten
-      logger.debug "lib/oxidized/input/ssh.rb: expecting #{regexps.inspect} at #{node.name}"
+      logger.debug "Expecting #{regexps.inspect} at #{node.name}"
       Timeout.timeout(Oxidized.config.timeout) do
         @ssh.loop(0.1) do
           sleep 0.1

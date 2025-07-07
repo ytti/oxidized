@@ -14,7 +14,7 @@ module Oxidized
         new = []
         @source = Oxidized.config.source.default
         Oxidized.mgr.add_source(@source) || raise(MethodNotFound, "cannot load node source '#{@source}', not found")
-        logger.info "lib/oxidized/nodes.rb: Loading nodes"
+        logger.info "Loading nodes"
         nodes = Oxidized.mgr.source[@source].new.load node_want
         nodes.each do |node|
           # we want to load specific node(s), not all of them
@@ -31,7 +31,7 @@ module Oxidized
         end
         size.zero? ? replace(new) : update_nodes(new)
         Output.clean_obsolete_nodes(self) if node_want.nil?
-        logger.info "lib/oxidized/nodes.rb: Loaded #{size} nodes"
+        logger.info "Loaded #{size} nodes"
       end
     end
 

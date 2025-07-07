@@ -69,7 +69,7 @@ module Oxidized
     end
 
     def run
-      logger.debug "lib/oxidized/core.rb: Starting the worker..."
+      logger.debug "Starting the worker..."
       loop do
         reload if @need_reload
         @worker.work

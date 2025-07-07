@@ -19,7 +19,7 @@ module Oxidized
       @jobs.work
 
       while @jobs.size < @jobs.want
-        logger.debug "lib/oxidized/worker.rb: Jobs running: #{@jobs.size} of #{@jobs.want} - ended: " \
+        logger.debug "Jobs running: #{@jobs.size} of #{@jobs.want} - ended: " \
                      "#{@jobs_done} of #{@nodes.size}"
         # ask for next node in queue non destructive way
         nextnode = @nodes.first
@@ -33,14 +33,14 @@ module Oxidized
         node.running? ? next : node.running = true
 
         @jobs.push Job.new node
-        logger.debug "lib/oxidized/worker.rb: Added #{node.group}/#{node.name} to the job queue"
+        logger.debug "Added #{node.group}/#{node.name} to the job queue"
       end
 
       if cycle_finished?
         run_done_hook
         exit 0 if Oxidized.config.run_once
       end
-      logger.debug("lib/oxidized/worker.rb: #{@jobs.size} jobs running in parallel") unless @jobs.empty?
+      logger.debug("#{@jobs.size} jobs running in parallel") unless @jobs.empty?
     end
 
     def process(job)
@@ -109,11 +109,11 @@ module Oxidized
     end
 
     def run_done_hook
-      logger.debug "lib/oxidized/worker.rb: Running :nodes_done hook"
+      logger.debug "Running :nodes_done hook"
       Oxidized.hooks.handle :nodes_done
     rescue StandardError => e
       # swallow the hook erros and continue as normal
-      logger.error "lib/oxidized/worker.rb: #{e.message}"
+      logger.error e.message
     ensure
       @jobs_done = 0
     end

@@ -49,11 +49,11 @@ module Oxidized
 
         @model.input = input = input.new
         if (config = run_input(input))
-          logger.debug "lib/oxidized/node.rb: #{input.class.name} ran for #{name} successfully"
+          logger.debug "#{input.class.name} ran for #{name} successfully"
           status = :success
           break
         else
-          logger.debug "lib/oxidized/node.rb: #{input.class.name} failed for #{name}"
+          logger.debug "#{input.class.name} failed for #{name}"
           status = :no_connection
         end
       end
@@ -185,7 +185,7 @@ module Oxidized
     def resolve_model(opt)
       model = resolve_key :model, opt
       unless Oxidized.mgr.model[model]
-        logger.debug "lib/oxidized/node.rb: Loading model #{model.inspect}"
+        logger.debug "Loading model #{model.inspect}"
         Oxidized.mgr.add_model(model) || raise(ModelNotFound, "#{model} not found for node #{ip}")
       end
       Oxidized.mgr.model[model].new
@@ -214,40 +214,40 @@ module Oxidized
       key_sym = key.to_sym
       key_str = key.to_s
       model_name = @model.class.name.to_s.downcase
-      logger.debug "node.rb: resolving node key '#{key}', with passed global value of '#{global}' " \
-                            "and node value '#{opt[key_sym]}'"
+      logger.debug "resolving node key '#{key}', with passed global value of '#{global}' " \
+                   "and node value '#{opt[key_sym]}'"
 
       # Node
       if opt[key_sym]
         value = opt[key_sym]
-        logger.debug "node.rb: setting node key '#{key}' to value '#{value}' from node"
+        logger.debug "setting node key '#{key}' to value '#{value}' from node"
 
       # Group specific model
       elsif Oxidized.config.groups.has_key?(@group) &&
             Oxidized.config.groups[@group].models.has_key?(model_name) &&
             Oxidized.config.groups[@group].models[model_name].has_key?(key_str)
         value = Oxidized.config.groups[@group].models[model_name][key_str]
-        logger.debug "node.rb: setting node key '#{key}' to value '#{value}' from model in group"
+        logger.debug "setting node key '#{key}' to value '#{value}' from model in group"
 
       # Group
       elsif Oxidized.config.groups.has_key?(@group) && Oxidized.config.groups[@group].has_key?(key_str)
         value = Oxidized.config.groups[@group][key_str]
-        logger.debug "node.rb: setting node key '#{key}' to value '#{value}' from group"
+        logger.debug "setting node key '#{key}' to value '#{value}' from group"
 
       # Model
       elsif Oxidized.config.models.has_key?(model_name) && Oxidized.config.models[model_name].has_key?(key_str)
         value = Oxidized.config.models[model_name][key_str]
-        logger.debug "node.rb: setting node key '#{key}' to value '#{value}' from model"
+        logger.debug "setting node key '#{key}' to value '#{value}' from model"
 
       # Global passed
       elsif global
         value = global
-        logger.debug "node.rb: setting node key '#{key}' to value '#{value}' from passed global value"
+        logger.debug "setting node key '#{key}' to value '#{value}' from passed global value"
 
       # Global
       elsif Oxidized.config.has_key?(key_str)
         value = Oxidized.config[key_str]
-        logger.debug "node.rb: setting node key '#{key}' to value '#{value}' from global"
+        logger.debug "setting node key '#{key}' to value '#{value}' from global"
       end
       value
     end
