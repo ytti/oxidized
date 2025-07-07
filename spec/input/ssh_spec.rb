@@ -41,7 +41,8 @@ describe Oxidized::SSH do
         timeout:                         Oxidized.config.timeout,
         number_of_password_prompts:      0,
         auth_methods:                    %w[none publickey password],
-        proxy:                           proxy
+        proxy:                           proxy,
+        logger:                          anything
       }
       Net::SSH.expects(:start).with('192.0.2.2', 'alma', ssh_options)
 
@@ -77,7 +78,8 @@ describe Oxidized::SSH do
         timeout:                         Oxidized.config.timeout,
         number_of_password_prompts:      0,
         auth_methods:                    %w[none publickey password],
-        proxy:                           proxy
+        proxy:                           proxy,
+        logger:                          anything
       }
       Net::SSH.expects(:start).with('example.com', 'alma', ssh_options)
 

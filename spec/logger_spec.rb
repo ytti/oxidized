@@ -22,6 +22,15 @@ describe Oxidized::Logger do
       _(SemanticLogger.appenders[0]).must_be_instance_of SemanticLogger::Appender::IO
     end
 
+    it "creates an appender when only logger is specified" do
+      Oxidized.asetus.cfg.logger = nil
+
+      Oxidized::Logger.setup
+      _(SemanticLogger.default_level).must_equal :info
+      _(SemanticLogger.appenders.count).must_equal 1
+      _(SemanticLogger.appenders[0]).must_be_instance_of SemanticLogger::Appender::IO
+    end
+
     it "creates an appender when only logger.level is specified" do
       Oxidized.asetus.cfg.logger.level = :debug
       Oxidized::Logger.setup
@@ -50,6 +59,9 @@ describe Oxidized::Logger do
 
     it "creates an appender when legacy use_syslog is true" do
       Oxidized.asetus.cfg.use_syslog = true
+      Oxidized::Logger.logger.expects(:warn)
+                      .with("The configuration 'use_syslog' is deprecated. " \
+                            "Remove it and use 'logger' instead")
       Oxidized::Logger.setup
 
       _(SemanticLogger.appenders.count).must_equal 1
@@ -58,9 +70,7 @@ describe Oxidized::Logger do
 
     it "Set loglevel to debug when config.debug is true" do
       _(SemanticLogger.default_level).must_equal :info
-
       Oxidized.asetus.cfg.debug = true
-
       Oxidized::Logger.setup
 
       _(SemanticLogger.default_level).must_equal :debug
@@ -69,16 +79,22 @@ describe Oxidized::Logger do
 
     it "Use a File appender when legacy log is set" do
       Oxidized.asetus.cfg.log = File::NULL
-
+      Oxidized::Logger.logger.expects(:warn)
+                      .with("The configuration 'log' is deprecated. " \
+                            "Remove it and use 'logger' instead")
       Oxidized::Logger.setup
+
       _(SemanticLogger.appenders[0]).must_be_instance_of SemanticLogger::Appender::File
     end
 
     it "Overrides log when legacy use_syslog is set" do
       Oxidized.asetus.cfg.log = File::NULL
       Oxidized.asetus.cfg.use_syslog = true
-
+      Oxidized::Logger.logger.expects(:warn)
+                      .with("The configuration 'use_syslog' is deprecated. " \
+                            "Remove it and use 'logger' instead")
       Oxidized::Logger.setup
+
       _(SemanticLogger.appenders.count).must_equal 1
       _(SemanticLogger.appenders[0]).must_be_instance_of SemanticLogger::Appender::Syslog
     end

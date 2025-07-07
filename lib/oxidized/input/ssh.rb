@@ -158,11 +158,10 @@ module Oxidized
       ssh_opts[:host_key]   = vars(:ssh_host_key).split(/,\s*/)   if vars(:ssh_host_key)
       ssh_opts[:hmac]       = vars(:ssh_hmac).split(/,\s*/)       if vars(:ssh_hmac)
 
-      if Oxidized.config.input.debug?
-        # Log debug messages of Net::SSH as trace
-        ssh_opts[:logger]  = SemanticLogger::DebugAsTraceLogger.new("Net::SSH")
-        ssh_opts[:verbose] = Logger::DEBUG
-      end
+      # Use our logger for Net:SSH
+      ssh_logger = SemanticLogger[Net::SSH]
+      ssh_logger.level = Oxidized.config.input.debug? ? :debug : :error
+      ssh_opts[:logger] = ssh_logger
 
       ssh_opts
     end

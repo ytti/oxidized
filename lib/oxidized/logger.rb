@@ -10,17 +10,17 @@ module Oxidized
 
       SemanticLogger.add_signal_handler
 
-      if config.has_key?('use_syslog') && config.use_syslog
+      if config.use_syslog?
         SemanticLogger.add_appender(appender: :syslog)
-        logger.warn("The configuration 'use_syslog' is deprecated." \
+        logger.warn("The configuration 'use_syslog' is deprecated. " \
                     "Remove it and use 'logger' instead")
 
-      elsif config.has_key?('log')
+      elsif config.log?
         SemanticLogger.add_appender(file_name: File.expand_path(config.log))
-        logger.warn("The configuration 'log' is deprecated." \
+        logger.warn("The configuration 'log' is deprecated. " \
                     "Remove it and use 'logger' instead")
 
-      elsif config.has_key?('logger')
+      elsif config.logger?
         SemanticLogger.default_level = config.logger.level if config.logger.level?
         config.logger.appenders.each { |a| add_appender a } if config.logger.has_key?('appenders')
 
