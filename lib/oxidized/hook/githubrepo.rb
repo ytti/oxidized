@@ -7,7 +7,7 @@ class GithubRepo < Oxidized::Hook
 
   def run_hook(ctx)
     unless ctx.node
-      log 'GithubRepo.run_hook: no node provided', :error
+      logger.error 'GithubRepo.run_hook: no node provided'
       return
     end
 

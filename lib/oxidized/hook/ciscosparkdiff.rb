@@ -35,8 +35,8 @@ class CiscoSparkDiff < Oxidized::Hook
       logger.info cfg.message
       msg = cfg.message % { node: ctx.node.name.to_s, group: ctx.node.group.to_s, commitref: ctx.commitref,
                             model: ctx.node.model.class.name.to_s.downcase }
-      log msg
-      log "Posting message to #{cfg.space}"
+      logger.info msg
+      logger.info "Posting message to #{cfg.space}"
       room.send_message CiscoSpark::Message.new(text: msg)
     end
 
