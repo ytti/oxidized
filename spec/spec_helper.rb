@@ -6,6 +6,9 @@ require 'mocha/minitest'
 require 'oxidized'
 
 Oxidized.mgr = Oxidized::Manager.new
+# Default level is :info, uncomment & adapt to set another level
+# SemanticLogger.default_level = :debug
+SemanticLogger.add_appender(io: $stderr)
 
 def stub_oxidized_ssh
   Oxidized::SSH.any_instance.stubs(:connect).returns(true)

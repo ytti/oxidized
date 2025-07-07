@@ -8,8 +8,6 @@ describe 'Oxidized::Output' do
   describe '.clean_obsolete_nodes' do
     before do
       Oxidized.asetus = Asetus.new
-      Oxidized.asetus.cfg.debug = false
-      Oxidized.setup_logger
     end
     it 'runs on git' do
       Oxidized.config.output.default = 'git'

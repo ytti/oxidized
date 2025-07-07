@@ -174,9 +174,6 @@ describe Oxidized::Output::Git do
       Oxidized.config.output.git.email = 'oxidized@example.com'
       Oxidized.config.output.git.repo = '/gitrepo'
 
-      Oxidized.asetus.cfg.debug = false
-      Oxidized.setup_logger
-
       @opts = {
         input:  'ssh',
         output: 'git',

@@ -3,8 +3,6 @@ require_relative '../spec_helper'
 describe 'Model apc_aos' do
   before(:each) do
     Oxidized.asetus = Asetus.new
-    Oxidized.asetus.cfg.debug = false
-    Oxidized.setup_logger
 
     Oxidized::Node.any_instance.stubs(:resolve_repo)
     Oxidized::Node.any_instance.stubs(:resolve_output)

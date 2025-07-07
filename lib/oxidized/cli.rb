@@ -27,7 +27,7 @@ module Oxidized
       _args, @opts = parse_opts
 
       Config.load(@opts)
-      Oxidized.setup_logger
+      Oxidized::Logger.setup
 
       @pidfile = File.expand_path(Oxidized.config.pid)
     end

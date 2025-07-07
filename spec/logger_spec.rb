@@ -1,21 +1,22 @@
 require_relative 'spec_helper'
 
-describe Oxidized do
-  describe '#setup_logger' do
-    before(:each) do
-      # Reset SemanticLogger settings changed by other tests
-      SemanticLogger.clear_appenders!
-      SemanticLogger.default_level = :info
-      Oxidized.asetus = Asetus.new
-    end
+describe Oxidized::Logger do
+  before(:each) do
+    Oxidized.asetus = Asetus.new
+    @saved_level = SemanticLogger.default_level
+    # Remove the appender from spec_helper
+    SemanticLogger.clear_appenders!
+  end
 
-    after(:each) do
-      SemanticLogger.clear_appenders!
-      SemanticLogger.default_level = :info
-    end
+  after(:each) do
+    SemanticLogger.clear_appenders!
+    SemanticLogger.default_level = @saved_level
+    SemanticLogger.add_appender(io: $stderr)
+  end
 
+  describe '#setup' do
     it "creates an appender when no config is specified" do
-      Oxidized.setup_logger
+      Oxidized::Logger.setup
       _(SemanticLogger.default_level).must_equal :info
       _(SemanticLogger.appenders.count).must_equal 1
       _(SemanticLogger.appenders[0]).must_be_instance_of SemanticLogger::Appender::IO
@@ -23,7 +24,7 @@ describe Oxidized do
 
     it "creates an appender when only logger.level is specified" do
       Oxidized.asetus.cfg.logger.level = :debug
-      Oxidized.setup_logger
+      Oxidized::Logger.setup
 
       _(SemanticLogger.default_level).must_equal :debug
       _(SemanticLogger.appenders.count).must_equal 1
@@ -36,7 +37,7 @@ describe Oxidized do
         { 'type' => 'syslog' }
       ]
 
-      Oxidized.setup_logger
+      Oxidized::Logger.setup
 
       _(SemanticLogger.appenders.count).must_equal 3
       _(SemanticLogger.appenders[0]).must_be_instance_of SemanticLogger::Appender::File
@@ -49,7 +50,7 @@ describe Oxidized do
 
     it "creates an appender when legacy use_syslog is true" do
       Oxidized.asetus.cfg.use_syslog = true
-      Oxidized.setup_logger
+      Oxidized::Logger.setup
 
       _(SemanticLogger.appenders.count).must_equal 1
       _(SemanticLogger.appenders[0]).must_be_instance_of SemanticLogger::Appender::Syslog
@@ -59,50 +60,48 @@ describe Oxidized do
       _(SemanticLogger.default_level).must_equal :info
 
       Oxidized.asetus.cfg.debug = true
-      Oxidized.setup_logger
+
+      Oxidized::Logger.setup
 
       _(SemanticLogger.default_level).must_equal :debug
       _(SemanticLogger.appenders[0]).must_be_instance_of SemanticLogger::Appender::IO
+    end
 
-      SemanticLogger.default_level = :info
+    it "Use a File appender when legacy log is set" do
       Oxidized.asetus.cfg.log = File::NULL
-      Oxidized.setup_logger
-      _(SemanticLogger.default_level).must_equal :debug
-      _(SemanticLogger.appenders[0]).must_be_instance_of SemanticLogger::Appender::File
 
-      SemanticLogger.default_level = :info
-      # use_syslog overrides log
+      Oxidized::Logger.setup
+      _(SemanticLogger.appenders[0]).must_be_instance_of SemanticLogger::Appender::File
+    end
+
+    it "Overrides log when legacy use_syslog is set" do
+      Oxidized.asetus.cfg.log = File::NULL
       Oxidized.asetus.cfg.use_syslog = true
-      Oxidized.setup_logger
+
+      Oxidized::Logger.setup
       _(SemanticLogger.appenders.count).must_equal 1
-      _(SemanticLogger.default_level).must_equal :debug
       _(SemanticLogger.appenders[0]).must_be_instance_of SemanticLogger::Appender::Syslog
     end
 
     it "keeps specified :trace when debug = true" do
       Oxidized.asetus.cfg.logger.level = :trace
       Oxidized.asetus.cfg.debug = true
-      Oxidized.setup_logger
+      Oxidized::Logger.setup
 
       _(SemanticLogger.default_level).must_equal :trace
     end
   end
-  describe '#setup_appender' do
-    before(:each) do
-      # Reset SemanticLogger settings changed by other tests
-      SemanticLogger.clear_appenders!
 
+  describe '#add_appender' do
+    before(:each) do
       Asetus.any_instance.expects(:load)
       Asetus.any_instance.expects(:create).returns(false)
       # Set :home_dir to make sure the OXIDIZED_HOME environment variable is not used
       Oxidized::Config.load({ home_dir: '/cfg_path/' })
     end
-    after(:each) do
-      SemanticLogger.clear_appenders!
-    end
 
     it "raises an InvalidConfig when the appender type is unknown" do
-      err = _ { Oxidized.setup_appender('type' => 'invalid') }.must_raise Oxidized::InvalidConfig
+      err = _ { Oxidized::Logger.add_appender('type' => 'invalid') }.must_raise Oxidized::InvalidConfig
       _(err.message).must_equal 'Unknown logger invalid, edit /cfg_path/config'
     end
   end

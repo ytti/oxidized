@@ -4,13 +4,7 @@ require 'yaml'
 
 def init_model_helper
   Oxidized.asetus = Asetus.new
-  # Set to true in your unit test if you want a lot of logs while debugging
-  # You will need to run Oxidized.setup_logger again inside your unit test
-  # after setting Oxidized.asetus.cfg.debug to true
-  Oxidized.asetus.cfg.debug = false
   Oxidized.config.timeout = 5
-  Oxidized.setup_logger
-
   Oxidized::Node.any_instance.stubs(:resolve_repo)
   Oxidized::Node.any_instance.stubs(:resolve_output)
 

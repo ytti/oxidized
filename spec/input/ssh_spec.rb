@@ -4,8 +4,6 @@ require 'oxidized/input/ssh'
 describe Oxidized::SSH do
   before(:each) do
     Oxidized.asetus = Asetus.new
-    Oxidized.asetus.cfg.debug = false
-    Oxidized.setup_logger
     Oxidized.config.timeout = 30
     Oxidized.config.input.ssh.secure = true
     Oxidized::Node.any_instance.stubs(:resolve_repo)
