@@ -5,35 +5,35 @@ class XMPPDiff < Oxidized::Hook
   def connect
     @client = Jabber::Client.new(Jabber::JID.new(cfg.jid))
 
-    log "Connecting to XMPP"
+    logger.info "Connecting to XMPP"
     begin
       Timeout.timeout(15) do
         begin
           @client.connect
         rescue StandardError => e
-          log "Failed to connect to XMPP: #{e}"
+          logger.info "Failed to connect to XMPP: #{e}"
         end
         sleep 1
 
-        log "Authenticating to XMPP"
+        logger.info "Authenticating to XMPP"
         @client.auth(cfg.password)
         sleep 1
 
-        log "Connected to XMPP"
+        logger.info "Connected to XMPP"
 
         @muc = Jabber::MUC::SimpleMUCClient.new(@client)
         @muc.join(cfg.channel + "/" + cfg.nick)
 
-        log "Joined #{cfg.channel}"
+        logger.info "Joined #{cfg.channel}"
       end
     rescue Timeout::Error
-      log "timed out"
+      logger.info "timed out"
       @client = nil
       @muc = nil
     end
 
     @client.on_exception do
-      log "XMPP connection aborted, reconnecting"
+      logger.info "XMPP connection aborted, reconnecting"
       @client = nil
       @muc = nil
       connect
@@ -66,14 +66,14 @@ class XMPPDiff < Oxidized::Hook
           # Maybe connecting failed, so only proceed if we actually joined the MUC
           unless @muc.nil?
             title = "#{ctx.node.name} #{ctx.node.group} #{ctx.node.model.class.name.to_s.downcase}"
-            log "Posting diff as snippet to #{cfg.channel}"
+            logger.info "Posting diff as snippet to #{cfg.channel}"
 
             @muc.say(title + "\n\n" + diff[:patch].lines.to_a[4..-1].join)
           end
         end
       end
     rescue Timeout::Error
-      log "timed out"
+      logger.info "timed out"
     end
   end
 end

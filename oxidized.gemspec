@@ -41,7 +41,10 @@ Gem::Specification.new do |s|
   s.add_dependency 'net-telnet',           '~> 0.2'
   s.add_dependency 'psych',                '~> 5.0'
   s.add_dependency 'rugged',               '~> 1.6'
+  s.add_dependency 'semantic_logger',      '~> 4.16'
   s.add_dependency 'slop',                 '~> 4.6'
+  s.add_dependency 'syslog',               '~> 0.3.0'
+  s.add_dependency 'syslog_protocol',      '~> 0.9.2'
 
   s.add_development_dependency 'bundler',             '~> 2.2'
   s.add_development_dependency 'git',                 '>= 2.0', '< 3.2.0'

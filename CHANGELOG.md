@@ -23,6 +23,7 @@ The format is based on [Keep a Changelog](https://keepachangelog.com/en/1.1.0/).
 - Housekeeping in the code: Maximal line length: 120 char + Rubocop fixes (@robertcheramy)
 - spec/model/data uses # instead of : as a separator in the filename, so we can
   git clone unter Windows. Fixes: #3481 (@robertcheramy)
+- logging: rework of the logging system, using Semantic Logger (@robertcheramy)
 
 ### Fixed
 - nxos: ignore bootflash size and permission errors (@rouven0)

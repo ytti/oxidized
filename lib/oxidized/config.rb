@@ -27,7 +27,6 @@ module Oxidized
       asetus.default.model         = 'junos'
       asetus.default.resolve_dns   = true # if false, don't resolve DNS to IP
       asetus.default.interval      = 3600
-      asetus.default.use_syslog    = false
       asetus.default.debug         = false
       asetus.default.run_once      = false
       asetus.default.threads       = 30

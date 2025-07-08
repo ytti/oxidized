@@ -9,6 +9,8 @@ module Oxidized
     end
 
     class Output
+      include SemanticLogger::Loggable
+
       class NoConfig < OxidizedError; end
 
       def cfg_to_str(cfg)
@@ -16,8 +18,7 @@ module Oxidized
       end
 
       def self.clean_obsolete_nodes(_active_nodes)
-        Oxidized.logger.warn "clean_obsolete_nodes is not implemented for " \
-                             "#{name}"
+        logger.warn "clean_obsolete_nodes is not implemented for #{name}"
       end
     end
   end
