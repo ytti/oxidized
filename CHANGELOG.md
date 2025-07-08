@@ -18,6 +18,7 @@ The format is based on [Keep a Changelog](https://keepachangelog.com/en/1.1.0/).
 
 
 ### Changed
+- remove uri in commit-archive location for EdgeOS. Fixed #3525 (@systeembeheerder)
 - acos: remove free storage amount from show version. Fixes #3492 (@991jo)
 - Housekeeping in the code: Maximal line length: 120 char + Rubocop fixes (@robertcheramy)
 - spec/model/data uses # instead of : as a separator in the filename, so we can
