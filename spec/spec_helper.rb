@@ -6,7 +6,7 @@ require 'mocha/minitest'
 require 'oxidized'
 
 Oxidized.mgr = Oxidized::Manager.new
-# Default level is :info, uncomment & adapt to set another level
+# The default log level is :info; uncomment & adapt to set another log level in the tests
 # SemanticLogger.default_level = :debug
 SemanticLogger.add_appender(io: $stderr)
 

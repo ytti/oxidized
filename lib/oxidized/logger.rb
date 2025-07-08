@@ -23,12 +23,11 @@ module Oxidized
         config.logger.appenders.each { |a| add_appender a } if config.logger.has_key?('appenders')
       end
 
-      # config.logger specified without appenders
+      # No appenders configured
       SemanticLogger.add_appender(io: $stderr) if SemanticLogger.appenders.empty?
 
       return if %i[trace debug].include?(SemanticLogger.default_level)
 
-      # override config.logger.level when debug is true
       SemanticLogger.default_level = :debug if config.debug?
     end
 
