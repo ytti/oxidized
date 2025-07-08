@@ -14,18 +14,13 @@ module Oxidized
         SemanticLogger.add_appender(appender: :syslog)
         logger.warn("The configuration 'use_syslog' is deprecated. " \
                     "Remove it and use 'logger' instead")
-
       elsif config.log?
         SemanticLogger.add_appender(file_name: File.expand_path(config.log))
         logger.warn("The configuration 'log' is deprecated. " \
                     "Remove it and use 'logger' instead")
-
       elsif config.logger?
         SemanticLogger.default_level = config.logger.level if config.logger.level?
         config.logger.appenders.each { |a| add_appender a } if config.logger.has_key?('appenders')
-
-      else # Nothing specified
-        SemanticLogger.add_appender(io: $stderr)
       end
 
       # config.logger specified without appenders
