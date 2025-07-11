@@ -1,5 +1,7 @@
 # Oxidized
 
+![alt text](https://github.com/LaKishta/oxidized/blob/master/sick_logo.png)
+
 [![Build Status](https://github.com/ytti/oxidized/actions/workflows/ruby.yml/badge.svg)](https://github.com/ytti/oxidized/actions/workflows/ruby.yml)
 [![Gem Version](https://badge.fury.io/rb/oxidized.svg)](http://badge.fury.io/rb/oxidized)
 [![Join the chat at https://gitter.im/oxidized/Lobby](https://badges.gitter.im/oxidized/Lobby.svg)](https://gitter.im/oxidized/Lobby?utm_source=badge&utm_medium=badge&utm_campaign=pr-badge&utm_content=badge)
