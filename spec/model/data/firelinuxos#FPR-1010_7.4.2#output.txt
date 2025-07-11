@@ -1,0 +1,82 @@
+! -------------------[ FPR-12345 ]--------------------
+! Model                     : Cisco Firepower 1010 Threat Defense (78) Version 7.4.2 (Build 172)
+! UUID                      : 5d111111-0000-0000-0000-00000000cafe
+! LSP version               : lsp-rel-20250114-1341
+! VDB version               : 400
+! ----------------------------------------------------
+! 
+! Cisco Adaptive Security Appliance Software Version 9.20(2)32 
+! SSP Operating System Version 2.14(1.167)
+! 
+! Compiled on Mon 29-Jul-24 18:15 GMT by builders
+! System image file is "disk0:/installables/switch/fxos-k8-fp1k-lfbff.2.14.1.167.SPA"
+! Config file at boot was "startup-config"
+! 
+! Start-up time 20 secs
+! 
+! Hardware:   FPR-1010, 2581 MB RAM, CPU Atom C3000 series 2200 MHz, 1 CPU (4 cores)
+! 
+! Encryption hardware device : Cisco FP Crypto on-board accelerator (revision 0x11)
+!                              Driver version        : 4.12.0
+!                              Number of accelerators: 6
+! 
+!  1: Int: Internal-Data0/0    : address is 00a0.c900.0000, irq 10
+!  3: Ext: Management1/1       : address is 5c5a.c700.cafe, irq 0
+!  4: Int: Internal-Data1/1    : address is 0000.0100.0001, irq 0
+!  5: Int: Internal-Data1/2    : address is 0000.0300.0001, irq 0
+!  6: Int: Internal-Control1/1 : address is 0000.0001.0001, irq 0
+! 
+! Serial Number: JAD20000AAA
+! Configuration has not been modified since last system restart.
+! Name: "module 0", DESCR: "Firepower 1010 Appliance, Desktop, 8 GE, 1 MGMT"
+! PID: FPR-1010          , VID: V01     , SN: JMX0000AAAA
+! 
+:
+NGFW Version 7.4.2 
+!
+command-alias exec h help
+command-alias exec lo logout
+command-alias exec p ping
+command-alias exec s show
+terminal width 80
+hostname FPR-12345
+enable password ***** encrypted
+no asp load-balance per-packet
+! ...
+!
+interface Vlan1
+ no nameif
+ no cts manual
+ no security-level
+ vrf forwarding default
+ no ip address
+ delay 10
+!
+interface Ethernet1/1
+ description outside interface
+ no switchport
+ nameif OUTSIDE
+ no cts manual
+ security-level 0
+ vrf forwarding default
+ ip address 10.42.42.18 255.255.255.248 
+ delay 1
+!
+! ...
+interface Management1/1
+ speed auto
+ duplex auto
+ management-only
+ nameif management
+ cts manual
+  propagate sgt preserve-untag
+  policy static sgt disabled trusted
+ security-level 0
+ vrf forwarding default
+ delay 100
+!
+! ...
+snort preserve-connection
+snort multichannel-lb enable
+no dp-tcp-proxy
+Cryptochecksum:70000cafe00000000000effffaaaacd0

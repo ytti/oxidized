@@ -47,7 +47,7 @@ module Oxidized
     def cmd(cmd, expect = node.prompt)
       logger.debug "Sending '#{cmd.dump}' @ #{node.name} with expect: #{expect.inspect}"
       if Oxidized.config.input.debug?
-        @log.puts "sent #{cmd.dump}"
+        @log.puts "sent cmd #{@exec ? cmd.dump : (cmd + newline).dump}"
         @log.flush
       end
       cmd_output = if @exec
@@ -60,6 +60,10 @@ module Oxidized
     end
 
     def send(data)
+      if Oxidized.config.input.debug?
+        @log.puts "sent data #{data.dump}"
+        @log.flush
+      end
       @ses.send_data data
     end
 
