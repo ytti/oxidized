@@ -10,7 +10,7 @@ pending = false
 critical_nodes = []
 pending_nodes = []
 
-json = JSON.parse(open("http://localhost:8888/nodes.json").read)
+json = JSON.parse(URI("http://localhost:8888/nodes.json").open(&:read))
 json.each do |node|
   next if !ARGV.empty? && (ARGV[0] != node['name'])
 

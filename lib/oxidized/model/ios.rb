@@ -50,6 +50,7 @@ class IOS < Oxidized::Model
     cfg.gsub! /^( +client \S+ server-key \d) (.*)$/, '\\1 <secret hidden>'
     cfg.gsub! /^( +domain-password) \S+ ?(.*)/, '\\1 <secret hidden> \\2'
     cfg.gsub! /^( +pre-shared-key).*/, '\\1 <configuration removed>'
+    cfg.gsub! /^(.*server-key(?: \d)?) \S+/, '\\1 <secret hidden>'
     cfg
   end
 
@@ -68,17 +69,25 @@ class IOS < Oxidized::Model
 
       comments << "Image:#{slave} Compiled: #{Regexp.last_match(1)}" if line =~ /^Compiled (.*)$/
 
-      comments << "Image:#{slave} Software: #{Regexp.last_match(1)}, #{Regexp.last_match(2)}" if line =~ /^(?:Cisco )?IOS .* Software,? \(([A-Za-z0-9_-]*)\), .*Version\s+(.*)$/
+      if line =~ /^(?:Cisco )?IOS .* Software,? \(([A-Za-z0-9_-]*)\), .*Version\s+(.*)$/
+        comments << "Image:#{slave} Software: #{Regexp.last_match(1)}, #{Regexp.last_match(2)}"
+      end
 
-      comments << "ROM Bootstrap: #{Regexp.last_match(3)}" if line =~ /^ROM: (IOS \S+ )?(System )?Bootstrap.*(Version.*)$/
+      if line =~ /^ROM: (IOS \S+ )?(System )?Bootstrap.*(Version.*)$/
+        comments << "ROM Bootstrap: #{Regexp.last_match(3)}"
+      end
 
       comments << "BOOTFLASH: #{Regexp.last_match(1)}" if line =~ /^BOOTFLASH: .*(Version.*)$/
 
       comments << "Memory: nvram #{Regexp.last_match(1)}" if line =~ /^(\d+[kK]) bytes of (non-volatile|NVRAM)/
 
-      comments << "Memory: flash #{Regexp.last_match(1)}" if line =~ /^(\d+[kK]) bytes of (flash memory|flash internal|processor board System flash|ATA CompactFlash)/i
+      if line =~ /^(\d+[kK]) bytes of (flash memory|flash internal|processor board System flash|ATA CompactFlash)/i
+        comments << "Memory: flash #{Regexp.last_match(1)}"
+      end
 
-      comments << "Memory: pcmcia #{Regexp.last_match(2)} #{Regexp.last_match(3)}#{Regexp.last_match(4)} #{Regexp.last_match(1)}" if line =~ /^(\d+[kK]) bytes of (Flash|ATA)?.*PCMCIA .*(slot|disk) ?(\d)/i
+      if line =~ /^(\d+[kK]) bytes of (Flash|ATA)?.*PCMCIA .*(slot|disk) ?(\d)/i
+        comments << "Memory: pcmcia #{Regexp.last_match(2)} #{Regexp.last_match(3)}#{Regexp.last_match(4)} #{Regexp.last_match(1)}"
+      end
 
       if line =~ /(\S+(?:\sseries)?)\s+(?:\(([\S ]+)\)\s+processor|\(revision[^)]+\)).*\s+with (\S+k) bytes/i
         sproc = Regexp.last_match(1)
@@ -119,7 +128,9 @@ class IOS < Oxidized::Model
     cmd cmd_line do |cfg|
       cfg = cfg.each_line.to_a[3..-1]
       cfg = cfg.reject { |line| line.match /^ntp clock-period / }.join
-      cfg = cfg.each_line.reject { |line| line.match /^! (Last|No) configuration change (at|since).*/ unless line =~ /\d+\sby\s\S+$/ }.join
+      cfg = cfg.each_line.reject do |line|
+        line.match /^! (Last|No) configuration change (at|since).*/ unless line =~ /\d+\sby\s\S+$/
+      end.join
       cfg.gsub! /^Current configuration : [^\n]*\n/, ''
       cfg.gsub! /^ tunnel mpls traffic-eng bandwidth[^\n]*\n*(
                     (?: [^\n]*\n*)*

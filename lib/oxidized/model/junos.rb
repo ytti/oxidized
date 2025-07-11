@@ -26,12 +26,16 @@ class JunOS < Oxidized::Model
   end
 
   post do
-    out = ''
+    out = String.new('')
     case @model
     when 'mx960'
       out << cmd('show chassis fabric reachability') { |cfg| comment cfg }
     when /^(ex22|ex3[34]|ex4|ex8|qfx)/
       out << cmd('show virtual-chassis') { |cfg| comment cfg }
+    when /^srx/
+      out << cmd('show chassis cluster status') do |cfg|
+        cfg.lines.count <= 1 && cfg.include?("error:") ? '' : comment(cfg)
+      end
     end
     out
   end

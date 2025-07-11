@@ -1,24 +1,14 @@
 require 'simplecov'
-require 'simplecov-cobertura'
-
-SimpleCov.start do
-  if ENV['CI']
-    formatter SimpleCov::Formatter::CoberturaFormatter
-  else
-    formatter SimpleCov::Formatter::MultiFormatter.new(
-      [
-        SimpleCov::Formatter::CoberturaFormatter,
-        SimpleCov::Formatter::HTMLFormatter
-      ]
-    )
-  end
-end
+SimpleCov.start
 
 require 'minitest/autorun'
 require 'mocha/minitest'
 require 'oxidized'
 
 Oxidized.mgr = Oxidized::Manager.new
+# The default log level is :info; uncomment & adapt to set another log level in the tests
+# SemanticLogger.default_level = :debug
+SemanticLogger.add_appender(io: $stderr)
 
 def stub_oxidized_ssh
   Oxidized::SSH.any_instance.stubs(:connect).returns(true)

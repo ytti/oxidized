@@ -109,8 +109,8 @@ describe Refinements do
 
   describe '#init_from_string' do
     it 'initializes instance variables from another string' do
-      str1 = "sample string"
-      str1.process_cmd("some_command")
+      str1 = String.new('sample string')
+      str1.process_cmd('some_command')
 
       str2 = String.new(str1)
       str2.init_from_string(str1)

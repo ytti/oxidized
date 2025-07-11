@@ -3,12 +3,21 @@ class FireLinuxOS < Oxidized::Model
 
   # Fire Linux OS is what the new FTD (FirePOWER) series devices from Cisco run. At the backend, it's mostly identical to ASA's.
 
-  prompt /^[#>]\(?.+\)?\s?/
-  comment  '! '
+  prompt /^[#>]\(?.+\)? ?$/
+  comment '! '
+
+  expect /^Syntax error: .*\n.*$/ do |data, re|
+    # The firepower does not remove the entered command, so
+    # Send CTRL-U and \n for a fresh prompt
+    send "\x15\n"
+    data.sub re, ''
+  end
 
   cmd :all do |cfg|
     cfg.gsub! /^% Invalid input detected at '\^' marker\.$|^\s+\^$/, ''
-    cfg.each_line.to_a[1..-2].join
+    # Ged rid of ANSI escape codes
+    cfg.gsub! /\e\[[0-?]*[ -\/]*[@-~]\r?/, ''
+    cfg.cut_both
   end
 
   cmd :secret do |cfg|

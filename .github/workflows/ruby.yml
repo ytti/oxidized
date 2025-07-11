@@ -19,7 +19,10 @@ jobs:
     runs-on: ubuntu-latest
     strategy:
       matrix:
-        ruby-version: ['3.1', '3.2', '3.3']
+        ruby-version: ['3.1', '3.2', '3.3', '3.4']
+    # ruby-head disabled because of problem with bundler (2025-06-27)
+    #     ruby-version: ['3.1', '3.2', '3.3', '3.4', 'ruby-head']
+    # continue-on-error: ${{ matrix.ruby-version == 'ruby-head' }}
 
     steps:
     - uses: actions/checkout@v4
@@ -30,13 +33,5 @@ jobs:
       with:
         ruby-version: ${{ matrix.ruby-version }}
         bundler-cache: true # runs 'bundle install' and caches installed gems automatically
-    - name: rubocop
-      uses: reviewdog/action-rubocop@v2
-      with:
-        rubocop_version: gemfile
-        rubocop_extensions: rubocop-minitest:gemfile rubocop-rake:gemfile rubocop-sequel:gemfile
-        reporter: github-pr-review
     - name: Run tests
       run: bundle exec rake
-    - uses: codecov/codecov-action@v3
-      if: ${{ always() }}

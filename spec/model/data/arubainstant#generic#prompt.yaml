@@ -1,0 +1,4 @@
+pass:
+  - 'AAAA-AP123456# '
+  # Issue #3398: show version prepends a space to prompt when a core file is present
+  - ' AAAA-AP123456# '

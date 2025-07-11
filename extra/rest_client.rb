@@ -6,7 +6,7 @@ module Oxidized
     require 'asetus'
 
     class Config
-      Root = Root = ENV['OXIDIZED_HOME'] || File.join(Dir.home, '.config', 'oxidized')
+      ROOT = ENV['OXIDIZED_HOME'] || File.join(Dir.home, '.config', 'oxidized')
     end
 
     CFGS = Asetus.new name: 'oxidized', load: false, key_to_s: true
@@ -38,7 +38,8 @@ module Oxidized
 
     def next(opt)
       data = JSON.dump opt
-      @web.put PATH + '/node/next/' + opt[:name].to_s, data
+      headers = { 'content-type': 'application/json' }
+      @web.put PATH + '/node/next/' + opt[:name].to_s, data, headers
     end
   end
 end

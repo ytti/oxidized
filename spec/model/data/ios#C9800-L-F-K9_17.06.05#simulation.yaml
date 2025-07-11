@@ -1,0 +1,251 @@
+init_prompt: |-
+  OXIDIZED-WLC1#
+commands:
+  "terminal length 0\n": |-
+    terminal length 0
+    OXIDIZED-WLC1#
+  "terminal width 0\n": |-
+    terminal width 0
+    OXIDIZED-WLC1#
+  "show version\n": |-
+    show version
+    Cisco IOS XE Software, Version 17.06.05
+    Cisco IOS Software [Bengaluru], C9800 Software (C9800_IOSXE-K9), Version 17.6.5, RELEASE SOFTWARE (fc2)
+    Technical Support: http://www.cisco.com/techsupport
+    Copyright (c) 1986-2023 by Cisco Systems, Inc.
+    Compiled Wed 25-Jan-23 16:09 by mcpre
+    
+    
+    Cisco IOS-XE software, Copyright (c) 2005-2023 by cisco Systems, Inc.
+    All rights reserved.  Certain components of Cisco IOS-XE software are
+    licensed under the GNU General Public License (\"GPL\") Version 2.0.  The
+    software code licensed under GPL Version 2.0 is free software that comes
+    with ABSOLUTELY NO WARRANTY.  You can redistribute and/or modify such
+    GPL code under the terms of GPL Version 2.0.  For more details, see the
+    documentation or \"License Notice\" file accompanying the IOS-XE software,
+    or the applicable URL provided on the flyer accompanying the IOS-XE
+    software.
+    
+    
+    ROM: 16.12(3r)
+    
+    OXIDIZED-WLC1 uptime is 25 weeks, 5 days, 22 hours, 52 minutes
+    Uptime for this control processor is 25 weeks, 5 days, 22 hours, 53 minutes
+    System returned to ROM by Reload Command at 13:53:05 CET Wed Mar 13 2024
+    System restarted at 13:56:37 CET Wed Mar 13 2024
+    System image file is \"bootflash:C9800-L-universalk9_wlc.17.06.05.SPA.bin\"
+    Last reload reason: Reload Command
+    
+    
+    
+    This product contains cryptographic features and is subject to United
+    States and local country laws governing import, export, transfer and
+    use. Delivery of Cisco cryptographic products does not imply
+    third-party authority to import, export, distribute or use encryption.
+    Importers, exporters, distributors and users are responsible for
+    compliance with U.S. and local country laws. By using this product you
+    agree to comply with applicable laws and regulations. If you are unable
+    to comply with U.S. and local laws, return this product immediately.
+    
+    A summary of U.S. laws governing Cisco cryptographic products may be found at:
+    http://www.cisco.com/wwl/export/crypto/tool/stqrg.html
+    
+    If you require further assistance please contact us by sending email to
+    export@cisco.com.
+    
+    License Type: Smart License is permanent
+    License Level: adventerprise
+    Next reload license Level: adventerprise
+    AIR License Level: AIR Network Essentials
+    Next reload AIR license Level: AIR Network Essentials
+    
+    The current crypto throughput level is 0 kbps\x20
+    
+    
+    Smart Licensing Status: Registration Not Applicable/Not Applicable
+    
+    cisco C9800-L-F-K9 (KATAR) processor (revision KATAR) with 1688671K/6147K bytes of memory.
+    Processor board ID FCL2XXXXXXX
+    Router operating mode: Autonomous
+    2 Virtual Ethernet interfaces
+    4 2.5 Gigabit Ethernet interfaces
+    2 Ten Gigabit Ethernet interfaces
+    32768K bytes of non-volatile configuration memory.
+    16777216K bytes of physical memory.
+    26251263K bytes of eUSB flash at bootflash:.
+    
+    Base Ethernet MAC Address          : 08:45:D1:00:00:00
+    
+    Installation mode is BUNDLE\x20
+    
+    Configuration register is 0x2102
+    
+    OXIDIZED-WLC1#
+  "show vtp status\n": |-
+    show vtp status
+    VTP Version capable             : 1 to 3
+    VTP version running             : 1
+    VTP Domain Name                 :\x20
+    VTP Pruning Mode                : Disabled (Operationally Disabled)
+    VTP Traps Generation            : Disabled
+    Device ID                       : 0845.d100.0000
+    Configuration last modified by 0.0.0.0 at 0-0-00 00:00:00
+    
+    Feature VLAN:
+    --------------
+    VTP Operating Mode                : Off
+    Maximum VLANs supported locally   : 1005
+    Number of existing VLANs          : 8
+    Configuration Revision            : 0
+    MD5 digest                        : 0x00 0x00 0x00 0x00 0x00 0x00 0x00 0x00\x20
+                                        0x00 0x00 0x00 0x00 0x00 0x00 0x00 0x00\x20
+    OXIDIZED-WLC1#
+  "show inventory\n": |-
+    show inventory
+    NAME: \"Chassis 1\", DESCR: \"Cisco C9800-L-F-K9 Chassis\"
+    PID: C9800-L-F-K9      , VID: 01   , SN: FCL2XXXXXXX
+    
+    NAME: \"Chassis 1 Power Supply Module 0\", DESCR: \"Cisco Catalyst Wireless Controller 12V DC Generic Power Supply\"
+    PID: PWR-12V           , VID:      , SN:           \x20
+    
+    NAME: \"Chassis 1 Fan Tray\", DESCR: \"Cisco C9800-L-F-K9 Fan Tray\"
+    PID: C9800-L-F-K9-FAN  , VID:      , SN:           \x20
+    
+    NAME: \"module 0\", DESCR: \"Cisco C9800-L-F-K9 Modular Interface Processor\"
+    PID: C9800-L-F-K9      , VID:      , SN:           \x20
+    
+    NAME: \"SPA subslot 0/0\", DESCR: \"Front Panel bay-0 4 ports 2.5 Gigabitethernet Module\"
+    PID: BUILT-IN-4x2_5GE  , VID: V01  , SN: N/A       \x20
+    
+    NAME: \"SPA subslot 0/1\", DESCR: \"Front Panel bay-1 2 ports Ten/Gigabitethernet Module\"
+    PID: BUILT-IN-2x10GE-F , VID: V01  , SN: N/A       \x20
+    
+    NAME: \"module R0\", DESCR: \"Cisco C9800-L-F-K9 Route Processor\"
+    PID: C9800-L-F-K9      , VID: 01   , SN: FCL2XXXXXXX
+    
+    NAME: \"module F0\", DESCR: \"Cisco C9800-L-F-K9 Embedded Services Processor\"
+    PID: C9800-L-F-K9      , VID:      , SN:           \x20
+    
+    
+    OXIDIZED-WLC1#
+  "show running-config\n": |-
+    show running-config
+    Building configuration...
+    
+    Current configuration : 19796 bytes
+    !
+    ! Last configuration change at 13:57:08 CET Wed Mar 13 2024
+    ! NVRAM config last updated at 15:26:39 CET Wed Mar 13 2024 by oxidized
+    !
+    version 17.6
+    service timestamps debug datetime localtime show-timezone year
+    service timestamps log datetime localtime show-timezone year
+    service password-encryption
+    platform qos marker-statistics
+    platform qos match-statistics per-filter
+    !
+    hostname OXIDIZED-WLC1
+    !
+    boot-start-marker
+    boot system flash bootflash:C9800-L-universalk9_wlc.17.06.05.SPA.bin
+    boot-end-marker
+    !
+    !
+    vrf definition Mgmt-intf
+     !
+     address-family ipv4
+     exit-address-family
+     !
+     address-family ipv6
+     exit-address-family
+    !
+    logging monitor informational
+    enable secret 9 $9$SECRET_REMOVED
+    !
+    !
+    aaa server radius dynamic-author
+     client 10.42.0.7 server-key 7 REMOVED_SECRET
+    !
+    aaa session-id common
+    clock timezone CET 1 0
+    clock summer-time CET recurring last Sun Mar 2:00 last Sun Oct 2:00
+    vtp mode off
+    !
+    !
+    !
+    !
+    subscriber templating
+    !\x20
+    !\x20
+    !\x20
+    !\x20
+    !
+    !
+    !
+    !
+    !
+    interface TwoGigabitEthernet0/0/0
+     description Uplink
+     switchport trunk allowed vlan 2,3,4
+     switchport mode trunk
+     negotiation auto
+     no snmp trap link-status
+    !
+    interface TwoGigabitEthernet0/0/1
+     negotiation auto
+     no snmp trap link-status
+    !
+    ! ...
+    !
+    interface TenGigabitEthernet0/1/0
+     no negotiation auto
+     no snmp trap link-status
+    !
+    interface TenGigabitEthernet0/1/1
+     no negotiation auto
+     no snmp trap link-status
+    !
+    interface GigabitEthernet0
+     description Mgmt
+     vrf forwarding Mgmt-intf
+     ip address 10.41.1.10 255.255.255.0
+     negotiation auto
+    !
+    interface Vlan1
+     no ip address
+     shutdown
+    !
+    ip http server
+    ip http authentication aaa
+    ip http secure-server
+    ip http session-idle-timeout 900\x20
+    ip http client source-interface GigabitEthernet0
+    ! ...
+    ip route 0.0.0.0 0.0.0.0 10.41.2.1
+    ip route vrf Mgmt-intf 0.0.0.0 0.0.0.0 10.41.1.1 250
+    ip ssh version 2
+    ip scp server enable
+    !
+    !
+    banner login ^CThis is an actively monitored system!
+    Unauthorized access prohibited!
+    ^C
+    !
+    ! ...
+    wlan test 1 test
+     security wpa psk set-key ascii 0 WLANSECR3T
+    wlan test-spaces 2 test-spaces
+     security wpa psk set-key ascii 0 WLAN SECR3T
+    wlan hex 1000 hex
+     security wpa psk set-key hex 0 7df35f90c92ecff2a803e79577b85e978edc0a76404f6cfb534df8d9f9f67beb
+    ap profile default-ap-profile
+     dot1x username dot1x-username password 0 DOT1XPASSW0RD
+     mgmtuser username apmgmtuser password 0 MGMTPASSW0RD secret 0 MGMTSECR3T
+    ap profile \"spaces profile\"
+     dot1x username dot1x-username password 0 DOT1X PASSW0RD
+     mgmtuser username username password 0 MGMT PASSW0RD secret 0 MGMT SECR3T
+    netconf-yang
+    end
+    
+    OXIDIZED-WLC1#
+  "exit\n": |-

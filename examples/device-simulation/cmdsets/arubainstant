@@ -1,5 +1,0 @@
-show version
-show activate status
-show aps
-show running-config no-encrypt
-exit

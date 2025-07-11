@@ -1,0 +1,185 @@
+---
+init_prompt: |-
+    Welcome to Netgate TNSR Version: 24.10-3
+    
+    \t* Documentation:  https://docs.netgate.com/tnsr/en/latest/
+    \t* Support:        https://www.netgate.com/support
+    
+       _          __________
+     _| |_ _ __  | ___ _ __ |
+    |_  __| '_ \\ |/ __| '__||
+      | |_| | | ||\\__ \\ |   |
+       \\__|_| |_|||___/_|   |
+                 |__________|
+    
+    
+    
+    Version: 24.10-3
+    
+    This TNSR instance is not configured for package updates.
+    
+    For information see 'show documentation'
+    
+    \rtnsr-dev-24-10 tnsr#\x20
+commands:
+  - "show version all\n": |-
+      show version all
+      \r                tnsr-release 24.10-3
+                            cligen 7.1.0-3+tnsr-v24.10-3+jammy
+                            clixon 7.1.0-15+tnsr-v24.10-3+jammy
+                            davici 1.4-36+tnsr-v24.10-3+jammy
+                        libikemgmt 1.2.1-41+tnsr-v24.10-3+jammy
+                         libnfmgmt 1.0.1-60+tnsr-v24.10-3+jammy
+                         libnlmgmt 1.0.1-66+tnsr-v24.10-3+jammy
+                        libntpmgmt 1.0.1-36+tnsr-v24.10-3+jammy
+                      libtnsrinfra 0.0.1-80+tnsr-v24.10-3+jammy
+                        libvppmgmt 1.2.1-746+tnsr-v24.10-3+jammy
+                       libyang2t64 2.1.148-4+tnsr-v24.10-3+jammy
+                netgate-dpdk-kmods 21.06-45+tnsr-v24.10-3+jammy
+                       netgate-frr 10.0.2-43+tnsr-v24.10-3+jammy
+          netgate-kea-dhcp4-server 2.4.1-4+tnsr-v24.10-3+jammy
+                     netgate-snmpd 5.8-26+tnsr-v24.10-3+jammy
+                netgate-strongswan 5.9.14-43+tnsr-v24.10-3+jammy
+                     snmp-subagent 1.0.2-45+tnsr-v24.10-3+jammy
+                              tnsr 24.10-3
+                       tnsr-config 0.1-211+tnsr-v24.10-3+jammy
+                          tnsr-gui 0.0.1-578+tnsr-v24.10-3+jammy
+                               vpp 24.06-135+tnsr-v24.10-3+jammy+D24.03
+      \rtnsr-dev-24-10 tnsr#\x20
+  - "show configuration running cli\n": |-
+      show configuration running cli
+      \rconfiguration history enable
+      
+      nacm disable
+      nacm read-default deny
+      nacm write-default deny
+      nacm exec-default deny
+      nacm group admin
+          member root
+          member tnsr
+      exit
+      nacm rule-list admin-rules
+          group admin
+          rule permit-all
+              module *
+              access-operations *
+              action permit
+          exit
+      exit
+      nacm enable
+      
+      sysctl vm nr_hugepages 1024
+      sysctl vm nr_overcommit_hugepages 256
+      sysctl vm max_map_count 65530
+      --More--
+  - " ": |-
+      \b\b\b\b\b\b\b\b        \b\b\b\b\b\b\b\bsysctl kernel shmmax 2147483648
+      
+      system name tnsr-dev-24-10.example.com
+      
+      host interface ens192
+          enable
+          ip dhcp-client enable
+      exit
+      
+      dataplane ethernet default-mtu 1500
+      dataplane dpdk uio-driver vfio-pci
+      dataplane memory main-heap-page-size 2m
+      dataplane api-segment api-size 16M
+      dataplane api-segment global-size 64M
+      dataplane api-segment api-pvt-heap-size 128K
+      dataplane api-segment global-pvt-heap-size 128K
+      dataplane buffers buffers-per-numa 32768
+      dataplane statseg heap-size 96M
+      dataplane logging default-syslog-log-level notice
+      
+      nat global-options nat44 max-translations-per-thread 128000
+      nat global-options nat44 enabled false
+      
+      --More--
+  - " ": |-
+      \b\b\b\b\b\b\b\b        \b\b\b\b\b\b\b\bvpf options
+          startup max-connections-per-thread ip4 131072
+          startup max-connections-per-thread ip6 32768
+          startup port-mapping min-port 1024
+          startup port-mapping max-port 49151
+          runtime drop-options ip4 false
+          runtime drop-options ip6 false
+          runtime timeouts generic closed 0
+          runtime timeouts generic new 30
+          runtime timeouts generic established 60
+          runtime timeouts tcp closed 10
+          runtime timeouts tcp new 30
+          runtime timeouts tcp established 86400
+          runtime timeouts tcp half-closed 21600
+          runtime timeouts tcp time-wait 240
+          runtime tcp strict-rst-order true
+          runtime tcp max-ack-win 66000
+      exit
+      
+      vpf ipfix
+          domain 1
+          src-port 4739
+      exit
+      --More--
+  - " ": |-
+      \b\b\b\b\b\b\b\b        \b\b\b\b\b\b\b\b
+      nat ipfix logging domain 1
+      nat ipfix logging src-port 4739
+      nat nat64 map parameters
+          security-check enable
+      exit
+      
+      neighbor cache-options ipv4 max-number 50000
+      neighbor cache-options ipv4 max-age 300
+      neighbor cache-options ipv6 max-number 50000
+      neighbor cache-options ipv6 max-age 300
+      
+      route dynamic manager
+      exit
+      
+      route dynamic bgp
+          disable
+          rpki
+              expire-interval 7200
+              polling-period 3600
+              retry-interval 600
+          exit
+      exit
+      --More--
+  - " ": |-
+      \b\b\b\b\b\b\b\b        \b\b\b\b\b\b\b\b
+      route dynamic ospf6
+      exit
+      
+      route dynamic ospf
+      exit
+      
+      route dynamic rip
+      exit
+      
+      dhcp4 server
+          authoritative true
+          lease persist true
+          lease lfc-interval 3600
+          interface socket raw
+      exit
+      
+      unbound server
+          do-ip4
+          do-tcp
+          do-udp
+          harden glue
+          hide identity
+      --More--
+  - " ": |-
+      \b\b\b\b\b\b\b\b        \b\b\b\b\b\b\b\b    port outgoing range 4096
+      exit
+      
+      snmp host disable
+      
+      
+      \rtnsr-dev-25-02 tnsr#\x20
+  - "exit\n": |-
+      exit
+      \r

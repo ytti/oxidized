@@ -1,0 +1,438 @@
+---
+init_prompt: |-
+  SSH@#HOSTNAME#
+commands:
+  "show version\n": |-
+    show version
+    
+      Copyright (c) Ruckus Networks, Inc. All rights reserved.
+        UNIT 1: compiled on Apr 11 2023 at 00:06:30 labeled as SPS08095j
+          (31457280 bytes) from Primary SPS08095j.bin (UFI)
+            SW: Version 08.0.95jT211\x20
+          Compressed Primary Boot Code size = 786944, Version:10.1.26T225 (mnz10126)
+           Compiled on Tue Nov 29 18:13:26 2022
+        UNIT 2: compiled on Apr 11 2023 at 00:06:30 labeled as SPS08095j
+          (31457280 bytes) from Primary SPS08095j.bin (UFI)
+            SW: Version 08.0.95jT211\x20
+          Compressed Primary Boot Code size = 786944, Version:10.1.26T225 (mnz10126)
+        UNIT 3: compiled on Apr 11 2023 at 00:06:30 labeled as SPS08095j
+          (31457280 bytes) from Primary SPS08095j.bin (UFI)
+            SW: Version 08.0.95jT211\x20
+          Compressed Primary Boot Code size = 786944, Version:10.1.26T225 (mnz10126)
+        UNIT 4: compiled on Apr 11 2023 at 00:06:30 labeled as SPS08095j
+          (31457280 bytes) from Primary SPS08095j.bin (UFI)
+            SW: Version 08.0.95jT211\x20
+          Compressed Primary Boot Code size = 786944, Version:10.1.26T225 (mnz10126)
+    
+      HW: Stackable ICX7150-48Z-HPOE
+    ==========================================================================
+    UNIT 1: SL 1: ICX7150-48ZP-8X10GR POE 48-port Management Module
+          Serial  #:#SERIAL#
+          Current License: 8X10GR \x20
+          P-ASIC  0: type B160, rev 11  Chip BCM56160_B0
+    ==========================================================================
+    UNIT 1: SL 2: ICX7150-8X10GF 8-port 80G Module
+    ==========================================================================
+    UNIT 2: SL 1: ICX7150-48ZP-8X10GR POE 48-port Management Module
+          Serial  #:#SERIAL#
+          Software Package: BASE_SOFT_PACKAGE  \x20
+          Current License: 8X10GR \x20
+    ==========================================================================
+    UNIT 2: SL 2: ICX7150-8X10GF 8-port 80G Module
+    ==========================================================================
+    UNIT 3: SL 1: ICX7150-48ZP-8X10GR POE 48-port Management Module
+          Serial  #:#SERIAL#
+          Software Package: BASE_SOFT_PACKAGE  \x20
+          Current License: 8X10GR \x20
+    ==========================================================================
+    UNIT 3: SL 2: ICX7150-8X10GF 8-port 80G Module
+    ==========================================================================
+    UNIT 4: SL 1: ICX7150-48ZP-8X10GR POE 48-port Management Module
+          Serial  #:#SERIAL#
+          Software Package: BASE_SOFT_PACKAGE  \x20
+    ==========================================================================
+    UNIT 4: SL 2: ICX7150-8X10GF 8-port 80G Module
+    ==========================================================================
+     1000 MHz ARM processor ARMv7 88 MHz bus
+        8 MB boot flash memory
+        2 GB code flash memory
+        1 GB DRAM
+    STACKID 1  system uptime is 403 day(s) 4 hour(s) 20 minute(s) 22 second(s)\x20
+    STACKID 2  system uptime is 403 day(s) 4 hour(s) 20 minute(s) 37 second(s)\x20
+    STACKID 3  system uptime is 403 day(s) 4 hour(s) 20 minute(s) 11 second(s)\x20
+    STACKID 4  system uptime is 403 day(s) 4 hour(s) 20 minute(s) 31 second(s)\x20
+    The system started at 13:52:06 GMT+05:30 Sat Feb 17 2024
+    
+    The system : started=cold start  \x20
+    My stack unit ID = 1, bootup role = active
+    
+    SSH@#HOSTNAME#
+  "show chassis\n": |-
+    show chassis
+    
+    The stack unit 1 chassis info:\x20
+    
+    Power supply 1 (AC - PoE) present, status ok
+     \tModel Number:\t23-1000086-01
+    \tSerial Number:\\x20
+    \tFirmware Ver: \t32.66
+    Power supply 1 Fan Air Flow Direction:  Front to Back
+    Power supply 2 (AC - PoE) present, status ok
+     \tModel Number:\t23-1000086-01
+    \tSerial Number:\\x20
+    \tFirmware Ver: \t32.66
+    Power supply 2 Fan Air Flow Direction:  Front to Back
+    
+    Fan 1 ok, speed (auto): [[1]]<->2
+    Fan 2 ok, speed (auto): [[1]]<->2
+    
+    Fan controlled temperature:\x20
+    \tRule 1/3 (MGMT THERMAL PLANE): 44.2 deg-C
+    \tRule 2/3 (PoE THERMAL SENSOR PLANE): 87.0 deg-C
+    \tRule 3/3 (MISC THERMAL PLANE): 73.0 deg-C
+    
+    Fan speed switching temperature thresholds:
+    \tRule 1/3 (MGMT THERMAL PLANE):
+    \t\tSpeed 2:        85<----->105 deg-C (shutdown)
+    \tRule 2/3 (PoE THERMAL SENSOR PLANE):
+    \t\tSpeed 1: NM<----->130       deg-C
+    \t\tSpeed 2:       120<----->130 deg-C
+    \tRule 3/3 (MISC THERMAL PLANE):
+    \t\tSpeed 1: NM<----->100       deg-C
+    \t\tSpeed 2:        85<----->108 deg-C
+    
+    Fan 1 Air Flow Direction:  Front to Back\x20
+    Fan 2 Air Flow Direction:  Front to Back\x20
+    Slot 1 Current Temperature: 38.9 deg-C (Sensor 1), 44.7 deg-C (Sensor 2), 87.0 deg-C (Sensor 3), 73.0 deg-C (Sensor 4)
+    Slot 2 Current Temperature: NA
+    \tWarning level.......: 100.0 deg-C
+    \tShutdown level......: 105.0 deg-C
+    Boot Prom MAC : fc5c.4536.3302
+    Management MAC: fc5c.4536.3302
+    
+    The stack unit 2 chassis info:\x20
+    
+    Power supply 1 (AC - PoE) present, status ok
+     \tModel Number:\t23-1000086-01
+    \tSerial Number:\\x20
+    Power supply 1 Fan Air Flow Direction:  Front to Back
+    Power supply 2 (AC - PoE) present, status ok
+     \tModel Number:\t23-1000086-01
+    \tSerial Number:\\x20
+    \tFirmware Ver: \t32.66
+    Power supply 2 Fan Air Flow Direction:  Front to Back
+    
+    Fan 1 ok, speed (auto): [[1]]<->2
+    Fan 2 ok, speed (auto): [[1]]<->2
+    
+    Fan controlled temperature:\x20
+    \tRule 1/3 (MGMT THERMAL PLANE): 42.7 deg-C
+    \tRule 2/3 (PoE THERMAL SENSOR PLANE): 39.0 deg-C
+    \tRule 3/3 (MISC THERMAL PLANE): 66.0 deg-C
+    
+    Fan speed switching temperature thresholds:
+    \tRule 1/3 (MGMT THERMAL PLANE):
+    \t\tSpeed 1: NM<-----> 95       deg-C
+    \t\tSpeed 2:        85<----->105 deg-C (shutdown)
+    \tRule 2/3 (PoE THERMAL SENSOR PLANE):
+    \t\tSpeed 1: NM<----->130       deg-C
+    \t\tSpeed 2:       120<----->130 deg-C
+    \t\tSpeed 1: NM<----->100       deg-C
+    \t\tSpeed 2:        85<----->108 deg-C
+    
+    Fan 1 Air Flow Direction:Front to Back
+    Fan 2 Air Flow Direction:Front to Back
+    Slot 1 Current Temperature: 40.2 deg-C (Sensor 1), 42.7 deg-C (Sensor 2), 39.0 deg-C (Sensor 3), 66.0 deg-C (Sensor 4)
+    Slot 2 Current Temperature: NA
+    \tWarning level.......: 100.0 deg-C
+    \tShutdown level......: 105.0 deg-C
+    Boot Prom MAC : fc5c.4536.5e82
+    
+    The stack unit 3 chassis info:\x20
+    
+    Power supply 1 (AC - PoE) present, status ok
+     \tModel Number:\t23-1000086-01
+    \tSerial Number:\\x20
+    \tFirmware Ver: \t32.66
+    Power supply 1 Fan Air Flow Direction:  Front to Back
+    Power supply 2 (AC - PoE) present, status ok
+     \tModel Number:\t23-1000086-01
+    \tSerial Number:\\x20
+    \tFirmware Ver: \t32.66
+    
+    Fan 1 ok, speed (auto): 1<->[[2]]
+    Fan 2 ok, speed (auto): 1<->[[2]]
+    
+    Fan controlled temperature:\x20
+    \tRule 1/3 (MGMT THERMAL PLANE): 34.5 deg-C
+    \tRule 2/3 (PoE THERMAL SENSOR PLANE): 255.0 deg-C
+    \tRule 3/3 (MISC THERMAL PLANE): 51.0 deg-C
+    
+    Fan speed switching temperature thresholds:
+    \tRule 1/3 (MGMT THERMAL PLANE)***active***:
+    \t\tSpeed 1: NM<-----> 95       deg-C
+    \t\tSpeed 2:        85<----->105 deg-C (shutdown)
+    \tRule 2/3 (PoE THERMAL SENSOR PLANE):
+    \t\tSpeed 1: NM<----->130       deg-C
+    \t\tSpeed 2:       120<----->130 deg-C
+    \tRule 3/3 (MISC THERMAL PLANE):
+    \t\tSpeed 1: NM<----->100       deg-C
+    \t\tSpeed 2:        85<----->108 deg-C
+    
+    Fan 1 Air Flow Direction:Front to Back
+    Fan 2 Air Flow Direction:Front to Back
+    Slot 2 Current Temperature: NA
+    \tWarning level.......: 100.0 deg-C
+    \tShutdown level......: 105.0 deg-C
+    Boot Prom MAC : fc5c.4536.3376
+    
+    The stack unit 4 chassis info:\x20
+    
+    Power supply 1 (AC - PoE) present, status ok
+     \tModel Number:\t23-1000086-01
+    \tSerial Number:\\x20
+    \tFirmware Ver: \t32.66
+    Power supply 1 Fan Air Flow Direction:  Front to Back
+    Power supply 2 (AC - PoE) present, status ok
+     \tModel Number:\t23-1000086-01
+    \tSerial Number:\\x20
+    \tFirmware Ver: \t32.66
+    Power supply 2 Fan Air Flow Direction:  Front to Back
+    
+    Fan 1 ok, speed (auto): [[1]]<->2
+    Fan 2 ok, speed (auto): [[1]]<->2
+    
+    Fan controlled temperature:\x20
+    \tRule 2/3 (PoE THERMAL SENSOR PLANE): 102.0 deg-C
+    \tRule 3/3 (MISC THERMAL PLANE): 58.0 deg-C
+    
+    Fan speed switching temperature thresholds:
+    \tRule 1/3 (MGMT THERMAL PLANE):
+    \t\tSpeed 1: NM<-----> 95       deg-C
+    \t\tSpeed 2:        85<----->105 deg-C (shutdown)
+    \tRule 2/3 (PoE THERMAL SENSOR PLANE):
+    \t\tSpeed 1: NM<----->130       deg-C
+    \t\tSpeed 2:       120<----->130 deg-C
+    \tRule 3/3 (MISC THERMAL PLANE):
+    \t\tSpeed 1: NM<----->100       deg-C
+    \t\tSpeed 2:        85<----->108 deg-C
+    
+    Fan 1 Air Flow Direction:Front to Back
+    Fan 2 Air Flow Direction:Front to Back
+    Slot 1 Current Temperature: 37.4 deg-C (Sensor 1), 40.2 deg-C (Sensor 2), 102.0 deg-C (Sensor 3), 58.0 deg-C (Sensor 4)
+    Slot 2 Current Temperature: NA
+    \tWarning level.......: 100.0 deg-C
+    \tShutdown level......: 105.0 deg-C
+    Boot Prom MAC : fc5c.4536.2d92
+    SSH@#HOSTNAME##\x20
+  "show flash\n": |-
+    show flash
+    
+    Stack unit 1:
+      NAND Type: Micron NAND 2GiB (x 1)
+      Compressed Pri Code size = 31457280, Version:08.0.95jT211 (SPS08095j.bin)
+      Compressed Sec Code size = 33554432, Version:08.0.95hT213 (SPR08095h.bin)
+      Compressed Pri Boot Code size = 786944, Version:10.1.26T225 (mnz10126)
+      Compressed Sec Boot Code size = 786944, Version:10.1.25T225 (mnz10125)
+      Code Flash Free Space = 1067139072
+    Stack unit 2:\x20
+      NAND Type: Micron NAND 2GiB (x 1)
+      Compressed Pri Code size = 31457280, Version:08.0.95jT211 (SPS08095j.bin)
+      Compressed Sec Code size = 33554432, Version:08.0.95hT213 (SPR08095h.bin)
+      Compressed Pri Boot Code size = 786944, Version:10.1.26T225 (mnz10126)
+      Compressed Sec Boot Code size = 786944, Version:10.1.25T225 (mnz10125)
+      Code Flash Free Space = 1067188224
+    Stack unit 3:\x20
+      NAND Type: Micron NAND 2GiB (x 1)
+      Compressed Pri Code size = 31457280, Version:08.0.95jT211 (SPS08095j.bin)
+      Compressed Sec Code size = 33554432, Version:08.0.95hT213 (SPR08095h.bin)
+      Compressed Pri Boot Code size = 786944, Version:10.1.26T225 (mnz10126)
+      Compressed Sec Boot Code size = 786944, Version:10.1.25T225 (mnz10125)
+      Code Flash Free Space = 1067139072
+    Stack unit 4:\x20
+      NAND Type: Micron NAND 2GiB (x 1)
+      Compressed Sec Code size = 33554432, Version:08.0.95hT213 (SPR08095h.bin)
+      Compressed Pri Boot Code size = 786944, Version:10.1.26T225 (mnz10126)
+      Compressed Sec Boot Code size = 786944, Version:10.1.25T225 (mnz10125)
+      Code Flash Free Space = 1067159552
+    SSH@#HOSTNAME##\x20
+  "show module\n": |-
+    show module
+    
+           Module                                         Status Ports Starting MAC \x20
+    U1:M1  ICX7150-48ZP POE 48-port Management Module       OK     48   fc5c.4536.3302
+    U1:M2  ICX7150-8X10GF 8-port 80G Module                 OK     8    fc5c.4536.3333
+    U2:M1  ICX7150-48ZP POE 48-port Management Module       OK     48   fc5c.4536.5e82
+    U2:M2  ICX7150-8X10GF 8-port 80G Module                 OK     8    fc5c.4536.5eb3
+    U3:M1  ICX7150-48ZP POE 48-port Management Module       OK     48   fc5c.4536.3376
+    U3:M2  ICX7150-8X10GF 8-port 80G Module                 OK     8    fc5c.4536.33a7
+    U4:M1  ICX7150-48ZP POE 48-port Management Module       OK     48   fc5c.4536.2d92
+    U4:M2  ICX7150-8X10GF 8-port 80G Module                 OK     8    fc5c.4536.2dc3
+    SSH@#HOSTNAME##\x20
+  "show running-config\n": |-
+    show running-config
+    
+    Current configuration:
+    !
+    ver 08.0.95jT211
+    !
+    stack unit 1
+      module 1 icx7150-48zp-poe-port-management-module
+      module 2 icx7150-8-sfp-plus-port-80g-module
+      priority 255
+      stack-port 1/2/1
+      stack-port 1/2/3
+    stack unit 2
+      module 1 icx7150-48zp-poe-port-management-module
+      module 2 icx7150-8-sfp-plus-port-80g-module
+      priority 250
+      stack-port 2/2/1
+      stack-port 2/2/3
+    stack unit 3
+      module 1 icx7150-48zp-poe-port-management-module
+      module 2 icx7150-8-sfp-plus-port-80g-module
+      priority 100
+      stack-port 3/2/1
+      stack-port 3/2/3
+    stack unit 4
+      module 2 icx7150-8-sfp-plus-port-80g-module
+      priority 240
+      stack-port 4/2/1
+      stack-port 4/2/3
+    stack enable
+    stack mac fc5c.4536.3302
+    !
+    !
+    no global-stp
+    !
+    lag uplink-aggregate dynamic id 100
+     ports ethe 1/2/5 to 1/2/6 ethe 2/2/5 to 2/2/6 ethe 3/2/5 to 3/2/6 ethe 4/2/5 to 4/2/6\x20
+    !
+    !
+    !
+    vlan 1 name DEFAULT-VLAN by port
+     no spanning-tree
+    !
+    vlan 70 name Printers by port
+     tagged lag 100\x20
+     no spanning-tree
+    !
+     tagged lag 100\x20
+     untagged ethe 1/1/1 to 1/1/16 ethe 2/1/1 to 2/1/16\x20
+     no spanning-tree
+    !
+    !
+    !
+    !
+    !
+    !
+    !
+    !
+    !
+    !
+    !
+    !
+    !
+    aaa authentication web-server default local
+    aaa authentication login default tacacs+ enable local
+    aaa authentication login privilege-mode
+    aaa authorization exec default tacacs+
+    aaa accounting exec default start-stop tacacs+
+    aaa accounting system default start-stop tacacs+
+    boot sys fl pri
+    enable aaa console
+    #HOSTNAME# hostname
+    ip address #IPADDRESS# #IPADDRESS#
+    ip default-gateway #IPADDRESS#
+    !
+    no telnet server
+    username super password .....
+    username admin password .....
+    !
+    !
+    tacacs-server key 2 $byFkfW9uLW8=
+    snmp-server community ..... ro
+    snmp-server community ..... ro
+    snmp-server location HYD
+    snmp-server host #IPADDRESS# version v2c .....
+    snmp-server host #IPADDRESS# version v2c .....
+    !
+    !
+    clock timezone gmt GMT+05:30
+    !
+    !
+    ntp
+     server #IPADDRESS#
+    !
+    !
+    hitless-failover enable
+    !
+    !
+    manager registrar
+    !
+    manager port-list 987
+    !
+    interface ethernet 1/1/1
+     port-name hyd-wap-19
+     no spanning-tree
+     no flow-control both
+    !
+    interface ethernet 1/1/2
+     no spanning-tree
+     no flow-control both
+    !
+    interface ethernet 1/1/3
+     port-name hyd-wap-20
+     no spanning-tree
+     no flow-control both
+    !
+    interface ethernet 1/1/4
+     port-name hyd-wap-24
+     no spanning-tree
+     no flow-control both
+    !
+    interface ethernet 2/1/1
+     port-name hyd-wap-06
+     no spanning-tree
+     no flow-control both
+    !
+    interface ethernet 2/1/2
+     no spanning-tree
+     no flow-control both
+    !
+    interface ethernet 2/1/3
+     no spanning-tree
+     no flow-control both
+    !
+    interface ethernet 2/1/4
+     no spanning-tree
+     no flow-control both
+    !
+    !
+    !
+    !
+    !
+    !
+    !
+    !
+    !
+    !
+    !
+    !
+    !
+    !
+    end
+    SSH@#HOSTNAME##
+  "\n": |-
+    SSH@#HOSTNAME##
+  "skip-page-display\n": |-
+    skip-page-display
+    (fake response)
+    SSH@#HOSTNAME##
+  "terminal length 0\n": |-
+    terminal length 0
+    (fake response)
+    SSH@#HOSTNAME##
+  "logout\nexit\nexit\n\n": |-
+    Bye! (fake resposnse)
+

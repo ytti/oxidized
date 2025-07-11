@@ -3,8 +3,14 @@ class SonicOS < Oxidized::Model
 
   # Applies to Sonicwall NSA series firewalls
 
-  prompt /^\w+@\w+[>]\(?.+\)?\s?/
-  comment  '! '
+  prompt /^\w+@[\w\-]+[>]\(?.+\)?\s?/
+  comment '! '
+
+  # Accept policiy message (see Issue #3339). Tested on 6.5 and 7.1
+  expect /Accept The Policy Banner \(yes\)\?\r\nyes: $/ do |data, re|
+    send "yes\n"
+    data.sub re, ''
+  end
 
   cmd :all do |cfg|
     cfg.each_line.to_a[1..-2].join
@@ -50,7 +56,7 @@ class SonicOS < Oxidized::Model
       next if line =~ /date \d{4}:\d{2}:\d{2}/
       next if line =~ /time \d{2}:\d{2}:\d{2}/
       next if line =~ /system-time "\d{2}\/\d{2}\/\d{4} \d{2}:\d{2}:\d{2}.\d+"/
-      next if line =~ /system-uptime "((\s+up\s+\d+\s+)|(\d+\s\w+(,\s)?)*)"/
+      next if line =~ /system-uptime "(?:\s+up\s+\d+\s+|\d+ \w+(?:, \d+ \w+)*)"/
       next if line =~ /checksum \d+/
 
       line = line[1..-1] if line[0] == "\r"

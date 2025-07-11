@@ -1,60 +1,27 @@
-###################
-# Stage 1: Prebuild to save space in the final image.
-
-FROM docker.io/phusion/baseimage:noble-1.0.0 AS prebuilder
-
-# install necessary packages for building gems
-RUN apt-get update && apt-get install -y \
-    build-essential \
-    git \
-    ruby-dev \
-    && rm -rf /var/lib/apt/lists/*
-
-# create bundle directory
-RUN mkdir -p /usr/local/bundle
-ENV GEM_HOME=/usr/local/bundle
-
-###################
-# Install the x25519 gem
-RUN gem install x25519 --no-document
-
-###################
-# build oxidized
-COPY . /tmp/oxidized/
-WORKDIR /tmp/oxidized
-
-# docker automated build gets shallow copy, but non-shallow copy cannot be unshallowed
-RUN git fetch --unshallow || true
-
-# Remove any older gems of oxidized
-RUN rm pkg/*
-
-# Ensure rugged is built with ssh support
-RUN rake build
-
-
-###################
-# Stage2: build an oxidized container from phusion/baseimage-docker and install x25519 from stage1
-FROM docker.io/phusion/baseimage:noble-1.0.0
+FROM docker.io/phusion/baseimage:noble-1.0.2
 
 ENV DEBIAN_FRONTEND=noninteractive
 
 ##### Place "static" commands at the beginning to optimize image size and build speed
+# remove default ubuntu user
+RUN userdel -r ubuntu
+
 # add non-privileged user
 ARG UID=30000
 ARG GID=$UID
 RUN groupadd -g "${GID}" -r oxidized && useradd -u "${UID}" -r -m -d /home/oxidized -g oxidized oxidized
 
+
+##### MSMTP - Sending emails
 # link config for msmtp for easier use.
-RUN ln -s /home/oxidized/.config/oxidized/.msmtprc /home/oxidized/
-
-# create parent directory & touch required file
-RUN mkdir -p /home/oxidized/.config/oxidized/
-RUN touch /home/oxidized/.config/oxidized/.msmtprc
-
-# setup the access to the file
-RUN chmod 600 /home/oxidized/.msmtprc
-RUN chown oxidized:oxidized /home/oxidized/.msmtprc
+# /home/oxidized/.msmtprc is a symbolic link to /home/oxidized/.config/oxidized/.msmtprc
+# Create the files as the user oxidized
+RUN mkdir -p /home/oxidized/.config/oxidized/ && \
+    chmod -R ug=rwX,o= /home/oxidized/.config/ && \
+    touch /home/oxidized/.config/oxidized/.msmtprc && \
+    chmod -R u=rw,go= /home/oxidized/.config/oxidized/.msmtprc && \
+    ln -s /home/oxidized/.config/oxidized/.msmtprc /home/oxidized/ && \
+    chown -R oxidized:oxidized /home/oxidized/.config /home/oxidized/.msmtprc
 
 # add runit services
 COPY extra/oxidized.runit /etc/service/oxidized/run
@@ -62,10 +29,10 @@ COPY extra/auto-reload-config.runit /etc/service/auto-reload-config/run
 COPY extra/update-ca-certificates.runit /etc/service/update-ca-certificates/run
 
 # set up dependencies for the build process
-RUN apt-get -yq update \
-    && apt-get -yq upgrade \
-    && apt-get -yq --no-install-recommends install ruby \
-    # Build process of oxidized from git (beloww)
+RUN apt-get -qy update \
+    && apt-get -qy upgrade \
+    && apt-get -qy --no-install-recommends install ruby \
+    # Build process of oxidized from git (below)
     git \
     # Allow git send-email from docker image
     git-email libmailtools-perl \
@@ -76,7 +43,7 @@ RUN apt-get -yq update \
     # Use ubuntu gems where possible
     # Gems needed by oxidized
     ruby-rugged ruby-slop ruby-psych \
-    ruby-net-telnet ruby-net-ssh ruby-net-ftp ruby-net-scp ruby-ed25519 \
+    ruby-net-telnet ruby-net-ssh ruby-net-ftp ruby-ed25519 \
     # Gem dependencies for inputs
     ruby-net-http-persistent ruby-mechanize \
     # Gem dependencies for sources
@@ -89,25 +56,34 @@ RUN apt-get -yq update \
     && apt-get clean \
     && rm -rf /var/lib/apt/lists/*
 
-# copy the compiled gem from the builder stage
-COPY --from=prebuilder /usr/local/bundle /usr/local/bundle
-
-# Set environment variables for bundler
-ENV GEM_HOME="/usr/local/bundle"
-ENV PATH="$GEM_HOME/bin:$PATH"
-
 # gems not available in ubuntu noble
 RUN gem install --no-document \
     # dependencies for hooks
     slack-ruby-client cisco_spark \
     # dependencies for specific inputs
-    net-tftp
+    net-tftp \
+    # Net scp is needed in Version >= 4.1.0, which is not available in ubuntu
+    net-scp
 
-# install oxidized from prebuilder
-# The Dockerfile ist version-independent, so use oxidized-*.gem to cach the gem
-RUN mkdir -p /tmp/oxidized
-COPY --from=prebuilder /tmp/oxidized/pkg/oxidized-*.gem /tmp/oxidized/
-RUN gem install /tmp/oxidized/oxidized-*.gem
+# Prepare the build of oxidized, copy our workig directory in the container
+COPY . /tmp/oxidized/
+WORKDIR /tmp/oxidized
+
+# Install gems which needs a build environment
+RUN apt-get -qy update && \
+    apt-get -qy install --no-install-recommends \
+                        build-essential ruby-dev && \
+    ##### X25519 (a.k.a. Curve25519) Elliptic Curve Diffie-Hellman
+    gem install x25519 && \
+    ##### build & install oxidized from the working repository
+    # docker automated build gets shallow copy, but non-shallow copy cannot be unshallowed
+    git fetch --unshallow || true && \
+    rake install && \
+    # remove the packages we do not need.
+    apt-get -qy remove build-essential ruby-dev && \
+    apt-get -qy autoremove && \
+    apt-get clean && \
+    rm -rf /var/lib/apt/lists/*
 
 # install oxidized-web
 RUN gem install oxidized-web --no-document

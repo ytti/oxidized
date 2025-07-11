@@ -4,19 +4,16 @@ require 'oxidized/input/ssh'
 describe Oxidized::SSH do
   before(:each) do
     Oxidized.asetus = Asetus.new
-    Oxidized.asetus.cfg.debug = false
-    Oxidized.setup_logger
     Oxidized.config.timeout = 30
     Oxidized.config.input.ssh.secure = true
     Oxidized::Node.any_instance.stubs(:resolve_repo)
     Oxidized::Node.any_instance.stubs(:resolve_input)
     Oxidized::Node.any_instance.stubs(:resolve_output)
+    Resolv.any_instance.stubs(:getaddress).with('example.com').returns('192.0.2.2')
   end
 
   describe "#connect" do
     it "should use proxy command when proxy host given and connect by ip if resolve_dns is true" do
-      # If this test fails, check it exemple.com still resolves to 93.184.215.14
-      # If not, update Net::SSH.expects(:start).with('93.184.215.14'... below
       Oxidized.config.resolve_dns = true
       @node = Oxidized::Node.new(name:     'example.com',
                                  input:    'ssh',
@@ -44,9 +41,10 @@ describe Oxidized::SSH do
         timeout:                         Oxidized.config.timeout,
         number_of_password_prompts:      0,
         auth_methods:                    %w[none publickey password],
-        proxy:                           proxy
+        proxy:                           proxy,
+        logger:                          anything
       }
-      Net::SSH.expects(:start).with('93.184.215.14', 'alma', ssh_options)
+      Net::SSH.expects(:start).with('192.0.2.2', 'alma', ssh_options)
 
       ssh.instance_variable_set("@exec", true)
       ssh.connect(@node)
@@ -80,7 +78,8 @@ describe Oxidized::SSH do
         timeout:                         Oxidized.config.timeout,
         number_of_password_prompts:      0,
         auth_methods:                    %w[none publickey password],
-        proxy:                           proxy
+        proxy:                           proxy,
+        logger:                          anything
       }
       Net::SSH.expects(:start).with('example.com', 'alma', ssh_options)
 

@@ -1,0 +1,7 @@
+pass:
+  - "S01-P1-RK13-SW01> "
+  - "S01-P1-RK13-SW01# "
+  # Issue #3351: Firmware 8.8x adds a space after the hostname
+  - "S01-P1-RK13-SW01 > "
+  - "S01-P1-RK13-SW01 # "
+

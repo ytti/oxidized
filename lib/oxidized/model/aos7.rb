@@ -4,6 +4,8 @@ class AOS7 < Oxidized::Model
   # Alcatel-Lucent Operating System Version 7 (Linux based)
   # used in OmniSwitch 6900/10k
 
+  prompt /^([\w.@-]+ ?[#>]\s?)$/
+
   comment  '! '
 
   cmd :all do |cfg, cmdstring|
@@ -24,14 +26,23 @@ class AOS7 < Oxidized::Model
   end
 
   cmd 'show hardware-info' do |cfg|
+    # Remove extra lines occuring when the command runs slow
+    cfg.gsub! /^Please wait...\n/, ''
+    cfg.gsub! /^\n\n\n/, "\n\n"
     comment cfg
   end
 
   cmd 'show running-directory' do |cfg|
+    # Remove extra lines occuring when the command runs slow
+    cfg.gsub! /^Please wait...\n/, ''
+    cfg.gsub! /^\n\n/, "\n"
     comment cfg
   end
 
   cmd 'show configuration snapshot' do |cfg|
+    # Remove extra lines occuring when the command runs slow
+    cfg.gsub! /^Please wait...\n/, ''
+    cfg.gsub! /^\n\n/, "\n"
     cfg
   end
 

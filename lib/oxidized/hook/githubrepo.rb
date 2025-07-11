@@ -6,8 +6,13 @@ class GithubRepo < Oxidized::Hook
   end
 
   def run_hook(ctx)
+    unless ctx.node
+      logger.error 'GithubRepo.run_hook: no node provided'
+      return
+    end
+
     unless ctx.node.repo
-      log "Oxidized output is not git, can't push to remote", :error
+      logger.error "Oxidized output is not git, can't push to remote"
       return
     end
     repo  = Rugged::Repository.new(ctx.node.repo)
@@ -15,12 +20,11 @@ class GithubRepo < Oxidized::Hook
     url   = remote_repo(ctx.node)
 
     if url.nil? || url.empty?
-      log "No repository defined for #{ctx.node.group}/#{ctx.node.name}", :error
+      logger.error "No repository defined for #{ctx.node.group}/#{ctx.node.name}"
       return
     end
 
-    log "Pushing local repository(#{repo.path})..."
-    log "to remote: #{url}"
+    logger.info "Pushing local repository(#{repo.path}) to remote: #{url}"
 
     if repo.remotes['origin'].nil?
       repo.remotes.create('origin', url)
@@ -34,10 +38,10 @@ class GithubRepo < Oxidized::Hook
       remote.push([repo.head.name], credentials: creds)
     rescue Rugged::NetworkError => e
       if e.message == 'unsupported URL protocol'
-        log "Rugged does not support the git URL '#{url}'.", :warn
+        logger.warn "Rugged does not support the git URL '#{url}'."
         unless Rugged.features.include?(:ssh)
-          log 'You may need to install Rugged with ssh support ' \
-              '(gem install rugged -- --with-ssh)', :warn
+          logger.warn "Note: Rugged isn't installed with ssh support. You may need " \
+                      '"gem install rugged -- --with-ssh"'
         end
       end
       # re-raise exception for the calling method
@@ -47,28 +51,28 @@ class GithubRepo < Oxidized::Hook
 
   def fetch_and_merge_remote(repo, creds)
     result = repo.fetch('origin', [repo.head.name], credentials: creds)
-    log result.inspect, :debug
+    logger.debug result.inspect
 
     their_branch = remote_branch(repo)
 
     unless their_branch
-      log 'remote branch does not exist yet, nothing to merge', :debug
+      logger.debug 'remote branch does not exist yet, nothing to merge'
       return
     end
 
     result = repo.merge_analysis(their_branch.target_id)
 
     if result.include? :up_to_date
-      log 'nothing to merge', :debug
+      logger.debug 'nothing to merge'
       return
     end
 
-    log "merging fetched branch #{their_branch.name}", :debug
+    logger.debug "merging fetched branch #{their_branch.name}"
 
     merge_index = repo.merge_commits(repo.head.target_id, their_branch.target_id)
 
     if merge_index.conflicts?
-      log("Conflicts detected, skipping Rugged::Commit.create", :warn)
+      logger.warn "Conflicts detected, skipping Rugged::Commit.create"
       return
     end
 
@@ -85,18 +89,20 @@ class GithubRepo < Oxidized::Hook
     Proc.new do |_url, username_from_url, _allowed_types| # rubocop:disable Style/Proc
       git_user = cfg.has_key?('username') ? cfg.username : (username_from_url || 'git')
       if cfg.has_key?('password')
-        log "Authenticating using username and password as '#{git_user}'", :debug
+        logger.debug "Authenticating using username and password as '#{git_user}'"
         Rugged::Credentials::UserPassword.new(username: git_user, password: cfg.password)
       elsif cfg.has_key?('privatekey')
         pubkey = cfg.has_key?('publickey') ? cfg.publickey : nil
-        log "Authenticating using ssh keys as '#{git_user}'", :debug
+        logger.debug "Authenticating using ssh keys as '#{git_user}'"
         rugged_sshkey(git_user: git_user, privkey: cfg.privatekey, pubkey: pubkey)
-      elsif cfg.has_key?('remote_repo') && cfg.remote_repo.has_key?(node.group) && cfg.remote_repo[node.group].has_key?('privatekey')
+      elsif cfg.has_key?('remote_repo') &&
+            cfg.remote_repo.has_key?(node.group) &&
+            cfg.remote_repo[node.group].has_key?('privatekey')
         pubkey = cfg.remote_repo[node.group].has_key?('publickey') ? cfg.remote_repo[node.group].publickey : nil
-        log "Authenticating using ssh keys as '#{git_user}' for '#{node.group}/#{node.name}'", :debug
+        logger.debug "Authenticating using ssh keys as '#{git_user}' for '#{node.group}/#{node.name}'"
         rugged_sshkey(git_user: git_user, privkey: cfg.remote_repo[node.group].privatekey, pubkey: pubkey)
       else
-        log "Authenticating using ssh agent as '#{git_user}'", :debug
+        logger.debug "Authenticating using ssh agent as '#{git_user}'"
         Rugged::Credentials::SshKeyFromAgent.new(username: git_user)
       end
     end

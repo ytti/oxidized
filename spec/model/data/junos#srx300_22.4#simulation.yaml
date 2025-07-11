@@ -1,0 +1,349 @@
+init_prompt: |-
+  Last login: Fri Dec  6 11:32:31 2024 from 192.168.1.2\r
+  --- JUNOS 22.4R3-S2.11 built 2024-05-10 20:45:39 UTC
+commands:
+  "set cli screen-length 0\n": |-
+    Screen length set to 0
+    
+  "set cli screen-width 0\n": |-
+    Screen width set to 0
+    
+  "show version\n": |-
+    Model: srx300
+    Junos: 22.4R3-S2.11
+    JUNOS Software Release [22.4R3-S2.11]
+    
+  "show chassis hardware\n": |-
+    Hardware inventory:
+    Item             Version  Part number  Serial number     Description
+    Chassis                                AA0000AA0000      SRX300
+    Routing Engine   REV 0x08 650-077890   AA0000AA0000      RE-SRX300
+    FPC 0                     BUILTIN      BUILTIN           FPC
+      PIC 0                                                  6xGE,2xGE SFP Base PIC
+        Xcvr 6       REV 01   740-031850   S2001411089       SFP-LX10
+    Power Supply 0 \x20
+    
+  "show system license\n": |-
+    License usage:\x20
+                                     Licenses     Licenses    Licenses
+    \t\t\t\t  Feature      Feature     Feature
+      Feature name                       used    installed      needed  Expiry\x20
+      remote-access-ipsec-vpn-client        0            2           0    permanent
+      remote-access-juniper-std             0            2           0    permanent
+    
+    Licenses installed: none
+    
+  "show system license keys\n": |-
+    
+  "show configuration | display omit\n": |-
+    ## Last commit: 2024-12-06 11:41:05 UTC by root
+    version 22.4R3-S2.11;
+    system {
+        root-authentication {
+            encrypted-password \"very-secret-encrypted-password\"; ## SECRET-DATA
+        }
+        login {
+            user oxidized {
+                uid 2002;
+                class super-user;
+                authentication {
+                    encrypted-password \"very-secret-encrypted-password\"; ## SECRET-DATA
+                }
+            }
+        }
+        services {
+            ssh;
+            netconf {
+                ssh;
+            }
+            dhcp-local-server {
+                group jdhcp-group {
+                    interface irb.0;
+                }
+            }
+            web-management {
+                https {
+                    system-generated-certificate;
+                }
+            }
+        }
+        name-server {
+            8.8.8.8;
+            8.8.4.4;
+        }
+        syslog {
+            archive size 100k files 3;
+            user * {
+                any emergency;
+            }
+            file interactive-commands {
+                interactive-commands any;
+            }
+            file messages {
+                any notice;
+                authorization info;
+            }
+        }
+        max-configurations-on-flash 5;
+        max-configuration-rollbacks 5;
+        license {
+            autoupdate {
+                url https://ae1.juniper.net/junos/key_retrieval;
+            }
+        }
+        phone-home {
+            server https://redirect.juniper.net;
+            rfc-compliant;
+        }
+    }
+    security {
+        screen {
+            ids-option untrust-screen {
+                icmp {
+                    ping-death;
+                }
+                ip {
+                    source-route-option;
+                    tear-drop;
+                }
+                tcp {
+                    syn-flood {
+                        alarm-threshold 1024;
+                        attack-threshold 200;
+                        source-threshold 1024;
+                        destination-threshold 2048;
+                        timeout 20;
+                    }
+                    land;
+                }
+            }
+        }
+        nat {
+            source {
+                rule-set trust-to-untrust {
+                    from zone trust;
+                    to zone untrust;
+                    rule source-nat-rule {
+                        match {
+                            source-address 0.0.0.0/0;
+                        }
+                        then {
+                            source-nat {
+                                interface;
+                            }
+                        }
+                    }
+                }
+            }
+        }
+        policies {
+            from-zone trust to-zone trust {
+                policy trust-to-trust {
+                    match {
+                        source-address any;
+                        destination-address any;
+                        application any;
+                    }
+                    then {
+                        permit;
+                    }
+                }
+            }
+            from-zone trust to-zone untrust {
+                policy trust-to-untrust {
+                    match {
+                        source-address any;
+                        destination-address any;
+                        application any;
+                    }
+                    then {
+                        permit;
+                    }
+                }
+            }
+            pre-id-default-policy {
+                then {
+                    log {
+                        session-close;
+                    }
+                }
+            }
+        }
+        zones {
+            security-zone trust {
+                host-inbound-traffic {
+                    system-services {
+                        all;
+                    }
+                    protocols {
+                        all;
+                    }
+                }
+                interfaces {
+                    irb.0;
+                }
+            }
+            security-zone untrust {
+                screen untrust-screen;
+                interfaces {
+                    ge-0/0/0.0 {
+                        host-inbound-traffic {
+                            system-services {
+                                dhcp;
+                                tftp;
+                                https;
+                            }
+                        }
+                    }
+                    ge-0/0/7.0 {
+                        host-inbound-traffic {
+                            system-services {
+                                dhcp;
+                                tftp;
+                            }
+                        }
+                    }
+                }
+            }
+        }
+    }
+    interfaces {
+        ge-0/0/0 {
+            unit 0 {
+                family inet {
+                    dhcp {
+                        vendor-id Juniper-srx300;
+                    }
+                }
+            }
+        }
+        ge-0/0/1 {
+            unit 0 {
+                family ethernet-switching {
+                    vlan {
+                        members vlan-trust;
+                    }
+                }
+            }
+        }
+        ge-0/0/2 {
+            unit 0 {
+                family ethernet-switching {
+                    vlan {
+                        members vlan-trust;
+                    }
+                }
+            }
+        }
+        ge-0/0/3 {
+            unit 0 {
+                family ethernet-switching {
+                    vlan {
+                        members vlan-trust;
+                    }
+                }
+            }
+        }
+        ge-0/0/4 {
+            unit 0 {
+                family ethernet-switching {
+                    vlan {
+                        members vlan-trust;
+                    }
+                }
+            }
+        }
+        ge-0/0/5 {
+            unit 0 {
+                family ethernet-switching {
+                    vlan {
+                        members vlan-trust;
+                    }
+                }
+            }
+        }
+        ge-0/0/6 {
+            unit 0 {
+                family ethernet-switching {
+                    vlan {
+                        members vlan-trust;
+                    }
+                }
+            }
+        }
+        ge-0/0/7 {
+            unit 0 {
+                family inet {
+                    dhcp {
+                        vendor-id Juniper-srx300;
+                    }
+                }
+            }
+        }
+        irb {
+            unit 0 {
+                family inet {
+                    address 192.168.1.1/24;
+                }
+            }
+        }
+    }
+    snmp {
+        location \"42 Wallaby Way, Sydney\";
+    }
+    access {
+        address-assignment {
+            pool junosDHCPPool {
+                family inet {
+                    network 192.168.1.0/24;
+                    range junosRange {
+                        low 192.168.1.2;
+                        high 192.168.1.254;
+                    }
+                    dhcp-attributes {
+                        router {
+                            192.168.1.1;
+                        }
+                        propagate-settings ge-0/0/0.0;
+                    }
+                }
+            }
+        }
+    }
+    vlans {
+        vlan-trust {
+            vlan-id 3;
+            l3-interface irb.0;
+        }
+    }
+    protocols {
+        l2-learning {
+            global-mode switching;
+        }
+        rstp {
+            interface all;
+        }
+    }
+    
+  "show chassis cluster status\n": |-
+    Monitor Failure codes:
+        CS  Cold Sync monitoring        FL  Fabric Connection monitoring
+        GR  GRES monitoring             HW  Hardware monitoring
+        IF  Interface monitoring        IP  IP monitoring
+        LB  Loopback monitoring         MB  Mbuf monitoring
+        NH  Nexthop monitoring          NP  NPC monitoring
+        SP  SPU monitoring              SM  Schedule monitoring
+        CF  Config Sync monitoring      RE  Relinquish monitoring
+        IS  IRQ storm
+    
+    Cluster ID: 1
+    Node   Priority Status               Preempt Manual   Monitor-failures
+    
+    Redundancy group: 0 , Failover count: 1
+    node0  200      primary              no      no       None
+    node1  100      secondary            no      no       None
+    
+    Redundancy group: 1 , Failover count: 2
+    node0  200      primary              no      no       None
+    node1  101      secondary            no      no       None
+  "exit\n": ""

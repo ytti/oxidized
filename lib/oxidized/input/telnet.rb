@@ -6,7 +6,7 @@ module Oxidized
     include Input::CLI
     attr_reader :telnet
 
-    def connect(node)
+    def connect(node) # rubocop:disable Naming/PredicateMethod
       @node    = node
       @timeout = Oxidized.config.timeout
       @node.model.cfg['telnet'].each { |cb| instance_exec(&cb) }
@@ -35,7 +35,7 @@ module Oxidized
     end
 
     def cmd(cmd_str, expect = @node.prompt)
-      Oxidized.logger.debug "Telnet: #{cmd_str} @#{@node.name}"
+      logger.debug "Telnet: #{cmd_str} @#{@node.name}"
       return send(cmd_str + "\r\n") unless expect
 
       # create a string to be passed to oxidized_expect and modified _there_
@@ -78,7 +78,7 @@ module Net
     ## FIXME: we also need output (not sure I'm going to support this)
     attr_reader :output
 
-    def oxidized_expect(options) ## rubocop:disable Metrics/PerceivedComplexity
+    def oxidized_expect(options)
       model    = @options["Model"]
       @log     = @options["Log"]
 

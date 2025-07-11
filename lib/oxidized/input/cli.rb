@@ -20,15 +20,16 @@ module Oxidized
       end
 
       def connect_cli
-        Oxidized.logger.debug "lib/oxidized/input/cli.rb: Running post_login commands at #{node.name}"
+        logger.debug "Running post_login commands at #{node.name}"
         @post_login.each do |command, block|
-          Oxidized.logger.debug "lib/oxidized/input/cli.rb: Running post_login command: #{command.inspect}, block: #{block.inspect} at #{node.name}"
+          logger.debug "Running post_login command: #{command.inspect}, " \
+                       "block: #{block.inspect} at #{node.name}"
           block ? block.call : (cmd command)
         end
       end
 
       def disconnect_cli
-        Oxidized.logger.debug "lib/oxidized/input/cli.rb Running pre_logout commands at #{node.name}"
+        logger.debug "Running pre_logout commands at #{node.name}"
         @pre_logout.each { |command, block| block ? block.call : (cmd command, nil) }
       end
 
@@ -50,6 +51,10 @@ module Oxidized
 
       def password(regex = /^Password/)
         @password || (@password = regex)
+      end
+
+      def newline(newline_str = "\n")
+        @newline || (@newline = newline_str)
       end
 
       def login

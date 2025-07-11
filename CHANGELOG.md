@@ -5,6 +5,144 @@ All notable changes to this project will be documented in this file.
 The format is based on [Keep a Changelog](https://keepachangelog.com/en/1.1.0/).
 
 ## [Unreleased]
+### Added
+- add iosxr support to SyslogMonitor (@deesel)
+- add junos: support show chassis cluster when SRX series (@shigechika)
+- add nxos: support for complete hardware inventory (@garryshtern)
+- ssh: support 'newline "string"' cfg block method to allow defining \r\n newline (@ytti)
+- model for Netgate TNSR (@Vantomas)
+- efos: New model for Brocade Enhanced Fabric OS. Fixes #3477 (@sorano, @cetjcm, @robertcheramy)
+- ouput/file, output/git: clean node configurations which are not listed in the source anymore. Fixes: #1805 (@robertcheramy)
+- sixwind: New model to support 6WIND Virtual Service Router (@hcaldicott)
+- model for saos10 (@penfold1972)
+
+
+### Changed
+- remove uri in commit-archive location for EdgeOS. Fixed #3525 (@systeembeheerder)
+- acos: remove free storage amount from show version. Fixes #3492 (@991jo)
+- Housekeeping in the code: Maximal line length: 120 char + Rubocop fixes (@robertcheramy)
+- spec/model/data uses # instead of : as a separator in the filename, so we can
+  git clone unter Windows. Fixes: #3481 (@robertcheramy)
+- logging: rework of the logging system, using Semantic Logger (@robertcheramy)
+
+### Fixed
+- nxos: ignore bootflash size and permission errors (@rouven0)
+- githubrepo: explicitly tell when Rugged isn't installed with ssh support (@robertcheramy)
+- ironware: mask temperatures with more than two digits (@merelissdgr)
+- add content-type header for PUT request in rest client (@deesel)
+- docker: do not remove git. Fixes #3482 (@robertcheramy)
+- awplus: fix skip password when enable=true (@shigechika)
+- aosw: fix secret parsing (@rouven0)
+- mlnxos: handle ANSI-ESC codes and pager requests. The prompt has been
+  reengineered, open an issue if you experience timeouts. Fixes #3469 (@robertcheramy)
+- AricentISS: fix codeQL alert #15 (@robertcheramy)
+- Update installation instructions on Rocky Linux 9. Fixes #3368 (@robertcheramy)
+- awplus: fix enable password when supplied (@sgsimpson)
+- node.rb: remove Polynomial regular expression / Fixes Code scanning alert #40 (@robertcheramy)
+- asa: remove inefficient regular expression / Fixes Code scanning alert #5 and #6 (@robertcheramy)
+- sonicos: remove inefficient regular expression / Fixes code scanning alert #4 and #11 (@robertcheramy)
+- quantaos: remove inefficient regular expression / Fixes code scanning alerts 9 and 10 (@robertcheramy)
+- fabricos: remove power supply input voltage from `chassisShow` output (@hops)
+- netgear: include running-config in config output (@bradleywehmeier)
+- eltex: remove inefficient regular expression / Fixes code scanning alert 7 / See Issue #3513 (@robertcheramy)
+- tmos: remove deprecated secrets (@rouven0)
+- log an error when no suitable input is found for a node. Fixes: #3346 (@robertcheramy)
+- firelinuxos: fix timeout on syntax error. Fixes #3393, #3502 (@robertcheramy)
+
+
+## [0.33.0 - 2025-03-26]
+This release changes the way to configure oxidized-web. The old `rest`
+configuration is still supported but deprecated. The new configuration works
+with oxidized-web 0.16.0 or later.
+See [docs/Configuration.md](/docs/Configuration.md#oxidized-web-RESTful-API-and-web-interface).
+
+The docker container includes
+[security fixes to ruby-rake](https://ubuntu.com/security/notices/USN-7366-1),
+so be sure to update to the latest version.
+
+### Added
+- unifiap: new model for Unifi APs, switches, and AirOS APs (@clifcox)
+- github: Issue templates for bugs, feature requests and support requests (@robertcheramy)
+- model for Ingate Operating System (@thanegill)
+- model for Easton Gigabit Network Card (@thanegill)
+
+### Changed
+- fortios: support for FortiADC (@electrocret)
+- output/git: cache commit log to improve performance of oxidized-web. Fixes #3121 (@robertcheramy)
+- input/http: digest auth handles special characters in passwords by itself (no need to url encode them manually) (@einglasvollkakao)
+- changed the configuration for oxidized-web from rest: to extensions.oxidized-web (@robertcheramy)
+- netgear: add pager-handler workaround, fixes: #2394 and #3341 (@candlerb, @syn-bit)
+- Output#version (git/gitcrypt) returns a Time object in its hash for more flexibility in oxidized-web (@robertcheramy)
+- ios: hide secret key of aaa radius (@martinberg, @robertcheramy)
+- container: update to phusion/baseimage:noble-1.0.1 (@robertcheramy)
+
+### Fixed
+- powerconnect: Mask the changing temperature issue for non-stacked switches. Fixes #2088 (@clifcox)
+- Fix frozen string literals (@robertcheramy)
+- powerconnect: Cleanup login/logout logic. Fixes #3437 (@clifcox)
+- aos7: remove extra lines occuring when `show hardware-info` runs slow (@rouven0)
+- srosmd: add ignore regex for 64-bit system uptime (@emiliaaah)
+- removed some rubocop warnings (@robertcheramy)
+
+
+## [0.32.2 – 2025-02-27]
+This patch release mainly fixes the docker building process, wich resulted in
+0.32.1 not beeing built.
+
+### Changed
+- docker image: updated github CI to explicitly build tag versions (@robertcheramy)
+- docker image: update rake build_container to match the tags of GitHub CI (@robertcheramy)
+
+### Fixed
+- powerconnect: restore last line of command output, and remove spurious CR characters. Fixes #2692 (@clifcox)
+- powerconnect: Remove undesirable inserted blank lines during pagination. Fixes #3413 (@clifcox)
+- docker image: remove ubuntu user introduced in noble. Fixes #3336 (@robertcheramy)
+- docker image: correct rights under /home/oxidized. Fixes #3336 (@robertcheramy)
+- docker image: revert the use of GEM_HOME. Fixes #3331 (@robertcheramy)
+- docker image: improve the documentation. Fixes #3336 (@robertcheramy)
+- docker image: remove examples/podman-compose as this is better documented in docs/Docker.md (@robertcheramy)
+
+
+## [0.32.1 – 2025-02-20]
+This patch release fixes a javascript issue in oxidized-web, which is included
+in the Docker container of oxidized.
+
+### Fixed
+- powerconnect: Hide enable, and line secrets. Further Fixes #1212 (#clifcox)
+
+
+## [0.32.0 – 2025-02-17]
+This release fixes a security issue in oxidized-web, which is included in the
+Docker container of oxidized. If you are not using the Docker container but
+use oxidized-web, be sure to update your oxidized-web gem to 0.15.0.
+
+### Added
+- junos: add unit test (@systeembeheerder)
+- apc_aos: support for scp (@robertcheramy)
+- config: allow model_map and group_map keys to be regexp. Fixes #3360 (@ytti)
+- enterprise_sonic: add new model enterprise_sonic (@ohai89)
+- model for Kornfeld Operating System (@yurenkov)
+
+### Changed
+- sonicos: accept policy message. Fixes #3339 (@Steve-M-C, @robertcheramy)
+- input/ssh: change input.debug to dump all characters and include sent commands. (@robertcheramy)
+- cumulus: remove ANSI Escape codes and fix prompt issues. The prompt is more specific now (@alchemyx, @robertcheramy)
+- model unit tests: the tests are automated and simpler to use (@ytti, @robertcheramy)
+- device2yaml.rb: moved to extra/, commands can be specified from the command line or from a file (no cmdsets provided anymore) (@robertcheramy)
+- extra/gitdiff-msteams.sh: honor the 28KB size limit and add an optional link to GitHub (@mopi3456)
+
+### Fixed
+- tplink: send 'enable' before the enable password. Fixes #3271 (@robertcheramy)
+- asyncos: fix prompt for hostnames containing "-" . Fixes #3327 (@robertcheramy)
+- sonicos: fix prompt for hostnames containing "-" . Fixes #3333 (@robertcheramy)
+- xos: Hide radius accounting secret
+- fsos: Hide AAA and SNMP secrets (@RayaneB35)
+- aos7: fix prompt for version 8.8x. Fixes #3351 (@robertcheramy)
+- aosw: Hide power measurements (@rouven0)
+- arubainstant: show version prepends a space to prompt when a core file is present. Fixes #3398 (@robertcheramy)
+
+
+## [0.31.0 – 2024-11-29]
 
 ### Added
 - model for Riverbed Steelhead (@Swaeltjie)
@@ -65,6 +203,7 @@ The format is based on [Keep a Changelog](https://keepachangelog.com/en/1.1.0/).
 - ios: fixed device specs on ASR900 Series. Fixes #3297 (@robertcheramy, @roshnaraman)
 - netgear: prompt for gs752tpp. Fixes #3287 (@robertcheramy)
 - aoscx: fixed regex for 6400 switches to hide temperature and power (@steveneppler)
+
 
 ## [0.30.1 – 2024-04-12]
 

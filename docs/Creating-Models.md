@@ -54,6 +54,52 @@ The API documentation contains a list of [methods](https://github.com/ytti/oxidi
 
 A more fleshed out example can be found in the `IOS` and `JunOS` models.
 
+### Common task: mechanism for handling 'enable' mode
+The following code snippet demonstrates how to handle sending the 'enable'
+command and an enable password.
+
+This example is taken from the `IOS` model. It covers scenarios where users
+need to enable privileged mode, either without providing a password (by setting
+`enable: true` in the configuration) or with a password.
+
+```ruby
+  cfg :telnet, :ssh do
+    post_login do
+      if vars(:enable) == true
+        cmd "enable"
+      elsif vars(:enable)
+        cmd "enable", /^[pP]assword:/
+        cmd vars(:enable)
+      end
+    end
+  end
+```
+Note: remove `:telnet, ` if your device does not support telnet.
+
+### Common Task: remove ANSI escape codes
+> :warning: This common task is experimental.
+> If it does not work for you, please open an issue so that we can adapt the
+> code snippet.
+
+Some devices produce ANSI escape codes to enhance the appearance of output.
+However, this can make prompt matching difficult and some of these ANSI escape
+codes might end up in the resulting configuration.
+
+You can remove most [ANSI escape codes](https://en.wikipedia.org/wiki/ANSI_escape_code#Control_Sequence_Introducer_commands) using the following Ruby
+code in your model:
+```
+  # Remove ANSI escape codes
+  expect /\e\[[0-?]*[ -\/]*[@-~]\r?/ do |data, re|
+    data.gsub re, ''
+  end
+```
+Explanation of the Regular Expression:
+- `\e\[`   : Control Sequence Introducer (CSI), which starts with "ESC [".
+- `[0-?]*` : "Parameter" bytes (range 0x30–0x3F, corresponding to ASCII `0–9:;<=>?`).
+- `[ -\/]*`: "Intermediate" bytes (range 0x20–0x2F, corresponding to ASCII ` !"#$%&'()*+,-./`).
+- `[@-~]`  : The "final" byte (range 0x40–0x7E, corresponding to ASCII ``@A–Z[\]^_`a–z{|}~).[``).
+- `\r?`    : Some ESC codes include a carriage return, which we do not want in the resulting config.
+
 ## Extending an existing model with a new command
 
 The example below can be used to extend the `JunOS` model to collect the output of `show interfaces diagnostics optics` and append the output to the configuration file as a comment. This command retrieves DOM information on pluggable optics present in a `JunOS`-powered chassis.
@@ -86,32 +132,16 @@ Intuitively, it is also possible to:
 * Create a completely new model, with a new name, for a new operating system type.
 * Testing/validation of an updated model from the [Oxidized GitHub repo models](https://github.com/ytti/oxidized/tree/master/lib/oxidized/model) by placing an updated model in the proper location without disrupting the gem-supplied model files.
 
-## Create unit tests for the model
-> :warning: model unit tests are still a work in progress and need some polishing.
-
-If you want the model to be integrated into oxidized, you can
-[submit a pull request on github](https://github.com/ytti/oxidized/pulls).
+## Create Unit Tests for the Model
+If you want the model to be integrated into Oxidized, you can
+[submit a pull request on GitHub](https://github.com/ytti/oxidized/pulls).
 This is a greatly appreciated submission, as there are probably other users
 using the same network device as you are.
 
 A good (and optional) practice for submissions is to provide a
-[unit test for your model](/spec/model). This reduces the risk that further
-developments could break it, and facilitates debugging issues without having
-access to a physical network device for the model.
-
-In order to simulate the device in the unit test, you need a
-[YAML simulation file](/examples/device-simulation/), have a look at the
-link for an explanation on how to create one.
-
-Creating the unit test itself is explained in
-[README.md in the model unit test directory](/spec/model/README.md).
-
-Remember - producing a YAML simulation file and/or writing a unit test is
-optional.
-The most value comes from the YAML simulation file. The unit
-test can be written by someone else, but you need access to the device for the
-YAML simulation file. If you encounter problems, open an issue or ask for help
-in your pull request.
+[unit test for your model](/docs/ModelUnitTests.md). This reduces the risk that
+further developments could break it, and facilitates debugging issues without
+having access to a physical network device for the model.
 
 ## Advanced features
 

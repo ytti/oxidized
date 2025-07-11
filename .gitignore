@@ -13,6 +13,7 @@
 Gemfile.lock
 .ruby-version
 .sass-cache/
+.vscode/
 
 # Used by dotenv library to load environment variables.
 # .env
@@ -52,3 +53,4 @@ build-iPhoneSimulator/
 
 # unless supporting rvm < 1.11.0 or doing something fancy, ignore this:
 .rvmrc
+/.rake_tasks~

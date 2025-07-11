@@ -3,6 +3,7 @@ require_relative 'outputs'
 
 module Oxidized
   class Model
+    include SemanticLogger::Loggable
     using Refinements
 
     include Oxidized::Config::Vars
@@ -56,7 +57,7 @@ module Oxidized
         else
           process_args_block(@cmd[:cmd], args, [cmd_arg, block])
         end
-        Oxidized.logger.debug "lib/oxidized/model/model.rb Added #{cmd_arg} to the commands list"
+        logger.debug "Added #{cmd_arg} to the commands list"
       end
 
       def cmds
@@ -118,7 +119,7 @@ module Oxidized
     attr_accessor :input, :node
 
     def cmd(string, &block)
-      Oxidized.logger.debug "lib/oxidized/model/model.rb Executing #{string}"
+      logger.debug "Executing #{string}"
       out = @input.cmd(string)
       return false unless out
 
@@ -165,7 +166,7 @@ module Oxidized
     end
 
     def get
-      Oxidized.logger.debug 'lib/oxidized/model/model.rb Collecting commands\' outputs'
+      logger.debug 'Collecting commands\' outputs'
       outputs = Outputs.new
       procs = self.class.procs
       self.class.cmds[:cmd].each do |command, block|
@@ -184,7 +185,7 @@ module Oxidized
     end
 
     def comment(str)
-      data = ''
+      data = String.new('')
       str.each_line do |line|
         data << self.class.comment << line
       end
@@ -202,7 +203,7 @@ module Oxidized
       # Also, XML Comments must not contain --. So we put a space between
       # any double hyphens, by replacing any - that is followed by another -
       # with '- '
-      data = ''
+      data = String.new('')
       str.each_line do |_line|
         data << '<!-- ' << str.gsub(/-(?=-)/, '- ').chomp << " -->\n"
       end

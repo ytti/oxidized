@@ -1,0 +1,7 @@
+pass:
+  - 'AAAA-AP123456# '
+  - '(WPP-ArubaVMC) [mynode] #'
+  - '(AAAA-WLC42) ^[mynode] #'
+  - '(AAAA-WLC42) *[mynode] #'
+  - '(AAAA-WLC42) *[/] #'
+  - '(AAAA-WLC42) [mm] #'

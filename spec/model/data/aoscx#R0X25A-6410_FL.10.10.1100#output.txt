@@ -1,0 +1,1114 @@
+! -----------------------------------------------------------------------------
+! ArubaOS-CX
+! (c) Copyright 2017-2023 Hewlett Packard Enterprise Development LP
+! -----------------------------------------------------------------------------
+! Version      : FL.10.10.1100                                                 
+! Build Date   : 2023-12-11 18:38:23 UTC                                       
+! Build ID     : ArubaOS-CX:FL.10.10.1100:b4b52a6a46ff:202312111821            
+! Build SHA    : b4b52a6a46ffe674f326481629c70082b24aeb95                      
+! Active Image : secondary                     
+! 
+! Service OS Version : FL.01.11.0001                 
+! BIOS Version       : FL.01.0002                    
+! show environment fan
+! 
+! Fan tray information
+! ------------------------------------------------------------------------------
+! Name  Description                           Status        Serial Number  Fans
+! ------------------------------------------------------------------------------
+! 1/1   R0X32A Aruba 6400 Fan Tray            ready         SG0AAAA00A     4  
+! 1/2   R0X32A Aruba 6400 Fan Tray            ready         SG0AAAA0A0     4  
+! 1/3   R0X32A Aruba 6400 Fan Tray            ready         SG0AAAA0AA     4  
+! 1/4   R0X32A Aruba 6400 Fan Tray            ready         SG0AAAA0AA     4  
+! 
+! Fan information
+! ------------------------------------------------------------------------------
+! Location-      Product  Serial Number  Speed   Direction      Status  RPM
+! Mbr/Slot/Fan   Name
+! ------------------------------------------------------------------------------
+! Tray-1/1/1     N/A      N/A            <speed> front-to-back  ok      <rpm>
+! Tray-1/1/2     N/A      N/A            <speed> front-to-back  ok      <rpm>
+! Tray-1/1/3     N/A      N/A            <speed> front-to-back  ok      <rpm>
+! Tray-1/1/4     N/A      N/A            <speed> front-to-back  ok      <rpm>
+! Tray-1/2/1     N/A      N/A            <speed> front-to-back  ok      <rpm>
+! Tray-1/2/2     N/A      N/A            <speed> front-to-back  ok      <rpm>
+! Tray-1/2/3     N/A      N/A            <speed> front-to-back  ok      <rpm>
+! Tray-1/2/4     N/A      N/A            <speed> front-to-back  ok      <rpm>
+! Tray-1/3/1     N/A      N/A            <speed> front-to-back  ok      <rpm>
+! Tray-1/3/2     N/A      N/A            <speed> front-to-back  ok      <rpm>
+! Tray-1/3/3     N/A      N/A            <speed> front-to-back  ok      <rpm>
+! Tray-1/3/4     N/A      N/A            <speed> front-to-back  ok      <rpm>
+! Tray-1/4/1     N/A      N/A            <speed> front-to-back  ok      <rpm>
+! Tray-1/4/2     N/A      N/A            <speed> front-to-back  ok      <rpm>
+! Tray-1/4/3     N/A      N/A            <speed> front-to-back  ok      <rpm>
+! Tray-1/4/4     N/A      N/A            <speed> front-to-back  ok      <rpm>
+! 
+! 
+! 
+! show environment led
+! Mbr/Name       State        Status    
+! ----------------------------------
+! 1/locator      off          ok        
+! 
+! 
+! show environment power-allocation
+!      Product                                                Power
+! Name Number  Subsystem-Type       Request Priority Granted  Usage
+! -------------------------------------------------------------------
+! 1    R0X25A  base-chassis-module  N/A     N/A      N/A     <power>
+! 1/1  R0X25A  fabric-card-module   158     128      granted <power>
+! 1/2  R0X25A  fabric-card-module   158     128      granted <power>
+! 1/1  R0X32A  fan-tray-module      200     128      granted <power>
+! 1/2  R0X32A  fan-tray-module      200     128      granted <power>
+! 1/3  R0X32A  fan-tray-module      200     128      granted <power>
+! 1/4  R0X32A  fan-tray-module      200     128      granted <power>
+! 1/3  R0X45A  line-card-module     352     128      granted <power>
+! 1/4  R0X44A  line-card-module     424     128      granted <power>
+! 1/5  N/A     line-card-module     0       128      NA      <power>
+! 1/6  R0X44A  line-card-module     424     128      granted <power>
+! 1/7  N/A     line-card-module     0       128      NA      <power>
+! 1/8  N/A     line-card-module     0       128      NA      <power>
+! 1/9  N/A     line-card-module     0       128      NA      <power>
+! 1/10 N/A     line-card-module     0       128      NA      <power>
+! 1/11 N/A     line-card-module     0       128      NA      <power>
+! 1/12 R0X39B  line-card-module     121     128      granted <power>
+! 1/1  R0X31A  management-module    39      128      granted <power>
+! 1/2  R0X31A  management-module    39      128      granted <power>
+! -------------------------------------------------------------------
+! Total Requested                   2515 W
+! Total Power Granted to Subsystems 2515 W
+! Power Granted for PoE             2813 W
+! Total Power Granted               5328 W
+! Maximum PSU Power Available       5328 W
+! Power Remaining                      0 W
+! -------------------------------------------------------------------
+! 
+! 
+! show environment power-redundancy
+! Configured  Operational
+! Redundancy  Redundancy
+! -------------------------
+! none        none
+! 
+! 
+! show environment power-supply
+! ------------------------------------------------------------------------------
+!          Product  Serial            PSU            Input   Voltage    Wattage
+! Mbr/PSU  Number   Number            Status         Type    Range      Maximum
+! ------------------------------------------------------------------------------
+! 1/1      R0X35A   CN0AAAA0AA        OK             AC      110V-240V  1800
+! 1/2      R0X35A   CN0AAAA00A        OK             AC      110V-240V  1764
+! 1/3      R0X35A   CN0AAAA0AA        OK             AC      110V-240V  1764
+! 1/4      N/A      N/A               Absent         --      --         0
+! 
+! 
+! 
+! show environment temperature
+! Temperature information
+! ------------------------------------------------------------------------------
+!                                                      Current
+! Mbr/Slot-Sensor                 Module Type        temperature  Status
+! ------------------------------------------------------------------------------
+! 1/3-Board-front                 line-card-module     <hidden>   normal
+! 1/3-Board-rear                  line-card-module     <hidden>   normal
+! 1/3-CPU                         line-card-module     <hidden>   normal
+! 1/3-DDR                         line-card-module     <hidden>   normal
+! 1/3-Exhaust-left                line-card-module     <hidden>   normal
+! 1/3-Exhaust-right               line-card-module     <hidden>   normal
+! 1/3-IBC                         line-card-module     <hidden>   normal
+! 1/3-Switch-ASIC                 line-card-module     <hidden>   normal
+! 1/3-Switch-ASIC-Internal        line-card-module     <hidden>   normal
+! 1/4-Board-front                 line-card-module     <hidden>   normal
+! 1/4-Board-rear                  line-card-module     <hidden>   normal
+! 1/4-CPU                         line-card-module     <hidden>   normal
+! 1/4-DDR                         line-card-module     <hidden>   normal
+! 1/4-Exhaust-left                line-card-module     <hidden>   normal
+! 1/4-Exhaust-right               line-card-module     <hidden>   normal
+! 1/4-IBC                         line-card-module     <hidden>   normal
+! 1/4-Switch-ASIC                 line-card-module     <hidden>   normal
+! 1/4-Switch-ASIC-Internal        line-card-module     <hidden>   normal
+! 1/6-Board-front                 line-card-module     <hidden>   normal
+! 1/6-Board-rear                  line-card-module     <hidden>   normal
+! 1/6-CPU                         line-card-module     <hidden>   normal
+! 1/6-DDR                         line-card-module     <hidden>   normal
+! 1/6-Exhaust-left                line-card-module     <hidden>   normal
+! 1/6-Exhaust-right               line-card-module     <hidden>   normal
+! 1/6-IBC                         line-card-module     <hidden>   normal
+! 1/6-Switch-ASIC                 line-card-module     <hidden>   normal
+! 1/6-Switch-ASIC-Internal        line-card-module     <hidden>   normal
+! 1/12-Board-front                line-card-module     <hidden>   normal
+! 1/12-Board-rear                 line-card-module     <hidden>   normal
+! 1/12-CPU                        line-card-module     <hidden>   normal
+! 1/12-DDR                        line-card-module     <hidden>   normal
+! 1/12-Exhaust-left               line-card-module     <hidden>   normal
+! 1/12-Exhaust-right              line-card-module     <hidden>   normal
+! 1/12-IBC                        line-card-module     <hidden>   normal
+! 1/12-PHY-01-08                  line-card-module     <hidden>   normal
+! 1/12-PHY-09-16                  line-card-module     <hidden>   normal
+! 1/12-PHY-17-24                  line-card-module     <hidden>   normal
+! 1/12-PHY-25-32                  line-card-module     <hidden>   normal
+! 1/12-PHY-33-40                  line-card-module     <hidden>   normal
+! 1/12-PHY-41-48                  line-card-module     <hidden>   normal
+! 1/12-Switch-ASIC                line-card-module     <hidden>   normal
+! 1/12-Switch-ASIC-Internal       line-card-module     <hidden>   normal
+! 
+! 1/1-Board-Corner                management-module    <hidden>   normal
+! 1/1-CPU                         management-module    <hidden>   normal
+! 1/1-DDR                         management-module    <hidden>   normal
+! 1/1-Exhaust-Air                 management-module    <hidden>   normal
+! 1/1-Exhaust-board               management-module    <hidden>   normal
+! 1/1-IBC                         management-module    <hidden>   normal
+! 1/1-Inlet-Air                   management-module    <hidden>   normal
+! 1/2-Board-Corner                management-module    <hidden>   normal
+! 1/2-CPU                         management-module    <hidden>   normal
+! 1/2-DDR                         management-module    <hidden>   normal
+! 1/2-Exhaust-Air                 management-module    <hidden>   normal
+! 1/2-Exhaust-board               management-module    <hidden>   normal
+! 1/2-IBC                         management-module    <hidden>   normal
+! 1/2-Inlet-Air                   management-module    <hidden>   normal
+! 
+! 1-ASIC-DC-board                 chassis              <hidden>   normal
+! 1-Board-NW                      chassis              <hidden>   normal
+! 1-Board-W                       chassis              <hidden>   normal
+! 1-DC-DC                         chassis              <hidden>   normal
+! 1-Fabric-ASIC-1                 chassis              <hidden>   normal
+! 1-Fabric-ASIC-2                 chassis              <hidden>   normal
+! 1-Fabric-ASIC-Internal-1        chassis              <hidden>   normal
+! 1-Fabric-ASIC-Internal-2        chassis              <hidden>   normal
+! 1-IBC                           chassis              <hidden>   normal
+! 1-PCIE-Management               chassis              <hidden>   normal
+! 1-PCIE-Management-2             chassis              <hidden>   normal
+! 
+! 
+! Management Modules
+! ==================
+! 
+!      Product                                        Serial
+! Name Number  Description                            Number     Status
+! ---- ------- -------------------------------------- ---------- ----------------
+! 1/1  R0X31A  6400 Management Module                 SG0AAAA00A Active (local)
+! 1/2  R0X31A  6400 Management Module                 SG00AAA00A Standby 
+! 
+! 
+! Line Modules
+! ============
+! 
+!      Product                                        Serial
+! Name Number  Description                            Number     Status
+! ---- ------- -------------------------------------- ---------- ----------------
+! 1/3  R0X45A  6400 12p 40G/100G QSFP28 Mod           SG00AAA000 Ready
+! 1/4  R0X44A  6400 48p 10G/25G SFP28 Mod             SG00AAA000 Ready
+! 1/6  R0X44A  6400 48p 10G/25G SFP28 Mod             SG00AAA00A Ready
+! 1/12 R0X39B  6400 48p 1GbE CL4 PoE 4SFP56 Mod       SG00AA000A Ready
+! 
+! 
+! ------------------------------------------------------------------
+! Port      Type           Product      Serial          Part        
+!                          Number       Number          Number      
+! ------------------------------------------------------------------
+! 1/3/1     100G-DAC5      R0Z26A       CN00AAA00A      8121-1696   
+! 1/3/2     40G-LR4        JH232A       CN00AAA00A      1990-4676   
+! 1/3/3     40G-LR4        JH232A       CN00AAA00A      1990-4676   
+! 1/3/4     40G-LR4        JH232A       C0000000000     1990-4556   
+! 1/3/10    40G-LR4        JH232A       C0000000000     1990-4556   
+! 1/3/11    40G-BiDi       JL308A       MY00AA0AAA      1990-4679   
+! 1/3/12    100G-DAC5      R0Z26A       CN00AAA00A      8121-1696   
+! 1/4/7     10G-SR         J9150D       CN00AAA0A0      1990-4634   
+! 1/4/8     10G-SR         J9150D       CN00AAA0AA      1990-4634   
+! 1/4/9     10G-SR         J9150D       CN00AAA0AA      1990-4634   
+! 1/4/10    1G-SX          J4858C       PFA00A0         1990-3657   
+! 1/4/20    10G-LR         J9151E       CN00AAA0AA      1990-4694   
+! 1/4/21    10G-LR         J9151E       CN00AAA0AA      1990-4694   
+! 1/4/22    10G-LR         J9151E       CN00AAA0AA      1990-4694   
+! 1/4/23    10G-LR         J9151D       C0000000000     1990-3883   
+! 1/4/24    10G-LR         J9151D       C0000000000     1990-3883   
+! 1/4/25    1G-SX          J4858D       MY00AA0AAA      1990-4395   
+! 1/4/26    10G-SR         J9150D       CN00AAA0AA      1990-4635   
+! 1/4/27    10G-LR         J9151E       CN00AAA0AA      1990-4694   
+! 1/4/28    10G-LR         J9151E       CN00AAA0AA      1990-4694   
+! 1/4/29    10G-LR         J9151E       CN00AAA0AA      1990-4694   
+! 1/4/30    10G-LR         J9151E       CN00AAA0AA      1990-4694   
+! 1/4/31    10G-LR         J9151E       CN00AAA0AA      1990-4694   
+! 1/4/32    10G-SR         J9150D       CN00AAA0AA      1990-4634   
+! 1/4/33    10G-LR         J9151D       C0000000000     1990-3883   
+! 1/4/34    10G-LR         J9151D       C0000000000     1990-3883   
+! 1/4/35    10G-LR         J9151E       CN00AAA0AA      1990-4694   
+! 1/4/36    10G-LR         J9151E       CN00AAA0AA      1990-4727   
+! 1/4/37    10G-LR         J9151E       CN00AAA0AA      1990-4694   
+! 1/4/38    10G-LR         J9151E       CN00AAA0AA      1990-4694   
+! 1/4/39    10G-LR         J9151E       CN00AAA0AA      1990-4694   
+! 1/4/40    10G-LR         J9151E       CN00AAA0AA      1990-4694   
+! 1/4/41    10G-LR         J9151E       CN00AAA0AA      1990-4694   
+! 1/4/42    10G-LR         J9151E       CN00AAA0AA      1990-4727   
+! 1/4/43    10G-LR         J9151E       CN00AAA0AA      1990-4727   
+! 1/4/44    10G-LR         J9151E       CN00AAA0AA      1990-4694   
+! 1/4/45    10G-LR         J9151E       CN00AAA0AA      1990-4727   
+! 1/4/46    10G-LR         J9151E       CN00AAA0AA      1990-4727   
+! 1/4/47    10G-LR         J9151E       CN00AAA0AA      1990-4694   
+! 1/4/48    10G-SR         J9150D       CN00AAA0AA      1990-4634   
+! 1/6/37    10G-SR         J9150D       CN00AAA0AA      1990-4634   
+! 1/6/38    10G-SR         J9150D       CN00AAA0AA      1990-4634   
+! 1/6/39    10G-SR         J9150D       CN00AAA0AA      1990-4634   
+! 1/6/40    10G-SR         J9150D       CN00AAA0AA      1990-4634   
+! 1/6/44    1G-LX          J4859C       CN00AAA0AA      1990-3677   
+! 1/6/47    1G-LX          J4859C       CN00AAA0AA      1990-4116   
+! 1/6/48    10G-SR         J9150D       CN00AAA0AA      1990-4634   
+! 
+! Hostname               : Switch-cx               
+! System Description     : FL.10.10.1100                 
+! System Contact         : SNMP Description
+! System Location        : SNMP Location                 
+! 
+! Vendor                 : Aruba                         
+! Product Name           : R0X25A 6410 Chassis                  
+! Chassis Serial Nbr     : SG0AAA0000                    
+! Base MAC Address       : 100f00-000d00                 
+! ArubaOS-CX Version     : FL.10.10.1100                 
+! 
+! Time Zone              : America/Denver                
+! 
+Current configuration:
+!
+!Version ArubaOS-CX FL.10.10.1100
+!export-password: default
+hostname Switch-cx
+alias  diff        checkpoint diff startup-config running-config  
+alias  logout      exit  
+user admin group administrators password ciphertext AQEcvdLHmJIRAAAAAAAAABBBBBBBBCCCCCCCC29thkGl9AIkfApt/VowNDcU2BAaNmcgvS63g2LPqkf4VxntPXE5xKOAT9p8KbhO3gDkywU3rSvo1+mrqoeLQ8tCNHVJwztFTK
+user user group administrators password ciphertext AQEfgTZ27jH5bp3e4uMv1qTGAAAAAAAAAAABBBBBBBBCCCCCCCCAoQ0SWlDq9xhpmF/Z6pv83YJkQjVWOswRxNRMhzoeAOK6PTIyfGwqOJuZz3SQ9bP4LTCJ
+module 1/3 product-number r0x45a
+module 1/4 product-number r0x44a
+module 1/6 product-number r0x44a
+module 1/12 product-number r0x39b
+clock timezone america/denver
+logging filter no_restd
+    enable
+     20 deny event-id 4602,4605,4608,4655,4657
+profile default
+vrf KA
+ntp server ntp1.example.com
+ntp server ntp2.example.com
+ntp server ntp3.example.com
+ntp server pool.ntp.org minpoll 4 maxpoll 4 iburst
+ntp enable
+cli-session
+    timeout 1440
+!
+!
+!
+!
+!
+!
+aruba-central
+    disable
+logging 10.1.2.3
+logging facility local0
+ssh server vrf default
+ssh server vrf mgmt
+ssh key-exchange-algorithms curve25519-sha256 curve25519-sha256@libssh.org ecdh-sha2-nistp256 ecdh-sha2-nistp384 ecdh-sha2-nistp521 diffie-hellman-group-exchange-sha256 diffie-hellman-group16-sha512 diffie-hellman-group18-sha512 diffie-hellman-group14-sha256 diffie-hellman-group14-sha1
+vlan 1
+vlan 2
+    name VLAN name
+vlan 7
+    name VLAN name
+    vsx-sync
+vlan 206
+    name VLAN name
+    vsx-sync
+vlan 207
+    name VLAN name
+    vsx-sync
+vlan 208
+    name VLAN name
+    vsx-sync
+vlan 209
+    name VLAN name
+    vsx-sync
+vlan 989
+    name VLAN name
+    vsx-sync
+vlan 994
+    name VLAN name
+    vsx-sync
+vlan 1630
+    name VLAN-name
+    vsx-sync
+vlan 1640
+    name VLAN-name
+    vsx-sync
+vlan 1650
+    name VLAN-name
+    vsx-sync
+spanning-tree
+spanning-tree priority 5
+interface mgmt
+    no shutdown
+    ip dhcp
+qos trust dscp
+interface lag 7 multi-chassis static
+    description Description for interface
+    no shutdown
+    no routing
+    vlan trunk native 1
+    vlan trunk allowed 988,999
+interface lag 8 multi-chassis static
+    description Description for interface
+    no shutdown
+    no routing
+    vlan trunk native 2
+    vlan trunk allowed all
+interface lag 9 multi-chassis static
+    description Description for interface
+    no shutdown
+    no routing
+    vlan trunk native 1
+    vlan trunk allowed 1,2
+interface lag 10 multi-chassis static
+    description Description for interface
+    no shutdown
+    no routing
+    vlan trunk native 2
+    vlan trunk allowed 1640
+interface lag 247 multi-chassis
+    description Description for interface
+    no shutdown
+    no routing
+    vlan trunk native 2000
+    vlan trunk allowed all
+    lacp mode active
+interface 1/3/1
+    description Description for interface
+    no shutdown
+    lag 247
+interface 1/3/2
+    description Description for interface
+    no shutdown
+    mtu 9198
+    lag 247
+interface 1/3/3
+    description Description for interface
+    no shutdown
+    mtu 9198
+    lag 247
+interface 1/3/4
+    description Description for interface
+    no shutdown
+    mtu 9198
+    lag 247
+interface 1/3/5
+    no shutdown
+    no routing
+    vlan access 1
+interface 1/3/6
+    no shutdown
+    no routing
+    vlan access 1
+interface 1/3/7
+    no shutdown
+    no routing
+    vlan access 1
+interface 1/3/8
+    no shutdown
+    no routing
+    vlan access 1
+interface 1/3/9
+    no shutdown
+    no routing
+    vlan access 1
+interface 1/3/10
+    description Description for interface
+    no shutdown
+    mtu 9198
+    lag 249
+interface 1/3/11
+    description Description for interface
+    no shutdown
+    mtu 9198
+    lag 247
+interface 1/3/12
+    description Description for interface
+    no shutdown
+    lag 8
+interface 1/4/1
+    description Description for interface
+    no shutdown
+    mtu 9198
+    no routing
+    vlan trunk native 2
+    vlan trunk allowed 206,1640
+interface 1/4/2
+    shutdown
+    mtu 9198
+    no routing
+    vlan access 1
+interface 1/4/3
+    no shutdown
+    no routing
+    vlan access 1
+interface 1/4/4
+    no shutdown
+    no routing
+    vlan access 1
+interface 1/4/5
+    no shutdown
+    no routing
+    vlan access 1
+interface 1/4/6
+    no shutdown
+    no routing
+    vlan access 1
+interface 1/4/7
+    description Description for interface
+    no shutdown
+    lag 7
+interface 1/4/8
+    description Description for interface
+    no shutdown
+    lag 8
+interface 1/4/9
+    description Description for interface
+    no shutdown
+    lag 9
+interface 1/4/10
+    description Description for interface
+    no shutdown
+    speed 1000-full
+    lag 10
+interface 1/4/11
+    no shutdown
+    no routing
+    vlan access 1
+interface 1/4/12
+    no shutdown
+    no routing
+    vlan access 1
+interface 1/4/13
+    no shutdown
+    no routing
+    vlan access 1
+interface 1/4/14
+    no shutdown
+    no routing
+    vlan access 1
+interface 1/4/15
+    no shutdown
+    no routing
+    vlan access 1
+interface 1/4/16
+    description Description for interface
+    no shutdown
+    no routing
+    vlan access 1
+interface 1/4/17
+    no shutdown
+    no routing
+    vlan access 1
+interface 1/4/18
+    no shutdown
+    no routing
+    vlan access 1
+interface 1/4/19
+    no shutdown
+    no routing
+    vlan access 1
+interface 1/4/20
+    description Description for interface
+    no shutdown
+    mtu 9198
+    lag 20
+interface 1/4/21
+    description Description for interface
+    no shutdown
+    mtu 9198
+    lag 21
+interface 1/4/22
+    description Description for interface
+    no shutdown
+    mtu 9198
+    lag 22
+interface 1/4/23
+    description Description for interface
+    no shutdown
+    mtu 9198
+    lag 23
+interface 1/4/24
+    description Description for interface
+    no shutdown
+    mtu 9198
+    lag 24
+interface 1/4/25
+    description Description for interface
+    no shutdown
+    mtu 9198
+    lag 25
+interface 1/4/26
+    description Description for interface
+    no shutdown
+    mtu 9198
+    lag 26
+interface 1/4/27
+    description Description for interface
+    no shutdown
+    mtu 9198
+    lag 27
+interface 1/4/28
+    description Description for interface
+    no shutdown
+    mtu 9198
+    lag 28
+interface 1/4/29
+    description Description for interface
+    no shutdown
+    mtu 9198
+    lag 29
+interface 1/4/30
+    description Description for interface
+    no shutdown
+    mtu 9198
+    lag 30
+interface 1/4/31
+    description Description for interface
+    no shutdown
+    mtu 9198
+    lag 31
+interface 1/4/32
+    description Description for interface
+    no shutdown
+    mtu 9198
+    lag 32
+interface 1/4/33
+    description Description for interface
+    no shutdown
+    mtu 9198
+    lag 33
+interface 1/4/34
+    description Description for interface
+    no shutdown
+    mtu 9198
+    lag 34
+interface 1/4/35
+    description Description for interface
+    no shutdown
+    mtu 9198
+    lag 35
+interface 1/4/36
+    description Description for interface
+    no shutdown
+    mtu 9198
+    lag 36
+interface 1/4/37
+    description Description for interface
+    no shutdown
+    mtu 9198
+    lag 37
+interface 1/4/38
+    description Description for interface
+    no shutdown
+    mtu 9198
+    lag 38
+interface 1/4/39
+    description Description for interface
+    no shutdown
+    mtu 9198
+    lag 39
+interface 1/4/40
+    description Description for interface
+    no shutdown
+    mtu 9198
+    lag 40
+interface 1/4/41
+    description Description for interface
+    no shutdown
+    mtu 9198
+    lag 41
+interface 1/4/42
+    description Description for interface
+    no shutdown
+    mtu 9198
+    lag 42
+interface 1/4/43
+    description Description for interface
+    no shutdown
+    mtu 9198
+    lag 43
+interface 1/4/44
+    description Description for interface
+    no shutdown
+    mtu 9198
+    lag 44
+interface 1/4/45
+    description Description for interface
+    no shutdown
+    mtu 9198
+    lag 45
+interface 1/4/46
+    description Description for interface
+    no shutdown
+    mtu 9198
+    lag 46
+interface 1/4/47
+    description Description for interface
+    no shutdown
+    mtu 9198
+    lag 47
+interface 1/4/48
+    no shutdown
+    no routing
+    vlan access 1
+interface 1/6/1
+    no shutdown
+    no routing
+    vlan access 1
+interface 1/6/2
+    no shutdown
+    no routing
+    vlan access 1
+interface 1/6/3
+    no shutdown
+    no routing
+    vlan access 1
+interface 1/6/4
+    no shutdown
+    no routing
+    vlan access 1
+interface 1/6/5
+    no shutdown
+    no routing
+    vlan access 1
+interface 1/6/6
+    no shutdown
+    no routing
+    vlan access 1
+interface 1/6/7
+    no shutdown
+    no routing
+    vlan access 1
+interface 1/6/8
+    no shutdown
+    no routing
+    vlan access 1
+interface 1/6/9
+    no shutdown
+    no routing
+    vlan access 1
+interface 1/6/10
+    no shutdown
+    no routing
+    vlan access 1
+interface 1/6/11
+    no shutdown
+    no routing
+    vlan access 1
+interface 1/6/12
+    no shutdown
+    no routing
+    vlan access 1
+interface 1/6/13
+    no shutdown
+    no routing
+    vlan access 1
+interface 1/6/14
+    no shutdown
+    no routing
+    vlan access 1
+interface 1/6/15
+    no shutdown
+    no routing
+    vlan access 1
+interface 1/6/16
+    no shutdown
+    no routing
+    vlan access 1
+interface 1/6/17
+    no shutdown
+    no routing
+    vlan access 1
+interface 1/6/18
+    no shutdown
+    no routing
+    vlan access 1
+interface 1/6/19
+    no shutdown
+    no routing
+    vlan access 1
+interface 1/6/20
+    no shutdown
+    no routing
+    vlan access 1
+interface 1/6/21
+    no shutdown
+    no routing
+    vlan access 1
+interface 1/6/22
+    no shutdown
+    no routing
+    vlan access 1
+interface 1/6/23
+    no shutdown
+    no routing
+    vlan access 1
+interface 1/6/24
+    no shutdown
+    no routing
+    vlan access 1
+interface 1/6/25
+    no shutdown
+    no routing
+    vlan access 1
+interface 1/6/26
+    no shutdown
+    no routing
+    vlan access 1
+interface 1/6/27
+    no shutdown
+    no routing
+    vlan access 1
+interface 1/6/28
+    no shutdown
+    no routing
+    vlan access 1
+interface 1/6/29
+    no shutdown
+    no routing
+    vlan access 1
+interface 1/6/30
+    no shutdown
+    no routing
+    vlan access 1
+interface 1/6/31
+    no shutdown
+    no routing
+    vlan access 1
+interface 1/6/32
+    no shutdown
+    no routing
+    vlan access 1
+interface 1/6/33
+    no shutdown
+    no routing
+    vlan access 1
+interface 1/6/34
+    no shutdown
+    no routing
+    vlan access 1
+interface 1/6/35
+    no shutdown
+    no routing
+    vlan access 1
+interface 1/6/36
+    no shutdown
+    no routing
+    vlan access 1
+interface 1/6/37
+    description Description for interface
+    no shutdown
+    mtu 9198
+    lag 137
+interface 1/6/38
+    description Description for interface
+    no shutdown
+    mtu 9198
+    lag 138
+interface 1/6/39
+    description Description for interface
+    no shutdown
+    mtu 9198
+    lag 139
+interface 1/6/40
+    description Description for interface
+    no shutdown
+    mtu 9198
+    lag 140
+interface 1/6/41
+    no shutdown
+    no routing
+    vlan access 1
+interface 1/6/42
+    no shutdown
+    no routing
+    vlan access 1
+interface 1/6/43
+    no shutdown
+    no routing
+    vlan access 1
+interface 1/6/44
+    description Description for interface
+    no shutdown
+    speed 1000-full
+    mtu 9198
+    no routing
+    vlan access 997
+    spanning-tree bpdu-filter
+interface 1/6/45
+    description Description for interface
+    no shutdown
+    no routing
+    vlan access 1
+interface 1/6/46
+    description Description for interface
+    no shutdown
+    no routing
+    vlan access 1
+interface 1/6/47
+    description Description for interface)
+    no shutdown
+    no routing
+    vlan trunk native 2000
+    vlan trunk allowed 2000
+interface 1/6/48
+    description Description for interface
+    no shutdown
+    mtu 9198
+    lag 148
+interface 1/12/1
+    description Description for interface
+    no shutdown
+    mtu 9198
+    routing
+    vrf attach KA
+    ip address 192.168.0.0/31
+interface 1/12/2
+    no shutdown
+    no routing
+    vlan access 2
+interface 1/12/3
+    description Description for interface
+    no shutdown
+    no routing
+    vlan trunk native 1
+    vlan trunk allowed 1,2,206
+interface 1/12/4
+    description Description for interface
+    no shutdown
+    no routing
+    vlan access 1
+    spanning-tree port-type admin-edge
+    spanning-tree tcn-guard
+interface 1/12/5
+    description Description for interface
+    no shutdown
+    no routing
+    vlan access 1
+interface 1/12/6
+    no shutdown
+    no routing
+    vlan access 1
+interface 1/12/7
+    no shutdown
+    no routing
+    vlan access 1
+interface 1/12/8
+    no shutdown
+    no routing
+    vlan access 1
+interface 1/12/9
+    no shutdown
+    no routing
+    vlan access 1
+interface 1/12/10
+    no shutdown
+    no routing
+    vlan access 1
+interface 1/12/11
+    no shutdown
+    no routing
+    vlan access 1
+interface 1/12/12
+    no shutdown
+    no routing
+    vlan access 1
+interface 1/12/13
+    no shutdown
+    no routing
+    vlan access 1
+interface 1/12/14
+    no shutdown
+    no routing
+    vlan access 1
+interface 1/12/15
+    no shutdown
+    no routing
+    vlan access 1
+interface 1/12/16
+    no shutdown
+    no routing
+    vlan access 1
+interface 1/12/17
+    no shutdown
+    no routing
+    vlan access 1
+interface 1/12/18
+    no shutdown
+    no routing
+    vlan access 1
+interface 1/12/19
+    no shutdown
+    no routing
+    vlan access 1
+interface 1/12/20
+    no shutdown
+    no routing
+    vlan access 1
+interface 1/12/21
+    no shutdown
+    no routing
+    vlan access 1
+interface 1/12/22
+    no shutdown
+    no routing
+    vlan access 1
+interface 1/12/23
+    no shutdown
+    no routing
+    vlan access 1
+interface 1/12/24
+    no shutdown
+    no routing
+    vlan access 1
+interface 1/12/25
+    no shutdown
+    no routing
+    vlan access 1
+interface 1/12/26
+    no shutdown
+    no routing
+    vlan access 1
+interface 1/12/27
+    no shutdown
+    no routing
+    vlan access 1
+interface 1/12/28
+    no shutdown
+    no routing
+    vlan access 1
+interface 1/12/29
+    no shutdown
+    no routing
+    vlan access 1
+interface 1/12/30
+    no shutdown
+    no routing
+    vlan access 1
+interface 1/12/31
+    no shutdown
+    no routing
+    vlan access 1
+interface 1/12/32
+    no shutdown
+    no routing
+    vlan access 1
+interface 1/12/33
+    no shutdown
+    no routing
+    vlan access 1
+interface 1/12/34
+    no shutdown
+    no routing
+    vlan access 1
+interface 1/12/35
+    no shutdown
+    no routing
+    vlan access 1
+interface 1/12/36
+    no shutdown
+    no routing
+    vlan access 1
+interface 1/12/37
+    no shutdown
+    no routing
+    vlan access 1
+interface 1/12/38
+    no shutdown
+    no routing
+    vlan access 1
+interface 1/12/39
+    no shutdown
+    no routing
+    vlan access 1
+interface 1/12/40
+    no shutdown
+    no routing
+    vlan access 1
+interface 1/12/41
+    no shutdown
+    no routing
+    vlan access 1
+interface 1/12/42
+    no shutdown
+    no routing
+    vlan access 1
+interface 1/12/43
+    no shutdown
+    no routing
+    vlan access 1
+interface 1/12/44
+    no shutdown
+    no routing
+    vlan access 1
+interface 1/12/45
+    no shutdown
+    no routing
+    vlan access 1
+interface 1/12/46
+    no shutdown
+    no routing
+    vlan access 1
+interface 1/12/47
+    description Description for interface
+    no shutdown
+    no routing
+    vlan access 1
+interface 1/12/48
+    no shutdown
+    no routing
+    vlan access 2
+interface 1/12/49
+    no shutdown
+    no routing
+    vlan access 1
+interface 1/12/50
+    no shutdown
+    no routing
+    vlan access 1
+interface 1/12/51
+    no shutdown
+    no routing
+    vlan access 1
+interface 1/12/52
+    no shutdown
+    no routing
+    vlan access 1
+interface vlan 1
+    no ip dhcp
+interface vlan 2
+    ip address 10.0.0.113/21
+snmp-server vrf default
+snmp-server trap-source interface vlan2 vrf default
+snmp-server system-location SNMP Location
+snmp-server system-contact SNMP Contact Information
+snmp-server community readonlycom
+snmp-server community rwsnmpcom
+    access-level rw
+snmp-server host 10.7.32.31 trap version v2c community trapcomm 
+snmp-server host 10.7.32.67 trap version v2c community trapcomm 
+vsx
+    system-mac 02:02:00:00:02:00
+    inter-switch-link lag 256
+    role primary
+    keepalive peer 192.168.0.1 source 192.168.0.0 vrf KA
+    vsx-sync vsx-global
+ip route 0.0.0.0/0 10.0.0.1
+ip route 10.0.0.0/8 10.0.0.1
+mirror session 1
+    destination tunnel 10.0.2.1 source 10.0.0.113
+    source interface lag45 rx
+ip dns server-address 10.0.0.2
+!
+!
+!
+!
+!
+https-server vrf default
+https-server vrf mgmt
+nae-script configuration_change_email false ...
+nae-script fault_finder_monitor false ...

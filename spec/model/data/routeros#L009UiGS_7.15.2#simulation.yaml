@@ -1,0 +1,216 @@
+init_prompt:
+commands:
+  "/system resource print\n": |-
+    \x20                  uptime: 14w1d19h55m4s
+    \x20                 version: 7.15.2 (stable)
+    \x20              build-time: 2024-06-26 11:42:37
+    \x20        factory-software: 7.12
+    \x20             free-memory: 432.4MiB
+    \x20            total-memory: 512.0MiB
+    \x20                     cpu: ARM
+    \x20               cpu-count: 2
+    \x20           cpu-frequency: 800MHz
+    \x20                cpu-load: 0%
+    \x20          free-hdd-space: 103.8MiB
+    \x20         total-hdd-space: 128.0MiB
+    \x20 write-sect-since-reboot: 361943
+    \x20        write-sect-total: 669893
+    \x20              bad-blocks: 0%
+    \x20       architecture-name: arm
+    \x20              board-name: L009UiGS
+    \x20                platform: MikroTik
+    
+  "/system package update print\n": |-
+    \x20           channel: stable
+    \x20 installed-version: 7.15.2
+    \x20    latest-version: 7.15.3
+    \x20            status: New version is available
+    
+  "/system history print without-paging\n": |-
+    Flags: U - UNDOABLE
+    Columns: ACTION, BY, POLICY, TIME
+    \x20 ACTION                            BY           POLICY  TIME              \x20
+    U bridge port changed               user  write   2024-07-31 09:33:47
+    U bridge port changed               user  write   2024-07-31 09:32:52
+    U bridge port changed               user  write   2024-07-31 09:32:50
+    U detect-internet settings changed  user  write   2024-07-31 09:28:59
+    
+  "/export show-sensitive\n": |-
+    # 2024-10-25 12:09:43 by RouterOS 7.15.2
+    # software id = A0AA-AAA0
+    #
+    # model = L009UiGS
+    # serial number = AA111AAAAAA
+    /interface bridge
+    add admin-mac=00:00:5E:00:53:00 auto-mac=no comment=defconf name=bridge \\
+    \x20   port-cost-mode=short
+    /interface vlan
+    add interface=ether1 name=vlan6 vlan-id=6
+    /interface pppoe-client
+    add add-default-route=yes disabled=no interface=vlan6 name=pppoe-out1 \\
+    \x20   password=password use-peer-dns=yes user=user
+    /interface list
+    add comment=defconf name=WAN
+    add comment=defconf name=LAN
+    /interface wireless security-profiles
+    set [ find default=yes ] supplicant-identity=MikroTik
+    /ip pool
+    add name=default-dhcp ranges=192.0.2.0-192.0.2.254
+    /ip dhcp-server
+    add address-pool=default-dhcp interface=bridge lease-time=10m name=defconf
+    /port
+    set 0 name=serial0
+    /snmp community
+    add addresses=0.0.0.0/0 name=community security=authorized
+    /interface bridge port
+    add bridge=bridge comment=defconf interface=ether2 internal-path-cost=10 \\
+    \x20   path-cost=10
+    add bridge=bridge comment=defconf interface=ether3 internal-path-cost=10 \\
+    \x20   path-cost=10
+    add bridge=bridge comment=defconf interface=ether4 internal-path-cost=10 \\
+    \x20   path-cost=10
+    add bridge=bridge comment=defconf interface=ether5 internal-path-cost=10 \\
+    \x20   path-cost=10
+    add bridge=bridge comment=defconf interface=ether6 internal-path-cost=10 \\
+    \x20   path-cost=10
+    add bridge=bridge comment=defconf interface=ether7 internal-path-cost=10 \\
+    \x20   path-cost=10
+    add bridge=bridge comment=defconf interface=ether8 internal-path-cost=10 \\
+    \x20   path-cost=10
+    add bridge=bridge comment=defconf interface=sfp1 internal-path-cost=10 \\
+    \x20   path-cost=10
+    /ip firewall connection tracking
+    set udp-timeout=10s
+    /ip neighbor discovery-settings
+    set discover-interface-list=LAN
+    /ip settings
+    set max-neighbor-entries=14336
+    /ipv6 settings
+    set max-neighbor-entries=7168
+    /interface list member
+    add comment=defconf interface=bridge list=LAN
+    add comment=defconf interface=ether1 list=WAN
+    add interface=pppoe-out1 list=WAN
+    /ip address
+    add address=192.0.2.1/24 comment=defconf interface=bridge network=\\
+    \x20   192.0.2.0
+    /ip dhcp-client
+    add comment=defconf interface=ether1
+    /ip dhcp-server network
+    add address=192.0.2.0/24 comment=defconf dns-server=192.0.2.1 gateway=\\
+    \x20   192.0.2.1
+    /ip dns
+    set allow-remote-requests=yes
+    /ip dns static
+    add address=192.0.2.1 comment=defconf name=router.lan
+    /ip firewall address-list
+    add address=198.51.100.1 list=\"office\"
+    add address=198.51.100.2 list=\"nms\"
+    /ip firewall filter
+    add action=accept chain=input comment=\\
+    \x20   \"defconf: accept established,related,untracked\" connection-state=\\
+    \x20   established,related,untracked
+    add action=drop chain=input comment=\"defconf: drop invalid\" connection-state=\\
+    \x20   invalid
+    add action=accept chain=input comment=\"defconf: accept ICMP\" protocol=icmp
+    add action=accept chain=input comment=\"Remote MGTM\" in-interface-list=WAN \\
+    \x20   src-address-list=\"office\"
+    add action=accept chain=input in-interface-list=WAN src-address-list=\\
+    \x20   \"nms\"
+    add action=accept chain=input comment=\\
+    \x20   \"defconf: accept to local loopback (for CAPsMAN)\" dst-address=127.0.0.1
+    add action=drop chain=input comment=\"defconf: drop all not coming from LAN\" \\
+    \x20   in-interface-list=!LAN
+    add action=accept chain=forward comment=\"defconf: accept in ipsec policy\" \\
+    \x20   ipsec-policy=in,ipsec
+    add action=accept chain=forward comment=\"defconf: accept out ipsec policy\" \\
+    \x20   ipsec-policy=out,ipsec
+    add action=fasttrack-connection chain=forward comment=\"defconf: fasttrack\" \\
+    \x20   connection-state=established,related hw-offload=yes
+    add action=accept chain=forward comment=\\
+    \x20   \"defconf: accept established,related, untracked\" connection-state=\\
+    \x20   established,related,untracked
+    add action=drop chain=forward comment=\"defconf: drop invalid\" \\
+    \x20   connection-state=invalid
+    add action=drop chain=forward comment=\\
+    \x20   \"defconf: drop all from WAN not DSTNATed\" connection-nat-state=!dstnat \\
+    \x20   connection-state=new in-interface-list=WAN
+    /ip firewall nat
+    add action=masquerade chain=srcnat comment=\"defconf: masquerade\" \\
+    \x20   ipsec-policy=out,none out-interface-list=WAN
+    /ipv6 firewall address-list
+    add address=::/128 comment=\"defconf: unspecified address\" list=bad_ipv6
+    add address=::1/128 comment=\"defconf: lo\" list=bad_ipv6
+    add address=fec0::/10 comment=\"defconf: site-local\" list=bad_ipv6
+    add address=::ffff:0.0.0.0/96 comment=\"defconf: ipv4-mapped\" list=bad_ipv6
+    add address=::/96 comment=\"defconf: ipv4 compat\" list=bad_ipv6
+    add address=100::/64 comment=\"defconf: discard only \" list=bad_ipv6
+    add address=2001:db8::/32 comment=\"defconf: documentation\" list=bad_ipv6
+    add address=2001:10::/28 comment=\"defconf: ORCHID\" list=bad_ipv6
+    add address=3ffe::/16 comment=\"defconf: 6bone\" list=bad_ipv6
+    /ipv6 firewall filter
+    add action=accept chain=input comment=\\
+    \x20   \"defconf: accept established,related,untracked\" connection-state=\\
+    \x20   established,related,untracked
+    add action=drop chain=input comment=\"defconf: drop invalid\" connection-state=\\
+    \x20   invalid
+    add action=accept chain=input comment=\"defconf: accept ICMPv6\" protocol=\\
+    \x20   icmpv6
+    add action=accept chain=input comment=\"defconf: accept UDP traceroute\" port=\\
+    \x20   33434-33534 protocol=udp
+    add action=accept chain=input comment=\\
+    \x20   \"defconf: accept DHCPv6-Client prefix delegation.\" dst-port=546 protocol=\\
+    \x20   udp src-address=fe80::/10
+    add action=accept chain=input comment=\"defconf: accept IKE\" dst-port=500,4500 \\
+    \x20   protocol=udp
+    add action=accept chain=input comment=\"defconf: accept ipsec AH\" protocol=\\
+    \x20   ipsec-ah
+    add action=accept chain=input comment=\"defconf: accept ipsec ESP\" protocol=\\
+    \x20   ipsec-esp
+    add action=accept chain=input comment=\\
+    \x20   \"defconf: accept all that matches ipsec policy\" ipsec-policy=in,ipsec
+    add action=drop chain=input comment=\\
+    \x20   \"defconf: drop everything else not coming from LAN\" in-interface-list=\\
+    \x20   !LAN
+    add action=accept chain=forward comment=\\
+    \x20   \"defconf: accept established,related,untracked\" connection-state=\\
+    \x20   established,related,untracked
+    add action=drop chain=forward comment=\"defconf: drop invalid\" \\
+    \x20   connection-state=invalid
+    add action=drop chain=forward comment=\\
+    \x20   \"defconf: drop packets with bad src ipv6\" src-address-list=bad_ipv6
+    add action=drop chain=forward comment=\\
+    \x20   \"defconf: drop packets with bad dst ipv6\" dst-address-list=bad_ipv6
+    add action=drop chain=forward comment=\"defconf: rfc4890 drop hop-limit=1\" \\
+    \x20   hop-limit=equal:1 protocol=icmpv6
+    add action=accept chain=forward comment=\"defconf: accept ICMPv6\" protocol=\\
+    \x20   icmpv6
+    add action=accept chain=forward comment=\"defconf: accept HIP\" protocol=139
+    add action=accept chain=forward comment=\"defconf: accept IKE\" dst-port=\\
+    \x20   500,4500 protocol=udp
+    add action=accept chain=forward comment=\"defconf: accept ipsec AH\" protocol=\\
+    \x20   ipsec-ah
+    add action=accept chain=forward comment=\"defconf: accept ipsec ESP\" protocol=\\
+    \x20   ipsec-esp
+    add action=accept chain=forward comment=\\
+    \x20   \"defconf: accept all that matches ipsec policy\" ipsec-policy=in,ipsec
+    add action=drop chain=forward comment=\\
+    \x20   \"defconf: drop everything else not coming from LAN\" in-interface-list=\\
+    \x20   !LAN
+    /snmp
+    set contact=user enabled=yes location=\"Riga, LATIVA\" \\
+    \x20   trap-community=community
+    /system clock
+    set time-zone-name=Europe/Riga
+    /system identity
+    set name=router
+    /system note
+    set show-at-login=no
+    /system routerboard settings
+    set enter-setup-on=delete-key
+    /tool mac-server
+    set allowed-interface-list=LAN
+    /tool mac-server mac-winbox
+    set allowed-interface-list=LAN
+  "quit\n": |-
+    interrupted
