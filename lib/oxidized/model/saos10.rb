@@ -13,7 +13,7 @@ class SAOS10 < Oxidized::Model
   cmd('show software') { |cfg| comment cfg }
 
   cmd('show system components') { |cfg| comment cfg }
-  
+
   cmd('show system health') { |cfg| comment cfg }
 
   cmd('show system last-reset-reasons') { |cfg| comment cfg }
