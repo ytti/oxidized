@@ -21,7 +21,7 @@ class ZyNOS < Oxidized::Model
   end
 
   # ignore copyright motd
-  expect /^(Copyright .*)\n^([\w.@()-<]+[#>]\s?)$/ do
+  expect /^(Copyright .*)\n^([\w.@()\-<]+[#>]\s?)$/ do
     send '\n'
     ""
   end
