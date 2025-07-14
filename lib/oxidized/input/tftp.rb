@@ -21,7 +21,7 @@ module Oxidized
     end
 
     def cmd(file)
-      Oxidized.logger.debug "TFTP: #{file} @ #{@node.name}"
+      logger.debug "TFTP: #{file} @ #{@node.name}"
       config = StringIO.new
       @tftp.getbinary file, config
       config.rewind

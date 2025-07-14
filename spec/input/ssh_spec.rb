@@ -4,8 +4,6 @@ require 'oxidized/input/ssh'
 describe Oxidized::SSH do
   before(:each) do
     Oxidized.asetus = Asetus.new
-    Oxidized.asetus.cfg.debug = false
-    Oxidized.setup_logger
     Oxidized.config.timeout = 30
     Oxidized.config.input.ssh.secure = true
     Oxidized::Node.any_instance.stubs(:resolve_repo)
@@ -43,7 +41,8 @@ describe Oxidized::SSH do
         timeout:                         Oxidized.config.timeout,
         number_of_password_prompts:      0,
         auth_methods:                    %w[none publickey password],
-        proxy:                           proxy
+        proxy:                           proxy,
+        logger:                          anything
       }
       Net::SSH.expects(:start).with('192.0.2.2', 'alma', ssh_options)
 
@@ -79,7 +78,8 @@ describe Oxidized::SSH do
         timeout:                         Oxidized.config.timeout,
         number_of_password_prompts:      0,
         auth_methods:                    %w[none publickey password],
-        proxy:                           proxy
+        proxy:                           proxy,
+        logger:                          anything
       }
       Net::SSH.expects(:start).with('example.com', 'alma', ssh_options)
 

@@ -8,8 +8,6 @@ describe 'Oxidized::Output' do
   describe '.clean_obsolete_nodes' do
     before do
       Oxidized.asetus = Asetus.new
-      Oxidized.asetus.cfg.debug = false
-      Oxidized.setup_logger
     end
     it 'runs on git' do
       Oxidized.config.output.default = 'git'
@@ -34,9 +32,9 @@ describe 'Oxidized::Output' do
       Oxidized.config.output.clean_obsolete_nodes = true
       Oxidized::Output::File.expects(:clean_obsolete_nodes).never
       Oxidized::Output::Git.expects(:clean_obsolete_nodes).never
-      Oxidized.logger.expects(:warn)
-              .with("clean_obsolete_nodes is not " \
-                    "implemented for Oxidized::Output::Http")
+      Oxidized::Output::Http.logger.expects(:warn)
+                            .with("clean_obsolete_nodes is not " \
+                                  "implemented for Oxidized::Output::Http")
       Oxidized::Output.clean_obsolete_nodes([])
     end
   end

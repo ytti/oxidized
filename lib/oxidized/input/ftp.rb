@@ -30,7 +30,7 @@ module Oxidized
     end
 
     def cmd(file)
-      Oxidized.logger.debug "FTP: #{file} @ #{@node.name}"
+      logger.debug "FTP: #{file} @ #{@node.name}"
       @ftp.getbinaryfile file, nil
     end
 

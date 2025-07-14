@@ -1,5 +1,9 @@
+require 'semantic_logger'
+
 module Oxidized
   class CLI
+    include SemanticLogger::Loggable
+
     require 'slop'
     require 'oxidized'
     require 'English'
@@ -9,7 +13,7 @@ module Oxidized
       Process.daemon if @opts[:daemonize]
       write_pid
       begin
-        Oxidized.logger.info "Oxidized starting, running as pid #{$PROCESS_ID}"
+        logger.info "Oxidized starting, running as pid #{$PROCESS_ID}"
         Oxidized.new
       rescue StandardError => e
         crash e
@@ -23,13 +27,13 @@ module Oxidized
       _args, @opts = parse_opts
 
       Config.load(@opts)
-      Oxidized.setup_logger
+      Oxidized::Logger.setup
 
       @pidfile = File.expand_path(Oxidized.config.pid)
     end
 
     def crash(error)
-      Oxidized.logger.fatal "Oxidized crashed, crashfile written in #{Config::CRASH}"
+      logger.fatal "Oxidized crashed, crashfile written in #{Config::CRASH}"
       File.open Config::CRASH, 'w' do |file|
         file.puts '-' * 50
         file.puts Time.now.utc

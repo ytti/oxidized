@@ -18,10 +18,12 @@ The format is based on [Keep a Changelog](https://keepachangelog.com/en/1.1.0/).
 
 
 ### Changed
+- remove uri in commit-archive location for EdgeOS. Fixed #3525 (@systeembeheerder)
 - acos: remove free storage amount from show version. Fixes #3492 (@991jo)
 - Housekeeping in the code: Maximal line length: 120 char + Rubocop fixes (@robertcheramy)
 - spec/model/data uses # instead of : as a separator in the filename, so we can
   git clone unter Windows. Fixes: #3481 (@robertcheramy)
+- logging: rework of the logging system, using Semantic Logger (@robertcheramy)
 
 ### Fixed
 - nxos: ignore bootflash size and permission errors (@rouven0)
@@ -41,11 +43,11 @@ The format is based on [Keep a Changelog](https://keepachangelog.com/en/1.1.0/).
 - sonicos: remove inefficient regular expression / Fixes code scanning alert #4 and #11 (@robertcheramy)
 - quantaos: remove inefficient regular expression / Fixes code scanning alerts 9 and 10 (@robertcheramy)
 - fabricos: remove power supply input voltage from `chassisShow` output (@hops)
-- vyatta: Ignore system uptime in `show version` on Edgerouter devices (@shanemcc)
 - netgear: include running-config in config output (@bradleywehmeier)
 - eltex: remove inefficient regular expression / Fixes code scanning alert 7 / See Issue #3513 (@robertcheramy)
 - tmos: remove deprecated secrets (@rouven0)
-- log an error when no suitable input is found for a node. Fixes: #3346 (@robertcheramy) 
+- log an error when no suitable input is found for a node. Fixes: #3346 (@robertcheramy)
+- firelinuxos: fix timeout on syntax error. Fixes #3393, #3502 (@robertcheramy)
 
 
 ## [0.33.0 - 2025-03-26]

@@ -29,7 +29,7 @@ module Oxidized
     end
 
     def cmd(file)
-      Oxidized.logger.debug "SCP: #{file} @ #{@node.name}"
+      logger.debug "SCP: #{file} @ #{@node.name}"
       @ssh.scp.download!(file)
     end
 

@@ -1,0 +1,118 @@
+---
+init_prompt: |-
+    Last login: Thu Jul 10 09:11:54 UTC 2025 from 10.42.1.2 on pts/0
+    Successful login attempts for user 'oxidized' : 42
+    Last failed login: Thu Jul 10 09:21:42 UTC 2025 from 10.42.1.2 on ssh:notty
+    There was 1 failed login attempt since the last successful login.
+    Last login: Thu Jul 10 09:21:45 2025 from 10.42.1.2\r
+    
+    Copyright 2004-2024, Cisco and/or its affiliates. All rights reserved.\x20
+    Cisco is a registered trademark of Cisco Systems, Inc.\x20
+    All other trademarks are property of their respective owners.
+    
+    Cisco Firepower Extensible Operating System (FX-OS) v2.14.1 (build 167)
+    Cisco Firepower 1010 Threat Defense v7.4.2 (build 172)
+    
+    >\x20
+commands:
+  - "show version system\n": |-
+      show version system
+      -------------------[ FPR-12345 ]--------------------
+      Model                     : Cisco Firepower 1010 Threat Defense (78) Version 7.4.2 (Build 172)
+      UUID                      : 5d111111-0000-0000-0000-00000000cafe
+      LSP version               : lsp-rel-20250114-1341
+      VDB version               : 400
+      ----------------------------------------------------
+      
+      Cisco Adaptive Security Appliance Software Version 9.20(2)32\x20
+      SSP Operating System Version 2.14(1.167)
+      
+      Compiled on Mon 29-Jul-24 18:15 GMT by builders
+      System image file is \"disk0:/installables/switch/fxos-k8-fp1k-lfbff.2.14.1.167.SPA\"
+      Config file at boot was \"startup-config\"
+      
+      FPR-12345 up 40 days 21 hours
+      Start-up time 20 secs
+      
+      Hardware:   FPR-1010, 2581 MB RAM, CPU Atom C3000 series 2200 MHz, 1 CPU (4 cores)
+      
+      Encryption hardware device : Cisco FP Crypto on-board accelerator (revision 0x11)
+                                   Driver version        : 4.12.0
+                                   Number of accelerators: 6
+      
+       1: Int: Internal-Data0/0    : address is 00a0.c900.0000, irq 10
+       3: Ext: Management1/1       : address is 5c5a.c700.cafe, irq 0
+       4: Int: Internal-Data1/1    : address is 0000.0100.0001, irq 0
+       5: Int: Internal-Data1/2    : address is 0000.0300.0001, irq 0
+       6: Int: Internal-Control1/1 : address is 0000.0001.0001, irq 0
+      
+      Serial Number: JAD20000AAA
+      Configuration has not been modified since last system restart.
+      >\x20
+  - "show inventory\n": |-
+      show inventory
+      Syntax error: Illegal parameter
+      > show inventory\a
+  - "\x15\n": |-
+      \e[12D\e[J
+      >\x20
+  - "show running-config all\n": |-
+      show running-config all
+      : Saved
+      
+      :\x20
+      : Serial Number: JAD20000AAA
+      : Hardware:   FPR-1010, 2581 MB RAM, CPU Atom C3000 series 2200 MHz, 1 CPU (4 cores)
+      :
+      NGFW Version 7.4.2\x20
+      !
+      command-alias exec h help
+      command-alias exec lo logout
+      command-alias exec p ping
+      command-alias exec s show
+      terminal width 80
+      hostname FPR-12345
+      enable password ***** encrypted
+      no asp load-balance per-packet
+      ! ...
+      !
+      interface Vlan1
+       no nameif
+       no cts manual
+       no security-level
+       vrf forwarding default
+       no ip address
+       delay 10
+      !
+      interface Ethernet1/1
+       description outside interface
+       no switchport
+       nameif OUTSIDE
+       no cts manual
+       security-level 0
+       vrf forwarding default
+       ip address 10.42.42.18 255.255.255.248\x20
+       delay 1
+      !
+      ! ...
+      interface Management1/1
+       speed auto
+       duplex auto
+       management-only
+       nameif management
+       cts manual
+        propagate sgt preserve-untag
+        policy static sgt disabled trusted
+       security-level 0
+       vrf forwarding default
+       delay 100
+      !
+      ! ...
+      snort preserve-connection
+      snort multichannel-lb enable
+      no dp-tcp-proxy
+      Cryptochecksum:70000cafe00000000000effffaaaacd0
+      : end
+      >\x20
+  - "exit\n": |-
+      exit

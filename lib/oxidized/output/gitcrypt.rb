@@ -202,7 +202,7 @@ module Oxidized
         begin
           update_repo repo, file, data, @msg, @user, @email
         rescue Git::GitExecuteError, ArgumentError => e
-          Oxidized.logger.debug "open_error #{e} #{file}"
+          logger.debug "open_error #{e} #{file}"
           begin
             grepo = Git.init repo
             crypt_init grepo

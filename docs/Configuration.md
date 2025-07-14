@@ -501,3 +501,100 @@ You can use some environment variables to change default root directories values
 
 * `OXIDIZED_HOME` may be used to set oxidized configuration directory, which defaults to `~/.config/oxidized`
 * `OXIDIZED_LOGS` may be used to set oxidzied logs and crash directories root, which default to `~/.config/oxidized`
+
+## Logging
+Oxidized supports parallel logging to different systems (appenders). The
+following appenders are currently supported:
+- `stderr`: log to standard error (this is the default)
+- `stdout`: log to standard output
+- `file`: log to a file
+- `syslog`: log to syslog
+
+> `stderr` and `stdout` are mutually exclusive and will produce a warning if used
+> simultaneously.
+
+> Note: `syslog` currently produces two timestamps because of an issue in
+> [Sematic Logger](https://github.com/reidmorrison/semantic_logger/issues/316).
+
+> You can configure as many file appenders as you wish.
+
+You can set a log level globally and/or for each appender.
+- The global log level will limit which log messages are accepted, depending
+  on their level.
+  - The default global log level is `:info`.
+  - If you set `debug: true` in the configuration, the global log level will be
+    forced to `:debug`.
+- The appender log level limits which log messages are displayed by the
+  appender, depending on their level.
+  - The default is `:trace`.
+
+
+> Available log levels: `:trace`, `:debug`, `:info`, `:warn`,
+> `:error` and `:fatal`
+
+Here is a configuration example logging `:error` to syslog, `:warn` to stdout
+and `:info` to `~/.config/oxidized/info.log`:
+
+```yaml
+logger:
+  # Default level
+  # level: :info
+  appenders:
+    - type: syslog
+      level: :error
+    - type: stdout
+      level: :warn
+    - type: file
+      # Default level is :trace, so we get the logs in the default level (:info)
+      file: ~/.config/oxidized/info.log
+```
+
+If you want to log :trace to a file and `:info` to stdout, you must set the
+global log level to `:trace`, and limit the stdout appender to `:info`:
+
+```yaml
+logger:
+  level: :trace
+  appenders:
+    - type: stdout
+      level: :info
+    - type: file
+      file: ~/.config/oxidized/trace.log
+```
+
+### Change log level
+You can change the global log level of oxidized by sending a SIGUSR2 to
+the process:
+```
+kill -SIGUSR2 424242
+```
+It will rotate between the log levels and log a warning with the new level
+(you won't see the warning when the log level is `:fatal` or `:error`):
+```
+2025-06-30 15:25:27.972881 W [109750:2640] SemanticLogger -- Changed global default log level to :warn
+```
+
+If you specified a log level for an appender, this log level won't be
+changed.
+
+> :warning: **Warning** This currently does not work when oxidized-web is used
+> and will kill the whole oxidized application. This will be corrected in a
+> future release of oxidized-web.
+
+### Dump running threads
+With the SIGTTIN signal, oxidized will log a backtrace for each of its threads.
+```
+kill -SIGTTIN 424242
+```
+
+The threads used to fetch the configs are named `Oxidized::Job 'hostname'`:
+
+```
+2025-06-30 15:32:22.293047 W [110549:2640 core.rb:76] Thread Dump -- Backtrace:
+/home/xxx/oxidized/lib/oxidized/core.rb:76:in `sleep'
+/home/xxx/oxidized/lib/oxidized/core.rb:76:in `block in run'
+(...)
+2025-06-30 15:32:22.293409 W [110549:Oxidized::Job 'host2' ssh.rb:127] Thread Dump -- Backtrace:
+/home/xxx/oxidized/lib/oxidized/input/ssh.rb:127:in `sleep'
+/home/xxx/oxidized/lib/oxidized/input/ssh.rb:127:in `block (2 levels) in expect'
+```

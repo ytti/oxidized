@@ -2,6 +2,7 @@ module Oxidized
   class PromptUndetect < OxidizedError; end
 
   class Input
+    include SemanticLogger::Loggable
     include Oxidized::Config::Vars
 
     RESCUE_FAIL = {
