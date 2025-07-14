@@ -48,7 +48,9 @@ The format is based on [Keep a Changelog](https://keepachangelog.com/en/1.1.0/).
 - log an error when no suitable input is found for a node. Fixes: #3346 (@robertcheramy)
 - firelinuxos: fix timeout on syntax error. Fixes #3393, #3502 (@robertcheramy)
 - zynos: fix overly permissive regular expression range. Fixes code scanning
-  alert 19 / See Issue #3513 (@robertcheramy)
+  alert 18 / See Issue #3513 (@robertcheramy)
+- aosw: fix polynomial regular expression. Fixes code scanning
+  alert 36 / See Issue #3513 (@robertcheramy)
 
 
 ## [0.33.0 - 2025-03-26]
