@@ -1,7 +1,9 @@
 class SAOS10 < Oxidized::Model
+  using Refinements
   # Ciena SAOS switch
   # used for 10.x devices
 
+  prompt /^[\w\-]+\*?> ?$/
   comment  '# '
 
   cmd :all do |cfg|
