@@ -88,6 +88,11 @@ module Oxidized
       rescue StandardError => e
         # Send a message in debug mode in case we are not able to create a crashfile
         logger.error "#{ip} raised #{e.class} with msg #{e.message}, creating crashfile"
+        unless Oxidized.config.crash.directory?
+          logger.error "Cannot create crashfile for exception", e
+          return false
+        end
+
         crashdir  = Oxidized.config.crash.directory
         crashfile = Oxidized.config.crash.hostnames? ? name : ip.to_s
         FileUtils.mkdir_p(crashdir) unless File.directory?(crashdir)

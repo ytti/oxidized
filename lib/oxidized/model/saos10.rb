@@ -1,7 +1,9 @@
 class SAOS10 < Oxidized::Model
+  using Refinements
   # Ciena SAOS switch
   # used for 10.x devices
 
+  prompt /^[\w\-]+\*?> ?$/
   comment  '# '
 
   cmd :all do |cfg|
@@ -9,6 +11,8 @@ class SAOS10 < Oxidized::Model
   end
 
   cmd('show system hostname') { |cfg| comment cfg }
+
+  cmd('show software') { |cfg| comment cfg }
 
   cmd('show system components') { |cfg| comment cfg }
 
