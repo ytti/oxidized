@@ -16,7 +16,6 @@ The format is based on [Keep a Changelog](https://keepachangelog.com/en/1.1.0/).
 - sixwind: New model to support 6WIND Virtual Service Router (@hcaldicott)
 - model for saos10 (@penfold1972)
 
-
 ### Changed
 - remove uri in commit-archive location for EdgeOS. Fixed #3525 (@systeembeheerder)
 - acos: remove free storage amount from show version. Fixes #3492 (@991jo)
@@ -48,6 +47,8 @@ The format is based on [Keep a Changelog](https://keepachangelog.com/en/1.1.0/).
 - tmos: remove deprecated secrets (@rouven0)
 - log an error when no suitable input is found for a node. Fixes: #3346 (@robertcheramy)
 - firelinuxos: fix timeout on syntax error. Fixes #3393, #3502 (@robertcheramy)
+- zynos: fix overly permissive regular expression range. Fixes code scanning
+  alert 19 / See Issue #3513 (@robertcheramy)
 
 
 ## [0.33.0 - 2025-03-26]
