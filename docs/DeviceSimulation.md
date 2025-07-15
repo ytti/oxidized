@@ -89,7 +89,7 @@ you will have to use the option `-e` to run `device2yaml.rb` in SSH exec mode.
   appear in the order used in the Oxidized model. This is useful for simulating
   devices that paginate output. To allow any order or include more commands than
   the model uses, use the option `-u`. Note that the `unordered` mode may not
-  produce a useful YAML file when combined whith user input (see
+  produce a useful YAML file when combined with user input (see
   [Interactive Mode](#interactive-mode) below).
 
 Note that `device2yaml.rb` takes some time to run because of the idle timeout of

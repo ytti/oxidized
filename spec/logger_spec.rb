@@ -6,6 +6,8 @@ describe Oxidized::Logger do
     @saved_level = SemanticLogger.default_level
     # Remove the appender from spec_helper
     SemanticLogger.clear_appenders!
+    # Reverse possible log level definition in spec_helper
+    SemanticLogger.default_level = :info
   end
 
   after(:each) do
