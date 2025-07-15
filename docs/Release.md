@@ -49,7 +49,8 @@ Test the git code and the container against as much device types and
 environments as you can.
 
 ## Prepare the release in your working repository
-1. Merge the Pull Request into master
+1. Merge the Pull Request into master with the commit message
+   `chore(release): release version 0.3x.y`
 2. `git pull` master
 3. Tag the commit with `git tag -a 0.xx.yy -m "Release 0.xx.yy"`
 4. Build the gem with ‘rake build’

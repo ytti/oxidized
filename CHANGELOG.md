@@ -4,11 +4,20 @@ All notable changes to this project will be documented in this file.
 
 The format is based on [Keep a Changelog](https://keepachangelog.com/en/1.1.0/).
 
+## [Unreleased]
+
+### Added
+
+### Changed
+
+### Fixed
+
+
 ## [0.34.0 - 2025-07-15]
 :warning: This release introduces a [new logging system](docs/Configuration.md#logging),
 based on [semantic logger](https://logger.rocketjob.io/). The old configuration
 (`log`, `syslog`) is still supported but obsolete and will be removed in a
-future release, so be sure to migrate your configureation.
+future release, so be sure to migrate your configuration.
 
 ### Added
 - add iosxr support to SyslogMonitor (@deesel)
