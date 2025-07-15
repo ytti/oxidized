@@ -12,7 +12,8 @@ The format is based on [Keep a Changelog](https://keepachangelog.com/en/1.1.0/).
 - ssh: support 'newline "string"' cfg block method to allow defining \r\n newline (@ytti)
 - model for Netgate TNSR (@Vantomas)
 - efos: New model for Brocade Enhanced Fabric OS. Fixes #3477 (@sorano, @cetjcm, @robertcheramy)
-- ouput/file, output/git: clean node configurations which are not listed in the source anymore. Fixes: #1805 (@robertcheramy)
+- ouput/file, output/git: clean node configurations which are not listed in the
+  source anymore. Fixes: #1805 (@robertcheramy)
 - sixwind: New model to support 6WIND Virtual Service Router (@hcaldicott)
 - model for saos10 (@penfold1972)
 
@@ -37,20 +38,14 @@ The format is based on [Keep a Changelog](https://keepachangelog.com/en/1.1.0/).
 - AricentISS: fix codeQL alert #15 (@robertcheramy)
 - Update installation instructions on Rocky Linux 9. Fixes #3368 (@robertcheramy)
 - awplus: fix enable password when supplied (@sgsimpson)
-- node.rb: remove Polynomial regular expression / Fixes Code scanning alert #40 (@robertcheramy)
-- asa: remove inefficient regular expression / Fixes Code scanning alert #5 and #6 (@robertcheramy)
-- sonicos: remove inefficient regular expression / Fixes code scanning alert #4 and #11 (@robertcheramy)
-- quantaos: remove inefficient regular expression / Fixes code scanning alerts 9 and 10 (@robertcheramy)
+- Fix Code scanning alerts on regular expressions (Issue #3513) in node.rb (alert 40),
+  asa (alerts 5 and 6), sonicos (4, 11), quantaos (9, 10), eltex (7), zynos (18, 19)
+  and aosw (36)
 - fabricos: remove power supply input voltage from `chassisShow` output (@hops)
 - netgear: include running-config in config output (@bradleywehmeier)
-- eltex: remove inefficient regular expression / Fixes code scanning alert 7 / See Issue #3513 (@robertcheramy)
 - tmos: remove deprecated secrets (@rouven0)
 - log an error when no suitable input is found for a node. Fixes: #3346 (@robertcheramy)
 - firelinuxos: fix timeout on syntax error. Fixes #3393, #3502 (@robertcheramy)
-- zynos: fix overly permissive regular expression range. Fixes code scanning
-  alert 18 and 19/ See Issue #3513 (@robertcheramy)
-- aosw: fix polynomial regular expression. Fixes code scanning
-  alert 36 / See Issue #3513 (@robertcheramy)
 
 
 ## [0.33.0 - 2025-03-26]
