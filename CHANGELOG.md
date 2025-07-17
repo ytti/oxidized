@@ -11,6 +11,7 @@ The format is based on [Keep a Changelog](https://keepachangelog.com/en/1.1.0/).
 ### Changed
 
 ### Fixed
+- input/ssh: hide Net::SSH errors and only display fatal logs unless input.debug = true. Fixes: #3574 (@robertcheramy)
 
 
 ## [0.34.0 - 2025-07-15]

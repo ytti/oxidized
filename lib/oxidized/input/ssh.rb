@@ -164,7 +164,7 @@ module Oxidized
 
       # Use our logger for Net:SSH
       ssh_logger = SemanticLogger[Net::SSH]
-      ssh_logger.level = Oxidized.config.input.debug? ? :debug : :error
+      ssh_logger.level = Oxidized.config.input.debug? ? :debug : :fatal
       ssh_opts[:logger] = ssh_logger
 
       ssh_opts
