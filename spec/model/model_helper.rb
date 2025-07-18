@@ -7,6 +7,7 @@ require 'yaml'
 def init_model_helper
   Oxidized.asetus = Asetus.new
   Oxidized.config.timeout = 5
+  Oxidized.config.prompt = /^([\w.@-]+[#>]\s?)$/
   Oxidized::Node.any_instance.stubs(:resolve_repo)
   Oxidized::Node.any_instance.stubs(:resolve_output)
 
