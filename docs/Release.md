@@ -2,7 +2,7 @@
 This document is targeted at oxidized maintainers. It describes the release process.
 
 ## Version numbering
-Oxidized versions are nummered like major.minor.patch
+Oxidized versions are numbered like major.minor.patch
 - currently, the major version is 0.
 - minor is incremented when releasing new features.
 - patch is incremented when releasing fixes only.
