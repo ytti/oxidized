@@ -1,3 +1,5 @@
+# frozen_string_literal: true
+
 require_relative '../spec_helper'
 require_relative 'atoms'
 require 'yaml'
@@ -134,7 +136,7 @@ class MockChannel
 
   def initialize(commands)
     @commands = commands
-    @queue = ''
+    @queue = String.new
   end
 
   def commands_left?
@@ -159,7 +161,7 @@ class MockChannel
 
     # Send data from @queue but clear it first to prevent new data to be lost
     data = @queue
-    @queue = ''
+    @queue = String.new
     @on_data_block.call(nil, data)
   end
 
