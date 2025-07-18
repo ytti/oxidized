@@ -2,22 +2,22 @@
 This document is targeted at oxidized maintainers. It describes the release process.
 
 ## Version numbering
-Oxidized versions are nummered like major.minor.patch
+Oxidized versions are numbered like major.minor.patch
 - currently, the major version is 0.
 - minor is incremented when releasing new features.
 - patch is incremented when releasing fixes only.
 
 ## Review changes
-Run `git diff 0.30.0..master` (where `0.30.0` is to be changed to the last release) and review
+Run `git diff 0.30.0` (where `0.30.0` is to be changed to the last release) and review
 all the changes that have been done. Have a specific look at changes you don't understand.
 
-For a graphical compare, use `git difftool -d 0.30.0..master`.
+For a graphical compare, use `git difftool -d 0.30.0`.
 
 ## Update the gem dependencies to the latest versions
 ```
-bundle outaded
+bundle outdated
 bundle update
-bundle outaded
+bundle outdated
 ```
 
 ## Update rubocup .rubocop_todo.yml
@@ -52,7 +52,7 @@ environments as you can.
 1. Merge the Pull Request into master with the commit message
    `chore(release): release version 0.3x.y`
 2. `git pull` master
-3. Tag the commit with `git tag -a 0.xx.yy -m "Release 0.xx.yy"`
+3. Tag the commit with `git tag -a 0.xx.yy -m "Release 0.xx.yy"` or `rake tag`
 4. Build the gem with ‘rake build’
 5. Run `git diff` to check if there have been more changes (there shouldn't)
 6. Install an test the gem locally

@@ -79,14 +79,13 @@ RUN apt-get -qy update && \
     # docker automated build gets shallow copy, but non-shallow copy cannot be unshallowed
     git fetch --unshallow || true && \
     rake install && \
+    # install oxidized-web
+    gem install oxidized-web --no-document && \
     # remove the packages we do not need.
     apt-get -qy remove build-essential ruby-dev && \
     apt-get -qy autoremove && \
     apt-get clean && \
     rm -rf /var/lib/apt/lists/*
-
-# install oxidized-web
-RUN gem install oxidized-web --no-document
 
 # clean up
 WORKDIR /
