@@ -4,15 +4,16 @@ All notable changes to this project will be documented in this file.
 
 The format is based on [Keep a Changelog](https://keepachangelog.com/en/1.1.0/).
 
-## [Unreleased]
-
-### Added
+## [0.34.1 - 2025-07-18]
+This release contains small fixes and will include the new version of oxidized-web (0.17.0) in the docker container.
 
 ### Changed
+- github: run ruby CI against ruby-head (@robertcheramy)
 
 ### Fixed
 - input/ssh: hide Net::SSH errors and only display fatal logs unless input.debug = true. Fixes: #3574 (@robertcheramy)
-
+- junos: fix unfrozen literal strings (@robertcheramy)
+- spec/model: fix unfrozen literal strings and set a default prompt (@robertcheramy)
 
 ## [0.34.0 - 2025-07-15]
 :warning: This release introduces a [new logging system](docs/Configuration.md#logging),

@@ -577,9 +577,8 @@ It will rotate between the log levels and log a warning with the new level
 If you specified a log level for an appender, this log level won't be
 changed.
 
-> :warning: **Warning** This currently does not work when oxidized-web is used
-> and will kill the whole oxidized application. This will be corrected in a
-> future release of oxidized-web.
+> :warning: **Warning** You need oxidized-web 0.17.0 and above for this or
+> it will kill the whole oxidized application.
 
 ### Dump running threads
 With the SIGTTIN signal, oxidized will log a backtrace for each of its threads.
