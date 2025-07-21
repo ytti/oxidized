@@ -16,9 +16,9 @@ module Oxidized
 
     def self.load(cmd_opts = {})
       usrdir = File.expand_path(cmd_opts[:home_dir] || Oxidized::Config::ROOT)
-      cfgfile = cmd_opts[:config_file] || 'config'
+      cfgfile = cmd_opts[:config_file] || File.join(usrdir, 'config')
       # configuration file with full path as a class instance variable
-      @configfile = File.join(usrdir, cfgfile)
+      @configfile = cfgfile
       asetus = Asetus.new(name: 'oxidized', load: false, usrdir: usrdir, cfgfile: cfgfile)
       Oxidized.asetus = asetus
 
