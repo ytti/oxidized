@@ -50,7 +50,6 @@ describe Oxidized::Config::Vars do
   before(:each) do
     Oxidized.asetus = Asetus.new
     Oxidized.asetus.cfg.debug = false
-    Oxidized.setup_logger
     Oxidized::Node.any_instance.stubs(:resolve_output)
   end
 
