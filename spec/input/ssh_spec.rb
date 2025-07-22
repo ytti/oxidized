@@ -21,7 +21,7 @@ describe Oxidized::SSH do
                                  model:    'junos',
                                  username: 'alma',
                                  password: 'armud',
-                                 vars:     { "ssh_proxy": 'test.com' })
+                                 vars:     { "ssh_proxy" => 'test.com' })
 
       ssh = Oxidized::SSH.new
 
@@ -58,7 +58,7 @@ describe Oxidized::SSH do
                                  model:    'junos',
                                  username: 'alma',
                                  password: 'armud',
-                                 vars:     { "ssh_proxy": 'test.com' })
+                                 vars:     { "ssh_proxy" => 'test.com' })
 
       ssh = Oxidized::SSH.new
 
