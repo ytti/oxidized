@@ -30,7 +30,7 @@ describe 'Model Cumulus' do
                                username: 'alma',
                                password: 'armud',
                                vars:     { "cumulus_routing_daemon" => 'frr',
-                                           "enable" =>                 true })
+                                           "enable"                 => true })
 
     model = YAML.load_file('spec/model/data/cumulus#VX_5.4.0_frr#custom_simulation.yaml')
     mockmodel = MockSsh.new(model)
