@@ -3,8 +3,6 @@ require_relative 'spec_helper'
 describe Oxidized::Node do
   before(:each) do
     Oxidized.asetus = Asetus.new
-    Oxidized.asetus.cfg.debug = false
-    Oxidized.setup_logger
 
     Oxidized::Node.any_instance.stubs(:resolve_repo)
     Oxidized::Node.any_instance.stubs(:resolve_output)
@@ -63,6 +61,20 @@ describe Oxidized::Node do
       after_fails = @node.stats.failures
       fails = after_fails - before_fails
       _(fails).must_equal 1
+    end
+
+    it 'should warn when no suitable input has been found' do
+      node = Oxidized::Node.new(name:     'example.com',
+                                input:    'http',
+                                output:   'git',
+                                model:    'junos',
+                                username: 'alma',
+                                password: 'armud',
+                                prompt:   'test_prompt')
+      Oxidized::Node.logger.expects(:error)
+                    .with("No suitable input found for example.com")
+      status, = node.run
+      _(status).must_equal :fail
     end
   end
 
@@ -170,7 +182,7 @@ describe Oxidized::Node do
       _(input_classes[2]).must_equal Oxidized::FTP
     end
 
-    it 'resolves input.default without whitespaces' do
+    it 'resolves input.default with whitespaces' do
       Oxidized.config.input.default = "ssh  , \ttelnet, ftp ,scp"
 
       input_classes = @node.send(:resolve_input, {})

@@ -1,9 +1,9 @@
 class ZyNOS < Oxidized::Model
   using Refinements
 
-  prompt /^([\w.@()-<]+[#>]\s?)$/
+  prompt /^([\w.@()\-<]+[#>]\s?)$/
   # if there is something you can not identify after prompt, uncomment next line and comment previous line
-  # prompt /^([\w.@()-<]+[#>]\s?).*$/
+  # prompt /^([\w.@()\-<]+[#>]\s?).*$/
 
   comment '! '
 
@@ -21,7 +21,7 @@ class ZyNOS < Oxidized::Model
   end
 
   # ignore copyright motd
-  expect /^(Copyright .*)\n^([\w.@()-<]+[#>]\s?)$/ do
+  expect /^(Copyright .*)\n^([\w.@()\-<]+[#>]\s?)$/ do
     send '\n'
     ""
   end

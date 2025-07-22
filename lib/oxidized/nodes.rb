@@ -5,6 +5,8 @@ module Oxidized
   class NodeNotFound < OxidizedError; end
 
   class Nodes < Array
+    include SemanticLogger::Loggable
+
     attr_accessor :source, :jobs
     alias put unshift
     def load(node_want = nil)
@@ -12,7 +14,7 @@ module Oxidized
         new = []
         @source = Oxidized.config.source.default
         Oxidized.mgr.add_source(@source) || raise(MethodNotFound, "cannot load node source '#{@source}', not found")
-        Oxidized.logger.info "lib/oxidized/nodes.rb: Loading nodes"
+        logger.info "Loading nodes"
         nodes = Oxidized.mgr.source[@source].new.load node_want
         nodes.each do |node|
           # we want to load specific node(s), not all of them
@@ -22,13 +24,14 @@ module Oxidized
             node_obj = Node.new node
             new.push node_obj
           rescue ModelNotFound => e
-            Oxidized.logger.error "node %s raised %s with message '%s'" % [node, e.class, e.message]
+            logger.error "node %s raised %s with message '%s'" % [node, e.class, e.message]
           rescue Resolv::ResolvError => e
-            Oxidized.logger.error "node %s is not resolvable, raised %s with message '%s'" % [node, e.class, e.message]
+            logger.error "node %s is not resolvable, raised %s with message '%s'" % [node, e.class, e.message]
           end
         end
         size.zero? ? replace(new) : update_nodes(new)
-        Oxidized.logger.info "lib/oxidized/nodes.rb: Loaded #{size} nodes"
+        Output.clean_obsolete_nodes(self) if node_want.nil?
+        logger.info "Loaded #{size} nodes"
       end
     end
 
@@ -74,6 +77,7 @@ module Oxidized
     def next(node, opt = {})
       return if running.find_index(node)
 
+      logger.info "Add node #{node} to running jobs"
       with_lock do
         n = del node
         n.user = opt['user']

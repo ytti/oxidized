@@ -200,6 +200,61 @@ module Oxidized
         @gitcache = nil
       end
 
+      def self.clean_obsolete_nodes(active_nodes)
+        git_config = Oxidized.config.output.git
+        repo_path = git_config.repo
+
+        unless git_config.single_repo?
+          logger.warn "clean_obsolete_nodes is not implemented for " \
+                      "multiple git repositories"
+          return
+        end
+
+        if git_config.type_as_directory?
+          logger.warn "clean_obsolete_nodes is not implemented for output " \
+                      "types as a directory within the git repository"
+          return
+        end
+
+        # The repo might not exist on the first run
+        return unless ::File.directory?(repo_path)
+
+        repo = Rugged::Repository.new repo_path
+        return if repo.empty?
+
+        keep_files = active_nodes.map do |n|
+          n.group ? ::File.join(n.group, n.name) : n.name
+        end
+
+        tree = repo.last_commit.tree
+        files_to_delete = []
+
+        tree.walk_blobs do |root, entry|
+          file_path = root.empty? ? entry[:name] : ::File.join(root, entry[:name])
+          files_to_delete << file_path unless keep_files.include?(file_path)
+        end
+
+        return if files_to_delete.empty?
+
+        logger.info "clean_obsolete_nodes: removing " \
+                    "#{files_to_delete.size} obsolete configs"
+        index = repo.index
+
+        files_to_delete.each { |file_path| index.remove(file_path) }
+
+        repo.config['user.name']  = git_config.user
+        repo.config['user.email'] = git_config.email
+        Rugged::Commit.create(
+          repo,
+          tree:       index.write_tree(repo),
+          message:    "Removing #{files_to_delete.size} obsolete configs",
+          parents:    [repo.head.target].compact,
+          update_ref: 'HEAD'
+        )
+
+        index.write
+      end
+
       private
 
       def yield_repo_and_path(node, group)
@@ -247,7 +302,7 @@ module Oxidized
       # The alternative would be to rebuild the index each time, which a little
       # time consuming. Caching the index in memory is difficult because a new
       # Output object is created each time #store is called.
-      def update_repo(repo, file, data)
+      def update_repo(repo, file, data) # rubocop:disable Naming/PredicateMethod
         oid_old = repo.blob_at(repo.head.target_id, file) rescue nil
         return false if oid_old && (oid_old.content.b == data.b)
 

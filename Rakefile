@@ -26,6 +26,7 @@ task :test do
   Rake::TestTask.new do |t|
     t.libs << 'spec'
     t.test_files = FileList['spec/**/*_spec.rb']
+    t.ruby_opts = ['-W:deprecated']
     # Don't display ambiguity warning between regexp and division in models
     t.warning = false
     t.verbose = true
@@ -47,7 +48,7 @@ end
 
 desc 'Tag the release'
 task :tag do
-  system "git tag #{gemspec.version}"
+  system "git tag #{gemspec.version} -m 'Release #{gemspec.version}'"
 end
 
 desc 'Push to rubygems'

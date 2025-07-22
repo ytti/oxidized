@@ -103,10 +103,16 @@ Metrics/MethodLength:
   Max: 50
 
 Metrics/AbcSize:
-  Max: 28
+  Enabled: false
 
 Metrics/ClassLength:
-  Max: 200
+  Enabled: false
+
+Metrics/PerceivedComplexity:
+  Enabled: false
+
+Metrics/CyclomaticComplexity:
+  Enabled: false
 
 # The BlockLength metric does not apply to unit tests. They are in nature
 # long and not very pretty

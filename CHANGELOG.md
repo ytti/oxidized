@@ -4,7 +4,23 @@ All notable changes to this project will be documented in this file.
 
 The format is based on [Keep a Changelog](https://keepachangelog.com/en/1.1.0/).
 
-## [Unreleased]
+## [0.34.1 - 2025-07-18]
+This release contains small fixes and will include the new version of oxidized-web (0.17.0) in the docker container.
+
+### Changed
+- github: run ruby CI against ruby-head (@robertcheramy)
+
+### Fixed
+- input/ssh: hide Net::SSH errors and only display fatal logs unless input.debug = true. Fixes: #3574 (@robertcheramy)
+- junos: fix unfrozen literal strings (@robertcheramy)
+- spec/model: fix unfrozen literal strings and set a default prompt (@robertcheramy)
+
+## [0.34.0 - 2025-07-15]
+:warning: This release introduces a [new logging system](docs/Configuration.md#logging),
+based on [semantic logger](https://logger.rocketjob.io/). The old configuration
+(`log`, `syslog`) is still supported but obsolete and will be removed in a
+future release, so be sure to migrate your configuration.
+
 ### Added
 - add iosxr support to SyslogMonitor (@deesel)
 - add junos: support show chassis cluster when SRX series (@shigechika)
@@ -12,10 +28,18 @@ The format is based on [Keep a Changelog](https://keepachangelog.com/en/1.1.0/).
 - ssh: support 'newline "string"' cfg block method to allow defining \r\n newline (@ytti)
 - model for Netgate TNSR (@Vantomas)
 - efos: New model for Brocade Enhanced Fabric OS. Fixes #3477 (@sorano, @cetjcm, @robertcheramy)
+- output/file, output/git: clean node configurations which are not listed in the
+  source anymore. Fixes: #1805 (@robertcheramy)
+- sixwind: New model to support 6WIND Virtual Service Router (@hcaldicott)
+- model for saos10 (@penfold1972)
 
 ### Changed
+- remove uri in commit-archive location for EdgeOS. Fixed #3525 (@systeembeheerder)
 - acos: remove free storage amount from show version. Fixes #3492 (@991jo)
 - Housekeeping in the code: Maximal line length: 120 char + Rubocop fixes (@robertcheramy)
+- spec/model/data uses # instead of : as a separator in the filename, so we can
+  git clone under Windows. Fixes: #3481 (@robertcheramy)
+- logging: rework of the logging system, using Semantic Logger (@robertcheramy)
 
 ### Fixed
 - nxos: ignore bootflash size and permission errors (@rouven0)
@@ -27,12 +51,16 @@ The format is based on [Keep a Changelog](https://keepachangelog.com/en/1.1.0/).
 - aosw: fix secret parsing (@rouven0)
 - mlnxos: handle ANSI-ESC codes and pager requests. The prompt has been
   reengineered, open an issue if you experience timeouts. Fixes #3469 (@robertcheramy)
-- AricentISS: fix codeQL alert #15 (@robertcheramy)
 - Update installation instructions on Rocky Linux 9. Fixes #3368 (@robertcheramy)
 - awplus: fix enable password when supplied (@sgsimpson)
-- node.rb: remove Polynomial regular expression / Fixes Code scanning alert #40 (@robertcheramy)
-- asa: remove Inefficient regular expression / Fixes Code scanning alert #5 and #6 (@robertcheramy)
-- quantaos: remove inefficient regular expression / Fixes code scanning alerts 9 and 10 (@robertcheramy)
+- Fix CodeQL scanning alerts on regular expressions (Issue #3513) in node.rb (alert 40),
+  asa (alerts 5 and 6), sonicos (4, 11), quantaos (9, 10), eltex (7), zynos (18, 19),
+  AricentISS (15) and aosw (36)
+- fabricos: remove power supply input voltage from `chassisShow` output (@hops)
+- netgear: include running-config in config output (@bradleywehmeier)
+- tmos: remove deprecated secrets (@rouven0)
+- log an error when no suitable input is found for a node. Fixes: #3346 (@robertcheramy)
+- firelinuxos: fix timeout on syntax error. Fixes #3393, #3502 (@robertcheramy)
 
 
 ## [0.33.0 - 2025-03-26]

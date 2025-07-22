@@ -1,7 +1,7 @@
 class Edgeos < Oxidized::Model
   using Refinements
 
-  # EdgeOS #
+  # Ubiquiti EdgeOS #
 
   prompt /@.*?:~\$\s/
 
@@ -10,11 +10,12 @@ class Edgeos < Oxidized::Model
   end
 
   cmd :secret do |cfg|
-    cfg.gsub! /encrypted-password (\S+).*/, 'encrypted-password <secret removed>'
-    cfg.gsub! /plaintext-password (\S+).*/, 'plaintext-password <secret removed>'
-    cfg.gsub! /password (\S+).*/, 'password <secret removed>'
-    cfg.gsub! /pre-shared-secret (\S+).*/, 'pre-shared-secret <secret removed>'
-    cfg.gsub! /community (\S+) {/, 'community <hidden> {'
+    cfg.gsub!(/(encrypted-password) \S+/, '\1 <secret removed>')
+    cfg.gsub!(/(plaintext-password) \S+/, '\1 <secret removed>')
+    cfg.gsub!(/(password) \S+/, '\1 <secret removed>')
+    cfg.gsub!(/(pre-shared-secret) \S+/, '\1 <secret removed>')
+    cfg.gsub!(/(community) \S+ {/, '\1 <hidden> {')
+    cfg.gsub!(/(commit-archive location) \S+/, '\1 <secret removed>')
     cfg
   end
 

@@ -16,7 +16,7 @@ module Oxidized
     }.freeze
     include Input::CLI
 
-    def connect(node)
+    def connect(node) # rubocop:disable Naming/PredicateMethod
       @node = node
       @node.model.cfg['scp'].each { |cb| instance_exec(&cb) }
       @log = File.open(Oxidized::Config::LOG + "/#{@node.ip}-scp", 'w') if Oxidized.config.input.debug?
@@ -29,7 +29,7 @@ module Oxidized
     end
 
     def cmd(file)
-      Oxidized.logger.debug "SCP: #{file} @ #{@node.name}"
+      logger.debug "SCP: #{file} @ #{@node.name}"
       @ssh.scp.download!(file)
     end
 
