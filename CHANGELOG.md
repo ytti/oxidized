@@ -4,6 +4,11 @@ All notable changes to this project will be documented in this file.
 
 The format is based on [Keep a Changelog](https://keepachangelog.com/en/1.1.0/).
 
+## HEAD
+
+### Fixed
+- Config vars will not fall back to less specific. Fixes #3536 (@ytti)
+
 ## [0.34.1 - 2025-07-18]
 This release contains small fixes and will include the new version of oxidized-web (0.17.0) in the docker container.
 
