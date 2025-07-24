@@ -6,6 +6,9 @@ The format is based on [Keep a Changelog](https://keepachangelog.com/en/1.1.0/).
 
 ## HEAD
 
+### Changed
+- slackdiff: Attempt to join the channel if Errors::NotInChannel is encountered (@varesa)
+
 ### Fixed
 - SSH raises error when closing closed connection. Fixes #3583 (@ytti)
 - Config vars will not fall back to less specific. Fixes #3536 (@ytti)

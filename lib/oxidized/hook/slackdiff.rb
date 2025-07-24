@@ -31,8 +31,15 @@ class SlackDiff < Oxidized::Hook
       id:    upload_dest[:file_id],
       title: title
     }]
-    client.files_completeUploadExternal(channel_id: channel,
-                                        files:      files.to_json)
+    begin
+      client.files_completeUploadExternal(channel_id: channel,
+                                          files:      files.to_json)
+    rescue Slack::Web::Api::Errors::NotInChannel
+      logger.info "Not in specified channel, attempting to join"
+      client.conversations_join(channel: channel)
+      client.files_completeUploadExternal(channel_id: channel,
+                                          files:      files.to_json)
+    end
   end
 
   def run_hook(ctx)
