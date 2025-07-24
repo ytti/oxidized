@@ -1,4 +1,5 @@
 class Mtrlrfs < Oxidized::Model
+  prompt /^([\w.@-]+\*?[#>])\s?$/
   using Refinements
 
   # Motorola RFS/Extreme WM
