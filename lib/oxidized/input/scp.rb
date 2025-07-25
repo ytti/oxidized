@@ -6,12 +6,8 @@ module Oxidized
 
   class SCP < Input
     RESCUE_FAIL = {
-      debug: [
-        # Net::SSH::Disconnect,
-      ],
-      warn:  [
-        # RuntimeError,
-        # Net::SSH::AuthenticationFailed,
+      warn: [
+        Net::SCP::Error
       ]
     }.freeze
     include Input::CLI
