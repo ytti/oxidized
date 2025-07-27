@@ -25,7 +25,14 @@ class RouterOS < Oxidized::Model
     comment version_line
   end
 
- post do
+  # Only run history if include_history is true (defaults to false)
+  if vars.fetch('include_history', false)
+    cmd '/system history print without-paging' do |cfg|
+      comment cfg
+    end
+  end
+
+  post do
     logger.debug "Running /export for routeros version #{@ros_version}"
     run_cmd = if vars(:remove_secret)
                 '/export hide-sensitive'
