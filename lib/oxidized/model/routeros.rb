@@ -25,11 +25,7 @@ class RouterOS < Oxidized::Model
     comment version_line
   end
 
-  cmd '/system history print without-paging' do |cfg|
-    comment cfg
-  end
-
-  post do
+ post do
     logger.debug "Running /export for routeros version #{@ros_version}"
     run_cmd = if vars(:remove_secret)
                 '/export hide-sensitive'
@@ -39,17 +35,50 @@ class RouterOS < Oxidized::Model
                 '/export'
               end
     cmd run_cmd do |cfg|
-      cfg.gsub! /\\\r?\n\s+/, '' # strip new line
-      cfg.gsub! "# inactive time\r\n", '' # Remove time based system comment
-      cfg.gsub! /# received packet from \S+ bad format\r\n/, '' # Remove intermittent VRRP/CARP collision comment
-      cfg.gsub! "# poe-out status: short_circuit\r\n", '' # Remove intermittent POE short_circuit comment
-      cfg.gsub! "# Firmware upgraded successfully, please reboot for changes to take effect!\r\n", '' # Remove transient firmware upgrade comment
-      cfg.gsub! /# \S+ not ready\r\n/, '' # Remove intermittent $interface not ready comment
-      cfg.gsub! /# .+ please restart the device in order to apply the new setting\r\n/, '' # Remove intermittent restart needed comment. (e.g. for ipv6 settings)
+      # Apply configurable gsub filters
+      apply_gsub_filters(cfg)
+      
       cfg = cfg.split("\n")
-      cfg.reject! { |line| line[/^#\s\w{3}\/\d{2}\/\d{4}.*$/] } # Remove date time and 'by RouterOS' comment (v6)
-      cfg.reject! { |line| line[/^#\s\d{4}-\d{2}-\d{2}.*$/] }   # Remove date time and 'by RouterOS' comment (v7)
+      
+      # Apply configurable line filters
+      apply_line_filters(cfg)
+      
       cfg.join("\n") + "\n"
+    end
+  end
+
+  private
+
+  def apply_gsub_filters(cfg)
+    # Default gsub filters - can be overridden via vars(:gsub_filters)
+    default_gsub_filters = [
+      [/\\\r?\n\s+/, ''],                                                                                    # strip new line
+      ["# inactive time\r\n", ''],                                                                           # Remove time based system comment
+      [/# received packet from \S+ bad format\r\n/, ''],                                                    # Remove intermittent VRRP/CARP collision comment
+      ["# poe-out status: short_circuit\r\n", ''],                                                          # Remove intermittent POE short_circuit comment
+      ["# Firmware upgraded successfully, please reboot for changes to take effect!\r\n", ''],            # Remove transient firmware upgrade comment
+      [/# \S+ not ready\r\n/, ''],                                                                          # Remove intermittent $interface not ready comment
+      [/# .+ please restart the device in order to apply the new setting\r\n/, '']                        # Remove intermittent restart needed comment
+    ]
+    
+    gsub_filters = vars(:gsub_filters) || default_gsub_filters
+    
+    gsub_filters.each do |pattern, replacement|
+      cfg.gsub!(pattern, replacement)
+    end
+  end
+
+  def apply_line_filters(cfg)
+    # Default line filters - can be overridden via vars(:line_filters)
+    default_line_filters = [
+      /^#\s\w{3}\/\d{2}\/\d{4}.*$/,    # Remove date time and 'by RouterOS' comment (v6)
+      /^#\s\d{4}-\d{2}-\d{2}.*$/       # Remove date time and 'by RouterOS' comment (v7)
+    ]
+    
+    line_filters = vars(:line_filters) || default_line_filters
+    
+    line_filters.each do |pattern|
+      cfg.reject! { |line| line[pattern] }
     end
   end
 
