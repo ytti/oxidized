@@ -25,9 +25,10 @@ class RouterOS < Oxidized::Model
     comment version_line
   end
 
-  # Only run history if include_history is true (defaults to false)
-  if vars.fetch('include_history', false)
-    cmd '/system history print without-paging' do |cfg|
+  cmd '/system history print without-paging' do |cfg|
+    if vars(:exclude_history)
+      ''
+    else
       comment cfg
     end
   end
