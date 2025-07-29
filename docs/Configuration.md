@@ -46,6 +46,24 @@ The above strips out snmp community strings from your saved configs.
 
 **NOTE:** Removing secrets reduces the usefulness as a full configuration backup, but it may make sharing configs easier.
 
+## Timeout and Time limit
+You can configure when oxidized will `timeout` while fetching a configuration
+(default: 20 seconds), and how much absolute time (`timelimit`) the fetching
+is allowed to last (default: 300 seconds, or 5 minutes):
+
+* `timeout`: Maximum time to wait for a single operation during config fetching.
+  Not every input module has an implemented timeout.
+* `timelimit`: Maximum total time allowed for the entire fetch job. It is
+  independent of input modules and will always be enforced.
+
+If `timelimit`is reached, the fetch job will be killed and will produce a
+warning. The job status will be set to `timelimit`.
+
+```yaml
+timeout: 20
+timelimit: 300
+```
+
 ## Advanced Configuration
 
 Below is an advanced example configuration.
@@ -73,6 +91,7 @@ threads: 30 # maximum number of threads
 # true - always use the maximum number of threads
 use_max_threads: false
 timeout: 20
+timelimit: 300
 retries: 3
 prompt: !ruby/regexp /^([\w.@-]+[#>]\s?)$/
 crash:
@@ -215,7 +234,7 @@ models:
     password: pass
 ```
 
-### Options (credentials, vars, etc.) precedence:
+## Options (credentials, vars, etc.) precedence:
 From least to most important:
 - global options
 - model specific options

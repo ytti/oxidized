@@ -3,6 +3,7 @@ require_relative 'spec_helper'
 describe Oxidized::Node do
   before(:each) do
     Oxidized.asetus = Asetus.new
+    Oxidized.config.timelimit = 300
 
     Oxidized::Node.any_instance.stubs(:resolve_repo)
     Oxidized::Node.any_instance.stubs(:resolve_output)
