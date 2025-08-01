@@ -13,6 +13,7 @@ The format is based on [Keep a Changelog](https://keepachangelog.com/en/1.1.0/).
 - Config vars will not fall back to less specific. Fixes #3536 (@ytti)
 - input/scp: make common errors produce a warning, not a crashfile (@robertcheramy)
 - input/scp: implement timeouts. Fixes #3590 (@robertcheramy, @ytti)
+- model/mtrlrfs: add missing prompt (@R3thos)
 
 
 ## [0.34.1 - 2025-07-18]
