@@ -18,6 +18,7 @@ The format is based on [Keep a Changelog](https://keepachangelog.com/en/1.1.0/).
 - input/scp: implement timeouts. Fixes #3590 (@robertcheramy, @ytti)
 - model/mtrlrfs: add missing prompt (@R3thos)
 - slackdiff: Respect the HTTP proxy configuration while uploading the file. Fixes #3534 (@varesa)
+- logging (syslog): do not write two timestamps (Fixed in semanticlogger) (@robertcheramy)
 
 
 ## [0.34.1 - 2025-07-18]
