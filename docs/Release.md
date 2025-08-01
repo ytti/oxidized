@@ -39,8 +39,6 @@ Test the git code and the container against as much device types and
 environments as you can.
 
 ## Bump the version
-Name the release branch `release/0.xx.yy`
-
 Update CHANGELOG.md:
 - review it
 - add release notes
