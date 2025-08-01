@@ -375,9 +375,6 @@ following appenders are currently supported:
 > `stderr` and `stdout` are mutually exclusive and will produce a warning if used
 > simultaneously.
 
-> Note: `syslog` currently produces two timestamps because of an issue in
-> [Sematic Logger](https://github.com/reidmorrison/semantic_logger/issues/316).
-
 > You can configure as many file appenders as you wish.
 
 You can set a log level globally and/or for each appender.
