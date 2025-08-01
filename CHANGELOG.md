@@ -4,11 +4,16 @@ All notable changes to this project will be documented in this file.
 
 The format is based on [Keep a Changelog](https://keepachangelog.com/en/1.1.0/).
 
-## HEAD
+## HEAD [Unreleased]
+### Added
+- Absolute time limit for a fetch job (default: 300 seconds) (@robertcheramy)
 
 ### Fixed
 - SSH raises error when closing closed connection. Fixes #3583 (@ytti)
 - Config vars will not fall back to less specific. Fixes #3536 (@ytti)
+- input/scp: make common errors produce a warning, not a crashfile (@robertcheramy)
+- input/scp: implement timeouts. Fixes #3590 (@robertcheramy, @ytti)
+
 
 ## [0.34.1 - 2025-07-18]
 This release contains small fixes and will include the new version of oxidized-web (0.17.0) in the docker container.
@@ -20,6 +25,7 @@ This release contains small fixes and will include the new version of oxidized-w
 - input/ssh: hide Net::SSH errors and only display fatal logs unless input.debug = true. Fixes: #3574 (@robertcheramy)
 - junos: fix unfrozen literal strings (@robertcheramy)
 - spec/model: fix unfrozen literal strings and set a default prompt (@robertcheramy)
+
 
 ## [0.34.0 - 2025-07-15]
 :warning: This release introduces a [new logging system](docs/Configuration.md#logging),
