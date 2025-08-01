@@ -111,7 +111,7 @@ def yaml_output(prepend = '')
 end
 
 def cleanup
-  (@ssh.close rescue true) unless @ssh.closed?
+  (@ssh.close rescue true) unless @ssh.closed? # rubocop:disable Style/RedundantParentheses
   @output&.close
 end
 
