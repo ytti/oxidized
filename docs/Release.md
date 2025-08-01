@@ -75,6 +75,8 @@ Make a release from the tag in github.
 - List new contributors (generated automatically)
 - Keep the Full Changelog (generated automatically)
 
+Close the corresponding milestone in github.
+
 ## Release in rubygems
 Push the gem with ‘rake push’
 
