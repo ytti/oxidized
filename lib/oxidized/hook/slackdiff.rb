@@ -11,14 +11,20 @@ class SlackDiff < Oxidized::Hook
     raise KeyError, 'hook.channel is required' unless cfg.has_key?('channel')
   end
 
-  def slack_upload(client, title, content, channel)
+  def slack_upload(client, title, content, channel, proxy)
     logger.info "Posting diff as snippet to #{channel}"
     upload_dest = client.files_getUploadURLExternal(filename:     "change",
                                                     length:       content.length,
                                                     snippet_type: "diff")
     file_uri = URI.parse(upload_dest[:upload_url])
 
-    http = Net::HTTP.new(file_uri.host, file_uri.port)
+    proxy_uri = URI.parse(proxy) if proxy
+    proxy_address = proxy_uri ? proxy_uri.host : :ENV
+    proxy_port = proxy_uri&.port
+    proxy_user = proxy_uri&.user
+    proxy_pass = proxy_uri&.password
+
+    http = Net::HTTP.new(file_uri.host, file_uri.port, proxy_address, proxy_port, proxy_user, proxy_pass)
     http.use_ssl = true
 
     request = Net::HTTP::Post.new(file_uri.request_uri, { Host: file_uri.host })
@@ -31,8 +37,15 @@ class SlackDiff < Oxidized::Hook
       id:    upload_dest[:file_id],
       title: title
     }]
-    client.files_completeUploadExternal(channel_id: channel,
-                                        files:      files.to_json)
+    begin
+      client.files_completeUploadExternal(channel_id: channel,
+                                          files:      files.to_json)
+    rescue Slack::Web::Api::Errors::NotInChannel
+      logger.info "Not in specified channel, attempting to join"
+      client.conversations_join(channel: channel)
+      client.files_completeUploadExternal(channel_id: channel,
+                                          files:      files.to_json)
+    end
   end
 
   def run_hook(ctx)
@@ -53,7 +66,7 @@ class SlackDiff < Oxidized::Hook
       unless diff == "no diffs"
         title = "#{ctx.node.name} #{ctx.node.group} #{ctx.node.model.class.name.to_s.downcase}"
         content = diff[:patch].lines.to_a[4..-1].join
-        slack_upload(client, title, content, cfg.channel)
+        slack_upload(client, title, content, cfg.channel, cfg.has_key?('proxy') ? cfg.proxy : nil)
       end
     end
     # message custom formatted - optional
