@@ -12,7 +12,7 @@ The format is based on [Keep a Changelog](https://keepachangelog.com/en/1.1.0/).
 ### Fixed
 - SSH raises error when closing closed connection. Fixes #3583 (@ytti)
 - Config vars will not fall back to less specific. Fixes #3536 (@ytti)
-- slackdiff: Respect the HTTP proxy configuration while uploading the file (@varesa)
+- slackdiff: Respect the HTTP proxy configuration while uploading the file. Fixes #3534 (@varesa)
 
 ## [0.34.1 - 2025-07-18]
 This release contains small fixes and will include the new version of oxidized-web (0.17.0) in the docker container.
