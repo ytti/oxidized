@@ -7,11 +7,16 @@ Oxidized versions are numbered like major.minor.patch
 - minor is incremented when releasing new features.
 - patch is incremented when releasing fixes only.
 
+## Create a release branch
+Name the release branch `release/0.xx.yy`
+
 ## Review changes
 Run `git diff 0.30.0` (where `0.30.0` is to be changed to the last release) and review
 all the changes that have been done. Have a specific look at changes you don't understand.
 
 For a graphical compare, use `git difftool -d 0.30.0`.
+
+Commit fixes to the release branch
 
 ## Update the gem dependencies to the latest versions
 ```
@@ -29,9 +34,11 @@ If you change some code => Restart the release process at the beginning ;-)
 ## Make sure the file permissions are correct
 Run `bundle exec rake chmod`
 
-## Create a release branch
-Name the release branch `release/0.xx.yy`
+## Test !
+Test the git code and the container against as much device types and
+environments as you can.
 
+## Bump the version
 Update CHANGELOG.md:
 - review it
 - add release notes
@@ -42,16 +49,12 @@ Change the version in `lib/oxidized/version.rb`
 Upload the branch to github, make a Pull Request for it.
 
 ## Make sure you pass all GitHub CI
-They test different ruby versions, the docker build process and codeql.
-
-## Test !
-Test the git code and the container against as much device types and
-environments as you can.
+They test different ruby versions an run security checks on the code (codeql).
 
 ## Prepare the release in your working repository
 1. Merge the Pull Request into master with the commit message
    `chore(release): release version 0.3x.y`
-2. `git pull` master
+2. `git pull` on master
 3. Tag the commit with `git tag -a 0.xx.yy -m "Release 0.xx.yy"` or `rake tag`
 4. Build the gem with ‘rake build’
 5. Run `git diff` to check if there have been more changes (there shouldn't)

@@ -4,7 +4,14 @@ All notable changes to this project will be documented in this file.
 
 The format is based on [Keep a Changelog](https://keepachangelog.com/en/1.1.0/).
 
-## HEAD [Unreleased]
+## [0.34.2 – 2025-08-01]
+This release mainly fixes a bug in input/scp that made ssh raise an error when
+closing a closed connection (Issue #3583).
+
+A fix for config vars (Issue #3536) changes the way oxidized stores its
+vars internally (symblos => strings). Libraries depending on oxidized internal
+structures may have problem with this. oxidized-web was fixed in Release 0.17.1.
+
 ### Added
 - Absolute time limit for a fetch job (default: 300 seconds) (@robertcheramy)
 
@@ -12,7 +19,7 @@ The format is based on [Keep a Changelog](https://keepachangelog.com/en/1.1.0/).
 - slackdiff: Attempt to join the channel if Errors::NotInChannel is encountered (@varesa)
 
 ### Fixed
-- SSH raises error when closing closed connection. Fixes #3583 (@ytti)
+- SSH raises error when closing a closed connection. Fixes #3583 (@ytti)
 - Config vars will not fall back to less specific. Fixes #3536 (@ytti)
 - input/scp: make common errors produce a warning, not a crashfile (@robertcheramy)
 - input/scp: implement timeouts. Fixes #3590 (@robertcheramy, @ytti)
