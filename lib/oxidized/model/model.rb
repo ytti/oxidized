@@ -4,6 +4,7 @@ require_relative 'outputs'
 module Oxidized
   class Model
     include SemanticLogger::Loggable
+
     using Refinements
 
     include Oxidized::Config::Vars

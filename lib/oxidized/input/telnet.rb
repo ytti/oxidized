@@ -4,6 +4,7 @@ module Oxidized
   class Telnet < Input
     RESCUE_FAIL = {}.freeze
     include Input::CLI
+
     attr_reader :telnet
 
     def connect(node) # rubocop:disable Naming/PredicateMethod
@@ -67,7 +68,7 @@ module Oxidized
       # This exception is intented and therefore not handled here
     ensure
       @log.close if Oxidized.config.input.debug?
-      (@telnet.close rescue true) unless @telnet.sock.closed?
+      (@telnet.close rescue true) unless @telnet.sock.closed? # rubocop:disable Style/RedundantParentheses
     end
   end
 end

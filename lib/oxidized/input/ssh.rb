@@ -14,6 +14,7 @@ module Oxidized
       ]
     }.freeze
     include Input::CLI
+
     class NoShell < OxidizedError; end
 
     def connect(node) # rubocop:disable Naming/PredicateMethod
@@ -86,7 +87,7 @@ module Oxidized
       logger.debug "#{@node.name} timed out while disconnecting"
     ensure
       @log.close if Oxidized.config.input.debug?
-      (@ssh.close rescue true) unless @ssh.closed?
+      (@ssh.close rescue true) unless @ssh.closed? # rubocop:disable Style/RedundantParentheses
     end
 
     def shell_open(ssh)
