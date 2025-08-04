@@ -17,6 +17,8 @@ class Vyatta < Oxidized::Model
     cfg.gsub! /community (\S+)/, 'community <hidden>'
     cfg.gsub! /private-key (\S+).*/, 'private-key <secret removed>'
     cfg.gsub! /preshared-key (\S+).*/, 'preshared-key <secret removed>'
+    cfg.gsub! /private key (\S+).*/, 'private key <secret removed>'
+    cfg.gsub! /preshared key (\S+).*/, 'preshared key <secret removed>'
     cfg
   end
 
