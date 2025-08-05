@@ -27,7 +27,7 @@ module Oxidized
       @output = resolve_output opt
       @auth = resolve_auth opt
       @prompt = resolve_prompt opt
-      @vars = opt[:vars]
+      @vars = opt[:vars] || {}
       @stats = Stats.new
       @retry = 0
       @repo = resolve_repo opt
