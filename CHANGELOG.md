@@ -4,14 +4,12 @@ All notable changes to this project will be documented in this file.
 
 The format is based on [Keep a Changelog](https://keepachangelog.com/en/1.1.0/).
 
-## [Unreleased]
-
-### Added
-
-### Changed
+## [0.34.3 - 2025-08-05]
+This release fixes an issue preventing /node/show/<hostname> to work in oxidized-web.
 
 ### Fixed
-Guarantee that node vars is a dict (Issue ytti/oxidized-web#365) (@ytti)
+- Guarantee that node vars is a dict (Issue ytti/oxidized-web#365) (@ytti)
+
 
 ## [0.34.2 – 2025-08-01]
 This release mainly fixes a bug in input/scp that made ssh raise an error when
