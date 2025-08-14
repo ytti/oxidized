@@ -79,7 +79,7 @@ module Oxidized
     def disconnect
       disconnect_cli
       # if disconnect does not disconnect us, give up after timeout
-      Timeout.timeout(Oxidized.config.timeout) { @ssh.loop }
+      Timeout.timeout(@node.timeout) { @ssh.loop }
     rescue Errno::ECONNRESET, Net::SSH::Disconnect, IOError => e
       logger.debug 'The other side closed the connection while ' \
                    "disconnecting, raising #{e.class} with #{e.message}"
@@ -127,7 +127,7 @@ module Oxidized
     def expect(*regexps)
       regexps = [regexps].flatten
       logger.debug "Expecting #{regexps.inspect} at #{node.name}"
-      Timeout.timeout(Oxidized.config.timeout) do
+      Timeout.timeout(@node.timeout) do
         @ssh.loop(0.1) do
           sleep 0.1
           match = regexps.find { |regexp| @output.match regexp }
@@ -146,7 +146,7 @@ module Oxidized
         verify_host_key:                 secure ? :always : :never,
         append_all_supported_algorithms: true,
         password:                        @node.auth[:password],
-        timeout:                         Oxidized.config.timeout,
+        timeout:                         @node.timeout,
         port:                            (vars(:ssh_port) || 22).to_i,
         forward_agent:                   false
       }

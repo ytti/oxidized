@@ -34,7 +34,7 @@ module Oxidized
         verify_host_key:                 secure ? :always : :never,
         append_all_supported_algorithms: true,
         password:                        @node.auth[:password],
-        timeout:                         Oxidized.config.timeout,
+        timeout:                         @node.timeout,
         port:                            (vars(:ssh_port) || 22).to_i,
         forward_agent:                   false
       }
@@ -53,7 +53,7 @@ module Oxidized
 
     def cmd(file)
       logger.debug "SCP: #{file} @ #{@node.name}"
-      Timeout.timeout(Oxidized.config.timeout) do
+      Timeout.timeout(@node.timeout) do
         @ssh.scp.download!(file)
       end
     end
@@ -69,7 +69,7 @@ module Oxidized
     private
 
     def disconnect
-      Timeout.timeout(Oxidized.config.timeout) do
+      Timeout.timeout(@node.timeout) do
         @ssh.close
       end
     rescue Timeout::Error
