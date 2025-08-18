@@ -7,6 +7,7 @@ The format is based on [Keep a Changelog](https://keepachangelog.com/en/1.1.0/).
 ## [Unreleased]
 
 ### Added
+- Allow setting timeout on per node basis. Closes #3612 (@ytti)
 
 ### Changed
 
@@ -18,7 +19,6 @@ This release fixes an issue preventing /node/show/<hostname> to work in oxidized
 
 ### Fixed
 - Guarantee that node vars is a dict (Issue ytti/oxidized-web#365) (@ytti)
-
 
 ## [0.34.2 – 2025-08-01]
 This release mainly fixes a bug in input/scp that made ssh raise an error when
