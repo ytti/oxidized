@@ -9,9 +9,11 @@ module Oxidized
         group = groups[@node.group] if groups.has_key?(@node.group)
         model = models[model_name] if models.has_key?(model_name)
         group_model = group.models[model_name] if group&.models&.has_key?(model_name)
+        node_cfg = Oxidized.config.node[@node.name]
 
         scopes = {
-          node:        @node.vars,
+          node_cfg:    node_cfg&.vars,
+          node_src:    @node.vars,
           group_model: group_model&.vars,
           group:       group&.vars,
           model:       model&.vars,

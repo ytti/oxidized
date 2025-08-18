@@ -54,9 +54,16 @@ describe Oxidized::Config::Vars do
   end
 
   describe "#vars" do
-    it "returns node var" do
+    it "returns node cfg" do
       set_config
-      _(vars("enable", enable: "enable_node")).must_equal "enable_node"
+      Oxidized.config.node["example.com"].vars = {
+        "enable" => "enable_node_cfg"
+      }
+      _(vars("enable", enable: "enable_node_src")).must_equal "enable_node_cfg"
+    end
+    it "returns node var on missing node cfg" do
+      set_config
+      _(vars("enable", enable: "enable_node_src")).must_equal "enable_node_src"
     end
     it "returns group model var on missing node var" do
       set_config

@@ -226,10 +226,16 @@ module Oxidized
       logger.debug "resolving node key '#{key}', with passed global value of '#{global}' " \
                    "and node value '#{opt[key_sym]}'"
 
-      # Node
-      if opt[key_sym]
+      # Node, Config
+      if Oxidized.config.node.has_key?(@name) &&
+         Oxidized.config.node[@name].has_key?(key_str)
+        value = Oxidized.config.node[@name][key_str]
+        logger.debug "setting node key '#{key}' to value '#{value}' from node config"
+
+      # Node, Source
+      elsif opt[key_sym]
         value = opt[key_sym]
-        logger.debug "setting node key '#{key}' to value '#{value}' from node"
+        logger.debug "setting node key '#{key}' to value '#{value}' from node source"
 
       # Group specific model
       elsif Oxidized.config.groups.has_key?(@group) &&

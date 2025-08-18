@@ -166,13 +166,23 @@ describe Oxidized::Node do
         Oxidized.config.groups[group].models[model].username = "group_model_username"
         _(node.auth[:username]).must_equal "group_model_username"
       end
-      it 'should prefer node username over everything else' do
+      it 'should prefer src node username over model username' do
         Oxidized.config.username = "global_username"
         Oxidized.config.models[model].username = "model_username"
         Oxidized.config.groups[group].username = "group_username"
         Oxidized.config.groups[group].models[model].username = "group_model_username"
         node = Oxidized::Node.new(ip: '127.0.0.1', group: group, model: model, username: "node_username")
         _(node.auth[:username]).must_equal "node_username"
+      end
+      it 'should prefer cfg node username over src node username' do
+        Oxidized.config.username = "global_username"
+        Oxidized.config.models[model].username = "model_username"
+        Oxidized.config.groups[group].username = "group_username"
+        Oxidized.config.groups[group].models[model].username = "group_model_username"
+        Oxidized.config.node["foobar"].username = "node_cfg_username"
+        node = Oxidized::Node.new(name: "foobar", ip: '127.0.0.1', group: group,
+                                  model: model, username: "node_username")
+        _(node.auth[:username]).must_equal "node_cfg_username"
       end
     end
   end
