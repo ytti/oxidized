@@ -9,7 +9,7 @@ module Oxidized
 
     def connect(node) # rubocop:disable Naming/PredicateMethod
       @node    = node
-      @timeout = Oxidized.config.timeout
+      @timeout = @node.timeout
       @node.model.cfg['telnet'].each { |cb| instance_exec(&cb) }
       @log = File.open(Oxidized::Config::LOG + "/#{@node.ip}-telnet", 'w') if Oxidized.config.input.debug?
       port = vars(:telnet_port) || 23
@@ -84,7 +84,7 @@ module Net
       @log     = @options["Log"]
 
       expects  = [options[:expect]].flatten
-      time_out = options[:timeout] || @options["Timeout"] || Oxidized.config.timeout?
+      time_out = options[:timeout] || @options["Timeout"]
 
       Timeout.timeout(time_out) do
         line = ""
