@@ -7,11 +7,13 @@ The format is based on [Keep a Changelog](https://keepachangelog.com/en/1.1.0/).
 ## [Unreleased]
 
 ### Added
+- .gitattributes file for consistent line endings (@casudo)
+- Robust oxidized binary path detection (@casudo)
+- Support for node/group specific timeouts (Issue ytti/oxidized#3612) (@ytti)
 
 ### Changed
 
 ### Fixed
-Guarantee that node vars is a dict (Issue ytti/oxidized-web#365) (@ytti)
 
 ## [0.34.2 – 2025-08-01]
 This release mainly fixes a bug in input/scp that made ssh raise an error when
