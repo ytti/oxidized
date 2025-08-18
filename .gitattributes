@@ -1,0 +1,6 @@
+# Force LF line endings
+extra/*.sh text eol=lf
+extra/*.runit text eol=lf
+extra/oxidized-report-git-commits text eol=lf
+extra/*.init text eol=lf
+extra/*.init.d text eol=lf
