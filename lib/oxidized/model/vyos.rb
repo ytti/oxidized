@@ -1,7 +1,9 @@
 class Vyos < Oxidized::Model
   using Refinements
 
-  #VyOS model #
+  # VyOS model #
+  # Vyos is a Fork of Vyatta and is being actively developed.
+  # https://vyos.org/
 
   prompt /@.*(:~\$|>)\s/
 
