@@ -48,8 +48,9 @@ module Oxidized
     private
 
     def get_http(path)
+      path = URI.parse(path)
       scheme = @secure ? "https" : "http"
-      uri = URI::Generic.build(scheme: scheme, host: @node.ip, path: path)
+      uri = URI::Generic.build(scheme: scheme, host: @node.ip, path: path.path, query: path.query)
 
       logger.debug "Making request to: #{uri}"
 
