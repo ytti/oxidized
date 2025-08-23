@@ -1,29 +1,26 @@
 require_relative '../spec_helper'
 require 'oxidized/input/http'
 
-def get_node(ip = "127.0.0.1")
-  Oxidized::Node.new(ip:       ip,
-                     name:     'example.com',
-                     input:    'http',
-                     output:   'git',
-                     model:    'junos',
-                     username: 'user',
-                     password: 'pass')
-end
-
-def get_uri(ip, path, secure: false)
-  @http = Oxidized::HTTP.new
-  @http.connect(get_node(ip))
-  @http.instance_variable_set("@secure", secure)
-  @http.send("get_uri", path)
-end
-
 describe Oxidized::HTTP do
+  def get_node(ip = "127.0.0.1")
+    Oxidized::Node.new(ip:       ip,
+                       name:     'example.com',
+                       input:    'http',
+                       output:   'git',
+                       model:    'junos',
+                       username: 'user',
+                       password: 'pass')
+  end
+
+  def get_uri(ip, path, secure: false)
+    @http = Oxidized::HTTP.new
+    @http.connect(get_node(ip))
+    @http.instance_variable_set("@secure", secure)
+    @http.send("get_uri", path)
+  end
+
   before(:each) do
     Oxidized.asetus = Asetus.new
-    Oxidized::Node.any_instance.stubs(:resolve_repo)
-    Oxidized::Node.any_instance.stubs(:resolve_input)
-    Oxidized::Node.any_instance.stubs(:resolve_output)
   end
 
   describe "#connect" do
