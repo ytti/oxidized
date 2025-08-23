@@ -21,6 +21,9 @@ end
 describe Oxidized::HTTP do
   before(:each) do
     Oxidized.asetus = Asetus.new
+    Oxidized::Node.any_instance.stubs(:resolve_repo)
+    Oxidized::Node.any_instance.stubs(:resolve_input)
+    Oxidized::Node.any_instance.stubs(:resolve_output)
   end
 
   describe "#connect" do
