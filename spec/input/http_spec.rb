@@ -32,9 +32,8 @@ describe Oxidized::HTTP do
       _(uri.to_s).must_equal "http://[2001:db8::42]/path?query"
     end
     it "it should return valid secure IPv4 URI for a path with query" do
-      uri = get_uri("192.0.0.42", "/this/is/path?and=this&is=query", secure: true) do
-        _(uri.to_s).must_equal "https://192.0.0.42/this/is/path?and=this&is=query"
-      end
+      uri = get_uri("192.0.0.42", "/this/is/path?and=this&is=query", secure: true)
+      _(uri.to_s).must_equal "https://192.0.0.42/this/is/path?and=this&is=query"
     end
   end
 end
