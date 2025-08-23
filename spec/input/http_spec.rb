@@ -26,7 +26,7 @@ describe Oxidized::HTTP do
     @http.send("get_uri", path)
   end
 
-  describe "#connect" do
+  describe "#get_uri" do
     it "it should return valid insecure IPv6 URI for a path with query" do
       uri = get_uri("2001:db8::42", "/path?query")
       _(uri.to_s).must_equal "http://[2001:db8::42]/path?query"
