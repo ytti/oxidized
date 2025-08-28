@@ -95,10 +95,10 @@ module Oxidized
 
     def get_uri(path)
       path = URI.parse(path)
-      URI::Generic.build(scheme: "http#{'s' if @secure}",
-                         host:   @node.ip,
-                         path:   path.path,
-                         query:  path.query)
+      uri_class = @secure ? URI::HTTPS : URI::HTTP
+      uri_class.build(host:  @node.ip,
+                      path:  path.path,
+                      query: path.query)
     end
   end
 end
