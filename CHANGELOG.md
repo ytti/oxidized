@@ -12,6 +12,7 @@ The format is based on [Keep a Changelog](https://keepachangelog.com/en/1.1.0/).
 ### Changed
 
 ### Fixed
+- input/http: bracket IPv6 URI. Fixes #3620 (@ytti)
 
 
 ## [0.34.3 - 2025-08-05]
