@@ -20,7 +20,7 @@ class TNSR < Oxidized::Model
 
   comment '! '
 
-  expect /^--More--/ do |data, re|
+  expect /--More--/ do |data, re|
     send ' '
     data.sub re, ''
   end
@@ -40,7 +40,12 @@ class TNSR < Oxidized::Model
   end
 
   cmd 'show version all' do |cfg|
-    comment cfg
+    out = cfg.to_s
+    # for older tnsr versions
+    if out =~ /(CLI\s+syntax\s+error|Unknown\s+command|invalid\s+input)/i || out.strip.empty?
+      out = cmd('show version').to_s
+    end
+    comment out
   end
 
   cmd 'show configuration running cli' do |cfg|
