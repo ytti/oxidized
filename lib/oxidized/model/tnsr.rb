@@ -13,14 +13,16 @@ class TNSR < Oxidized::Model
   #  received "\r\nVersion: 25.02-2\r\n\r\nFor information see 'show documentation'\r\n\r\n"
   #  received "\rbgp01 tnsr# "
   # when the --More-- pager is the last line of paged output, the prompt contains \x08\x20\x08 orphans on the begin
+  # on older version (23.06) --More-- pager is sometimes misplaced
   #  you can look for context into spec simulation:
-  #    spec/model/data/tnsr:TNSR_24.10-3_short-config:simulation.yaml
-  #    spec/model/data/tnsr:TNSR_25.02-2_long-config-and-pager-at-last-line:simulation.yaml
+  #    spec/model/data/tnsr#TNSR_24.10-3_short-config#simulation.yaml
+  #    spec/model/data/tnsr#TNSR_25.02-2_long-config-and-pager-at-last-line#simulation.yaml
+  #    spec/model/data/tnsr#TNSR_23.06-3_with-misplaced-pager#simulation.yaml
   prompt /^((\x08{8}\x20{8}\x08{8})?\r?[\w-]+\stnsr#\s?)$/
 
   comment '! '
 
-  expect /--More--/ do |data, re|
+  expect /^--More--|--More--$/ do |data, re|
     send ' '
     data.sub re, ''
   end
@@ -40,12 +42,11 @@ class TNSR < Oxidized::Model
   end
 
   cmd 'show version all' do |cfg|
-    out = cfg.to_s
     # for older tnsr versions
-    if out =~ /(CLI\s+syntax\s+error|Unknown\s+command|invalid\s+input)/i || out.strip.empty?
-      out = cmd('show version').to_s
+    if cfg.to_s =~ /^CLI syntax error:.+Unknown command$/
+      cfg = cmd('show version')
     end
-    comment out
+    comment cfg
   end
 
   cmd 'show configuration running cli' do |cfg|
