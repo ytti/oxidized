@@ -10,8 +10,10 @@ The format is based on [Keep a Changelog](https://keepachangelog.com/en/1.1.0/).
 - Allow setting timeout on per node basis. Closes #3612 (@ytti)
 
 ### Changed
+- tnsr: added simulation data for older versions (@Vantomas)
 
 ### Fixed
+- tnsr: fixed prompt regex, sometimes --More-- pager is misplaced on older versions (@ClumsyAdmin)
 
 
 ## [0.34.3 - 2025-08-05]

@@ -43,9 +43,7 @@ class TNSR < Oxidized::Model
 
   cmd 'show version all' do |cfg|
     # for older tnsr versions
-    if cfg.to_s =~ /^CLI syntax error:.+Unknown command$/
-      cfg = cmd('show version')
-    end
+    cfg = cmd('show version') if cfg.to_s =~ /^CLI syntax error:.+Unknown command$/
     comment cfg
   end
 
