@@ -54,6 +54,11 @@ class EatonNetwork < Oxidized::Model
     json['features']['userAndSessionManagement']['data']['settings']['all']['1.0']['radius']['1.0']['settings']['connectivity']['primaryServer'].delete('secret')
     json['features']['userAndSessionManagement']['data']['settings']['all']['1.0']['radius']['1.0']['settings']['connectivity']['secondaryServer'].delete('secret')
 
+    # Added in frimware v2.2.0
+    json['features']['peripherals']['data']['dmeData']['ethernet']['ports'].each do |n|
+      n.dig('dot1x', 'peap', 'password') && n['dot1x']['peap'].delete('password')
+    end
+
     cfg = JSON.pretty_generate(json)
     cfg
   end
