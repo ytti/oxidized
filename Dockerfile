@@ -122,6 +122,9 @@ RUN gem install /tmp/oxidized/oxidized-*.gem
 # install oxidized-web
 RUN gem install oxidized-web --no-document
 
+# set container shell to bash
+SHELL ["/bin/bash", "-ec"]
+
 # clean up
 WORKDIR /
 RUN rm -rf /tmp/oxidized
