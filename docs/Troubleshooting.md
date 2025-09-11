@@ -27,7 +27,10 @@ Welcome to the advanced nuclear launchinator 5A-X20. Proceed with caution.
 SEKRET-5A-X20#
 ```
 
-Review the relevant device model file and identify the defined prompt. You can find the device models in the `lib/oxidized/model` sub-folder of the repository. For example, the Cisco IOS model, `ios.rb` may use the following prompt:
+Review the relevant device model file and identify the defined prompt. You can
+find the device models in the `lib/oxidized/model` subdirectory of the
+repository. For example, the Cisco IOS model, `ios.rb` may use the following
+prompt:
 
 ```text
   prompt /^([\w.@()-]+[#>]\s?)$/
@@ -84,18 +87,6 @@ ssh-keyscan gitserver.git.com >> ~/.ssh/known_hosts
 If you are running oxidized in a container, you need to map /home/oxidized/.ssh in the
 container to a local repository and save the known_hosts in the local repository. You can
 find an example how to do this under [examples/podman-compose](/examples/podman-compose/)
-
-## Git performance issues with large device counts
-When you use git to store your configurations, the size of your repository will
-grow over time. This growth can lead to performance issues. To resolve these issues, you should perform a Git garbage collection on your repository.
-
-Follow these steps to do so:
-
-1. Stop oxidized (no one should access the git repository while running garbage collection)
-2. Make a backup of your oxidized data, especially the Git repository
-3. Change directory your oxidized git repository (as configured in oxidized configuration file)
-4. Execute the command `git gc` to run the garbage collection
-5. Restart oxidized - you're done!
 
 ## Oxidized ignores the changes I made to its git repository
 First of all: you shouldn't manipulate the git repository of oxidized. Don't

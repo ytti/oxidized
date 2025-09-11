@@ -15,7 +15,7 @@ module Oxidized
     }.freeze
     include Input::CLI
 
-    def connect(node)
+    def connect(node) # rubocop:disable Naming/PredicateMethod
       @node = node
       @node.model.cfg['ftp'].each { |cb| instance_exec(&cb) }
       @log = File.open(Oxidized::Config::LOG + "/#{@node.ip}-ftp", 'w') if Oxidized.config.input.debug?
@@ -30,7 +30,7 @@ module Oxidized
     end
 
     def cmd(file)
-      Oxidized.logger.debug "FTP: #{file} @ #{@node.name}"
+      logger.debug "FTP: #{file} @ #{@node.name}"
       @ftp.getbinaryfile file, nil
     end
 

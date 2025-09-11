@@ -11,7 +11,7 @@ class RouterOS < Oxidized::Model
       cfg.gsub! /^\r+(.+)/, '\1'
       cfg.gsub! /([^\r]*)\r+$/, '\1'
     end
-    cfg
+    cfg.lines.map { |line| line.rstrip }.join("\n") + "\n" # strip trailing whitespace
   end
 
   cmd '/system resource print' do |cfg|
@@ -30,7 +30,7 @@ class RouterOS < Oxidized::Model
   end
 
   post do
-    Oxidized.logger.debug "lib/oxidized/model/routeros.rb: running /export for routeros version #{@ros_version}"
+    logger.debug "Running /export for routeros version #{@ros_version}"
     run_cmd = if vars(:remove_secret)
                 '/export hide-sensitive'
               elsif (not @ros_version.nil?) && (@ros_version >= 7)
@@ -45,6 +45,7 @@ class RouterOS < Oxidized::Model
       cfg.gsub! "# poe-out status: short_circuit\r\n", '' # Remove intermittent POE short_circuit comment
       cfg.gsub! "# Firmware upgraded successfully, please reboot for changes to take effect!\r\n", '' # Remove transient firmware upgrade comment
       cfg.gsub! /# \S+ not ready\r\n/, '' # Remove intermittent $interface not ready comment
+      cfg.gsub! /# .+ please restart the device in order to apply the new setting\r\n/, '' # Remove intermittent restart needed comment. (e.g. for ipv6 settings)
       cfg = cfg.split("\n")
       cfg.reject! { |line| line[/^#\s\w{3}\/\d{2}\/\d{4}.*$/] } # Remove date time and 'by RouterOS' comment (v6)
       cfg.reject! { |line| line[/^#\s\d{4}-\d{2}-\d{2}.*$/] }   # Remove date time and 'by RouterOS' comment (v7)

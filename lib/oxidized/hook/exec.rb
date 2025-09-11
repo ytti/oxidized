@@ -28,7 +28,7 @@ class Exec < Oxidized::Hook
 
   def run_hook(ctx)
     env = make_env ctx
-    log "Execute: #{@cmd.inspect}", :debug
+    logger.debug "Execute: #{@cmd.inspect}"
     th = Thread.new do
       run_cmd! env
     rescue StandardError => e
@@ -38,20 +38,21 @@ class Exec < Oxidized::Hook
   end
 
   def run_cmd!(env)
-    pid, status = nil, nil
+    pid = nil
+    status = nil
     Timeout.timeout(@timeout) do
       pid = spawn env, @cmd, unsetenv_others: true
       pid, status = wait2 pid
       unless status.exitstatus.zero?
         msg = "#{@cmd.inspect} failed with exit value #{status.exitstatus}"
-        log msg, :error
+        logger.error msg
         raise msg
       end
     end
   rescue Timeout::Error
     kill "TERM", pid
     msg = "#{@cmd} timed out"
-    log msg, :error
+    logger.error msg
     raise Timeout::Error, msg
   end
 

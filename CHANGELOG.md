@@ -7,23 +7,166 @@ The format is based on [Keep a Changelog](https://keepachangelog.com/en/1.1.0/).
 ## [Unreleased]
 
 ### Added
+- Allow setting timeout on per node basis. Closes #3612 (@ytti)
+
+### Changed
+- tnsr: added simulation data for older versions (@Vantomas)
+
+### Fixed
+- input/http: bracket IPv6 URI. Fixes #3620 (@ytti)
+- tnsr: fixed prompt regex, sometimes --More-- pager is misplaced on older versions (@ClumsyAdmin)
+
+## [0.34.3 - 2025-08-05]
+This release fixes an issue preventing /node/show/<hostname> to work in oxidized-web.
+
+### Fixed
+- Guarantee that node vars is a dict (Issue ytti/oxidized-web#365) (@ytti)
+
+## [0.34.2 – 2025-08-01]
+This release mainly fixes a bug in input/scp that made ssh raise an error when
+closing a closed connection (Issue #3583).
+
+A fix for config vars (Issue #3536) changes the way oxidized stores its
+vars internally (symblos => strings). Libraries depending on oxidized internal
+structures may have problem with this. oxidized-web was fixed in Release 0.17.1.
+
+### Added
+- Absolute time limit for a fetch job (default: 300 seconds) (@robertcheramy)
+
+### Changed
+- slackdiff: Attempt to join the channel if Errors::NotInChannel is encountered (@varesa)
+
+### Fixed
+- SSH raises error when closing a closed connection. Fixes #3583 (@ytti)
+- Config vars will not fall back to less specific. Fixes #3536 (@ytti)
+- input/scp: make common errors produce a warning, not a crashfile (@robertcheramy)
+- input/scp: implement timeouts. Fixes #3590 (@robertcheramy, @ytti)
+- model/mtrlrfs: add missing prompt (@R3thos)
+- slackdiff: Respect the HTTP proxy configuration while uploading the file. Fixes #3534 (@varesa)
+- logging (syslog): do not write two timestamps (Fixed in semanticlogger) (@robertcheramy)
+
+
+## [0.34.1 - 2025-07-18]
+This release contains small fixes and will include the new version of oxidized-web (0.17.0) in the docker container.
+
+### Changed
+- github: run ruby CI against ruby-head (@robertcheramy)
+
+### Fixed
+- input/ssh: hide Net::SSH errors and only display fatal logs unless input.debug = true. Fixes: #3574 (@robertcheramy)
+- junos: fix unfrozen literal strings (@robertcheramy)
+- spec/model: fix unfrozen literal strings and set a default prompt (@robertcheramy)
+
+
+## [0.34.0 - 2025-07-15]
+:warning: This release introduces a [new logging system](docs/Configuration.md#logging),
+based on [semantic logger](https://logger.rocketjob.io/). The old configuration
+(`log`, `syslog`) is still supported but obsolete and will be removed in a
+future release, so be sure to migrate your configuration.
+
+### Added
+- add iosxr support to SyslogMonitor (@deesel)
+- add junos: support show chassis cluster when SRX series (@shigechika)
+- add nxos: support for complete hardware inventory (@garryshtern)
+- ssh: support 'newline "string"' cfg block method to allow defining \r\n newline (@ytti)
+- model for Netgate TNSR (@Vantomas)
+- efos: New model for Brocade Enhanced Fabric OS. Fixes #3477 (@sorano, @cetjcm, @robertcheramy)
+- output/file, output/git: clean node configurations which are not listed in the
+  source anymore. Fixes: #1805 (@robertcheramy)
+- sixwind: New model to support 6WIND Virtual Service Router (@hcaldicott)
+- model for saos10 (@penfold1972)
+
+### Changed
+- remove uri in commit-archive location for EdgeOS. Fixed #3525 (@systeembeheerder)
+- acos: remove free storage amount from show version. Fixes #3492 (@991jo)
+- Housekeeping in the code: Maximal line length: 120 char + Rubocop fixes (@robertcheramy)
+- spec/model/data uses # instead of : as a separator in the filename, so we can
+  git clone under Windows. Fixes: #3481 (@robertcheramy)
+- logging: rework of the logging system, using Semantic Logger (@robertcheramy)
+
+### Fixed
+- nxos: ignore bootflash size and permission errors (@rouven0)
+- githubrepo: explicitly tell when Rugged isn't installed with ssh support (@robertcheramy)
+- ironware: mask temperatures with more than two digits (@merelissdgr)
+- add content-type header for PUT request in rest client (@deesel)
+- docker: do not remove git. Fixes #3482 (@robertcheramy)
+- awplus: fix skip password when enable=true (@shigechika)
+- aosw: fix secret parsing (@rouven0)
+- mlnxos: handle ANSI-ESC codes and pager requests. The prompt has been
+  reengineered, open an issue if you experience timeouts. Fixes #3469 (@robertcheramy)
+- Update installation instructions on Rocky Linux 9. Fixes #3368 (@robertcheramy)
+- awplus: fix enable password when supplied (@sgsimpson)
+- Fix CodeQL scanning alerts on regular expressions (Issue #3513) in node.rb (alert 40),
+  asa (alerts 5 and 6), sonicos (4, 11), quantaos (9, 10), eltex (7), zynos (18, 19),
+  AricentISS (15) and aosw (36)
+- fabricos: remove power supply input voltage from `chassisShow` output (@hops)
+- netgear: include running-config in config output (@bradleywehmeier)
+- tmos: remove deprecated secrets (@rouven0)
+- log an error when no suitable input is found for a node. Fixes: #3346 (@robertcheramy)
+- firelinuxos: fix timeout on syntax error. Fixes #3393, #3502 (@robertcheramy)
+
+
+## [0.33.0 - 2025-03-26]
+This release changes the way to configure oxidized-web. The old `rest`
+configuration is still supported but deprecated. The new configuration works
+with oxidized-web 0.16.0 or later.
+See [docs/Configuration.md](/docs/Configuration.md#oxidized-web-RESTful-API-and-web-interface).
+
+The docker container includes
+[security fixes to ruby-rake](https://ubuntu.com/security/notices/USN-7366-1),
+so be sure to update to the latest version.
+
+### Added
+- unifiap: new model for Unifi APs, switches, and AirOS APs (@clifcox)
+- github: Issue templates for bugs, feature requests and support requests (@robertcheramy)
+- model for Ingate Operating System (@thanegill)
+- model for Easton Gigabit Network Card (@thanegill)
+
+### Changed
+- fortios: support for FortiADC (@electrocret)
+- output/git: cache commit log to improve performance of oxidized-web. Fixes #3121 (@robertcheramy)
+- input/http: digest auth handles special characters in passwords by itself (no need to url encode them manually) (@einglasvollkakao)
+- changed the configuration for oxidized-web from rest: to extensions.oxidized-web (@robertcheramy)
+- netgear: add pager-handler workaround, fixes: #2394 and #3341 (@candlerb, @syn-bit)
+- Output#version (git/gitcrypt) returns a Time object in its hash for more flexibility in oxidized-web (@robertcheramy)
+- ios: hide secret key of aaa radius (@martinberg, @robertcheramy)
+- container: update to phusion/baseimage:noble-1.0.1 (@robertcheramy)
+
+### Fixed
+- powerconnect: Mask the changing temperature issue for non-stacked switches. Fixes #2088 (@clifcox)
+- Fix frozen string literals (@robertcheramy)
+- powerconnect: Cleanup login/logout logic. Fixes #3437 (@clifcox)
+- aos7: remove extra lines occuring when `show hardware-info` runs slow (@rouven0)
+- srosmd: add ignore regex for 64-bit system uptime (@emiliaaah)
+- removed some rubocop warnings (@robertcheramy)
+
+
+## [0.32.2 – 2025-02-27]
+This patch release mainly fixes the docker building process, wich resulted in
+0.32.1 not beeing built.
 
 ### Changed
 - docker image: updated github CI to explicitly build tag versions (@robertcheramy)
+- docker image: update rake build_container to match the tags of GitHub CI (@robertcheramy)
 - docker image: set default shell to bash. (@electrocret)
 
 ### Fixed
+- powerconnect: restore last line of command output, and remove spurious CR characters. Fixes #2692 (@clifcox)
 - powerconnect: Remove undesirable inserted blank lines during pagination. Fixes #3413 (@clifcox)
-- docker image: remove ubuntu user introduced in noble (@robertcheramy)
-- docker image: correct rights under /home/oxidized (@robertcheramy)
+- docker image: remove ubuntu user introduced in noble. Fixes #3336 (@robertcheramy)
+- docker image: correct rights under /home/oxidized. Fixes #3336 (@robertcheramy)
+- docker image: revert the use of GEM_HOME. Fixes #3331 (@robertcheramy)
+- docker image: improve the documentation. Fixes #3336 (@robertcheramy)
+- docker image: remove examples/podman-compose as this is better documented in docs/Docker.md (@robertcheramy)
 
 
 ## [0.32.1 – 2025-02-20]
-This minor release fixes a javascript issue in oxidized-web, which is included
+This patch release fixes a javascript issue in oxidized-web, which is included
 in the Docker container of oxidized.
 
 ### Fixed
 - powerconnect: Hide enable, and line secrets. Further Fixes #1212 (#clifcox)
+
 
 ## [0.32.0 – 2025-02-17]
 This release fixes a security issue in oxidized-web, which is included in the
@@ -46,7 +189,6 @@ use oxidized-web, be sure to update your oxidized-web gem to 0.15.0.
 - extra/gitdiff-msteams.sh: honor the 28KB size limit and add an optional link to GitHub (@mopi3456)
 
 ### Fixed
-- powerconnect: restore last line of command output, and remove spurious CR characters. Fixes #2692 (@clifcox)
 - tplink: send 'enable' before the enable password. Fixes #3271 (@robertcheramy)
 - asyncos: fix prompt for hostnames containing "-" . Fixes #3327 (@robertcheramy)
 - sonicos: fix prompt for hostnames containing "-" . Fixes #3333 (@robertcheramy)

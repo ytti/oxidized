@@ -1,0 +1,149 @@
+#
+# Aruba Operating System Software.
+# ArubaOS (MODEL: Aruba7210), Version 8.10.0.7 LSR
+# Website: http://www.arubanetworks.com
+# (c) Copyright 2023 Hewlett Packard Enterprise Development LP.
+# Compiled on 2023-06-06 at 18:06:54 UTC (build 87023) by jenkins
+#
+# ROM: System Bootstrap, Version CPBoot 1.2.9.0 (build 59986)
+# Built: 2017-06-07 03:35:36
+# Built by: p4build@re_client_59986
+#
+#
+# Reboot Cause: Power Cycle (Intent:cause:register ee:ee:0:1)
+# Supervisor Card
+# Processor (XLP416 Rev B2 (Secure Boot) , 800 MHz) with 7382M bytes of memory.
+# 32K bytes of non-volatile configuration memory.
+# 7744M bytes of Supervisor Card system flash.
+#
+# Supervisor Card slot      	: 0
+# System Serial#            	: CV0010001 (Date:03/31/18)
+# CPU Card Serial#          	: AI12345678 (Date:03/31/18)
+# CPU Card Assembly#        	: 2010001H
+# CPU Card Revision         	: (Rev:11.00)
+# Interface Card Serial#    	: AI10123456 (Date:03/31/18)
+# Interface Card Assembly#  	: 2010011E
+# Interface Card Revision   	: (Rev:04.00)
+# SC Model#                 	: Aruba7210
+# HW MAC Addr               	: 00:1a:1e:00:00:68 to 00:1a:1e:00:00:6f
+# CPLD Version                    : (Rev: 3.0)
+# Power Supply 0            	: Present             	: Yes
+# : 12V OK              	: Yes
+# : Fan OK              	: Yes
+# : Aruba Model No      	: 2510057
+# : Vendor & Model No   	: QCS DCJ3501-01P
+# : Serial No           	: QCS1999999Z
+# : MFG Date            	: 2/7/18
+# : Input Min           	: 90V AC
+# : Input Max           	: 264V AC
+# Power Supply 1            	: Present             	: Yes
+# : 12V OK              	: Yes
+# : Fan OK              	: Yes
+# : Aruba Model No      	: 2510057
+# : Vendor & Model No   	: QCS DCJ3501-01P
+# : Serial No           	: QCS1888888M
+# : MFG Date            	: 4/17/18
+# : Input Min           	: 90V AC
+# : Input Max           	: 264V AC
+# ispPAC_POWR1014A_A        	:
+# ispPAC_POWR1014A_B        	:
+# ispPAC_POWR6AT6           	:
+#
+# Slots
+# ------
+# Slot  Status   Card Type
+# ----  ------   ---------
+# 0     Present  A7210
+#
+# License Table
+# -------------
+# Key                                               Installed            Expires(Grace period expiry)  Flags  Service Type
+# ---                                               ---------            ----------------------------  -----  ------------
+# 00000000-00000000-00000000-00000000-00000000-000  2099-05-27 19:46:18  Never                          E     Next Generation Policy Enforcement Firewall Module: 42
+# 00000000-00000000-00000000-00000000-00000000-000  2099-05-27 19:46:19  Never                          E     RF Protect: 12
+# 00000000-00000000-00000000-00000000-00000000-000  2099-05-27 19:46:18  Never                          E     Access Points: 12
+#
+# License Entries: 3
+#
+# Flags: A - auto-generated; E - enabled; S - Subscription; R - reboot required to activate; D - Not enabled on license client
+#
+# Note: Time under 'Installed' for Subscription licenses is the license generation time.
+#
+# Command is not supported for this platform
+#
+
+version 8.10
+hostname "OXID-IZE01"
+clock timezone Europe/Berlin +02 0
+!
+vpn-dialer default-dialer
+ike authentication pre-share AAAAAAAAAABBBBBBBBBB
+!
+!
+crypto isakmp policy 20
+encryption AES256
+authentication pre-share
+!
+syslocation "LOCATION"
+syscontact "OXIDIZED"
+snmp-server community "AAAAAAAAAABBBBBBBBBBCCCCCCCCCC"
+snmp-server community "AAAAAAAAAABBBBBBBBBB"
+mgmt-user admin root ******************** node /
+mgmt-user oxidized root ********************
+
+!
+country DE
+change-config-node /
+!
+aaa authentication-server tacacs "tacacs1"
+host "10.42.0.12"
+key "AAAAAAAAAABBBBBBBBBBB"
+!
+aaa authentication-server tacacs "tacacs2"
+host "10.42.0.13"
+key "AAAAAAAAAABBBBBBBBBBBCCCCCCCCCCC"
+!
+aaa authentication-server radius "radius1"
+host "10.42.0.14"
+key "AAAAAAAAAABBBBBBBBBBB"
+nas-identifier "OXID-IZE01"
+nas-ip 10.42.0.5
+!
+preemption
+state-sync
+pre-shared-key "AAAAAAAAAABBBBBBBBBBCCCCCCCCCCC"
+controller 10.42.0.2 role active
+controller 10.42.0.3 role standby
+!
+ap system-profile "AP-PROFILE"
+session-acl ""
+lms-ip 10.42.0.52
+bkup-lms-ip 10.42.0.53
+ap-console-password "AAAAAAAAAABBBBBBBBBB"
+bkup-passwords "AAAAAAAAAABBBBBBBBBBCCCCCCCCCC"
+!
+wlan ssid-profile "PSK-SSID"
+essid "PSK-SSID"
+wpa-passphrase "AAAAAAAAAABBBBBBBBBB"
+opmode wpa2-psk-aes
+!
+
+snmp-server enable trap
+snmp-server host 10.42.1.5 version 2c AAAAAAAAAABBBBBBBBBB udp-port 162
+snmp-server host 10.42.1.6 version 2c AAAAAAAAAABBBBBBBBBB udp-port 162
+!
+conductor-redundancy
+conductor-vrrp 255
+peer-ip-address 10.42.0.3 ipsec AAAAAAAAAABBBBBBBBBBCCCCCCCCCC
+!
+vrrp 254
+priority 110
+authentication AAAAAAAAAABBBBBBBBBB
+ip address 10.42.0.8
+description "VRRP-Master"
+vlan 42
+no shutdown
+!
+
+
+end

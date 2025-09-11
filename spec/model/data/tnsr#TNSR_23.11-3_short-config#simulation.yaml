@@ -1,0 +1,563 @@
+---
+init_prompt: |-
+    Welcome to Ubuntu 22.04.3 LTS (GNU/Linux 5.15.0-143-generic x86_64)
+    
+     * Documentation:  https://help.ubuntu.com
+     * Management:     https://landscape.canonical.com
+     * Support:        https://ubuntu.com/advantage
+    
+      System information as of Thu Aug 28 10:13:47 AM UTC 2025
+    
+      System load:             0.03564453125
+      Usage of /:              43.3% of 9.75GB
+      Memory usage:            30%
+      Swap usage:              0%
+      Processes:               151
+      Users logged in:         1
+      IPv4 address for ens192: 10.88.230.249
+      IPv6 address for ens192: 2a02:f000:230:0:250:56ff:fe93:4908
+    
+    
+    Expanded Security Maintenance for Applications is not enabled.
+    
+    181 updates can be applied immediately.
+    96 of these updates are standard security updates.
+    To see these additional updates run: apt list --upgradable
+    
+    Enable ESM Apps to receive additional future security updates.
+    See https://ubuntu.com/esm or run: sudo pro status
+    
+    New release '24.04.3 LTS' available.
+    Run 'do-release-upgrade' to upgrade to it.
+    
+    
+    Last login: Thu Aug 28 09:39:45 2025 from 10.88.230.105\r
+    
+    Netgate TNSR Version: 23.11-3
+    
+    This system is not configured for package updates.
+    For information see 'show documentation'
+    
+    \rtnsr-23-11 tnsr#\x20
+commands:
+  - "show version all\n": |-
+      show version all
+      \rCLI syntax error: \"show version all\": Unknown command
+      \rtnsr-23-11 tnsr#\x20
+  - "show version\n": |-
+      show version
+      \r
+      Version: 23.11-3
+      Build timestamp: Tue Nov 28 15:07:25 2023 UTC
+      
+      This TNSR instance is not configured for package updates.
+      
+      For information see 'show documentation'
+      
+      \rtnsr-23-11 tnsr#\x20
+  - "show configuration running cli\n": |-
+      show configuration running cli
+      \rconfiguration history enable
+      
+      nacm disable
+      nacm read-default deny
+      nacm write-default deny
+      nacm exec-default deny
+      nacm group admin
+          member root
+          member tnsr
+      exit
+      nacm rule-list admin-rules
+          group admin
+          rule permit-all
+              module *
+              access-operations *
+              action permit
+          exit
+      exit
+      nacm enable
+      
+      sysctl vm nr_hugepages 1024
+      sysctl vm max_map_count 3096
+      sysctl kernel shmmax 2147483648
+      --More--
+  - " ": |-
+      \b\b\b\b\b\b\b\b        \b\b\b\b\b\b\b\b
+      host interface ens192
+          enable
+          ip dhcp-client enable
+      exit
+      
+      restconf
+          enable true
+          global authentication-type client-certificate
+          global server-certificate restconf
+          global server-key restconf
+          global server-ca-cert-path restconf-CA
+          server host 0.0.0.0 443 true
+      exit
+      
+      dataplane ethernet default-mtu 1500
+      dataplane dpdk uio-driver vfio-pci
+      dataplane api-segment api-size 16M
+      dataplane api-segment global-size 64M
+      dataplane api-segment api-pvt-heap-size 128K
+      dataplane api-segment global-pvt-heap-size 128K
+      dataplane buffers buffers-per-numa 32768
+      dataplane statseg heap-size 96M
+      --More--
+  - " ": |-
+      \b\b\b\b\b\b\b\b        \b\b\b\b\b\b\b\b
+      interface bond 11
+          mode lacp
+          load-balance l23
+      exit
+      interface bond 12
+          mode lacp
+          load-balance l23
+      exit
+      interface bond 13
+          mode lacp
+          load-balance l23
+      exit
+      interface bond 14
+          mode lacp
+          load-balance l23
+      exit
+      interface bond 15
+          mode lacp
+          load-balance l23
+      exit
+      interface bond 16
+          mode lacp
+      --More--
+  - " ": |-
+      \b\b\b\b\b\b\b\b        \b\b\b\b\b\b\b\b    load-balance l23
+      exit
+      interface bond 17
+          mode lacp
+          load-balance l23
+      exit
+      interface bond 18
+          mode lacp
+          load-balance l23
+      exit
+      interface bond 19
+          mode lacp
+          load-balance l23
+      exit
+      interface bond 20
+          mode lacp
+          load-balance l23
+      exit
+      interface bond 21
+          mode lacp
+          load-balance l23
+      exit
+      interface bond 22
+      --More--
+  - " ": |-
+      \b\b\b\b\b\b\b\b        \b\b\b\b\b\b\b\b    mode lacp
+          load-balance l23
+      exit
+      interface bond 23
+          mode lacp
+          load-balance l23
+      exit
+      interface bond 24
+          mode lacp
+          load-balance l23
+      exit
+      interface bond 25
+          mode lacp
+          load-balance l23
+      exit
+      interface bond 26
+          mode lacp
+          load-balance l23
+      exit
+      interface bond 27
+          mode lacp
+          load-balance l23
+      exit
+      --More--
+  - " ": |-
+      \b\b\b\b\b\b\b\b        \b\b\b\b\b\b\b\binterface bond 28
+          mode lacp
+          load-balance l23
+      exit
+      interface bond 29
+          mode lacp
+          load-balance l23
+      exit
+      interface bond 30
+          mode lacp
+          load-balance l23
+      exit
+      interface bond 31
+          mode lacp
+          load-balance l23
+      exit
+      interface bond 32
+          mode lacp
+          load-balance l23
+      exit
+      interface bond 33
+          mode lacp
+          load-balance l23
+      --More--
+  - " ": |-
+      \b\b\b\b\b\b\b\b        \b\b\b\b\b\b\b\bexit
+      interface bond 34
+          mode lacp
+          load-balance l23
+      exit
+      interface bond 35
+          mode lacp
+          load-balance l23
+      exit
+      interface bond 36
+          mode lacp
+          load-balance l23
+      exit
+      interface bond 37
+          mode lacp
+          load-balance l23
+      exit
+      interface bond 38
+          mode lacp
+          load-balance l23
+      exit
+      interface bond 39
+          mode lacp
+      --More--
+  - " ": |-
+      \b\b\b\b\b\b\b\b        \b\b\b\b\b\b\b\b    load-balance l23
+      exit
+      interface bond 40
+          mode lacp
+          load-balance l23
+      exit
+      interface bond 41
+          mode lacp
+          load-balance l23
+      exit
+      interface bond 42
+          mode lacp
+          load-balance l23
+      exit
+      interface bond 43
+          mode lacp
+          load-balance l23
+      exit
+      interface bond 44
+          mode lacp
+          load-balance l23
+      exit
+      interface bond 45
+      --More--
+  - " ": |-
+      \b\b\b\b\b\b\b\b        \b\b\b\b\b\b\b\b    mode lacp
+          load-balance l23
+      exit
+      interface bond 46
+          mode lacp
+          load-balance l23
+      exit
+      interface bond 47
+          mode lacp
+          load-balance l23
+      exit
+      interface bond 48
+          mode lacp
+          load-balance l23
+      exit
+      interface bond 49
+          mode lacp
+          load-balance l23
+      exit
+      interface bond 50
+          mode lacp
+          load-balance l23
+      exit
+      --More--
+  - " ": |-
+      \b\b\b\b\b\b\b\b        \b\b\b\b\b\b\b\binterface bond 51
+          mode lacp
+          load-balance l23
+      exit
+      interface bond 52
+          mode lacp
+          load-balance l23
+      exit
+      interface bond 53
+          mode lacp
+          load-balance l23
+      exit
+      interface bond 54
+          mode lacp
+          load-balance l23
+      exit
+      interface bond 55
+          mode lacp
+          load-balance l23
+      exit
+      interface bond 56
+          mode lacp
+          load-balance l23
+      --More--
+  - " ": |-
+      \b\b\b\b\b\b\b\b        \b\b\b\b\b\b\b\bexit
+      interface bond 57
+          mode lacp
+          load-balance l23
+      exit
+      interface bond 58
+          mode lacp
+          load-balance l23
+      exit
+      interface bond 59
+          mode lacp
+          load-balance l23
+      exit
+      interface bond 60
+          mode lacp
+          load-balance l23
+      exit
+      interface bond 61
+          mode lacp
+          load-balance l23
+      exit
+      interface bond 62
+          mode lacp
+      --More--
+  - " ": |-
+      \b\b\b\b\b\b\b\b        \b\b\b\b\b\b\b\b    load-balance l23
+      exit
+      interface bond 63
+          mode lacp
+          load-balance l23
+      exit
+      interface bond 64
+          mode lacp
+          load-balance l23
+      exit
+      interface bond 65
+          mode lacp
+          load-balance l23
+      exit
+      interface bond 66
+          mode lacp
+          load-balance l23
+      exit
+      interface bond 67
+          mode lacp
+          load-balance l23
+      exit
+      interface bond 68
+      --More--
+  - " ": |-
+      \b\b\b\b\b\b\b\b        \b\b\b\b\b\b\b\b    mode lacp
+          load-balance l23
+      exit
+      interface bond 69
+          mode lacp
+          load-balance l23
+      exit
+      interface bond 70
+          mode lacp
+          load-balance l23
+      exit
+      interface bond 71
+          mode lacp
+          load-balance l23
+      exit
+      interface bond 72
+          mode lacp
+          load-balance l23
+      exit
+      interface bond 73
+          mode lacp
+          load-balance l23
+      exit
+      --More--
+  - " ": |-
+      \b\b\b\b\b\b\b\b        \b\b\b\b\b\b\b\binterface bond 74
+          mode lacp
+          load-balance l23
+      exit
+      interface bond 75
+          mode lacp
+          load-balance l23
+      exit
+      interface bond 76
+          mode lacp
+          load-balance l23
+      exit
+      interface bond 77
+          mode lacp
+          load-balance l23
+      exit
+      interface bond 78
+          mode lacp
+          load-balance l23
+      exit
+      interface bond 79
+          mode lacp
+          load-balance l23
+      --More--
+  - " ": |-
+      \b\b\b\b\b\b\b\b        \b\b\b\b\b\b\b\bexit
+      interface bond 80
+          mode lacp
+          load-balance l23
+      exit
+      interface bond 81
+          mode lacp
+          load-balance l23
+      exit
+      interface bond 82
+          mode lacp
+          load-balance l23
+      exit
+      interface bond 83
+          mode lacp
+          load-balance l23
+      exit
+      interface bond 84
+          mode lacp
+          load-balance l23
+      exit
+      interface bond 85
+          mode lacp
+      --More--
+  - " ": |-
+      \b\b\b\b\b\b\b\b        \b\b\b\b\b\b\b\b    load-balance l23
+      exit
+      interface bond 86
+          mode lacp
+          load-balance l23
+      exit
+      interface bond 87
+          mode lacp
+          load-balance l23
+      exit
+      interface bond 88
+          mode lacp
+          load-balance l23
+      exit
+      interface bond 89
+          mode lacp
+          load-balance l23
+      exit
+      interface bond 90
+          mode lacp
+          load-balance l23
+      exit
+      interface bond 91
+      --More--
+  - " ": |-
+      \b\b\b\b\b\b\b\b        \b\b\b\b\b\b\b\b    mode lacp
+          load-balance l23
+      exit
+      interface bond 92
+          mode lacp
+          load-balance l23
+      exit
+      interface bond 93
+          mode lacp
+          load-balance l23
+      exit
+      interface bond 94
+          mode lacp
+          load-balance l23
+      exit
+      interface bond 95
+          mode lacp
+          load-balance l23
+      exit
+      interface bond 96
+          mode lacp
+          load-balance l23
+      exit
+      --More--
+  - " ": |-
+      \b\b\b\b\b\b\b\b        \b\b\b\b\b\b\b\binterface bond 97
+          mode lacp
+          load-balance l23
+      exit
+      interface bond 98
+          mode lacp
+          load-balance l23
+      exit
+      interface bond 99
+          mode lacp
+          load-balance l23
+      exit
+      interface bond 100
+          mode lacp
+          load-balance l23
+      exit
+      
+      
+      nat global-options nat44 max-translations-per-thread 128000
+      nat global-options nat44 enabled false
+      
+      
+      nat ipfix logging domain 1
+      --More--
+  - " ": |-
+      \b\b\b\b\b\b\b\b        \b\b\b\b\b\b\b\bnat ipfix logging src-port 4739
+      nat nat64 map parameters
+          security-check enable
+      exit
+      
+      neighbor cache-options ipv4 max-number 50000
+      neighbor cache-options ipv4 max-age 300
+      neighbor cache-options ipv6 max-number 50000
+      neighbor cache-options ipv6 max-age 300
+      
+      
+      route dynamic manager
+      exit
+      
+      route dynamic bgp
+          disable
+      exit
+      
+      route dynamic ospf6
+      exit
+      
+      route dynamic ospf
+      exit
+      --More--
+  - " ": |-
+      \b\b\b\b\b\b\b\b        \b\b\b\b\b\b\b\b
+      route dynamic rip
+      exit
+      
+      dhcp4 server
+          authoritative true
+          lease persist true
+          lease lfc-interval 3600
+          interface socket raw
+      exit
+      
+      unbound server
+          do-ip4
+          do-tcp
+          do-udp
+          harden glue
+          hide identity
+          port outgoing range 4096
+      exit
+      
+      snmp host disable
+      
+      
+      --More--
+  - " ": |-
+      \b\b\b\b\b\b\b\b        \b\b\b\b\b\b\b\b\rtnsr-23-11 tnsr#\x20
+  - "exit\n": |-
+      exit
+      \r

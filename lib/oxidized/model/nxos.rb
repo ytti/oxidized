@@ -22,11 +22,11 @@ class NXOS < Oxidized::Model
 
   cmd 'show version' do |cfg|
     cfg = filter cfg
-    cfg = cfg.each_line.take_while { |line| not line.match(/uptime/i) }
+    cfg = cfg.each_line.take_while { |line| not line.match(/uptime|bootflash:\s+\d+\skB|sysmgrcli_show_flash_size/i) }
     comment cfg.join
   end
 
-  cmd 'show inventory' do |cfg|
+  cmd 'show inventory all' do |cfg|
     cfg = filter cfg
     comment cfg
   end

@@ -26,14 +26,23 @@ class AOS7 < Oxidized::Model
   end
 
   cmd 'show hardware-info' do |cfg|
+    # Remove extra lines occuring when the command runs slow
+    cfg.gsub! /^Please wait...\n/, ''
+    cfg.gsub! /^\n\n\n/, "\n\n"
     comment cfg
   end
 
   cmd 'show running-directory' do |cfg|
+    # Remove extra lines occuring when the command runs slow
+    cfg.gsub! /^Please wait...\n/, ''
+    cfg.gsub! /^\n\n/, "\n"
     comment cfg
   end
 
   cmd 'show configuration snapshot' do |cfg|
+    # Remove extra lines occuring when the command runs slow
+    cfg.gsub! /^Please wait...\n/, ''
+    cfg.gsub! /^\n\n/, "\n"
     cfg
   end
 

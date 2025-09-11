@@ -1,0 +1,248 @@
+init_prompt: |-
+  
+  Last login: 2024-10-21 06:01:45 from 10.42.0.7
+  User \"oxidized\" has logged in 18 times in the past 30 days
+  OX-SW123#\x20
+commands:
+  "no page\n": |-
+    no page
+    OX-SW123#\x20
+  "show version\n": |-
+    show version
+    -----------------------------------------------------------------------------
+    ArubaOS-CX
+    (c) Copyright 2017-2021 Hewlett Packard Enterprise Development LP
+    -----------------------------------------------------------------------------
+    Version      : PL.10.08.1010                                                \x20
+    Build Date   : 2021-09-21 14:53:08 UTC                                      \x20
+    Build ID     : ArubaOS-CX:PL.10.08.1010:51920eb359ca:202109211429           \x20
+    Build SHA    : 51920eb359caf6584f995926dea7a99242bab059                     \x20
+    Active Image : primary                      \x20
+    
+    Service OS Version : PL.01.09.0003                \x20
+    BIOS Version       : PL.02.0002                   \x20
+    OX-SW123#\x20
+  "show environment\n": |-
+    show environment
+    show environment fan
+    Fan information
+    ---------------------------------------------------------------------------
+    Mbr/Fan       Product  Serial Number  Speed   Direction      Status  RPM
+                  Name
+    ---------------------------------------------------------------------------
+    1/1           N/A      N/A            N/A     left-to-right  ok      N/A\x20
+    1/2           N/A      N/A            N/A     left-to-right  ok      N/A\x20
+    
+    
+    
+    show environment led
+    Mbr/Name       State        Status   \x20
+    ----------------------------------
+    1/locator      off          ok       \x20
+    
+    
+    show environment power-supply
+    ------------------------------------------------------------------------------
+             Product  Serial            PSU            Input   Voltage    Wattage
+    Mbr/PSU  Number   Number            Status         Type    Range      Maximum
+    ------------------------------------------------------------------------------
+    1/1      N/A      N/A               OK             --      --         460
+    
+    
+    
+    show environment temperature
+    Temperature information
+    ------------------------------------------------------------------------------
+                                                         Current
+    Mbr/Slot-Sensor                 Module Type        temperature  Status
+    ------------------------------------------------------------------------------
+    1/1-PHY-01-08                   line-card-module     49.00 C    normal
+    1/1-PHY-09-16                   line-card-module     49.00 C    normal
+    1/1-PHY-17-24                   line-card-module     46.00 C    normal
+    1/1-PHY-25-32                   line-card-module     47.00 C    normal
+    1/1-PHY-33-40                   line-card-module     47.00 C    normal
+    1/1-PHY-41-48                   line-card-module     46.00 C    normal
+    
+    1/1-Inlet-Air                   management-module    27.75 C    normal
+    1/1-Switch-ASIC-Internal        management-module    50.38 C    normal
+    1/1-Switch-CPU-1                management-module    49.88 C    normal
+    1/1-Switch-CPU-2                management-module    50.88 C    normal
+    
+    OX-SW123#\x20
+  "show module\n": |-
+    show module
+    
+    Management Modules
+    ==================
+    
+         Product                                        Serial
+    Name Number  Description                            Number     Status
+    ---- ------- -------------------------------------- ---------- ----------------
+    1/1  R8N85A  6000 48G CL4 4SFP Swch                 CN21FFFFFF Ready
+    
+    
+    Line Modules
+    ============
+    
+         Product                                        Serial
+    Name Number  Description                            Number     Status
+    ---- ------- -------------------------------------- ---------- ----------------
+    1/1  R8N85A  6000 48G CL4 4SFP Swch                 CN21FFFFFF Ready
+    
+    
+    OX-SW123#\x20
+  "show interface transceiver\n": |-
+    show interface transceiver
+    No pluggable modules found.
+    OX-SW123#\x20
+  "show system | exclude \"Up Time\" | exclude \"CPU\" | exclude \"Memory\" | exclude \"Pkts .x\" | exclude \"Lowest\" | exclude \"Missed\"\n": |-
+    show system | exclude \"Up Time\" | exclude \"CPU\" | exclude \"Memory\" | e\rexclude \"Pkts .x\" | exclude \"Lowest\" | exclude \"Missed\"
+    Hostname           : OX-SW123                     \x20
+    System Description : PL.10.08.1010                \x20
+    System Contact     : Oxidized_Admin      \x20
+    System Location    : Here or there
+    
+    Vendor             : Aruba                        \x20
+    Product Name       : R8N85A 6000 48G CL4 4SFP Swch       \x20
+    Chassis Serial Nbr : CN21FFFFFF                   \x20
+    Base MAC Address   : 9460d5-ff00ff                \x20
+    ArubaOS-CX Version : PL.10.08.1010                \x20
+    
+    Time Zone          : Europe/Berlin                \x20
+    
+    OX-SW123#\x20
+  "show running-config\n": |-
+    show running-config
+    Current configuration:
+    !
+    !Version ArubaOS-CX PL.10.08.1010
+    !export-password: default
+    hostname OX-SW123
+    banner motd $
+    
+    #########################################
+    
+    Sample configuration provided by @robertcheramy
+    
+    #########################################
+    
+    $
+    user admin group administrators password ciphertext AAAAAAAAAABBBBBBBBBBCCCCCCCCCC
+    user oxidzed group administrators password ciphertext AAAAAAAAAABBBBBBBBBBCCCCCCCCCC
+    user operator group operators password ciphertext AAAAAAAAAABBBBBBBBBBCCCCCCCCCC
+    clock timezone europe/berlin
+    ntp server 10.42.0.2 prefer
+    ntp enable
+    !
+    !
+    !
+    !
+    tacacs-server host 10.42.0.11 key ciphertext AAAAAAAAAABBBBBBBBBBCCCCCCCCCC
+    tacacs-server host 10.42.0.12 key ciphertext AAAAAAAAAABBBBBBBBBBCCCCCCCCCC
+    !
+    !
+    aaa authentication login ssh group tacacs local
+    aaa authentication login default group tacacs local
+    aaa authentication login console group tacacs local
+    !
+    aruba-central
+        disable
+    ssh server vrf default
+    vlan 1
+    vlan 497
+        name MANAGEMENT
+    vlan 498
+        name OXIDIZED
+    vlan 499
+        name ROCKS
+    spanning-tree mode rpvst
+    spanning-tree
+    spanning-tree vlan 497-499
+    interface 1/1/1
+        no shutdown
+        description OXIDIZED
+        vlan access 498
+        spanning-tree bpdu-guard
+        spanning-tree port-type admin-edge
+    interface 1/1/2
+        no shutdown
+        vlan access 499
+        spanning-tree bpdu-guard
+        spanning-tree port-type admin-edge
+    interface 1/1/3
+        no shutdown
+        vlan access 1
+        spanning-tree bpdu-guard
+        spanning-tree port-type admin-edge
+    interface 1/1/4
+        no shutdown
+        vlan access 1
+        spanning-tree bpdu-guard
+        spanning-tree port-type admin-edge
+    interface 1/1/46
+        no shutdown
+        description skipping a lot of interfaces
+        vlan access 1
+        spanning-tree bpdu-guard
+        spanning-tree port-type admin-edge
+    interface 1/1/47
+        no shutdown
+        vlan access 1
+        spanning-tree bpdu-guard
+        spanning-tree port-type admin-edge
+    interface 1/1/48
+        no shutdown
+        no lldp trap enable
+        description Uplink
+        vlan trunk native 1
+        vlan trunk allowed 497-499
+    interface 1/1/49
+        no shutdown
+        vlan access 1
+    interface 1/1/50
+        no shutdown
+        vlan access 1
+    interface 1/1/51
+        no shutdown
+        vlan access 1
+    interface 1/1/52
+        no shutdown
+        vlan access 1
+    interface vlan 1
+        ip dhcp
+    interface vlan 497
+        ip address 10.0.42.2/29
+    snmp-server vrf default
+    snmp-server system-location Here or there
+    snmp-server system-contact Oxidized_Admin
+    snmp-server community oxidized
+        access-level rw
+    ip route 0.0.0.0/0 10.0.42.1
+    !
+    !
+    !
+    !
+    !
+    https-server vrf default
+    OX-SW123#\x20
+  "show system\n": |-
+    show system
+    Hostname           : OX-SW123                     \x20
+    System Description : PL.10.08.1010                \x20
+    System Contact     : Oxidized_Admin      \x20
+    System Location    : Here or there
+    
+    Vendor             : Aruba                        \x20
+    Product Name       : R8N85A 6000 48G CL4 4SFP Swch       \x20
+    Chassis Serial Nbr : CN21FFFFFF                   \x20
+    Base MAC Address   : 9460d5-ff00ff                \x20
+    ArubaOS-CX Version : PL.10.08.1010                \x20
+    
+    Time Zone          : Europe/Berlin                \x20
+    
+    Up Time            : 51 weeks, 5 days, 17 hours, 17 minutes                     \x20
+    CPU Util (%)       : 3                            \x20
+    Memory Usage (%)   : 29                           \x20
+    OX-SW123#\x20
+  "exit\n": |-
+    exit

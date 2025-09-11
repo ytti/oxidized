@@ -21,7 +21,7 @@ information is the responses to the commands used in the Oxidized models.
 
 The YAML simulation files are stored under
 [/spec/model/data/](/spec/model/data/), with the naming convention
-`<model>:<description>:simulation.yaml`, where `<model>` is the lowercase name
+`<model>#<description>#simulation.yaml`, where `<model>` is the lowercase name
 of the Oxidized model and `<description>` is the name of the test case.
 `<description>` is generally formatted as `<hardware>_<software>` or
 `<hardware>_<software>_<information>`.
@@ -61,6 +61,7 @@ Usages:
     -o, --output file                Specify an output YAML-file
     -t, --timeout value              Specify the idle timeout beween commands (default: 5 seconds)
     -e, --exec-mode                  Run ssh in exec mode (without tty)
+    -u, --unordered                  The YAML simulation should not enforce an order of the commands
     -h, --help                       Print this help
 ```
 
@@ -80,10 +81,16 @@ output of the command is shortened or slips into the next command in the YAML
 file. You will have to change the idle timeout to a greater value to address
 this.
 - When run without the output argument, `device2yaml.rb` will only print the SSH
-output to the standard output. You must use `-o <model:HW_SW:simulation.yaml>`
+output to the standard output. You must use `-o <model#HW_SW#simulation.yaml>`
 to store the collected data in a YAML file.
 - If your Oxidized model uses SSH exec mode (look for `exec true` in the model),
 you will have to use the option `-e` to run `device2yaml.rb` in SSH exec mode.
+- The default behavior is to create a YAML file in which the commands must
+  appear in the order used in the Oxidized model. This is useful for simulating
+  devices that paginate output. To allow any order or include more commands than
+  the model uses, use the option `-u`. Note that the `unordered` mode may not
+  produce a useful YAML file when combined with user input (see
+  [Interactive Mode](#interactive-mode) below).
 
 Note that `device2yaml.rb` takes some time to run because of the idle timeout of
 (default) 5 seconds between each command. You can press the "Escape" key if you
@@ -100,7 +107,7 @@ show version
 show vtp status
 show inventory
 show running-config
-exit" -o spec/model/data/ios:C8200L_16.12.1:simulation.yaml
+exit" -o spec/model/data/ios#C8200L_16.12.1#simulation.yaml
 ```
 ### Publishing the YAML Simulation File to Oxidized
 Publishing the YAML simulation file of your device helps maintain Oxidized. This
@@ -124,7 +131,7 @@ change the hostname everywhere.
 
 The YAML simulation files are stored under
 [/spec/model/data/](/spec/model/data/), with the naming convention
-`<model>:<description>:simulation.yaml`, where `<model>` is the lowercase name
+`<model>#<description>#simulation.yaml`, where `<model>` is the lowercase name
 of the Oxidized model and `<description>` is the name of the test case.
 `<description>` is generally formatted as `<hardware>_<software>` or
 `<hardware>_<software>_<information>`.
@@ -134,9 +141,9 @@ automatic model unit tests.
 
 Examples:
 
-- spec/model/data/aoscx:R0X25A-6410_FL.10.10.1100:simulation.yaml
-- spec/model/data/asa:5512_9.12-4-67_single-context:simulation.yaml
-- spec/model/data/ios:C9200L-24P-4G_17.09.04a:simulation.yaml
+- spec/model/data/aoscx#R0X25A-6410_FL.10.10.1100#simulation.yaml
+- spec/model/data/asa#5512_9.12-4-67_single-context#simulation.yaml
+- spec/model/data/ios#C9200L-24P-4G_17.09.04a#simulation.yaml
 
 When you are finished, commit and push to your forked repository on GitHub, and
 submit a Pull Request. Thank you for your help!
@@ -152,6 +159,11 @@ will be sent to the remote device. So you can press space or 'n' to get the next
 page.
 
 You can also use this to enter an enable password.
+
+Every key press will be recorded in the YAML file, so that it can be used
+in the simulation afterwards, especialy for devices that paginate output. You
+may need to clean the YAML file manually if you don't want some input (such
+as passwords) to be included.
 
 If you press the "Esc" key, `device2yaml.rb` will not wait for the idle timeout
 and will process the next command right away.

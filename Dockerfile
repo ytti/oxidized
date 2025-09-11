@@ -1,45 +1,4 @@
-###################
-# Stage 1: Prebuild to save space in the final image.
-
-FROM docker.io/phusion/baseimage:noble-1.0.0 AS prebuilder
-
-ENV DEBIAN_FRONTEND=noninteractive
-
-# install necessary packages for building gems
-RUN apt-get -yq update && apt-get install -yq --no-install-recommends \
-    build-essential \
-    git \
-    ruby-dev \
-    && rm -rf /var/lib/apt/lists/*
-
-# create bundle directory
-RUN mkdir -p /usr/local/bundle
-ENV GEM_HOME=/usr/local/bundle
-
-###################
-# Install the x25519 gem
-RUN gem install x25519 --no-document
-
-
-###################
-# build oxidized
-COPY . /tmp/oxidized/
-WORKDIR /tmp/oxidized
-
-# docker automated build gets shallow copy, but non-shallow copy cannot be unshallowed
-RUN git fetch --unshallow || true
-
-# Remove any older gems of oxidized if they exist
-RUN rm pkg/* || true
-
-# Build oxidized
-RUN rake build
-
-
-###################
-# Stage2: build an oxidized container from phusion/baseimage-docker and install
-# gems from stage1
-FROM docker.io/phusion/baseimage:noble-1.0.0
+FROM docker.io/phusion/baseimage:noble-1.0.2
 
 ENV DEBIAN_FRONTEND=noninteractive
 
@@ -70,10 +29,10 @@ COPY extra/auto-reload-config.runit /etc/service/auto-reload-config/run
 COPY extra/update-ca-certificates.runit /etc/service/update-ca-certificates/run
 
 # set up dependencies for the build process
-RUN apt-get -yq update \
-    && apt-get -yq upgrade \
-    && apt-get -yq --no-install-recommends install ruby \
-    # Build process of oxidized from git (beloww)
+RUN apt-get -qy update \
+    && apt-get -qy upgrade \
+    && apt-get -qy --no-install-recommends install ruby \
+    # Build process of oxidized from git and git-tools in the container
     git \
     # Allow git send-email from docker image
     git-email libmailtools-perl \
@@ -97,13 +56,6 @@ RUN apt-get -yq update \
     && apt-get clean \
     && rm -rf /var/lib/apt/lists/*
 
-# copy the compiled gem from the builder stage
-COPY --from=prebuilder /usr/local/bundle /usr/local/bundle
-
-# Set environment variables for bundler
-ENV GEM_HOME="/usr/local/bundle"
-ENV PATH="$GEM_HOME/bin:$PATH"
-
 # gems not available in ubuntu noble
 RUN gem install --no-document \
     # dependencies for hooks
@@ -113,14 +65,27 @@ RUN gem install --no-document \
     # Net scp is needed in Version >= 4.1.0, which is not available in ubuntu
     net-scp
 
-# install oxidized from prebuilder
-# The Dockerfile ist version-independent, so use oxidized-*.gem to cach the gem
-RUN mkdir -p /tmp/oxidized
-COPY --from=prebuilder /tmp/oxidized/pkg/oxidized-*.gem /tmp/oxidized/
-RUN gem install /tmp/oxidized/oxidized-*.gem
+# Prepare the build of oxidized, copy our workig directory in the container
+COPY . /tmp/oxidized/
+WORKDIR /tmp/oxidized
 
-# install oxidized-web
-RUN gem install oxidized-web --no-document
+# Install gems which needs a build environment
+RUN apt-get -qy update && \
+    apt-get -qy install --no-install-recommends \
+                        build-essential ruby-dev && \
+    ##### X25519 (a.k.a. Curve25519) Elliptic Curve Diffie-Hellman
+    gem install x25519 && \
+    ##### build & install oxidized from the working repository
+    # docker automated build gets shallow copy, but non-shallow copy cannot be unshallowed
+    git fetch --unshallow || true && \
+    rake install && \
+    # install oxidized-web
+    gem install oxidized-web --no-document && \
+    # remove the packages we do not need.
+    apt-get -qy remove build-essential ruby-dev && \
+    apt-get -qy autoremove && \
+    apt-get clean && \
+    rm -rf /var/lib/apt/lists/*
 
 # set container shell to bash
 SHELL ["/bin/bash", "-ec"]

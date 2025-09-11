@@ -2,7 +2,7 @@ require 'bundler/gem_tasks'
 require 'rake/testtask'
 require_relative 'lib/oxidized/version'
 
-gemspec = eval(File.read(Dir['*.gemspec'].first))
+gemspec = Gem::Specification.load(Dir['*.gemspec'].first)
 gemfile = [gemspec.name, gemspec.version].join('-') + '.gem'
 
 # Integrate Rubocop if available
@@ -10,7 +10,6 @@ begin
   require 'rubocop/rake_task'
 
   RuboCop::RakeTask.new
-  task(:default).prerequisites << task(:rubocop)
 rescue LoadError
   task :rubocop do
     puts 'Install rubocop to run its rake tasks'
@@ -27,6 +26,7 @@ task :test do
   Rake::TestTask.new do |t|
     t.libs << 'spec'
     t.test_files = FileList['spec/**/*_spec.rb']
+    t.ruby_opts = ['-W:deprecated']
     # Don't display ambiguity warning between regexp and division in models
     t.warning = false
     t.verbose = true
@@ -41,11 +41,6 @@ task :version_set do
   Bundler::GemHelper.instance.gemspec.version = Oxidized::VERSION
 end
 
-# desc 'Install gem'
-# task install: :build do
-#    system "sudo -Es sh -c \'umask 022; gem install gems/#{gemfile}\'"
-# end
-
 desc 'Remove gems'
 task :clean do
   FileUtils.rm_rf 'pkg'
@@ -53,7 +48,7 @@ end
 
 desc 'Tag the release'
 task :tag do
-  system "git tag #{gemspec.version}"
+  system "git tag #{gemspec.version} -m 'Release #{gemspec.version}'"
 end
 
 desc 'Push to rubygems'
@@ -95,15 +90,19 @@ end
 
 desc 'Build the container image with docker or podman'
 task :build_container do
+  branch_name = %x(git rev-parse --abbrev-ref HEAD).chop.gsub '/', '_'
+  sha_hash = %x(git rev-parse --short HEAD).chop
+  image_tag = "#{branch_name}-#{sha_hash}"
+
   # Prefer podman if available as it runs rootless
   if command_available?('podman')
-    sh 'podman build -t oxidized:`git describe --tags` -t oxidized:latest .'
+    sh "podman build -t oxidized:#{image_tag} -t oxidized:latest ."
   elsif command_available?('docker')
     if docker_needs_root?
       puts 'docker needs root to build the image. Using sudo...'
-      sh 'sudo docker build -t oxidized:`git describe --tags` -t oxidized:latest .'
+      sh "sudo docker build -t oxidized:#{image_tag} -t oxidized:latest ."
     else
-      sh 'docker build -t oxidized:`git describe --tags` -t oxidized:latest .'
+      sh "docker build -t oxidized:#{image_tag} -t oxidized:latest ."
     end
   else
     puts 'You need Podman or Docker to build the container image.'
@@ -111,4 +110,4 @@ task :build_container do
   end
 end
 
-task default: :test
+task default: %i[rubocop test]

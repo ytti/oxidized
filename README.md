@@ -1,9 +1,6 @@
 # Oxidized
 
 [![Build Status](https://github.com/ytti/oxidized/actions/workflows/ruby.yml/badge.svg)](https://github.com/ytti/oxidized/actions/workflows/ruby.yml)
-[![codecov.io](https://codecov.io/gh/ytti/oxidized/coverage.svg?branch=master)](https://codecov.io/gh/ytti/oxidized?branch=master)
-[![Codacy Badge](https://api.codacy.com/project/badge/Grade/5a90cb22db6a4d5ea23ad0dfb53fe03a)](https://www.codacy.com/app/ytti/oxidized?utm_source=github.com&amp;utm_medium=referral&amp;utm_content=ytti/oxidized&amp;utm_campaign=Badge_Grade)
-[![Code Climate](https://codeclimate.com/github/ytti/oxidized/badges/gpa.svg)](https://codeclimate.com/github/ytti/oxidized)
 [![Gem Version](https://badge.fury.io/rb/oxidized.svg)](http://badge.fury.io/rb/oxidized)
 [![Join the chat at https://gitter.im/oxidized/Lobby](https://badges.gitter.im/oxidized/Lobby.svg)](https://gitter.im/oxidized/Lobby?utm_source=badge&utm_medium=badge&utm_campaign=pr-badge&utm_content=badge)
 
@@ -14,7 +11,7 @@ It is light and extensible and supports over 130 operating system types.
 Feature highlights:
 
 * Automatically adds/removes threads to meet configured retrieval interval
-* Restful API to a move node immediately to head-of-queue (GET/POST /node/next/[NODE])
+* Restful API to a move node immediately to head-of-queue (GET/PUT /node/next/[NODE])
 * Syslog udp+file example to catch config change events (IOS/JunOS) and trigger a config fetch
   * Will signal which IOS/JunOS user made the change, can then be used by output modules (via POST)
   * The `git` output module uses this info - 'git blame' will show who changed each line
@@ -34,12 +31,10 @@ Check out the [Oxidized TREX 2014 presentation](http://youtu.be/kBQ_CTUuqeU?t=3h
 1. [Supported OS Types](docs/Supported-OS-Types.md)
 2. [Installation](#installation)
     * [Debian and Ubuntu](#debian-and-ubuntu)
-    * [CentOS, Oracle Linux, Red Hat Linux](#centos-oracle-linux-red-hat-linux)
+    * [Rocky Linux, Red Hat Enterprise Linux](#rocky-linux-red-hat-enterprise-linux)
     * [FreeBSD](#freebsd)
     * [Build from Git](#build-from-git)
-    * [Docker](#running-with-docker)
-    * [Podman-Compose](#running-with-podman-compose)
-    * [Installing Ruby 2.3 using RVM](#installing-ruby-23-using-rvm)
+    * [Docker & Podman](docs/Docker.md)
 3. [Initial Configuration](#configuration)
 4. [Configuration](docs/Configuration.md)
     * [Debugging](docs/Configuration.md#debugging)
@@ -89,58 +84,80 @@ add-apt-repository universe
 Install the dependencies:
 
 ```shell
-apt-get install ruby ruby-dev libsqlite3-dev libssl-dev pkg-config cmake libssh2-1-dev libicu-dev zlib1g-dev g++ libyaml-dev
+apt install ruby ruby-dev libsqlite3-dev libssl-dev pkg-config cmake libssh2-1-dev libicu-dev zlib1g-dev g++ libyaml-dev
 ```
 
-Finally, install the gems:
+Finally, install Oxidized:
 
 ```shell
 gem install oxidized
-gem install oxidized-script oxidized-web # If you don't install oxidized-web, ensure "rest" is removed from your Oxidized config.
 ```
 
-### CentOS, Oracle Linux, Red Hat Linux
+You can also install one or both of the optional gems. They are not required
+to run Oxidized:
+```shell
+gem install oxidized-web    # Web interface and rest API
+gem install oxidized-script # Script-based input/output extensions
+```
 
-On CentOS 6 and 7 / RHEL 6 and 7, begin by installing Ruby 3.1 via RVM by following the instructions:
+### Rocky Linux, Red Hat Enterprise Linux
+These instructions has been verified on Rocky Linux 9.3 and Fedora.
 
-Make sure you dont have any leftover ruby:
-```yum erase ruby```
+On Rocky Linux 9, you need to install/enable EPEL, CRB and Ruby 3.1:
+```shell
+dnf install epel-release
+dnf config-manager --set-enabled crb
+dnf module enable ruby:3.1
+```
 
-Then, install gpg key and rvm
+Then you need the required packages for oxidized:
+```shell
+dnf -y install ruby ruby-devel sqlite-devel openssl-devel pkgconf-pkg-config  cmake libssh-devel libicu-devel zlib-devel gcc-c++ libyaml-devel which
+```
+
+Finally, install Oxidized:
 
 ```shell
-sudo gpg --keyserver hkp://keys.gnupg.net --recv-keys 409B6B1796C275462A1703113804BB82D39DC0E3 7D2BAF1CF37B13E2069D6956105BD0E739499BDB
-curl -sSL https://get.rvm.io | bash -s stable
-source /etc/profile.d/rvm.sh
-rvm requirements run
-rvm install 3.1
-rvm use 3.1
+gem install oxidized
 ```
 
-Install oxidized requirements:
-```yum install make cmake which sqlite-devel openssl-devel libssh2-devel gcc libicu-devel gcc-c++```
-
-Install the gems:
-```gem install oxidized oxidized-web```
-
-You need to wrap the gem and reference the wrap in the systemctl service file:
-```rvm wrapper oxidized```
-
-You can see where the wrapped gem is via
-```rvm wrapper show oxidized```
-Use that path in the oxidized.service file, restart the systemctl daemon, run oxidized by hand once, edit config file, start service.
+You can also install one or both of the optional gems. They are not required
+to run Oxidized:
+```shell
+gem install oxidized-web    # Web interface and rest API
+gem install oxidized-script # Script-based input/output extensions
+```
 
 ### FreeBSD
+These installation instructions have been tested on FreeBSD 14.2, but
+oxidized itself has not been tested on it.
 
-[Use RVM to install Ruby v2.3](#installing-ruby-23-using-rvm), then install all required packages and gems:
-
+First install ruby and rubyXX-gems (Find out the name of the package with `pkg search gems`):
 ```shell
-pkg install cmake pkgconf
-gem install oxidized
-gem install oxidized-script oxidized-web
+pkg instal ruby
+pkg instal ruby32-gems
 ```
 
-Oxidized is also available via [FreeBSD ports](https://bugs.freebsd.org/bugzilla/show_bug.cgi?id=203374):
+Then install the dependencies of oxidized an oxidized-web:
+```shell
+pkg install ruby ruby-gems git sqlite3 libssh2 cmake pkgconf gmake
+pkg install libyaml icu   # Dependencies for oxidized-web
+```
+
+Finally, install Oxidized:
+
+```shell
+gem install oxidized
+```
+
+You can also install one or both of the optional gems. They are not required
+to run Oxidized:
+```shell
+gem install oxidized-web    # Web interface and rest API
+gem install oxidized-script # Script-based input/output extensions
+```
+
+Oxidized is also available via [FreeBSD ports](https://ports.freebsd.org/cgi/ports.cgi?query=oxidized):
 
 ```shell
 pkg install rubygem-oxidized rubygem-oxidized-script rubygem-oxidized-web
@@ -155,123 +172,8 @@ gem install bundler
 rake install
 ```
 
-### Running with Docker
-
-Currently, Docker Hub automatically builds the master branch for linux/amd64
-and linux/arm64 platforms as
-[oxidized/oxidized](https://hub.docker.com/r/oxidized/oxidized/). Each official
-release also gets its own tag.
-You can make use of this container or build your own.
-
-To build your own, clone git repo:
-
-```shell
-git clone https://github.com/ytti/oxidized
-```
-
-Then, build the container locally (requires docker 17.05.0-ce or higher):
-
-```shell
-docker build -q -t oxidized/oxidized:latest oxidized/
-```
-
-Once you've built the container (or chosen to make use of the automatically built container in Docker Hub, which will be downloaded for you by docker on the first `run` command had you not built it), proceed as follows:
-
-Create a configuration directory in the host system:
-
-```shell
-mkdir /etc/oxidized
-```
-
-Run the container for the first time to initialize the config:
-
-_Note: this step in only required for creating the Oxidized configuration file and can be skipped if you already have one._
-
-```shell
-docker run --rm -v /etc/oxidized:/home/oxidized/.config/oxidized -p 8888:8888/tcp --user oxidized -t oxidized/oxidized:latest oxidized
-```
-
-If the RESTful API and Web Interface are enabled, on the docker host running the container
-edit `/etc/oxidized/config` and modify `rest: 127.0.0.1:8888` to `rest: 0.0.0.0:8888`. This will bind port 8888 to all interfaces, and expose the port so that it could be accessed externally. [(Issue #445)](https://github.com/ytti/oxidized/issues/445)
-
-Alternatively, you can use docker-compose to launch the oxidized container:
-
-```yaml
-# docker-compose.yml
-# docker-compose file example for oxidized that will start along with docker daemon
----
-version: "3"
-services:
-  oxidized:
-    restart: always
-    image: oxidized/oxidized:latest
-    ports:
-      - 8888:8888/tcp
-    environment:
-      CONFIG_RELOAD_INTERVAL: 600
-    volumes:
-       - config:/home/oxidized/.config/oxidized/
-volumes:
-  config:
-```
-
-Create the `/etc/oxidized/router.db` (see [CSV Source](docs/Sources.md#source-csv) for further info):
-
-```shell
-vim /etc/oxidized/router.db
-```
-
-Run container again to start oxidized with your configuration:
-
-```shell
-docker run -v /etc/oxidized:/home/oxidized/.config/oxidized -p 8888:8888/tcp -t oxidized/oxidized:latest
-oxidized[1]: Oxidized starting, running as pid 1
-oxidized[1]: Loaded 1 nodes
-Puma 2.13.4 starting...
-* Min threads: 0, max threads: 16
-* Environment: development
-* Listening on tcp://0.0.0.0:8888
-```
-
-If you want to have the config automatically reloaded (e.g. when using a http source that changes):
-
-```shell
-docker run -v /etc/oxidized:/home/oxidized/.config/oxidized -p 8888:8888/tcp -e CONFIG_RELOAD_INTERVAL=3600 -t oxidized/oxidized:latest
-```
-
-If you need to use an internal CA (e.g. to connect to an private github instance):
-
-```shell
-docker run -v /etc/oxidized:/home/oxidized/.config/oxidized -v /path/to/MY-CA.crt:/usr/local/share/ca-certificates/MY-CA.crt -p 8888:8888/tcp -e UPDATE_CA_CERTIFICATES=true -t oxidized/oxidized:latest
-```
-
-### Running with podman-compose
-Under [examples/podman-compose](examples/podman-compose), you will find a complete
-example of how to integrate the container into a docker-compose.yml file.
-
-### Installing Ruby 2.3 using RVM
-
-Install Ruby 2.3 build dependencies
-
-```shell
-yum install curl gcc-c++ patch readline readline-devel zlib zlib-devel
-yum install libyaml-devel libffi-devel openssl-devel make cmake
-yum install bzip2 autoconf automake libtool bison iconv-devel libssh2-devel libicu-devel
-```
-
-Install RVM
-
-```shell
-curl -L get.rvm.io | bash -s stable
-```
-
-Setup RVM environment and compile and install Ruby 2.3 and set it as default
-
-```shell
-source /etc/profile.d/rvm.sh
-rvm install 2.3
-rvm use --default 2.3
-```
+### Running with Docker or Podman
+See [docs/Docker.md](docs/Docker.md)
 
 ## Configuration
 

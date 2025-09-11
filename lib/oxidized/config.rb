@@ -27,21 +27,23 @@ module Oxidized
       asetus.default.model         = 'junos'
       asetus.default.resolve_dns   = true # if false, don't resolve DNS to IP
       asetus.default.interval      = 3600
-      asetus.default.use_syslog    = false
       asetus.default.debug         = false
       asetus.default.run_once      = false
       asetus.default.threads       = 30
       asetus.default.use_max_threads = false
       asetus.default.timeout       = 20
+      asetus.default.timelimit     = 300
       asetus.default.retries       = 3
       asetus.default.prompt        = /^([\w.@-]+[#>]\s?)$/
-      asetus.default.rest          = '127.0.0.1:8888' # or false to disable
       asetus.default.next_adds_job = false            # if true, /next adds job, so device is fetched immmeiately
       asetus.default.vars          = {}               # could be 'enable'=>'enablePW'
       asetus.default.groups        = {}               # group level configuration
       asetus.default.group_map     = {}               # map aliases of groups to names
       asetus.default.models        = {}               # model level configuration
       asetus.default.pid           = File.join(Oxidized::Config::ROOT, 'pid')
+
+      # Extentions
+      asetus.default.extensions['oxidized-web'].load = false
 
       asetus.default.crash.directory = File.join(Oxidized::Config::ROOT, 'crashes')
       asetus.default.crash.hostnames = false

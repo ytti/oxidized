@@ -4,6 +4,12 @@ class Netgear < Oxidized::Model
   comment '!'
   prompt /^\(?[\w \-+.]+\)? ?[#>] ?$/
 
+  # Handle pager for "show version" on old Netgear models: #2394
+  expect /^--More-- or \(q\)uit$/ do |data, re|
+    send ' '
+    data.sub re, ''
+  end
+
   cmd :secret do |cfg|
     cfg.gsub!(/password (\S+)/, 'password <hidden>')
     cfg.gsub!(/encrypted (\S+)/, 'encrypted <hidden>')
@@ -53,5 +59,7 @@ class Netgear < Oxidized::Model
   cmd 'show running-config' do |cfg|
     cfg.gsub! /(System Up Time\s+).*/, '\\1 <removed>'
     cfg.gsub! /(Current SNTP Synchronized Time:).*/, '\\1 <removed>'
+    cfg.gsub! /(Current System Time:).*/, '\\1 <removed>'
+    cfg
   end
 end

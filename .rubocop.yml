@@ -3,8 +3,6 @@ inherit_from: .rubocop_todo.yml
 plugins:
   - rubocop-rake
   - rubocop-minitest
-
-require:
   - rubocop-sequel
 
 AllCops:
@@ -16,6 +14,8 @@ AllCops:
 Gemspec/DevelopmentDependencies:
   EnforcedStyle: gemspec
 
+# We prefer to use ”” by default and use ’’ to signal that interpolation is
+# intentionally turned off, but we don't enforce it.
 Style/StringLiterals:
   Enabled: false
 
@@ -23,7 +23,13 @@ Style/FrozenStringLiteralComment:
   Enabled: false
 
 Layout/LineLength:
-  Enabled: false
+  Enabled: true
+  IgnoreCopDirectives: false
+  Max: 120
+  # Too much models have long lines, which is unsafe to reduce without
+  # having an existing model unit test.
+  Exclude:
+   - lib/oxidized/model/*.rb
 
 # We do not enforce the cop in the models as it would not work with the
 # DSL style of the models
@@ -46,12 +52,16 @@ Layout/HashAlignment:
   EnforcedHashRocketStyle: table
   EnforcedColonStyle: table
 
+# Explicitly allow the use of "not"
 Style/Not:
   Enabled: false
 
 # comply with @ytti's exacting specifications
 Style/CommandLiteral:
   EnforcedStyle: percent_x
+
+Style/ConditionalAssignment:
+  Enabled: false
 
 Style/FormatString:
   EnforcedStyle: percent
@@ -75,9 +85,11 @@ Style/RegexpLiteral:
   EnforcedStyle: slashes
   AllowInnerSlashes: true
 
+# Explicitly allow the use of rescue as a Modifier
 Style/RescueModifier:
   Enabled: false
 
+# Intentionally left deactivated as used in the models
 Style/SymbolProc:
   Enabled: false
 
@@ -85,19 +97,22 @@ Style/Documentation:
   Enabled: false
 
 Style/ParallelAssignment:
-  Enabled: false
+  Enabled: true
 
 Metrics/MethodLength:
   Max: 50
 
 Metrics/AbcSize:
-  Max: 28
+  Enabled: false
 
 Metrics/ClassLength:
-  Max: 200
+  Enabled: false
 
-## Metrics/CyclomaticComplexity:
-##   Max: 7
+Metrics/PerceivedComplexity:
+  Enabled: false
+
+Metrics/CyclomaticComplexity:
+  Enabled: false
 
 # The BlockLength metric does not apply to unit tests. They are in nature
 # long and not very pretty
@@ -109,5 +124,11 @@ Metrics/BlockLength:
 Metrics/ParameterLists:
   Max: 6
 
+# Used in the models
 Lint/EmptyBlock:
   Enabled: false
+
+# Disable the cop as string concatenation is widely used in oxidized
+Style/StringConcatenation:
+  Enabled: false
+

@@ -19,12 +19,12 @@ class ATOMS
   # @glob is the pattern matching the test data.
   #
   # When called by ATOMS::all, @glob is @klass::GLOB
-  # When called by atoms_genrate.rb, @globs matches '*:simulation.yaml'
+  # When called by atoms_genrate.rb, @globs matches '*#simulation.yaml'
   def self.get(klass, glob)
     Dir[File.join(DIRECTORY, glob)].map do |file|
       ext = File.extname(glob)
-      # 'model:desc:type.txt' => test.new('model', 'desc', 'type')
-      klass.new(*File.basename(file, ext).split(':'))
+      # 'model#desc#type.txt' => test.new('model', 'desc', 'type')
+      klass.new(*File.basename(file, ext).split('#'))
     end
   end
 
@@ -45,7 +45,7 @@ class ATOMS
     end
 
     def to_s(type = @type)
-      [@model, @desc, type].join(':')
+      [@model, @desc, type].join('#')
     end
 
     def get_filename(type)
@@ -54,7 +54,7 @@ class ATOMS
     end
 
     def load_file(type = nil)
-      file_name = get_filename((type or @type))
+      file_name = get_filename(type || @type)
       if File.extname(file_name) == '.yaml'
         YAML.load_file(file_name)
       else
@@ -70,15 +70,15 @@ class ATOMS
   #
   # The files are stored under ATOMS::DIRECTORY (spec/model/data) and follow the
   # naming convention:
-  # - YAML Simulation File: model:description:simulation.yaml
-  # - Expected Output:      model:description:output.txt
+  # - YAML Simulation File: model#description#simulation.yaml
+  # - Expected Output:      model#description#output.txt
   #
   # "description" is the name of the test case and is generally formatted as
-  # #hardware_#software or #model_#hardware_#information.
+  # hardware_software or model_hardware_information.
   #
   # The test is skipped if one of the files is missing.
   class TestOutput < Test
-    GLOB = '*:output.txt'.freeze
+    GLOB = '*#output.txt'.freeze
     class TestOutputError < TestError; end
     class OutputGenerationError < TestOutputError; end
     attr_reader :simulation, :output
@@ -131,7 +131,7 @@ class ATOMS
   #
   # The prompts are loaded from files stored in the directory specified by
   # ATOMS::DIRECTORY (spec/model/data) and follow the naming convention:
-  # model:description:prompt.yaml
+  # model#description#prompt.yaml
   #
   # "description" is generally named 'generic', as all prompts for a model
   # can be stored in a single YAML file.
@@ -148,7 +148,7 @@ class ATOMS
   # stored in the instance variables @data['pass'], @data['pass_with_expect'],
   # and @data['fail'].
   class TestPrompt < TestPassFail
-    GLOB = '*:prompt.yaml'.freeze
+    GLOB = '*#prompt.yaml'.freeze
     def initialize(model, desc, type = 'prompt')
       super
     end
@@ -165,10 +165,10 @@ class ATOMS
   #
   # The test data is loaded from YAML files stored in the directory specified by
   # ATOMS::DIRECTORY (spec/model/data) and follows the naming convention:
-  # model:description:secret.yaml
+  # model#description#secret.yaml
   #
   # "description" is the name of the test case and is generally formatted as
-  # #hardware_#software or #model_#hardware_#information. It must match the
+  # hardware_software or model_hardware_information. It must match the
   # name of the corresponding YAML simulation file.
   #
   # The test is skipped if the YAML file cannot be loaded.
@@ -182,7 +182,7 @@ class ATOMS
   # These lists are stored in the instance variable @data['pass'] and
   # @data['fail'].
   class TestSecret < TestPassFail
-    GLOB = '*:secret.yaml'.freeze
+    GLOB = '*#secret.yaml'.freeze
     attr_reader :output_test
 
     def initialize(model, desc, type = 'secret')

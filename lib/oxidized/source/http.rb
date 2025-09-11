@@ -8,7 +8,6 @@ module Oxidized
       end
 
       def setup
-        Oxidized.setup_logger
         if @cfg.empty?
           Oxidized.asetus.user.source.http.url       = 'https://url/api'
           Oxidized.asetus.user.source.http.map.name  = 'name'
@@ -45,7 +44,10 @@ module Oxidized
 
       def pagination(data, node_want)
         node_data = []
-        raise Oxidized::OxidizedError, "if using pagination, 'pagination_key_name' setting must be set" unless @cfg.pagination_key_name?
+        unless @cfg.pagination_key_name?
+          raise Oxidized::OxidizedError,
+                "if using pagination, 'pagination_key_name' setting must be set"
+        end
 
         next_key = @cfg.pagination_key_name
         loop do

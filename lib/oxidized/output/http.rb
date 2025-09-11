@@ -34,14 +34,14 @@ module Oxidized
 
         case response.code.to_i
         when 200 || 201
-          Oxidized.logger.info "Configuration http backup complete for #{node}"
+          logger.info "Configuration http backup complete for #{node}"
           p [:success]
         when (400..499)
-          Oxidized.logger.info "Configuration http backup for #{node} failed status: #{response.body}"
+          logger.info "Configuration http backup for #{node} failed status: #{response.body}"
           p [:bad_request]
         when (500..599)
           p [:server_problems]
-          Oxidized.logger.info "Configuration http backup for #{node} failed status: #{response.body}"
+          logger.info "Configuration http backup for #{node} failed status: #{response.body}"
         end
       end
 
@@ -55,7 +55,8 @@ module Oxidized
           'group'  => opt[:group],
           'node'   => node,
           'config' => outputs.to_cfg
-          # actually we need to also iterate outputs, for other types like in gitlab. But most people don't use 'type' functionality.
+          # actually we need to also iterate outputs, for other types like in gitlab.
+          # But most people don't use 'type' functionality.
         )
       end
     end

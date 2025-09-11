@@ -21,7 +21,7 @@ See the link for instructions on how to produce it.
 
 The YAML simulation files are stored under
 [/spec/model/data/](/spec/model/data/), with the naming convention
-`<model>:<description>:simulation.yaml`, where `<model>` is the lowercase name
+`<model>#<description>#simulation.yaml`, where `<model>` is the lowercase name
 of the Oxidized model and `<description>` is the name of the test case.
 `<description>` is generally formatted as `<hardware>_<software>` or
 `<hardware>_<software>_<information>`.
@@ -31,17 +31,17 @@ automatic model unit tests.
 
 ### Expected Output
 You need a second file that contains the expected output, which has the same
-name as the YAML simulation file but ends with `:output.txt` instead of
-`:simulation.yaml`.
+name as the YAML simulation file but ends with `#output.txt` instead of
+`#simulation.yaml`.
 
 You can automatically produce an output file based on the current model for all
-YAML simulation files missing an `:output.txt`:
+YAML simulation files missing an `#output.txt`:
 ```shell
 bundle exec ruby spec/model/atoms_generate.rb
 ```
 
 In the following example,
-`spec/model/data/aoscx:R8N85A-C6000-48G-CL4_PL.10.08.1010:output.txt` (the
+`spec/model/data/aoscx#R8N85A-C6000-48G-CL4_PL.10.08.1010#output.txt` (the
 second file in the list) was missing:
 
 ```shell
@@ -50,21 +50,21 @@ Run options: --seed 57811
 
 # Running:
 
-Generating output file for aoscx:R0X25A-6410_FL.10.10.1100:simulation... SKIP, output already exists
-Generating output file for aoscx:R8N85A-C6000-48G-CL4_PL.10.08.1010:simulation... OK
-Generating output file for arubainstant:IAP515_8.10.0.6_VWLC:simulation... SKIP, output already exists
-Generating output file for asa:5512_9.12-4-67_single-context:simulation... SKIP, output already exists
-Generating output file for garderos:R7709_003_006_068:simulation... SKIP, output already exists
-Generating output file for ios:C8200L_16.12.1:simulation... FAIL, no simulation file
-Generating output file for ios:C9200L-24P-4G_17.09.04a:simulation... SKIP, output already exists
-Generating output file for ios:C9800-L-F-K9_17.06.05:simulation... SKIP, output already exists
-Generating output file for ios:asr920_16.8.1b:simulation... SKIP, output already exists
-Generating output file for junos:srx300_22.4:simulation... SKIP, output already exists
-Generating output file for opnsense:nano_23.7:simulation... SKIP, output already exists
-Generating output file for pfsense:CE_2.7.2:simulation... SKIP, output already exists
-Generating output file for routeros:CHR_7.10.1:simulation... SKIP, output already exists
-Generating output file for routeros:CHR_7.16:simulation... SKIP, output already exists
-Generating output file for routeros:L009UiGS_7.15.2:simulation... SKIP, output already exists
+Generating output file for aoscx#R0X25A-6410_FL.10.10.1100#simulation... SKIP, output already exists
+Generating output file for aoscx#R8N85A-C6000-48G-CL4_PL.10.08.1010#simulation... OK
+Generating output file for arubainstant#IAP515_8.10.0.6_VWLC#simulation... SKIP, output already exists
+Generating output file for asa#5512_9.12-4-67_single-context#simulation... SKIP, output already exists
+Generating output file for garderos#R7709_003_006_068#simulation... SKIP, output already exists
+Generating output file for ios#C8200L_16.12.1#simulation... FAIL, no simulation file
+Generating output file for ios#C9200L-24P-4G_17.09.04a#simulation... SKIP, output already exists
+Generating output file for ios#C9800-L-F-K9_17.06.05#simulation... SKIP, output already exists
+Generating output file for ios#asr920_16.8.1b#simulation... SKIP, output already exists
+Generating output file for junos#srx300_22.4#simulation... SKIP, output already exists
+Generating output file for opnsense#nano_23.7#simulation... SKIP, output already exists
+Generating output file for pfsense#CE_2.7.2#simulation... SKIP, output already exists
+Generating output file for routeros#CHR_7.10.1#simulation... SKIP, output already exists
+Generating output file for routeros#CHR_7.16#simulation... SKIP, output already exists
+Generating output file for routeros#L009UiGS_7.15.2#simulation... SKIP, output already exists
 .
 
 Finished in 0.904792s, 1.1052 runs/s, 0.0000 assertions/s.
@@ -76,7 +76,7 @@ Line Coverage: 58.02% (651 / 1122)
 ```
 
 ### Running the Tests
-You can modify the `:output.txt` file to match your expectations and modify the
+You can modify the `#output.txt` file to match your expectations and modify the
 model accordingly. Run `bundle exec rake` to run the tests.
 
 Here is an example when the output of the VTP command is missing in the expected
@@ -94,7 +94,7 @@ Run options: --seed 31447
 Finished in 7.963602s, 14.6918 runs/s, 48.7217 assertions/s.
 
   1) Failure:
-ATOMS tests#test_0006_ios:C9200L-24P-4G_17.09.04a:output has expected output [spec/model/model_atoms_spec.rb:12]:
+ATOMS tests#test_0006_ios#C9200L-24P-4G_17.09.04a#output has expected output [spec/model/model_atoms_spec.rb:12]:
 --- expected
 +++ actual
 @@ -9,6 +9,21 @@
@@ -138,9 +138,19 @@ If you want to be sure that your model has been tested, run
 `bundle exec rake test TESTOPTS="--verbose"` and search for your models unter
 `ATOMS tests`
 
+### Running only one test
+If you want to run only one test while debuging your model, you can select it
+with the option `--name=/regexp/`:
+```
+bundle exec rake test TESTOPTS="--verbose --name=/ios#C9800.*output/"
+```
+
+You can also set `Oxidized.asetus.cfg.debug = true` in
+`spec/model/model_helper.rb` to activate debug logs.
+
 ## Device Prompt
 You can specify device prompts to test in a YAML file named
-`spec/model/data/<model>:generic:prompt.yaml`.
+`spec/model/data/<model>#generic#prompt.yaml`.
 
 The YAML file has three sections containing a list of prompts to test:
 - pass: these prompts will pass the prompt regexp.
@@ -162,7 +172,7 @@ fail:
 ## Secrets
 You can test if the model effectively removes secrets from your YAML simulation
 file with a YAML file named like the YAML simulation, but with the suffix
-`:secret.yaml`.
+`#secret.yaml`.
 
 The YAML file has two sections containing a list of strings to test:
 - fail: the test will fail if the output contains these strings.
@@ -180,7 +190,7 @@ pass:
 ## Custom tests
 When you write custom tests for your models, please do not use the filenames
 mentioned above, as it will interfere with the standard tests. If you need to
-store a custom simulation file, use `model:description:custom_simulation.yaml`.
+store a custom simulation file, use `model#description#custom_simulation.yaml`.
 
 The [cumulus test](/spec/model/cumulus_spec.rb) is an example of a custom
 test.

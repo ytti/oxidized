@@ -5,9 +5,6 @@ require_relative 'model_helper'
 describe 'Model Helper' do
   before(:each) do
     init_model_helper
-    # You can set debuging to true if you want to see debug messages
-    # Oxidized.asetus.cfg.debug = true
-    # Oxidized.setup_logger
     @node = MockSsh.get_node('garderos')
     @test = ATOMS::TestOutput.new('garderos', 'R7709_003_006_068')
     @mockmodel = MockSsh.new(@test.simulation)
@@ -16,7 +13,9 @@ describe 'Model Helper' do
 
   it 'works with ssh in exec mode' do
     myssh = Net::SSH.start
-    _(myssh.exec!('show system version')).must_equal "show system version\ngrs-gwuz-armel/003_005_068 (Garderos; 2021-04-30 16:19:35)\n\e[4m\rLAB-R1234_Garderos#\e[m "
+    _(myssh.exec!('show system version')).must_equal \
+      "show system version\ngrs-gwuz-armel/003_005_068 " \
+      "(Garderos; 2021-04-30 16:19:35)\n\e[4m\rLAB-R1234_Garderos#\e[m "
     # Unknown commands raise an Error
     _(-> { myssh.exec!('hallo') }).must_raise RuntimeError
     # Commands with \n raise an Error

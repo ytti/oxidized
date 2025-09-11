@@ -15,8 +15,6 @@ describe GithubRepo do
 
   before do
     Oxidized.asetus = Asetus.new
-    Oxidized.config.log = File::NULL
-    Oxidized.setup_logger
     Oxidized.config.output.default = 'git'
   end
 
@@ -87,6 +85,10 @@ describe GithubRepo do
       it "should not try merging when there's conflict" do
         merge_index.expects(:conflicts?).returns(true)
         Rugged::Commit.expects(:create).never
+        GithubRepo.logger.expects(:warn).with(
+          'Conflicts detected, skipping Rugged::Commit.create'
+        )
+
         _(gr.fetch_and_merge_remote(repo, credentials)).must_be_nil
       end
 
@@ -111,42 +113,51 @@ describe GithubRepo do
 
   describe "#run_hook" do
     let(:group) { nil }
-    let(:ctx) { OpenStruct.new(node: node) }
+    let(:ctx) { Struct.new(:node).new(node) }
     let(:node) do
       Oxidized::Node.new(ip: '127.0.0.1', group: group, model: 'junos', output: 'git')
     end
 
     before do
-      Proc.expects(:new).returns(credentials)
+      gr.expects(:credentials).returns(credentials)
       repo_head.expects(:name).twice.returns('refs/heads/master')
       repo.expects(:head).twice.returns(repo_head)
       repo.expects(:path).returns('/foo.git')
       repo.expects(:fetch).with('origin', ['refs/heads/master'], credentials: credentials).returns(Hash.new(0))
+      remote_branch.expects(:target_id).returns('aaaabbbb')
+      gr.expects(:remote_branch).with(repo).returns(remote_branch)
+      repo.expects(:merge_analysis).with('aaaabbbb').returns([:up_to_date])
+      repo.expects(:remotes).returns(remotes).times(3)
+      remotes.expects(:[]).with('origin').returns(remote).times(3)
     end
 
     describe 'when there is only one repository and no groups' do
       before do
         Oxidized.config.output.git.repo = '/foo.git'
-        remote.expects(:url).returns('https://github.com/username/foo.git')
         remote.expects(:push).with(['refs/heads/master'], credentials: credentials).returns(true)
-        repo.expects(:remotes).returns('origin' => remote)
         Rugged::Repository.expects(:new).with('/foo.git').returns(repo)
       end
 
       it "will push to the remote repository using https" do
-        skip "TODO TypeError: wrong argument type Mocha::Mock (expected Proc) when executing `gr.run_hook`"
+        remote.expects(:url).returns("https://github.com/username/foo.git")
         Oxidized.config.hooks.github_repo_hook.remote_repo = 'https://github.com/username/foo.git'
         Oxidized.config.hooks.github_repo_hook.username = 'username'
         Oxidized.config.hooks.github_repo_hook.password = 'password'
-        Proc.expects(:new).returns(credentials)
+        GithubRepo.logger.expects(:info).with(
+          'Pushing local repository(/foo.git) to remote: https://github.com/username/foo.git'
+        )
+
         gr.cfg = Oxidized.config.hooks.github_repo_hook
         _(gr.run_hook(ctx)).must_equal true
       end
 
       it "will push to the remote repository using ssh" do
-        skip "TODO TypeError: wrong argument type Mocha::Mock (expected Proc) when executing `gr.run_hook`"
         Oxidized.config.hooks.github_repo_hook.remote_repo = 'git@github.com:username/foo.git'
-        Proc.expects(:new).returns(credentials)
+        remote.expects(:url).returns('git@github.com:username/foo.git')
+        GithubRepo.logger.expects(:info).with(
+          'Pushing local repository(/foo.git) to remote: git@github.com:username/foo.git'
+        )
+
         gr.cfg = Oxidized.config.hooks.github_repo_hook
         _(gr.run_hook(ctx)).must_equal true
       end
@@ -156,44 +167,43 @@ describe GithubRepo do
       let(:group) { 'ggrroouupp' }
 
       before do
-        Proc.expects(:new).returns(credentials)
         Rugged::Repository.expects(:new).with(repository).returns(repo)
 
-        repo.expects(:remotes).twice.returns(remotes)
-        remotes.expects(:[]).with('origin').returns(nil)
-        remotes.expects(:create).with('origin', create_remote).returns(remote)
-        remote.expects(:url).returns('url')
         remote.expects(:push).with(['refs/heads/master'], credentials: credentials).returns(true)
       end
 
       describe 'and there are several repositories' do
-        let(:create_remote) { 'ggrroouupp#remote_repo' }
         let(:repository) { '/ggrroouupp.git' }
 
         before do
           Oxidized.config.output.git.repo.ggrroouupp = repository
           Oxidized.config.hooks.github_repo_hook.remote_repo.ggrroouupp = 'ggrroouupp#remote_repo'
+          remote.expects(:url).returns('ggrroouupp#remote_repo')
+          GithubRepo.logger.expects(:info).with(
+            'Pushing local repository(/foo.git) to remote: ggrroouupp#remote_repo'
+          )
         end
 
         it 'will push to the node group repository' do
-          skip "TODO TypeError: wrong argument type Mocha::Mock (expected Proc) when executing `gr.run_hook`"
           gr.cfg = Oxidized.config.hooks.github_repo_hook
           _(gr.run_hook(ctx)).must_equal true
         end
       end
 
       describe 'and has a single repository' do
-        let(:create_remote) { 'github_repo_hook#remote_repo' }
         let(:repository) { '/foo.git' }
 
         before do
           Oxidized.config.output.git.repo = repository
           Oxidized.config.hooks.github_repo_hook.remote_repo = 'github_repo_hook#remote_repo'
           Oxidized.config.output.git.single_repo = true
+          remote.expects(:url).returns('github_repo_hook#remote_repo')
+          GithubRepo.logger.expects(:info).with(
+            'Pushing local repository(/foo.git) to remote: github_repo_hook#remote_repo'
+          )
         end
 
         it 'will push to the correct repository' do
-          skip "TODO TypeError: wrong argument type Mocha::Mock (expected Proc) when executing `gr.run_hook`"
           gr.cfg = Oxidized.config.hooks.github_repo_hook
           _(gr.run_hook(ctx)).must_equal true
         end

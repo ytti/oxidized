@@ -25,17 +25,17 @@ module Oxidized
         if @cfg.empty?
           Oxidized.asetus.user.output.gitcrypt.user  = 'Oxidized'
           Oxidized.asetus.user.output.gitcrypt.email = 'o@example.com'
-          Oxidized.asetus.user.output.gitcrypt.repo = File.join(Config::ROOT, 'oxidized.git')
+          Oxidized.asetus.user.output.gitcrypt.repo = ::File.join(Config::ROOT, 'oxidized.git')
           Oxidized.asetus.save :user
           raise NoConfig, "no output git config, edit #{Oxidized::Config.configfile}"
         end
 
         if @cfg.repo.respond_to?(:each)
           @cfg.repo.each do |group, repo|
-            @cfg.repo["#{group}="] = File.expand_path repo
+            @cfg.repo["#{group}="] = ::File.expand_path repo
           end
         else
-          @cfg.repo = File.expand_path @cfg.repo
+          @cfg.repo = ::File.expand_path @cfg.repo
         end
       end
 
@@ -45,7 +45,7 @@ module Oxidized
           @cfg.users.each do |user|
             system("#{@gitcrypt_adduser} #{user}")
           end
-          File.write(".gitattributes", "* filter=git-crypt diff=git-crypt\n.gitattributes !filter !diff")
+          ::File.write(".gitattributes", "* filter=git-crypt diff=git-crypt\n.gitattributes !filter !diff")
           repo.add(".gitattributes")
           repo.commit("Initial commit: crypt all config files")
         end
@@ -73,7 +73,7 @@ module Oxidized
 
         outputs.types.each do |type|
           type_cfg = ''
-          type_repo = File.join(File.dirname(repo), type + '.git')
+          type_repo = ::File.join(::File.dirname(repo), type + '.git')
           outputs.type(type).each do |output|
             (type_cfg << output; next) unless output.name # rubocop:disable Style/Semicolon
             type_file = file + '--' + output.name
@@ -95,9 +95,9 @@ module Oxidized
         unlock repo
         index = repo.index
         # Empty repo ?
-        raise 'Empty git repo' if File.exist?(index.path)
+        raise 'Empty git repo' if ::File.exist?(index.path)
 
-        File.read path
+        ::File.read path
         lock repo
       rescue StandardError
         'node not found'
@@ -114,7 +114,10 @@ module Oxidized
         tab = []
         walker.each do |commit|
           hash = {}
+          # We keep :date for reverse compatibility on oxidized-web <= 0.15.1
           hash[:date] = commit.date.to_s
+          # date as a Time instance for more flexibility in oxidized-web
+          hash[:time] = commit.date
           hash[:oid] = commit.objectish
           hash[:author] = commit.author
           hash[:message] = commit.message
@@ -173,7 +176,8 @@ module Oxidized
       private
 
       def yield_repo_and_path(node, group)
-        repo, path = node.repo, node.name
+        repo = node.repo
+        path = node.name
 
         path = "#{group}/#{node.name}" if group && @cfg.single_repo?
 
@@ -185,10 +189,10 @@ module Oxidized
 
         if @opt[:group]
           if @cfg.single_repo?
-            file = File.join @opt[:group], file
+            file = ::File.join @opt[:group], file
           else
             repo = if repo.is_a?(::String)
-                     File.join File.dirname(repo), @opt[:group] + '.git'
+                     ::File.join ::File.dirname(repo), @opt[:group] + '.git'
                    else
                      repo[@opt[:group]]
                    end
@@ -198,12 +202,13 @@ module Oxidized
         begin
           update_repo repo, file, data, @msg, @user, @email
         rescue Git::GitExecuteError, ArgumentError => e
-          Oxidized.logger.debug "open_error #{e} #{file}"
+          logger.debug "open_error #{e} #{file}"
           begin
             grepo = Git.init repo
             crypt_init grepo
           rescue StandardError => create_error
-            raise GitCryptError, "first '#{e.message}' was raised while opening git repo, then '#{create_error.message}' was while trying to create git repo"
+            raise GitCryptError, "first '#{e.message}' was raised while opening git repo, then " \
+                                 "'#{create_error.message}' was while trying to create git repo"
           end
           retry
         end
@@ -215,7 +220,7 @@ module Oxidized
         grepo.config('user.email', email)
         grepo.chdir do
           unlock grepo
-          File.write(file, data)
+          ::File.write(file, data)
           grepo.add(file)
           if grepo.status[file].nil? || !grepo.status[file].type.nil?
             grepo.commit(msg)

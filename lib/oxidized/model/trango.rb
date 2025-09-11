@@ -18,7 +18,9 @@ class Trango < Oxidized::Model
       out << ("freq " + Regexp.last_match[1] + ' ' + Regexp.last_match[2]) if line =~ /\[Active Channel\] (\d+) (v|h)/
       out << ("peerid " + Regexp.last_match[1]) if line =~ /\[Peer ID\] ([A-F0-9]+)/
       out << ("utype " + Regexp.last_match[1]) if line =~ /\[Unit Type\] (\S+)/
-      comments << ('# ' + Regexp.last_match[1] + ': ' + Regexp.last_match[2]) if line =~ /\[(Hardware Version|Firmware Version|Model|S\/N)\] (\S+)/
+      if line =~ /\[(Hardware Version|Firmware Version|Model|S\/N)\] (\S+)/
+        comments << ('# ' + Regexp.last_match[1] + ': ' + Regexp.last_match[2])
+      end
       out << ("remarks " + Regexp.last_match[1]) if line =~ /\[Remarks\] (\S+)/
       out << ("rssiled " + Regexp.last_match[1]) if line =~ /\[RSSI LED\] (on|off)/
       speed = Regexp.last_match[1] if line =~ /\[Speed\] (\d+) Mbps/
