@@ -10,7 +10,7 @@ The format is based on [Keep a Changelog](https://keepachangelog.com/en/1.1.0/).
 
 ### Changed
 - docker image: updated github CI to explicitly build tag versions (@robertcheramy)
-- docker image: set default shell to bash.
+- docker image: set default shell to bash. (@electrocret)
 
 ### Fixed
 - powerconnect: Remove undesirable inserted blank lines during pagination. Fixes #3413 (@clifcox)
