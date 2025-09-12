@@ -89,8 +89,6 @@ RUN apt-get -qy update && \
 
 # set container shell to bash
 SHELL ["/bin/bash", "-ec"]
-# Remove the existing /bin/sh symlink and create a new one pointing to bash
-RUN rm /bin/sh && ln -s /bin/bash /bin/sh
 
 # clean up
 WORKDIR /
