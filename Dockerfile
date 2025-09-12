@@ -11,6 +11,9 @@ ARG UID=30000
 ARG GID=$UID
 RUN groupadd -g "${GID}" -r oxidized && useradd -u "${UID}" -r -m -d /home/oxidized -g oxidized oxidized
 
+# Set Oxidized user's shell to bash
+RUN chsh -s /bin/bash oxidized
+
 
 ##### MSMTP - Sending emails
 # link config for msmtp for easier use.

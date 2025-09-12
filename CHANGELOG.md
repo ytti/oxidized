@@ -11,6 +11,7 @@ The format is based on [Keep a Changelog](https://keepachangelog.com/en/1.1.0/).
 
 ### Changed
 - tnsr: added simulation data for older versions (@Vantomas)
+- docker image: change oxidized user's shell to bash. (@electrocret)
 
 ### Fixed
 - input/http: bracket IPv6 URI. Fixes #3620 (@ytti)
