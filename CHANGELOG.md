@@ -11,6 +11,7 @@ The format is based on [Keep a Changelog](https://keepachangelog.com/en/1.1.0/).
 
 ### Changed
 - tnsr: added simulation data for older versions (@Vantomas)
+- docker image: change oxidized user's shell to bash. (@electrocret)
 
 ### Fixed
 - input/http: bracket IPv6 URI. Fixes #3620 (@ytti)
@@ -148,7 +149,6 @@ This patch release mainly fixes the docker building process, wich resulted in
 ### Changed
 - docker image: updated github CI to explicitly build tag versions (@robertcheramy)
 - docker image: update rake build_container to match the tags of GitHub CI (@robertcheramy)
-- docker image: set default shell to bash. (@electrocret)
 
 ### Fixed
 - powerconnect: restore last line of command output, and remove spurious CR characters. Fixes #2692 (@clifcox)
