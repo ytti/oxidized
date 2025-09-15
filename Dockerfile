@@ -13,7 +13,8 @@ RUN groupadd -g "${GID}" -r oxidized && useradd -u "${UID}" -r -m -d /home/oxidi
 
 # Set Oxidized user's shell to bash
 RUN chsh -s /bin/bash oxidized
-
+# Remove the existing /bin/sh symlink and create a new one pointing to bash
+RUN rm /bin/sh && ln -s /bin/bash /bin/sh
 
 ##### MSMTP - Sending emails
 # link config for msmtp for easier use.
