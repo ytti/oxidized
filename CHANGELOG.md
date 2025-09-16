@@ -16,6 +16,7 @@ The format is based on [Keep a Changelog](https://keepachangelog.com/en/1.1.0/).
 ### Fixed
 - input/http: bracket IPv6 URI. Fixes #3620 (@ytti)
 - tnsr: fixed prompt regex, sometimes --More-- pager is misplaced on older versions (@ClumsyAdmin)
+- eatonnetwork: Update for firmware v2.2.0 #3634 (@thanegill)
 
 ## [0.34.3 - 2025-08-05]
 This release fixes an issue preventing /node/show/<hostname> to work in oxidized-web.
