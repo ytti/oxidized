@@ -3,7 +3,7 @@ class Airfiber < Oxidized::Model
 
   # Ubiquiti Airfiber (tested with Airfiber 11FX)
 
-  prompt /^AF[\w\.-]+#/i
+  prompt /^AF[\w.-]+#/i
 
   cmd :all do |cfg|
     cfg.cut_both

@@ -3,7 +3,7 @@ class OneFinity < Oxidized::Model
 
   # Fujitsu 1finity
 
-  prompt /(\r?[\w.@_()-]+[>]\s?)$/
+  prompt /(\r?[\w.@_()-]+>\s?)$/
 
   cmd :all do |cfg|
     cfg.each_line.to_a[1..-3].join

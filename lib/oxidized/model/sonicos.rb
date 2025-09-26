@@ -3,7 +3,7 @@ class SonicOS < Oxidized::Model
 
   # Applies to Sonicwall NSA series firewalls
 
-  prompt /^\w+@[\w\-]+[>]\(?.+\)?\s?/
+  prompt /^\w+@[\w-]+>\(?.+\)?\s?/
   comment '! '
 
   # Accept policiy message (see Issue #3339). Tested on 6.5 and 7.1
