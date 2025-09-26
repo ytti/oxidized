@@ -35,7 +35,7 @@ class Comtrol < Oxidized::Model
           expect /[pP]assword:\s?$/
           send vars(:enable) + "\n"
         end
-        expect /^.+[#]\s?$/
+        expect /^.+\#\s?$/
       end
     end
     pre_logout 'exit'

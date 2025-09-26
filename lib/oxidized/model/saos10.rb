@@ -3,7 +3,7 @@ class SAOS10 < Oxidized::Model
   # Ciena SAOS switch
   # used for 10.x devices
 
-  prompt /^[\w\-]+\*?> ?$/
+  prompt /^[\w-]+\*?> ?$/
   comment  '# '
 
   cmd :all do |cfg|

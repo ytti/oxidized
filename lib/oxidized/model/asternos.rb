@@ -1,7 +1,7 @@
 class AsterNOS < Oxidized::Model
   using Refinements
 
-  prompt /^[^\$]+\$/
+  prompt /^[^$]+\$/
   comment '# '
 
   cmd :all do |cfg|

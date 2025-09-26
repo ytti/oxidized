@@ -1,7 +1,7 @@
 class UCS < Oxidized::Model
   using Refinements
 
-  prompt /^(\r?[\w.@_()-]+[#]\s?)$/
+  prompt /^(\r?[\w.@_()-]+\#\s?)$/
   comment '! '
 
   cmd 'show version brief' do |cfg|

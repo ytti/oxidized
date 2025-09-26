@@ -1,7 +1,7 @@
 class AxOS < Oxidized::Model
   using Refinements
 
-  prompt /(\x1b\[\?7h)?([\w.@()-]+[#]\s?)$/
+  prompt /(\x1b\[\?7h)?([\w.@()-]+\#\s?)$/
   comment '! '
 
   cmd 'show running-config | nomore' do |cfg|
