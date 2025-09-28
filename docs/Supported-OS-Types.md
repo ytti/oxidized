@@ -35,7 +35,7 @@
 |                    |FastIron                      |[fastiron](/lib/oxidized/model/fastiron.rb)
 |                    |IronWare                      |[ironware](/lib/oxidized/model/ironware.rb)
 |                    |NOS (Network Operating System)|[nos](/lib/oxidized/model/nos.rb)
-|                    |Vyatta                        |[vyatta](/lib/oxidized/model/vyatta.rb)
+|                    |Vyatta                        |[vyatta](/lib/oxidized/model/vyatta.rb)          |                 | Also used for Vyos <= 1.2.x, for newer versions use the VyOS model
 |                    |6910                          |[br6910](/lib/oxidized/model/br6910.rb)
 |                    |SLX-OS                        |[slxos](/lib/oxidized/model/slxos.rb)
 |Calix               |AXOS                          |[axos](/lib/oxidized/model/axos.rb)
