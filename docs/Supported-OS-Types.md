@@ -180,7 +180,8 @@
 |VMWare              |NSX Edge (configuration)      |[nsxconfig](/lib/oxidized/model/nsxconfig.rb)
 |                    |NSX Edge (firewall rules)     |[nsxfirewall](/lib/oxidized/model/nsxfirewall.rb)
 |                    |NSX Distributed Firewall      |[nsxdfw](/lib/oxidized/model/nsxdfw.rb)
-|VYOS Networks       |VYOS                          |[vyos](/lib/oxidized/model/vyos.rb)              |                 |Fork of Vyatta
+|VYOS Networks       |VYOS                          |[vyos](/lib/oxidized/model/vyos.rb)
+|                 |Fork of Vyatta, tracking the supported versions (>= 1.4.x)
 |Watchguard          |Fireware OS                   |[firewareos](/lib/oxidized/model/firewareos.rb)
 |Westell             |Westell 8178G, Westell 8266G  |[weos](/lib/oxidized/model/weos.rb)
 |Yadro               |KornfeldOS                    |[kornfeldos](/lib/oxidized/model/kornfeldos.rb) 
