@@ -57,6 +57,8 @@ RUN apt-get -qy update \
     # Gems needed by oxidized-web
     ruby-charlock-holmes ruby-haml ruby-htmlentities ruby-json \
     puma ruby-sinatra ruby-sinatra-contrib \
+    # Dependencies for /extra scripts
+    curl jq \
     && apt-get clean \
     && rm -rf /var/lib/apt/lists/*
 
