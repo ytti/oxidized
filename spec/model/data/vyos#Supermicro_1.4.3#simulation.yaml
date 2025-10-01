@@ -1,10 +1,10 @@
 ---
 init_prompt: |-
     Last login: Sun Sep 28 15:22:45 2025 from 10.234.154.66\r
+    nicolas.berens@fw1:~$\x20
 commands:
   - "show version\n": |-
-  - "show configuration commands | no-more\n": |-
-      nicolas.berens@fw1:~$ show version
+      show version
       \e[?1h\e=\rVersion:          VyOS 1.4.3\e[m
       Release train:    sagitta\e[m
       Release flavor:   generic\e[m
@@ -24,7 +24,9 @@ commands:
       Hardware UUID:    00000000-0000-0000-0000-7cc2554f1d58\e[m
       \e[m
       Copyright:        VyOS maintainers and contributors\e[m
-      \r\e[K\e[?1l\e>nicolas.berens@fw1:~$ show configuration commands | no-more
+      \r\e[K\e[?1l\e>nicolas.berens@fw1:~$\x20
+  - "show configuration commands | no-more\n": |-
+      show configuration commands | no-more
       set firewall global-options all-ping 'enable'
       set firewall global-options broadcast-ping 'disable'
       set firewall global-options ip-src-route 'disable'
