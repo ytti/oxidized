@@ -96,6 +96,9 @@ commands:
       set system syslog global facility all level 'notice'
       set system syslog global facility local7 level 'debug'
       set system time-zone 'UTC'
+      # some URL with password: http://user:AAAAAAAAAABBBBBBBBBB@domain.tld/
+      # some URL with password: ftp://user:AAAAAAAAAABBBBBBBBBB@domain.tld/
+      # some URL with password: https://user:AAAAAAAAAABBBBBBBBBB@domain.tld/
       nicolas.berens@fw1:~$\x20
   - "exit\n": |-
       exit

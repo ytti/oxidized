@@ -17,7 +17,8 @@ class Vyos < Oxidized::Model
     cfg.gsub! /password (\S+).*/, 'password <secret removed>'
     cfg.gsub! /community (\S+)/, 'community <secret removed>'
     cfg.gsub! /private key (\S+).*/, 'private key <secret removed>'
-    cfg.gsub! /:[^:\s]*@/, ':<secret removed>@'
+    # password in URLs like protocol://user:password@domain.tld/
+    cfg.gsub! /([a-z]+:\/\/[^:\s]+:)\S+@/, '\1<secret removed>@'
     cfg
   end
 
