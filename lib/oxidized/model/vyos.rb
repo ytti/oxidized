@@ -5,7 +5,8 @@ class Vyos < Oxidized::Model
   # Vyos is a Fork of Vyatta and is being actively developed.
   # https://vyos.org/
 
-  prompt /@.*(:~\$|>)\s/
+  prompt /^\S+@\S+(:~\$|>) $/
+  clean :escape_codes
 
   cmd :all do |cfg|
     cfg.lines.to_a[1..-2].join
@@ -20,10 +21,7 @@ class Vyos < Oxidized::Model
     cfg
   end
 
-  # No idea where the extra characters come from.
-  # But the gsub removes them
   cmd 'show version' do |cfg|
-    cfg.gsub! /\e\S*\r*/, ''
     comment cfg
   end
 

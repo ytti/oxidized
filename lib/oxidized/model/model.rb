@@ -69,6 +69,30 @@ module Oxidized
         process_args_block(@expect, args, [regex, block])
       end
 
+      def clean(what)
+        case what
+        when :escape_codes
+          ansi_escape_regex = /
+            \r?        # Optional carriage return at start
+            \e         # ESC character - starts escape sequence
+            (?:        # Non-capturing group for different sequence types:
+              # Type 1: CSI (Control Sequence Introducer)
+              \[       # Literal '[' - starts CSI sequence
+              [0-?]*   # Parameter bytes: digits (0-9), semicolon, colon, etc.
+              [ -\/]*  # Intermediate bytes: space through slash characters
+              [@-~]    # Final byte: determines the actual command
+            |          # OR
+              # Type 2: Simple escape
+              [=>]     # Single character commands after ESC
+            )
+            \r?        # Optional carriage return at end
+          /x
+          expect ansi_escape_regex do |data, re|
+            data.gsub re, ''
+          end
+        end
+      end
+
       def expects
         @expect
       end

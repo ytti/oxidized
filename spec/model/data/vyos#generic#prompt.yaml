@@ -1,2 +1,5 @@
 pass:
   - "user.name@fw1:~$ "
+  - "username@fw1> "
+pass_with_expect:
+  - "\r\e[K\e[?1l\e>nicolas.berens@fw1:~$ "
