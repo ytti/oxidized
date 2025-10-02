@@ -5,7 +5,7 @@ class VOLTAIRE < Oxidized::Model
   comment '## '
 
   # Pager Handling
-  expect /.+lines\s\d+-\d+([\s]|\/\d+\s\(END\)\s).+$/ do |data, re|
+  expect /.+lines\s\d+-\d+(\s|\/\d+\s\(END\)\s).+$/ do |data, re|
     send ' '
     data.sub re, ''
   end

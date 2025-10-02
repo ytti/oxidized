@@ -16,7 +16,7 @@ class SLXOS < Oxidized::Model
     cfg.gsub! /.*Power Usage.*/, '' # remove unwanted lines power usage
     cfg.gsub! /^Update:.*$/, '' # remove unwanted current date
     cfg.gsub! /Time A(live|wake).*/, '' # remove unwanted lines time alive/awake
-    cfg.gsub! /([\[]*)1([\]]*)<->([\[]*)2([\]]*)(<->([\[]*)3([\]]*))*/, ''
+    cfg.gsub! /(\[*)1(\]*)<->(\[*)2(\]*)(<->(\[*)3(\]*))*/, ''
 
     comment cfg
   end

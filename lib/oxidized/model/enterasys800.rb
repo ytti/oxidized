@@ -5,7 +5,7 @@ class Enterasys800 < Oxidized::Model
   # Tested with 08H20G4-24 Fast Ethernet Switch Firmware: Build 01.01.01.0017
   comment '# '
 
-  prompt /([\w \(:.@-]+[#>]\s?)$/
+  prompt /([\w (:.@-]+[#>]\s?)$/
 
   cfg :telnet do
     username /UserName:/

@@ -44,7 +44,7 @@ class ADVA < Oxidized::Model
 
     cmd 'show ports' do |cfg|
       cfg.each_line do |line|
-        port = line.match(/\|((access|network)[^\|]+)\|/)
+        port = line.match(/\|((access|network)[^|]+)\|/)
         ports << port if port
       end
     end

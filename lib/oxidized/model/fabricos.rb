@@ -4,7 +4,7 @@ class FabricOS < Oxidized::Model
   # Brocade Fabric OS model #
   ## FIXME: Only ssh exec mode support, no telnet, no ssh screenscraping
 
-  prompt /^([\w]+:+[\w]+[>]\s)$/
+  prompt /^(\w+:+\w+>\s)$/
   comment '# '
 
   cmd 'chassisShow' do |cfg|

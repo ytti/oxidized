@@ -1,7 +1,7 @@
 class SixWind < Oxidized::Model
   using Refinements
 
-  prompt /^[\w\s\(\).@_\/:-]+[>] $/
+  prompt /^[\w\s().@_\/:-]+> $/
   comment '# '
 
   cmd :all do |cfg|

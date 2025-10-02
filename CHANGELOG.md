@@ -12,10 +12,16 @@ VyOS now has it's own Model and should be used for supported VyOS versions inste
 - Added Vyos as individual model. Closes #3603 #3560 (@nicolasberens)
 
 ### Changed
+- tnsr: added simulation data for older versions (@Vantomas)
+- docker image: change oxidized user's shell to bash. (@electrocret)
 - refactor suppression of ANSI escape codes into model.rb (use `clean :escape_codes` in your model. Updated cumulus, garderos, mlnxos and vyos. (@robertcheramy)
 
 ### Fixed
-
+- input/http: bracket IPv6 URI. Fixes #3620 (@ytti)
+- tnsr: fixed prompt regex, sometimes --More-- pager is misplaced on older versions (@ClumsyAdmin)
+- eatonnetwork: Update for firmware v2.2.0 #3634 (@thanegill)
+- many models: fix redundant regular expressions (@cheramr)
+- timos: remove deprecated model timos. Use sros. #3617 (@cheramr)
 
 ## [0.34.3 - 2025-08-05]
 This release fixes an issue preventing /node/show/<hostname> to work in oxidized-web.

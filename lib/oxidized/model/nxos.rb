@@ -1,7 +1,7 @@
 class NXOS < Oxidized::Model
   using Refinements
 
-  prompt /^(\r?[\w.@_()-]+[#]\s?)$/
+  prompt /^(\r?[\w.@_()-]+\#\s?)$/
   comment '! '
 
   def filter(cfg)
@@ -35,7 +35,7 @@ class NXOS < Oxidized::Model
     cfg = filter cfg
     cfg.gsub! /^(show run.*)$/, '! \1'
     cfg.gsub! /^!Time:[^\n]*\n/, ''
-    cfg.gsub! /^[\w.@_()-]+[#].*$/, ''
+    cfg.gsub! /^[\w.@_()-]+\#.*$/, ''
     cfg
   end
 

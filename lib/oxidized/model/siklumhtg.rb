@@ -4,7 +4,7 @@ class SikluMHTG < Oxidized::Model
   # Siklu MultiHaul TG#
   # Requires source to define the model as SikluMHTG #
 
-  prompt /^\r?MH-[TN]\d{3}[\@][\w]{2,8}>$/
+  prompt /^\r?MH-[TN]\d{3}@\w{2,8}>$/
 
   expect /--More--/ do |data, re|
     send ' '

@@ -48,8 +48,7 @@ module Oxidized
     private
 
     def get_http(path)
-      schema = @secure ? "https://" : "http://"
-      uri = URI("#{schema}#{@node.ip}#{path}")
+      uri = get_uri(path)
 
       logger.debug "Making request to: #{uri}"
 
@@ -92,6 +91,14 @@ module Oxidized
 
     def disconnect
       @log.close if Oxidized.config.input.debug?
+    end
+
+    def get_uri(path)
+      path = URI.parse(path)
+      uri_class = @secure ? URI::HTTPS : URI::HTTP
+      uri_class.build(host:  @node.ip,
+                      path:  path.path,
+                      query: path.query)
     end
   end
 end
