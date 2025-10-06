@@ -4,13 +4,8 @@ class Garderos < Oxidized::Model
   # Routers for harsh environments
   # grs = Garderos Router Software
 
-  # Remove ANSI escape codes
-  expect /\e\[[0-?]*[ -\/]*[@-~]\r?/ do |data, re|
-    data.gsub re, ''
-  end
-
-  # the prompt does not need to match escape codes, as they have been removed above
   prompt /[\w-]+# /
+  clean :escape_codes
   comment '# '
 
   cmd :all do |cfg|

@@ -5,13 +5,16 @@ All notable changes to this project will be documented in this file.
 The format is based on [Keep a Changelog](https://keepachangelog.com/en/1.1.0/).
 
 ## [Unreleased]
+VyOS now has it's own Model and should be used for supported VyOS versions instead of the Vyatta Model.
 
 ### Added
 - Allow setting timeout on per node basis. Closes #3612 (@ytti)
+- Added Vyos as individual model. Closes #3603 #3560 (@nicolasberens)
 
 ### Changed
 - tnsr: added simulation data for older versions (@Vantomas)
 - docker image: change oxidized user's shell to bash. (@electrocret)
+- refactor suppression of ANSI escape codes into model.rb (use `clean :escape_codes` in your model. Updated cumulus, garderos, mlnxos and vyos. (@robertcheramy)
 
 ### Fixed
 - input/http: bracket IPv6 URI. Fixes #3620 (@ytti)

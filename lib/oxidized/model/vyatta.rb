@@ -1,7 +1,7 @@
 class Vyatta < Oxidized::Model
   using Refinements
 
-  # Brocade Vyatta / VyOS model #
+  # Brocade Vyatta model #
 
   prompt /@.*(:~\$|>)\s/
 
