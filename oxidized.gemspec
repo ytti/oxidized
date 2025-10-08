@@ -49,7 +49,7 @@ Gem::Specification.new do |s|
   s.add_development_dependency 'bundler',             '~> 2.2'
   # ruby-git 4.0 requests ruby >= 3.2, we stick to ruby >= 3.1 (Ubuntu Noble/Debian Bookworm)
   s.add_development_dependency 'git',                 '>= 2.0', '< 3.2.0'
-  s.add_development_dependency 'minitest',            '~> 5.25.4'
+  s.add_development_dependency 'minitest',            '~> 5.26.0'
   s.add_development_dependency 'mocha',               '~> 2.1'
   s.add_development_dependency 'pry',                 '~> 0.15.0'
   s.add_development_dependency 'rake',                '~> 13.0'
