@@ -22,6 +22,7 @@ VyOS now has it's own Model and should be used for supported VyOS versions inste
 - eatonnetwork: Update for firmware v2.2.0 #3634 (@thanegill)
 - many models: fix redundant regular expressions (@cheramr)
 - timos: remove deprecated model timos. Use sros. #3617 (@cheramr)
+- fsos: set terminal width to 0. Fixes #3576 (@cheramr)
 
 ## [0.34.3 - 2025-08-05]
 This release fixes an issue preventing /node/show/<hostname> to work in oxidized-web.
