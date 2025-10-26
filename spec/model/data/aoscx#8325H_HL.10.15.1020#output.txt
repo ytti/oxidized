@@ -1,0 +1,204 @@
+! -----------------------------------------------------------------------------
+! AOS-CX
+! (c) Copyright 2017-2025 Hewlett Packard Enterprise Development LP
+! -----------------------------------------------------------------------------
+! Version      : HL.10.15.1020                                                 
+! Build Date   : 2025-05-10 00:59:04 UTC                                       
+! Build ID     : AOS-CX:HL.10.15.1020:b30077084728:202505100039                
+! Build SHA    : b3007708472845684815cecc555ec5813090390c                      
+! Hot Patches  :                                                               
+! Active Image : secondary                     
+! 
+! Service OS Version : HL.01.16.0004                 
+! BIOS Version       : HL-01-0007                    
+! show environment fan
+! 
+! Fan information
+! ------------------------------------------------------------------------------
+! Location-      Product  Serial Number  Speed   Direction      Status  RPM
+! Mbr/Slot/Fan   Name
+! ------------------------------------------------------------------------------
+! System-1/1/1   N/A      N/A            <speed>    back-to-front  ok      <rpm>
+! System-1/1/2   N/A      N/A            <speed>    back-to-front  ok      <rpm>
+! System-1/1/3   N/A      N/A            <speed>    back-to-front  ok      <rpm>
+! System-1/1/4   N/A      N/A            <speed>    back-to-front  ok      <rpm>
+! System-1/1/5   N/A      N/A            <speed>    back-to-front  ok      <rpm>
+! System-1/1/6   N/A      N/A            <speed>    back-to-front  ok      <rpm>
+! System-1/1/7   N/A      N/A            <speed>    back-to-front  ok      <rpm>
+! System-1/1/8   N/A      N/A            <speed>    back-to-front  ok      <rpm>
+! 
+! 
+! 
+! show environment led
+! Mbr/Name       State        Status    
+! ----------------------------------
+! 1/locator      off          ok        
+! 
+! 
+! show environment power-consumption
+! 
+! Power Consumption Averaging Period : 600 seconds
+! 
+!                                       Power Usage (W)      PSU Output (W) 
+! Name Description                     Instant   Average   Instant   Average
+! ----------------------------------------------------------------------------
+! 1    8325H 18Y 4C BF 4Fs 2PS Sw       <power hidden>
+! 
+! 
+! show environment power-supply
+! --------------------------------------------------------------------------------
+!          Product  Serial            PSU                Input  Voltage    Wattage
+! Mbr/PSU  Number   Number            Status             Type   Range      Maximum
+! --------------------------------------------------------------------------------
+! 1/1      N/A      CN00000000        OK                 AC     100V-240V  500
+! 1/2      N/A      CN00000000        OK                 AC     100V-240V  500
+! 
+! 
+! 
+! show environment system-airflow
+! System Airflow:
+! ---------------
+! back-to-front
+! 
+! 
+! 
+! show environment temperature
+! Temperature information
+! ------------------------------------------------------------------------------
+!                                                      Current
+! Mbr/Slot-Sensor                 Module Type        Temperature  Status
+! ------------------------------------------------------------------------------
+! 1/1-ASIC                        line-card-module     <hidden>   normal
+! 1/1-xcvr-1                      line-card-module     <hidden>   normal
+! 1/1-xcvr-2                      line-card-module     <hidden>   normal
+! 1/1-xcvr-4                      line-card-module     <hidden>   normal
+! 1/1-xcvr-5                      line-card-module     <hidden>   normal
+! 
+! 1/1-CPU                         management-module    <hidden>   normal
+! 1/1-CPU-LOCAL                   management-module    <hidden>   normal
+! 1/1-DDR1                        management-module    <hidden>   normal
+! 1/1-DDR2                        management-module    <hidden>   normal
+! 1/1-DPLL_btm-LOCAL              management-module    <hidden>   normal
+! 1/1-DPLL_top-LOCAL              management-module    <hidden>   normal
+! 1/1-Inlet_Air                   management-module    <hidden>   normal
+! 1/1-Outlet_Air                  management-module    <hidden>   normal
+! 1/1-PSU1                        management-module    <hidden>   normal
+! 1/1-PSU1-LOCAL                  management-module    <hidden>   normal
+! 1/1-PSU2                        management-module    <hidden>   normal
+! 1/1-PSU2-LOCAL                  management-module    <hidden>   normal
+! 1/1-SSD                         management-module    <hidden>   normal
+! 1/1-SSD-LOCAL                   management-module    <hidden>   normal
+! 
+! 
+! Management Modules
+! ==================
+! 
+!      Product                                        Serial
+! Name Number  Description                            Number     Status
+! ---- ------- -------------------------------------- ---------- ----------------
+! 1/1  S4B21A  HPE ANW 8325H 18Y 4C BF 4Fs 2PS Sw     TW00000000 Ready
+! 
+! 
+! Line Modules
+! ============
+! 
+!      Product                                        Serial
+! Name Number  Description                            Number     Status
+! ---- ------- -------------------------------------- ---------- ----------------
+! 1/1  S4B21A  HPE ANW 8325H 18Y 4C BF 4Fs 2PS Sw     TW00000000 Ready
+! 
+! 
+! -------------------------------------------------------------------------
+! Port      Type             Product          Serial           Part        
+!                            Number           Number           Number      
+! -------------------------------------------------------------------------
+! 1/1/1     10G-LR*          --               --               --
+! 1/1/2     25G-SR*          --               --               --
+! 1/1/4     25G-SR*          --               --               --
+! 1/1/5     25G-SR*          --               --               --
+! 1/1/19    100G-DAC1        R0Z25A           CN00000000       1990-4678
+! 1/1/20    100G-DAC1        R0Z25A           CN00000000       1990-4678
+! 
+! * unsupported transceiver
+! 
+! Hostname               : xx-xxxx-sw01                  
+! System Description     : HL.10.15.1020                 
+! System Contact         : xxx@isnic.is                  
+! System Location        : ISNIC - Katrinartun           
+! 
+! Vendor                 : HPE ANW                       
+! Product Name           : S4B21A HPE ANW 8325H 18Y 4C BF 4Fs 2PS Sw
+! Chassis Serial Nbr     : TW00000000                    
+! Base MAC Address       : 9c3708-000000                 
+! AOS-CX Version         : HL.10.15.1020                 
+! 
+! Time Zone              : UTC                           
+! 
+Current configuration:
+!
+!Version AOS-CX HL.10.15.1020
+!export-password: default
+hostname xx-xxxx-sw01
+!
+user admin group administrators password ciphertext **************
+profile leaf
+vrf external
+!
+!
+!
+!
+!
+!
+user robot authorized-key ssh-rsa ******** oxidized@local
+ssh server vrf external
+no ssh server vrf mgmt
+vlan 1,42,48-49
+interface mgmt
+    shutdown
+    ip dhcp
+interface lag 1 multi-chassis
+    description LAG to xx-sw03
+    vsx-sync vlans
+    no shutdown
+    no routing
+    vlan trunk native 1
+    vlan trunk allowed 42
+    lacp mode active
+    lacp rate fast
+interface lag 100
+    no shutdown
+    no routing
+    vlan trunk native 1
+    vlan trunk allowed 42,48-49
+    lacp mode active
+interface 1/1/1
+    description Part of LAG to xx-sw03
+    no shutdown
+    lag 1
+interface 1/1/19
+    no shutdown
+    lag 100
+interface 1/1/20
+    no shutdown
+    lag 100
+interface vlan 42
+    vrf attach external
+    ip address 192.168.1.1/25
+    ipv6 address 2001::1/64
+snmp-server vrf external
+snmp-server system-location ISNIC - Katrinartun
+snmp-server system-contact xxx@isnic.is
+vsx
+    inter-switch-link lag 100
+    role primary
+    keepalive peer 2001::2 source 2001::1 vrf external
+    vsx-sync dns
+ip route 0.0.0.0/0 192.168.1.1 vrf external
+ipv6 route ::/0 2001::1 vrf external
+ip dns server-address 192.168.1.1 vrf external
+!
+!
+!
+!
+!
+no https-server vrf mgmt

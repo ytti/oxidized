@@ -23,6 +23,7 @@ VyOS now has it's own Model and should be used for supported VyOS versions inste
 - many models: fix redundant regular expressions (@cheramr)
 - timos: remove deprecated model timos. Use sros. #3617 (@cheramr)
 - fsos: set terminal width to 0. Fixes #3576 (@cheramr)
+- aoscx: rework environmental data anonymization. Fixes #3568 (@cheramr, inspired by PR #3653 by @martadams89)
 
 ## [0.34.3 - 2025-08-05]
 This release fixes an issue preventing /node/show/<hostname> to work in oxidized-web.
