@@ -26,6 +26,8 @@ The format is based on [Keep a Changelog](https://keepachangelog.com/en/1.1.0/).
 - timos: remove deprecated model timos. Use sros. #3617 (@robertcheramy)
 - fsos: set terminal width to 0. Fixes #3576 (@robertcheramy)
 - aoscx: rework environmental data anonymization. Fixes #3568 (@robertcheramy, inspired by PR #3653 by @martadams89)
+- netgear: fix prompt issues caused by ANSI escape codes. Fixes #3287 (@robertcheramy)
+
 
 ## [0.34.3 - 2025-08-05]
 This release fixes an issue preventing /node/show/<hostname> to work in oxidized-web.

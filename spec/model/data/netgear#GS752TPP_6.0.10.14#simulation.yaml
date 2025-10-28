@@ -1,0 +1,81 @@
+---
+init_prompt: |-
+  \e[H\e[J19sw011#\x20
+commands:
+  - "terminal length 0\n": |-
+      terminal length 0
+      19sw011#\x20
+  - "show version\n": |-
+      show version
+      Loader Version   : 1.0.0.5
+      Loader Date      : 2017-12-28 09:35:22 UTC
+      Firmware Version : 6.0.10.14 (6.0.10.14)
+      Firmware Date    : Jul 29 2022 - 23:52:55
+      
+      MAC Address      : FF:FF:FF:FF:FF:FF
+      SN               : 0XX000XXX000X
+      19sw011#\x20
+  - "show bootvar\n": |-
+      show bootvar
+      ! Fake output to show bootvar
+      19sw011#\x20
+  - "show running-config\n": |-
+      show running-config
+      SYSTEM CONFIG FILE ::= BEGIN
+      ! Model: GS752TPP
+      ! System Description: NETGEAR 48-Port Gigabit PoE+ Smart Managed Pro Switch with 4 SFP Ports (GS752TPP)
+      ! Firmware Version: 6.0.10.14 [Jul 29 2022 - 23:52:55]
+      ! Loader Version: 1.0.0.5 [2017-12-28 09:35:22 UTC]
+      ! Config Version: 0
+      ! Hardware Version: 2
+      ! System Name: 19sw011
+      ! MAC Address: FF:FF:FF:FF:FF:FF
+      ! Serial Number: 0XX000XXX000X
+      ! System Up Time: 123 days, 21 hours, 50 mins, 5 secs
+      !
+      !
+      !
+      system name \"19sw011\"
+      system location \"Rack\"
+      web hidePopup lanOnly,
+      ip address 192.168.0.2 mask 255.255.255.0
+      ip default-gateway 192.168.0.1
+      ip name-server 8.8.8.8\x20
+      boot system image0 description \"Update 21.01.23\"
+      boot system image1 description \"Update 13.08.2022\"
+      username \"admin\" secret encrypted XXXXXXXXXXXXXXXXXXXXXXXX
+      sntp 1 host time-b.netgear.com port 123 ver 4
+      sntp 2 host time-a.netgear.com port 123 ver 4
+      sntp 3 host 0.openwrt.pool.ntp.org port 123 ver 4
+      clock source sntp
+      
+      spanning-tree mst configuration
+      
+      no snmp trap poe
+      
+      snmp user \"admin\" \"AUTH\" auth md5 encrypted XXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXX
+      
+      snmp community \"public\" enable 0.0.0.0 mask 0.0.0.0 ro
+      
+      snmp host 192.168.0.1 enable version 2c \"public\"\x20
+      
+      !
+      interface g17
+       switchport hybrid pvid 111
+       switchport hybrid allowed vlan add 111 untagged
+       switchport hybrid allowed vlan remove 1
+      !
+      interface g18
+       switchport hybrid pvid 111
+       switchport hybrid allowed vlan add 111 untagged
+       switchport hybrid allowed vlan remove 1
+      !
+      !
+      !
+      !
+      
+      19sw011#\x20
+  - "quit\n": |-
+      quit
+      19sw011>\x20
+  - "n\n": ""
