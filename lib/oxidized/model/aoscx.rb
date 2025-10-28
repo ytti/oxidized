@@ -1,25 +1,13 @@
 class Aoscx < Oxidized::Model
   using Refinements
+  # HPE Aruba Networking - ArubaOS-CX models
 
-  # previous command is repeated followed by "\eE", which sometimes ends up on last line
-  # ssh switches prompt may start with \r, followed by the prompt itself, regex ([\w\s.-]+[#>] ), which ends the line
-  # telnet switchs may start with various vt100 control characters, regex (\e\[24;[0-9][hH]), follwed by the prompt, followed
-  # by at least 3 other vt100 characters
-  prompt /(^\r|\e\[24;[0-9][hH])?([\w\s.-]+[#>] )($|(\e\[24;[0-9][0-9]?[hH]){3})/
+  prompt /^[\w\s.-]+[#>] $/
+  clean :escape_codes
 
   comment '! '
 
-  # replace next line control sequence with a new line
-  expect /(\e\[1M\e\[\??\d+(;\d+)*[A-Za-z]\e\[1L)|(\eE)/ do |data, re|
-    data.gsub re, "\n"
-  end
-
-  # replace all used vt100 control sequences
-  expect /\e\[\??\d+(;\d+)*[A-Za-z]/ do |data, re|
-    data.gsub re, ''
-  end
-
-  expect /Press any key to continue(\e\[\??\d+(;\d+)*[A-Za-z])*$/ do
+  expect /Press any key to continue$/ do
     send ' '
     ""
   end
@@ -30,13 +18,7 @@ class Aoscx < Oxidized::Model
   end
 
   cmd :all do |cfg|
-    cfg = cfg.cut_both
-    cfg = cfg.gsub /^\r/, ''
-    # Additional filtering for elder switches sending vt100 control chars via telnet
-    cfg.gsub! /\e\[\??\d+(;\d+)*[A-Za-z]/, ''
-    # Additional filtering for power usage reporting which obviously changes over time
-    cfg.gsub! /^(.*AC [0-9]{3}V\/?([0-9]{3}V)?) *([0-9]{1,3}) (.*)/, '\\1 <removed> \\4'
-    cfg
+    cfg.cut_both
   end
 
   cmd :secret do |cfg|
@@ -54,27 +36,30 @@ class Aoscx < Oxidized::Model
   end
 
   cmd 'show environment' do |cfg|
-    cfg.gsub! /^(LC.*\s+)\d+\s+$/, '\\1<hidden>'
-    cfg.gsub! /^(\d\/\d\/\d.*\s+)\d+\s+$/, '\\1<hidden>'
-    cfg.gsub! /^(\d+\/?\S+\s+\S+\s+)\d+\.\d+\s+C\s+(.*)/, '\\1<hidden>   \\2'
-    cfg.gsub! /^(LC.*\s+)\d+\.\d+\s+(C.*)$/, '\\1 <hidden> \\2'
-    # match show environment No speed shown for switches CX83xx, e.g. "PSU-1/1/1      N/A      N/A            N/A     front-to-back  ok      7360"
-    cfg.gsub! /^PSU(\S+\s+\S+\s+\s+\S+\s+)(slow|normal|medium|fast|max|N\/A)\s+(\S+\s+\S+\s+)\d+[[:blank:]]+/, '\\1<speed> \\3<rpm>'
-    cfg.gsub! /^(\S+\s+\S+\s+\s+\S+\s+)(slow|normal|medium|fast|max)\s+(\S+\s+\S+\s+)\d+[[:blank:]]+/, '\\1<speed> \\3<rpm>'
-    # match show environment power-consumption on VSF or standadlone, non-chassis and non-6400 switch, e.g. "2    6300M 48G 4SFP56 Swch                 156.00      155.94"
-    cfg.gsub! /^(\d+\s+.+\s+)(\s{2}\d{2}\.\d{2}|\s{1}\d{3}\.\d{2}|\d{4}\.\d{2})(\s+)(\s{2}\d{2}\.\d{2}|\s{1}\d{3}\.\d{2}|\d{4}\.\d{2})$/, '\\1<power>\\3<power>'
-    # match show environment power-consumption on 6400 or chassis switches, e.g. "1/4    line-card-module    R0X39A 6400 48p 1GbE CL4 PoE 4SFP56 Mod     54 W"
-    cfg.gsub! /^(\d+\/?\d*\s+.+\s+)(\s{1,4}\d{1,3})\sW\s*$/, '\\1<power>'
-    # match show environment power-consumption on 6400 or chassis switches, e.g. "Module Total Power Usage      13000 W", match up to a 5-digit number and keep table formatting.
-    cfg.gsub! /^(Module|Chassis)\s(Total\sPower\sUsage)(\s+)\s(\s{4}\d{1}|\s{3}\d{2}|\s{2}\d{3}|\s{1}\d{4}|\d{5})\sW\s*$/, '\\1 <power>'
-    # match show environment power-consumption on 6400 or chassis switches, e.g. "Chassis Total Power Usage     13000 W", match up to a 5-digit number and keep table formatting.
-    cfg.gsub! /^(Chassis\sTotal\sPower\sUsage)(\s+)(\s{4}\d{1}|\s{3}\d{2}|\s{2}\d{3}|\s{1}\d{4}|\d{5})\sW\s*$/, '\\1\\2<power>'
-    # match show environment power-consumption on 8400 or chassis switches, up to a 5-digit number, example matches:
-    # e.g. "Chassis Total Power Allocated (total of all max wattages)               4130 W"
-    # e.g. "Chassis Total Power Unallocated                                        15860 W"
-    cfg.gsub! /^(Chassis\sTotal\sPower\s)(Allocated|Unallocated)(\s|\s\(total of all max wattages\))(\s+)(\s{4}\d{1}|\s{3}\d{2}|\s{2}\d{3}|\s{1}\d{4}|\d{5})\sW\s*$/, '\\1\\2\\3\\4<power>'
-    # match Total Power Consumption:
-    cfg.gsub! /^([t|T]otal\s[p|P]ower\s[c|C]onsumption\s+)(\d+\.\d\d)$/, '\\1<power>'
+    def with_section(cfg, section, &block)
+      cfg.sub!(/(show environment #{section}.*?-{10,}\n)(.*?)(?=\nshow environment|\z)/m) do
+        header = ::Regexp.last_match(1)
+        content = ::Regexp.last_match(2)
+        block.call(content) if block_given?
+        header + content
+      end
+    end
+
+    with_section(cfg, 'fan') do |content|
+      content.gsub!(/^(.*)(slow|normal|medium|fast|max) (.*?)\d+ +$/, '\\1<speed> \\3<rpm>')
+    end
+
+    with_section(cfg, 'power-consumption') do |content|
+      content.gsub!(/^(.*?) (?:\d+\.\d+ +)+\d+\.\d+$/, '\\1 <power hidden>')
+    end
+
+    with_section(cfg, 'power-allocation') do |content|
+      content.gsub!(/^(.*) \d+ W$/, '\\1 <power>')
+    end
+
+    with_section(cfg, 'temperature') do |content|
+      content.gsub!(/^(.*) \d+\.\d+ C (.*)$/, '\\1 <hidden>\\2')
+    end
     comment cfg
   end
 
