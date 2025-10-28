@@ -2,7 +2,8 @@ class Netgear < Oxidized::Model
   using Refinements
 
   comment '!'
-  prompt /^(\e\[\w)*\(?[\w \-+.]+\)? ?[#>] ?$/
+  prompt /^\(?[\w \-+.]+\)? ?[#>] ?$/
+  clean :escape_codes
 
   # Handle pager for "show version" on old Netgear models: #2394
   expect /^--More-- or \(q\)uit$/ do |data, re|

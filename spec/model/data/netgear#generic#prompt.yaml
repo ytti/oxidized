@@ -7,4 +7,5 @@ pass:
   # Prompt from Issue #3287
   - '10sw011# '
   - '19sw011> '
+pass_with_expect:
   - "\e[H\e[J19sw011#\x20"
