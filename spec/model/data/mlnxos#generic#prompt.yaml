@@ -4,5 +4,6 @@ pass:
   - "\rhsb2-slf-3-6 [standalone: master] #\x20"
   - "\r [standalone: master] # "
   - "\r [standalone: master] > "
+pass_with_expect:
   - "\r\e[K\e[?1l\e>\r [standalone: master] > "
   - "\r\e[K\e[?1l\e>\r [standalone: master] # "

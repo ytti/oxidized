@@ -1,7 +1,7 @@
 class Vyatta < Oxidized::Model
   using Refinements
 
-  # Brocade Vyatta / VyOS model #
+  # Brocade Vyatta model #
 
   prompt /@.*(:~\$|>)\s/
 
@@ -21,7 +21,6 @@ class Vyatta < Oxidized::Model
   end
 
   cmd 'show version' do |cfg|
-    cfg.gsub! /^Uptime[^\n]*\n/, ''
     comment cfg
   end
 

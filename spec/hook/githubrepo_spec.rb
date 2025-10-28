@@ -15,8 +15,6 @@ describe GithubRepo do
 
   before do
     Oxidized.asetus = Asetus.new
-    Oxidized.config.log = File::NULL
-    Oxidized.setup_logger
     Oxidized.config.output.default = 'git'
   end
 
@@ -87,6 +85,10 @@ describe GithubRepo do
       it "should not try merging when there's conflict" do
         merge_index.expects(:conflicts?).returns(true)
         Rugged::Commit.expects(:create).never
+        GithubRepo.logger.expects(:warn).with(
+          'Conflicts detected, skipping Rugged::Commit.create'
+        )
+
         _(gr.fetch_and_merge_remote(repo, credentials)).must_be_nil
       end
 
@@ -141,6 +143,10 @@ describe GithubRepo do
         Oxidized.config.hooks.github_repo_hook.remote_repo = 'https://github.com/username/foo.git'
         Oxidized.config.hooks.github_repo_hook.username = 'username'
         Oxidized.config.hooks.github_repo_hook.password = 'password'
+        GithubRepo.logger.expects(:info).with(
+          'Pushing local repository(/foo.git) to remote: https://github.com/username/foo.git'
+        )
+
         gr.cfg = Oxidized.config.hooks.github_repo_hook
         _(gr.run_hook(ctx)).must_equal true
       end
@@ -148,6 +154,10 @@ describe GithubRepo do
       it "will push to the remote repository using ssh" do
         Oxidized.config.hooks.github_repo_hook.remote_repo = 'git@github.com:username/foo.git'
         remote.expects(:url).returns('git@github.com:username/foo.git')
+        GithubRepo.logger.expects(:info).with(
+          'Pushing local repository(/foo.git) to remote: git@github.com:username/foo.git'
+        )
+
         gr.cfg = Oxidized.config.hooks.github_repo_hook
         _(gr.run_hook(ctx)).must_equal true
       end
@@ -169,6 +179,9 @@ describe GithubRepo do
           Oxidized.config.output.git.repo.ggrroouupp = repository
           Oxidized.config.hooks.github_repo_hook.remote_repo.ggrroouupp = 'ggrroouupp#remote_repo'
           remote.expects(:url).returns('ggrroouupp#remote_repo')
+          GithubRepo.logger.expects(:info).with(
+            'Pushing local repository(/foo.git) to remote: ggrroouupp#remote_repo'
+          )
         end
 
         it 'will push to the node group repository' do
@@ -185,6 +198,9 @@ describe GithubRepo do
           Oxidized.config.hooks.github_repo_hook.remote_repo = 'github_repo_hook#remote_repo'
           Oxidized.config.output.git.single_repo = true
           remote.expects(:url).returns('github_repo_hook#remote_repo')
+          GithubRepo.logger.expects(:info).with(
+            'Pushing local repository(/foo.git) to remote: github_repo_hook#remote_repo'
+          )
         end
 
         it 'will push to the correct repository' do

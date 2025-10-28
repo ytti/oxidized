@@ -5,7 +5,7 @@ class ZhoneOLT < Oxidized::Model
 
   # the prompt can be anything on zhone, but it defaults to 'zXX>' and we
   # always use hostname>
-  prompt /^(\r*[\w.@():-]+[>]\s?)$/
+  prompt /^(\r*[\w.@():-]+>\s?)$/
   comment '# '
 
   cmd :secret do |cfg|

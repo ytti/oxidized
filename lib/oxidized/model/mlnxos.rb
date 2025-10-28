@@ -1,27 +1,20 @@
 class MLNXOS < Oxidized::Model
   using Refinements
 
-  prompt /^\r?(\e.+\e>\r)?\S* \[\S+: (master|standby)\] [#>] $/
+  prompt /^\r?\S* \[\S+: (master|standby)\] [#>] $/
   comment '## '
+  clean :escape_codes
 
   # Pager Handling
   # "Normal" pager: "lines 183-204 "
   # Last pager:     "lines 256-269/269 (END) "
-  expect /\e\[7mlines \d+-\d+( |\/\d+ \(END\) )/ do |data, re|
+  expect /lines \d+-\d+( |\/\d+ \(END\) )/ do |data, re|
     send ' '
     data.sub re, ''
   end
 
-  # Remove ANSI escape codes
-  expect /\e\[[0-?]*[ -\/]*[@-~]\r?/ do |data, re|
-    data.sub re, ''
-  end
-
   cmd :all do |cfg|
-    cfg.gsub! "\e[m", '' # Remove reset formating
-    cfg.gsub! "\e[K", '' # Remove erase in line
     cfg.gsub! /.\x08/, '' # Remove Backspace char
-    cfg.gsub! "\r", '' # Remove Cariage Return
     cfg.gsub! /^CPU load averages:\s.+/, '' # Omit constantly changing CPU info
     cfg.gsub! /^System memory:\s.+/, '' # Omit constantly changing memory info
     cfg.gsub! /^Uptime:\s.+/, '' # Omit constantly changing uptime info

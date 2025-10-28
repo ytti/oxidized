@@ -4,7 +4,6 @@ require 'oxidized/source/http'
 describe Oxidized::Source::HTTP do
   before(:each) do
     Oxidized.asetus = Asetus.new
-    Oxidized.setup_logger
   end
 
   describe '#setup' do

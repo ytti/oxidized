@@ -30,7 +30,7 @@ class ZyNOSCLI < Oxidized::Model
           expect /[pP]assword:\s?$/
           send vars(:enable) + "\n"
         end
-        expect /^.+[#]$/
+        expect /^.+\#$/
       end
     end
     pre_logout 'exit'

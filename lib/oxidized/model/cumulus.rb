@@ -1,19 +1,14 @@
 class Cumulus < Oxidized::Model
   using Refinements
 
-  # Remove ANSI escape codes
-  expect /\e\[[0-?]*[ -\/]*[@-~]\r?/ do |data, re|
-    data.gsub re, ''
-  end
-
-  # The prompt contains ANSI escape codes, which have already been removed
-  # from the expect call above
+  # Regular expression explanation:
   # ^                 : match begin of line, to have the most specific prompt
   # [\w.-]+@[\w.-]+   : user@hostname
   # (:mgmt)?          : optional when logged in out of band
   # :~[#$] $          : end of prompt, containing the linux path,
   #                     which is always "~" in our context
   prompt /^[\w.-]+@[\w.-]+(:mgmt)?:~[#$] $/
+  clean :escape_codes
   comment '# '
 
   # add a comment in the final conf

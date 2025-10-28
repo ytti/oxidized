@@ -5,9 +5,6 @@ require_relative 'model_helper'
 describe 'Model Helper' do
   before(:each) do
     init_model_helper
-    # You can set debuging to true if you want to see debug messages
-    # Oxidized.asetus.cfg.debug = true
-    # Oxidized.setup_logger
     @node = MockSsh.get_node('garderos')
     @test = ATOMS::TestOutput.new('garderos', 'R7709_003_006_068')
     @mockmodel = MockSsh.new(@test.simulation)

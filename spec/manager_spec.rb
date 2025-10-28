@@ -3,8 +3,6 @@ require_relative 'spec_helper'
 describe Oxidized::Manager do
   before(:each) do
     Oxidized.asetus = Asetus.new
-    Oxidized.asetus.cfg.debug = false
-    Oxidized.setup_logger
   end
 
   describe '#add_source' do

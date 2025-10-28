@@ -222,7 +222,7 @@ If not, a quick way to solve it is to delete `~/.local/share/containers/`.
 Beware - this will delete **all** your containers!
 
 ### Store the ssh keys a remote git repository
-When you user the githubrepo hook to upload your configs to a remote git
+When you use the githubrepo hook to upload your configs to a remote git
 repository, you have to store your ssh-key and the public keys of the remote
 server. Create a directory `~/oxidized-ssh` and map it to `/home/oxidized/.ssh`.
 
@@ -233,11 +233,13 @@ ssh-keygen -q -t ed25519 -C "Oxidized Push Key@`hostname`" -N "YOURPASSPHRASE" -
 ```
 
 You also need to store the public keys of the remote git server in known_hosts.
-If you do not, oxidized will refuse to push to the remote Git with the error
+If you don't store the keys, oxidized will refuse to push to the remote Git with
+the error
 `#<Rugged::SshError: invalid or unknown remote ssh hostkey>`, see Issue #2753.
 
 ```shell
 ssh-keyscan git-server.example.com > ~/oxidized-ssh/known_hosts
 ```
 
-Don't forget to set the permission (owner) of the files for the user oxidized inside the container!
+Don't forget to set the permission (owner) of the files for the user oxidized
+inside the container, or this will not work!

@@ -23,8 +23,6 @@ describe 'Oxidized::Output::File' do
   describe '#store' do
     before do
       Oxidized.asetus = Asetus.new
-      Oxidized.asetus.cfg.debug = false
-      Oxidized.setup_logger
       @file = Oxidized::Output::File.new
       @outputs = Oxidized::Model::Outputs.new
       @outputs << 'configuration'
@@ -58,8 +56,6 @@ describe 'Oxidized::Output::File' do
   describe '.clean_obsolete_nodes' do
     before do
       Oxidized.asetus = Asetus.new
-      Oxidized.asetus.cfg.debug = false
-      Oxidized.setup_logger
       @opts = {
         input:  'ssh',
         output: 'file',

@@ -3,8 +3,7 @@ require_relative 'spec_helper'
 describe Oxidized::Node do
   before(:each) do
     Oxidized.asetus = Asetus.new
-    Oxidized.asetus.cfg.debug = false
-    Oxidized.setup_logger
+    Oxidized.config.timelimit = 300
 
     Oxidized::Node.any_instance.stubs(:resolve_repo)
     Oxidized::Node.any_instance.stubs(:resolve_output)
@@ -14,7 +13,8 @@ describe Oxidized::Node do
                                model:    'junos',
                                username: 'alma',
                                password: 'armud',
-                               prompt:   'test_prompt')
+                               prompt:   'test_prompt',
+                               timeout:  42)
   end
 
   describe '#new' do
@@ -32,6 +32,9 @@ describe Oxidized::Node do
     end
     it 'should require prompt' do
       _(@node.prompt).must_equal 'test_prompt'
+    end
+    it 'should resolve timeout, from node source' do
+      _(@node.timeout).must_equal 42
     end
   end
 
@@ -73,8 +76,8 @@ describe Oxidized::Node do
                                 username: 'alma',
                                 password: 'armud',
                                 prompt:   'test_prompt')
-      Oxidized.logger.expects(:error)
-              .with("No suitable input found for example.com")
+      Oxidized::Node.logger.expects(:error)
+                    .with("No suitable input found for example.com")
       status, = node.run
       _(status).must_equal :fail
     end
@@ -184,7 +187,7 @@ describe Oxidized::Node do
       _(input_classes[2]).must_equal Oxidized::FTP
     end
 
-    it 'resolves input.default without whitespaces' do
+    it 'resolves input.default with whitespaces' do
       Oxidized.config.input.default = "ssh  , \ttelnet, ftp ,scp"
 
       input_classes = @node.send(:resolve_input, {})

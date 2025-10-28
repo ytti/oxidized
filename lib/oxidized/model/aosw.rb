@@ -13,7 +13,7 @@ class AOSW < Oxidized::Model
 
   comment '# '
   # see /spec/model/aosw_spec.rb for prompt examples
-  prompt /^\(?[\w\:.@-]+\)? ?[*^]?(\[[\w\/]+\] ?)?[#>] ?$/
+  prompt /^\(?[\w:.@-]+\)? ?[*^]?(\[[\w\/]+\] ?)?[#>] ?$/
 
   # Ignore cariage returns - also for the prompt
   expect "\r" do |data, re|
@@ -122,7 +122,7 @@ class AOSW < Oxidized::Model
       next if line =~ /Output \d Config/i
       next if line =~ /(Tachometers|Temperatures|Voltages)/
       next if line =~ /((Card|CPU) Temperature|Chassis Fan|VMON1[0-9])/
-      next if line =~ /[0-9]+\s+(RPMS?|m?V|C|W)/i
+      next if line =~ /[0-9.]{1,6}\s+(RPMS?|m?V|C|W)/i
 
       out << line.strip
     end

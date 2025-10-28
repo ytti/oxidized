@@ -8,7 +8,6 @@ module Oxidized
       end
 
       def setup
-        Oxidized.setup_logger
         if @cfg.empty?
           Oxidized.asetus.user.source.http.url       = 'https://url/api'
           Oxidized.asetus.user.source.http.map.name  = 'name'

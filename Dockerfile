@@ -11,6 +11,10 @@ ARG UID=30000
 ARG GID=$UID
 RUN groupadd -g "${GID}" -r oxidized && useradd -u "${UID}" -r -m -d /home/oxidized -g oxidized oxidized
 
+# Set Oxidized user's shell to bash
+RUN chsh -s /bin/bash oxidized
+# Remove the existing /bin/sh symlink and create a new one pointing to bash
+RUN rm /bin/sh && ln -s /bin/bash /bin/sh
 
 ##### MSMTP - Sending emails
 # link config for msmtp for easier use.
@@ -32,7 +36,7 @@ COPY extra/update-ca-certificates.runit /etc/service/update-ca-certificates/run
 RUN apt-get -qy update \
     && apt-get -qy upgrade \
     && apt-get -qy --no-install-recommends install ruby \
-    # Build process of oxidized from git (below)
+    # Build process of oxidized from git and git-tools in the container
     git \
     # Allow git send-email from docker image
     git-email libmailtools-perl \
@@ -53,6 +57,8 @@ RUN apt-get -qy update \
     # Gems needed by oxidized-web
     ruby-charlock-holmes ruby-haml ruby-htmlentities ruby-json \
     puma ruby-sinatra ruby-sinatra-contrib \
+    # Dependencies for /extra scripts
+    curl jq \
     && apt-get clean \
     && rm -rf /var/lib/apt/lists/*
 
@@ -79,14 +85,13 @@ RUN apt-get -qy update && \
     # docker automated build gets shallow copy, but non-shallow copy cannot be unshallowed
     git fetch --unshallow || true && \
     rake install && \
+    # install oxidized-web
+    gem install oxidized-web --no-document && \
     # remove the packages we do not need.
     apt-get -qy remove build-essential ruby-dev && \
     apt-get -qy autoremove && \
     apt-get clean && \
     rm -rf /var/lib/apt/lists/*
-
-# install oxidized-web
-RUN gem install oxidized-web --no-document
 
 # clean up
 WORKDIR /

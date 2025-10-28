@@ -14,7 +14,7 @@ class Trango < Oxidized::Model
         out << ("opmode " + Regexp.last_match[1])
         out << ("defaultopmode " + Regexp.last_match[2])
       end
-      out << ("power " + Regexp.last_match[1]) if line =~ /\[Tx Power\] ([\-\d]+) dBm/
+      out << ("power " + Regexp.last_match[1]) if line =~ /\[Tx Power\] ([-\d]+) dBm/
       out << ("freq " + Regexp.last_match[1] + ' ' + Regexp.last_match[2]) if line =~ /\[Active Channel\] (\d+) (v|h)/
       out << ("peerid " + Regexp.last_match[1]) if line =~ /\[Peer ID\] ([A-F0-9]+)/
       out << ("utype " + Regexp.last_match[1]) if line =~ /\[Unit Type\] (\S+)/

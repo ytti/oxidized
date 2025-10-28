@@ -35,7 +35,7 @@
 |                    |FastIron                      |[fastiron](/lib/oxidized/model/fastiron.rb)
 |                    |IronWare                      |[ironware](/lib/oxidized/model/ironware.rb)
 |                    |NOS (Network Operating System)|[nos](/lib/oxidized/model/nos.rb)
-|                    |Vyatta                        |[vyatta](/lib/oxidized/model/vyatta.rb)
+|                    |Vyatta                        |[vyatta](/lib/oxidized/model/vyatta.rb)          |                 | Also used for Vyos <= 1.2.x, for newer versions use the VyOS model
 |                    |6910                          |[br6910](/lib/oxidized/model/br6910.rb)
 |                    |SLX-OS                        |[slxos](/lib/oxidized/model/slxos.rb)
 |Calix               |AXOS                          |[axos](/lib/oxidized/model/axos.rb)
@@ -180,6 +180,8 @@
 |VMWare              |NSX Edge (configuration)      |[nsxconfig](/lib/oxidized/model/nsxconfig.rb)
 |                    |NSX Edge (firewall rules)     |[nsxfirewall](/lib/oxidized/model/nsxfirewall.rb)
 |                    |NSX Distributed Firewall      |[nsxdfw](/lib/oxidized/model/nsxdfw.rb)
+|VYOS Networks       |VYOS                          |[vyos](/lib/oxidized/model/vyos.rb)
+|                 |Fork of Vyatta, tracking the supported versions (>= 1.4.x)
 |Watchguard          |Fireware OS                   |[firewareos](/lib/oxidized/model/firewareos.rb)
 |Westell             |Westell 8178G, Westell 8266G  |[weos](/lib/oxidized/model/weos.rb)
 |Yadro               |KornfeldOS                    |[kornfeldos](/lib/oxidized/model/kornfeldos.rb) 

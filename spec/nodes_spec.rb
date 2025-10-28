@@ -4,8 +4,6 @@ describe Oxidized::Nodes do
   before(:each) do
     Resolv.any_instance.stubs(:getaddress)
     Oxidized.asetus = Asetus.new
-    Oxidized.asetus.cfg.debug = false
-    Oxidized.setup_logger
 
     opts = {
       input:    'ssh',
@@ -47,6 +45,10 @@ describe Oxidized::Nodes do
   end
 
   describe '#next' do
+    before(:each) do
+      Oxidized::Nodes.logger.expects(:info)
+                     .with('Add node sav-gr1-sw1.kuo to running jobs')
+    end
     it 'moves node to top of queue' do
       node = @nodes[3]
       @nodes.next node.name

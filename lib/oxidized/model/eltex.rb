@@ -3,7 +3,7 @@ class Eltex < Oxidized::Model
 
   # Tested with MES2324FB Version: 4.0.7.1 Build: 37 (master)
 
-  prompt /^\s?[\w.@\(\)-]+[#>]\s?$/
+  prompt /^\s?[\w.@()-]+[#>]\s?$/
   comment '! '
 
   cmd :all do |cfg|

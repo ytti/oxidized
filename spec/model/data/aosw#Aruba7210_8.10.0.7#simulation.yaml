@@ -1,0 +1,233 @@
+---
+init_prompt: |-
+    
+    (OXID-IZE01) [mynode] #
+commands:
+  - "no paging\n": |-
+      no paging
+      \r(OXID-IZE01) [mynode] #
+  - "encrypt disable\n": |-
+      encrypt disable
+      \r(OXID-IZE01) [mynode] #
+  - "show version\n": |-
+      show version
+      \r\r
+      Aruba Operating System Software.
+      ArubaOS (MODEL: Aruba7210), Version 8.10.0.7 LSR
+      Website: http://www.arubanetworks.com
+      (c) Copyright 2023 Hewlett Packard Enterprise Development LP.
+      Compiled on 2023-06-06 at 18:06:54 UTC (build 87023) by jenkins
+      
+      ROM: System Bootstrap, Version CPBoot 1.2.9.0 (build 59986)
+      Built: 2017-06-07 03:35:36
+      Built by: p4build@re_client_59986
+      
+      
+      Switch uptime is 275 days 1 hours 56 minutes 34 seconds
+      Reboot Cause: Power Cycle (Intent:cause:register ee:ee:0:1)
+      Supervisor Card
+      Processor (XLP416 Rev B2 (Secure Boot) , 800 MHz) with 7382M bytes of memory.
+      32K bytes of non-volatile configuration memory.
+      7744M bytes of Supervisor Card system flash.
+      (OXID-IZE01) [mynode] #
+  - "show inventory\n": |-
+      show inventory
+      \r
+      Supervisor Card slot      \t: 0
+      System Serial#            \t: CV0010001 (Date:03/31/18)
+      CPU Card Serial#          \t: AI12345678 (Date:03/31/18)
+      CPU Card Assembly#        \t: 2010001H
+      CPU Card Revision         \t: (Rev:11.00)
+      Interface Card Serial#    \t: AI10123456 (Date:03/31/18)
+      Interface Card Assembly#  \t: 2010011E
+      Interface Card Revision   \t: (Rev:04.00)
+      SC Model#                 \t: Aruba7210
+      HW MAC Addr               \t: 00:1a:1e:00:00:68 to 00:1a:1e:00:00:6f
+      CPLD Version                    : (Rev: 3.0)
+      Power Supply 0            \t: Present             \t: Yes
+      \t\t\t\t: 12V OK              \t: Yes
+      \t\t\t\t: Fan OK              \t: Yes
+      \t\t\t\t: Aruba Model No      \t: 2510057
+      \t\t\t\t: Vendor & Model No   \t: QCS DCJ3501-01P
+      \t\t\t\t: Serial No           \t: QCS1999999Z
+      \t\t\t\t: MFG Date            \t: 2/7/18
+      \t\t\t\t: Output 1 Config     \t: 12V 350W
+      \t\t\t\t: Input Min           \t: 90V AC
+      \t\t\t\t: Input Max           \t: 264V AC
+      Power Supply 1            \t: Present             \t: Yes
+      \t\t\t\t: 12V OK              \t: Yes
+      \t\t\t\t: Fan OK              \t: Yes
+      \t\t\t\t: Aruba Model No      \t: 2510057
+      \t\t\t\t: Vendor & Model No   \t: QCS DCJ3501-01P
+      \t\t\t\t: Serial No           \t: QCS1888888M
+      \t\t\t\t: MFG Date            \t: 4/17/18
+      \t\t\t\t: Output 1 Config     \t: 12V 350W
+      \t\t\t\t: Input Min           \t: 90V AC
+      \t\t\t\t: Input Max           \t: 264V AC
+      Main Board Temperatures   \t:
+      \t\t\t\t: U24 - Local Temp    \t31 C (shadow of XLP heatsink)
+      \t\t\t\t: Q1  - Remote 1 Temp \t33 C (shadow of VRM, VDD_CPU)
+      \t\t\t\t: Q2  - Remote 2 Temp \t33 C (shadow of VRM, VDD_SOC)
+      \t\t\t\t: U44 - Local Temp    \t26 C (shadow of DPI connector)
+      \t\t\t\t: U29  - Remote 1 Temp\t30 C (XLP die temperature)
+      \t\t\t\t: Q36  - Remote 2 Temp\t28 C (shadow of 98X1422)
+      \t\t\t\t: J2  - DDR A Temp    \t24 C (DDR3 A temp)
+      \t\t\t\t: J4  - DDR B Temp    \t27 C (DDR3 B temp)
+      \t\t\t\t: J1  - DDR C Temp    \t26 C (DDR3 C temp)
+      \t\t\t\t: J3  - DDR D Temp    \t27 C (DDR3 D temp)
+      \t\t\t\t: Port 0 Temp         \t33 C (1G PHY temp)
+      \t\t\t\t: Port 1 Temp         \t33 C (1G PHY temp)
+      Interface Board Temperatures\t:
+      \t\t\t\t: U21 - Local Temp    \t28 C (shadow of port 1 RJ45)
+      \t\t\t\t: Q4 - Remote 1 Temp  \t27 C (shadow of 88E1543)
+      \t\t\t\t: Q3 - Remote 2 Temp  \t34 C (shadow of 88X2140)
+      Fan  0                         \t: 8957 rpm (5.719 V),Speed Low
+      Fan  1                         \t: 9029 rpm (5.921 V),Speed Low
+      Fan  2                         \t: 9091 rpm (5.719 V),Speed Low
+      Fan  3                         \t: 9091 rpm (5.764 V),Speed Low
+      Main Board Voltages       \t:
+      ispPAC_POWR1014A_A        \t:
+      \t\t\t\t: 1V2                  1.20V sense 1.226 V
+      \t\t\t\t: VDD SOC              0.943V sense 0.924 V
+      \t\t\t\t: VCC IOBD 1V5         1.50V sense 1.520 V
+      \t\t\t\t: DDR3BD_VTT           0.75V sense 0.748 V
+      \t\t\t\t: VCC 1A               1.00V sense 1.024 V
+      \t\t\t\t: IV8_DIGITAL          1.80V sense 1.856 V
+      \t\t\t\t: 3V3_MAIN             3.30V sense 3.348 V
+      \t\t\t\t: VCC1                 1.00V sense 1.020 V
+      \t\t\t\t: VCC25                2.50V sense 2.538 V
+      \t\t\t\t: 3V3 SB               3.30V sense 3.330 V
+      ispPAC_POWR1014A_B        \t:
+      \t\t\t\t: VDD                  0.837V sense 0.848 V
+      \t\t\t\t: VCC IOAC 1V5         1.50V sense 1.532 V
+      \t\t\t\t: DDR3AC_VTT           0.75V sense 0.754 V
+      \t\t\t\t: VDD_SRAM             1.00V sense 1.048 V
+      \t\t\t\t: VCC1B                1.00V sense 1.030 V
+      \t\t\t\t: 1V8_ANALOG           1.80V sense 1.830 V
+      \t\t\t\t: 1V8                  1.80V sense 1.860 V
+      \t\t\t\t: VDDIO12_XAUI         1.20V sense 1.224 V
+      \t\t\t\t: 5V                   5.00V sense 5.028 V
+      Interface Board Voltages  \t:
+      ispPAC_POWR6AT6           \t:
+      \t\t\t\t: VCC33                3.30V sense 3.354 V
+      \t\t\t\t: VCC 18               1.80V sense 1.854 V
+      \t\t\t\t: VCC1                 1.00V sense 1.026 V
+      \t\t\t\t: VCC12                1.20V sense 1.232 V
+      \t\t\t\t: VCC12-DVDD           1.20V sense 1.240 V
+      \t\t\t\t: VCC9                 0.90V sense 0.928 V
+      (OXID-IZE01) [mynode] #
+  - "show slots\n": |-
+      show slots
+      \r
+      Slots\x20
+      ------
+      Slot  Status   Card Type
+      ----  ------   ---------
+      0     Present  A7210
+      (OXID-IZE01) [mynode] #
+  - "show license\n": |-
+      show license
+      \r
+      License Table
+      -------------
+      Key                                               Installed            Expires(Grace period expiry)  Flags  Service Type
+      ---                                               ---------            ----------------------------  -----  ------------
+      00000000-00000000-00000000-00000000-00000000-000  2099-05-27 19:46:18  Never                          E     Next Generation Policy Enforcement Firewall Module: 42
+      00000000-00000000-00000000-00000000-00000000-000  2099-05-27 19:46:19  Never                          E     RF Protect: 12
+      00000000-00000000-00000000-00000000-00000000-000  2099-05-27 19:46:18  Never                          E     Access Points: 12
+      
+      License Entries: 3
+      
+      Flags: A - auto-generated; E - enabled; S - Subscription; R - reboot required to activate; D - Not enabled on license client
+      
+      Note: Time under 'Installed' for Subscription licenses is the license generation time.
+      (OXID-IZE01) [mynode] #
+  - "show license passphrase\n": |-
+      show license passphrase
+      \r
+      Command is not supported for this platform
+      \r
+      (OXID-IZE01) [mynode] #
+  - "show running-config\n": |-
+      show running-config
+      \rBuilding Configuration...\r
+      \x20
+      version 8.10
+      hostname \"OXID-IZE01\"\x20
+      clock timezone Europe/Berlin +02 0\x20
+      !
+      vpn-dialer default-dialer\x20
+      ike authentication pre-share AAAAAAAAAABBBBBBBBBB\x20
+      !
+      !
+      crypto isakmp policy 20\x20
+      encryption AES256\x20
+      authentication pre-share\x20
+      !
+      syslocation \"LOCATION\"\x20
+      syscontact \"OXIDIZED\"\x20
+      snmp-server community \"AAAAAAAAAABBBBBBBBBBCCCCCCCCCC\"\x20
+      snmp-server community \"AAAAAAAAAABBBBBBBBBB\"\x20
+      mgmt-user admin root ******************** node /\x20
+      mgmt-user oxidized root ********************\x20
+      
+      !
+      country DE\x20
+      change-config-node /
+      !
+      aaa authentication-server tacacs \"tacacs1\"\x20
+      host \"10.42.0.12\"\x20
+      key \"AAAAAAAAAABBBBBBBBBBB\"\x20
+      !
+      aaa authentication-server tacacs \"tacacs2\"\x20
+      host \"10.42.0.13\"\x20
+      key \"AAAAAAAAAABBBBBBBBBBBCCCCCCCCCCC\"\x20
+      !
+      aaa authentication-server radius \"radius1\"\x20
+      host \"10.42.0.14\"\x20
+      key \"AAAAAAAAAABBBBBBBBBBB\"\x20
+      nas-identifier \"OXID-IZE01\"\x20
+      nas-ip 10.42.0.5\x20
+      !
+      preemption\x20
+      state-sync\x20
+      pre-shared-key \"AAAAAAAAAABBBBBBBBBBCCCCCCCCCCC\"\x20
+      controller 10.42.0.2 role active\x20
+      controller 10.42.0.3 role standby\x20
+      !
+      ap system-profile \"AP-PROFILE\"\x20
+          session-acl \"\"
+      lms-ip 10.42.0.52\x20
+      bkup-lms-ip 10.42.0.53\x20
+      ap-console-password \"AAAAAAAAAABBBBBBBBBB\"\x20
+      bkup-passwords \"AAAAAAAAAABBBBBBBBBBCCCCCCCCCC\"\x20
+      !
+      wlan ssid-profile \"PSK-SSID\"\x20
+      essid \"PSK-SSID\"\x20
+      wpa-passphrase \"AAAAAAAAAABBBBBBBBBB\"\x20
+      opmode wpa2-psk-aes\x20
+      !
+      
+      snmp-server enable trap\x20
+      snmp-server host 10.42.1.5 version 2c AAAAAAAAAABBBBBBBBBB udp-port 162\x20
+      snmp-server host 10.42.1.6 version 2c AAAAAAAAAABBBBBBBBBB udp-port 162\x20
+      !
+      conductor-redundancy\x20
+      conductor-vrrp 255\x20
+      peer-ip-address 10.42.0.3 ipsec AAAAAAAAAABBBBBBBBBBCCCCCCCCCC\x20
+      !
+      vrrp 254\x20
+      priority 110\x20
+      authentication AAAAAAAAAABBBBBBBBBB\x20
+      ip address 10.42.0.8\x20
+      description \"VRRP-Master\"\x20
+      vlan 42\x20
+      no shutdown\x20
+      !
+      
+      
+      end
+      (OXID-IZE01) [mynode] #
+  - "exit\n": |-
+      exit
+      \r

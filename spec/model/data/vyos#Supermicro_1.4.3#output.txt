@@ -1,0 +1,91 @@
+# Version:          VyOS 1.4.3
+# Release train:    sagitta
+# Release flavor:   generic
+# 
+# Built by:         autobuild@vyos.net
+# Built on:         Mon 07 Jul 2025 14:34 UTC
+# Build UUID:       b0ae922b-2396-42b7-bb82-a1ebf406306d
+# Build commit ID:  f327543504e3da-dirty
+# 
+# Architecture:     x86_64
+# Boot via:         installed image
+# System type:      bare metal
+# 
+# Hardware vendor:  Supermicro
+# Hardware model:   S373857X4512086
+# Hardware S/N:     57088070529243W
+# Hardware UUID:    00000000-0000-0000-0000-7cc2554f1d58
+# 
+# Copyright:        VyOS maintainers and contributors
+set firewall global-options all-ping 'enable'
+set firewall global-options broadcast-ping 'disable'
+set firewall global-options ip-src-route 'disable'
+set firewall global-options ipv6-receive-redirects 'disable'
+set firewall global-options ipv6-src-route 'disable'
+set firewall global-options log-martians 'enable'
+set firewall global-options receive-redirects 'disable'
+set firewall global-options send-redirects 'enable'
+set firewall global-options source-validation 'disable'
+set firewall global-options syn-cookies 'enable'
+set firewall global-options twa-hazards-protection 'disable'
+set firewall group network-group AUTHORIZED_PUBLIC_DNS_SERVERS network '1.1.1.1/32'
+set firewall group network-group AUTHORIZED_PUBLIC_DNS_SERVERS network '8.8.8.8/32'
+set firewall group network-group AUTHORIZED_PUBLIC_DNS_SERVERS network '8.8.4.4/32'
+set interfaces ethernet eth0 hw-id '7c:c2:55:4f:1d:58'
+set interfaces ethernet eth1 hw-id '7c:c2:55:4f:1d:59'
+set interfaces ethernet eth2 hw-id '7c:c2:55:4f:1d:5a'
+set interfaces ethernet eth3 hw-id '7c:c2:55:4f:1d:5b'
+set interfaces loopback lo description 'config_saved_2025-09-16'
+set service console-server device usb0b3p1.0 description 'devswitch'
+set service console-server device usb0b3p1.0 speed '9600'
+set service console-server device usb0b3p1.0 ssh port '3001'
+set service lldp interface eth0
+set service lldp interface eth1
+set service lldp snmp
+set service ntp allow-client address '0.0.0.0/0'
+set service ntp allow-client address '::/0'
+set service ntp server 10.10.10.1
+set service snmp community public authorization 'ro'
+set service snmp contact 'user@example.com'
+set service snmp oid-enable 'ip-route-table'
+set service ssh port '22'
+set system config-management commit-revisions '20'
+set system conntrack expect-table-size '2048'
+set system conntrack hash-size '32768'
+set system conntrack modules ftp
+set system conntrack modules h323
+set system conntrack modules nfs
+set system conntrack modules pptp
+set system conntrack modules sip
+set system conntrack modules sqlnet
+set system conntrack modules tftp
+set system conntrack table-size '524288'
+set system conntrack tcp half-open-connections '512'
+set system conntrack tcp loose 'enable'
+set system conntrack tcp max-retrans '3'
+set system conntrack timeout icmp '30'
+set system conntrack timeout other '600'
+set system conntrack timeout tcp close '10'
+set system conntrack timeout tcp close-wait '60'
+set system conntrack timeout tcp established '432000'
+set system conntrack timeout tcp fin-wait '120'
+set system conntrack timeout tcp last-ack '30'
+set system conntrack timeout tcp syn-recv '60'
+set system conntrack timeout tcp syn-sent '120'
+set system conntrack timeout tcp time-wait '120'
+set system conntrack timeout udp other '30'
+set system conntrack timeout udp stream '180'
+set system console device ttyS0 speed '115200'
+set system domain-name 'example.com'
+set system frr snmp bgpd
+set system host-name 'fw1'
+set system name-server '8.8.8.8'
+set system option ctrl-alt-delete 'reboot'
+set system option disable-usb-autosuspend
+set system option reboot-on-panic
+set system syslog global facility all level 'notice'
+set system syslog global facility local7 level 'debug'
+set system time-zone 'UTC'
+# some URL with password: http://user:AAAAAAAAAABBBBBBBBBB@domain.tld/
+# some URL with password: ftp://user:AAAAAAAAAABBBBBBBBBB@domain.tld/
+# some URL with password: https://user:AAAAAAAAAABBBBBBBBBB@domain.tld/

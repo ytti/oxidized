@@ -3,6 +3,8 @@ require_relative 'outputs'
 
 module Oxidized
   class Model
+    include SemanticLogger::Loggable
+
     using Refinements
 
     include Oxidized::Config::Vars
@@ -11,9 +13,9 @@ module Oxidized
       def inherited(klass)
         super
         if klass.superclass == Oxidized::Model
-          klass.instance_variable_set '@cmd',     (Hash.new { |h, k| h[k] = [] })
-          klass.instance_variable_set '@cfg',     (Hash.new { |h, k| h[k] = [] })
-          klass.instance_variable_set '@procs',   (Hash.new { |h, k| h[k] = [] })
+          klass.instance_variable_set('@cmd',     Hash.new { |h, k| h[k] = [] })
+          klass.instance_variable_set('@cfg',     Hash.new { |h, k| h[k] = [] })
+          klass.instance_variable_set('@procs',   Hash.new { |h, k| h[k] = [] })
           klass.instance_variable_set '@expect',  []
           klass.instance_variable_set '@comment', nil
           klass.instance_variable_set '@prompt',  nil
@@ -56,7 +58,7 @@ module Oxidized
         else
           process_args_block(@cmd[:cmd], args, [cmd_arg, block])
         end
-        Oxidized.logger.debug "lib/oxidized/model/model.rb Added #{cmd_arg} to the commands list"
+        logger.debug "Added #{cmd_arg} to the commands list"
       end
 
       def cmds
@@ -65,6 +67,30 @@ module Oxidized
 
       def expect(regex, **args, &block)
         process_args_block(@expect, args, [regex, block])
+      end
+
+      def clean(what)
+        case what
+        when :escape_codes
+          ansi_escape_regex = /
+            \r?        # Optional carriage return at start
+            \e         # ESC character - starts escape sequence
+            (?:        # Non-capturing group for different sequence types:
+              # Type 1: CSI (Control Sequence Introducer)
+              \[       # Literal '[' - starts CSI sequence
+              [0-?]*   # Parameter bytes: digits (0-9), semicolon, colon, etc.
+              [ -\/]*  # Intermediate bytes: space through slash characters
+              [@-~]    # Final byte: determines the actual command
+            |          # OR
+              # Type 2: Simple escape
+              [=>]     # Single character commands after ESC
+            )
+            \r?        # Optional carriage return at end
+          /x
+          expect ansi_escape_regex do |data, re|
+            data.gsub re, ''
+          end
+        end
       end
 
       def expects
@@ -118,7 +144,7 @@ module Oxidized
     attr_accessor :input, :node
 
     def cmd(string, &block)
-      Oxidized.logger.debug "lib/oxidized/model/model.rb Executing #{string}"
+      logger.debug "Executing #{string}"
       out = @input.cmd(string)
       return false unless out
 
@@ -165,7 +191,7 @@ module Oxidized
     end
 
     def get
-      Oxidized.logger.debug 'lib/oxidized/model/model.rb Collecting commands\' outputs'
+      logger.debug 'Collecting commands\' outputs'
       outputs = Outputs.new
       procs = self.class.procs
       self.class.cmds[:cmd].each do |command, block|

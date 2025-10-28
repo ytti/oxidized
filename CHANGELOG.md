@@ -5,6 +5,73 @@ All notable changes to this project will be documented in this file.
 The format is based on [Keep a Changelog](https://keepachangelog.com/en/1.1.0/).
 
 ## [Unreleased]
+VyOS now has it's own Model and should be used for supported VyOS versions instead of the Vyatta Model.
+
+### Added
+- Allow setting timeout on per node basis. Closes #3612 (@ytti)
+- Added Vyos as individual model. Closes #3603 #3560 (@nicolasberens)
+
+### Changed
+- tnsr: added simulation data for older versions (@Vantomas)
+- docker image: change oxidized user's shell to bash. (@electrocret)
+- refactor suppression of ANSI escape codes into model.rb (use `clean :escape_codes` in your model. Updated cumulus, garderos, mlnxos and vyos. (@robertcheramy)
+
+### Fixed
+- input/http: bracket IPv6 URI. Fixes #3620 (@ytti)
+- tnsr: fixed prompt regex, sometimes --More-- pager is misplaced on older versions (@ClumsyAdmin)
+- eatonnetwork: Update for firmware v2.2.0 #3634 (@thanegill)
+- many models: fix redundant regular expressions (@cheramr)
+- timos: remove deprecated model timos. Use sros. #3617 (@cheramr)
+- fsos: set terminal width to 0. Fixes #3576 (@cheramr)
+
+## [0.34.3 - 2025-08-05]
+This release fixes an issue preventing /node/show/<hostname> to work in oxidized-web.
+
+### Fixed
+- Guarantee that node vars is a dict (Issue ytti/oxidized-web#365) (@ytti)
+
+## [0.34.2 – 2025-08-01]
+This release mainly fixes a bug in input/scp that made ssh raise an error when
+closing a closed connection (Issue #3583).
+
+A fix for config vars (Issue #3536) changes the way oxidized stores its
+vars internally (symblos => strings). Libraries depending on oxidized internal
+structures may have problem with this. oxidized-web was fixed in Release 0.17.1.
+
+### Added
+- Absolute time limit for a fetch job (default: 300 seconds) (@robertcheramy)
+
+### Changed
+- slackdiff: Attempt to join the channel if Errors::NotInChannel is encountered (@varesa)
+
+### Fixed
+- SSH raises error when closing a closed connection. Fixes #3583 (@ytti)
+- Config vars will not fall back to less specific. Fixes #3536 (@ytti)
+- input/scp: make common errors produce a warning, not a crashfile (@robertcheramy)
+- input/scp: implement timeouts. Fixes #3590 (@robertcheramy, @ytti)
+- model/mtrlrfs: add missing prompt (@R3thos)
+- slackdiff: Respect the HTTP proxy configuration while uploading the file. Fixes #3534 (@varesa)
+- logging (syslog): do not write two timestamps (Fixed in semanticlogger) (@robertcheramy)
+
+
+## [0.34.1 - 2025-07-18]
+This release contains small fixes and will include the new version of oxidized-web (0.17.0) in the docker container.
+
+### Changed
+- github: run ruby CI against ruby-head (@robertcheramy)
+
+### Fixed
+- input/ssh: hide Net::SSH errors and only display fatal logs unless input.debug = true. Fixes: #3574 (@robertcheramy)
+- junos: fix unfrozen literal strings (@robertcheramy)
+- spec/model: fix unfrozen literal strings and set a default prompt (@robertcheramy)
+
+
+## [0.34.0 - 2025-07-15]
+:warning: This release introduces a [new logging system](docs/Configuration.md#logging),
+based on [semantic logger](https://logger.rocketjob.io/). The old configuration
+(`log`, `syslog`) is still supported but obsolete and will be removed in a
+future release, so be sure to migrate your configuration.
+
 ### Added
 - add iosxr support to SyslogMonitor (@deesel)
 - add junos: support show chassis cluster when SRX series (@shigechika)
@@ -12,16 +79,18 @@ The format is based on [Keep a Changelog](https://keepachangelog.com/en/1.1.0/).
 - ssh: support 'newline "string"' cfg block method to allow defining \r\n newline (@ytti)
 - model for Netgate TNSR (@Vantomas)
 - efos: New model for Brocade Enhanced Fabric OS. Fixes #3477 (@sorano, @cetjcm, @robertcheramy)
-- ouput/file, output/git: clean node configurations which are not listed in the source anymore. Fixes: #1805 (@robertcheramy)
+- output/file, output/git: clean node configurations which are not listed in the
+  source anymore. Fixes: #1805 (@robertcheramy)
 - sixwind: New model to support 6WIND Virtual Service Router (@hcaldicott)
 - model for saos10 (@penfold1972)
 
-
 ### Changed
+- remove uri in commit-archive location for EdgeOS. Fixed #3525 (@systeembeheerder)
 - acos: remove free storage amount from show version. Fixes #3492 (@991jo)
 - Housekeeping in the code: Maximal line length: 120 char + Rubocop fixes (@robertcheramy)
 - spec/model/data uses # instead of : as a separator in the filename, so we can
-  git clone unter Windows. Fixes: #3481 (@robertcheramy)
+  git clone under Windows. Fixes: #3481 (@robertcheramy)
+- logging: rework of the logging system, using Semantic Logger (@robertcheramy)
 
 ### Fixed
 - nxos: ignore bootflash size and permission errors (@rouven0)
@@ -33,19 +102,16 @@ The format is based on [Keep a Changelog](https://keepachangelog.com/en/1.1.0/).
 - aosw: fix secret parsing (@rouven0)
 - mlnxos: handle ANSI-ESC codes and pager requests. The prompt has been
   reengineered, open an issue if you experience timeouts. Fixes #3469 (@robertcheramy)
-- AricentISS: fix codeQL alert #15 (@robertcheramy)
 - Update installation instructions on Rocky Linux 9. Fixes #3368 (@robertcheramy)
 - awplus: fix enable password when supplied (@sgsimpson)
-- node.rb: remove Polynomial regular expression / Fixes Code scanning alert #40 (@robertcheramy)
-- asa: remove inefficient regular expression / Fixes Code scanning alert #5 and #6 (@robertcheramy)
-- sonicos: remove inefficient regular expression / Fixes code scanning alert #4 and #11 (@robertcheramy)
-- quantaos: remove inefficient regular expression / Fixes code scanning alerts 9 and 10 (@robertcheramy)
+- Fix CodeQL scanning alerts on regular expressions (Issue #3513) in node.rb (alert 40),
+  asa (alerts 5 and 6), sonicos (4, 11), quantaos (9, 10), eltex (7), zynos (18, 19),
+  AricentISS (15) and aosw (36)
 - fabricos: remove power supply input voltage from `chassisShow` output (@hops)
-- vyatta: Ignore system uptime in `show version` on Edgerouter devices (@shanemcc)
 - netgear: include running-config in config output (@bradleywehmeier)
-- eltex: remove inefficient regular expression / Fixes code scanning alert 7 / See Issue #3513 (@robertcheramy)
 - tmos: remove deprecated secrets (@rouven0)
-- log an error when no suitable input is found for a node. Fixes: #3346 (@robertcheramy) 
+- log an error when no suitable input is found for a node. Fixes: #3346 (@robertcheramy)
+- firelinuxos: fix timeout on syntax error. Fixes #3393, #3502 (@robertcheramy)
 
 
 ## [0.33.0 - 2025-03-26]

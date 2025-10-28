@@ -14,6 +14,7 @@ module Oxidized
       ]
     }.freeze
     include Input::CLI
+
     class NoShell < OxidizedError; end
 
     def connect(node) # rubocop:disable Naming/PredicateMethod
@@ -24,10 +25,10 @@ module Oxidized
       if Oxidized.config.input.debug?
         logfile = Oxidized::Config::LOG + "/#{@node.ip}-ssh"
         @log = File.open(logfile, 'w')
-        Oxidized.logger.debug "lib/oxidized/input/ssh.rb: I/O Debuging to #{logfile}"
+        logger.debug "I/O Debuging to #{logfile}"
       end
 
-      Oxidized.logger.debug "lib/oxidized/input/ssh.rb: Connecting to #{@node.name}"
+      logger.debug "Connecting to #{@node.name}"
       @ssh = Net::SSH.start(@node.ip, @node.auth[:username], make_ssh_opts)
       unless @exec
         shell_open @ssh
@@ -45,9 +46,9 @@ module Oxidized
     end
 
     def cmd(cmd, expect = node.prompt)
-      Oxidized.logger.debug "lib/oxidized/input/ssh.rb #{cmd.dump} @ #{node.name} with expect: #{expect.inspect}"
+      logger.debug "Sending '#{cmd.dump}' @ #{node.name} with expect: #{expect.inspect}"
       if Oxidized.config.input.debug?
-        @log.puts "sent #{cmd.dump}"
+        @log.puts "sent cmd #{@exec ? cmd.dump : (cmd + newline).dump}"
         @log.flush
       end
       cmd_output = if @exec
@@ -60,6 +61,10 @@ module Oxidized
     end
 
     def send(data)
+      if Oxidized.config.input.debug?
+        @log.puts "sent data #{data.dump}"
+        @log.flush
+      end
       @ses.send_data data
     end
 
@@ -74,15 +79,15 @@ module Oxidized
     def disconnect
       disconnect_cli
       # if disconnect does not disconnect us, give up after timeout
-      Timeout.timeout(Oxidized.config.timeout) { @ssh.loop }
+      Timeout.timeout(@node.timeout) { @ssh.loop }
     rescue Errno::ECONNRESET, Net::SSH::Disconnect, IOError => e
-      Oxidized.logger.debug 'ssh: the other side closed the connection while ' \
-                            "disconnecting, rasing #{e.class} with #{e.messages}"
+      logger.debug 'The other side closed the connection while ' \
+                   "disconnecting, raising #{e.class} with #{e.message}"
     rescue Timeout::Error
-      Oxidized.logger.debug "ssh: #{@node.name} timed out while disconnecting"
+      logger.debug "#{@node.name} timed out while disconnecting"
     ensure
       @log.close if Oxidized.config.input.debug?
-      (@ssh.close rescue true) unless @ssh.closed?
+      (@ssh.close rescue true) unless @ssh.closed? # rubocop:disable Style/RedundantParentheses
     end
 
     def shell_open(ssh)
@@ -121,8 +126,8 @@ module Oxidized
 
     def expect(*regexps)
       regexps = [regexps].flatten
-      Oxidized.logger.debug "lib/oxidized/input/ssh.rb: expecting #{regexps.inspect} at #{node.name}"
-      Timeout.timeout(Oxidized.config.timeout) do
+      logger.debug "Expecting #{regexps.inspect} at #{node.name}"
+      Timeout.timeout(@node.timeout) do
         @ssh.loop(0.1) do
           sleep 0.1
           match = regexps.find { |regexp| @output.match regexp }
@@ -141,14 +146,14 @@ module Oxidized
         verify_host_key:                 secure ? :always : :never,
         append_all_supported_algorithms: true,
         password:                        @node.auth[:password],
-        timeout:                         Oxidized.config.timeout,
+        timeout:                         @node.timeout,
         port:                            (vars(:ssh_port) || 22).to_i,
         forward_agent:                   false
       }
 
       auth_methods = vars(:auth_methods) || %w[none publickey password]
       ssh_opts[:auth_methods] = auth_methods
-      Oxidized.logger.debug "AUTH METHODS::#{auth_methods}"
+      logger.debug "AUTH METHODS::#{auth_methods}"
 
       ssh_opts[:proxy] = make_ssh_proxy_command(vars(:ssh_proxy), vars(:ssh_proxy_port), secure) if vars(:ssh_proxy)
 
@@ -158,10 +163,10 @@ module Oxidized
       ssh_opts[:host_key]   = vars(:ssh_host_key).split(/,\s*/)   if vars(:ssh_host_key)
       ssh_opts[:hmac]       = vars(:ssh_hmac).split(/,\s*/)       if vars(:ssh_hmac)
 
-      if Oxidized.config.input.debug?
-        ssh_opts[:logger]  = Oxidized.logger
-        ssh_opts[:verbose] = Logger::DEBUG
-      end
+      # Use our logger for Net::SSH
+      ssh_logger = SemanticLogger[Net::SSH]
+      ssh_logger.level = Oxidized.config.input.debug? ? :debug : :fatal
+      ssh_opts[:logger] = ssh_logger
 
       ssh_opts
     end
