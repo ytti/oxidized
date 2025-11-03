@@ -26,6 +26,10 @@ class PfSense < Oxidized::Model
     xmlcomment "PFsense #{version}"
   end
 
+  metadata :bottom do
+    xmlcomment interpolate_string Oxidized::Model::METADATA_DEFAULT
+  end
+
   cfg :ssh do
     exec true
     pre_logout 'exit'

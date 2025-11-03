@@ -22,6 +22,11 @@ class OpnSense < Oxidized::Model
     xmlcomment version
   end
 
+  # FIXME: use var("metadata_top")||Oxidized::Model::METADATA_DEFAULT ?
+  metadata :bottom do
+    xmlcomment interpolate_string Oxidized::Model::METADATA_DEFAULT
+  end
+
   cfg :ssh do
     exec true
     pre_logout 'exit'

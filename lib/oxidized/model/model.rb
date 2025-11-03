@@ -9,6 +9,11 @@ module Oxidized
 
     include Oxidized::Config::Vars
 
+    # rubocop:disable Style/FormatStringToken
+    METADATA_DEFAULT = "%{comment}Fetched by Oxidized with model %{model} " \
+                       "from host %{name} [%{ip}]\n".freeze
+    # rubocop:enable Style/FormatStringToken
+
     class << self
       def inherited(klass)
         super
@@ -19,6 +24,7 @@ module Oxidized
           klass.instance_variable_set '@expect',  []
           klass.instance_variable_set '@comment', nil
           klass.instance_variable_set '@prompt',  nil
+          klass.instance_variable_set '@metadata', {}
         else # we're subclassing some existing model, take its variables
           instance_variables.each do |var|
             iv = instance_variable_get(var)
@@ -59,6 +65,16 @@ module Oxidized
           process_args_block(@cmd[:cmd], args, [cmd_arg, block])
         end
         logger.debug "Added #{cmd_arg} to the commands list"
+      end
+
+      def metadata(position, value = nil, &block)
+        return unless %i[top bottom].include? position
+
+        if block_given?
+          @metadata[position] = block
+        else
+          @metadata[position] = value
+        end
       end
 
       def cmds
@@ -161,6 +177,31 @@ module Oxidized
       process_cmd_output out, string
     end
 
+    def metadata(position)
+      value = self.class.instance_variable_get(:@metadata)[position]
+      value.is_a?(Proc) ? instance_eval(&value) : interpolate_string(value)
+    end
+
+    def interpolate_string(template)
+      return nil unless template
+
+      time = Time.now
+      template_variables = {
+        model:   self.class.name,
+        name:    node.name,
+        ip:      node.ip,
+        group:   node.group,
+        comment: self.class.comment,
+        year:    time.year,
+        month:   "%02d" % time.month,
+        day:     "%02d" % time.day,
+        hour:    "%02d" % time.hour,
+        minute:  "%02d" % time.min,
+        second:  "%02d" % time.sec
+      }
+      template % template_variables
+    end
+
     def output
       @input.output
     end
@@ -205,6 +246,22 @@ module Oxidized
       end
       procs[:post].each do |post_proc|
         outputs << process_cmd_output(instance_eval(&post_proc), '')
+      end
+      if vars("metadata") == true
+        # FIXME: move most of the logic to #metadata?
+        metadata_top = metadata(:top)
+        metadata_bottom = metadata(:bottom)
+        unless metadata_top || metadata_bottom
+          # only use vars metadata when the model doesn't provide one
+          metadata_top = interpolate_string(vars("metadata_top"))
+          metadata_bottom = interpolate_string(vars("metadata_bottom"))
+        end
+        unless metadata_top || metadata_bottom
+          # when vars are not set, use default
+          metadata_top = interpolate_string(METADATA_DEFAULT)
+        end
+        outputs.unshift metadata_top if metadata_top
+        outputs << metadata_bottom if metadata_bottom
       end
       outputs
     end
