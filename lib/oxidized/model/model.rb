@@ -178,8 +178,21 @@ module Oxidized
     end
 
     def metadata(position)
-      value = self.class.instance_variable_get(:@metadata)[position]
-      value.is_a?(Proc) ? instance_eval(&value) : interpolate_string(value)
+      return unless %i[top bottom].include? position
+
+      model_metadata = self.class.instance_variable_get(:@metadata)
+      var_position = { top: "metadata_top", bottom: "metadata_bottom" }
+      if model_metadata[:top] || model_metadata[:bottom]
+        # the model defines metadata at :top ot :bottom, use the model
+        value = model_metadata[position]
+        value.is_a?(Proc) ? instance_eval(&value) : interpolate_string(value)
+      elsif vars("metadata_top") || vars("metadata_bottom")
+        # vars defines metadata_top or metadata bottom, use the vars
+        interpolate_string(vars(var_position[position]))
+      elsif position == :top
+        # default: set use METADATA_DEFAULT for top
+        interpolate_string(METADATA_DEFAULT)
+      end
     end
 
     def interpolate_string(template)
@@ -248,18 +261,8 @@ module Oxidized
         outputs << process_cmd_output(instance_eval(&post_proc), '')
       end
       if vars("metadata") == true
-        # FIXME: move most of the logic to #metadata?
         metadata_top = metadata(:top)
         metadata_bottom = metadata(:bottom)
-        unless metadata_top || metadata_bottom
-          # only use vars metadata when the model doesn't provide one
-          metadata_top = interpolate_string(vars("metadata_top"))
-          metadata_bottom = interpolate_string(vars("metadata_bottom"))
-        end
-        unless metadata_top || metadata_bottom
-          # when vars are not set, use default
-          metadata_top = interpolate_string(METADATA_DEFAULT)
-        end
         outputs.unshift metadata_top if metadata_top
         outputs << metadata_bottom if metadata_bottom
       end
