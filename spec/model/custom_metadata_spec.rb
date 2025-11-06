@@ -18,30 +18,63 @@ describe 'custom metadata models' do
     @mock_input.stubs(:cmd).returns("not implemented.\n")
   end
   describe 'OpnSense' do
-    it 'adds an xmmlcomment for metadata' do
-      model = OpnSense.new
-      model.input = @mock_input
-      model.node = @mock_node
-      model.stubs(:vars).returns(nil)
-      model.stubs(:vars).with('metadata').returns(true)
+    before do
+      @model = OpnSense.new
+      @model.input = @mock_input
+      @model.node = @mock_node
+      @model.stubs(:vars).returns(nil)
+      @model.stubs(:vars).with('metadata').returns(true)
+    end
 
-      result = model.get.to_cfg
+    it 'adds an xmlcomment for metadata' do
+      result = @model.get.to_cfg
       _(result).must_include '<!-- # Fetched by Oxidized with model OpnSense from host router1 [192.168.1.1] -->'
+    end
+
+    it 'uses vars("metadata_bottom") if present' do
+      @model.stubs(:vars).with('metadata_bottom').returns("# bottom\n")
+      @model.stubs(:vars).with('metadata_top').returns("# top\n")
+
+      result = @model.get.to_cfg
+      _(result).must_include '<!-- # bottom -->'
+    end
+
+    it 'uses vars("metadata_top") if present and vars("metadata_bottom is not defined")' do
+      @model.stubs(:vars).with('metadata_top').returns("# top\n")
+
+      result = @model.get.to_cfg
+      _(result).must_include '<!-- # top -->'
     end
   end
 
   describe 'PfSense' do
-    it 'adds an xmmlcomment for metadata' do
-      model = PfSense.new
-      model.input = @mock_input
+    before do
+      @model = PfSense.new
+      @model.input = @mock_input
+      @model.node = @mock_node
+      @model.stubs(:vars).returns(nil)
+      @model.stubs(:vars).with('metadata').returns(true)
       @mock_input.stubs(:cmd).returns("<pfsense>command</pfsense>\n")
+    end
 
-      model.node = @mock_node
-      model.stubs(:vars).returns(nil)
-      model.stubs(:vars).with('metadata').returns(true)
-
-      result = model.get.to_cfg
+    it 'adds an xmmlcomment for metadata' do
+      result = @model.get.to_cfg
       _(result).must_include '<!-- # Fetched by Oxidized with model PfSense from host router1 [192.168.1.1] -->'
+    end
+
+    it 'uses vars("metadata_bottom") if present' do
+      @model.stubs(:vars).with('metadata_bottom').returns("# bottom\n")
+      @model.stubs(:vars).with('metadata_top').returns("# top\n")
+
+      result = @model.get.to_cfg
+      _(result).must_include '<!-- # bottom -->'
+    end
+
+    it 'uses vars("metadata_top") if present and vars("metadata_bottom is not defined")' do
+      @model.stubs(:vars).with('metadata_top').returns("# top\n")
+
+      result = @model.get.to_cfg
+      _(result).must_include '<!-- # top -->'
     end
   end
 end

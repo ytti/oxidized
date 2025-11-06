@@ -458,8 +458,8 @@ The threads used to fetch the configs are named `Oxidized::Job 'hostname'`:
 ```
 
 ## Metadata
-You can indlude metadata in your model outputs, for this you have to set the
-variable `metadata` to `true`:
+You can include some metadata in your model outputs, for this you have to set
+the variable `metadata` to `true`:
 ```yaml
 vars:
   metadata: true
@@ -470,10 +470,11 @@ model, group and even node level.
 
 By default this will produce
 `"%{comment}Fetched by Oxidized with model %{model} from host %{name} [%{ip}]\n"`
-at the first line of every model output. Some models with specific needs (xml
+at the first line of every model output. Some models with specific needs (XML
 for example) will save the metadata differently (for example, OpnSense and
-PfSense save an xml comment at the end of the model).
+PfSense save an XML comment at the end of the model).
 
+### Customize metadata
 You can customize the metadata produced by setting the varibles `metadata_top`
 (top of the file) and `metadata_bottom` (bottom of the file).
 
@@ -494,10 +495,26 @@ using the following substitution templates:
   - `%{minute}`: current minute, zero-padded
   - `%{second}`: current second, zero-padded
 
-Setting `metadata_top` and `metadata_bottom` will not change the metadata of
-models with specific metadata. For this, you need to
-[monkey patch](Creating-Models.md#monkey-patching-blocks-in-existing-models)
-the models, and set metatada to your needs. This can be done in two ways:
+### Customize metadata in models
+When writing a custom metadata for a model, you can default to
+`vars("metadata_*")` or the model default. You need to interpolate the strings
+with interpolate_string. This example is taken from OpnSense, and makes an 
+XML comment of the default strings, with precedence for vars("metadata_bottom"),
+as the XML comment is situated at the bottom.
+
+```ruby
+  metadata :bottom do
+    xmlcomment interpolate_string(
+      vars("metadata_bottom") ||
+      vars("metadata_top") ||
+      Oxidized::Model::METADATA_DEFAULT
+    )
+  end
+```
+
+You can also change the metadata in the models in your configuration dir with
+[monkey patching](Creating-Models.md#monkey-patching-blocks-in-existing-models).
+This can be done in two ways:
 
 1. Interpolation string:
 ```ruby
@@ -524,4 +541,3 @@ end
 ```
 
 Remove a previous metadata by setting it to `nil`.
-
