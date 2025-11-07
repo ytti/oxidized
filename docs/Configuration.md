@@ -456,3 +456,88 @@ The threads used to fetch the configs are named `Oxidized::Job 'hostname'`:
 /home/xxx/oxidized/lib/oxidized/input/ssh.rb:127:in `sleep'
 /home/xxx/oxidized/lib/oxidized/input/ssh.rb:127:in `block (2 levels) in expect'
 ```
+
+## Metadata
+You can include some metadata in your model outputs, for this you have to set
+the variable `metadata` to `true`:
+```yaml
+vars:
+  metadata: true
+```
+
+As every [variable](#options-credentials-vars-etc-precedence), you can set it on
+model, group and even node level.
+
+By default this will produce
+`"%{comment}Fetched by Oxidized with model %{model} from host %{name} [%{ip}]\n"`
+at the first line of every model output. Some models with specific needs (XML
+for example) will save the metadata differently (for example, OpnSense and
+PfSense save an XML comment at the end of the model).
+
+### Customize metadata
+You can customize the metadata produced by setting the varibles `metadata_top`
+(top of the file) and `metadata_bottom` (bottom of the file).
+
+These variables accept string templates, and you can include newline characters
+(\n) to control formatting.
+
+Both `metadata_top` and `metadata_bottom` support interpolation of dynamic values
+using the following substitution templates:
+  - `%{model}`: name of the Oxidized model
+  - `%{name}`: name of the node
+  - `%{ip}`: IP address of the node
+  - `%{group}`: group name of the node
+  - `%{comment}`: comment string used in the model output (`# `)
+  - `%{year}`: current year (`2025`)
+  - `%{month}`: current month, zero-padded (`03` for March)
+  - `%{day}`: current day, zero-padded (`09`)
+  - `%{hour}`: current hour (24-hour format, zero-padded)
+  - `%{minute}`: current minute, zero-padded
+  - `%{second}`: current second, zero-padded
+
+### Customize metadata in models
+When writing a custom metadata for a model, you can default to
+`vars("metadata_*")` or the model default. You need to interpolate the strings
+with interpolate_string. This example is taken from OpnSense, and makes an 
+XML comment of the default strings, with precedence for vars("metadata_bottom"),
+as the XML comment is situated at the bottom.
+
+```ruby
+  metadata :bottom do
+    xmlcomment interpolate_string(
+      vars("metadata_bottom") ||
+      vars("metadata_top") ||
+      Oxidized::Model::METADATA_DEFAULT
+    )
+  end
+```
+
+You can also change the metadata in the models in your configuration directory with
+[monkey patching](Creating-Models.md#monkey-patching-blocks-in-existing-models).
+This can be done in two ways:
+
+1. Interpolation string:
+```ruby
+require 'oxidized/model/ios.rb'
+
+class IOS
+  metadata :top, "%{comment}Model: %{model}\n"
+  metadata :bottom, "%{comment}Will be placed at the end of the output\n"
+end
+```
+
+2. For advanced code, you can use a code block, and access every variable of
+   the model:
+
+```ruby
+require 'oxidized/model/opnsense.rb'
+class OpnSense
+  metadata :top do
+    xmlcomment "Model:#{self.class.name}, hostname: #{@node.name}, ip:#{@node.ip}"
+  end
+
+  metadata :bottom, nil
+end
+```
+
+Remove a previous metadata by setting it to `nil`.
