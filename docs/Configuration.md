@@ -512,7 +512,7 @@ as the XML comment is situated at the bottom.
   end
 ```
 
-You can also change the metadata in the models in your configuration dir with
+You can also change the metadata in the models in your configuration directory with
 [monkey patching](Creating-Models.md#monkey-patching-blocks-in-existing-models).
 This can be done in two ways:
 

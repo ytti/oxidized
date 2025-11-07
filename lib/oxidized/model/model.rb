@@ -190,7 +190,7 @@ module Oxidized
         # vars defines metadata_top or metadata bottom, use the vars
         interpolate_string(vars(var_position[position]))
       elsif position == :top
-        # default: set use METADATA_DEFAULT for top
+        # default: use METADATA_DEFAULT for top
         interpolate_string(METADATA_DEFAULT)
       end
     end

@@ -114,6 +114,22 @@ describe 'Oxidized::Model' do
         )
       end
 
+      it 'falls back to vars(top) when neither top nor bottom metadata is defined' do
+        model = TestModelNoMetadata.new
+        model.input = @mock_input
+        model.node = @mock_node
+
+        model.stubs(:vars).returns(nil)
+        model.stubs(:vars).with('metadata').returns(true)
+        model.stubs(:vars).with('metadata_top').returns("%{comment}Top from vars model %{model}\n")
+
+        result = model.get.to_cfg
+        _(result).must_equal(
+          "// Top from vars model TestModelNoMetadata\n" \
+          "Sample config\n"
+        )
+      end
+
       it 'Falls back to METADATA_DEFAULT in metadata_top when nothing else is defined' do
         model = TestModelNoMetadata.new
         model.input = @mock_input
