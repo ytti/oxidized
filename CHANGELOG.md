@@ -20,6 +20,12 @@ The format is based on [Keep a Changelog](https://keepachangelog.com/en/1.1.0/).
   - Comprehensive data validation and type checking
   - Full test coverage including security and validation tests
   - Documentation available in `docs/State-Persistence.md`
+- **SQLite output**: New output type for storing device configurations in SQLite database
+  - Single-file database for all configurations with version history
+  - Automatic versioning (up to 100 versions per device)
+  - Support for groups and obsolete node cleanup
+  - Secure permissions and concurrent access via WAL mode
+  - Documentation in `docs/Outputs.md`
 - Allow setting timeout on per node basis. Closes #3612 (@ytti)
 - Added Vyos as individual model. Closes #3603 #3560 (@nicolasberens)
 - Add metadata to models. Closes #3249 (@robertcheramy)
