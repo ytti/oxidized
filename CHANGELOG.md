@@ -7,17 +7,38 @@ The format is based on [Keep a Changelog](https://keepachangelog.com/en/1.1.0/).
 ## [Unreleased]
 - VyOS now has it's own Model and should be used for supported VyOS versions instead of the Vyatta Model.
 - Aoscx has been reworked and may break old OS versions.
+- **BREAKING**: State is now persisted to SQLite database instead of being stored in memory. Existing statistics will be lost on upgrade but will rebuild automatically.
 
 ### Added
+- **Persistent state management**: Node statistics, job history, and scheduling data are now stored in SQLite database
+  - State survives application restarts
+  - Database stored at `~/.config/oxidized/state/oxidized.db` by default
+  - Automatic schema migration support
+  - Secure file permissions (0600 for database, 0700 for directory)
+  - WAL mode for better concurrency
+  - Automatic cleanup of removed nodes
+  - Comprehensive data validation and type checking
+  - Full test coverage including security and validation tests
+  - Documentation available in `docs/State-Persistence.md`
 - Allow setting timeout on per node basis. Closes #3612 (@ytti)
 - Added Vyos as individual model. Closes #3603 #3560 (@nicolasberens)
 - Add metadata to models. Closes #3249 (@robertcheramy)
 
 ### Changed
+- **Node::Stats**: Now loads data from SQLite database instead of memory, with 1-second caching
+- **Node last job**: Persisted to database and loaded on-demand
+- **Jobs durations**: Loaded from database on startup for accurate scheduling
+- **Sequel gem**: Moved from development dependency to runtime dependency
 - tnsr: added simulation data for older versions (@Vantomas)
 - docker image: change oxidized user's shell to bash. (@electrocret)
 - refactor suppression of ANSI escape codes into model.rb (use `clean :escape_codes` in your model. Updated cumulus, garderos, mlnxos and vyos. (@robertcheramy)
 - aoscx: rework handling of ANSI escape codes (@robertcheramy)
+
+### Removed
+- **In-memory state storage**: All node statistics and job history previously stored in memory
+  - `Node::Stats` no longer stores data in instance variables
+  - `Nodes#update_nodes` no longer copies stats between instances (loaded from database instead)
+  - State data is now persistent across restarts
 
 ### Fixed
 - input/http: bracket IPv6 URI. Fixes #3620 (@ytti)
@@ -28,6 +49,14 @@ The format is based on [Keep a Changelog](https://keepachangelog.com/en/1.1.0/).
 - fsos: set terminal width to 0. Fixes #3576 (@robertcheramy)
 - aoscx: rework environmental data anonymization. Fixes #3568 (@robertcheramy, inspired by PR #3653 by @martadams89)
 - netgear: fix prompt issues caused by ANSI escape codes. Fixes #3287 (@robertcheramy)
+
+### Migration Notes
+When upgrading to this version:
+- Existing in-memory statistics will be lost on first restart
+- A new SQLite database will be created automatically at `~/.config/oxidized/state/oxidized.db`
+- Statistics will rebuild naturally as jobs execute
+- No manual intervention is required
+- Ensure your backup strategy includes the new state directory
 
 
 ## [0.34.3 - 2025-08-05]
