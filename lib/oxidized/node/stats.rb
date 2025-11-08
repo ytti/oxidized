@@ -48,9 +48,7 @@ module Oxidized
         stats = load_stats
         result = stats[:mtimes]
         # Maintain backward compatibility: pad with "unknown" if needed
-        if result.length < @history_size
-          result = result + Array.new(@history_size - result.length, "unknown")
-        end
+        result += Array.new(@history_size - result.length, "unknown") if result.length < @history_size
         result
       end
 
@@ -68,9 +66,7 @@ module Oxidized
       def load_stats
         now = Time.now.to_f
         # Use cached data if available and fresh
-        if @cache && @cache_time && (now - @cache_time) < @cache_ttl
-          return @cache
-        end
+        return @cache if @cache && @cache_time && (now - @cache_time) < @cache_ttl
 
         @cache = Oxidized.state.get_node_stats(@node_name)
         @cache_time = now

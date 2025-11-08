@@ -31,13 +31,13 @@ module Oxidized
         end
         size.zero? ? replace(new) : update_nodes(new)
         Output.clean_obsolete_nodes(self) if node_want.nil?
-        
+
         # Clean up state for removed nodes
         if node_want.nil? && Oxidized.state
           node_names = map(&:name)
           Oxidized.state.cleanup_removed_nodes(node_names)
         end
-        
+
         logger.info "Loaded #{size} nodes"
       end
     end

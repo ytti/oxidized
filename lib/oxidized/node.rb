@@ -147,9 +147,7 @@ module Oxidized
       # Load from persistent state if not in memory
       if @last.nil?
         job_data = Oxidized.state.get_last_job(@name)
-        if job_data
-          @last = JobStruct.new(job_data[:start], job_data[:end], job_data[:status], job_data[:time])
-        end
+        @last = JobStruct.new(job_data[:start], job_data[:end], job_data[:status], job_data[:time]) if job_data
       end
       @last
     end

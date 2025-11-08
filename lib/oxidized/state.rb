@@ -177,7 +177,7 @@ module Oxidized
 
     # Get job durations for scheduling
     # @return [Array<Float>] Array of job durations
-    def get_job_durations
+    def job_durations
       @db[:job_durations]
         .order(:created_at)
         .select_map(:duration)
@@ -215,7 +215,7 @@ module Oxidized
     # @param existing_nodes [Array<String>] List of current node names
     def cleanup_removed_nodes(existing_nodes)
       @db.transaction do
-        tables = [:node_stats_counters, :node_stats_history, :node_last_jobs, :node_mtimes]
+        tables = %i[node_stats_counters node_stats_history node_last_jobs node_mtimes]
         tables.each do |table|
           @db[table].exclude(node_name: existing_nodes).delete
         end
@@ -258,7 +258,7 @@ module Oxidized
       logger.info "Connecting to state database: #{@database_path}"
       @db = Sequel.connect("sqlite://#{@database_path}")
       @db.logger = logger if Oxidized.config.debug?
-      
+
       # Enable WAL mode for better concurrency
       @db.run("PRAGMA journal_mode=WAL")
       # Set synchronous to NORMAL for better performance while maintaining durability
@@ -281,7 +281,7 @@ module Oxidized
       if current_version < SCHEMA_VERSION
         logger.info "Migrating state database from version #{current_version} to #{SCHEMA_VERSION}"
         migrate_to_v1 if current_version < 1
-        
+
         @db[:schema_info].insert(
           version: SCHEMA_VERSION,
           migrated_at: Time.now.utc
@@ -297,8 +297,8 @@ module Oxidized
         String :node_name, null: false, index: true
         String :status, null: false
         Integer :count, null: false, default: 0
-        
-        index [:node_name, :status], unique: true
+
+        index %i[node_name status], unique: true
       end
 
       # Node statistics history
@@ -310,8 +310,8 @@ module Oxidized
         DateTime :job_end
         Float :job_time
         DateTime :created_at, null: false, default: Sequel::CURRENT_TIMESTAMP
-        
-        index [:node_name, :status]
+
+        index %i[node_name status]
         index :created_at
       end
 
@@ -331,7 +331,7 @@ module Oxidized
         primary_key :id
         String :node_name, null: false, index: true
         DateTime :mtime, null: false
-        
+
         index [:node_name, :mtime]
       end
 
@@ -340,7 +340,7 @@ module Oxidized
         primary_key :id
         Float :duration, null: false
         DateTime :created_at, null: false, default: Sequel::CURRENT_TIMESTAMP
-        
+
         index :created_at
       end
     end
@@ -387,12 +387,12 @@ module Oxidized
 
       # Set file permissions to 0600 (owner read/write only)
       File.chmod(0o600, @database_path)
-      
+
       # Also secure WAL and SHM files if they exist
       [@database_path + '-wal', @database_path + '-shm'].each do |file|
         File.chmod(0o600, file) if File.exist?(file)
       end
-      
+
       logger.info "Secured database file permissions: #{@database_path}"
     end
 
@@ -442,7 +442,7 @@ module Oxidized
     def ensure_time(value)
       return nil if value.nil?
       return value if value.is_a?(Time)
-      
+
       # Try to parse if it's a string or convert if it's numeric
       if value.is_a?(String)
         Time.parse(value)
@@ -460,10 +460,10 @@ module Oxidized
     # @return [Float] Float value
     def ensure_float(value)
       return nil if value.nil?
-      
+
       float_val = Float(value)
       raise ArgumentError, "Value must be finite" unless float_val.finite?
-      
+
       float_val
     rescue TypeError, ArgumentError => e
       raise ArgumentError, "Invalid numeric value: #{e.message}"

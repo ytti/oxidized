@@ -153,7 +153,7 @@ describe Oxidized::State do
     it 'clears last job when set to nil' do
       @state.set_last_job(@node_name, @job)
       @state.set_last_job(@node_name, nil)
-      
+
       last_job = @state.get_last_job(@node_name)
       _(last_job).must_be_nil
     end
@@ -354,7 +354,7 @@ describe Oxidized::State do
     it 'raises error for invalid database path' do
       invalid_path = '/invalid/path/that/does/not/exist/oxidized.db'
       FileUtils.mkdir_p(File.dirname(invalid_path)) rescue nil
-      
+
       # SQLite will try to create the file, so this test checks connection issues
       begin
         state = Oxidized::State.new(invalid_path)
@@ -494,7 +494,7 @@ describe Oxidized::State do
   describe 'file security' do
     it 'creates database with secure permissions' do
       skip 'Permission tests only on Unix-like systems' unless File.respond_to?(:chmod)
-      
+
       stat = File.stat(@db_path)
       mode = stat.mode & 0o777
       _(mode).must_equal 0o600
@@ -502,7 +502,7 @@ describe Oxidized::State do
 
     it 'creates state directory with secure permissions' do
       skip 'Permission tests only on Unix-like systems' unless File.respond_to?(:chmod)
-      
+
       state_dir = File.dirname(@db_path)
       stat = File.stat(state_dir)
       mode = stat.mode & 0o777
@@ -511,7 +511,7 @@ describe Oxidized::State do
 
     it 'secures WAL file if it exists' do
       skip 'Permission tests only on Unix-like systems' unless File.respond_to?(:chmod)
-      
+
       wal_file = @db_path + '-wal'
       if File.exist?(wal_file)
         stat = File.stat(wal_file)
@@ -534,7 +534,7 @@ describe Oxidized::State do
           time, time, 10.0, :success
         )
         @state.update_node_stats("node-#{i}", job, 10)
-        
+
         stats = @state.get_node_stats("node-#{i}")
         _(stats[:success].first[:start]).must_be_kind_of Time
         _(stats[:success].first[:end]).must_be_kind_of Time
@@ -542,8 +542,8 @@ describe Oxidized::State do
     end
 
     it 'stores numeric values with precision' do
-      durations = [1.0, 1.5, 1.123456789, 0.001, 999999.999]
-      
+      durations = [1.0, 1.5, 1.123456789, 0.001, 999_999.999]
+
       durations.each do |duration|
         @state.add_job_duration(duration, 100)
       end
@@ -557,23 +557,23 @@ describe Oxidized::State do
 
     it 'stores unicode node names correctly' do
       unicode_names = ['node-日本語', 'node-العربية', 'node-Ελληνικά', 'node-🚀']
-      
+
       unicode_names.each do |name|
         next if name.length > 255 # Skip if too long
-        
+
         job = Struct.new(:start, :end, :time, :status).new(
           Time.now.utc, Time.now.utc, 10.0, :success
         )
         @state.update_node_stats(name, job, 10)
-        
+
         stats = @state.get_node_stats(name)
         _(stats[:counter][:success]).must_equal 1
       end
     end
 
     it 'stores various status symbols correctly' do
-      statuses = [:success, :fail, :no_connection, :timeout, :error]
-      
+      statuses = %i[success fail no_connection timeout error]
+
       statuses.each do |status|
         job = Struct.new(:start, :end, :time, :status).new(
           Time.now.utc, Time.now.utc, 10.0, status
@@ -595,7 +595,7 @@ describe Oxidized::State do
       )
 
       1000.times { @state.update_node_stats('test-node', job, 10) }
-      
+
       stats = @state.get_node_stats('test-node')
       _(stats[:counter][:success]).must_equal 1000
     end
@@ -606,7 +606,7 @@ describe Oxidized::State do
       )
 
       100.times { |i| @state.update_node_stats("node-#{i}", job, 10) }
-      
+
       100.times do |i|
         stats = @state.get_node_stats("node-#{i}")
         _(stats[:counter][:success]).must_equal 1
@@ -617,10 +617,10 @@ describe Oxidized::State do
       stats = @state.get_node_stats('nonexistent')
       _(stats[:counter][:success]).must_equal 0
       _(stats[:mtimes]).must_equal []
-      
+
       last_job = @state.get_last_job('nonexistent')
       _(last_job).must_be_nil
-      
+
       durations = @state.get_job_durations
       _(durations).must_equal []
     end
