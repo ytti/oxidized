@@ -31,6 +31,13 @@ module Oxidized
         end
         size.zero? ? replace(new) : update_nodes(new)
         Output.clean_obsolete_nodes(self) if node_want.nil?
+        
+        # Clean up state for removed nodes
+        if node_want.nil? && Oxidized.state
+          node_names = map(&:name)
+          Oxidized.state.cleanup_removed_nodes(node_names)
+        end
+        
         logger.info "Loaded #{size} nodes"
       end
     end
@@ -168,6 +175,9 @@ module Oxidized
     # walks list of new nodes, if old node contains same name, adds last and
     # stats information from old to new.
     #
+    # With persistent state, stats and last job are loaded from database,
+    # so we only need to preserve the object reference if the node already exists.
+    #
     # @todo can we trust name to be unique identifier, what about when groups are used?
     # @param [Array] nodes Array of nodes used to replace+update old
     def update_nodes(nodes)
@@ -176,14 +186,16 @@ module Oxidized
       replace(nodes)
       each do |node|
         if (i = old.find_node_index(node.name))
+          # With persistent state, we only need to preserve the stats object reference
+          # The actual data is loaded from the database
           node.stats = old[i].stats
-          node.last  = old[i].last
+          # last is now loaded from persistent state via the last() method
         end
       rescue NodeNotFound
         # Do nothing:
         # when a node is not found, we have nothing to do:
-        # it has already been loaded by replace(nodes) and there are no
-        # stats to copy
+        # it has already been loaded by replace(nodes) and state
+        # will be loaded from the database as needed
       end
       sort_by! { |x| x.last.nil? ? Time.new(0) : x.last.end }
     end
