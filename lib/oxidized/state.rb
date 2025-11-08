@@ -377,7 +377,6 @@ module Oxidized
       FileUtils.mkdir_p(state_dir, mode: 0o700)
       logger.info "Created state directory with secure permissions: #{state_dir}"
     end
-    end
 
     # Set secure permissions on database file
     def secure_database_file
