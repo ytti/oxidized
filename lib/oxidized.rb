@@ -31,4 +31,12 @@ module Oxidized
   def self.config
     asetus.cfg
   end
+
+  def self.state
+    @@state
+  end
+
+  def self.state=(val)
+    @@state = val
+  end
 end
