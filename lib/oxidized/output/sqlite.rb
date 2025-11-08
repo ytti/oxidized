@@ -112,8 +112,8 @@ module Oxidized
         open unless @db
 
         row = @db[:config_versions]
-                .where(node: node, group: group, id: oid.to_i)
-                .first
+              .where(node: node, group: group, id: oid.to_i)
+              .first
 
         row ? row[:config] : 'version not found'
       end
@@ -129,9 +129,9 @@ module Oxidized
         output.instance_variable_get(:@db).transaction do
           # Get all nodes in database
           db_nodes = output.instance_variable_get(:@db)[:configs]
-                       .select(:node, :group)
-                       .distinct
-                       .all
+                           .select(:node, :group)
+                           .distinct
+                           .all
 
           # Find obsolete nodes
           obsolete = db_nodes.reject do |db_node|
@@ -143,11 +143,11 @@ module Oxidized
           # Delete obsolete nodes and their versions
           obsolete.each do |obs|
             output.instance_variable_get(:@db)[:configs]
-              .where(node: obs[:node], group: obs[:group])
-              .delete
+                  .where(node: obs[:node], group: obs[:group])
+                  .delete
             output.instance_variable_get(:@db)[:config_versions]
-              .where(node: obs[:node], group: obs[:group])
-              .delete
+                  .where(node: obs[:node], group: obs[:group])
+                  .delete
             logger.info "Cleaned up obsolete node: #{obs[:node]} (group: #{obs[:group]})"
           end
         end

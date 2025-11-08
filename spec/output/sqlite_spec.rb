@@ -6,7 +6,7 @@ describe 'Oxidized::Output::SQLite' do
   before(:each) do
     Oxidized.asetus = Asetus.new
     @tmpdir = Dir.mktmpdir('oxidized_sqlite_output_test')
-    @db_path = ::File.join(@tmpdir, 'test_configs.db')
+    @db_path = File.join(@tmpdir, 'test_configs.db')
     Oxidized.config.output.sqlite.database = @db_path
     @sqlite = Oxidized::Output::SQLite.new
     @outputs = Oxidized::Model::Outputs.new
@@ -14,8 +14,8 @@ describe 'Oxidized::Output::SQLite' do
   end
 
   after(:each) do
-    @sqlite.close if @sqlite
-    FileUtils.rm_rf(@tmpdir) if @tmpdir && ::File.directory?(@tmpdir)
+    @sqlite&.close
+    FileUtils.rm_rf(@tmpdir) if @tmpdir && File.directory?(@tmpdir)
   end
 
   describe '#setup' do
@@ -229,21 +229,21 @@ describe 'Oxidized::Output::SQLite' do
       @sqlite.store('router1', @outputs)
       @sqlite.close
 
-      stat = ::File.stat(@db_path)
-      mode = sprintf("%o", stat.mode)
+      stat = File.stat(@db_path)
+      mode = "%o" % stat.mode
       _(mode).must_match(/600$/)
     end
 
     it 'creates database directory if it does not exist' do
-      db_path = ::File.join(@tmpdir, 'nested', 'dir', 'configs.db')
+      db_path = File.join(@tmpdir, 'nested', 'dir', 'configs.db')
       Oxidized.config.output.sqlite.database = db_path
 
       sqlite = Oxidized::Output::SQLite.new
       sqlite.store('router1', @outputs)
       sqlite.close
 
-      _(::File.exist?(db_path)).must_equal true
-      _(::File.directory?(::File.dirname(db_path))).must_equal true
+      _(File.exist?(db_path)).must_equal true
+      _(File.directory?(File.dirname(db_path))).must_equal true
     end
   end
 
