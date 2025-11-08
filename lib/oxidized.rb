@@ -11,6 +11,7 @@ module Oxidized
   require 'oxidized/version'
   require 'oxidized/config'
   require 'oxidized/config/vars'
+  require 'oxidized/state'
   require 'oxidized/worker'
   require 'oxidized/nodes'
   require 'oxidized/manager'
