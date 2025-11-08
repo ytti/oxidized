@@ -29,7 +29,7 @@ module Oxidized
     def get_node_stats(node_name)
       stats = {
         counter: Hash.new(0),
-        mtimes: []
+        mtimes:  []
       }
 
       # Load counters
@@ -48,16 +48,16 @@ module Oxidized
           stats[status] ||= []
           stats[status] << {
             start: row[:job_start],
-            end: row[:job_end],
-            time: row[:job_time]
+            end:   row[:job_end],
+            time:  row[:job_time]
           }
         end
 
       # Load mtimes
       stats[:mtimes] = @db[:node_mtimes]
-        .where(node_name: node_name)
-        .order(:mtime)
-        .select_map(:mtime)
+                         .where(node_name: node_name)
+                         .order(:mtime)
+                         .select_map(:mtime)
 
       stats
     end
@@ -74,8 +74,8 @@ module Oxidized
       @db.transaction do
         # Update counter
         counter = @db[:node_stats_counters]
-          .where(node_name: node_name, status: job.status.to_s)
-          .first
+                    .where(node_name: node_name, status: job.status.to_s)
+                    .first
 
         if counter
           @db[:node_stats_counters]
@@ -84,18 +84,18 @@ module Oxidized
         else
           @db[:node_stats_counters].insert(
             node_name: node_name,
-            status: job.status.to_s,
-            count: 1
+            status:    job.status.to_s,
+            count:     1
           )
         end
 
         # Add job to history with validated data
         @db[:node_stats_history].insert(
           node_name: node_name,
-          status: job.status.to_s,
+          status:    job.status.to_s,
           job_start: ensure_time(job.start),
-          job_end: ensure_time(job.end),
-          job_time: ensure_float(job.time)
+          job_end:   ensure_time(job.end),
+          job_time:  ensure_float(job.time)
         )
 
         # Trim history to keep only the latest N entries per status
@@ -108,16 +108,16 @@ module Oxidized
     # @return [Hash, nil] Last job information or nil
     def get_last_job(node_name)
       row = @db[:node_last_jobs]
-        .where(node_name: node_name)
-        .first
+              .where(node_name: node_name)
+              .first
 
       return nil unless row
 
       {
-        start: row[:job_start],
-        end: row[:job_end],
+        start:  row[:job_start],
+        end:    row[:job_end],
         status: row[:status].to_sym,
-        time: row[:job_time]
+        time:   row[:job_time]
       }
     end
 
@@ -135,9 +135,9 @@ module Oxidized
           @db[:node_last_jobs].insert(
             node_name: node_name,
             job_start: ensure_time(job.start),
-            job_end: ensure_time(job.end),
-            status: job.status.to_s,
-            job_time: ensure_float(job.time)
+            job_end:   ensure_time(job.end),
+            status:    job.status.to_s,
+            job_time:  ensure_float(job.time)
           )
         end
       end
@@ -153,20 +153,20 @@ module Oxidized
       @db.transaction do
         @db[:node_mtimes].insert(
           node_name: node_name,
-          mtime: Time.now.utc
+          mtime:     Time.now.utc
         )
 
         # Trim old mtimes
         count = @db[:node_mtimes]
-          .where(node_name: node_name)
-          .count
+                  .where(node_name: node_name)
+                  .count
 
         if count > history_size
           old_records = @db[:node_mtimes]
-            .where(node_name: node_name)
-            .order(:mtime)
-            .limit(count - history_size)
-            .select_map(:id)
+                          .where(node_name: node_name)
+                          .order(:mtime)
+                          .limit(count - history_size)
+                          .select_map(:id)
 
           @db[:node_mtimes]
             .where(id: old_records)
@@ -192,7 +192,7 @@ module Oxidized
 
       @db.transaction do
         @db[:job_durations].insert(
-          duration: ensure_float(duration),
+          duration:   ensure_float(duration),
           created_at: Time.now.utc
         )
 
@@ -200,9 +200,9 @@ module Oxidized
         count = @db[:job_durations].count
         if count > max_size
           old_records = @db[:job_durations]
-            .order(:created_at)
-            .limit(count - max_size)
-            .select_map(:id)
+                          .order(:created_at)
+                          .limit(count - max_size)
+                          .select_map(:id)
 
           @db[:job_durations]
             .where(id: old_records)
@@ -278,15 +278,15 @@ module Oxidized
 
       current_version = @db[:schema_info].max(:version) || 0
 
-      if current_version < SCHEMA_VERSION
-        logger.info "Migrating state database from version #{current_version} to #{SCHEMA_VERSION}"
-        migrate_to_v1 if current_version < 1
+      return unless current_version < SCHEMA_VERSION
 
-        @db[:schema_info].insert(
-          version: SCHEMA_VERSION,
-          migrated_at: Time.now.utc
-        )
-      end
+      logger.info "Migrating state database from version #{current_version} to #{SCHEMA_VERSION}"
+      migrate_to_v1 if current_version < 1
+
+      @db[:schema_info].insert(
+        version:     SCHEMA_VERSION,
+        migrated_at: Time.now.utc
+      )
     end
 
     # Migrate to schema version 1
@@ -332,7 +332,7 @@ module Oxidized
         String :node_name, null: false, index: true
         DateTime :mtime, null: false
 
-        index [:node_name, :mtime]
+        index %i[node_name mtime]
       end
 
       # Job durations for scheduling
@@ -351,17 +351,16 @@ module Oxidized
     # @param max_size [Integer] Maximum number of entries to keep
     def trim_history(node_name, status, max_size)
       count = @db[:node_stats_history]
-        .where(node_name: node_name, status: status)
-        .count
+                .where(node_name: node_name, status: status)
+                .count
 
       return unless count > max_size
 
-      # Get IDs of old records to delete
       old_records = @db[:node_stats_history]
-        .where(node_name: node_name, status: status)
-        .order(:job_start)
-        .limit(count - max_size)
-        .select_map(:id)
+                      .where(node_name: node_name, status: status)
+                      .order(:job_start)
+                      .limit(count - max_size)
+                      .select_map(:id)
 
       @db[:node_stats_history]
         .where(id: old_records)
@@ -373,12 +372,11 @@ module Oxidized
     # Ensure directory exists and has secure permissions
     def ensure_secure_directory
       state_dir = File.dirname(@database_path)
-      unless File.directory?(state_dir)
-        FileUtils.mkdir_p(state_dir)
-        # Set directory permissions to 0700 (owner only)
-        File.chmod(0o700, state_dir)
-        logger.info "Created state directory with secure permissions: #{state_dir}"
-      end
+      return if File.directory?(state_dir)
+
+      FileUtils.mkdir_p(state_dir, mode: 0o700)
+      logger.info "Created state directory with secure permissions: #{state_dir}"
+    end
     end
 
     # Set secure permissions on database file

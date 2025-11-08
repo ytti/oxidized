@@ -270,8 +270,8 @@ describe Oxidized::State do
       @state.cleanup_removed_nodes([@node1, @node2])
 
       # Node 1 and 2 should still exist
-      _((@state.get_node_stats(@node1)[:counter][:success])).must_equal 1
-      _((@state.get_node_stats(@node2)[:counter][:success])).must_equal 1
+      _(@state.get_node_stats(@node1)[:counter][:success]).must_equal 1
+      _(@state.get_node_stats(@node2)[:counter][:success]).must_equal 1
 
       # Node 3 should be cleaned up
       stats = @state.get_node_stats(@node3)
@@ -284,7 +284,7 @@ describe Oxidized::State do
       @state.cleanup_removed_nodes([@node1, @node2, @node3])
 
       [@node1, @node2, @node3].each do |node|
-        _((@state.get_node_stats(node)[:counter][:success])).must_equal 1
+        _(@state.get_node_stats(node)[:counter][:success]).must_equal 1
         _(@state.get_last_job(node)).wont_be_nil
       end
     end
@@ -293,7 +293,7 @@ describe Oxidized::State do
       @state.cleanup_removed_nodes([])
 
       [@node1, @node2, @node3].each do |node|
-        _((@state.get_node_stats(node)[:counter][:success])).must_equal 0
+        _(@state.get_node_stats(node)[:counter][:success]).must_equal 0
         _(@state.get_last_job(node)).must_be_nil
       end
     end
