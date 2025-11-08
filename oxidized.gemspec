@@ -42,6 +42,7 @@ Gem::Specification.new do |s|
   s.add_dependency 'psych',                '~> 5.0'
   s.add_dependency 'rugged',               '~> 1.6'
   s.add_dependency 'semantic_logger',      '~> 4.17.0'
+  s.add_dependency 'sequel',               '~> 5.63'
   s.add_dependency 'slop',                 '~> 4.6'
   s.add_dependency 'syslog',               '~> 0.3.0'
   s.add_dependency 'syslog_protocol',      '~> 0.9.2'
@@ -61,5 +62,4 @@ Gem::Specification.new do |s|
 
   # Dependencies on optional libraries, used for unit tests & development
   s.add_development_dependency 'oxidized-web',        '~> 0.17.1'
-  s.add_development_dependency 'sequel',              '>= 5.63.0', '< 5.98.0'
 end
