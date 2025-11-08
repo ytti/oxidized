@@ -364,4 +364,265 @@ describe Oxidized::State do
       end
     end
   end
+
+  describe 'data validation' do
+    describe '#update_node_stats' do
+      it 'rejects nil node_name' do
+        job = Struct.new(:start, :end, :time, :status).new(
+          Time.now.utc, Time.now.utc, 10.0, :success
+        )
+        _ { @state.update_node_stats(nil, job, 10) }.must_raise ArgumentError
+      end
+
+      it 'rejects empty node_name' do
+        job = Struct.new(:start, :end, :time, :status).new(
+          Time.now.utc, Time.now.utc, 10.0, :success
+        )
+        _ { @state.update_node_stats('', job, 10) }.must_raise ArgumentError
+      end
+
+      it 'rejects node_name longer than 255 chars' do
+        job = Struct.new(:start, :end, :time, :status).new(
+          Time.now.utc, Time.now.utc, 10.0, :success
+        )
+        long_name = 'a' * 256
+        _ { @state.update_node_stats(long_name, job, 10) }.must_raise ArgumentError
+      end
+
+      it 'rejects nil job' do
+        _ { @state.update_node_stats('test-node', nil, 10) }.must_raise ArgumentError
+      end
+
+      it 'rejects job without required methods' do
+        bad_job = Object.new
+        _ { @state.update_node_stats('test-node', bad_job, 10) }.must_raise ArgumentError
+      end
+
+      it 'rejects negative history_size' do
+        job = Struct.new(:start, :end, :time, :status).new(
+          Time.now.utc, Time.now.utc, 10.0, :success
+        )
+        _ { @state.update_node_stats('test-node', job, -1) }.must_raise ArgumentError
+      end
+
+      it 'rejects zero history_size' do
+        job = Struct.new(:start, :end, :time, :status).new(
+          Time.now.utc, Time.now.utc, 10.0, :success
+        )
+        _ { @state.update_node_stats('test-node', job, 0) }.must_raise ArgumentError
+      end
+
+      it 'handles Time objects correctly' do
+        job = Struct.new(:start, :end, :time, :status).new(
+          Time.now.utc, Time.now.utc, 10.0, :success
+        )
+        @state.update_node_stats('test-node', job, 10)
+        stats = @state.get_node_stats('test-node')
+        _(stats[:counter][:success]).must_equal 1
+      end
+
+      it 'rejects infinite duration' do
+        job = Struct.new(:start, :end, :time, :status).new(
+          Time.now.utc, Time.now.utc, Float::INFINITY, :success
+        )
+        _ { @state.update_node_stats('test-node', job, 10) }.must_raise ArgumentError
+      end
+
+      it 'rejects NaN duration' do
+        job = Struct.new(:start, :end, :time, :status).new(
+          Time.now.utc, Time.now.utc, Float::NAN, :success
+        )
+        _ { @state.update_node_stats('test-node', job, 10) }.must_raise ArgumentError
+      end
+    end
+
+    describe '#set_last_job' do
+      it 'rejects nil node_name' do
+        job = Struct.new(:start, :end, :time, :status).new(
+          Time.now.utc, Time.now.utc, 10.0, :success
+        )
+        _ { @state.set_last_job(nil, job) }.must_raise ArgumentError
+      end
+
+      it 'accepts nil job to clear' do
+        @state.set_last_job('test-node', nil)
+        _(@state.get_last_job('test-node')).must_be_nil
+      end
+    end
+
+    describe '#update_mtime' do
+      it 'rejects nil node_name' do
+        _ { @state.update_mtime(nil, 10) }.must_raise ArgumentError
+      end
+
+      it 'rejects negative history_size' do
+        _ { @state.update_mtime('test-node', -1) }.must_raise ArgumentError
+      end
+    end
+
+    describe '#add_job_duration' do
+      it 'rejects negative duration' do
+        _ { @state.add_job_duration(-5.0, 10) }.must_raise ArgumentError
+      end
+
+      it 'rejects zero duration' do
+        _ { @state.add_job_duration(0, 10) }.must_raise ArgumentError
+      end
+
+      it 'rejects infinite duration' do
+        _ { @state.add_job_duration(Float::INFINITY, 10) }.must_raise ArgumentError
+      end
+
+      it 'rejects NaN duration' do
+        _ { @state.add_job_duration(Float::NAN, 10) }.must_raise ArgumentError
+      end
+
+      it 'accepts integer duration' do
+        @state.add_job_duration(10, 100)
+        durations = @state.get_job_durations
+        _(durations).must_include 10.0
+      end
+
+      it 'accepts float duration' do
+        @state.add_job_duration(10.5, 100)
+        durations = @state.get_job_durations
+        _(durations).must_include 10.5
+      end
+    end
+  end
+
+  describe 'file security' do
+    it 'creates database with secure permissions' do
+      skip 'Permission tests only on Unix-like systems' unless File.respond_to?(:chmod)
+      
+      stat = File.stat(@db_path)
+      mode = stat.mode & 0o777
+      _(mode).must_equal 0o600
+    end
+
+    it 'creates state directory with secure permissions' do
+      skip 'Permission tests only on Unix-like systems' unless File.respond_to?(:chmod)
+      
+      state_dir = File.dirname(@db_path)
+      stat = File.stat(state_dir)
+      mode = stat.mode & 0o777
+      _(mode).must_equal 0o700
+    end
+
+    it 'secures WAL file if it exists' do
+      skip 'Permission tests only on Unix-like systems' unless File.respond_to?(:chmod)
+      
+      wal_file = @db_path + '-wal'
+      if File.exist?(wal_file)
+        stat = File.stat(wal_file)
+        mode = stat.mode & 0o777
+        _(mode).must_equal 0o600
+      end
+    end
+  end
+
+  describe 'data type storage' do
+    it 'stores and retrieves different time formats correctly' do
+      times = [
+        Time.now.utc,
+        Time.parse('2025-01-01 00:00:00 UTC'),
+        Time.at(0)
+      ]
+
+      times.each_with_index do |time, i|
+        job = Struct.new(:start, :end, :time, :status).new(
+          time, time, 10.0, :success
+        )
+        @state.update_node_stats("node-#{i}", job, 10)
+        
+        stats = @state.get_node_stats("node-#{i}")
+        _(stats[:success].first[:start]).must_be_kind_of Time
+        _(stats[:success].first[:end]).must_be_kind_of Time
+      end
+    end
+
+    it 'stores numeric values with precision' do
+      durations = [1.0, 1.5, 1.123456789, 0.001, 999999.999]
+      
+      durations.each do |duration|
+        @state.add_job_duration(duration, 100)
+      end
+
+      retrieved = @state.get_job_durations
+      durations.each do |expected|
+        found = retrieved.find { |d| (d - expected).abs < 0.000001 }
+        _(found).wont_be_nil
+      end
+    end
+
+    it 'stores unicode node names correctly' do
+      unicode_names = ['node-日本語', 'node-العربية', 'node-Ελληνικά', 'node-🚀']
+      
+      unicode_names.each do |name|
+        next if name.length > 255 # Skip if too long
+        
+        job = Struct.new(:start, :end, :time, :status).new(
+          Time.now.utc, Time.now.utc, 10.0, :success
+        )
+        @state.update_node_stats(name, job, 10)
+        
+        stats = @state.get_node_stats(name)
+        _(stats[:counter][:success]).must_equal 1
+      end
+    end
+
+    it 'stores various status symbols correctly' do
+      statuses = [:success, :fail, :no_connection, :timeout, :error]
+      
+      statuses.each do |status|
+        job = Struct.new(:start, :end, :time, :status).new(
+          Time.now.utc, Time.now.utc, 10.0, status
+        )
+        @state.update_node_stats('test-node', job, 10)
+      end
+
+      stats = @state.get_node_stats('test-node')
+      statuses.each do |status|
+        _(stats[:counter][status]).must_equal 1
+      end
+    end
+  end
+
+  describe 'edge cases' do
+    it 'handles very large counter values' do
+      job = Struct.new(:start, :end, :time, :status).new(
+        Time.now.utc, Time.now.utc, 10.0, :success
+      )
+
+      1000.times { @state.update_node_stats('test-node', job, 10) }
+      
+      stats = @state.get_node_stats('test-node')
+      _(stats[:counter][:success]).must_equal 1000
+    end
+
+    it 'handles rapid sequential updates' do
+      job = Struct.new(:start, :end, :time, :status).new(
+        Time.now.utc, Time.now.utc, 10.0, :success
+      )
+
+      100.times { |i| @state.update_node_stats("node-#{i}", job, 10) }
+      
+      100.times do |i|
+        stats = @state.get_node_stats("node-#{i}")
+        _(stats[:counter][:success]).must_equal 1
+      end
+    end
+
+    it 'handles empty database queries' do
+      stats = @state.get_node_stats('nonexistent')
+      _(stats[:counter][:success]).must_equal 0
+      _(stats[:mtimes]).must_equal []
+      
+      last_job = @state.get_last_job('nonexistent')
+      _(last_job).must_be_nil
+      
+      durations = @state.get_job_durations
+      _(durations).must_equal []
+    end
+  end
 end
