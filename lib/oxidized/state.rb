@@ -17,8 +17,10 @@ module Oxidized
     def initialize(database_path = nil)
       @database_path = database_path || default_database_path
       @db = nil
+      ensure_secure_directory
       connect
       migrate
+      secure_database_file
     end
 
     # Get node statistics
@@ -65,6 +67,10 @@ module Oxidized
     # @param job [Object] Job object with start, end, time, and status
     # @param history_size [Integer] Maximum number of history items per status
     def update_node_stats(node_name, job, history_size = 10)
+      validate_node_name!(node_name)
+      validate_job!(job)
+      validate_positive_integer!(history_size, 'history_size')
+
       @db.transaction do
         # Update counter
         counter = @db[:node_stats_counters]
@@ -83,13 +89,13 @@ module Oxidized
           )
         end
 
-        # Add job to history
+        # Add job to history with validated data
         @db[:node_stats_history].insert(
           node_name: node_name,
           status: job.status.to_s,
-          job_start: job.start,
-          job_end: job.end,
-          job_time: job.time
+          job_start: ensure_time(job.start),
+          job_end: ensure_time(job.end),
+          job_time: ensure_float(job.time)
         )
 
         # Trim history to keep only the latest N entries per status
@@ -119,16 +125,19 @@ module Oxidized
     # @param node_name [String] Name of the node
     # @param job [Object, nil] Job object or nil to clear
     def set_last_job(node_name, job)
+      validate_node_name!(node_name)
+      validate_job!(job) if job
+
       @db.transaction do
         @db[:node_last_jobs].where(node_name: node_name).delete
 
         if job
           @db[:node_last_jobs].insert(
             node_name: node_name,
-            job_start: job.start,
-            job_end: job.end,
+            job_start: ensure_time(job.start),
+            job_end: ensure_time(job.end),
             status: job.status.to_s,
-            job_time: job.time
+            job_time: ensure_float(job.time)
           )
         end
       end
@@ -138,6 +147,9 @@ module Oxidized
     # @param node_name [String] Name of the node
     # @param history_size [Integer] Maximum number of mtimes to keep
     def update_mtime(node_name, history_size = 10)
+      validate_node_name!(node_name)
+      validate_positive_integer!(history_size, 'history_size')
+
       @db.transaction do
         @db[:node_mtimes].insert(
           node_name: node_name,
@@ -175,9 +187,12 @@ module Oxidized
     # @param duration [Float] Job duration in seconds
     # @param max_size [Integer] Maximum number of durations to keep
     def add_job_duration(duration, max_size)
+      validate_positive_number!(duration, 'duration')
+      validate_positive_integer!(max_size, 'max_size')
+
       @db.transaction do
         @db[:job_durations].insert(
-          duration: duration,
+          duration: ensure_float(duration),
           created_at: Time.now.utc
         )
 
@@ -351,6 +366,107 @@ module Oxidized
       @db[:node_stats_history]
         .where(id: old_records)
         .delete
+    end
+
+    # Validation and security methods
+
+    # Ensure directory exists and has secure permissions
+    def ensure_secure_directory
+      state_dir = File.dirname(@database_path)
+      unless File.directory?(state_dir)
+        FileUtils.mkdir_p(state_dir)
+        # Set directory permissions to 0700 (owner only)
+        File.chmod(0o700, state_dir)
+        logger.info "Created state directory with secure permissions: #{state_dir}"
+      end
+    end
+
+    # Set secure permissions on database file
+    def secure_database_file
+      return unless File.exist?(@database_path)
+
+      # Set file permissions to 0600 (owner read/write only)
+      File.chmod(0o600, @database_path)
+      
+      # Also secure WAL and SHM files if they exist
+      [@database_path + '-wal', @database_path + '-shm'].each do |file|
+        File.chmod(0o600, file) if File.exist?(file)
+      end
+      
+      logger.info "Secured database file permissions: #{@database_path}"
+    end
+
+    # Validate node name
+    # @param node_name [String] Node name to validate
+    # @raise [ArgumentError] if node name is invalid
+    def validate_node_name!(node_name)
+      raise ArgumentError, "node_name cannot be nil" if node_name.nil?
+      raise ArgumentError, "node_name must be a String" unless node_name.is_a?(String)
+      raise ArgumentError, "node_name cannot be empty" if node_name.empty?
+      raise ArgumentError, "node_name too long (max 255 chars)" if node_name.length > 255
+    end
+
+    # Validate job object
+    # @param job [Object] Job object to validate
+    # @raise [ArgumentError] if job is invalid
+    def validate_job!(job)
+      raise ArgumentError, "job cannot be nil" if job.nil?
+      raise ArgumentError, "job must respond to :start" unless job.respond_to?(:start)
+      raise ArgumentError, "job must respond to :end" unless job.respond_to?(:end)
+      raise ArgumentError, "job must respond to :time" unless job.respond_to?(:time)
+      raise ArgumentError, "job must respond to :status" unless job.respond_to?(:status)
+    end
+
+    # Validate positive integer
+    # @param value [Integer] Value to validate
+    # @param name [String] Name of the parameter
+    # @raise [ArgumentError] if value is invalid
+    def validate_positive_integer!(value, name)
+      raise ArgumentError, "#{name} must be an Integer" unless value.is_a?(Integer)
+      raise ArgumentError, "#{name} must be positive" unless value.positive?
+    end
+
+    # Validate positive number
+    # @param value [Numeric] Value to validate
+    # @param name [String] Name of the parameter
+    # @raise [ArgumentError] if value is invalid
+    def validate_positive_number!(value, name)
+      raise ArgumentError, "#{name} must be a number" unless value.is_a?(Numeric)
+      raise ArgumentError, "#{name} must be positive" unless value.positive?
+      raise ArgumentError, "#{name} must be finite" unless value.finite?
+    end
+
+    # Ensure value is a Time object
+    # @param value [Time, nil] Value to convert
+    # @return [Time, nil] Time object or nil
+    def ensure_time(value)
+      return nil if value.nil?
+      return value if value.is_a?(Time)
+      
+      # Try to parse if it's a string or convert if it's numeric
+      if value.is_a?(String)
+        Time.parse(value)
+      elsif value.is_a?(Numeric)
+        Time.at(value)
+      else
+        raise ArgumentError, "Cannot convert #{value.class} to Time"
+      end
+    rescue ArgumentError => e
+      raise ArgumentError, "Invalid time value: #{e.message}"
+    end
+
+    # Ensure value is a Float
+    # @param value [Numeric] Value to convert
+    # @return [Float] Float value
+    def ensure_float(value)
+      return nil if value.nil?
+      
+      float_val = Float(value)
+      raise ArgumentError, "Value must be finite" unless float_val.finite?
+      
+      float_val
+    rescue TypeError, ArgumentError => e
+      raise ArgumentError, "Invalid numeric value: #{e.message}"
     end
   end
 end
