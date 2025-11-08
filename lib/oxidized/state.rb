@@ -74,8 +74,8 @@ module Oxidized
       @db.transaction do
         # Update counter
         counter = @db[:node_stats_counters]
-                    .where(node_name: node_name, status: job.status.to_s)
-                    .first
+                  .where(node_name: node_name, status: job.status.to_s)
+                  .first
 
         if counter
           @db[:node_stats_counters]
@@ -158,15 +158,15 @@ module Oxidized
 
         # Trim old mtimes
         count = @db[:node_mtimes]
-                  .where(node_name: node_name)
-                  .count
+                .where(node_name: node_name)
+                .count
 
         if count > history_size
           old_records = @db[:node_mtimes]
-                          .where(node_name: node_name)
-                          .order(:mtime)
-                          .limit(count - history_size)
-                          .select_map(:id)
+                        .where(node_name: node_name)
+                        .order(:mtime)
+                        .limit(count - history_size)
+                        .select_map(:id)
 
           @db[:node_mtimes]
             .where(id: old_records)
@@ -200,9 +200,9 @@ module Oxidized
         count = @db[:job_durations].count
         if count > max_size
           old_records = @db[:job_durations]
-                          .order(:created_at)
-                          .limit(count - max_size)
-                          .select_map(:id)
+                        .order(:created_at)
+                        .limit(count - max_size)
+                        .select_map(:id)
 
           @db[:job_durations]
             .where(id: old_records)
@@ -351,16 +351,16 @@ module Oxidized
     # @param max_size [Integer] Maximum number of entries to keep
     def trim_history(node_name, status, max_size)
       count = @db[:node_stats_history]
-                .where(node_name: node_name, status: status)
-                .count
+              .where(node_name: node_name, status: status)
+              .count
 
       return unless count > max_size
 
       old_records = @db[:node_stats_history]
-                      .where(node_name: node_name, status: status)
-                      .order(:job_start)
-                      .limit(count - max_size)
-                      .select_map(:id)
+                    .where(node_name: node_name, status: status)
+                    .order(:job_start)
+                    .limit(count - max_size)
+                    .select_map(:id)
 
       @db[:node_stats_history]
         .where(id: old_records)
