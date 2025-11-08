@@ -29,7 +29,7 @@ module Oxidized
       @prompt = resolve_prompt opt
       @timeout = resolve_timeout opt
       @vars = opt[:vars] || {}
-      @stats = Stats.new
+      @stats = Stats.new(@name)
       @retry = 0
       @repo = resolve_repo opt
       @err_type = nil
