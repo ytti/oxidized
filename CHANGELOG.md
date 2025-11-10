@@ -18,6 +18,7 @@ The format is based on [Keep a Changelog](https://keepachangelog.com/en/1.1.0/).
 - docker image: change oxidized user's shell to bash. (@electrocret)
 - refactor suppression of ANSI escape codes into model.rb (use `clean :escape_codes` in your model. Updated cumulus, garderos, mlnxos and vyos. (@robertcheramy)
 - aoscx: rework handling of ANSI escape codes (@robertcheramy)
+- docker: build on arm64 natively. Closes #3665 (@robertcheramy)
 
 ### Fixed
 - input/http: bracket IPv6 URI. Fixes #3620 (@ytti)

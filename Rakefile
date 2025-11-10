@@ -1,5 +1,6 @@
 require 'bundler/gem_tasks'
 require 'rake/testtask'
+require 'time'
 require_relative 'lib/oxidized/version'
 
 gemspec = Gem::Specification.load(Dir['*.gemspec'].first)
@@ -92,17 +93,34 @@ desc 'Build the container image with docker or podman'
 task :build_container do
   branch_name = %x(git rev-parse --abbrev-ref HEAD).chop.gsub '/', '_'
   sha_hash = %x(git rev-parse --short HEAD).chop
+  sha_hash_long = %x(git rev-parse HEAD).chop
   image_tag = "#{branch_name}-#{sha_hash}"
+  created_time = Time.now.iso8601
+
+  # Build-Args for consistent labels
+  build_args = [
+    "--label org.opencontainers.image.title=oxidized",
+    "--label org.opencontainers.image.description='Local build of Oxidized'",
+    "--label org.opencontainers.image.url=https://github.com/ytti/oxidized",
+    "--label org.opencontainers.image.source=https://github.com/ytti/oxidized",
+    "--label org.opencontainers.image.created=#{created_time}",
+    "--label org.opencontainers.image.ref.name=#{image_tag}",
+    "--label org.opencontainers.image.licenses=Apache-2.0",
+    "--label org.opencontainers.image.version=#{image_tag}",
+    "--label org.opencontainers.image.revision=#{sha_hash_long}",
+    "-t oxidized:#{image_tag}",
+    "-t oxidized:latest"
+  ].join(' ')
 
   # Prefer podman if available as it runs rootless
   if command_available?('podman')
-    sh "podman build -t oxidized:#{image_tag} -t oxidized:latest ."
+    sh "podman build #{build_args} ."
   elsif command_available?('docker')
     if docker_needs_root?
       puts 'docker needs root to build the image. Using sudo...'
-      sh "sudo docker build -t oxidized:#{image_tag} -t oxidized:latest ."
+      sh "sudo docker build #{build_args} ."
     else
-      sh "docker build -t oxidized:#{image_tag} -t oxidized:latest ."
+      sh "docker build #{build_args} ."
     end
   else
     puts 'You need Podman or Docker to build the container image.'
