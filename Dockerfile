@@ -42,6 +42,8 @@ RUN apt-get -qy update \
     git-email libmailtools-perl \
     # Allow sending emails in the docker container
     msmtp \
+    # SQLite3 for inspecting state database
+    sqlite3 \
     # Debuging tools inside the container
     inetutils-telnet \
     # Use ubuntu gems where possible

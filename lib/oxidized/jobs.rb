@@ -12,7 +12,18 @@ module Oxidized
       @interval = interval.zero? ? 1 : interval
       @nodes = nodes
       @last = Time.now.utc
-      @durations = Array.new @nodes.size, AVERAGE_DURATION
+
+      # Load durations from persistent state
+      @durations = Oxidized.state.job_durations
+      if @durations.empty?
+        @durations = Array.new @nodes.size, AVERAGE_DURATION
+      elsif @durations.size < @nodes.size
+        # Ensure we have the right number of durations
+        @durations.fill AVERAGE_DURATION, @durations.size...@nodes.size
+      elsif @durations.size > @nodes.size
+        @durations = @durations.last(@nodes.size)
+      end
+
       duration AVERAGE_DURATION
       super()
     end
@@ -30,6 +41,10 @@ module Oxidized
       end
       @durations.push(last).shift
       @duration = @durations.inject(:+).to_f / @nodes.size # rolling average
+
+      # Persist the new duration
+      Oxidized.state.add_job_duration(last, @nodes.size)
+
       new_count
     end
 
