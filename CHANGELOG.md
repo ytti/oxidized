@@ -19,6 +19,7 @@ The format is based on [Keep a Changelog](https://keepachangelog.com/en/1.1.0/).
 - refactor suppression of ANSI escape codes into model.rb (use `clean :escape_codes` in your model. Updated cumulus, garderos, mlnxos and vyos. (@robertcheramy)
 - aoscx: rework handling of ANSI escape codes (@robertcheramy)
 - docker: build on arm64 natively. Closes #3665 (@robertcheramy)
+- docker image: move base image from phusion/baseimage to debian:trixie-slim (@robertcheramy)
 
 ### Fixed
 - input/http: bracket IPv6 URI. Fixes #3620 (@ytti)
