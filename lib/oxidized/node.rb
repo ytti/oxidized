@@ -7,7 +7,7 @@ module Oxidized
   class Node
     include SemanticLogger::Loggable
 
-    attr_reader :name, :ip, :model, :input, :output, :group, :auth, :prompt, :timeout, :vars, :last, :repo
+    attr_reader :name, :ip, :model, :input, :output, :group, :auth, :prompt, :timeout, :vars, :repo
     attr_accessor :running, :user, :email, :msg, :from, :stats, :retry, :err_type, :err_reason
     alias running? running
 
@@ -29,7 +29,7 @@ module Oxidized
       @prompt = resolve_prompt opt
       @timeout = resolve_timeout opt
       @vars = opt[:vars] || {}
-      @stats = Stats.new
+      @stats = Stats.new(@name)
       @retry = 0
       @repo = resolve_repo opt
       @err_type = nil
@@ -135,11 +135,21 @@ module Oxidized
 
     JobStruct = Struct.new(:start, :end, :status, :time)
     def last=(job)
+      Oxidized.state.set_last_job(@name, job)
       if job
         @last = JobStruct.new(job.start, job.end, job.status, job.time)
       else
         @last = nil
       end
+    end
+
+    def last
+      # Load from persistent state if not in memory
+      if @last.nil?
+        job_data = Oxidized.state.get_last_job(@name)
+        @last = JobStruct.new(job_data[:start], job_data[:end], job_data[:status], job_data[:time]) if job_data
+      end
+      @last
     end
 
     def reset

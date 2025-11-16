@@ -1,5 +1,101 @@
 # Outputs
 
+## Output: SQLite
+
+Store device configurations in a SQLite database with full version history.
+
+### Features
+
+- **Single file database**: All configurations stored in one SQLite database file
+- **Version history**: Automatic versioning with up to 100 versions per device
+- **Fast queries**: Indexed searches by node name and group
+- **Concurrent access**: Uses WAL mode for better performance
+- **Secure**: Database files created with 0600 permissions
+- **Groups support**: Store configurations organized by groups
+
+### Configuration
+
+```yaml
+output:
+  default: sqlite
+  sqlite:
+    database: ~/.config/oxidized/configs.db
+```
+
+### Database Location
+
+The database file will be created at the specified path. The parent directory
+will be created automatically if it doesn't exist.
+
+For Docker deployments, mount the database file or its parent directory:
+
+```bash
+docker run -v ~/oxidized-data:/home/oxidized/.config/oxidized oxidized/oxidized
+```
+
+The database will be at `~/oxidized-data/configs.db` on the host.
+
+### Version History
+
+The SQLite output automatically maintains version history. Each time a
+configuration changes, a new version is stored. Up to 100 versions are kept
+per device.
+
+View version history through the REST API:
+```
+GET /node/version/<node_name>
+```
+
+Retrieve a specific version:
+```
+GET /node/version/<node_name>/<version_id>
+```
+
+### Clean Obsolete Nodes
+
+The SQLite output supports automatic cleanup of obsolete nodes:
+
+```yaml
+output:
+  default: sqlite
+  clean_obsolete_nodes: true
+  sqlite:
+    database: ~/.config/oxidized/configs.db
+```
+
+This will remove configurations and version history for devices no longer
+present in the source.
+
+### Database Schema
+
+The database contains two tables:
+
+- **configs**: Current configuration for each node
+  - `node`: Device hostname
+  - `group`: Group name (optional)
+  - `config`: Configuration text
+  - `created_at`, `updated_at`: Timestamps
+
+- **config_versions**: Historical versions
+  - `node`: Device hostname
+  - `group`: Group name (optional)
+  - `config`: Configuration text at that version
+  - `created_at`: When this version was saved
+
+### Advantages
+
+- **Simple deployment**: Single file, easy to backup
+- **Version control**: Built-in version history
+- **Query flexibility**: SQL queries for advanced searching
+- **No external dependencies**: SQLite embedded in Ruby
+- **Concurrent reads**: Multiple processes can read simultaneously
+
+### Limitations
+
+- **Single writer**: Only one process should write at a time
+- **Not for clustering**: Use Git output for distributed deployments
+- **Limited version count**: Max 100 versions per device (configurable in code)
+
 ## Output: File
 
 Parent directory needs to be created manually, one file per device, with most recent running config.

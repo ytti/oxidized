@@ -11,6 +11,7 @@ module Oxidized
   require 'oxidized/version'
   require 'oxidized/config'
   require 'oxidized/config/vars'
+  require 'oxidized/state'
   require 'oxidized/worker'
   require 'oxidized/nodes'
   require 'oxidized/manager'
@@ -29,5 +30,13 @@ module Oxidized
 
   def self.config
     asetus.cfg
+  end
+
+  def self.state
+    @@state
+  end
+
+  def self.state=(val)
+    @@state = val
   end
 end
