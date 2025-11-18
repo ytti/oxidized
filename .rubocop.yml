@@ -68,6 +68,7 @@ Style/FormatString:
 
 Style/FormatStringToken:
   EnforcedStyle: unannotated
+  AllowedMethods: ['metadata']
 
 Style/HashEachMethods:
   Enabled: true

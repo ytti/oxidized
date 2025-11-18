@@ -1,0 +1,108 @@
+! -----------------------------------------------------------------------------
+! ArubaOS-CX
+! (c) Copyright 2017-2023 Hewlett Packard Enterprise Development LP
+! -----------------------------------------------------------------------------
+! Version      : PL.10.10.1090                                                 
+! Build Date   : 2023-10-03 19:00:03 UTC                                       
+! Build ID     : ArubaOS-CX:PL.10.10.1090:0c9948371ce3:202310031831            
+! Build SHA    : 0c9948371ce3f70afa872c69606dbc1fb0532e4f                      
+! Active Image : primary                       
+! 
+! Service OS Version : PL.01.09.0003                 
+! BIOS Version       : PL.01.0002                    
+! show environment fan
+! 
+! Fan information
+! ------------------------------------------------------------------------------
+! Location-      Product  Serial Number  Speed   Direction      Status  RPM
+! Mbr/Slot/Fan   Name
+! ------------------------------------------------------------------------------
+! System-1/1/1   N/A      N/A            N/A     left-to-right  ok      N/A 
+! System-1/1/2   N/A      N/A            N/A     left-to-right  ok      N/A 
+! 
+! 
+! 
+! show environment led
+! Mbr/Name       State        Status    
+! ----------------------------------
+! 1/locator      off          ok        
+! 
+! 
+! show environment power-supply
+! ------------------------------------------------------------------------------
+!          Product  Serial            PSU            Input   Voltage    Wattage
+! Mbr/PSU  Number   Number            Status         Type    Range      Maximum
+! ------------------------------------------------------------------------------
+! 1/1      N/A      N/A               OK             AC      100V-240V  460
+! 
+! 
+! 
+! show environment temperature
+! Temperature information
+! ------------------------------------------------------------------------------
+!                                                      Current
+! Mbr/Slot-Sensor                 Module Type        temperature  Status
+! ------------------------------------------------------------------------------
+! 1/1-PHY-01-08                   line-card-module     <hidden>   normal
+! 1/1-PHY-09-16                   line-card-module     <hidden>   normal
+! 1/1-PHY-17-24                   line-card-module     <hidden>   normal
+! 1/1-PHY-25-32                   line-card-module     <hidden>   normal
+! 1/1-PHY-33-40                   line-card-module     <hidden>   normal
+! 1/1-PHY-41-48                   line-card-module     <hidden>   normal
+! 
+! 1/1-Inlet-Air                   management-module    <hidden>   normal
+! 1/1-Switch-ASIC-Internal        management-module    <hidden>   normal
+! 1/1-Switch-CPU-1                management-module    <hidden>   normal
+! 1/1-Switch-CPU-2                management-module    <hidden>   normal
+! 
+! 
+! Management Modules
+! ==================
+! 
+!      Product                                        Serial
+! Name Number  Description                            Number     Status
+! ---- ------- -------------------------------------- ---------- ----------------
+! 1/1  JL675A  6100 48G CL4 4SFP+ Swch                CN25000000 Ready
+! 
+! 
+! Line Modules
+! ============
+! 
+!      Product                                        Serial
+! Name Number  Description                            Number     Status
+! ---- ------- -------------------------------------- ---------- ----------------
+! 1/1  JL675A  6100 48G CL4 4SFP+ Swch                CN25000000 Ready
+! 
+! 
+! ------------------------------------------------------------------
+! Port      Type           Product      Serial          Part        
+!                          Number       Number          Number      
+! ------------------------------------------------------------------
+! 1/1/52    10G-SR         J9150D       CN21000000      1990-4635   
+! 
+! Hostname               : TEST-SW1235                   
+! System Description     : PL.10.10.1090                 
+! System Contact         : System Contact                
+! System Location        : Location
+! 
+! Vendor                 : Aruba                         
+! Product Name           : JL675A 6100 48G CL4 4SFP+ Swch       
+! Chassis Serial Nbr     : CN25000000                    
+! Base MAC Address       : 9460d5-000000                 
+! ArubaOS-CX Version     : PL.10.10.1090                 
+! 
+! Time Zone              : Europe/Berlin                 
+! 
+Current configuration:
+!
+!Version ArubaOS-CX PL.10.10.1090
+!export-password: default
+hostname TEST-SW1235
+interface 1/1/1
+    description TEST
+    no shutdown
+    no trap link-status
+    vlan access 1
+interface vlan 1
+!
+https-server vrf default

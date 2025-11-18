@@ -5,16 +5,20 @@ All notable changes to this project will be documented in this file.
 The format is based on [Keep a Changelog](https://keepachangelog.com/en/1.1.0/).
 
 ## [Unreleased]
-VyOS now has it's own Model and should be used for supported VyOS versions instead of the Vyatta Model.
+- VyOS now has it's own Model and should be used for supported VyOS versions instead of the Vyatta Model.
+- Aoscx has been reworked and may break old OS versions.
 
 ### Added
 - Allow setting timeout on per node basis. Closes #3612 (@ytti)
 - Added Vyos as individual model. Closes #3603 #3560 (@nicolasberens)
+- Add metadata to models. Closes #3249 (@robertcheramy)
 
 ### Changed
 - tnsr: added simulation data for older versions (@Vantomas)
 - docker image: change oxidized user's shell to bash. (@electrocret)
 - refactor suppression of ANSI escape codes into model.rb (use `clean :escape_codes` in your model. Updated cumulus, garderos, mlnxos and vyos. (@robertcheramy)
+- aoscx: rework handling of ANSI escape codes (@robertcheramy)
+- docker: build on arm64 natively. Closes #3665 (@robertcheramy)
 
 ### Fixed
 - input/http: bracket IPv6 URI. Fixes #3620 (@ytti)
@@ -24,6 +28,13 @@ VyOS now has it's own Model and should be used for supported VyOS versions inste
 - timos: remove deprecated model timos. Use sros. #3617 (@cheramr)
 - fsos: set terminal width to 0. Fixes #3576 (@cheramr)
 - input/http: Corrected pagination causing duplicated nodes. Fixes #3676 (@kquilliam)
+- many models: fix redundant regular expressions (@robertcheramy)
+- timos: remove deprecated model timos. Use sros. #3617 (@robertcheramy)
+- fsos: set terminal width to 0. Fixes #3576 (@robertcheramy)
+- aoscx: rework environmental data anonymization. Fixes #3568 (@robertcheramy, inspired by PR #3653 by @martadams89)
+- netgear: fix prompt issues caused by ANSI escape codes. Fixes #3287 (@robertcheramy)
+- remove redundant dependency on bundler producing a CI failure on ruby-head (@robertcheramy)
+
 
 ## [0.34.3 - 2025-08-05]
 This release fixes an issue preventing /node/show/<hostname> to work in oxidized-web.

@@ -1,2 +1,10 @@
 pass:
   - 'LAB-SW1234# '
+  # From PR #2163
+  - "\rssh prompt# "
+  - "\rssh prompt> "
+pass_with_expect:
+  # From PR #2163
+  - "\rssh prompt# "
+  - "\rssh prompt> "
+  - "\e[24;0htelnet prompt> \e[24;12h\e[24;1H\e[24;42h"

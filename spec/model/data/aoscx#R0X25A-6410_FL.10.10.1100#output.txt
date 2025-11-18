@@ -26,22 +26,22 @@
 ! Location-      Product  Serial Number  Speed   Direction      Status  RPM
 ! Mbr/Slot/Fan   Name
 ! ------------------------------------------------------------------------------
-! Tray-1/1/1     N/A      N/A            <speed> front-to-back  ok      <rpm>
-! Tray-1/1/2     N/A      N/A            <speed> front-to-back  ok      <rpm>
-! Tray-1/1/3     N/A      N/A            <speed> front-to-back  ok      <rpm>
-! Tray-1/1/4     N/A      N/A            <speed> front-to-back  ok      <rpm>
-! Tray-1/2/1     N/A      N/A            <speed> front-to-back  ok      <rpm>
-! Tray-1/2/2     N/A      N/A            <speed> front-to-back  ok      <rpm>
-! Tray-1/2/3     N/A      N/A            <speed> front-to-back  ok      <rpm>
-! Tray-1/2/4     N/A      N/A            <speed> front-to-back  ok      <rpm>
-! Tray-1/3/1     N/A      N/A            <speed> front-to-back  ok      <rpm>
-! Tray-1/3/2     N/A      N/A            <speed> front-to-back  ok      <rpm>
-! Tray-1/3/3     N/A      N/A            <speed> front-to-back  ok      <rpm>
-! Tray-1/3/4     N/A      N/A            <speed> front-to-back  ok      <rpm>
-! Tray-1/4/1     N/A      N/A            <speed> front-to-back  ok      <rpm>
-! Tray-1/4/2     N/A      N/A            <speed> front-to-back  ok      <rpm>
-! Tray-1/4/3     N/A      N/A            <speed> front-to-back  ok      <rpm>
-! Tray-1/4/4     N/A      N/A            <speed> front-to-back  ok      <rpm>
+! Tray-1/1/1     N/A      N/A            <speed>    front-to-back  ok      <rpm>
+! Tray-1/1/2     N/A      N/A            <speed>    front-to-back  ok      <rpm>
+! Tray-1/1/3     N/A      N/A            <speed>    front-to-back  ok      <rpm>
+! Tray-1/1/4     N/A      N/A            <speed>    front-to-back  ok      <rpm>
+! Tray-1/2/1     N/A      N/A            <speed>    front-to-back  ok      <rpm>
+! Tray-1/2/2     N/A      N/A            <speed>    front-to-back  ok      <rpm>
+! Tray-1/2/3     N/A      N/A            <speed>    front-to-back  ok      <rpm>
+! Tray-1/2/4     N/A      N/A            <speed>    front-to-back  ok      <rpm>
+! Tray-1/3/1     N/A      N/A            <speed>    front-to-back  ok      <rpm>
+! Tray-1/3/2     N/A      N/A            <speed>    front-to-back  ok      <rpm>
+! Tray-1/3/3     N/A      N/A            <speed>    front-to-back  ok      <rpm>
+! Tray-1/3/4     N/A      N/A            <speed>    front-to-back  ok      <rpm>
+! Tray-1/4/1     N/A      N/A            <speed>    front-to-back  ok      <rpm>
+! Tray-1/4/2     N/A      N/A            <speed>    front-to-back  ok      <rpm>
+! Tray-1/4/3     N/A      N/A            <speed>    front-to-back  ok      <rpm>
+! Tray-1/4/4     N/A      N/A            <speed>    front-to-back  ok      <rpm>
 ! 
 ! 
 ! 
@@ -55,32 +55,33 @@
 !      Product                                                Power
 ! Name Number  Subsystem-Type       Request Priority Granted  Usage
 ! -------------------------------------------------------------------
-! 1    R0X25A  base-chassis-module  N/A     N/A      N/A     <power>
-! 1/1  R0X25A  fabric-card-module   158     128      granted <power>
-! 1/2  R0X25A  fabric-card-module   158     128      granted <power>
-! 1/1  R0X32A  fan-tray-module      200     128      granted <power>
-! 1/2  R0X32A  fan-tray-module      200     128      granted <power>
-! 1/3  R0X32A  fan-tray-module      200     128      granted <power>
-! 1/4  R0X32A  fan-tray-module      200     128      granted <power>
-! 1/3  R0X45A  line-card-module     352     128      granted <power>
-! 1/4  R0X44A  line-card-module     424     128      granted <power>
-! 1/5  N/A     line-card-module     0       128      NA      <power>
-! 1/6  R0X44A  line-card-module     424     128      granted <power>
-! 1/7  N/A     line-card-module     0       128      NA      <power>
-! 1/8  N/A     line-card-module     0       128      NA      <power>
-! 1/9  N/A     line-card-module     0       128      NA      <power>
-! 1/10 N/A     line-card-module     0       128      NA      <power>
-! 1/11 N/A     line-card-module     0       128      NA      <power>
-! 1/12 R0X39B  line-card-module     121     128      granted <power>
-! 1/1  R0X31A  management-module    39      128      granted <power>
-! 1/2  R0X31A  management-module    39      128      granted <power>
+! 1    R0X25A  base-chassis-module  N/A     N/A      N/A      <power>
+! 1/1  R0X25A  fabric-card-module   158     128      granted  <power>
+! 1/2  R0X25A  fabric-card-module   158     128      granted  <power>
+! 1/1  R0X32A  fan-tray-module      200     128      granted  <power>
+! 1/2  R0X32A  fan-tray-module      200     128      granted  <power>
+! 1/3  R0X32A  fan-tray-module      200     128      granted  <power>
+! 1/4  R0X32A  fan-tray-module      200     128      granted  <power>
+! 1/3  R0X45A  line-card-module     352     128      granted  <power>
+! 1/4  R0X44A  line-card-module     424     128      granted  <power>
+! 1/5  N/A     line-card-module     0       128      NA       <power>
+! 1/6  R0X44A  line-card-module     424     128      granted  <power>
+! 1/7  N/A     line-card-module     0       128      NA       <power>
+! 1/8  N/A     line-card-module     0       128      NA       <power>
+! 1/9  N/A     line-card-module     0       128      NA       <power>
+! 1/10 N/A     line-card-module     0       128      NA       <power>
+! 1/11 N/A     line-card-module     0       128      NA       <power>
+! 1/12 R0X39B  line-card-module     121     128      granted  <power>
+! 1/1  R0X31A  management-module    39      128      granted  <power>
+! 1/2  R0X31A  management-module    39      128      granted  <power>
+! 
 ! -------------------------------------------------------------------
-! Total Requested                   2515 W
-! Total Power Granted to Subsystems 2515 W
-! Power Granted for PoE             2813 W
-! Total Power Granted               5328 W
-! Maximum PSU Power Available       5328 W
-! Power Remaining                      0 W
+! Total Requested                   <power>
+! Total Power Granted to Subsystems <power>
+! Power Granted for PoE             <power>
+! Total Power Granted               <power>
+! Maximum PSU Power Available       <power>
+! Power Remaining                      <power>
 ! -------------------------------------------------------------------
 ! 
 ! 

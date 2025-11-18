@@ -46,7 +46,6 @@ Gem::Specification.new do |s|
   s.add_dependency 'syslog',               '~> 0.3.0'
   s.add_dependency 'syslog_protocol',      '~> 0.9.2'
 
-  s.add_development_dependency 'bundler',             '~> 2.2'
   # ruby-git 4.0 requests ruby >= 3.2, we stick to ruby >= 3.1 (Ubuntu Noble/Debian Bookworm)
   s.add_development_dependency 'git',                 '>= 2.0', '< 3.2.0'
   s.add_development_dependency 'minitest',            '~> 5.26.0'
@@ -61,5 +60,5 @@ Gem::Specification.new do |s|
 
   # Dependencies on optional libraries, used for unit tests & development
   s.add_development_dependency 'oxidized-web',        '~> 0.17.1'
-  s.add_development_dependency 'sequel',              '>= 5.63.0', '< 5.98.0'
+  s.add_development_dependency 'sequel',              '>= 5.63.0', '< 5.99.0'
 end
