@@ -1,100 +1,102 @@
-FROM docker.io/phusion/baseimage:noble-1.0.2
-
-ENV DEBIAN_FRONTEND=noninteractive
+FROM docker.io/debian:trixie-slim
 
 ##### Place "static" commands at the beginning to optimize image size and build speed
-# remove default ubuntu user
-RUN userdel -r ubuntu
 
 # add non-privileged user
-ARG UID=30000
-ARG GID=$UID
-RUN groupadd -g "${GID}" -r oxidized && useradd -u "${UID}" -r -m -d /home/oxidized -g oxidized oxidized
+RUN groupadd -g "30000" -r oxidized && \
+    useradd -u "30000" -r -m -d /home/oxidized -g oxidized oxidized && \
+    chsh -s /bin/bash oxidized 
 
-# Set Oxidized user's shell to bash
-RUN chsh -s /bin/bash oxidized
-# Remove the existing /bin/sh symlink and create a new one pointing to bash
-RUN rm /bin/sh && ln -s /bin/bash /bin/sh
+# See PR #3637 - ruby runs /bin/sh and bash is whished for exec hooks
+RUN ln -sf /bin/bash /bin/sh
 
 ##### MSMTP - Sending emails
 # link config for msmtp for easier use.
 # /home/oxidized/.msmtprc is a symbolic link to /home/oxidized/.config/oxidized/.msmtprc
 # Create the files as the user oxidized
 RUN mkdir -p /home/oxidized/.config/oxidized/ && \
-    chmod -R ug=rwX,o= /home/oxidized/.config/ && \
     touch /home/oxidized/.config/oxidized/.msmtprc && \
-    chmod -R u=rw,go= /home/oxidized/.config/oxidized/.msmtprc && \
     ln -s /home/oxidized/.config/oxidized/.msmtprc /home/oxidized/ && \
-    chown -R oxidized:oxidized /home/oxidized/.config /home/oxidized/.msmtprc
+    chmod -R ug=rwX,o= /home/oxidized/.config/ && \
+    chown -R oxidized:oxidized /home/oxidized/
 
 # add runit services
 COPY extra/oxidized.runit /etc/service/oxidized/run
 COPY extra/auto-reload-config.runit /etc/service/auto-reload-config/run
 COPY extra/update-ca-certificates.runit /etc/service/update-ca-certificates/run
 
-# set up dependencies for the build process
-RUN apt-get -qy update \
-    && apt-get -qy upgrade \
-    && apt-get -qy --no-install-recommends install ruby \
-    # Build process of oxidized from git and git-tools in the container
-    git \
-    # Allow git send-email from docker image
-    git-email libmailtools-perl \
-    # Allow sending emails in the docker container
-    msmtp \
-    # Debuging tools inside the container
-    inetutils-telnet \
-    # Use ubuntu gems where possible
-    # Gems needed by oxidized
-    ruby-rugged ruby-slop ruby-psych \
-    ruby-net-telnet ruby-net-ssh ruby-net-ftp ruby-ed25519 \
-    # Gem dependencies for inputs
-    ruby-net-http-persistent ruby-mechanize \
-    # Gem dependencies for sources
-    ruby-sqlite3 ruby-mysql2 ruby-pg ruby-sequel ruby-gpgme\
-    # Gem dependencies for hooks
-    ruby-aws-sdk ruby-xmpp4r \
-    # Gems needed by oxidized-web
-    ruby-charlock-holmes ruby-haml ruby-htmlentities ruby-json \
-    puma ruby-sinatra ruby-sinatra-contrib \
-    # Dependencies for /extra scripts
-    curl jq \
-    && apt-get clean \
-    && rm -rf /var/lib/apt/lists/*
-
-# gems not available in ubuntu noble
-RUN gem install --no-document \
-    # dependencies for hooks
-    slack-ruby-client cisco_spark \
-    # dependencies for specific inputs
-    net-tftp \
-    # Net scp is needed in Version >= 4.1.0, which is not available in ubuntu
-    net-scp
-
-# Prepare the build of oxidized, copy our workig directory in the container
+# Prepare the build of oxidized, copy our working directory in the container
 COPY . /tmp/oxidized/
 WORKDIR /tmp/oxidized
 
-# Install gems which needs a build environment
-RUN apt-get -qy update && \
-    apt-get -qy install --no-install-recommends \
-                        build-essential ruby-dev && \
-    ##### X25519 (a.k.a. Curve25519) Elliptic Curve Diffie-Hellman
-    gem install x25519 && \
-    ##### build & install oxidized from the working repository
+# set up dependencies for the build process
+RUN set -eux; \
+    export DEBIAN_FRONTEND=noninteractive; \
+    apt-get update; \
+    # no apt-get upgrade needed, as debian images are rebuilt on security issues
+    apt-get install -y --no-install-recommends \
+      # runit: lightweight service supervisor
+      # dumb-init: proper PID 1 signal handling
+      # gosu: run oxidized as the user oxidized
+      runit dumb-init gosu \
+      # Build tools
+      build-essential ruby-dev \
+      # Useful tools
+      openssh-client vim-tiny inetutils-telnet \
+      # Dependencies for /extra scripts
+      curl jq \
+      # Build process of oxidized from git and git-tools in the container
+      git \
+      # Allow git send-email from docker image
+      git-email libmailtools-perl \
+      # Allow sending emails in the docker container
+      msmtp \
+      # Use debian packaged gems where possible
+      # ruby and core gems needed by oxidized
+      ruby ruby-rugged ruby-slop \
+      # Gem dependencies for inputs
+      ruby-net-telnet ruby-net-ssh ruby-net-ftp ruby-ed25519 ruby-net-scp \
+      ruby-net-http-persistent ruby-mechanize \
+      # Gem dependencies for sources
+      ruby-sqlite3 ruby-mysql2 ruby-pg ruby-sequel ruby-gpgme\
+      # Gem dependencies for hooks
+      ruby-aws-sdk ruby-xmpp4r \
+      # Gems needed by oxidized-web
+      ruby-charlock-holmes ruby-haml ruby-htmlentities ruby-json \
+      puma ruby-sinatra ruby-sinatra-contrib \
+      # Gems needed by slack-ruby-client
+      ruby-faraday ruby-faraday-net-http ruby-faraday-multipart ruby-hashie \
+      # Gems needed by semantic logger
+      ruby-concurrent \
+    ; \
+    # build & install oxidized from the working repository
     # docker automated build gets shallow copy, but non-shallow copy cannot be unshallowed
-    git fetch --unshallow || true && \
-    rake install && \
-    # install oxidized-web
-    gem install oxidized-web --no-document && \
+    git fetch --unshallow || true; \
+    rake install; \
+    # install oxidized-web and gems not available in debian trixie
+    gem install --no-document --no-wrappers --conservative --minimal-deps \
+      oxidized-web \
+      # dependencies for hooks
+      slack-ruby-client cisco_spark \
+      # dependencies for specific inputs
+      net-tftp \
+      ##### X25519 (a.k.a. Curve25519) Elliptic Curve Diffie-Hellman
+      x25519 \
+    ; \
     # remove the packages we do not need.
-    apt-get -qy remove build-essential ruby-dev && \
-    apt-get -qy autoremove && \
-    apt-get clean && \
-    rm -rf /var/lib/apt/lists/*
+    apt-get remove -y build-essential ruby-dev; \
+    apt-get autoremove -y ; \
+    apt-get clean; \
+    rm -rf /var/lib/apt/lists/*; \
+    find /var/lib/gems/*/cache -mindepth 1 -delete; \
+    rm -rf /tmp/oxidized;
 
-# clean up
 WORKDIR /
-RUN rm -rf /tmp/oxidized
 
 EXPOSE 8888/tcp
+
+# dumb-init handles PID 1 for proper signal forwarding (Ctrl-C, SIGTERM)
+ENTRYPOINT ["/usr/bin/dumb-init", "--"]
+
+# runit supervises all services in /etc/service/
+CMD ["runsvdir", "-P", "/etc/service"]
