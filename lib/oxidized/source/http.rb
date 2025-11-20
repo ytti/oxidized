@@ -50,14 +50,22 @@ module Oxidized
         end
 
         next_key = @cfg.pagination_key_name
+        # Process the initial batch first
+        node_data += string_navigate_object(data, @cfg.hosts_location) if @cfg.hosts_location?
+
+        # Now loop only for subsequent pages
         loop do
-          node_data += string_navigate_object(data, @cfg.hosts_location) if @cfg.hosts_location?
+          # Check for the next URL *before* trying to fetch/add
           break if data[next_key].nil?
 
-          new_uri = URI.parse(data[next_key]) if data.has_key?(next_key)
+          # Fetch the next page
+          new_uri = URI.parse(data[next_key]) # Safe to parse now
           data = JSON.parse(read_http(new_uri, node_want))
+
+          # Add nodes from the *newly fetched* batch
           node_data += string_navigate_object(data, @cfg.hosts_location) if @cfg.hosts_location?
         end
+
         node_data
       end
 
