@@ -23,7 +23,7 @@ jobs:
     continue-on-error: ${{ matrix.ruby-version == 'ruby-head' }}
 
     steps:
-    - uses: actions/checkout@v5
+    - uses: actions/checkout@v6
     - name: Set up Ruby
     # To automatically get bug fixes and new Ruby versions for ruby/setup-ruby,
     # change this to (see https://github.com/ruby/setup-ruby#versioning):
