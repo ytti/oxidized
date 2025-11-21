@@ -12,6 +12,7 @@ The format is based on [Keep a Changelog](https://keepachangelog.com/en/1.1.0/).
 - Allow setting timeout on per node basis. Closes #3612 (@ytti)
 - Added Vyos as individual model. Closes #3603 #3560 (@nicolasberens)
 - Add metadata to models. Closes #3249 (@robertcheramy)
+- perle: new model for console servers (@robertcheramy)
 
 ### Changed
 - tnsr: added simulation data for older versions (@Vantomas)

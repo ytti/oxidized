@@ -146,6 +146,7 @@
 |OPNsense            |                              |[opnsense](/lib/oxidized/model/opnsense.rb)
 |Palo Alto           |PanOS API                     |[panos_api](/lib/oxidized/model/panos_api.rb)    |                 |[PanOS_API](Model-Notes/PanOS_API.md)
 |                    |PanOS                         |[panos](/lib/oxidized/model/panos.rb)
+|[Perle](https://www.perle.com)|IOLAN Console Servers|[perle](/lib/oxidized/model/perle.rb)           |@robertcheramy
 |PLANET SG/SGS Switches|                            |[planet](/lib/oxidized/model/planet.rb)
 |pfSense             |                              |[pfsense](/lib/oxidized/model/pfsense.rb)
 |Pure Storage        |PurityOS                      |[purityos](/lib/oxidized/model/purityos.rb)

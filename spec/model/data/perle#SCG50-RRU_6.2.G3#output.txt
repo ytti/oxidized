@@ -1,0 +1,38 @@
+! Perle IOLAN SCG Series Console Server, Version 6.2.G3, (Sun Sep 22 18:59:34
+! CEST 2024)
+! 
+! System Hardware: 
+!  Hardware Revision............................. A
+!  Part Number................................... 04011111
+!  Model Name.................................... SCG50 RRU
+!  Model Description............................. All in one Console server and
+! Ethernet router with modular serial interfaces, dual RJ45/SFP Combo Ethernet
+! Ports, RJ45/USB Console Management Port, Optional LTE, Wireless LAN (2.4/5
+! GHz), IPv4/IPv6 routing (RIP, OSPF, BGP) support, advanced data encryption and
+! user authentication, Dual Power Sources
+!  Serial Number................................. 96-9640000000000
+!   Base MAC Address............................. 00:80:d4:00:00:00
+!  Slot 1 Serial Number ......................... 98-013700000001
+!  Slot 2 Serial Number ......................... 98-013700000002
+!  Slot 3 Serial Number ......................... 98-013700000003
+! 
+! SFP Information for Ethernet1
+!    Vendor Name:                             FLEXOPTIX       
+!    Vendor Serial Number:                    F7B0000         
+! No SFP Information Available for Ethernet2
+! 
+Building running-config . . . 
+! 
+! 
+version 6.2.G3
+! 
+!
+service sequence-numbers
+service timestamps log datetime localtime show-timezone
+!
+tty 1 mode line
+tty 2 mode line
+tty 3 mode line
+! (...)
+!
+! ***** END of configuration *****
