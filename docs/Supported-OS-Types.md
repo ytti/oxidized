@@ -119,6 +119,7 @@
 |Icotera             |6400 series                   |[icotera](/lib/oxidized/model/icotera.rb)
 |Ingate              |SIParator/Firewalls           |[ingate](/lib/oxidized/model/ingate.rb)          |@thanegill
 |IP Infusion         |OcNOS                         |[ocnos](/lib/oxidized/model/ocnos.rb)
+|Ivanti              |Ivanti Connect Secure (ICS)   |[ivanti](/lib/oxidized/model/ivanti.rb)          |@candleflip      |[ICS](Model-Notes/IvantiConnectSecure.md)
 |Juniper             |JunOS                         |[junos](/lib/oxidized/model/junos.rb)            |                 |[MX/QFX/EX/SRX/J Series](Model-Notes/JunOS.md)
 |                    |ScreenOS (Netscreen)          |[screenos](/lib/oxidized/model/screenos.rb)
 |LANCOM Systems GmbH |LCOS                          |[lancom](/lib/oxidized/model/lancom.rb)
