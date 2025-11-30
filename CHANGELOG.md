@@ -26,6 +26,7 @@ The format is based on [Keep a Changelog](https://keepachangelog.com/en/1.1.0/).
 - input/http: bracket IPv6 URI. Fixes #3620 (@ytti)
 - tnsr: fixed prompt regex, sometimes --More-- pager is misplaced on older versions (@ClumsyAdmin)
 - eatonnetwork: Update for firmware v2.2.0 #3634 (@thanegill)
+- input/http: Corrected pagination causing duplicated nodes. Fixes #3676 (@kquilliam)
 - many models: fix redundant regular expressions (@robertcheramy)
 - timos: remove deprecated model timos. Use sros. #3617 (@robertcheramy)
 - fsos: set terminal width to 0. Fixes #3576 (@robertcheramy)
