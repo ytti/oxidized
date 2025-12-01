@@ -25,6 +25,16 @@ class NXOS < Oxidized::Model
   end
 
   cmd 'show inventory all' do |cfg|
+    if cfg.include? "% Invalid parameter detected at '^' marker."
+      @show_inv_all_failed = true
+      ""
+    else
+      comment cfg
+    end
+  end
+
+  # 'show inventory all' isn't supported on older versions (See Issue #3657)
+  cmd 'show inventory', if: -> { @show_inv_all_failed } do |cfg|
     comment cfg
   end
 
