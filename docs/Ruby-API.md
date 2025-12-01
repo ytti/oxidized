@@ -93,6 +93,25 @@ given.
 
 Supports [monkey patching](#monkey-patching).
 
+#### Conditional commands
+The `cmd "string"` method for accepts a lambda function via the `:if` argument
+to execute the command only when the lambda evaluates to true.
+The lambda function is evaluated at runtime in the instance context.
+
+```ruby
+  cmd 'conditional command', if: lambda {
+    # Use lambda when multiple lines are needed
+    vars("condition")
+  } do |cfg|
+    @run_second_command = "go"
+    comment cfg
+  end
+
+  cmd 'second command', if: -> { @run_second_command == "go" } do |cfg|
+    comment cfg
+  end
+```
+
 #### `comment`
 
 Called with a single string containing the string to prepend for comments in

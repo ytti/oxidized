@@ -23,6 +23,18 @@ class TestModel < Oxidized::Model
     comment cfg
   end
 
+  cmd 'conditional command', if: lambda {
+    # Use lambda when multiple lines are needed
+    vars("condition")
+  } do |cfg|
+    @run_second_command = "go"
+    comment cfg
+  end
+
+  cmd 'second command', if: -> { @run_second_command == "go" } do |cfg|
+    comment cfg
+  end
+
   pre do
     "Prepended output after cmd blocks have been run\n"
   end
@@ -189,7 +201,7 @@ describe 'Oxidized::Model' do
       @model.node = @mock_node
 
       # Default: vars are not present
-      @model.stubs(:vars).returns('nil')
+      @model.stubs(:vars).returns(nil)
     end
     describe '#metadata' do
       it 'returns string value for bottom position' do
@@ -269,6 +281,21 @@ describe 'Oxidized::Model' do
         _(result).must_equal(
           "// Fetched by Oxidized with model TestModelNoMetadata from host router1 [192.168.1.1]\n" \
           "Sample config\n"
+        )
+      end
+
+      it 'executes conditional commands when the condition is met' do
+        @model.stubs(:vars).with('condition').returns(true)
+        @mock_input.expects(:cmd).with('conditional command').returns("conditional command result\n")
+        @mock_input.expects(:cmd).with('second command').returns("second command result\n")
+
+        result = @model.get.to_cfg
+        _(result).must_equal(
+          "Prepended output after cmd blocks have been run\n" \
+          "! Version 1.0\n" \
+          "! conditional command result\n" \
+          "! second command result\n" \
+          "Appended output after cmd blocks have been run\n"
         )
       end
     end

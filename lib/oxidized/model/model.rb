@@ -250,8 +250,11 @@ module Oxidized
       outputs = Outputs.new
       self.class.cmds[:cmd].each do |data|
         command = data[:cmd]
-        _args = data[:args]
+        args = data[:args]
         block = data[:block]
+
+        next if args.include?(:if) && !instance_exec(&args[:if])
+
         out = cmd command, &block
         return false unless out
 
