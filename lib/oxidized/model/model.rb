@@ -85,6 +85,10 @@ module Oxidized
         process_args_block(@expect, args, [regex, block])
       end
 
+      def expects
+        @expect
+      end
+
       def clean(what)
         case what
         when :escape_codes
@@ -109,15 +113,9 @@ module Oxidized
         end
       end
 
-      def expects
-        @expect
-      end
-
       # calls the block at the end of the model, prepending the output of the
       # block to the output string
       #
-      # @author Saku Ytti <saku@ytti.fi>
-      # @since 0.0.39
       # @yield expects block which should return [String]
       # @return [void]
       def pre(**args, &block)
@@ -127,8 +125,6 @@ module Oxidized
       # calls the block at the end of the model, adding the output of the block
       # to the output string
       #
-      # @author Saku Ytti <saku@ytti.fi>
-      # @since 0.0.39
       # @yield expects block which should return [String]
       # @return [void]
       def post(**args, &block)
@@ -247,13 +243,13 @@ module Oxidized
     def get
       logger.debug 'Collecting commands\' outputs'
       outputs = Outputs.new
-      procs = self.class.procs
       self.class.cmds[:cmd].each do |command, block|
         out = cmd command, &block
         return false unless out
 
         outputs << out
       end
+      procs = self.class.procs
       procs[:pre].each do |pre_proc|
         outputs.unshift process_cmd_output(instance_eval(&pre_proc), '')
       end
