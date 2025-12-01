@@ -92,14 +92,17 @@ describe 'Oxidized::Model' do
           cmds = @test_model.cmds
 
           _(cmds[:cmd]).wont_be_empty
-          _(cmds[:cmd].first).must_equal ["show version", @block_upcase]
+          _(cmds[:cmd].first).must_equal(
+            { cmd: "show version", args: {}, block: @block_upcase }
+          )
         end
         it 'adds a command without a block' do
           @test_model.cmd("show version")
           cmds = @test_model.cmds
 
           _(cmds[:cmd]).wont_be_empty
-          _(cmds[:cmd].first).must_equal ["show version", nil]
+          _(cmds[:cmd].first[:cmd]).must_equal "show version"
+          _(cmds[:cmd].first[:block]).must_be_nil
         end
         it 'adds a command multiple times' do
           @test_model.cmd("show version", &@block_upcase)
@@ -108,17 +111,22 @@ describe 'Oxidized::Model' do
           cmds = @test_model.cmds
 
           _(cmds[:cmd].size).must_equal 3
-          _(cmds[:cmd][0]).must_equal ["show version", nil]
-          _(cmds[:cmd][1]).must_equal ["show version", @block_upcase]
-          _(cmds[:cmd][2]).must_equal ["show version", @block_downcase]
+          _(cmds[:cmd][0][:cmd]).must_equal "show version"
+          _(cmds[:cmd][0][:block]).must_be_nil
+          _(cmds[:cmd][0][:args]).must_equal({ prepend: true })
+          _(cmds[:cmd][1][:cmd]).must_equal "show version"
+          _(cmds[:cmd][1][:block]).must_equal @block_upcase
+          _(cmds[:cmd][2][:block]).must_equal @block_downcase
         end
         it 'can prepend a command' do
           @test_model.cmd("show version")
           @test_model.cmd("prepended command", prepend: true, &@block_upcase)
           cmds = @test_model.cmds
           _(cmds[:cmd].size).must_equal 2
-          _(cmds[:cmd][0][0]).must_equal "prepended command"
-          _(cmds[:cmd][1][0]).must_equal "show version"
+          _(cmds[:cmd][0][:cmd]).must_equal "prepended command"
+          _(cmds[:cmd][0][:args]).must_equal({ prepend: true })
+          _(cmds[:cmd][0][:block]).must_equal @block_upcase
+          _(cmds[:cmd][1][:cmd]).must_equal "show version"
         end
         it 'can clear a command' do
           @test_model.cmd("command", &@block_upcase)
@@ -126,8 +134,10 @@ describe 'Oxidized::Model' do
           @test_model.cmd("command", clear: true, &@block_downcase)
           cmds = @test_model.cmds
           _(cmds[:cmd].size).must_equal 2
-          _(cmds[:cmd][0]).must_equal ["other", nil]
-          _(cmds[:cmd][1]).must_equal ["command", @block_downcase]
+          _(cmds[:cmd][0][:cmd]).must_equal "other"
+          _(cmds[:cmd][1][:cmd]).must_equal "command"
+          _(cmds[:cmd][1][:args]).must_equal({ clear: true })
+          _(cmds[:cmd][1][:block]).must_equal @block_downcase
         end
       end
     end

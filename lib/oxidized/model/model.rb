@@ -62,7 +62,9 @@ module Oxidized
         if cmd_arg.instance_of?(Symbol)
           process_args_block(@cmd[cmd_arg], args, block)
         else
-          process_args_block(@cmd[:cmd], args, [cmd_arg, block])
+          # Normal command
+          process_args_block(@cmd[:cmd], args,
+                             { cmd: cmd_arg, args: args, block: block })
         end
         logger.debug "Added #{cmd_arg} to the commands list"
       end
@@ -142,6 +144,9 @@ module Oxidized
         if args[:clear]
           if block.instance_of?(Array)
             target.reject! { |k, _| k == block[0] }
+            target.push(block)
+          elsif block.instance_of?(Hash)
+            target.reject! { |item| item[:cmd] == block[:cmd] }
             target.push(block)
           else
             target.replace([block])
@@ -243,7 +248,10 @@ module Oxidized
     def get
       logger.debug 'Collecting commands\' outputs'
       outputs = Outputs.new
-      self.class.cmds[:cmd].each do |command, block|
+      self.class.cmds[:cmd].each do |data|
+        command = data[:cmd]
+        _args = data[:args]
+        block = data[:block]
         out = cmd command, &block
         return false unless out
 
