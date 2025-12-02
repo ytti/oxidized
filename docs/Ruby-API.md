@@ -2,6 +2,34 @@
 
 The following objects exist in Oxidized.
 
+## Index
+- [Input](#input)
+  - [http](#http)
+- [Output](#output)
+- [Source](#source)
+- [Model](#model)
+  - [At the top level](#at-the-top-level)
+    - [cfg](#cfg)
+    - [cmd](#cmd)
+    - [comment](#comment)
+    - [prompt](#prompt)
+    - [expect](#expect)
+    - [pre / post](#pre--post)
+  - [At the second level](#at-the-second-level)
+    - [comment](#comment-1)
+    - [password](#password)
+    - [post_login](#post_login)
+    - [pre_logout](#pre_logout)
+    - [send](#send)
+    - [cmd](#cmd-1)
+  - [Monkey patching](#monkey-patching)
+    - [clear: true](#clear-true)
+    - [prepend: true](#prepend-true)
+  - [Refinements - String Convenience Methods](#refinements)
+    - [cut_tail](#cut_tail)
+    - [cut_head](#cut_head)
+    - [cut_both](#cut_both)
+
 ## Input
 
 * gets config from nodes
@@ -91,24 +119,25 @@ string.
 Execution order is `:all`, `:secret`, and lastly the command specific block, if
 given.
 
-Supports [monkey patching](#monkey-patching).
-
-#### Conditional commands
 The `cmd "string"` method for accepts a lambda function via the `:if` argument
 to execute the command only when the lambda evaluates to true.
 The lambda function is evaluated at runtime in the instance context.
+See [Conditional `cmd`](Creating-Models.md#conditional-cmd) for details.
+
+Supports [monkey patching](#monkey-patching).
+
+#### pre / post
+After all `cmd` have been run, the blocks defined in pre and post are called. The
+output of pre will be prepended to the output of the model, The output of post
+will be appended.
 
 ```ruby
-  cmd 'conditional command', if: lambda {
-    # Use lambda when multiple lines are needed
-    vars("condition")
-  } do |cfg|
-    @run_second_command = "go"
-    comment cfg
+  pre do
+    "Prepended output after cmd blocks have been run\n"
   end
 
-  cmd 'second command', if: -> { @run_second_command == "go" } do |cfg|
-    comment cfg
+  post do
+    "Appended output after cmd blocks have been run\n"
   end
 ```
 
@@ -179,6 +208,10 @@ Supports [monkey patching](#monkey-patching).
 
 Usually used inside `expect` or blocks passed to `post_login`/`pre_logout`.
 Takes a single parameter: a string to be sent to the device.
+
+#### `cmd`
+You can nest a `cmd` block inside first level blocks. It will be executed at
+runtime.
 
 ### Monkey patching
 
