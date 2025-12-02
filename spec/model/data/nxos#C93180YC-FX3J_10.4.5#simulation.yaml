@@ -1,0 +1,135 @@
+---
+init_prompt: |-
+    
+    Cisco Nexus Operating System (NX-OS) Software
+    TAC support: http://www.cisco.com/tac
+    Copyright (C) 2002-2025, Cisco and/or its affiliates.
+    All rights reserved.
+    The copyrights to certain works contained in this software are
+    owned by other third parties and used and distributed under their own
+    licenses, such as open source.  This software is provided \"as is,\" and unless
+    otherwise stated, there is no warranty, express or implied, including but not
+    limited to warranties of merchantability and fitness for a particular purpose.
+    Certain components of this software are licensed under
+    the GNU General Public License (GPL) version 2.0 or\x20
+    GNU General Public License (GPL) version 3.0  or the GNU
+    Lesser General Public License (LGPL) Version 2.1 or\x20
+    Lesser General Public License (LGPL) Version 2.0.\x20
+    A copy of each such license is available at
+    http://www.opensource.org/licenses/gpl-2.0.php and
+    http://opensource.org/licenses/gpl-3.0.html and
+    http://www.opensource.org/licenses/lgpl-2.1.php and
+    http://www.gnu.org/licenses/old-licenses/library.txt.
+    \rTEST-12345#\x20
+commands:
+  - "terminal length 0\n": |-
+      terminal length 0\r
+      \rTEST-12345#\x20
+  - "show version\n": |-
+      show version\r
+      Cisco Nexus Operating System (NX-OS) Software
+      TAC support: http://www.cisco.com/tac
+      Copyright (C) 2002-2025, Cisco and/or its affiliates.
+      All rights reserved.
+      The copyrights to certain works contained in this software are
+      owned by other third parties and used and distributed under their own
+      licenses, such as open source.  This software is provided \"as is,\" and unless
+      otherwise stated, there is no warranty, express or implied, including but not
+      limited to warranties of merchantability and fitness for a particular purpose.
+      Certain components of this software are licensed under
+      the GNU General Public License (GPL) version 2.0 or\x20
+      GNU General Public License (GPL) version 3.0  or the GNU
+      Lesser General Public License (LGPL) Version 2.1 or\x20
+      Lesser General Public License (LGPL) Version 2.0.\x20
+      A copy of each such license is available at
+      http://www.opensource.org/licenses/gpl-2.0.php and
+      http://opensource.org/licenses/gpl-3.0.html and
+      http://www.opensource.org/licenses/lgpl-2.1.php and
+      http://www.gnu.org/licenses/old-licenses/library.txt.
+      
+      Software
+        BIOS: version 01.11
+        NXOS: version 10.4(5) [Maintenance Release]
+        Host NXOS: version 10.4(5)
+        BIOS compile time:  12/04/2024
+        NXOS image file is: bootflash:///nxos64-cs.10.4.5.M.bin
+        NXOS compile time:  3/5/2025 31:00:00 [03/01/2025 12:48:31]
+        NXOS boot mode: LXC
+      
+      Hardware
+        cisco Nexus9300 C93180YC-FX3H Chassis\x20
+        Intel(R) Xeon(R) CPU D-1526 @ 1.80GHz with 32802700 kB of memory.
+        Processor Board ID FDO20000000
+        Device name: TEST-12345
+        bootflash:  115805708 kB
+      
+      Kernel uptime is 217 day(s), 3 hour(s), 52 minute(s), 47 second(s)
+      
+      Last reset at 476035 usecs after Mon Apr 28 11:52:19 2025
+        Reason: Reset due to upgrade
+        System version: 10.3(2)
+        Service:\x20
+      
+      plugin
+        Core Plugin, Ethernet Plugin
+      
+      Active Package(s):
+             \x20
+      \rTEST-12345#\x20
+  - "show inventory all\n": |-
+      show inventory all\r
+      NAME: \"Chassis\",  DESCR: \"Nexus9300 C93180YC-FX3H Chassis\"      \x20
+      PID: N9K-C93180YC-FX3H   ,  VID: V04 ,  SN: FDO20000000         \x20
+      
+      NAME: \"Slot 1\",  DESCR: \"24x10/25G + 6x40/100G Ethernet Module\"\x20
+      PID: N9K-C93180YC-FX3H   ,  VID: V04 ,  SN: FDO20000000         \x20
+      
+      NAME: \"Slot 27\",  DESCR: \"24x10/25G + 6x40/100G Ethernet Module\"\x20
+      PID: N9K-C93180YC-FX3H   ,  VID: V04 ,  SN: FDO20000000         \x20
+      
+      NAME: \"Power Supply 1\",  DESCR: \"Nexus9300 C93180YC-FX3H Chassis Power Supply\"
+      PID: NXA-PAC-650W-PI     ,  VID: V04 ,  SN: LIT20000001         \x20
+      
+      NAME: \"Power Supply 2\",  DESCR: \"Nexus9300 C93180YC-FX3H Chassis Power Supply\"
+      PID: NXA-PAC-650W-PI     ,  VID: V04 ,  SN: LIT20000002         \x20
+      
+      NAME: \"Fan 1\",  DESCR: \"Nexus9300 C93180YC-FX3H Chassis Fan Module\"
+      PID: NXA-FAN-35CFM-PI    ,  VID: V01 ,  SN: N/A                 \x20
+      
+      NAME: \"Fan 2\",  DESCR: \"Nexus9300 C93180YC-FX3H Chassis Fan Module\"
+      PID: NXA-FAN-35CFM-PI    ,  VID: V01 ,  SN: N/A                 \x20
+      
+      NAME: \"Fan 3\",  DESCR: \"Nexus9300 C93180YC-FX3H Chassis Fan Module\"
+      PID: NXA-FAN-35CFM-PI    ,  VID: V01 ,  SN: N/A                 \x20
+      
+      NAME: \"Fan 4\",  DESCR: \"Nexus9300 C93180YC-FX3H Chassis Fan Module\"
+      PID: NXA-FAN-35CFM-PI    ,  VID: V01 ,  SN: N/A                 \x20
+      
+      NAME: Ethernet1/1,  DESCR: CISCO-ACCELINK                         \x20
+      PID: SFP-10G-SR          ,  VID: RTXM228-551-C98,  SN: ACW20000001         \x20
+      
+      NAME: Ethernet1/2,  DESCR: CISCO-ACCELINK                         \x20
+      PID: SFP-10G-SR          ,  VID: RTXM228-551-C98,  SN: ACW20000002         \x20
+      
+      \rTEST-12345#\x20
+  - "show running-config\n": |-
+      show running-config\r
+      
+      !Command: show running-config
+      !Running configuration last done at: Tue Sep 30 09:02:26 2025
+      !Time: Mon Dec  1 14:37:04 2025
+      
+      version 10.4(5) Bios:version 01.11\x20
+      hostname TEST-12345
+      (...)
+      clock timezone CST 1 0
+      clock summer-time MESZ 5 Sun Mar 02:00 5 Sun Oct 03:00 60
+      
+      (...)
+      logging origin-id hostname
+      boot nxos bootflash:/nxos64-cs.10.4.5.M.bin\x20
+      
+      
+      \rTEST-12345#\x20
+  - "exit\n": |-
+      exit\r
