@@ -4,9 +4,8 @@ class NXOS < Oxidized::Model
   prompt /^(\r?[\w.@_()-]+\#\s?)$/
   comment '! '
 
-  def filter(cfg)
-    cfg.gsub! /\r\n?/, "\n"
-    cfg.gsub! prompt, ''
+  cmd :all do |cfg|
+    cfg.cut_both
   end
 
   cmd :secret do |cfg|
@@ -21,18 +20,19 @@ class NXOS < Oxidized::Model
   end
 
   cmd 'show version' do |cfg|
-    cfg = filter cfg
     cfg = cfg.each_line.take_while { |line| not line.match(/uptime|bootflash:\s+\d+\skB|sysmgrcli_show_flash_size/i) }
-    comment cfg.join
+    comment cfg.join + "\n"
   end
 
   cmd 'show inventory all' do |cfg|
-    cfg = filter cfg
+    if cfg.include? "% Invalid parameter detected at '^' marker."
+      # 'show inventory all' isn't supported on older versions (See Issue #3657)
+      cfg = cmd 'show inventory'
+    end
     comment cfg
   end
 
   cmd 'show running-config' do |cfg|
-    cfg = filter cfg
     cfg.gsub! /^(show run.*)$/, '! \1'
     cfg.gsub! /^!Time:[^\n]*\n/, ''
     cfg.gsub! /^[\w.@_()-]+\#.*$/, ''
