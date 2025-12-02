@@ -8,6 +8,10 @@ This methodology allows local site changes to be preserved during Oxidized versi
 
 ## Index
 - [Creating a new model](#creating-a-new-model)
+- [Typical Tasks and Solutions](#typical-tasks-and-solutions)
+  - [Handling 'enable' mode](#handling-enable-mode)
+  - [Remove ANSI escape codes](#remove-ansi-escape-codes)
+  - [Conditional commands](#conditional-commands)
 - [Extending an existing model with a new command](#extending-an-existing-model-with-a-new-command)
 - [Create unit tests for the model](#create-unit-tests-for-the-model)
 - [Advanced features](#advanced-features)
@@ -54,7 +58,9 @@ The API documentation contains a list of [methods](https://github.com/ytti/oxidi
 
 A more fleshed out example can be found in the `IOS` and `JunOS` models.
 
-### Common task: mechanism for handling 'enable' mode
+## Typical Tasks and Solutions
+
+### Handling 'enable' mode
 The following code snippet demonstrates how to handle sending the 'enable'
 command and an enable password.
 
@@ -74,15 +80,15 @@ need to enable privileged mode, either without providing a password (by setting
     end
   end
 ```
-Note: remove `:telnet, ` if your device does not support telnet.
+Note: Remove `:telnet, ` if your device does not support telnet.
 
-### Common Task: remove ANSI escape codes
+### Remove ANSI Escape Codes
 Some devices produce [ANSI escape codes](https://en.wikipedia.org/wiki/ANSI_escape_code#Control_Sequence_Introducer_commands)
-to enhance the appearance of output.
+to enhance the appearance of their output.
 However, this can make prompt matching difficult and some of these ANSI escape
 codes might end up in the resulting configuration.
 
-You can remove most [ANSI escape codes] by inserting following line in your
+You can remove most ANSI escape codes by inserting the following line in your
 model:
 ```ruby
   clean :escape_codes
@@ -94,6 +100,71 @@ in your prompt regexp, as they will be removed before the prompt detection runs.
 If it doesn't work for your model, please open an issue and provide a
 [device simulation file](/docs/DeviceSimulation.md) so that we can adapt the
 code.
+
+### Conditional commands
+Some times, you have to run commands depending on the output of the device or
+a configured variable. For this, there are at least three solutions.
+
+#### Nested `cmd`
+You can nest `cmd` inside [`cmd` blocks](Ruby-API.md#cmd), the following example
+is taken from [nxos.rb](/lib/oxidized/model/nxos.rb):
+```ruby
+  cmd 'show inventory all' do |cfg|
+    if cfg.include? "% Invalid parameter detected at '^' marker."
+      # 'show inventory all' isn't supported on older versions (See Issue #3657)
+      cfg = cmd 'show inventory'
+    end
+    comment cfg
+  end
+```
+
+#### pre/post blocks
+After all the [`cmd` blocks](Ruby-API.md#cmd) have been run, the [`pre`
+and `post` blocks](Ruby-API.md#pre--post) are run. The following example is
+taken from [junos.rb](/lib/oxidized/model/junos.rb):
+```ruby
+  post do
+    out = String.new
+    case @model
+    when 'mx960'
+      out << cmd('show chassis fabric reachability') { |cfg| comment cfg }
+    when /^(ex22|ex3[34]|ex4|ex8|qfx)/
+      out << cmd('show virtual-chassis') { |cfg| comment cfg }
+    when /^srx/
+      out << cmd('show chassis cluster status') do |cfg|
+        cfg.lines.count <= 1 && cfg.include?("error:") ? String.new : comment(cfg)
+      end
+    end
+    out
+  end
+```
+
+In [pre/post blocks](Ruby-API.md#pre--post), you can also use dynamic generated
+commands, for example in [eatonnetwok.rb](/lib/oxidized/model/eatonnetwork.rb):
+```ruby
+  post do
+    cmd "save_configuration -p #{@node.auth[:password]}"
+  end
+```
+
+#### Conditional `cmd`
+The `cmd "string"` method for accepts a lambda function via the `:if` argument
+to execute the command only when the lambda evaluates to true.
+The lambda function is evaluated at runtime in the instance context.
+
+```ruby
+  cmd 'conditional command', if: lambda {
+    # Use lambda when multiple lines are needed
+    vars("condition")
+  } do |cfg|
+    @run_second_command = "go"
+    comment cfg
+  end
+
+  cmd 'second command', if: -> { @run_second_command == "go" } do |cfg|
+    comment cfg
+  end
+```
 
 ## Extending an existing model with a new command
 

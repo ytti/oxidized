@@ -14,8 +14,37 @@ class TestModel < Oxidized::Model
 
   metadata :bottom, "! End of configuration for host %{name}\n"
 
+  expect(/^--More--$/) do |data, re|
+    send ' '
+    data.sub re, ''
+  end
+
   cmd 'show version' do |cfg|
     comment cfg
+  end
+
+  cmd 'conditional command', if: lambda {
+    # Use lambda when multiple lines are needed
+    vars("condition")
+  } do |cfg|
+    @run_second_command = "go"
+    comment cfg
+  end
+
+  cmd 'second command', if: -> { @run_second_command == "go" } do |cfg|
+    comment cfg
+  end
+
+  pre do
+    "Prepended output after cmd blocks have been run\n"
+  end
+
+  post do
+    "Appended output after cmd blocks have been run\n"
+  end
+
+  cfg :ssh, :telnet do
+    pre_logout 'logout'
   end
 end
 
@@ -29,21 +58,129 @@ describe 'Oxidized::Model' do
   before do
     Oxidized.asetus = Asetus.new
   end
-  describe '.metadata class method' do
-    it 'stores metadata at top position with a block' do
-      metadata = TestModel.instance_variable_get(:@metadata)
-      _(metadata[:top]).must_be_kind_of Proc
+  describe 'class methods' do
+    describe '.metadata' do
+      it 'stores metadata at top position with a block' do
+        metadata = TestModel.instance_variable_get(:@metadata)
+        _(metadata[:top]).must_be_kind_of Proc
+      end
+
+      it 'stores metadata at bottom position with a string' do
+        metadata = TestModel.instance_variable_get(:@metadata)
+        _(metadata[:bottom]).must_equal "! End of configuration for host %{name}\n"
+      end
+
+      it 'does not store metadata when not defined' do
+        metadata = TestModelNoMetadata.instance_variable_get(:@metadata)
+        _(metadata[:top]).must_be_nil
+        _(metadata[:bottom]).must_be_nil
+      end
     end
 
-    it 'stores metadata at bottom position with a string' do
-      metadata = TestModel.instance_variable_get(:@metadata)
-      _(metadata[:bottom]).must_equal "! End of configuration for host %{name}\n"
+    describe '.cmd/.cmds' do
+      before do
+        @test_model = Class.new(Oxidized::Model)
+        @block_upcase = proc { |data| data.upcase }
+        @block_downcase = proc { |data| data.downcase }
+      end
+      describe 'with :all symbol' do
+        it 'adds a block' do
+          @test_model.cmd(:all, &@block_upcase)
+          _(@test_model.cmds[:all]).must_include @block_upcase
+        end
+        it 'can add multiple blocks' do
+          @test_model.cmd(:all, &@block_upcase)
+          @test_model.cmd(:all, &@block_downcase)
+          cmds = @test_model.cmds
+          _(cmds[:all].size).must_equal 2
+          _(cmds[:all]).must_include @block_upcase
+          _(cmds[:all]).must_include @block_downcase
+        end
+      end
+
+      describe 'with string' do
+        it 'adds a block' do
+          @test_model.cmd("show version", &@block_upcase)
+          cmds = @test_model.cmds
+
+          _(cmds[:cmd]).wont_be_empty
+          _(cmds[:cmd].first).must_equal(
+            { cmd: "show version", args: {}, block: @block_upcase }
+          )
+        end
+        it 'adds a command without a block' do
+          @test_model.cmd("show version")
+          cmds = @test_model.cmds
+
+          _(cmds[:cmd]).wont_be_empty
+          _(cmds[:cmd].first[:cmd]).must_equal "show version"
+          _(cmds[:cmd].first[:block]).must_be_nil
+        end
+        it 'adds a command multiple times' do
+          @test_model.cmd("show version", &@block_upcase)
+          @test_model.cmd("show version", &@block_downcase)
+          @test_model.cmd("show version", prepend: true)
+          cmds = @test_model.cmds
+
+          _(cmds[:cmd].size).must_equal 3
+          _(cmds[:cmd][0][:cmd]).must_equal "show version"
+          _(cmds[:cmd][0][:block]).must_be_nil
+          _(cmds[:cmd][0][:args]).must_equal({ prepend: true })
+          _(cmds[:cmd][1][:cmd]).must_equal "show version"
+          _(cmds[:cmd][1][:block]).must_equal @block_upcase
+          _(cmds[:cmd][2][:block]).must_equal @block_downcase
+        end
+        it 'can prepend a command' do
+          @test_model.cmd("show version")
+          @test_model.cmd("prepended command", prepend: true, &@block_upcase)
+          cmds = @test_model.cmds
+          _(cmds[:cmd].size).must_equal 2
+          _(cmds[:cmd][0][:cmd]).must_equal "prepended command"
+          _(cmds[:cmd][0][:args]).must_equal({ prepend: true })
+          _(cmds[:cmd][0][:block]).must_equal @block_upcase
+          _(cmds[:cmd][1][:cmd]).must_equal "show version"
+        end
+        it 'can clear a command' do
+          @test_model.cmd("command", &@block_upcase)
+          @test_model.cmd("other")
+          @test_model.cmd("command", clear: true, &@block_downcase)
+          cmds = @test_model.cmds
+          _(cmds[:cmd].size).must_equal 2
+          _(cmds[:cmd][0][:cmd]).must_equal "other"
+          _(cmds[:cmd][1][:cmd]).must_equal "command"
+          _(cmds[:cmd][1][:args]).must_equal({ clear: true })
+          _(cmds[:cmd][1][:block]).must_equal @block_downcase
+        end
+      end
     end
 
-    it 'does not store metadata when not defined' do
-      metadata = TestModelNoMetadata.instance_variable_get(:@metadata)
-      _(metadata[:top]).must_be_nil
-      _(metadata[:bottom]).must_be_nil
+    describe '.cfg/.cfgs' do
+      it 'stores and returns input configs' do
+        cfgs = TestModel.cfgs
+        _(cfgs.size).must_equal 2
+        _(cfgs).must_include "ssh"
+        _(cfgs).must_include "telnet"
+        _(cfgs["ssh"].first).must_be_kind_of Proc
+      end
+    end
+    describe '.expect/.expects' do
+      it 'stores and returns expectations' do
+        expects = TestModel.expects
+        _(expects.size).must_equal 1
+        _(expects.first[0]).must_equal(/^--More--$/)
+        _(expects.first[1]).must_be_kind_of Proc
+      end
+    end
+
+    describe '.procs' do
+      it 'stores and returns pre/post procs' do
+        procs = TestModel.procs
+        _(procs.size).must_equal 2
+        _(procs).must_include :pre
+        _(procs).must_include :post
+        _(procs[:pre].first).must_be_kind_of Proc
+        _(procs[:post].first).must_be_kind_of Proc
+      end
     end
   end
 
@@ -64,7 +201,7 @@ describe 'Oxidized::Model' do
       @model.node = @mock_node
 
       # Default: vars are not present
-      @model.stubs(:vars).returns('nil')
+      @model.stubs(:vars).returns(nil)
     end
     describe '#metadata' do
       it 'returns string value for bottom position' do
@@ -85,7 +222,9 @@ describe 'Oxidized::Model' do
         result = @model.get.to_cfg
         _(result).must_equal(
           "! Fetched by Oxidized with model TestModel from host router1 [192.168.1.1]\n" \
+          "Prepended output after cmd blocks have been run\n" \
           "! Version 1.0\n" \
+          "Appended output after cmd blocks have been run\n" \
           "! End of configuration for host router1\n"
         )
       end
@@ -142,6 +281,21 @@ describe 'Oxidized::Model' do
         _(result).must_equal(
           "// Fetched by Oxidized with model TestModelNoMetadata from host router1 [192.168.1.1]\n" \
           "Sample config\n"
+        )
+      end
+
+      it 'executes conditional commands when the condition is met' do
+        @model.stubs(:vars).with('condition').returns(true)
+        @mock_input.expects(:cmd).with('conditional command').returns("conditional command result\n")
+        @mock_input.expects(:cmd).with('second command').returns("second command result\n")
+
+        result = @model.get.to_cfg
+        _(result).must_equal(
+          "Prepended output after cmd blocks have been run\n" \
+          "! Version 1.0\n" \
+          "! conditional command result\n" \
+          "! second command result\n" \
+          "Appended output after cmd blocks have been run\n"
         )
       end
     end

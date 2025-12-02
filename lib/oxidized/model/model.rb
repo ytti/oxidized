@@ -62,7 +62,9 @@ module Oxidized
         if cmd_arg.instance_of?(Symbol)
           process_args_block(@cmd[cmd_arg], args, block)
         else
-          process_args_block(@cmd[:cmd], args, [cmd_arg, block])
+          # Normal command
+          process_args_block(@cmd[:cmd], args,
+                             { cmd: cmd_arg, args: args, block: block })
         end
         logger.debug "Added #{cmd_arg} to the commands list"
       end
@@ -83,6 +85,10 @@ module Oxidized
 
       def expect(regex, **args, &block)
         process_args_block(@expect, args, [regex, block])
+      end
+
+      def expects
+        @expect
       end
 
       def clean(what)
@@ -109,15 +115,9 @@ module Oxidized
         end
       end
 
-      def expects
-        @expect
-      end
-
       # calls the block at the end of the model, prepending the output of the
       # block to the output string
       #
-      # @author Saku Ytti <saku@ytti.fi>
-      # @since 0.0.39
       # @yield expects block which should return [String]
       # @return [void]
       def pre(**args, &block)
@@ -127,8 +127,6 @@ module Oxidized
       # calls the block at the end of the model, adding the output of the block
       # to the output string
       #
-      # @author Saku Ytti <saku@ytti.fi>
-      # @since 0.0.39
       # @yield expects block which should return [String]
       # @return [void]
       def post(**args, &block)
@@ -146,6 +144,9 @@ module Oxidized
         if args[:clear]
           if block.instance_of?(Array)
             target.reject! { |k, _| k == block[0] }
+            target.push(block)
+          elsif block.instance_of?(Hash)
+            target.reject! { |item| item[:cmd] == block[:cmd] }
             target.push(block)
           else
             target.replace([block])
@@ -247,13 +248,19 @@ module Oxidized
     def get
       logger.debug 'Collecting commands\' outputs'
       outputs = Outputs.new
-      procs = self.class.procs
-      self.class.cmds[:cmd].each do |command, block|
+      self.class.cmds[:cmd].each do |data|
+        command = data[:cmd]
+        args = data[:args]
+        block = data[:block]
+
+        next if args.include?(:if) && !instance_exec(&args[:if])
+
         out = cmd command, &block
         return false unless out
 
         outputs << out
       end
+      procs = self.class.procs
       procs[:pre].each do |pre_proc|
         outputs.unshift process_cmd_output(instance_eval(&pre_proc), '')
       end
