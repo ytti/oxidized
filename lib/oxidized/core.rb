@@ -40,7 +40,8 @@ module Oxidized
           '"extensions.oxidized-web" and remove "rest" from the configuration'
         )
         configuration = Oxidized.config.rest
-      elsif Oxidized.config.extensions['oxidized-web'].load?
+      elsif Oxidized.config.extensions &&
+            Oxidized.config.extensions['oxidized-web']&.load?
         # This comment stops rubocop complaining about Style/IfUnlessModifier
         configuration = Oxidized.config.extensions['oxidized-web']
       end
