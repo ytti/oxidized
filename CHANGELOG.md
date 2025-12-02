@@ -34,6 +34,7 @@ The format is based on [Keep a Changelog](https://keepachangelog.com/en/1.1.0/).
 - netgear: fix prompt issues caused by ANSI escape codes. Fixes #3287 (@robertcheramy)
 - remove redundant dependency on bundler producing a CI failure on ruby-head (@robertcheramy)
 - nxos: use "show inventory" when "show inventory all" is not supported. Fixes #3657 (@robertcheramy)
+- arubainstant: handle spaces/parentheses in AP names and add Zone column. Fixes #3611 (@iRomanyshyn, @robertcheramy)
 
 
 ## [0.34.3 - 2025-08-05]
