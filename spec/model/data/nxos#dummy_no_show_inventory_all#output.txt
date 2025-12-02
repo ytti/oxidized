@@ -1,0 +1,15 @@
+! Cisco Nexus Operating System (NX-OS) Software
+! (...)
+! ...show version output...
+! (...)
+! 
+! (...)
+! ... show inventory - without SFPs ...
+! (...)
+
+!Command: show running-config
+(...)
+... show running config output ...
+(...)
+
+
