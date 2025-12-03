@@ -5,8 +5,12 @@ All notable changes to this project will be documented in this file.
 The format is based on [Keep a Changelog](https://keepachangelog.com/en/1.1.0/).
 
 ## [Unreleased]
+### Release Notes
 - VyOS now has it's own Model and should be used for supported VyOS versions instead of the Vyatta Model.
-- Aoscx has been reworked and may break old OS versions.
+- AosCX has been reworked and may break old OS versions. Submit an issue along with a YAML Simulation File if you encounter problems.
+- TiMOS (deprecated model) has been removed. Use SROS.
+- FortiOs will be reworked in Release 0.36 (Issue #3680). Subscribe to the issue if you want to be informed and test the model before the release.
+- Support for Ruby 3.1 will be discontinued in Release 0.36 (Issue #3688) if no one objects.
 
 ### Added
 - Allow setting timeout on per node basis. Closes #3612 (@ytti)
@@ -17,7 +21,7 @@ The format is based on [Keep a Changelog](https://keepachangelog.com/en/1.1.0/).
 
 ### Changed
 - tnsr: added simulation data for older versions (@Vantomas)
-- docker image: change oxidized user's shell to bash. (@electrocret)
+- docker image: change default shell to bash. (@electrocret)
 - refactor suppression of ANSI escape codes into model.rb (use `clean :escape_codes` in your model. Updated cumulus, garderos, mlnxos and vyos. (@robertcheramy)
 - aoscx: rework handling of ANSI escape codes (@robertcheramy)
 - docker: build on arm64 natively. Closes #3665 (@robertcheramy)
