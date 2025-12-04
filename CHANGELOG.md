@@ -4,7 +4,7 @@ All notable changes to this project will be documented in this file.
 
 The format is based on [Keep a Changelog](https://keepachangelog.com/en/1.1.0/).
 
-## [Unreleased]
+## [0.35.0 - 2025-12-04]
 ### Release Notes
 - VyOS now has it's own Model and should be used for supported VyOS versions instead of the Vyatta Model.
 - AosCX has been reworked and may break old OS versions. Submit an issue along with a YAML Simulation File if you encounter problems.
