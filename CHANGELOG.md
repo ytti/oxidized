@@ -4,13 +4,22 @@ All notable changes to this project will be documented in this file.
 
 The format is based on [Keep a Changelog](https://keepachangelog.com/en/1.1.0/).
 
+## [Unreleased]
+
+### Added
+
+### Changed
+
+### Fixed
+
+
 ## [0.35.0 - 2025-12-04]
 ### Release Notes
-- VyOS now has it's own Model and should be used for supported VyOS versions instead of the Vyatta Model.
+- VyOS now has it's own model and should be used for supported VyOS versions instead of the Vyatta model.
 - AosCX has been reworked and may break old OS versions. Submit an issue along with a YAML Simulation File if you encounter problems.
 - TiMOS (deprecated model) has been removed. Use SROS.
-- FortiOs will be reworked in Release 0.36 (Issue #3680). Subscribe to the issue if you want to be informed and test the model before the release.
-- Support for Ruby 3.1 will be discontinued in Release 0.36 (Issue #3688) if no one objects.
+- FortiOs will be reworked in release 0.36 (Issue #3680). Subscribe to the issue if you want to be informed and test the model before the release.
+- Support for Ruby 3.1 will be discontinued in release 0.36 (Issue #3688) if no one objects.
 
 ### Added
 - Allow setting timeout on per node basis. Closes #3612 (@ytti)
