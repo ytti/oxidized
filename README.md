@@ -101,7 +101,7 @@ gem install oxidized-script # Script-based input/output extensions
 ```
 
 ### Rocky Linux, Red Hat Enterprise Linux
-These instructions has been verified on Rocky Linux 9.3 and Fedora.
+These instructions has been verified on Rocky Linux 9, Rocky Linux 10 and Fedora.
 
 On Rocky Linux 9, you need to install/enable EPEL, CRB and Ruby 3.1:
 ```shell

@@ -495,6 +495,13 @@ using the following substitution templates:
   - `%{minute}`: current minute, zero-padded
   - `%{second}`: current second, zero-padded
 
+Example:
+```yaml
+vars:
+  metadata: true
+  metadata_top: "%{comment}Model: %{model}; Device %{name} [%{ip}] at %{year}-%{month}-%{day} %{hour}:%{minute}:%{second}\n"
+```
+
 ### Customize metadata in models
 When writing a custom metadata for a model, you can default to
 `vars("metadata_*")` or the model default. You need to interpolate the strings
