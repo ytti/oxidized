@@ -11,6 +11,7 @@ The format is based on [Keep a Changelog](https://keepachangelog.com/en/1.1.0/).
 ### Changed
 
 ### Fixed
+- apc_aos: set comment to "; " to match comments in config.ini (@robertcheramy)
 
 
 ## [0.35.0 - 2025-12-04]
