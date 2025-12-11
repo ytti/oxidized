@@ -19,7 +19,7 @@ SYSTEM CONFIG FILE ::= BEGIN
 ! System Name: 19sw011
 ! MAC Address: FF:FF:FF:FF:FF:FF
 ! Serial Number: 0XX000XXX000X
-! System Up Time: 123 days, 21 hours, 50 mins, 5 secs
+! System Up Time:  <removed>
 !
 !
 !

@@ -31,30 +31,21 @@ class ArubaInstant < Oxidized::Model
 
   # get software version
   cmd 'show version' do |cfg|
-    out = ''
-    cfg.each_line do |line|
-      next if line =~ /^(Switch|AP) uptime is /
-
-      next if line =~ /^Reboot Time and Cause/
-
-      out += line
-    end
-    comment out
+    cfg = cfg.reject_lines [
+      /^(Switch|AP) uptime is /,
+      /^Reboot Time and Cause/
+    ]
+    comment cfg
   end
 
   # Get serial number
   cmd 'show activate status' do |cfg|
-    out = ''
-    cfg.each_line do |line|
-      next if line =~ /^Activate /
-
-      next if line =~ /^Provision interval/
-
-      next if line =~ /^Cloud Activation Key/
-
-      out += line
-    end
-    comment out + "\n"
+    cfg = cfg.reject_lines [
+      /^Activate /,
+      /^Provision interval/,
+      /^Cloud Activation Key/
+    ]
+    comment cfg + "\n"
   end
 
   # Get controlled WLAN-AP
