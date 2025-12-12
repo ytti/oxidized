@@ -29,6 +29,8 @@ The following objects exist in Oxidized.
     - [cut_tail](#cut_tail)
     - [cut_head](#cut_head)
     - [cut_both](#cut_both)
+    - [keep_lines](#keep_lines)
+    - [reject_lines](#reject_lines)
 
 ## Input
 
@@ -253,3 +255,9 @@ single line was present.
 
 Returns a multi-line string without the first and last lines, or an empty string
 if fewer than three lines were present.
+
+#### `keep_lines`
+Returns a multi-line string with only the lines matching any pattern (String or Regexp) given in an array.
+
+#### `reject_lines`
+Returns a multi-line string without the lines matching any pattern (String or Regexp) given in an array.

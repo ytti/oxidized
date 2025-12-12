@@ -116,7 +116,7 @@ controller 10.42.0.2 role active
 controller 10.42.0.3 role standby
 !
 ap system-profile "AP-PROFILE"
-session-acl ""
+    session-acl ""
 lms-ip 10.42.0.52
 bkup-lms-ip 10.42.0.53
 ap-console-password "AAAAAAAAAABBBBBBBBBB"

@@ -19,11 +19,11 @@ class EFOS < Oxidized::Model
   end
 
   cmd 'show running-config' do |cfg|
-    cfg.each_line
-       .reject { |line| line.match(/System Up Time/) }
-       .reject { |line| line.match(/Current System Time:/) }
-       .reject { |line| line.match(/Current SNTP Synchronized Time:/) }
-       .join
+    cfg.reject_lines [
+      'System Up Time',
+      'Current System Time:',
+      'Current SNTP Synchronized Time:'
+    ]
   end
 
   cfg :telnet, :ssh do

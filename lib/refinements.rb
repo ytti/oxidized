@@ -32,6 +32,24 @@ module Refinements
       # rubocop:enable Naming/MemoizedInstanceVariableName
     end
 
+    # keeps lines matching any pattern (String or Regexp)
+    def keep_lines(patterns)
+      each_line.select do |line|
+        patterns.any? do |pattern|
+          pattern.is_a?(Regexp) ? line =~ pattern : line.include?(pattern)
+        end
+      end.join
+    end
+
+    # remove lines matching any pattern (String or Regexp)
+    def reject_lines(patterns)
+      each_line.reject do |line|
+        patterns.any? do |pattern|
+          pattern.is_a?(Regexp) ? line =~ pattern : line.include?(pattern)
+        end
+      end.join
+    end
+
     # Initializes the String instance variables from another String instance
     # when the given str is an instance of String with Oxidized refinements applied
     def init_from_string(str = '')

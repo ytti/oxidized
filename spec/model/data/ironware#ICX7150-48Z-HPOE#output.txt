@@ -51,11 +51,6 @@
 !     2 GB code flash memory
 !     1 GB DRAM
 ! 
-! 
-! 
-! 
-! 
-! 
 ! The system : started=cold start   
 ! My stack unit ID = 1, bootup role = active
 ! 

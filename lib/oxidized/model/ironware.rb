@@ -22,9 +22,11 @@ class IronWare < Oxidized::Model
   end
 
   cmd 'show version' do |cfg|
-    cfg.gsub! /(^((.*)[Ss]ystem uptime(.*))$)/, '' # remove unwanted line system uptime
-    cfg.gsub! /(^((.*)[Tt]he system started at(.*))$)/, ''
-    cfg.gsub! /[Uu]p\s?[Tt]ime is .*/, ''
+    cfg = cfg.reject_lines [
+      /(^((.*)[Ss]ystem uptime(.*))$)/,
+      /(^((.*)[Tt]he system started at(.*))$)/,
+      /[Uu]p\s?[Tt]ime is .*/
+    ]
 
     comment cfg
   end

@@ -48,8 +48,11 @@ class AOSW < Oxidized::Model
   end
 
   cmd 'show version' do |cfg|
-    cfg = cfg.each_line.reject { |line| line.match(/(Switch|AP) uptime/i) || line.match(/Reboot Time and Cause/i) }
-    rstrip_cfg comment cfg.join
+    cfg = cfg.reject_lines [
+      /(Switch|AP) uptime/i,
+      /Reboot Time and Cause/i
+    ]
+    rstrip_cfg comment cfg
   end
 
   cmd 'show inventory' do |cfg|
@@ -77,15 +80,11 @@ class AOSW < Oxidized::Model
   end
 
   cmd 'show running-config' do |cfg|
-    out = []
-    cfg.each_line do |line|
-      next if line =~ /^controller config \d+$/
-      next if line =~ /^Building Configuration/
-
-      out << line.strip
-    end
-    out = out.join "\n"
-    out << "\n"
+    cfg = cfg.reject_lines [
+      /^controller config \d+$/,
+      /^Building Configuration/
+    ]
+    rstrip_cfg cfg
   end
 
   cfg :telnet do

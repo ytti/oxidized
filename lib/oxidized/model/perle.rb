@@ -17,13 +17,12 @@ class Perle < Oxidized::Model
   end
 
   cmd 'show interfaces transceiver' do |cfg|
-    out = []
-    cfg.each_line do |line|
-      out << line if line =~ /SFP Information/
-      out << line if line =~ /Vendor Name/
-      out << line if line =~ /Vendor Serial Number/
-    end
-    comment out.join + "\n"
+    cfg = cfg.keep_lines [
+      'SFP Information',
+      'Vendor Name',
+      'Vendor Serial Number'
+    ]
+    comment cfg + "\n"
   end
 
   cmd 'show running-config'
