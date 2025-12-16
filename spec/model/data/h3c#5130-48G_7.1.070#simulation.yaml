@@ -1,0 +1,55 @@
+---
+init_prompt: |-
+    ******************************************************************************\r
+    * Copyright (c) 2010-2023 Hewlett Packard Enterprise Development LP          *\r
+    * Without the owner's prior written consent,                                 *\r
+    * no decompiling or reverse-engineering shall be allowed.                    *\r
+    ******************************************************************************\r
+    \r
+    <test5130st1>
+commands:
+  - "screen-length disable\n": |-
+      screen-length disable\r
+      <test5130st1>
+  - "display version\n": |-
+      display version\r
+      HPE Comware Software, Version 7.1.070, Release 3507P18\r
+      Copyright (c) 2010-2023 Hewlett Packard Enterprise Development LP\r
+      HPE 5130 48G PoE+ 4SFP+ EI Switch uptime is 16 weeks, 6 days, 23 hours, 5 minutes\r
+      Last reboot reason : Cold reboot\r
+      \r
+      Boot image: flash:/5130ei-cmw710-boot-r3507p18.bin\r
+      Boot image version: 7.1.070, Release 3507P18\r
+        Compiled Oct 12 2023 11:00:00\r
+      System image: flash:/5130ei-cmw710-system-r3507p18.bin\r
+      System image version: 7.1.070, Release 3507P18\r
+        Compiled Oct 12 2023 11:00:00\r
+      \r
+      \r
+      Slot 1:\r
+      Uptime is 16 weeks,6 days,23 hours,5 minutes\r
+      5130-48G-PoE+-4SFP+ (370W) EI JG937A with 1 Processor\r
+      BOARD TYPE:         5130-48G-PoE+-4SFP+ (370W) EI JG937A\r
+      DRAM:               1024M bytes\r
+      FLASH:              512M bytes\r
+      PCB 1 Version:      VER.B\r
+      Bootrom Version:    147\r
+      CPLD 1 Version:     002\r
+      Release Version:    HPE 5130 48G PoE+ 4SFP+ EI JG937A-3507P18\r
+      Patch Version  :    None\r
+      Reboot Cause  :     ColdReboot\r
+      [SubSlot 0] 48GE+4SFP Plus\r
+      <test5130st1>
+  - "display device\n": |-
+      display device\r
+      --- Fake output of display device ---
+      <test5130st1>
+  - "display current-configuration\n": |-
+      display current-configuration\r
+      # Configuration snippet from Issue #3673
+      interface GigabitEthernet1/0/43
+       port link-mode bridge
+       description VER-NIC2-[TRUNK]
+      # End of snippet
+      <test5130st1>
+  - "quit\n": |-
