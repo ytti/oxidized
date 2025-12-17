@@ -15,10 +15,6 @@ class MLNXOS < Oxidized::Model
 
   cmd :all do |cfg|
     cfg.gsub! /.\x08/, '' # Remove Backspace char
-    cfg.gsub! /^CPU load averages:\s.+/, '' # Omit constantly changing CPU info
-    cfg.gsub! /^System memory:\s.+/, '' # Omit constantly changing memory info
-    cfg.gsub! /^Uptime:\s.+/, '' # Omit constantly changing uptime info
-    cfg.gsub! /.+Generated at\s\d+.+/, '' # Omit constantly changing generation time info
     cfg.lines.to_a[2..-3].join
   end
 
@@ -29,17 +25,25 @@ class MLNXOS < Oxidized::Model
   end
 
   cmd 'show version' do |cfg|
-    comment cfg
+    cfg = cfg.reject_lines [
+      /^CPU load averages:\s.+/, # Omit constantly changing CPU info
+      /^System memory:\s.+/,     # Omit constantly changing memory info
+      /^Uptime:\s.+/             # Omit constantly changing uptime info
+    ]
+    comment cfg + "\n"
   end
 
   cmd 'show inventory' do |cfg|
-    comment cfg
+    comment cfg + "\n"
   end
 
   cmd 'enable'
 
   cmd 'show running-config' do |cfg|
-    cfg
+    cfg.reject_lines [
+      # Omit constantly changing generation time info
+      /.+Generated at\s\d+.+/
+    ]
   end
 
   cfg :ssh do

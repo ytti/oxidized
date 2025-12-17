@@ -60,6 +60,42 @@ A more fleshed out example can be found in the `IOS` and `JunOS` models.
 
 ## Typical Tasks and Solutions
 
+### Keep or Remove Lines Returned from a Command
+To make command output cleaner, you can remove unwanted lines or keep only
+specific ones.
+
+Most devices echo the executed command on the first line and display a
+prompt on the last line. To remove these for all commands, use
+[cut_both](Ruby-API.md#cut_both):
+```ruby
+  cmd :all do |cfg|
+    cfg.cut_both
+  end
+```
+
+If you want to keep only relevant lines, use
+[keep_lines](Ruby-API.md#keep_lines):
+```ruby
+  cmd 'show interfaces transceiver' do |cfg|
+    cfg = cfg.keep_lines [
+      'SFP Information',
+      /Vendor (Name|Serial Number)/
+    ]
+    comment cfg + "\n"
+  end
+```
+
+If you want to suppress specific lines,
+use [reject_lines](Ruby-API.md#reject_lines):
+```ruby
+  cmd 'show running-config' do |cfg|
+    cfg.reject_lines [
+      'System Up Time',
+      /Current .* Time:/
+    ]
+  end
+```
+
 ### Handling 'enable' mode
 The following code snippet demonstrates how to handle sending the 'enable'
 command and an enable password.

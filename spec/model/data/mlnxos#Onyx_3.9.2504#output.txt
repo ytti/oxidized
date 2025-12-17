@@ -8,13 +8,11 @@
 ## 
 ## Product model:     x86onie
 ## 
-## 
-## 
 ## Number of CPUs:    2
 ## 
 ## Module           Part Number        Serial Number        Asic Rev.    HW Rev.
+## 
 ## Running database "initial"
-
 ## Hostname: 
 ## Product release: 3.9.2504
 ##
