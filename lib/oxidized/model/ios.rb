@@ -54,6 +54,13 @@ class IOS < Oxidized::Model
     cfg
   end
 
+  cmd :significant_changes do |cfg|
+    cfg.reject_lines [
+      /^! (Last|No) configuration change (at|since)/,
+      '! NVRAM config last updated at'
+    ]
+  end
+
   cmd 'show version' do |cfg|
     comments = []
     comments << cfg.lines.first

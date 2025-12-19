@@ -62,6 +62,28 @@ module Oxidized
       @nodes.load
     end
 
+    def self.significant_config(job, output)
+      node = job.node
+      model = node.model
+      store_mode = model.vars(:output_store_mode)
+      return job.config unless store_mode == "on_significant"
+
+      unless output.respond_to?(:fetch)
+        logger.error("Detection of significant changes needs an output" \
+                     "capable of fetching the last configuration")
+        return job.config
+      end
+
+      old = model.significant_changes(output.fetch(node, node.group))
+      new = model.significant_changes job.config.to_cfg
+      if old == new
+        logger.debug "No significant change on node #{node.name}"
+        nil
+      else
+        job.config
+      end
+    end
+
     private
 
     def process_success(node, job)
@@ -72,8 +94,11 @@ module Oxidized
       msg += " from #{node.from}" if node.from
       msg += " with message '#{node.msg}'" if node.msg
       output = node.output.new
-      if output.store node.name, job.config,
-                      msg: msg, email: node.email, user: node.user, group: node.group
+
+      store_config = Worker.significant_config(job, output)
+      if store_config && output.store(node.name, store_config, msg: msg,
+                                      email: node.email,
+                                      user: node.user, group: node.group)
         node.modified
         logger.info "Configuration updated for #{node.group}/#{node.name}"
         Oxidized.hooks.handle :post_store, node:      node,
