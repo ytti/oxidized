@@ -192,4 +192,16 @@ class ATOMS
       @skip = true if @output_test.skip?
     end
   end
+
+  class TestSignificantChange < TestPassFail
+    GLOB = '*#significant_changes.yaml'.freeze
+    attr_reader :output_test
+
+    def initialize(model, desc, type = 'significant_changes')
+      super
+
+      @output_test = TestOutput.new(@model, @desc, 'output')
+      @skip = true if @output_test.skip?
+    end
+  end
 end
