@@ -573,3 +573,7 @@ For this to work, the model must implement `cmd :significant_changes`:
     ]
   end
 ```
+
+Note that store on significant change only applies to the main configuration,
+and will not affect
+[output types](Creating-Models.md#advanced-feature-output-type)
