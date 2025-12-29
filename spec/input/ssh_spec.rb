@@ -87,4 +87,23 @@ describe Oxidized::SSH do
       ssh.connect(@node)
     end
   end
+
+  describe ".rescue_fail" do
+    it "returns RESCUE_FAIL from Oxidized::Input" do
+      result = Oxidized::SSH.rescue_fail
+
+      _(result[Errno::ECONNREFUSED]).must_equal :debug
+      _(result[IOError]).must_equal :warn
+      _(result[Timeout::Error]).must_equal :warn
+      _(result[Errno::ECONNRESET]).must_equal :warn
+    end
+    it "returns its own RESCUE_FAIL" do
+      result = Oxidized::SSH.rescue_fail
+
+      # Check that SSH-specific exceptions are included
+      _(result[Net::SSH::Disconnect]).must_equal :debug
+      _(result[RuntimeError]).must_equal :warn
+      _(result[Net::SSH::AuthenticationFailed]).must_equal :warn
+    end
+  end
 end

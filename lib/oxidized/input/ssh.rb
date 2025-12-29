@@ -4,18 +4,19 @@ module Oxidized
   require 'timeout'
   require 'oxidized/input/cli'
   class SSH < Input
-    RESCUE_FAIL = {
-      debug: [
-        Net::SSH::Disconnect
-      ],
-      warn:  [
-        RuntimeError,
-        Net::SSH::AuthenticationFailed
-      ]
-    }.freeze
     include Input::CLI
 
+    RESCUE_FAIL = {
+      Net::SSH::Disconnect           => :debug,
+      RuntimeError                   => :warn,
+      Net::SSH::AuthenticationFailed => :warn
+    }.freeze
+
     class NoShell < OxidizedError; end
+
+    def self.rescue_fail
+      super.merge(RESCUE_FAIL)
+    end
 
     def connect(node) # rubocop:disable Naming/PredicateMethod
       @node        = node

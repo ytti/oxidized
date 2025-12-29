@@ -5,19 +5,19 @@ module Oxidized
   require_relative 'cli'
 
   class SCP < Input
-    RESCUE_FAIL = {
-      debug: [
-        Net::SSH::Disconnect,
-        Net::SSH::ConnectionTimeout
-      ],
-      warn:  [
-        Net::SCP::Error,
-        Net::SSH::HostKeyUnknown,
-        Net::SSH::AuthenticationFailed,
-        Timeout::Error
-      ]
-    }.freeze
     include Input::CLI
+
+    RESCUE_FAIL = {
+      Net::SSH::Disconnect           => :debug,
+      Net::SSH::ConnectionTimeout    => :debug,
+      Net::SCP::Error                => :warn,
+      Net::SSH::HostKeyUnknown       => :warn,
+      Net::SSH::AuthenticationFailed => :warn
+    }.freeze
+
+    def self.rescue_fail
+      super.merge(RESCUE_FAIL)
+    end
 
     def connect(node) # rubocop:disable Naming/PredicateMethod
       @node = node
