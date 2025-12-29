@@ -50,7 +50,7 @@ Gem::Specification.new do |s|
   s.add_development_dependency 'git',                 '>= 2.0', '< 3.2.0'
   s.add_development_dependency 'minitest',            '~> 5.27.0'
   s.add_development_dependency 'mocha',               '~> 3.0'
-  s.add_development_dependency 'pry',                 '~> 0.15.0'
+  s.add_development_dependency 'pry',                 '~> 0.16.0'
   s.add_development_dependency 'rake',                '~> 13.0'
   s.add_development_dependency 'rubocop',             '~> 1.82.0'
   s.add_development_dependency 'rubocop-minitest',    '~> 0.38.0'
