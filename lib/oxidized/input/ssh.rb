@@ -70,20 +70,6 @@ module Oxidized
 
     private
 
-    def disconnect
-      disconnect_cli
-      # if disconnect does not disconnect us, give up after timeout
-      Timeout.timeout(@node.timeout) { @ssh.loop }
-    rescue Errno::ECONNRESET, Net::SSH::Disconnect, IOError => e
-      logger.debug 'The other side closed the connection while ' \
-                   "disconnecting, raising #{e.class} with #{e.message}"
-    rescue Timeout::Error
-      logger.debug "#{@node.name} timed out while disconnecting"
-    ensure
-      @log.close if Oxidized.config.input.debug?
-      (@ssh.close rescue true) unless @ssh.closed? # rubocop:disable Style/RedundantParentheses
-    end
-
     def shell_open(ssh)
       @ses = ssh.open_channel do |ch|
         ch.on_data do |_ch, data|

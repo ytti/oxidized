@@ -85,9 +85,13 @@ module Oxidized
     end
 
     def disconnect
+      disconnect_cli
       Timeout.timeout(@node.timeout) do
         @ssh.close
       end
+    rescue Errno::ECONNRESET, Net::SSH::Disconnect, IOError => e
+      logger.debug 'The other side closed the connection while ' \
+                   "disconnecting, raising #{e.class} with #{e.message}"
     rescue Timeout::Error
       logger.debug "#{@node.name} timed out while disconnecting"
     ensure
