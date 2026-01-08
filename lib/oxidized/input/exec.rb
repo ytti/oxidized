@@ -1,9 +1,5 @@
 module Oxidized
-  require "oxidized/input/cli"
-
   class Exec < Input
-    include Input::CLI
-
     def connect(node)
       @node = node
       @log = File.open(Oxidized::Config::LOG + "/#{@node.ip}-exec", "w") if Oxidized.config.input.debug?

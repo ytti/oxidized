@@ -11,7 +11,7 @@ The format is based on [Keep a Changelog](https://keepachangelog.com/en/1.1.0/).
 
 ### Changed
 - Refactored models: Use `keep_lines` and `reject_lines` in aosw, arubainstant, asa, efos, firelinuxos, fsos, ironware, mlnxos and perle to (@robertcheramy)
-
+- Refactor SSH and SCP into a common class SSHBase. Fixes #3597 (@robertcheramy)
 
 ### Fixed
 - apc_aos: set comment to "; " to match comments in config.ini (@robertcheramy)

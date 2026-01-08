@@ -106,4 +106,10 @@ describe Oxidized::SSH do
       _(result[Net::SSH::AuthenticationFailed]).must_equal :warn
     end
   end
+  describe '#config_name' do
+    it "returns the configuration name" do
+      ssh = Oxidized::SSH.new
+      _(ssh.config_name).must_equal 'ssh'
+    end
+  end
 end

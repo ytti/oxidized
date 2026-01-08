@@ -1,9 +1,12 @@
+require_relative 'cli'
+
 module Oxidized
   class PromptUndetect < OxidizedError; end
 
   class Input
     include SemanticLogger::Loggable
     include Oxidized::Config::Vars
+    include Oxidized::Input::CLI
 
     RESCUE_FAIL = {
       Errno::ECONNREFUSED => :debug,

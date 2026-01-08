@@ -1,9 +1,6 @@
 module Oxidized
   require 'net/telnet'
-  require 'oxidized/input/cli'
   class Telnet < Input
-    include Input::CLI
-
     attr_reader :telnet
 
     def connect(node) # rubocop:disable Naming/PredicateMethod

@@ -23,4 +23,11 @@ describe Oxidized::SCP do
       _(result[Net::SSH::AuthenticationFailed]).must_equal :warn
     end
   end
+
+  describe '#config_name' do
+    it "returns the configuration name" do
+      ssh = Oxidized::SCP.new
+      _(ssh.config_name).must_equal 'scp'
+    end
+  end
 end
