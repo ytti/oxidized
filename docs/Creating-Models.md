@@ -245,7 +245,7 @@ A good (and optional) practice for submissions is to provide a
 further developments could break it, and facilitates debugging issues without
 having access to a physical network device for the model.
 
-## Advanced features
+## Advanced feature: output type
 
 The loosely-coupled architecture of Oxidized allows for easy extensibility in more advanced use cases as well.
 
