@@ -27,6 +27,12 @@ class Perle < Oxidized::Model
 
   cmd 'show running-config'
 
+  cmd :significant_changes do |cfg|
+    cfg.reject_lines [
+      /^tacacs-server key 7 \$0\$\S+==$/
+    ]
+  end
+
   cfg :ssh do
     post_login 'terminal length 0'
     pre_logout 'exit'

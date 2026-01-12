@@ -106,6 +106,7 @@ commands:
       tty 1 mode line\r
       tty 2 mode line\r
       tty 3 mode line\r
+      tacacs-server key 7 $0$AAAAAAAAAABBBBBBBBBBCCCCCCCCCC==\r
       ! (...)
       !\r
       ! ***** END of configuration *****\r
