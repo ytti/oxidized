@@ -5,7 +5,8 @@ class Perle < Oxidized::Model
   comment '! '
 
   cmd :all do |cfg|
-    cfg.cut_both
+    cfg = cfg.cut_both
+    cfg.delete "\r"
   end
 
   cmd 'show version verbose' do |cfg|

@@ -17,6 +17,8 @@ The format is based on [Keep a Changelog](https://keepachangelog.com/en/1.1.0/).
 ### Fixed
 - apc_aos: set comment to "; " to match comments in config.ini (@robertcheramy)
 - h3c: fix overly permissive prompt regexp causing false matches. Fixes #3673 (@robertcheramy)
+- extra/device2yaml.rb: fix \r being removed at end of line (@robertcheramy)
+- perle: remove trailing \r (the device sends \r\r\n) (@robertcheramy)
 
 
 ## [0.35.0 - 2025-12-04]
