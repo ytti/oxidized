@@ -8,14 +8,17 @@ The format is based on [Keep a Changelog](https://keepachangelog.com/en/1.1.0/).
 
 ### Added
 - String refinements: introduce `keep_lines` and `reject_lines` methods (@robertcheramy)
+- Support for storing configurations only on significant changes (@robertcheramy)
 
 ### Changed
 - Refactored models: Use `keep_lines` and `reject_lines` in aosw, arubainstant, asa, efos, firelinuxos, fsos, ironware, mlnxos and perle to (@robertcheramy)
-
+- Modified models to support store mode on significant changes: ios, fortios, perle (@robertcheramy)
 
 ### Fixed
 - apc_aos: set comment to "; " to match comments in config.ini (@robertcheramy)
 - h3c: fix overly permissive prompt regexp causing false matches. Fixes #3673 (@robertcheramy)
+- extra/device2yaml.rb: fix \r being removed at end of line (@robertcheramy)
+- perle: remove trailing \r (the device sends \r\r\n) (@robertcheramy)
 
 
 ## [0.35.0 - 2025-12-04]

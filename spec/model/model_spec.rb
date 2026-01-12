@@ -43,6 +43,13 @@ class TestModel < Oxidized::Model
     "Appended output after cmd blocks have been run\n"
   end
 
+  cmd :significant_changes do |cfg|
+    cfg.reject_lines [
+      'Last configuration change at',
+      'NVRAM config last updated at'
+    ]
+  end
+
   cfg :ssh, :telnet do
     pre_logout 'logout'
   end
@@ -321,6 +328,20 @@ describe 'Oxidized::Model' do
         it "interpolates #{template}" do
           _(@model.interpolate_string(template)).must_equal expected
         end
+      end
+    end
+    describe '#significant_changes' do
+      it 'shows significant changes only' do
+        config =
+          "Last configuration change at 00001\n" \
+          "NVRAM config last updated at 00001\n" \
+          "Configuration Version 0000A\n"
+
+        significant_config =
+          "Configuration Version 0000A\n"
+
+        result = @model.significant_changes config
+        _(result).must_equal significant_config
       end
     end
   end

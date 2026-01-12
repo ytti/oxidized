@@ -21,8 +21,14 @@ module Oxidized
 
       # node: node name (String)
       # outputs: Oxidized::Models::Outputs
-      # opts: hash of node vars
+      # opts: dict of optional parameters:
+      #  - group: node group
+      #  - significant_changes:
+      #      nil / not set / true  -> store as usual
+      #      false                 -> do not store
       def store(node, outputs, opt = {})
+        return false if opt[:significant_changes] == false
+
         file = ::File.expand_path @cfg.directory
         file = ::File.join ::File.dirname(file), opt[:group] if opt[:group]
         FileUtils.mkdir_p file

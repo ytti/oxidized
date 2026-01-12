@@ -5,7 +5,8 @@ class Perle < Oxidized::Model
   comment '! '
 
   cmd :all do |cfg|
-    cfg.cut_both
+    cfg = cfg.cut_both
+    cfg.delete "\r"
   end
 
   cmd 'show version verbose' do |cfg|
@@ -26,6 +27,12 @@ class Perle < Oxidized::Model
   end
 
   cmd 'show running-config'
+
+  cmd :significant_changes do |cfg|
+    cfg.reject_lines [
+      /^tacacs-server key 7 \$0\$\S+==$/
+    ]
+  end
 
   cfg :ssh do
     post_login 'terminal length 0'
