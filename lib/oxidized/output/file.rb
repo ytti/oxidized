@@ -21,7 +21,7 @@ module Oxidized
 
       # node: node name (String)
       # outputs: Oxidized::Models::Outputs
-      # opts: dict of optional parameter:
+      # opts: dict of optional parameters:
       #  - group: node group
       #  - significant_changes:
       #      nil / not set / true  -> store as usual

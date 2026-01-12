@@ -68,7 +68,7 @@ module Oxidized
       return true unless model.vars(:output_store_mode) == "on_significant"
 
       unless output.respond_to?(:fetch)
-        logger.error("Detection of significant changes needs an output" \
+        logger.error("Detection of significant changes needs an output " \
                      "capable of fetching the last configuration")
         return true
       end

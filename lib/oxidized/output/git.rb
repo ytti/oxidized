@@ -37,7 +37,7 @@ module Oxidized
 
       # file: node name (String)
       # outputs: Oxidized::Models::Outputs
-      # opts: dict of optional parameter:
+      # opts: dict of optional parameters:
       #  - msg: commit message
       #  - email: committer email
       #  - user: committer name

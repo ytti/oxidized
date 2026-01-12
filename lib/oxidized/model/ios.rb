@@ -140,7 +140,7 @@ class IOS < Oxidized::Model
       ]
       unless vars("output_store_mode") == "on_significant"
         cfg = cfg.reject_lines [
-          # Ony sore the line "configuration change" when a user is specified
+          # Only store the line "configuration change" when a user is specified
           /^! (Last|No) configuration change (at|since)(?!.*\d+ by \S+$)/
         ]
       end
