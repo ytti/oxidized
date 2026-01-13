@@ -42,6 +42,23 @@ describe 'ATOMS tests' do
           _(cfg).wont_match Regexp.new(want_fail)
         end
       end
+
+    when 'significant_changes'
+      it "#{test} are detected" do
+        Oxidized.config.vars.output_store_mode = "on_significant"
+        cfg = MockSsh.get_result(self, test.output_test).to_cfg
+        class_sym = Object.constants.find do |const|
+          const.to_s.casecmp(test.model).zero?
+        end
+        changes = Object.const_get(class_sym).new.significant_changes cfg
+
+        test.pass.each do |want_pass|
+          _(changes).must_match Regexp.new(want_pass)
+        end
+        test.fail.each do |want_fail|
+          _(changes).wont_match Regexp.new(want_fail)
+        end
+      end
     end
   end
 end

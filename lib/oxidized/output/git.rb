@@ -35,6 +35,16 @@ module Oxidized
         end
       end
 
+      # file: node name (String)
+      # outputs: Oxidized::Models::Outputs
+      # opts: dict of optional parameters:
+      #  - msg: commit message
+      #  - email: committer email
+      #  - user: committer name
+      #  - group: node group
+      #  - significant_changes:
+      #      nil / not set / true: store as usual
+      #      false: skip general config, only store configs where type != nil
       def store(file, outputs, opt = {})
         @msg   = opt[:msg]
         @user  = opt[:user]  || @cfg.user
@@ -58,7 +68,7 @@ module Oxidized
           update type_repo, file, type_cfg
         end
 
-        update repo, file, outputs.to_cfg
+        update repo, file, outputs.to_cfg unless opt[:significant_changes] == false
       end
 
       # Returns the configuration of group/node_name

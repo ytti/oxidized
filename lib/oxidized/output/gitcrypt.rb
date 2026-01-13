@@ -86,7 +86,7 @@ module Oxidized
           update type_repo, file, type_cfg
         end
 
-        update repo, file, outputs.to_cfg
+        update repo, file, outputs.to_cfg unless opt[:significant_changes] == false
       end
 
       def fetch(node, group)

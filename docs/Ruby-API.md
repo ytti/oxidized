@@ -98,6 +98,7 @@ gather its configuration. It can be called with:
 * A string and a block
 * `:all` and a block
 * `:secret` and a block
+* `:significant_changes` and a block
 
 The block takes a single parameter `cfg` containing the output of the command
 being processed.
@@ -117,6 +118,11 @@ Calling `cmd` with `:secret` and a block will pass all configuration to the
 given block before emitting it to hide secrets if secret hiding is enabled. The
 block should replace any secrets with `'<hidden>'` and return the resulting
 string.
+
+Calling `cmd` with `:significant_changes` and a block will pass the final
+configuration to the given block. The resulting string should contain
+significant changes only and will be used to
+[decide if the configuration should be stored](Configuration.md#store-configuration-only-on-significant-changes).
 
 Execution order is `:all`, `:secret`, and lastly the command specific block, if
 given.

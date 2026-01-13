@@ -306,6 +306,13 @@ module Oxidized
       @input.class.to_s.match(/Telnet/) || vars(:ssh_no_exec)
     end
 
+    def significant_changes(config)
+      self.class.cmds[:significant_changes].each do |block|
+        config = instance_exec config, &block
+      end
+      config
+    end
+
     private
 
     def process_cmd_output(output, name)
