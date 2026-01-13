@@ -124,6 +124,11 @@ class MockSsh
     end
   end
 
+  def close
+    # Wait for the channels
+    loop
+  end
+
   def closed?
     false
   end

@@ -64,14 +64,7 @@ module Oxidized
     end
 
     def run_input(input)
-      rescue_fail = {}
-      [input.class::RESCUE_FAIL, input.class.superclass::RESCUE_FAIL].each do |hash|
-        hash.each do |level, errors|
-          errors.each do |err|
-            rescue_fail[err] = level
-          end
-        end
-      end
+      rescue_fail = input.class.rescue_fail
       begin
         input.connect(self) && input.get
       rescue *rescue_fail.keys => err

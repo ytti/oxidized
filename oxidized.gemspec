@@ -59,6 +59,7 @@ Gem::Specification.new do |s|
   s.add_development_dependency 'simplecov',           '~> 0.22.0'
 
   # Dependencies on optional libraries, used for unit tests & development
+  s.add_development_dependency 'net-tftp',            '~> 0.1.0'
   s.add_development_dependency 'oxidized-web',        '>= 0.17.1'
   s.add_development_dependency 'sequel',              '>= 5.63.0', '< 5.100.0'
 end

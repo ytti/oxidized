@@ -1,12 +1,9 @@
 module Oxidized
-  require "oxidized/input/cli"
   require "net/http"
   require "json"
   require "net/http/digest_auth"
 
   class HTTP < Input
-    include Input::CLI
-
     def connect(node)
       @node = node
       @secure = false
