@@ -51,8 +51,8 @@ class DiffMock
     @deltas = deltas
   end
 
-  def each_delta(&)
-    @deltas.each(&)
+  def each_delta(&block)
+    @deltas.each(&block)
   end
 end
 
@@ -82,7 +82,7 @@ class WalkerMock
 
   def push(*); end
 
-  def each(&)
-    @repo.commits.reverse_each(&)
+  def each(&block)
+    @repo.commits.reverse_each(&block)
   end
 end
