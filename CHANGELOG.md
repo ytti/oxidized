@@ -13,7 +13,6 @@ The format is based on [Keep a Changelog](https://keepachangelog.com/en/1.1.0/).
 ### Changed
 - Refactored models: Use `keep_lines` and `reject_lines` in aosw, arubainstant, asa, efos, firelinuxos, fsos, ironware, mlnxos and perle to (@robertcheramy)
 - Refactor SSH and SCP into a common class SSHBase. Fixes #3597 (@robertcheramy)
-- SSH#disconnect directly calls @ssh.close, as #close waits for the channels to be closed anyway. This might have side effects, please open an issue if you observe a regression. (@robertcheramy)
 - Modified models to support store mode on significant changes: ios, fortios, perle (@robertcheramy)
 
 ### Fixed
