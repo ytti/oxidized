@@ -1,0 +1,75 @@
+; Hardware Factory
+; ---------------
+; Model Number: 		AP9640
+; Serial Number: 		F22200000001
+; Hardware Revision: 	5
+; Manufacture Date: 	01/01/2022
+; MAC Address: 		28 29 86 00 00 01
+; 
+; Application Module
+; ---------------
+; Name: 			su
+; Version: 		v2.5.0.6
+; 
+; APC OS(AOS)
+; ---------------
+; Name: 			aos
+; Version: 		v2.5.0.8
+; 
+; APC Boot Monitor
+; ---------------
+; Name: 			boot
+; Version: 		v1.5.1.1
+; 
+; Model: Smart-UPS 750
+; SKU: SMT750IC
+; Serial Number: 3S2100000001
+; Firmware Revision: UPS 03.8 (ID1015) 
+; Manufacture Date: 01/24/2021
+; Apparent Power Rating: 750 VA
+; Real Power Rating: 500 W
+; Battery SKU: APCRBC48
+; 
+; 
+; Status of UPS: Online
+; Last Transfer: UPS battery test
+; Input Status: Acceptable
+; Next Battery Replacement Date: 07/01/2027
+; Battery Health: Battery Life OK
+; 
+; 
+; ========== config.ini ==========
+; Schneider Electric
+; Network Management Card AOS v2.5.0.8
+; Smart-UPS APP v2.5.0.6
+; (c) 2023 Schneider Electric. All rights reserved.
+; Configuration file, generated on 01/21/2026 at 16:08:12 by Administrator apc
+
+[NetworkTCP/IP]
+Override=28 29 86 00 00 01
+SystemIP=0.0.0.0
+SubnetMask=0.0.0.0
+DefaultGateway=0.0.0.0
+IPv4=enabled
+BootMode=DHCP Only
+HostName=APC-0007
+DomainName=oxidized.corp
+PortSpeed=Auto
+DHCPBootpVendorClass=APC
+DHCPBootpClientID=MAC
+
+[EventActionConfig]
+; Network Interface coldstarted.
+; SNMP Trap: 0
+E0001=ES,E[:::],T[:::::]
+
+; Firmware Updated.
+E0078=ES,E[:::],T[:::::]
+
+; UPS: Restored the local network management interface-to-UPS communication.
+; SNMP Trap: 8
+E0101=ES,E[:::],T[:::::]
+
+; Environment: Return to normal state for {UPS output relay}.
+; SNMP Trap: 4
+E4E04=ES,E[:::],T[:::::]

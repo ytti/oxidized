@@ -5,15 +5,17 @@ All notable changes to this project will be documented in this file.
 The format is based on [Keep a Changelog](https://keepachangelog.com/en/1.1.0/).
 
 ## [Unreleased]
-The fortios model has been split into fortigate and fortios. You need the new
-fortigate model for FortiGate firewalls. Be sure to check the
-[Fortinet model notes](docs/Model-Notes/Fortinet.md) before upgrading.
+The fortios model has been split into fortigate and fortios. You need the new fortigate model for FortiGate firewalls. Be sure to check the [Fortinet model notes](docs/Model-Notes/Fortinet.md) before upgrading.
+
+The SCP gem is now an optional dependency as it will rarely be used - you must install it if you need it. It is still included in the docker image.
 
 ### Added
 - String refinements: introduce `keep_lines` and `reject_lines` methods (@robertcheramy)
 - Support for storing configurations only on significant changes (@robertcheramy)
 - Add support for Ivanti Secure Connect ISA models (@candleflip)
 - smartbyte: new model for SmartByte switches (@freddy36)
+- Support multiple input (@robertcheramy)
+- apcaos model with SSH + SSH capabilities, deprecates apc_aos (@robertcheramy)
 
 ### Changed
 - Refactored models: Use `keep_lines` and `reject_lines` in aosw, arubainstant, asa, efos, firelinuxos, fsos, ironware, mlnxos and perle to (@robertcheramy)
