@@ -15,9 +15,9 @@ module Oxidized
     end
 
     # HookContext is passed to each hook. It can contain anything related to the
-    # event in question. At least it contains the event name
-    # The argument keyword_init: true is needed for ruby < 3.2 and can be
-    # dropped with the support of ruby 3.1
+    # event in question. It contains at least the event name.
+    # The argument keyword_init: true is needed to force an initialization with
+    # keyword arguments and allow a different argument order
     HookContext = Struct.new(:event, :node, :job, :commitref, keyword_init: true)
 
     # RegisteredHook is a container for a Hook instance
