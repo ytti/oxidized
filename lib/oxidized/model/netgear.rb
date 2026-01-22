@@ -20,7 +20,7 @@ class Netgear < Oxidized::Model
   end
 
   cfg :telnet do
-    username /^(User:|Applying Interface configuration, please wait ...)/
+    username /^(Username:|User:|Applying Interface configuration, please wait ...)/
     password /^Password:/i
   end
 
