@@ -6,7 +6,7 @@ class Netgear < Oxidized::Model
   clean :escape_codes
 
   # Handle pager for "show version" on old Netgear models: #2394
-  expect /^--More-- or \(q\)uit$/ do |data, re|
+  expect /^--More--(?: or \(q\)uit)?$/ do |data, re|
     send ' '
     data.sub re, ''
   end
