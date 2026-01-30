@@ -58,7 +58,7 @@ class Aoscx < Oxidized::Model
     end
 
     with_section(cfg, 'temperature') do |content|
-      content.gsub!(/^(.*) \d+\.\d+ C (.*)$/, '\\1 <hidden>\\2')
+      content.gsub!(/^(.*) \-?\d+\.\d+ C (.*)$/, '\\1 <hidden>\\2')
     end
     comment cfg
   end
