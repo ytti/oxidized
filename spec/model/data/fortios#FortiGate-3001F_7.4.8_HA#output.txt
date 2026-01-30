@@ -1,0 +1,90 @@
+# Version: FortiGate-3001F v7.4.8,build2795,250523 (GA.M)
+# Current Security Level: High
+# Serial-Number: FG3K100000000000
+# BIOS version: 06000104
+# System Part-Number: P27184-07
+# Hostname: Firewall-1
+# Private Encryption: Disable
+# Operation Mode: NAT
+# Current virtual domain: root
+# Max number of virtual domains: 10
+# Virtual domains status: 1 in NAT mode, 0 in TP mode
+# Virtual domain configuration: disable
+# FIPS-CC mode: disable
+# Current HA mode: a-p, primary
+# 
+# HA Health Status: OK
+# Model: FortiGate-3001F
+# Mode: HA A-P
+# number of member: 2
+# Primary: FG3K100000000000, HA operating index = 0
+# Secondary: FG3K100000000001, HA operating index = 1
+# 
+# Model name: FortiGate-3001F
+# ASIC version: CP9
+# ASIC SRAM: 64M
+# CPU: AMD EPYC 7502P 32-Core Processor
+# Number of CPUs: 64
+# RAM: 129072 MB
+# Compact Flash: 28738 MB /dev/sda
+# Hard disk: 915715 MB /dev/sdb
+# USB Flash: not available
+# Network Card chipset: FortiASIC NP7 Adapter (rev.)
+# Hardware Revision: unknown
+# 
+# PSU[1]:
+#   Product Manufacturer  : Murata-PS
+#   Product Name          : D1U54P-W-1200-12-HA4PC
+#   Product Version       : RP
+#   Product Serial        : DH2000000000
+#   Product Extra         : Pri f/w rev: 08.01
+#   Product Extra         : Sec f/w rev: 11.01
+# PSU[2]:
+#   Product Manufacturer  : Murata-PS
+#   Product Name          : D1U54P-W-1200-12-HA4PC
+#   Product Version       : RP
+#   Product Serial        : DH200000000A
+#   Product Extra         : Pri f/w rev: 08.01
+#   Product Extra         : Sec f/w rev: 11.01
+# 
+# Interface ha1 - SFP/SFP+/SFP28, 10GBASE-LR
+#   Vendor Name  :            Fortinet        
+#   Serial No.   :            240000000000    
+# Interface ha2 - SFP/SFP+/SFP28, 10GBASE-LR
+#   Vendor Name  :            Fortinet        
+#   Serial No.   :            240000000001    
+# Interface port17 - Transceiver is not detected.
+# Interface port18 - Transceiver is not detected.
+# Interface port19 - Transceiver is not detected.
+# Interface port20 - Transceiver is not detected.
+# Interface port21 - Transceiver is not detected.
+# Interface port22 - Transceiver is not detected.
+# Interface port23 - Transceiver is not detected.
+# Interface port24 - Transceiver is not detected.
+# Interface port25 - Transceiver is not detected.
+# Interface port26 - Transceiver is not detected.
+# Interface port27 - Transceiver is not detected.
+# Interface port28 - Transceiver is not detected.
+# Interface port29 - Transceiver is not detected.
+# Interface port30 - Transceiver is not detected.
+# Interface port31 - QSFP+/QSFP28, 100G CWDM4
+#   Vendor Name  :            FORTINET        
+#   Serial No.   :            U900000         
+# Interface port32 - QSFP+/QSFP28, 100G CWDM4
+#   Vendor Name  :            FORTINET        
+#   Serial No.   :            U90000A         
+# Interface port33 - Transceiver is not detected.
+# Interface port34 - Transceiver is not detected.
+# Interface port35 - Transceiver is not detected.
+# Interface port36 - Transceiver is not detected.
+# 
+#config-version=FG3K1F-7.4.8-FW-build2795-250523:opmode=1:vdom=0:user=TACACS-USER
+#buildno=2795
+#global_vdom=1
+config system global
+    set admintimeout 15
+    set alias "FortiGate-3001F"
+    set autorun-log-fsck enable
+    set hostname "Firewall-1"
+end
+

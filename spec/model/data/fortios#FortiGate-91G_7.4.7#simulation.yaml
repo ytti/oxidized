@@ -45,24 +45,6 @@ commands:
       Last reboot reason: warm reboot
       
       TEST-FW1234 #\x20
-  - "get system ha status\n": |-
-      get system ha status\r
-      HA Health Status: OK
-      Model: FortiGate-91G
-      Mode: Standalone
-      Group Name:\x20
-      Group ID: 0
-      Debug: 0
-      Cluster Uptime: 0 days 0h:0m:0s
-      Cluster state change time: N/A
-      ses_pickup: disable
-      override: disable
-      System Usage stats:
-      HBDEV stats:
-      number of member: 0
-      number of vcluster: 0
-      
-      TEST-FW1234 #\x20
   - "get hardware status\n": |-
       get hardware status\r
       Model name: FortiGate-91G
@@ -76,6 +58,29 @@ commands:
       Network Card chipset: FortiASIC NP7LITE Adapter (rev.)
       Hardware Revision: Rev1
       
+      TEST-FW1234 #\x20
+  - "diagnose hardware deviceinfo psu\n": |-
+      diagnose hardware deviceinfo psu\r\r
+      Power Supply            Status  \r
+      PSU[1]                  OK      \r
+      PSU[2]                  LOST      \r
+      \r
+      TEST-FW1234 #\x20
+  - "get system interface transceiver\n": |-
+      get system interface transceiver\r\r
+      Interface wan1 - SFP/SFP+/SFP28, 10GBASE-SR\r
+        Vendor Name  :            FORTINET        \r
+        Part No.     :            FTLX8574D3BCLFTN\r
+        Serial No.   :            NB00000         \r
+      Interface wan2 - Transceiver is not detected.\r
+      \r
+                                             Optical      Optical      Optical\r
+      SFP/SFP+     Temperature  Voltage      Tx Bias      Tx Power     Rx Power\r
+      Interface    (Celsius)    (Volts)      (mA)         (dBm)        (dBm)\r
+      ------------ ------------ ------------ ------------ ------------ ------------ \r
+      wan1          51.8         3.33         6.61         -2.7        -26.8 --    \r
+      ++ : high alarm, + : high warning, - : low warning, -- : low alarm, ? : suspect.\r
+      \r
       TEST-FW1234 #\x20
   - "show | grep .\n": |-
       show | grep .\r

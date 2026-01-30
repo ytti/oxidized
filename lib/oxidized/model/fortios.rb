@@ -16,9 +16,13 @@ class FortiOS < Oxidized::Model
     data.sub re, ''
   end
 
-  cmd :all do |cfg, cmdstring|
-    new_cfg = comment "COMMAND: #{cmdstring}\n"
-    new_cfg << cfg.each_line.to_a[1..-2].map { |line| line.gsub(/(conf_file_ver=)(.*)/, '\1<stripped>\3') }.join
+  cmd :all do |cfg|
+    # Remove junk after --More-- pager
+    cfg = cfg.gsub(/\r +\r/, '')
+    # Remove \r\n after command echo
+    cfg = cfg.gsub("\r\n", "\n")
+    # remove command echo and prompt
+    cfg.cut_both
   end
 
   cmd :secret do |cfg|
@@ -38,74 +42,87 @@ class FortiOS < Oxidized::Model
   end
 
   cmd 'get system status' do |cfg|
-    @vdom_enabled = cfg.match /Virtual domain configuration: (enable|multiple)/
-    cfg.gsub! /(System time:).*/i, '\\1 <stripped>'
-    cfg.gsub! /(Cluster (?:uptime|state change time):).*/, '\\1 <stripped>'
-    cfg.gsub! /(Current Time\s+:\s+)(.*)/, '\1<stripped>'
-    cfg.gsub! /(Uptime:\s+)(.*)/, '\1<stripped>\3'
-    cfg.gsub! /(Last reboot:\s+)(.*)/i, '\1<stripped>\3'
-    cfg.gsub! /(Disk Usage\s+:\s+)(.*)/, '\1<stripped>'
-    cfg.gsub! /(^\S+ (?:disk|DB):\s+)(.*)/, '\1<stripped>\3'
-    cfg.gsub! /(VM Registration:\s+)(.*)/, '\1<stripped>\3'
-    cfg.gsub! /(Virus-DB|Extended DB|FMWP-DB|IPS-DB|IPS-ETDB|APP-DB|INDUSTRIAL-DB|Botnet DB|IPS Malicious URL Database|AV AI\/ML Model|IoT-Detect).*/, '\\1 <db version stripped>'
+    @vdom_enabled = cfg.match(/^Virtual domain configuration: (enable|multiple)/)
+    @ha_cluster = cfg.match(/^Current HA mode: a-/) # a-p or a-a
+    cfg = cfg.keep_lines [
+      "Version: ",
+      "Security Level: ",
+      "Serial-Number: ",
+      "BIOS version: ",
+      "System Part-Number: ",
+      "Hostname: ",
+      "Operation Mode: ",
+      "Current virtual domain: ",
+      "Max number of virtual domains: ",
+      "Virtual domains status:",
+      "Virtual domain configuration: ",
+      "FIPS-CC mode: ",
+      "Current HA mode: ",
+      "Private Encryption: "
+    ]
+    comment cfg + "\n"
+  end
+
+  cmd 'config global', if: -> { @vdom_enabled } do |_cfg|
+    ''
+  end
+
+  cmd 'get system ha status', if: -> { @ha_cluster } do |cfg|
+    cfg = cfg.keep_lines [
+      "HA Health Status:",
+      "Model: ",
+      "Mode: ",
+      "number of member: ",
+      /^(Master|Slave|Primary|Secondary): /
+    ]
+    comment cfg + "\n"
+  end
+
+  cmd 'get hardware status' do |cfg|
     comment cfg
   end
 
-  post do
-    cfg = []
-    cfg << cmd('config global') if @vdom_enabled
+  cmd "diagnose hardware deviceinfo psu" do |cfg|
+    skip_patterns = [
+      /Command fail\./,      # The device doesn't support this command
+      /Power Supply +Status/ # We only get a status, but no serial numbers
+    ]
+    cfg = "No PSU serial numbers available\n\n" if skip_patterns.any? { |p| cfg.match?(p) }
 
-    cfg << cmd('get system ha status') do |cfg_ha|
-      cfg_ha = cfg_ha.each_line.select { |line| line.match /^(HA Health Status|Mode|Model|Master|Slave|Primary|Secondary|# COMMAND)(\s+)?:/ }.join
-      comment cfg_ha
-    end
+    comment cfg
+  end
 
-    cfg << cmd('get hardware status') do |cfg_hw|
-      comment cfg_hw
-    end
+  cmd "get system interface transceiver" do |cfg|
+    cfg = cfg.keep_lines [
+      /^Interface \w/,
+      "Vendor Name",
+      "Part No./",
+      "Serial No."
+    ]
+    comment cfg + "\n"
+  end
 
-    # default behaviour: include autoupdate output (backwards compatibility)
-    # do not include if variable "show_autoupdate" is set to false
-    if defined?(vars(:fortios_autoupdate)).nil? || vars(:fortios_autoupdate)
-      cfg << cmd('diagnose autoupdate version') do |cfg_auto|
-        cfg_auto.gsub! /(FDS Address\n---------\n).*/, '\\1IP Address removed'
-        comment cfg_auto.each_line.reject { |line| line.match /Last Update|Result/ }.join
-      end
-    end
+  cmd 'diagnose autoupdate version', if: -> { vars(:fortios_autoupdate) } do |cfg|
+    cfg = cfg.sub(/FDS Address\n---------\n.*\n/, '')
+    comment cfg.reject_lines ["Last Update", "Result :"]
+  end
 
-    cfg << cmd('end') if @vdom_enabled
+  cmd 'end', if: -> { @vdom_enabled } do |_cfg|
+    ''
+  end
 
-    # Different OS have different commands - we use the first that works
-    # - For fortigate > 7 and possibly earlier versions, we use:
-    #        show | grep .                     # backup as in fortigate GUI
-    #        show full-configuration | grep .  # bakup including default values
-    #   | grep is used to avoid the --More-- prompt
-    # - It is not documented which systems need the commands without | grep:
-    #        show full-configuration
-    #        show
-    #   Document it here and make a PR on github if you know!
-    # By default, we use the configuration without default values
-    # If fullconfig: true is set in the configuration, we get the full config
-    commandlist = if vars(:fullconfig)
-                    ['show full-configuration | grep .',
-                     'show full-configuration', 'show']
-                  else
-                    ['show | grep .',
-                     'show full-configuration', 'show']
-                  end
+  def clean_config(cfg)
+    cfg.reject_lines ['#conf_file_ver=']
+  end
 
-    commandlist.each do |fullcmd|
-      fullcfg = cmd(fullcmd)
-      # Don't show for unsupported devices (e.g. FortiAnalyzer, FortiManager, FortiMail)
-      next if fullcfg.lines[1..3].join =~ /(Parsing error at|command parse error)/
-
-      fullcfg.gsub! /(set comments "Error \(No order (found )?for (account )?ID \d+\) on).*/, '\\1 <stripped>"'
-
-      cfg << fullcfg
-      break
-    end
-
-    cfg.join
+  # If vars fullconfig is set to true, we get the full config (including default
+  # values)
+  cmd "show full-configuration | grep .", if: -> { vars(:fullconfig) } do |cfg|
+    clean_config cfg
+  end
+  # else backup as in Fortigate GUI
+  cmd "show | grep .", if: -> { !vars(:fullconfig) } do |cfg|
+    clean_config cfg
   end
 
   cmd :significant_changes do |cfg|

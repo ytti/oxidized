@@ -1,0 +1,126 @@
+# Version: FortiGate-501E v7.4.8,build2795,250523 (GA.M)
+# Current Security Level: High
+# Serial-Number: FG5H1E0000000000
+# BIOS version: 05000006
+# System Part-Number: P21592-09
+# Hostname: OXI-FW121
+# Private Encryption: Disable
+# Operation Mode: NAT
+# Current virtual domain: root
+# Max number of virtual domains: 10
+# Virtual domains status: 3 in NAT mode, 0 in TP mode
+# Virtual domain configuration: multiple
+# FIPS-CC mode: disable
+# Current HA mode: a-p, primary
+# 
+# HA Health Status: 
+# Model: FortiGate-501E
+# Mode: HA A-P
+# number of member: 1
+# Primary: FG5H1E0000000000, HA operating index = 0
+# 
+# Model name: FortiGate-501E
+# ASIC version: CP9
+# ASIC SRAM: 64M
+# CPU: Intel(R) Core(TM) i7-6700 CPU @ 3.40GHz
+# Number of CPUs: 8
+# RAM: 16047 MB
+# Compact Flash: 15331 MB /dev/sdc
+# Hard disk: 228936 MB /dev/sda
+# USB Flash: not available
+# Network Card chipset: Intel(R) Gigabit Ethernet Linux Driver (rev.0003)
+# Network Card chipset: FortiASIC NP6 Adapter (rev.)
+# 
+# No PSU serial numbers available
+# 
+# Interface port9 - Transceiver is not detected.
+# Interface port10 - Transceiver is not detected.
+# Interface port11 - Transceiver is not detected.
+# Interface port12 - Transceiver is not detected.
+# Interface s1 - Transceiver is not detected.
+# Interface s2 - Transceiver is not detected.
+# Interface vw1 - Transceiver is not detected.
+# Interface vw2 - Transceiver is not detected.
+# Interface x1 - Transceiver is not detected.
+# Interface x2 - Transceiver is not detected.
+# 
+#config-version=FG5H1E-7.4.8-FW-build2795-250523:opmode=0:vdom=1:user=TACACS-USER
+#buildno=2795
+#global_vdom=1
+config vdom
+edit root
+next
+edit xxxx
+next
+edit yyyy
+next
+end
+config global
+config system global
+    set alias "FortiGate-501E"
+    set hostname "OXI-FW121"
+    set timezone "Europe/Amsterdam"
+    set vdom-mode multi-vdom
+end
+config system vdom-link
+    edit "RootToXxxx"
+    next
+end
+config system interface
+    edit "ha"
+        set vdom "root"
+        set type physical
+        set snmp-index 1
+    next
+    edit "mgmt"
+        set vdom "root"
+        set ip 192.0.2.129 255.255.255.128
+        set allowaccess ping https ssh
+        set type physical
+        set dedicated-to management
+        set role lan
+        set snmp-index 2
+    next
+    edit "port1"
+        set vdom "root"
+        set ip 192.0.2.1 255.255.255.128
+        set allowaccess ping
+        set type physical
+        set alias "WAN"
+        set snmp-index 3
+        config ipv6
+            set ip6-address 2001:db8:cafe::/64
+            set ip6-allowaccess ping
+            config ip6-extra-addr
+                edit fe80::42/64
+                next
+            end
+        end
+    next
+    edit "port3"
+        set vdom "yyyy"
+        set ip 198.51.100.1 255.255.255.0
+        set allowaccess ping
+        set type physical
+        set alias "YYYY-Test-network"
+        set snmp-index 5
+    next
+end
+config system vdom-property
+    edit "root"
+        set description "property limits for vdom root"
+        set snmp-index 1
+    next
+    edit "xxxx"
+        set description "property limits for vdom xxxx"
+        set snmp-index 2
+    next
+    edit "yyyy"
+        set description "property limits for vdom yyyy"
+        set snmp-index 3
+    next
+end
+config router multicast
+end
+end
+
