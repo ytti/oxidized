@@ -112,7 +112,9 @@ class FortiOS < Oxidized::Model
   end
 
   def clean_config(cfg)
-    cfg.reject_lines ['#conf_file_ver=']
+    cfg = cfg.reject_lines ['#conf_file_ver=']
+    cfg.gsub(/(set comments "Error \(No order found for account ID \d+\) on).*/,
+             '\\1 <stripped>')
   end
 
   # If vars fullconfig is set to true, we get the full config (including default
