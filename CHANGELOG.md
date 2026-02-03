@@ -9,6 +9,7 @@ The format is based on [Keep a Changelog](https://keepachangelog.com/en/1.1.0/).
 ### Added
 - String refinements: introduce `keep_lines` and `reject_lines` methods (@robertcheramy)
 - Support for storing configurations only on significant changes (@robertcheramy)
+- Add support for Ivanti Secure Connect ISA models (@candleflip)
 
 ### Changed
 - Refactored models: Use `keep_lines` and `reject_lines` in aosw, arubainstant, asa, efos, firelinuxos, fsos, ironware, mlnxos and perle to (@robertcheramy)
@@ -37,7 +38,6 @@ The format is based on [Keep a Changelog](https://keepachangelog.com/en/1.1.0/).
 - Added Vyos as individual model. Closes #3603 #3560 (@nicolasberens)
 - Add metadata to models. Closes #3249 (@robertcheramy)
 - perle: new model for console servers (@robertcheramy)
-- Add support for Ivanti Secure Connect ISA models (@candleflip)
 - Introduce [conditional commands](/docs/Ruby-API.md#conditional-commands) (@robertcheramy)
 
 ### Changed
