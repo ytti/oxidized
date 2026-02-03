@@ -3,9 +3,6 @@
 require 'json'
 
 class Ivanti < Oxidized::Model
-  prompt /$^/
-  comment '! '
-
   BINARY_CONFIG_PATH = '/api/v1/system/binary-configuration'
   REALM_AUTH_PATH    = '/api/v1/realm_auth'
   DEFAULT_REALM      = 'Users'
@@ -18,13 +15,10 @@ class Ivanti < Oxidized::Model
     @secure = true
     @port   = 443
 
-    login_user = vars(:username) || @node.auth[:username]
-    login_pass = vars(:password) || @node.auth[:password]
-    realm      = vars(:realm)    || DEFAULT_REALM
+    @username = @node.auth[:username]
+    @password = @node.auth[:password]
 
-    @username = login_user
-    @password = login_pass
-
+    realm   = vars(:realm) || DEFAULT_REALM
     payload = { realm: realm }.to_json
 
     response_body = post_http(
@@ -37,7 +31,7 @@ class Ivanti < Oxidized::Model
     begin
       login_data = JSON.parse(response_body)
     rescue JSON::ParserError => e
-      Oxidized.logger.error(
+      logger.error(
         "Failed to parse realm_auth response: #{e.class}: #{e.message}, body=#{response_body.inspect}"
       )
       raise Oxidized::OxidizedError, 'Ivanti: realm_auth returned invalid JSON'
@@ -46,7 +40,7 @@ class Ivanti < Oxidized::Model
     api_key = login_data['api_key']
 
     if api_key.nil? || api_key.empty?
-      Oxidized.logger.error(
+      logger.error(
         "Failed to obtain api_key from realm_auth, response=#{response_body.inspect}"
       )
       raise Oxidized::OxidizedError, 'Ivanti: realm_auth did not return valid api_key'
@@ -55,6 +49,6 @@ class Ivanti < Oxidized::Model
     @username = api_key
     @password = ''
 
-    Oxidized.logger.debug "Obtained api_key #{api_key[0, 4]}... (len=#{api_key.length})"
+    logger.debug "Obtained api_key #{api_key[0, 4]}... (len=#{api_key.length})"
   end
 end
