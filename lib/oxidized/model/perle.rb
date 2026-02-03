@@ -5,7 +5,8 @@ class Perle < Oxidized::Model
   comment '! '
 
   cmd :all do |cfg|
-    cfg.cut_both
+    cfg = cfg.cut_both
+    cfg.delete "\r"
   end
 
   cmd 'show version verbose' do |cfg|
@@ -17,16 +18,21 @@ class Perle < Oxidized::Model
   end
 
   cmd 'show interfaces transceiver' do |cfg|
-    out = []
-    cfg.each_line do |line|
-      out << line if line =~ /SFP Information/
-      out << line if line =~ /Vendor Name/
-      out << line if line =~ /Vendor Serial Number/
-    end
-    comment out.join + "\n"
+    cfg = cfg.keep_lines [
+      'SFP Information',
+      'Vendor Name',
+      'Vendor Serial Number'
+    ]
+    comment cfg + "\n"
   end
 
   cmd 'show running-config'
+
+  cmd :significant_changes do |cfg|
+    cfg.reject_lines [
+      /^tacacs-server key 7 \$0\$\S+==$/
+    ]
+  end
 
   cfg :ssh do
     post_login 'terminal length 0'

@@ -1,6 +1,8 @@
 class Apc_aos < Oxidized::Model # rubocop:disable Naming/ClassAndModuleCamelCase
   using Refinements
 
+  comment '; '
+
   cmd 'config.ini' do |cfg|
     cfg.gsub!(/^; Configuration file, generated on.*\n/, '')
     cfg

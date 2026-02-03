@@ -2,7 +2,6 @@ require_relative 'spec_helper'
 require 'refinements'
 
 describe Refinements do
-  let(:all) { ["1\n2\n3\n"] }
   using Refinements
 
   describe '#init' do
@@ -120,6 +119,50 @@ describe Refinements do
       # :@type is always nil
       _(str2.instance_variable_get(:@type)).must_be_nil
       _(str1.instance_variable_get(:@type)).must_be_nil
+    end
+  end
+
+  describe '#keep_lines' do
+    before do
+      @text = String.new(
+        "Line 1 example\n" \
+        "Line 2 apple banana...\n" \
+        "Line 3\n" \
+        "Line 4\n"
+      )
+    end
+    it 'keeps lines with mixed strings and regexps' do
+      cfg = @text.keep_lines [
+        'ine 1',
+        /\S\sbanana/,
+        'example'
+      ]
+      _(cfg).must_equal(
+        "Line 1 example\n" \
+        "Line 2 apple banana...\n"
+      )
+    end
+  end
+
+  describe '#reject_lines' do
+    before do
+      @text = String.new(
+        "Line 1 example\n" \
+        "Line 2 apple banana...\n" \
+        "Line 3\n" \
+        "Line 4\n"
+      )
+    end
+    it 'rejects lines with mixed strings and regexps' do
+      cfg = @text.reject_lines [
+        'ine 1',
+        /\S\sbanana/,
+        'example'
+      ]
+      _(cfg).must_equal(
+        "Line 3\n" \
+        "Line 4\n"
+      )
     end
   end
 end

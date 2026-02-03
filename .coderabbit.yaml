@@ -1,0 +1,21 @@
+reviews:
+  auto_review:
+    enabled: false
+    auto_incremental_review: false
+
+  commit_status: false
+  review_status: false
+  high_level_summary: false
+  suggested_labels: false
+  suggested_reviewers: false
+  changed_files_summary: false
+  poem: false
+  sequence_diagrams: false
+  estimate_code_review_effort: false
+  assess_linked_issues: false
+  related_issues: false
+  in_progress_fortune: false
+
+
+chat:
+  auto_reply: false

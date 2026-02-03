@@ -31,41 +31,44 @@ class ArubaInstant < Oxidized::Model
 
   # get software version
   cmd 'show version' do |cfg|
-    out = ''
-    cfg.each_line do |line|
-      next if line =~ /^(Switch|AP) uptime is /
-
-      next if line =~ /^Reboot Time and Cause/
-
-      out += line
-    end
-    comment out
+    cfg = cfg.reject_lines [
+      /^(Switch|AP) uptime is /,
+      /^Reboot Time and Cause/
+    ]
+    comment cfg
   end
 
   # Get serial number
   cmd 'show activate status' do |cfg|
-    out = ''
-    cfg.each_line do |line|
-      next if line =~ /^Activate /
-
-      next if line =~ /^Provision interval/
-
-      next if line =~ /^Cloud Activation Key/
-
-      out += line
-    end
-    comment out + "\n"
+    cfg = cfg.reject_lines [
+      /^Activate /,
+      /^Provision interval/,
+      /^Cloud Activation Key/
+    ]
+    comment cfg + "\n"
   end
 
   # Get controlled WLAN-AP
   cmd 'show aps' do |cfg|
     out = ''
     cfg.each_line do |line|
-      out += if line.match?(/^Name/)
-               line.sub(/^(Name +IP Address +).*(Type +IPv6 Address +).*(Serial #).*$/, '\1\2\3')
-             else
-               line.sub(/^(\S+ +\S+ +)(?:\S+ +){3}(\S+ +\S+ +)(?:\S+ +){2}(\S+) +.*$/, '\1\2\3')
-             end
+      out += line.sub(
+        /^(?'Name'(?:.+?|-{2,})\s{2,})  # \s{2,} = separator between columns
+          (?'IPv4'(?:
+            IP\ Address|-{2,}|          # Header
+            (?:\d+\.){3}\S+             # Match an IPv4 to catch AP-Names with two spaces
+          )\s{2,})
+          (?:(?:.+?|-{2,})\s{2,}){3}    # Ignore Mode, Spectrum, Clients
+          (?'Type'(?:.+?|-{2,})\s{2,})
+          (?'IPv6'(?:.+?|-{2,})\s{2,})
+          (?:(?:.+?|-{2,})\s{2,})       # Ignore Mesh Role
+          (?'Zone'(?:.+?|-{2,})\s{2,})
+          (?'Serial'(?:.+?|-{2,}))
+          \s{2,}                        # Last separator
+          .*$                           # Ignore the rest
+          /x,
+        '\k<Name>\k<IPv4>\k<Type>\k<IPv6>\k<Zone>\k<Serial>'
+      )
     end
     comment out + "\n"
   end

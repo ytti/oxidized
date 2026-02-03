@@ -33,6 +33,7 @@ service timestamps log datetime localtime show-timezone
 tty 1 mode line
 tty 2 mode line
 tty 3 mode line
+tacacs-server key 7 $0$AAAAAAAAAABBBBBBBBBBCCCCCCCCCC==
 ! (...)
 !
 ! ***** END of configuration *****

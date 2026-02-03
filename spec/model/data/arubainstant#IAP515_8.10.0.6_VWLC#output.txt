@@ -10,14 +10,15 @@
 # IAP Serial Number        :CNQHAAAAAM
 # 
 # 
-# 4 Access Points
+# 5 Access Points
 # ---------------
-# Name           IP Address      Type         IPv6 Address  Serial #
-# ----           ----------      ----         ------------  --------
-# OXRO-AP111117  10.100.42.237*  515(indoor)  --            CNQHAAAAAM
-# OXRO-AP122229  10.100.42.242   315(indoor)  --            CNK9AAAAAN
-# OXRO-AP111118  10.100.42.241   515(indoor)  --            CNQHAAAAAW
-# OXRO-AP122223  10.100.42.238   315(indoor)  --            CNH6AAAAA6
+# Name           IP Address      Type         IPv6 Address  Zone               Serial #
+# ----           ----------      ----         ------------  ----               --------
+# OXRO-AP111117  10.100.42.237*  515(indoor)  --            all,admin,finance  CNQHAAAAAM
+# OXRO-AP11(11)  10.100.42.236   515(indoor)  --            all,admin,finance  CNQHAAAABM
+# OXR -AP122229  10.100.42.242   315(indoor)  --            all,admin          CNK9AAAAAN
+# OXR -AP(1)118  10.100.42.241   515(indoor)  --            -                  CNQHAAAAAW
+# OXRO-AP12  23  10.100.42.238   315(indoor)  --            -                  CNH6AAAAA6
 # 
 version 8.10.0.0-8.10.0
 syslocation OXIDIZED
@@ -37,6 +38,7 @@ dynamic-radius-proxy
 allow-new-aps
 
 allowed-ap 54:d7:e3:00:11:22
+allowed-ap 54:d7:e3:00:11:23
 allowed-ap 54:d7:e3:00:11:24
 allowed-ap 7c:57:3c:00:11:2c
 allowed-ap e8:26:89:00:11:26

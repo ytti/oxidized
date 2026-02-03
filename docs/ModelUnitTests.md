@@ -4,6 +4,7 @@ effort to use. There are three different default unit tests for models:
 - [Device Simulation](ModelUnitTests.md#device-simulation)
 - [Device Prompt](ModelUnitTests.md#device-prompt)
 - [Secrets](ModelUnitTests.md#secrets)
+- [Significant Changes](ModelUnitTests.md#significant-changes)
 
 You only need to provide test files under [/spec/model/data](/spec/model/data),
 and the tests will be run automatically with `rake test`. See
@@ -185,6 +186,28 @@ pass:
   - 'snmp-server host 10.10.42.12 version 2c <secret removed> inform'
   - 'hash-mgmt-user oxidized password hash <secret removed>'
   - 'hash-mgmt-user rocks password hash <secret removed> usertype read-only'
+```
+
+## Significant Changes
+You can test if the model correctly detects significant changes from a YAML
+simulation file (`#simulation.yaml`) when run with variable
+`output_store_mode` set to `on_significant`.
+
+The output is checked against a file with the same 
+prefix as the yaml simulation file, but with the suffix
+`#significant_changes.yaml`.
+
+The `#significant_changes.yaml` file contains two sections with a list of
+strings or regular expressions to test:
+- pass: the test passes only if the output contains these strings (significant changes).
+- fail: the test fails if the output contain these strings (non-significant changes).
+
+```yaml
+pass:
+ - "! Processor ID: FCL2XXXXXXX"
+fail:
+ - "! Last configuration change at 13:57:08 CET Wed Mar 13 2024"
+ - "! NVRAM config last updated at 15:26:39 CET Wed Mar 13 2024 by oxidized"
 ```
 
 ## Custom tests

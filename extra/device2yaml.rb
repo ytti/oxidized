@@ -91,9 +91,8 @@ def yaml_output(prepend = '')
 
   prepend = @sequence_prepend_output + prepend
 
-  # as we want to prepend 'prepend' to each line, we need each_line and chomp
-  # chomp removes the trainling \n
-  @ssh_output.each_line(chomp: true) do |line|
+  # each_line(chomp: true) would remove \r\n, so we prefer split
+  @ssh_output.split("\n", -1).each do |line|
     # encode line and remove the first and the trailing double quote
     line = line.dump[1..-2]
     if firstline

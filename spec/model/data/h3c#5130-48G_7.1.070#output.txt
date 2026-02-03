@@ -1,0 +1,30 @@
+# HPE Comware Software, Version 7.1.070, Release 3507P18
+# Copyright (c) 2010-2023 Hewlett Packard Enterprise Development LP
+# Last reboot reason : Cold reboot
+# 
+# Boot image: flash:/5130ei-cmw710-boot-r3507p18.bin
+# Boot image version: 7.1.070, Release 3507P18
+#   Compiled Oct 12 2023 11:00:00
+# System image: flash:/5130ei-cmw710-system-r3507p18.bin
+# System image version: 7.1.070, Release 3507P18
+#   Compiled Oct 12 2023 11:00:00
+# 
+# 
+# Slot 1:
+# 5130-48G-PoE+-4SFP+ (370W) EI JG937A with 1 Processor
+# BOARD TYPE:         5130-48G-PoE+-4SFP+ (370W) EI JG937A
+# DRAM:               1024M bytes
+# FLASH:              512M bytes
+# PCB 1 Version:      VER.B
+# Bootrom Version:    147
+# CPLD 1 Version:     002
+# Release Version:    HPE 5130 48G PoE+ 4SFP+ EI JG937A-3507P18
+# Patch Version  :    None
+# Reboot Cause  :     ColdReboot
+# [SubSlot 0] 48GE+4SFP Plus
+# --- Fake output of display device ---
+# Configuration snippet from Issue #3673
+interface GigabitEthernet1/0/43
+ port link-mode bridge
+ description VER-NIC2-[TRUNK]
+# End of snippet

@@ -495,6 +495,13 @@ using the following substitution templates:
   - `%{minute}`: current minute, zero-padded
   - `%{second}`: current second, zero-padded
 
+Example:
+```yaml
+vars:
+  metadata: true
+  metadata_top: "%{comment}Model: %{model}; Device %{name} [%{ip}] at %{year}-%{month}-%{day} %{hour}:%{minute}:%{second}\n"
+```
+
 ### Customize metadata in models
 When writing a custom metadata for a model, you can default to
 `vars("metadata_*")` or the model default. You need to interpolate the strings
@@ -541,3 +548,32 @@ end
 ```
 
 Remove a previous metadata by setting it to `nil`.
+
+## Store configuration only on significant changes
+Some devices produce configuration changes even though nothing relevant
+changed. For example, Cisco IOS produces a `Last configuration change at` as
+soon as you exit config mode, and FortiOS encrypts its passwords with a
+different salt on every run.
+
+By setting the [variable](#options-credentials-vars-etc-precedence)
+`output_store_mode` to `on_significant`, you can tell Oxidized only to
+store the configuration when significant changes occurred. The default is to
+always store the configuration.
+```yaml
+vars:
+  output_store_mode: on_significant
+```
+
+For this to work, the model must implement `cmd :significant_changes`:
+```ruby
+  cmd :significant_changes do |cfg|
+    cfg.reject_lines [
+      'Last configuration change at',
+      'NVRAM config last updated at'
+    ]
+  end
+```
+
+Note that store on significant change only applies to the main configuration,
+and will not affect
+[output types](Creating-Models.md#advanced-feature-output-type)

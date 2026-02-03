@@ -86,7 +86,7 @@ class GithubRepo < Oxidized::Hook
   private
 
   def credentials(node)
-    Proc.new do |_url, username_from_url, _allowed_types| # rubocop:disable Style/Proc
+    proc do |_url, username_from_url, _allowed_types|
       git_user = cfg.has_key?('username') ? cfg.username : (username_from_url || 'git')
       if cfg.has_key?('password')
         logger.debug "Authenticating using username and password as '#{git_user}'"
@@ -96,6 +96,7 @@ class GithubRepo < Oxidized::Hook
         logger.debug "Authenticating using ssh keys as '#{git_user}'"
         rugged_sshkey(git_user: git_user, privkey: cfg.privatekey, pubkey: pubkey)
       elsif cfg.has_key?('remote_repo') &&
+            cfg.remote_repo.respond_to?(:has_key?) &&
             cfg.remote_repo.has_key?(node.group) &&
             cfg.remote_repo[node.group].has_key?('privatekey')
         pubkey = cfg.remote_repo[node.group].has_key?('publickey') ? cfg.remote_repo[node.group].publickey : nil
