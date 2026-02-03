@@ -59,8 +59,9 @@ module Oxidized
 
     def perform_http_request(path, method: :get, body: nil, extra_headers: {})
       uri = get_uri(path)
+      http_method = method.to_s.upcase
 
-      logger.debug "Making #{method.to_s.upcase} request to: #{uri}"
+      logger.debug "Making #{http_method} request to: #{uri}"
 
       ssl_verify = Oxidized.config.input.http.ssl_verify? ? OpenSSL::SSL::VERIFY_PEER : OpenSSL::SSL::VERIFY_NONE
 
@@ -71,7 +72,6 @@ module Oxidized
         uri.password = URI.encode_www_form_component(@password)
         logger.debug "Server requires Digest authentication"
 
-        http_method = method.to_s.upcase
         auth = Net::HTTP::DigestAuth.new.auth_header(uri, res['www-authenticate'], http_method)
         res = make_request(uri, ssl_verify, extra_headers.merge('Authorization' => auth),
                            method: method, body: body)
@@ -88,9 +88,13 @@ module Oxidized
 
     def make_request(uri, ssl_verify, extra_headers = {}, method: :get, body: nil)
       Net::HTTP.start(uri.hostname, uri.port, use_ssl: uri.scheme == "https", verify_mode: ssl_verify) do |http|
-        req_class = case method.to_s.downcase.to_sym
-                    when :post then Net::HTTP::Post
-                    else Net::HTTP::Get
+        req_class = if method == :post
+                      Net::HTTP::Post
+                    elsif method == :get
+                      Net::HTTP::Get
+                    else
+                      raise Oxidized::OxidizedError, "Unsupported HTTP method: #{method.inspect}. " \
+                                                     "Only :get and :post are supported"
                     end
         req = req_class.new(uri)
         @headers.merge(extra_headers).each { |header, value| req.add_field(header, value) }
