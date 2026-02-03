@@ -88,10 +88,10 @@ module Oxidized
 
     def make_request(uri, ssl_verify, extra_headers = {}, method: :get, body: nil)
       Net::HTTP.start(uri.hostname, uri.port, use_ssl: uri.scheme == "https", verify_mode: ssl_verify) do |http|
-        req_class = if method == :post
-                      Net::HTTP::Post
-                    elsif method == :get
+        req_class = if method == :get
                       Net::HTTP::Get
+                    elsif method == :post
+                      Net::HTTP::Post
                     else
                       raise Oxidized::OxidizedError, "Unsupported HTTP method: #{method.inspect}. " \
                                                      "Only :get and :post are supported"
