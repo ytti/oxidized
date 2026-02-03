@@ -1,0 +1,114 @@
+---
+init_prompt: |-
+    Welcome to TEST-10 @ Line 2
+    \r
+    TEST-10#
+commands:
+  - "terminal length 0\n": |-
+      terminal length 0\r
+      TEST-10#
+  - "show version verbose\n": |-
+      show version verbose\r
+      Perle IOLAN SCG Series Console Server, Version 6.2.G3, (Sun Sep 22 18:59:34\r
+      CEST 2024)\r
+      TEST-10#
+  - "show system hardware\n": |-
+      show system hardware\r
+      \r
+      System Hardware: \r
+       Hardware Revision............................. A\r
+       Part Number................................... 04011111\r
+       Model Name.................................... SCG50 RRU\r
+       Model Description............................. All in one Console server and\r
+      Ethernet router with modular serial interfaces, dual RJ45/SFP Combo Ethernet\r
+      Ports, RJ45/USB Console Management Port, Optional LTE, Wireless LAN (2.4/5\r
+      GHz), IPv4/IPv6 routing (RIP, OSPF, BGP) support, advanced data encryption and\r
+      user authentication, Dual Power Sources\r
+       Serial Number................................. 96-9640000000000\r
+        Base MAC Address............................. 00:80:d4:00:00:00\r
+       Slot 1 Serial Number ......................... 98-013700000001\r
+       Slot 2 Serial Number ......................... 98-013700000002\r
+       Slot 3 Serial Number ......................... 98-013700000003\r
+      TEST-10#
+  - "show interfaces transceiver\n": |-
+      show interfaces transceiver\r
+      \r
+      SFP Information for Ethernet1\r
+      \r
+         Vendor Name:                             FLEXOPTIX       \r
+         Vendor Serial Number:                    F7B0000         \r
+         Connector:                               LC\r
+         Nominal Signaling Rate:                  1300 Mbps\r
+         Link Reach for 9/125 Single Mode Fiber:  0 m\r
+         Link Reach for 50/125 OM2 Fiber:         550 m\r
+         Link Reach for 62.5/125 OM1 Fiber:       270 m\r
+         Fiber Wavelength:                        850 nm\r
+         Fiber Speed:                             1000M\r
+      \r
+         Status\r
+         ------\r
+         Module Temperature:                        35.949 C   (Normal)\r
+         Transceiver Transmit Supply Voltage:        3.326 V   (Normal)\r
+         Transceiver Transmit Bias Current:          8.350 mA  (Normal)\r
+         Transceiver Transmit Power:                -7.464 dBm (Normal)\r
+         Transceiver Receive Optical Power:         -6.929 dBm (Normal)\r
+      \r
+         Alarm and Warning Thresholds\r
+         ----------------------------\r
+      \r
+         Module Temperature\r
+         ------------------\r
+         High Alarm Threshold:         85.000 C  \r
+         High Warning Threshold:       80.000 C  \r
+         Low Warning Threshold:        -5.000 C  \r
+         Low Alarm Threshold:         -10.000 C  \r
+      \r
+         Transmit Supply Voltage\r
+         -----------------------\r
+         High Alarm Threshold:          3.600 V  \r
+         High Warning Threshold:        3.500 V  \r
+         Low Warning Threshold:         3.000 V  \r
+         Low Alarm Threshold:           2.900 V  \r
+      \r
+         Transmit Bias Current\r
+         ---------------------\r
+         High Alarm Threshold:         50.000 mA \r
+         High Warning Threshold:       40.000 mA \r
+         Low Warning Threshold:         1.000 mA \r
+         Low Alarm Threshold:           0.500 mA \r
+      \r
+         Transmit Power\r
+         --------------\r
+         High Alarm Threshold:         -1.000 dBm\r
+         High Warning Threshold:       -2.000 dBm\r
+         Low Warning Threshold:       -11.002 dBm\r
+         Low Alarm Threshold:         -12.000 dBm\r
+      \r
+         Receive Power\r
+         -------------\r
+         High Alarm Threshold:          1.000 dBm\r
+         High Warning Threshold:        0.000 dBm\r
+         Low Warning Threshold:       -18.996 dBm\r
+         Low Alarm Threshold:         -20.000 dBm\r
+      No SFP Information Available for Ethernet2\r
+      TEST-10#
+  - "show running-config\n": |-
+      show running-config\r
+      Building running-config . . . \r
+      ! \r
+      ! \r
+      version 6.2.G3\r
+      ! \r
+      !\r
+      service sequence-numbers\r
+      service timestamps log datetime localtime show-timezone\r
+      !\r
+      tty 1 mode line\r
+      tty 2 mode line\r
+      tty 3 mode line\r
+      ! (...)
+      !\r
+      ! ***** END of configuration *****\r
+      TEST-10#
+  - "exit\n": |-
+      exit\r
