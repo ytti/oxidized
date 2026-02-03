@@ -7,12 +7,12 @@ The format is based on [Keep a Changelog](https://keepachangelog.com/en/1.1.0/).
 ## [Unreleased]
 - VyOS now has it's own Model and should be used for supported VyOS versions instead of the Vyatta Model.
 - Aoscx has been reworked and may break old OS versions.
-- Add support for Ivanti Secure Connect ISA models (@candleflip)
 
 ### Added
 - Allow setting timeout on per node basis. Closes #3612 (@ytti)
 - Added Vyos as individual model. Closes #3603 #3560 (@nicolasberens)
 - Add metadata to models. Closes #3249 (@robertcheramy)
+- Add support for Ivanti Secure Connect ISA models (@candleflip)
 
 ### Changed
 - tnsr: added simulation data for older versions (@Vantomas)
