@@ -1,0 +1,862 @@
+show running-config
+!
+hostname testsw
+!
+logging console 6
+logging monitor 6
+logging trap 6
+!
+snmp-server location "test"
+ip dns name-server 2a00:e60::1
+ip dns name-server 2a00:e60::2
+spanning-tree mode rstp
+telnet-server enable
+ssh-server enable
+web-server enable all
+snmp-server group public v2c  read all write none
+snmp-server community public ro
+username admin privilege 15 password 5 $5$ssssssssssssssssssssssssssssssssssssssssssssssssssssssssssss
+username oxidized privilege 10 password 5 $6$sssssssssssssssssssssssssssssssssssssssssssssssssssssssssssssssssssssssssssssssssssssssssssssssssssssss
+ntp server host ntp.nynex.de
+logging server ipv6 2a00:e60:afff:2724::1
+lldp run
+lldp system-name testsw
+spanning-tree priority 36864
+spanning-tree enable
+!
+vlan database
+ vlan 2000  state enable
+ vlan 2200-2534  state enable
+!
+interface gigabitEthernet0/1
+ optical-transceiver monitor enable
+ no spanning-tree enable
+ switchport access vlan 2480
+ lldp agt-circuit-id globnal-circuit-id
+ lldp locally-assigned lldp-local
+ lldp-agent
+  no lldp tlv-select basic-mgmt system-capabilities  
+  no lldp tlv-select basic-mgmt system-description  
+  no lldp tlv-select basic-mgmt  management-address  
+ spanning-tree bpdu-filter enable
+!
+interface gigabitEthernet0/2
+ optical-transceiver monitor enable
+ no spanning-tree enable
+ switchport access vlan 2481
+ lldp agt-circuit-id globnal-circuit-id
+ lldp locally-assigned lldp-local
+ lldp-agent
+  no lldp tlv-select basic-mgmt system-capabilities  
+  no lldp tlv-select basic-mgmt system-description  
+  no lldp tlv-select basic-mgmt  management-address  
+ spanning-tree bpdu-filter enable
+!
+interface gigabitEthernet0/3
+ optical-transceiver monitor enable
+ no spanning-tree enable
+ switchport access vlan 2482
+ lldp agt-circuit-id globnal-circuit-id
+ lldp locally-assigned lldp-local
+ lldp-agent
+  no lldp tlv-select basic-mgmt system-capabilities  
+  no lldp tlv-select basic-mgmt system-description  
+  no lldp tlv-select basic-mgmt  management-address  
+ spanning-tree bpdu-filter enable
+!
+interface gigabitEthernet0/4
+ optical-transceiver monitor enable
+ no spanning-tree enable
+ switchport access vlan 2483
+ lldp agt-circuit-id globnal-circuit-id
+ lldp locally-assigned lldp-local
+ lldp-agent
+  no lldp tlv-select basic-mgmt system-capabilities  
+  no lldp tlv-select basic-mgmt system-description  
+  no lldp tlv-select basic-mgmt  management-address  
+ spanning-tree bpdu-filter enable
+!
+interface gigabitEthernet0/5
+ optical-transceiver monitor enable
+ no spanning-tree enable
+ switchport access vlan 2484
+ lldp agt-circuit-id globnal-circuit-id
+ lldp locally-assigned lldp-local
+ lldp-agent
+  no lldp tlv-select basic-mgmt system-capabilities  
+  no lldp tlv-select basic-mgmt system-description  
+  no lldp tlv-select basic-mgmt  management-address  
+ spanning-tree bpdu-filter enable
+!
+interface gigabitEthernet0/6
+ optical-transceiver monitor enable
+ no spanning-tree enable
+ switchport access vlan 2485
+ lldp agt-circuit-id globnal-circuit-id
+ lldp locally-assigned lldp-local
+ lldp-agent
+  no lldp tlv-select basic-mgmt system-capabilities  
+  no lldp tlv-select basic-mgmt system-description  
+  no lldp tlv-select basic-mgmt  management-address  
+ spanning-tree bpdu-filter enable
+!
+interface gigabitEthernet0/7
+ optical-transceiver monitor enable
+ no spanning-tree enable
+ switchport access vlan 2486
+ lldp agt-circuit-id globnal-circuit-id
+ lldp locally-assigned lldp-local
+ lldp-agent
+  no lldp tlv-select basic-mgmt system-capabilities  
+  no lldp tlv-select basic-mgmt system-description  
+  no lldp tlv-select basic-mgmt  management-address  
+ spanning-tree bpdu-filter enable
+!
+interface gigabitEthernet0/8
+ optical-transceiver monitor enable
+ no spanning-tree enable
+ switchport access vlan 2487
+ lldp agt-circuit-id globnal-circuit-id
+ lldp locally-assigned lldp-local
+ lldp-agent
+  no lldp tlv-select basic-mgmt system-capabilities  
+  no lldp tlv-select basic-mgmt system-description  
+  no lldp tlv-select basic-mgmt  management-address  
+ spanning-tree bpdu-filter enable
+!
+interface gigabitEthernet0/9
+ optical-transceiver monitor enable
+ no spanning-tree enable
+ switchport access vlan 2488
+ lldp agt-circuit-id globnal-circuit-id
+ lldp locally-assigned lldp-local
+ lldp-agent
+  no lldp tlv-select basic-mgmt system-capabilities  
+  no lldp tlv-select basic-mgmt system-description  
+  no lldp tlv-select basic-mgmt  management-address  
+ spanning-tree bpdu-filter enable
+!
+interface gigabitEthernet0/10
+ optical-transceiver monitor enable
+ no spanning-tree enable
+ switchport access vlan 2489
+ lldp agt-circuit-id globnal-circuit-id
+ lldp locally-assigned lldp-local
+ lldp-agent
+  no lldp tlv-select basic-mgmt system-capabilities  
+  no lldp tlv-select basic-mgmt system-description  
+  no lldp tlv-select basic-mgmt  management-address  
+ spanning-tree bpdu-filter enable
+!
+interface gigabitEthernet0/11
+ optical-transceiver monitor enable
+ no spanning-tree enable
+ switchport access vlan 2490
+ lldp agt-circuit-id globnal-circuit-id
+ lldp locally-assigned lldp-local
+ lldp-agent
+  no lldp tlv-select basic-mgmt system-capabilities  
+  no lldp tlv-select basic-mgmt system-description  
+  no lldp tlv-select basic-mgmt  management-address  
+ spanning-tree bpdu-filter enable
+!
+interface gigabitEthernet0/12
+ optical-transceiver monitor enable
+ no spanning-tree enable
+ switchport access vlan 2491
+ lldp agt-circuit-id globnal-circuit-id
+ lldp locally-assigned lldp-local
+ lldp-agent
+  no lldp tlv-select basic-mgmt system-capabilities  
+  no lldp tlv-select basic-mgmt system-description  
+  no lldp tlv-select basic-mgmt  management-address  
+ spanning-tree bpdu-filter enable
+!
+interface gigabitEthernet0/13
+ optical-transceiver monitor enable
+ no spanning-tree enable
+ switchport access vlan 2492
+ lldp agt-circuit-id globnal-circuit-id
+ lldp locally-assigned lldp-local
+ lldp-agent
+  no lldp tlv-select basic-mgmt system-capabilities  
+  no lldp tlv-select basic-mgmt system-description  
+  no lldp tlv-select basic-mgmt  management-address  
+ spanning-tree bpdu-filter enable
+!
+interface gigabitEthernet0/14
+ optical-transceiver monitor enable
+ no spanning-tree enable
+ switchport access vlan 2493
+ lldp agt-circuit-id globnal-circuit-id
+ lldp locally-assigned lldp-local
+ lldp-agent
+  no lldp tlv-select basic-mgmt system-capabilities  
+  no lldp tlv-select basic-mgmt system-description  
+  no lldp tlv-select basic-mgmt  management-address  
+ spanning-tree bpdu-filter enable
+!
+interface gigabitEthernet0/15
+ optical-transceiver monitor enable
+ no spanning-tree enable
+ switchport access vlan 2494
+ lldp agt-circuit-id globnal-circuit-id
+ lldp locally-assigned lldp-local
+ lldp-agent
+  no lldp tlv-select basic-mgmt system-capabilities  
+  no lldp tlv-select basic-mgmt system-description  
+  no lldp tlv-select basic-mgmt  management-address  
+ spanning-tree bpdu-filter enable
+!
+interface gigabitEthernet0/16
+ optical-transceiver monitor enable
+ no spanning-tree enable
+ switchport access vlan 2495
+ lldp agt-circuit-id globnal-circuit-id
+ lldp locally-assigned lldp-local
+ lldp-agent
+  no lldp tlv-select basic-mgmt system-capabilities  
+  no lldp tlv-select basic-mgmt system-description  
+  no lldp tlv-select basic-mgmt  management-address  
+ spanning-tree bpdu-filter enable
+!
+interface gigabitEthernet0/17
+ optical-transceiver monitor enable
+ no spanning-tree enable
+ switchport access vlan 2496
+ lldp agt-circuit-id globnal-circuit-id
+ lldp locally-assigned lldp-local
+ lldp-agent
+  no lldp tlv-select basic-mgmt system-capabilities  
+  no lldp tlv-select basic-mgmt system-description  
+  no lldp tlv-select basic-mgmt  management-address  
+ spanning-tree bpdu-filter enable
+!
+interface gigabitEthernet0/18
+ optical-transceiver monitor enable
+ no spanning-tree enable
+ switchport access vlan 2497
+ lldp agt-circuit-id globnal-circuit-id
+ lldp locally-assigned lldp-local
+ lldp-agent
+  no lldp tlv-select basic-mgmt system-capabilities  
+  no lldp tlv-select basic-mgmt system-description  
+  no lldp tlv-select basic-mgmt  management-address  
+ spanning-tree bpdu-filter enable
+!
+interface gigabitEthernet0/19
+ optical-transceiver monitor enable
+ no spanning-tree enable
+ switchport access vlan 2498
+ lldp agt-circuit-id globnal-circuit-id
+ lldp locally-assigned lldp-local
+ lldp-agent
+  no lldp tlv-select basic-mgmt system-capabilities  
+  no lldp tlv-select basic-mgmt system-description  
+  no lldp tlv-select basic-mgmt  management-address  
+ spanning-tree bpdu-filter enable
+!
+interface gigabitEthernet0/20
+ optical-transceiver monitor enable
+ no spanning-tree enable
+ switchport access vlan 2499
+ lldp agt-circuit-id globnal-circuit-id
+ lldp locally-assigned lldp-local
+ lldp-agent
+  no lldp tlv-select basic-mgmt system-capabilities  
+  no lldp tlv-select basic-mgmt system-description  
+  no lldp tlv-select basic-mgmt  management-address  
+ spanning-tree bpdu-filter enable
+!
+interface gigabitEthernet0/21
+ optical-transceiver monitor enable
+ no spanning-tree enable
+ switchport access vlan 2500
+ lldp agt-circuit-id globnal-circuit-id
+ lldp locally-assigned lldp-local
+ lldp-agent
+  no lldp tlv-select basic-mgmt system-capabilities  
+  no lldp tlv-select basic-mgmt system-description  
+  no lldp tlv-select basic-mgmt  management-address  
+ spanning-tree bpdu-filter enable
+!
+interface gigabitEthernet0/22
+ optical-transceiver monitor enable
+ no spanning-tree enable
+ switchport access vlan 2501
+ lldp agt-circuit-id globnal-circuit-id
+ lldp locally-assigned lldp-local
+ lldp-agent
+  no lldp tlv-select basic-mgmt system-capabilities  
+  no lldp tlv-select basic-mgmt system-description  
+  no lldp tlv-select basic-mgmt  management-address  
+ spanning-tree bpdu-filter enable
+!
+interface gigabitEthernet0/23
+ optical-transceiver monitor enable
+ no spanning-tree enable
+ switchport access vlan 2502
+ lldp agt-circuit-id globnal-circuit-id
+ lldp locally-assigned lldp-local
+ lldp-agent
+  no lldp tlv-select basic-mgmt system-capabilities  
+  no lldp tlv-select basic-mgmt system-description  
+  no lldp tlv-select basic-mgmt  management-address  
+ spanning-tree bpdu-filter enable
+!
+interface gigabitEthernet0/24
+ optical-transceiver monitor enable
+ no spanning-tree enable
+ switchport access vlan 2503
+ lldp agt-circuit-id globnal-circuit-id
+ lldp locally-assigned lldp-local
+ lldp-agent
+  no lldp tlv-select basic-mgmt system-capabilities  
+  no lldp tlv-select basic-mgmt system-description  
+  no lldp tlv-select basic-mgmt  management-address  
+ spanning-tree bpdu-filter enable
+!
+interface tengigabitEthernet0/25
+ switchport mode trunk
+ lldp-agent
+!
+interface tengigabitEthernet0/26
+ switchport mode trunk
+ lldp-agent
+!
+interface tengigabitEthernet0/27
+ switchport mode trunk
+ lldp-agent
+!
+interface tengigabitEthernet0/28
+ switchport mode trunk
+ lldp-agent
+!
+interface vlan2000
+ ipv6 address 2a00:e60:afff:278b::2ebe:1/64
+!
+ipv6 route ::/0 2a00:e60:afff:278b::1
+!
+line con 0
+line vty 0 7
+!
+end
+
+! show version
+!  Software Version: hotfix/7.4.7 (r1540 af525c9)
+!  Release Date: 2025-12-11 17:09:22
+!  System MAC Address: fc:cd:2f:d0:4f:db
+!  PID: STC-4168XGGCM, Hardware Version: V1.1, Serial Number: 202509160001
+!  Vendor oid: 56166
+! show interface optical-transceiver info
+! ###################################################
+!                     GiE0/1   
+! Transceiver is absent!
+! ###################################################
+!                     GiE0/2   
+! Transceiver is absent!
+! ###################################################
+!                     GiE0/3   
+! Transceiver is absent!
+! ###################################################
+!                     GiE0/4   
+! Transceiver is absent!
+! ###################################################
+!                     GiE0/5   
+! +-------------------------------------------------+
+! |Transceiver base information:                    |
+! +-------------------------------------------------+
+! |Transceiver Type    :  1000BASE-LX-SFP           |
+! |Connector Type      :  LC                        |
+! |Wavelength(nm)      :  1490                      |
+! |Link Length     :                                |
+! |    SMF fiber                                    |
+! |        -- 10km                                  |
+! |Digital Diagnostic Monitoring  : YES             |
+! |Vendor Serial Number           : YXF20250509A0612|
+! +-------------------------------------------------+
+! |Transceiver vendor information:                  |
+! +-------------------------------------------------+
+! |Vendor Name         : fiberONE                   |
+! |Vendor Part Number  : SFP-1G-BX10-D              |
+! |Vendor Revision     :                            |
+! |Manufacturing Date  : 2025-05-09                 |
+! |Encoding            : 8B10B                      |
+! +-------------------------------------------------+
+! ###################################################
+!                     GiE0/6   
+! +-------------------------------------------------+
+! |Transceiver base information:                    |
+! +-------------------------------------------------+
+! |Transceiver Type    :  1000BASE-LX-SFP           |
+! |Connector Type      :  LC                        |
+! |Wavelength(nm)      :  1490                      |
+! |Link Length     :                                |
+! |    SMF fiber                                    |
+! |        -- 10km                                  |
+! |Digital Diagnostic Monitoring  : YES             |
+! |Vendor Serial Number           : YXF20250509A0365|
+! +-------------------------------------------------+
+! |Transceiver vendor information:                  |
+! +-------------------------------------------------+
+! |Vendor Name         : fiberONE                   |
+! |Vendor Part Number  : SFP-1G-BX10-D              |
+! |Vendor Revision     :                            |
+! |Manufacturing Date  : 2025-05-09                 |
+! |Encoding            : 8B10B                      |
+! +-------------------------------------------------+
+! ###################################################
+!                     GiE0/7   
+! +-------------------------------------------------+
+! |Transceiver base information:                    |
+! +-------------------------------------------------+
+! |Transceiver Type    :  1000BASE-LX-SFP           |
+! |Connector Type      :  LC                        |
+! |Wavelength(nm)      :  1490                      |
+! |Link Length     :                                |
+! |    SMF fiber                                    |
+! |        -- 10km                                  |
+! |Digital Diagnostic Monitoring  : YES             |
+! |Vendor Serial Number           : YXF20250509A0619|
+! +-------------------------------------------------+
+! |Transceiver vendor information:                  |
+! +-------------------------------------------------+
+! |Vendor Name         : fiberONE                   |
+! |Vendor Part Number  : SFP-1G-BX10-D              |
+! |Vendor Revision     :                            |
+! |Manufacturing Date  : 2025-05-09                 |
+! |Encoding            : 8B10B                      |
+! +-------------------------------------------------+
+! ###################################################
+!                     GiE0/8   
+! +-------------------------------------------------+
+! |Transceiver base information:                    |
+! +-------------------------------------------------+
+! |Transceiver Type    :  1000BASE-LX-SFP           |
+! |Connector Type      :  LC                        |
+! |Wavelength(nm)      :  1490                      |
+! |Link Length     :                                |
+! |    SMF fiber                                    |
+! |        -- 10km                                  |
+! |Digital Diagnostic Monitoring  : YES             |
+! |Vendor Serial Number           : YXF20250509A0620|
+! +-------------------------------------------------+
+! |Transceiver vendor information:                  |
+! +-------------------------------------------------+
+! |Vendor Name         : fiberONE                   |
+! |Vendor Part Number  : SFP-1G-BX10-D              |
+! |Vendor Revision     :                            |
+! |Manufacturing Date  : 2025-05-09                 |
+! |Encoding            : 8B10B                      |
+! +-------------------------------------------------+
+! ###################################################
+!                     GiE0/9   
+! +-------------------------------------------------+
+! |Transceiver base information:                    |
+! +-------------------------------------------------+
+! |Transceiver Type    :  1000BASE-LX-SFP           |
+! |Connector Type      :  LC                        |
+! |Wavelength(nm)      :  1490                      |
+! |Link Length     :                                |
+! |    SMF fiber                                    |
+! |        -- 20km                                  |
+! |    62.5/125 um OM1 fiber                        |
+! |        -- 550m                                  |
+! |    50/125 um OM2 fiber                          |
+! |        -- 550m                                  |
+! |Digital Diagnostic Monitoring  : YES             |
+! |Vendor Serial Number           : FO230711S390    |
+! +-------------------------------------------------+
+! |Transceiver vendor information:                  |
+! +-------------------------------------------------+
+! |Vendor Name         : fiberONE                   |
+! |Vendor Part Number  : SFP-GE-BX20-D(PE           |
+! |Vendor Revision     : 0000                       |
+! |Manufacturing Date  : 2023-07-11                 |
+! |Encoding            : 8B10B                      |
+! +-------------------------------------------------+
+! ###################################################
+!                     GiE0/10  
+! +-------------------------------------------------+
+! |Transceiver base information:                    |
+! +-------------------------------------------------+
+! |Transceiver Type    :  1000BASE-LX-SFP           |
+! |Connector Type      :  LC                        |
+! |Wavelength(nm)      :  1490                      |
+! |Link Length     :                                |
+! |    SMF fiber                                    |
+! |        -- 10km                                  |
+! |Digital Diagnostic Monitoring  : YES             |
+! |Vendor Serial Number           : YXF20250509A0846|
+! +-------------------------------------------------+
+! |Transceiver vendor information:                  |
+! +-------------------------------------------------+
+! |Vendor Name         : fiberONE                   |
+! |Vendor Part Number  : SFP-1G-BX10-D              |
+! |Vendor Revision     :                            |
+! |Manufacturing Date  : 2025-05-09                 |
+! |Encoding            : 8B10B                      |
+! +-------------------------------------------------+
+! ###################################################
+!                     GiE0/11  
+! +-------------------------------------------------+
+! |Transceiver base information:                    |
+! +-------------------------------------------------+
+! |Transceiver Type    :  1000BASE-LX-SFP           |
+! |Connector Type      :  LC                        |
+! |Wavelength(nm)      :  1490                      |
+! |Link Length     :                                |
+! |    SMF fiber                                    |
+! |        -- 20km                                  |
+! |Digital Diagnostic Monitoring  : YES             |
+! |Vendor Serial Number           : FO240218S0650   |
+! +-------------------------------------------------+
+! |Transceiver vendor information:                  |
+! +-------------------------------------------------+
+! |Vendor Name         : fiberONE                   |
+! |Vendor Part Number  : SFP-GE-BX20-D(PE           |
+! |Vendor Revision     : 1.0                        |
+! |Manufacturing Date  : 2024-02-18                 |
+! |Encoding            : 8B10B                      |
+! +-------------------------------------------------+
+! ###################################################
+!                     GiE0/12  
+! +-------------------------------------------------+
+! |Transceiver base information:                    |
+! +-------------------------------------------------+
+! |Transceiver Type    :  1000BASE-LX-SFP           |
+! |Connector Type      :  LC                        |
+! |Wavelength(nm)      :  1490                      |
+! |Link Length     :                                |
+! |    SMF fiber                                    |
+! |        -- 10km                                  |
+! |Digital Diagnostic Monitoring  : YES             |
+! |Vendor Serial Number           : YXF20250509A0906|
+! +-------------------------------------------------+
+! |Transceiver vendor information:                  |
+! +-------------------------------------------------+
+! |Vendor Name         : fiberONE                   |
+! |Vendor Part Number  : SFP-1G-BX10-D              |
+! |Vendor Revision     :                            |
+! |Manufacturing Date  : 2025-05-09                 |
+! |Encoding            : 8B10B                      |
+! +-------------------------------------------------+
+! ###################################################
+!                     GiE0/13  
+! +-------------------------------------------------+
+! |Transceiver base information:                    |
+! +-------------------------------------------------+
+! |Transceiver Type    :  1000BASE-LX-SFP           |
+! |Connector Type      :  LC                        |
+! |Wavelength(nm)      :  1490                      |
+! |Link Length     :                                |
+! |    SMF fiber                                    |
+! |        -- 10km                                  |
+! |Digital Diagnostic Monitoring  : YES             |
+! |Vendor Serial Number           : YXF20250509A0907|
+! +-------------------------------------------------+
+! |Transceiver vendor information:                  |
+! +-------------------------------------------------+
+! |Vendor Name         : fiberONE                   |
+! |Vendor Part Number  : SFP-1G-BX10-D              |
+! |Vendor Revision     :                            |
+! |Manufacturing Date  : 2025-05-09                 |
+! |Encoding            : 8B10B                      |
+! +-------------------------------------------------+
+! ###################################################
+!                     GiE0/14  
+! +-------------------------------------------------+
+! |Transceiver base information:                    |
+! +-------------------------------------------------+
+! |Transceiver Type    :  1000BASE-LX-SFP           |
+! |Connector Type      :  LC                        |
+! |Wavelength(nm)      :  1490                      |
+! |Link Length     :                                |
+! |    SMF fiber                                    |
+! |        -- 10km                                  |
+! |Digital Diagnostic Monitoring  : YES             |
+! |Vendor Serial Number           : YXF20250509A0908|
+! +-------------------------------------------------+
+! |Transceiver vendor information:                  |
+! +-------------------------------------------------+
+! |Vendor Name         : fiberONE                   |
+! |Vendor Part Number  : SFP-1G-BX10-D              |
+! |Vendor Revision     :                            |
+! |Manufacturing Date  : 2025-05-09                 |
+! |Encoding            : 8B10B                      |
+! +-------------------------------------------------+
+! ###################################################
+!                     GiE0/15  
+! +-------------------------------------------------+
+! |Transceiver base information:                    |
+! +-------------------------------------------------+
+! |Transceiver Type    :  1000BASE-LX-SFP           |
+! |Connector Type      :  LC                        |
+! |Wavelength(nm)      :  1490                      |
+! |Link Length     :                                |
+! |    SMF fiber                                    |
+! |        -- 10km                                  |
+! |Digital Diagnostic Monitoring  : YES             |
+! |Vendor Serial Number           : YXF20250509A0901|
+! +-------------------------------------------------+
+! |Transceiver vendor information:                  |
+! +-------------------------------------------------+
+! |Vendor Name         : fiberONE                   |
+! |Vendor Part Number  : SFP-1G-BX10-D              |
+! |Vendor Revision     :                            |
+! |Manufacturing Date  : 2025-05-09                 |
+! |Encoding            : 8B10B                      |
+! +-------------------------------------------------+
+! ###################################################
+!                     GiE0/16  
+! +-------------------------------------------------+
+! |Transceiver base information:                    |
+! +-------------------------------------------------+
+! |Transceiver Type    :  1000BASE-LX-SFP           |
+! |Connector Type      :  LC                        |
+! |Wavelength(nm)      :  1490                      |
+! |Link Length     :                                |
+! |    SMF fiber                                    |
+! |        -- 10km                                  |
+! |Digital Diagnostic Monitoring  : YES             |
+! |Vendor Serial Number           : YXF20250509A0902|
+! +-------------------------------------------------+
+! |Transceiver vendor information:                  |
+! +-------------------------------------------------+
+! |Vendor Name         : fiberONE                   |
+! |Vendor Part Number  : SFP-1G-BX10-D              |
+! |Vendor Revision     :                            |
+! |Manufacturing Date  : 2025-05-09                 |
+! |Encoding            : 8B10B                      |
+! +-------------------------------------------------+
+! ###################################################
+!                     GiE0/17  
+! +-------------------------------------------------+
+! |Transceiver base information:                    |
+! +-------------------------------------------------+
+! |Transceiver Type    :  1000BASE-LX-SFP           |
+! |Connector Type      :  LC                        |
+! |Wavelength(nm)      :  1490                      |
+! |Link Length     :                                |
+! |    SMF fiber                                    |
+! |        -- 10km                                  |
+! |Digital Diagnostic Monitoring  : YES             |
+! |Vendor Serial Number           : YXF20250509A0909|
+! +-------------------------------------------------+
+! |Transceiver vendor information:                  |
+! +-------------------------------------------------+
+! |Vendor Name         : fiberONE                   |
+! |Vendor Part Number  : SFP-1G-BX10-D              |
+! |Vendor Revision     :                            |
+! |Manufacturing Date  : 2025-05-09                 |
+! |Encoding            : 8B10B                      |
+! +-------------------------------------------------+
+! ###################################################
+!                     GiE0/18  
+! +-------------------------------------------------+
+! |Transceiver base information:                    |
+! +-------------------------------------------------+
+! |Transceiver Type    :  1000BASE-LX-SFP           |
+! |Connector Type      :  LC                        |
+! |Wavelength(nm)      :  1490                      |
+! |Link Length     :                                |
+! |    SMF fiber                                    |
+! |        -- 10km                                  |
+! |Digital Diagnostic Monitoring  : YES             |
+! |Vendor Serial Number           : YXF20250509A0903|
+! +-------------------------------------------------+
+! |Transceiver vendor information:                  |
+! +-------------------------------------------------+
+! |Vendor Name         : fiberONE                   |
+! |Vendor Part Number  : SFP-1G-BX10-D              |
+! |Vendor Revision     :                            |
+! |Manufacturing Date  : 2025-05-09                 |
+! |Encoding            : 8B10B                      |
+! +-------------------------------------------------+
+! ###################################################
+!                     GiE0/19  
+! +-------------------------------------------------+
+! |Transceiver base information:                    |
+! +-------------------------------------------------+
+! |Transceiver Type    :  1000BASE-LX-SFP           |
+! |Connector Type      :  LC                        |
+! |Wavelength(nm)      :  1490                      |
+! |Link Length     :                                |
+! |    SMF fiber                                    |
+! |        -- 10km                                  |
+! |Digital Diagnostic Monitoring  : YES             |
+! |Vendor Serial Number           : YXF20250509A0904|
+! +-------------------------------------------------+
+! |Transceiver vendor information:                  |
+! +-------------------------------------------------+
+! |Vendor Name         : fiberONE                   |
+! |Vendor Part Number  : SFP-1G-BX10-D              |
+! |Vendor Revision     :                            |
+! |Manufacturing Date  : 2025-05-09                 |
+! |Encoding            : 8B10B                      |
+! +-------------------------------------------------+
+! ###################################################
+!                     GiE0/20  
+! +-------------------------------------------------+
+! |Transceiver base information:                    |
+! +-------------------------------------------------+
+! |Transceiver Type    :  1000BASE-LX-SFP           |
+! |Connector Type      :  LC                        |
+! |Wavelength(nm)      :  1490                      |
+! |Link Length     :                                |
+! |    SMF fiber                                    |
+! |        -- 10km                                  |
+! |Digital Diagnostic Monitoring  : YES             |
+! |Vendor Serial Number           : YXF20250509A0905|
+! +-------------------------------------------------+
+! |Transceiver vendor information:                  |
+! +-------------------------------------------------+
+! |Vendor Name         : fiberONE                   |
+! |Vendor Part Number  : SFP-1G-BX10-D              |
+! |Vendor Revision     :                            |
+! |Manufacturing Date  : 2025-05-09                 |
+! |Encoding            : 8B10B                      |
+! +-------------------------------------------------+
+! ###################################################
+!                     GiE0/21  
+! +-------------------------------------------------+
+! |Transceiver base information:                    |
+! +-------------------------------------------------+
+! |Transceiver Type    :  1000BASE-LX-SFP           |
+! |Connector Type      :  LC                        |
+! |Wavelength(nm)      :  1490                      |
+! |Link Length     :                                |
+! |    SMF fiber                                    |
+! |        -- 10km                                  |
+! |Digital Diagnostic Monitoring  : YES             |
+! |Vendor Serial Number           : YXF20250509A0910|
+! +-------------------------------------------------+
+! |Transceiver vendor information:                  |
+! +-------------------------------------------------+
+! |Vendor Name         : fiberONE                   |
+! |Vendor Part Number  : SFP-1G-BX10-D              |
+! |Vendor Revision     :                            |
+! |Manufacturing Date  : 2025-05-09                 |
+! |Encoding            : 8B10B                      |
+! +-------------------------------------------------+
+! ###################################################
+!                     GiE0/22  
+! +-------------------------------------------------+
+! |Transceiver base information:                    |
+! +-------------------------------------------------+
+! |Transceiver Type    :  1000BASE-LX-SFP           |
+! |Connector Type      :  LC                        |
+! |Wavelength(nm)      :  1490                      |
+! |Link Length     :                                |
+! |    SMF fiber                                    |
+! |        -- 10km                                  |
+! |Digital Diagnostic Monitoring  : YES             |
+! |Vendor Serial Number           : YXF20250509A0960|
+! +-------------------------------------------------+
+! |Transceiver vendor information:                  |
+! +-------------------------------------------------+
+! |Vendor Name         : fiberONE                   |
+! |Vendor Part Number  : SFP-1G-BX10-D              |
+! |Vendor Revision     :                            |
+! |Manufacturing Date  : 2025-05-09                 |
+! |Encoding            : 8B10B                      |
+! +-------------------------------------------------+
+! ###################################################
+!                     GiE0/23  
+! +-------------------------------------------------+
+! |Transceiver base information:                    |
+! +-------------------------------------------------+
+! |Transceiver Type    :  1000BASE-LX-SFP           |
+! |Connector Type      :  LC                        |
+! |Wavelength(nm)      :  1490                      |
+! |Link Length     :                                |
+! |    SMF fiber                                    |
+! |        -- 10km                                  |
+! |Digital Diagnostic Monitoring  : YES             |
+! |Vendor Serial Number           : YXF20250509A0959|
+! +-------------------------------------------------+
+! |Transceiver vendor information:                  |
+! +-------------------------------------------------+
+! |Vendor Name         : fiberONE                   |
+! |Vendor Part Number  : SFP-1G-BX10-D              |
+! |Vendor Revision     :                            |
+! |Manufacturing Date  : 2025-05-09                 |
+! |Encoding            : 8B10B                      |
+! +-------------------------------------------------+
+! ###################################################
+!                     GiE0/24  
+! +-------------------------------------------------+
+! |Transceiver base information:                    |
+! +-------------------------------------------------+
+! |Transceiver Type    :  1000BASE-LX-SFP           |
+! |Connector Type      :  LC                        |
+! |Wavelength(nm)      :  1490                      |
+! |Link Length     :                                |
+! |    SMF fiber                                    |
+! |        -- 10km                                  |
+! |Digital Diagnostic Monitoring  : YES             |
+! |Vendor Serial Number           : YXF20250509A0957|
+! +-------------------------------------------------+
+! |Transceiver vendor information:                  |
+! +-------------------------------------------------+
+! |Vendor Name         : fiberONE                   |
+! |Vendor Part Number  : SFP-1G-BX10-D              |
+! |Vendor Revision     :                            |
+! |Manufacturing Date  : 2025-05-09                 |
+! |Encoding            : 8B10B                      |
+! +-------------------------------------------------+
+! ###################################################
+!                     TeE0/25  
+! +-------------------------------------------------+
+! |Transceiver base information:                    |
+! +-------------------------------------------------+
+! |Transceiver Type    :  25GBASE-CR-SFP28          |
+! |Connector Type      :  Copper Pigtail            |
+! |Wavelength(nm)      :  unspecified               |
+! |Link Length     :                                |
+! |    Cable Assembly copper                        |
+! |        -- 1m                                    |
+! |Digital Diagnostic Monitoring  : NO              |
+! |Vendor Serial Number           : YXF20250509A1084|
+! +-------------------------------------------------+
+! |Transceiver vendor information:                  |
+! +-------------------------------------------------+
+! |Vendor Name         : fiberONE                   |
+! |Vendor Part Number  : SFP-25G-PC0.2              |
+! |Vendor Revision     : A                          |
+! |Manufacturing Date  : 2025-05-09                 |
+! |Encoding            : Unspecified                |
+! +-------------------------------------------------+
+! ###################################################
+!                     TeE0/26  
+! Transceiver is absent!
+! ###################################################
+!                     TeE0/27  
+! +-------------------------------------------------+
+! |Transceiver base information:                    |
+! +-------------------------------------------------+
+! |Transceiver Type    :  25GBASE-CR-SFP28          |
+! |Connector Type      :  Copper Pigtail            |
+! |Wavelength(nm)      :  unspecified               |
+! |Link Length     :                                |
+! |    Cable Assembly copper                        |
+! |        -- 1m                                    |
+! |Digital Diagnostic Monitoring  : NO              |
+! |Vendor Serial Number           : YXF20250509A1073|
+! +-------------------------------------------------+
+! |Transceiver vendor information:                  |
+! +-------------------------------------------------+
+! |Vendor Name         : fiberONE                   |
+! |Vendor Part Number  : SFP-25G-PC0.2              |
+! |Vendor Revision     : A                          |
+! |Manufacturing Date  : 2025-05-09                 |
+! |Encoding            : Unspecified                |
+! +-------------------------------------------------+
+! ###################################################
+!                     TeE0/28  
+! Transceiver is absent!
+! show power
+! Index           Type(AC/DC/Battery)     State                   
+! ----------------------------------------------------
+! 1               AC                      Active                  
+! 2               AC                      Active                  
