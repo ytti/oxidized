@@ -1,0 +1,112 @@
+---
+init_prompt: |-
+    FortiMgr2 #\x20
+commands:
+  - "get system status\n": |-
+      get system status\r\r
+      Platform Type                   : FMG-VM64\r
+      Platform Full Name              : FortiManager-VM64\r
+      Version                         : v7.4.6-build2588 241218 (GA.M)\r
+      Serial Number                   : FMG-VMTM20000000\r
+      BIOS version                    : 04000002\r
+      Hostname                        : FortiMgr2\r
+      Max Number of Admin Domains     : 10\r
+      Max Number of Device Groups     : 10\r
+      Admin Domain Configuration      : Enabled\r
+      FIPS Mode                       : Disabled\r
+      HA Mode                         : Stand Alone\r
+      Branch Point                    : 2588\r
+      Release Version Information     : GA.M\r
+      Current Time                    : Thu Feb 12 12:42:42 CET 2026\r
+      Daylight Time Saving            : Yes\r
+      Time Zone                       : (GMT+1:00) Amsterdam, Berlin, Bern, Rome, Stockholm, Vienna.\r
+      x86-64 Applications             : Yes\r
+      Disk Usage                      : Free 442.42GB, Total 490.12GB\r
+      File System                     : Ext4\r
+      License Status                  : Valid\r
+      Image Signature                 : Image is GA Certified\r
+      \r
+      FortiMgr2 #\x20
+  - "show\n": |-
+      show\r\r
+      #config-version=FMG-VM64-7.4-FW-build2588-241212\r
+      #branch_pt=2588\r
+      config system global\r
+          set adom-status enable\r
+          set hostname \"FortiMgr2\"\r
+          set latitude \"42.42\"\r
+          set longitude \"12.12\"\r
+          set object-revision-mandatory-note disable\r
+          set timezone 26\r
+      end\r
+      config system interface\r
+          edit \"port1\"\r
+              set ip 192.0.2.42 255.255.255.0\r
+              set allowaccess ping https ssh snmp webservice\r
+              set type physical\r
+          next\r
+          edit \"port2\"\r
+              set status disable\r
+              set type physical\r
+          next\r
+      end\r
+      config system snmp user\r
+          edit \"snmpuser\"\r
+              set notify-hosts 192.0.2.5 192.0.2.6\r
+              set security-level auth-priv\r
+              set auth-pwd ENC AAAAAAAAAABBBBBBBBBBCCCCCCCCCC\r
+              set priv-pwd ENC AAAAAAAAAABBBBBBBBBBCCCCCCCCCC\r
+          next\r
+      end\r
+      config system route\r
+          edit 1\r
+              set device \"port1\"\r
+              set gateway 192.0.2.1\r
+          next\r
+      end\r
+      config system certificate local\r
+          edit \"certificate\"\r
+              set password ENC AAAAAAAAAABBBBBBBBBBCCCCCCCCCC\r
+              set comment \"Created by generating certificate\"\r
+              set private-key \"-----BEGIN ENCRYPTED PRIVATE KEY-----\r
+      XXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXX\r
+      AAAAAAAAAABBBBBBBBBBCCCCCCCCCCXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXX\r
+      XXXXXXXXXXXXXXXXXXXXXX==\r
+      -----END ENCRYPTED PRIVATE KEY-----\"\r
+              set certificate \"-----BEGIN CERTIFICATE-----\r
+      XXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXX\r
+      XXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXX\r
+      XXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXX=\r
+      -----END CERTIFICATE-----\"\r
+          next\r
+      end\r
+      config system backup all-settings\r
+          set status enable\r
+          set server \"192.0.2.12\"\r
+          set user \"backupuser\"\r
+          set directory \"/backup/\"\r
+          set week_days sunday monday tuesday wednesday thursday friday saturday\r
+          set time \"23:00:00\"\r
+          set passwd ENC AAAAAAAAAABBBBBBBBBBCCCCCCCCCC\r
+          set crptpasswd ENC AAAAAAAAAABBBBBBBBBBCCCCCCCCCC\r
+      end\r
+
+      config system admin tacacs\r
+          edit \"tacacs-server\"\r
+              set server \"192.0.2.22\"\r
+              set secondary-server \"192.0.2.23\"\r
+              set key ENC AAAAAAAAAABBBBBBBBBBCCCCCCCCCC\r
+              set secondary-key ENC AAAAAAAAAABBBBBBBBBBCCCCCCCCCC\r
+              set authorization enable\r
+          next\r
+      end\r
+      config system admin user\r
+          edit \"admin\"\r
+              set password ENC AAAAAAAAAABBBBBBBBBBCCCCCCCCCC\r
+          next\r
+      end\r
+      \r
+      FortiMgr2 #\x20
+  - "exit\n": |-
+      exit\r\r
+      

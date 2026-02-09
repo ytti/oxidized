@@ -42,89 +42,22 @@ class FortiOS < Oxidized::Model
   end
 
   cmd 'get system status' do |cfg|
-    @vdom_enabled = cfg.match(/^Virtual domain configuration: (enable|multiple)/)
-    @ha_cluster = cfg.match(/^Current HA mode: a-/) # a-p or a-a
-    cfg = cfg.keep_lines [
-      "Version: ",
-      "Security Level: ",
-      "Serial-Number: ",
-      "BIOS version: ",
-      "System Part-Number: ",
-      "Hostname: ",
-      "Operation Mode: ",
-      "Current virtual domain: ",
-      "Max number of virtual domains: ",
-      "Virtual domains status:",
-      "Virtual domain configuration: ",
-      "FIPS-CC mode: ",
-      "Current HA mode: ",
-      "Private Encryption: "
+    cfg = cfg.reject_lines [
+      "Current Time",
+      "Disk Usage",
+      "Release Version Information",
+      "Branch Point",
+      "Daylight Time Saving",
+      "Time Zone",
+      "x86-64 Applications",
+      "File System",
+      "Image Signature"
     ]
     comment cfg + "\n"
   end
 
-  cmd 'config global', if: -> { @vdom_enabled } do |_cfg|
-    ''
-  end
-
-  cmd 'get system ha status', if: -> { @ha_cluster } do |cfg|
-    cfg = cfg.keep_lines [
-      "HA Health Status:",
-      "Model: ",
-      "Mode: ",
-      "number of member: ",
-      /^(Master|Slave|Primary|Secondary): /
-    ]
-    comment cfg + "\n"
-  end
-
-  cmd 'get hardware status' do |cfg|
-    comment cfg
-  end
-
-  cmd "diagnose hardware deviceinfo psu" do |cfg|
-    skip_patterns = [
-      /Command fail\./,      # The device doesn't support this command
-      /Power Supply +Status/ # We only get a status, but no serial numbers
-    ]
-    cfg = "No PSU serial numbers available\n\n" if skip_patterns.any? { |p| cfg.match?(p) }
-
-    comment cfg
-  end
-
-  cmd "get system interface transceiver" do |cfg|
-    cfg = cfg.keep_lines [
-      /^Interface \w/,
-      "Vendor Name",
-      "Part No./",
-      "Serial No."
-    ]
-    comment cfg + "\n"
-  end
-
-  cmd 'diagnose autoupdate version', if: -> { vars(:fortios_autoupdate) } do |cfg|
-    cfg = cfg.sub(/FDS Address\n---------\n.*\n/, '')
-    comment cfg.reject_lines ["Last Update", "Result :"]
-  end
-
-  cmd 'end', if: -> { @vdom_enabled } do |_cfg|
-    ''
-  end
-
-  def clean_config(cfg)
-    cfg = cfg.reject_lines ['#conf_file_ver=']
-    cfg.gsub(/(set comments "Error \(No order found for account ID \d+\) on).*/,
-             '\\1 <stripped>')
-  end
-
-  # If vars fullconfig is set to true, we get the full config (including default
-  # values)
-  cmd "show full-configuration | grep .", if: -> { vars(:fullconfig) } do |cfg|
-    clean_config cfg
-  end
-  # else backup as in Fortigate GUI
-  cmd "show | grep .", if: -> { !vars(:fullconfig) } do |cfg|
-    clean_config cfg
+  cmd "show" do |cfg|
+    cfg.reject_lines ['#config-version=']
   end
 
   cmd :significant_changes do |cfg|

@@ -5,6 +5,9 @@ All notable changes to this project will be documented in this file.
 The format is based on [Keep a Changelog](https://keepachangelog.com/en/1.1.0/).
 
 ## [Unreleased]
+The fortios model has been split into fortigate and fortios. You need the new
+fortigate model for FortiGate firewalls. Be sure to check the
+[Fortinet model notes](docs/Model-Notes/Fortinet.md) before upgrading.
 
 ### Added
 - String refinements: introduce `keep_lines` and `reject_lines` methods (@robertcheramy)
@@ -14,7 +17,9 @@ The format is based on [Keep a Changelog](https://keepachangelog.com/en/1.1.0/).
 - Refactored models: Use `keep_lines` and `reject_lines` in aosw, arubainstant, asa, efos, firelinuxos, fsos, ironware, mlnxos and perle to (@robertcheramy)
 - Refactor SSH and SCP into a common class SSHBase. Fixes #3597 (@robertcheramy)
 - Modified models to support store mode on significant changes: ios, fortios, perle (@robertcheramy)
-- fortios: model rewrite; add PSU & SFP inventory. Fixes #3680 (@robertcheramy)
+- fortios: model rewrite and split into fortios and fortigate. Fixes #3680 (@robertcheramy)
+- fortigate: Add PSU & SFP inventory (@robertcheramy)
+- fortigate: move var fortios_autoupdate (deprecated) to fortigate_autoupdate (@robertcheramy)
 
 ### Fixed
 - apc_aos: set comment to "; " to match comments in config.ini (@robertcheramy)

@@ -1,0 +1,90 @@
+# Platform Type                   : FMG-VM64
+# Platform Full Name              : FortiManager-VM64
+# Version                         : v7.4.6-build2588 241218 (GA.M)
+# Serial Number                   : FMG-VMTM20000000
+# BIOS version                    : 04000002
+# Hostname                        : FortiMgr2
+# Max Number of Admin Domains     : 10
+# Max Number of Device Groups     : 10
+# Admin Domain Configuration      : Enabled
+# FIPS Mode                       : Disabled
+# HA Mode                         : Stand Alone
+# License Status                  : Valid
+# 
+# 
+#branch_pt=2588
+config system global
+    set adom-status enable
+    set hostname "FortiMgr2"
+    set latitude "42.42"
+    set longitude "12.12"
+    set object-revision-mandatory-note disable
+    set timezone 26
+end
+config system interface
+    edit "port1"
+        set ip 192.0.2.42 255.255.255.0
+        set allowaccess ping https ssh snmp webservice
+        set type physical
+    next
+    edit "port2"
+        set status disable
+        set type physical
+    next
+end
+config system snmp user
+    edit "snmpuser"
+        set notify-hosts 192.0.2.5 192.0.2.6
+        set security-level auth-priv
+        set auth-pwd ENC AAAAAAAAAABBBBBBBBBBCCCCCCCCCC
+        set priv-pwd ENC AAAAAAAAAABBBBBBBBBBCCCCCCCCCC
+    next
+end
+config system route
+    edit 1
+        set device "port1"
+        set gateway 192.0.2.1
+    next
+end
+config system certificate local
+    edit "certificate"
+        set password ENC AAAAAAAAAABBBBBBBBBBCCCCCCCCCC
+        set comment "Created by generating certificate"
+        set private-key "-----BEGIN ENCRYPTED PRIVATE KEY-----
+XXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXX
+AAAAAAAAAABBBBBBBBBBCCCCCCCCCCXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXX
+XXXXXXXXXXXXXXXXXXXXXX==
+-----END ENCRYPTED PRIVATE KEY-----"
+        set certificate "-----BEGIN CERTIFICATE-----
+XXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXX
+XXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXX
+XXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXX=
+-----END CERTIFICATE-----"
+    next
+end
+config system backup all-settings
+    set status enable
+    set server "192.0.2.12"
+    set user "backupuser"
+    set directory "/backup/"
+    set week_days sunday monday tuesday wednesday thursday friday saturday
+    set time "23:00:00"
+    set passwd ENC AAAAAAAAAABBBBBBBBBBCCCCCCCCCC
+    set crptpasswd ENC AAAAAAAAAABBBBBBBBBBCCCCCCCCCC
+end
+
+config system admin tacacs
+    edit "tacacs-server"
+        set server "192.0.2.22"
+        set secondary-server "192.0.2.23"
+        set key ENC AAAAAAAAAABBBBBBBBBBCCCCCCCCCC
+        set secondary-key ENC AAAAAAAAAABBBBBBBBBBCCCCCCCCCC
+        set authorization enable
+    next
+end
+config system admin user
+    edit "admin"
+        set password ENC AAAAAAAAAABBBBBBBBBBCCCCCCCCCC
+    next
+end
+
