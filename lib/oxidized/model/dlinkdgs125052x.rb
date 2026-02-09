@@ -16,7 +16,11 @@ class DlinkDgs125052x < Oxidized::Model
     cfg.each_line.to_a[2..-2].map { |line| line.delete("\r").rstrip }.join("\n") + "\n"
   end
 
-  cmd 'show startup-config'
+  cmd 'show vlan' do |cfg|
+    comment cfg
+  end
+
+  cmd 'show running-config'
 
   cfg :telnet do
     username /\r*([\w\s.@()\/:-]+)?([Uu]ser[Nn]ame|[Ll]ogin):/
