@@ -61,9 +61,10 @@ class FortiOS < Oxidized::Model
   end
 
   cmd :significant_changes do |cfg|
-    cfg.reject_lines [
+    cfg = cfg.reject_lines [
       /^ +set \S+ ENC \S+$/
     ]
+    cfg.gsub(/set private-key .*?-+END \S+ PRIVATE KEY-+\n?"$/m, '')
   end
 
   cfg :telnet do
