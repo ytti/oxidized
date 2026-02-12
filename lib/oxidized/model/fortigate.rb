@@ -58,7 +58,11 @@ class FortiGate < Oxidized::Model
       "Virtual domain configuration: ",
       "FIPS-CC mode: ",
       "Current HA mode: ",
-      "Private Encryption: "
+      "Private Encryption: ",
+      # Lines in FortiGate-VM64
+      "License Expiration Date: ",
+      "License Status: ",
+      "VM Resources: "
     ]
     comment cfg + "\n"
   end
