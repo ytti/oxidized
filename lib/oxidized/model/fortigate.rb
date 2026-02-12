@@ -123,8 +123,6 @@ class FortiGate < Oxidized::Model
     cfg = cfg.reject_lines ['#conf_file_ver=']
     cfg.gsub!(/(set comments "Error \(No order found for account ID \d+\) on).*/,
               '\\1 <stripped>')
-    cfg.gsub!(/(config firewall internet-service-name\n).*?(\nend\n)/m,
-              '\\1    <configuration removed>\\2')
     cfg
   end
 
@@ -139,9 +137,11 @@ class FortiGate < Oxidized::Model
   end
 
   cmd :significant_changes do |cfg|
-    cfg.reject_lines [
+    cfg = cfg.reject_lines [
       /^ +set \S+ ENC \S+$/
     ]
+    cfg.gsub!(/(config firewall internet-service-name\n).*?(\nend\n)/m, '')
+    cfg
   end
 
   cfg :telnet do

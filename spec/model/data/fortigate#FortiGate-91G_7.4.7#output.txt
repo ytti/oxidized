@@ -72,7 +72,12 @@ config system snmp user
     next
 end
 config firewall internet-service-name
-    <configuration removed>
+    edit "Google-Other"
+        set internet-service-id 65536
+    next
+    edit "Google-Web"
+        set internet-service-id 65537
+    next
 end
 config vpn certificate local
     edit "Fortinet_CA_SSL"
