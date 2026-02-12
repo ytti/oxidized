@@ -24,12 +24,9 @@
 # Network Card chipset: FortiASIC NP7LITE Adapter (rev.)
 # Hardware Revision: Rev1
 # 
-# No PSU serial numbers available
-# 
 # Interface wan1 - SFP/SFP+/SFP28, 10GBASE-SR
 #   Vendor Name  :            FORTINET        
 #   Serial No.   :            NB00000         
-# Interface wan2 - Transceiver is not detected.
 # 
 #config-version=FGT91G-7.4.7-FW-build2731-250120:opmode=1:vdom=0:user=TACACS-USER
 #buildno=2731
@@ -68,11 +65,14 @@ end
 config system snmp user
     edit "snmpuser"
         set notify-hosts 192.0.2.10 192.0.2.11
-        set events cpu-high mem-low log-full intf-ip vpn-tun-up vpn-tun-down ips-signature av-virus av-oversize av-pattern av-fragmented fm-if-change av-conserve av-bypass av-oversize-passed av-oversize-blocked ips-pkg-update ips-fail-open temperature-high voltage-alert faz-disconnect device-new per-cpu-high
+        set events cpu-high mem-low log-full ... device-new per-cpu-high
         set security-level auth-priv
         set auth-pwd ENC AAAAAAAAAABBBBBBBBBBCCCCCCCCCC
         set priv-pwd ENC AAAAAAAAAABBBBBBBBBBCCCCCCCCCC
     next
+end
+config firewall internet-service-name
+    <configuration removed>
 end
 config vpn certificate local
     edit "Fortinet_CA_SSL"

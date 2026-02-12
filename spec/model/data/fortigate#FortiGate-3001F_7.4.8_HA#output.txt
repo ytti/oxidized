@@ -53,30 +53,12 @@
 # Interface ha2 - SFP/SFP+/SFP28, 10GBASE-LR
 #   Vendor Name  :            Fortinet        
 #   Serial No.   :            240000000001    
-# Interface port17 - Transceiver is not detected.
-# Interface port18 - Transceiver is not detected.
-# Interface port19 - Transceiver is not detected.
-# Interface port20 - Transceiver is not detected.
-# Interface port21 - Transceiver is not detected.
-# Interface port22 - Transceiver is not detected.
-# Interface port23 - Transceiver is not detected.
-# Interface port24 - Transceiver is not detected.
-# Interface port25 - Transceiver is not detected.
-# Interface port26 - Transceiver is not detected.
-# Interface port27 - Transceiver is not detected.
-# Interface port28 - Transceiver is not detected.
-# Interface port29 - Transceiver is not detected.
-# Interface port30 - Transceiver is not detected.
 # Interface port31 - QSFP+/QSFP28, 100G CWDM4
 #   Vendor Name  :            FORTINET        
 #   Serial No.   :            U900000         
 # Interface port32 - QSFP+/QSFP28, 100G CWDM4
 #   Vendor Name  :            FORTINET        
 #   Serial No.   :            U90000A         
-# Interface port33 - Transceiver is not detected.
-# Interface port34 - Transceiver is not detected.
-# Interface port35 - Transceiver is not detected.
-# Interface port36 - Transceiver is not detected.
 # 
 #config-version=FG3K1F-7.4.8-FW-build2795-250523:opmode=1:vdom=0:user=TACACS-USER
 #buildno=2795

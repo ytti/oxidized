@@ -31,18 +31,6 @@
 # Network Card chipset: Intel(R) Gigabit Ethernet Linux Driver (rev.0003)
 # Network Card chipset: FortiASIC NP6 Adapter (rev.)
 # 
-# No PSU serial numbers available
-# 
-# Interface port9 - Transceiver is not detected.
-# Interface port10 - Transceiver is not detected.
-# Interface port11 - Transceiver is not detected.
-# Interface port12 - Transceiver is not detected.
-# Interface s1 - Transceiver is not detected.
-# Interface s2 - Transceiver is not detected.
-# Interface vw1 - Transceiver is not detected.
-# Interface vw2 - Transceiver is not detected.
-# Interface x1 - Transceiver is not detected.
-# Interface x2 - Transceiver is not detected.
 # 
 #config-version=FG5H1E-7.4.8-FW-build2795-250523:opmode=0:vdom=1:user=TACACS-USER
 #buildno=2795

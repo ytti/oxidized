@@ -24,12 +24,9 @@
 # Network Card chipset: FortiASIC NP7LITE Adapter (rev.)
 # Hardware Revision: Rev1
 # 
-# No PSU serial numbers available
-# 
 # Interface wan1 - SFP/SFP+/SFP28, 10GBASE-SR
 #   Vendor Name  :            FORTINET        
 #   Serial No.   :            NB00000         
-# Interface wan2 - Transceiver is not detected.
 # 
 # 
 # AV Engine

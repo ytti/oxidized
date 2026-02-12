@@ -87,9 +87,12 @@ class FortiGate < Oxidized::Model
       /Command fail\./,      # The device doesn't support this command
       /Power Supply +Status/ # We only get a status, but no serial numbers
     ]
-    cfg = "No PSU serial numbers available\n\n" if skip_patterns.any? { |p| cfg.match?(p) }
-
-    comment cfg
+    if skip_patterns.any? { |p| cfg.match?(p) }
+      logger.debug "No PSU serial numbers available"
+      ''
+    else
+      comment cfg
+    end
   end
 
   cmd "get system interface transceiver" do |cfg|
@@ -99,6 +102,7 @@ class FortiGate < Oxidized::Model
       "Part No./",
       "Serial No."
     ]
+    cfg = cfg.reject_lines ["Transceiver is not detected"]
     comment cfg + "\n"
   end
 
@@ -117,8 +121,11 @@ class FortiGate < Oxidized::Model
 
   def clean_config(cfg)
     cfg = cfg.reject_lines ['#conf_file_ver=']
-    cfg.gsub(/(set comments "Error \(No order found for account ID \d+\) on).*/,
-             '\\1 <stripped>')
+    cfg.gsub!(/(set comments "Error \(No order found for account ID \d+\) on).*/,
+              '\\1 <stripped>')
+    cfg.gsub!(/(config firewall internet-service-name\n).*?(\nend\n)/m,
+              '\\1    <configuration removed>\\2')
+    cfg
   end
 
   # If vars fullconfig is set to true, we get the full config (including default
