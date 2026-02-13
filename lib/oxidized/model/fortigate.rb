@@ -145,6 +145,7 @@ class FortiGate < Oxidized::Model
       /^ +set \S+ ENC \S+$/
     ]
     cfg.gsub!(/(config firewall internet-service-name\n).*?(\nend\n)/m, '')
+    cfg.gsub!(/set private-key .*?-+END \S+ PRIVATE KEY-+\n?"$/m, '')
     cfg
   end
 

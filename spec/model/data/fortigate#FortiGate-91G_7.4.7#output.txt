@@ -86,7 +86,23 @@ config vpn certificate local
         set range global
         set source factory
     next
-  end
+end
+config system certificate local
+    edit "certificate"
+        set password ENC AAAAAAAAAABBBBBBBBBBCCCCCCCCCC
+        set comment "Created by generating certificate"
+        set private-key "-----BEGIN ENCRYPTED PRIVATE KEY-----
+XXENCRYPTEDPRIVATEKEYXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXX
+AAAAAAAAAABBBBBBBBBBCCCCCCCCCCXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXX
+XXXXXXXXXXXXXXXXXXXXXX==
+-----END ENCRYPTED PRIVATE KEY-----"
+        set certificate "-----BEGIN CERTIFICATE-----
+XXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXX
+XXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXX
+XXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXX=
+-----END CERTIFICATE-----"
+    next
+end
 config user tacacs+
     edit "tacacs-server-name"
         set server "192.0.2.19"

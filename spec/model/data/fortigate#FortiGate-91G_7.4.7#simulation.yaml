@@ -143,7 +143,23 @@ commands:
               set range global\r
               set source factory\r
           next\r
-        end\r
+      end\r
+      config system certificate local\r
+          edit \"certificate\"\r
+              set password ENC AAAAAAAAAABBBBBBBBBBCCCCCCCCCC\r
+              set comment \"Created by generating certificate\"\r
+              set private-key \"-----BEGIN ENCRYPTED PRIVATE KEY-----\r
+      XXENCRYPTEDPRIVATEKEYXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXX\r
+      AAAAAAAAAABBBBBBBBBBCCCCCCCCCCXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXX\r
+      XXXXXXXXXXXXXXXXXXXXXX==\r
+      -----END ENCRYPTED PRIVATE KEY-----\"\r
+              set certificate \"-----BEGIN CERTIFICATE-----\r
+      XXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXX\r
+      XXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXX\r
+      XXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXX=\r
+      -----END CERTIFICATE-----\"\r
+          next\r
+      end\r
       config user tacacs+\r
           edit \"tacacs-server-name\"\r
               set server \"192.0.2.19\"\r
