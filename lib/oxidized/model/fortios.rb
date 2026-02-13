@@ -108,12 +108,18 @@ class FortiOS < Oxidized::Model
     cfg.join
   end
 
+  cmd :significant_changes do |cfg|
+    cfg.reject_lines [
+      /^ +set \S+ ENC \S+$/
+    ]
+  end
+
   cfg :telnet do
     username /^[lL]ogin:/
     password /^Password:/
   end
 
   cfg :telnet, :ssh do
-    pre_logout "exit\n"
+    pre_logout "exit"
   end
 end

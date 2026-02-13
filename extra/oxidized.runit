@@ -2,4 +2,4 @@
 [ ! -d /home/oxidized/.config/oxidized ] && mkdir -p /home/oxidized/.config/oxidized
 [ -f /home/oxidized/.config/oxidized/pid ] && rm /home/oxidized/.config/oxidized/pid
 chown -R oxidized:oxidized /home/oxidized/.config/oxidized
-exec setuser oxidized oxidized
+exec gosu oxidized oxidized

@@ -1,30 +1,11 @@
 # Configuration
 
-## Debugging
-
-In case a model plugin doesn't work correctly (ios, procurve, etc.), you can
-enable live debugging of SSH/Telnet sessions. Just add a `debug` option
-containing the value true to the `input` section. The log files will be created
-depending on the parent directory of the logfile option.
-
-The following example will log an active ssh/telnet session
-`/home/oxidized/.config/oxidized/log/<IP-Address>-<PROTOCOL>`. The file will be
-truncated on each consecutive ssh/telnet session, so you need to put a `tailf`
-or `tail -f` on that file!
-
-```yaml
-log: /home/oxidized/.config/oxidized/log
-
-# ...
-
-input:
-  default: ssh, telnet
-  debug: true
-  ssh:
-    secure: false
-  http:
-    ssl_verify: true
-```
+## Modules
+The configuration of each module is described in its respective sub-configuration file:
+* [Inputs.md](Inputs.md)
+* [Outputs.md](Outputs.md)
+* [Sources.md](Sources.md)
+* [Hooks.md](Hooks.md)
 
 ## Privileged mode
 
@@ -65,142 +46,22 @@ The above strips out snmp community strings from your saved configs.
 
 **NOTE:** Removing secrets reduces the usefulness as a full configuration backup, but it may make sharing configs easier.
 
-## Disabling SSH exec channels
+## Timeout and Time limit
+You can configure when oxidized will `timeout` while fetching a configuration
+(default: 20 seconds), and how much absolute time (`timelimit`) the fetching
+is allowed to last (default: 300 seconds, or 5 minutes):
 
-Oxidized uses exec channels to make information extraction simpler, but there
-are some situations where this doesn't work well, e.g. configuring devices. This
-feature can be turned off by setting the `ssh_no_exec`
-variable.
+* `timeout`: Maximum time to wait for a single operation during config fetching.
+  Not every input module has an implemented timeout.
+* `timelimit`: Maximum total time allowed for the entire fetch job. It is
+  independent of input modules and will always be enforced.
 
-```yaml
-vars:
-  ssh_no_exec: true
-```
-
-## Disabling SSH keepalives
-
-Oxidized SSH input makes use of SSH keepalives to prevent timeouts from slower
-devices and to quickly tear down stale sessions in larger deployments. There
-have been reports of SSH keepalives breaking compatibility with certain OS
-types. They can be disabled using the `ssh_no_keepalive` variable on a per-node
-basis (by specifying it in the source) or configured application-wide.
+If `timelimit`is reached, the fetch job will be killed and will produce a
+warning. The job status will be set to `timelimit`.
 
 ```yaml
-vars:
-  ssh_no_keepalive: true
-```
-
-## SSH Auth Methods
-
-By default, Oxidized registers the following auth methods: `none`, `publickey` and `password`. However you can configure this globally, by groups, models or nodes.
-
-```yaml
-vars:
-  auth_methods: [ "none", "publickey", "password", "keyboard-interactive" ]
-```
-
-## Public Key Authentication with SSH
-
-Instead of password-based login, Oxidized can make use of key-based SSH
-authentication.
-
-You can tell Oxidized to use one or more private keys globally, or specify the
-key to be used on a per-node basis. The latter can be done by mapping the
-`ssh_keys` variable through the active source.
-
-Global:
-
-```yaml
-vars:
-  ssh_keys: "~/.ssh/id_rsa"
-```
-
-Per-Node:
-
-```yaml
-# ...
-map:
-  name: 0
-  model: 1
-vars_map:
-  enable: 2
-  ssh_keys: 3
-# ...
-```
-
-If you are using a non-standard path, especially when copying the private key
-via a secured channel, make sure that the permissions are set correctly:
-
-```bash
-foo@bar:~$ ls -la ~/.ssh/
-total 20
-drwx------ 2 oxidized oxidized 4096 Mar 13 17:03 .
-drwx------ 5 oxidized oxidized 4096 Mar 13 21:40 ..
--r-------- 1 oxidized oxidized  103 Mar 13 17:03 authorized_keys
--rw------- 1 oxidized oxidized  399 Mar 13 17:02 id_ed25519
--rw-r--r-- 1 oxidized oxidized   94 Mar 13 17:02 id_ed25519.pub
-```
-
-Finally, multiple private keys can be specified as an array of file paths, such
-as `["~/.ssh/id_rsa", "~/.ssh/id_another_rsa"]`.
-
-## SSH Proxy Command
-
-Oxidized can `ssh` through a proxy as well. To do so we just need to set
-`ssh_proxy` variable with the proxy host information and optionally set the
-`ssh_proxy_port` with the SSH port if it is not listening on port 22.
-
-This can be provided on a per-node basis by mapping the proper fields from your
-source.
-
-An example for a `csv` input source that maps the 4th field as the `ssh_proxy`
-value and the 5th field as `ssh_proxy_port`.
-
-```yaml
-# ...
-map:
-  name: 0
-  model: 1
-vars_map:
-  enable: 2
-  ssh_proxy: 3
-  ssh_proxy_port: 4
-# ...
-```
-
-## SSH enabling legacy algorithms
-
-When connecting to older firmware over SSH, it is sometimes necessary to enable
-legacy/disabled settings like KexAlgorithms, HostKeyAlgorithms, MAC or the
-Encryption.
-
-These settings can be provided on a per-node basis by mapping the ssh_kex,
-ssh_host_key, ssh_hmac and the ssh_encryption fields from you source.
-
-```yaml
-# ...
-map:
-  name: 0
-  model: 1
-vars_map:
-  enable: 2
-  ssh_kex: 3
-  ssh_host_key: 4
-  ssh_hmac: 5
-  ssh_encryption: 6
-# ...
-```
-
-## FTP Passive Mode
-
-Oxidized uses ftp passive mode by default. Some devices require passive mode to
-be disabled. To do so, we can set `input.ftp.passive` to false - this will make
-use of FTP active mode.
-
-```yaml
-input:
-  ftp:
-    passive: false
+timeout: 20
+timelimit: 300
 ```
 
 ## Advanced Configuration
@@ -230,6 +91,7 @@ threads: 30 # maximum number of threads
 # true - always use the maximum number of threads
 use_max_threads: false
 timeout: 20
+timelimit: 300
 retries: 3
 prompt: !ruby/regexp /^([\w.@-]+[#>]\s?)$/
 crash:
@@ -372,7 +234,7 @@ models:
     password: pass
 ```
 
-### Options (credentials, vars, etc.) precedence:
+## Options (credentials, vars, etc.) precedence:
 From least to most important:
 - global options
 - model specific options
@@ -513,9 +375,6 @@ following appenders are currently supported:
 > `stderr` and `stdout` are mutually exclusive and will produce a warning if used
 > simultaneously.
 
-> Note: `syslog` currently produces two timestamps because of an issue in
-> [Sematic Logger](https://github.com/reidmorrison/semantic_logger/issues/316).
-
 > You can configure as many file appenders as you wish.
 
 You can set a log level globally and/or for each appender.
@@ -577,9 +436,8 @@ It will rotate between the log levels and log a warning with the new level
 If you specified a log level for an appender, this log level won't be
 changed.
 
-> :warning: **Warning** This currently does not work when oxidized-web is used
-> and will kill the whole oxidized application. This will be corrected in a
-> future release of oxidized-web.
+> :warning: **Warning** You need oxidized-web 0.17.0 and above for this or
+> it will kill the whole oxidized application.
 
 ### Dump running threads
 With the SIGTTIN signal, oxidized will log a backtrace for each of its threads.
@@ -598,3 +456,124 @@ The threads used to fetch the configs are named `Oxidized::Job 'hostname'`:
 /home/xxx/oxidized/lib/oxidized/input/ssh.rb:127:in `sleep'
 /home/xxx/oxidized/lib/oxidized/input/ssh.rb:127:in `block (2 levels) in expect'
 ```
+
+## Metadata
+You can include some metadata in your model outputs, for this you have to set
+the variable `metadata` to `true`:
+```yaml
+vars:
+  metadata: true
+```
+
+As every [variable](#options-credentials-vars-etc-precedence), you can set it on
+model, group and even node level.
+
+By default this will produce
+`"%{comment}Fetched by Oxidized with model %{model} from host %{name} [%{ip}]\n"`
+at the first line of every model output. Some models with specific needs (XML
+for example) will save the metadata differently (for example, OpnSense and
+PfSense save an XML comment at the end of the model).
+
+### Customize metadata
+You can customize the metadata produced by setting the varibles `metadata_top`
+(top of the file) and `metadata_bottom` (bottom of the file).
+
+These variables accept string templates, and you can include newline characters
+(\n) to control formatting.
+
+Both `metadata_top` and `metadata_bottom` support interpolation of dynamic values
+using the following substitution templates:
+  - `%{model}`: name of the Oxidized model
+  - `%{name}`: name of the node
+  - `%{ip}`: IP address of the node
+  - `%{group}`: group name of the node
+  - `%{comment}`: comment string used in the model output (`# `)
+  - `%{year}`: current year (`2025`)
+  - `%{month}`: current month, zero-padded (`03` for March)
+  - `%{day}`: current day, zero-padded (`09`)
+  - `%{hour}`: current hour (24-hour format, zero-padded)
+  - `%{minute}`: current minute, zero-padded
+  - `%{second}`: current second, zero-padded
+
+Example:
+```yaml
+vars:
+  metadata: true
+  metadata_top: "%{comment}Model: %{model}; Device %{name} [%{ip}] at %{year}-%{month}-%{day} %{hour}:%{minute}:%{second}\n"
+```
+
+### Customize metadata in models
+When writing a custom metadata for a model, you can default to
+`vars("metadata_*")` or the model default. You need to interpolate the strings
+with interpolate_string. This example is taken from OpnSense, and makes an 
+XML comment of the default strings, with precedence for vars("metadata_bottom"),
+as the XML comment is situated at the bottom.
+
+```ruby
+  metadata :bottom do
+    xmlcomment interpolate_string(
+      vars("metadata_bottom") ||
+      vars("metadata_top") ||
+      Oxidized::Model::METADATA_DEFAULT
+    )
+  end
+```
+
+You can also change the metadata in the models in your configuration directory with
+[monkey patching](Creating-Models.md#monkey-patching-blocks-in-existing-models).
+This can be done in two ways:
+
+1. Interpolation string:
+```ruby
+require 'oxidized/model/ios.rb'
+
+class IOS
+  metadata :top, "%{comment}Model: %{model}\n"
+  metadata :bottom, "%{comment}Will be placed at the end of the output\n"
+end
+```
+
+2. For advanced code, you can use a code block, and access every variable of
+   the model:
+
+```ruby
+require 'oxidized/model/opnsense.rb'
+class OpnSense
+  metadata :top do
+    xmlcomment "Model:#{self.class.name}, hostname: #{@node.name}, ip:#{@node.ip}"
+  end
+
+  metadata :bottom, nil
+end
+```
+
+Remove a previous metadata by setting it to `nil`.
+
+## Store configuration only on significant changes
+Some devices produce configuration changes even though nothing relevant
+changed. For example, Cisco IOS produces a `Last configuration change at` as
+soon as you exit config mode, and FortiOS encrypts its passwords with a
+different salt on every run.
+
+By setting the [variable](#options-credentials-vars-etc-precedence)
+`output_store_mode` to `on_significant`, you can tell Oxidized only to
+store the configuration when significant changes occurred. The default is to
+always store the configuration.
+```yaml
+vars:
+  output_store_mode: on_significant
+```
+
+For this to work, the model must implement `cmd :significant_changes`:
+```ruby
+  cmd :significant_changes do |cfg|
+    cfg.reject_lines [
+      'Last configuration change at',
+      'NVRAM config last updated at'
+    ]
+  end
+```
+
+Note that store on significant change only applies to the main configuration,
+and will not affect
+[output types](Creating-Models.md#advanced-feature-output-type)

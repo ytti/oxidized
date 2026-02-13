@@ -1,7 +1,5 @@
 module Oxidized
   require 'stringio'
-  require_relative 'cli'
-
   begin
     require 'net/tftp'
   rescue LoadError
@@ -9,7 +7,13 @@ module Oxidized
   end
 
   class TFTP < Input
-    include Input::CLI
+    RESCUE_FAIL = {
+      Net::TFTPTimeout => :warn
+    }.freeze
+
+    def self.rescue_fail
+      super.merge(RESCUE_FAIL)
+    end
 
     # TFTP utilizes UDP, there is not a connection. We simply specify an IP and send/receive data.
     def connect(node)

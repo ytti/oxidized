@@ -21,7 +21,7 @@ describe Oxidized::SSH do
                                  model:    'junos',
                                  username: 'alma',
                                  password: 'armud',
-                                 vars:     { ssh_proxy: 'test.com' })
+                                 vars:     { "ssh_proxy" => 'test.com' })
 
       ssh = Oxidized::SSH.new
 
@@ -58,7 +58,7 @@ describe Oxidized::SSH do
                                  model:    'junos',
                                  username: 'alma',
                                  password: 'armud',
-                                 vars:     { ssh_proxy: 'test.com' })
+                                 vars:     { "ssh_proxy" => 'test.com' })
 
       ssh = Oxidized::SSH.new
 
@@ -85,6 +85,31 @@ describe Oxidized::SSH do
 
       ssh.instance_variable_set("@exec", true)
       ssh.connect(@node)
+    end
+  end
+
+  describe ".rescue_fail" do
+    it "returns RESCUE_FAIL from Oxidized::Input" do
+      result = Oxidized::SSH.rescue_fail
+
+      _(result[Errno::ECONNREFUSED]).must_equal :debug
+      _(result[IOError]).must_equal :warn
+      _(result[Timeout::Error]).must_equal :warn
+      _(result[Errno::ECONNRESET]).must_equal :warn
+    end
+    it "returns its own RESCUE_FAIL" do
+      result = Oxidized::SSH.rescue_fail
+
+      # Check that SSH-specific exceptions are included
+      _(result[Net::SSH::Disconnect]).must_equal :debug
+      _(result[RuntimeError]).must_equal :warn
+      _(result[Net::SSH::AuthenticationFailed]).must_equal :warn
+    end
+  end
+  describe '#config_name' do
+    it "returns the configuration name" do
+      ssh = Oxidized::SSH.new
+      _(ssh.config_name).must_equal 'ssh'
     end
   end
 end

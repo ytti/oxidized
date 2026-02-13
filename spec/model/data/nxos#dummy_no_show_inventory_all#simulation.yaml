@@ -1,0 +1,39 @@
+---
+init_prompt: |-
+    
+    (... init prompt ...)
+    \rTEST-12345#\x20
+commands:
+  - "terminal length 0\n": |-
+      terminal length 0\r
+      \rTEST-12345#\x20
+  - "show version\n": |-
+      show version\r
+      Cisco Nexus Operating System (NX-OS) Software
+      (...)
+      ...show version output...
+      (...)
+      \rTEST-12345#\x20
+  - "show inventory all\n": |-
+      show inventory all\r
+                                 ^
+      % Invalid parameter detected at '^' marker.
+      \rTEST-12345#\x20
+  - "show inventory\n": |-
+      show inventory\r
+      (...)
+      ... show inventory - without SFPs ...
+      (...)
+      \rTEST-12345#\x20
+  - "show running-config\n": |-
+      show running-config\r
+      
+      !Command: show running-config
+      (...)
+      ... show running config output ...
+      (...)
+      
+
+      \rTEST-12345#\x20
+  - "exit\n": |-
+      exit\r

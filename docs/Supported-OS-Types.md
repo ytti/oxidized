@@ -35,7 +35,7 @@
 |                    |FastIron                      |[fastiron](/lib/oxidized/model/fastiron.rb)
 |                    |IronWare                      |[ironware](/lib/oxidized/model/ironware.rb)
 |                    |NOS (Network Operating System)|[nos](/lib/oxidized/model/nos.rb)
-|                    |Vyatta                        |[vyatta](/lib/oxidized/model/vyatta.rb)
+|                    |Vyatta                        |[vyatta](/lib/oxidized/model/vyatta.rb)          |                 | Also used for Vyos <= 1.2.x, for newer versions use the VyOS model
 |                    |6910                          |[br6910](/lib/oxidized/model/br6910.rb)
 |                    |SLX-OS                        |[slxos](/lib/oxidized/model/slxos.rb)
 |Calix               |AXOS                          |[axos](/lib/oxidized/model/axos.rb)
@@ -119,6 +119,7 @@
 |Icotera             |6400 series                   |[icotera](/lib/oxidized/model/icotera.rb)
 |Ingate              |SIParator/Firewalls           |[ingate](/lib/oxidized/model/ingate.rb)          |@thanegill
 |IP Infusion         |OcNOS                         |[ocnos](/lib/oxidized/model/ocnos.rb)
+|Ivanti              |Ivanti Connect Secure (ICS)   |[ivanti](/lib/oxidized/model/ivanti.rb)          |@candleflip      |[ICS](Model-Notes/IvantiConnectSecure.md)
 |Juniper             |JunOS                         |[junos](/lib/oxidized/model/junos.rb)            |                 |[MX/QFX/EX/SRX/J Series](Model-Notes/JunOS.md)
 |                    |ScreenOS (Netscreen)          |[screenos](/lib/oxidized/model/screenos.rb)
 |LANCOM Systems GmbH |LCOS                          |[lancom](/lib/oxidized/model/lancom.rb)
@@ -146,6 +147,7 @@
 |OPNsense            |                              |[opnsense](/lib/oxidized/model/opnsense.rb)
 |Palo Alto           |PanOS API                     |[panos_api](/lib/oxidized/model/panos_api.rb)    |                 |[PanOS_API](Model-Notes/PanOS_API.md)
 |                    |PanOS                         |[panos](/lib/oxidized/model/panos.rb)
+|[Perle](https://www.perle.com)|IOLAN Console Servers|[perle](/lib/oxidized/model/perle.rb)           |@robertcheramy
 |PLANET SG/SGS Switches|                            |[planet](/lib/oxidized/model/planet.rb)
 |pfSense             |                              |[pfsense](/lib/oxidized/model/pfsense.rb)
 |Pure Storage        |PurityOS                      |[purityos](/lib/oxidized/model/purityos.rb)
@@ -180,6 +182,8 @@
 |VMWare              |NSX Edge (configuration)      |[nsxconfig](/lib/oxidized/model/nsxconfig.rb)
 |                    |NSX Edge (firewall rules)     |[nsxfirewall](/lib/oxidized/model/nsxfirewall.rb)
 |                    |NSX Distributed Firewall      |[nsxdfw](/lib/oxidized/model/nsxdfw.rb)
+|VYOS Networks       |VYOS                          |[vyos](/lib/oxidized/model/vyos.rb)
+|                 |Fork of Vyatta, tracking the supported versions (>= 1.4.x)
 |Watchguard          |Fireware OS                   |[firewareos](/lib/oxidized/model/firewareos.rb)
 |Westell             |Westell 8178G, Westell 8266G  |[weos](/lib/oxidized/model/weos.rb)
 |Yadro               |KornfeldOS                    |[kornfeldos](/lib/oxidized/model/kornfeldos.rb) 

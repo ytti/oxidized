@@ -32,6 +32,7 @@ module Oxidized
       asetus.default.threads       = 30
       asetus.default.use_max_threads = false
       asetus.default.timeout       = 20
+      asetus.default.timelimit     = 300
       asetus.default.retries       = 3
       asetus.default.prompt        = /^([\w.@-]+[#>]\s?)$/
       asetus.default.next_adds_job = false            # if true, /next adds job, so device is fetched immmeiately

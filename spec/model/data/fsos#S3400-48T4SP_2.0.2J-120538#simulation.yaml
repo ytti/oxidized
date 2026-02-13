@@ -8,8 +8,8 @@ commands:
   "terminal length 0\n": |-
     terminal length 0
     FS-LAB-OXI#
-  "terminal width 512\n": |-
-    terminal width 512
+  "terminal width 0\n": |-
+    terminal width 0
     FS-LAB-OXI#
   "show version\n": |-
     show version

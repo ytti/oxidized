@@ -1,7 +1,7 @@
 class SpeedTouch < Oxidized::Model
   using Refinements
 
-  prompt /([\w{}=]+[>])$/
+  prompt /([\w{}=]+>)$/
   comment '! '
 
   expect /login$/ do

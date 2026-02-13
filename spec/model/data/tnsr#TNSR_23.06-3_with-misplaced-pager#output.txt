@@ -1,0 +1,90 @@
+! 
+! Version: 23.06-3+tnsr-v23.06-3+jammy
+! Build timestamp: Fri Jun 23 00:40:27 2023 UTC
+! 
+! This TNSR instance is not configured for package updates.
+! 
+! For information see 'show documentation'
+! 
+configuration history enable
+
+nacm disable
+nacm read-default permit
+nacm write-default deny
+nacm exec-default permit
+
+sysctl vm nr_hugepages 1024
+sysctl vm max_map_count 3096
+sysctl kernel shmmax 2147483648
+
+system dns-resolver dataplane
+    server g1 xx.xx.xx.xx
+    server g2 xx.xx.xx.xx
+exit
+system dns-resolver host
+    server g1 xx.xx.xx.xx
+    server g2 xx.xx.xx.xx
+exit
+
+restconf
+    enable true
+    global authentication-type user
+    server dataplane xx.xx.xx.xx 8080 false
+exit
+
+dataplane cpu main-core 1
+dataplane cpu workers 10
+dataplane ethernet default-mtu 1500
+dataplane dpdk dev 0000:02:00.0 network num-rx-desc 1024
+dataplane dpdk dev 0000:02:00.0 network num-tx-desc 1024
+dataplane dpdk dev 0000:02:00.0 network num-rx-queues 1024
+dataplane dpdk dev 0000:02:00.0 network num-tx-queues 1024
+dataplane dpdk uio-driver vfio-pci
+dataplane api-segment api-size 16M
+dataplane api-segment global-size 64M
+dataplane api-segment api-pvt-heap-size 128K
+dataplane api-segment global-pvt-heap-size 128K
+dataplane buffers buffers-per-numa 32768
+dataplane ip6 heap-size 8G
+dataplane statseg heap-size 1G
+dataplane linux-cp nl-rx-buffer-size 268435456
+
+route dynamic ospf6
+exit
+
+route dynamic ospf
+exit
+
+route dynamic rip
+exit
+
+dhcp4 server
+    lease persist true
+    lease lfc-interval 3600
+    interface socket raw
+exit
+
+unbound enable
+unbound server
+    outgoing-interface xx.xx.xx.xx
+    outgoing-interface xx.xx.xx.xx
+    do-ip4
+    do-tcp
+    do-udp
+    harden glue
+    hide identity
+    port outgoing range 4096
+    forward-zone .
+        nameserver address xx.xx.xx.xx
+        nameserver address xx.xx.xx.xx
+    exit
+exit
+
+snmp host enable
+snmp dataplane enable
+snmp access group-name ROGroup prefix exact model any level noauth read systemview write none
+snmp access group-name ROGroup prefix exact model v2c level noauth read systemvi
+
+ssh dataplane enable
+
+

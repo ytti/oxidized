@@ -24,7 +24,6 @@ Style/FrozenStringLiteralComment:
 
 Layout/LineLength:
   Enabled: true
-  IgnoreCopDirectives: false
   Max: 120
   # Too much models have long lines, which is unsafe to reduce without
   # having an existing model unit test.
@@ -68,6 +67,7 @@ Style/FormatString:
 
 Style/FormatStringToken:
   EnforcedStyle: unannotated
+  AllowedMethods: ['metadata']
 
 Style/HashEachMethods:
   Enabled: true

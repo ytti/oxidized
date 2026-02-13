@@ -22,9 +22,11 @@ class IronWare < Oxidized::Model
   end
 
   cmd 'show version' do |cfg|
-    cfg.gsub! /(^((.*)[Ss]ystem uptime(.*))$)/, '' # remove unwanted line system uptime
-    cfg.gsub! /(^((.*)[Tt]he system started at(.*))$)/, ''
-    cfg.gsub! /[Uu]p\s?[Tt]ime is .*/, ''
+    cfg = cfg.reject_lines [
+      /(^((.*)[Ss]ystem uptime(.*))$)/,
+      /(^((.*)[Tt]he system started at(.*))$)/,
+      /[Uu]p\s?[Tt]ime is .*/
+    ]
 
     comment cfg
   end
@@ -36,7 +38,7 @@ class IronWare < Oxidized::Model
     cfg.gsub! /current speed is [A-Z-]{2,6} \(\d{2,3}%\)/, ''
     cfg.gsub! /Fan \d* - STATUS: OK \D*\d*./, '' # Fix for ADX Fan speed reporting
     cfg.gsub! /\d* deg C/, '' # Fix for ADX temperature reporting
-    cfg.gsub! /([\[]*)1([\]]*)<->([\[]*)2([\]]*)(<->([\[]*)3([\]]*))*/, ''
+    cfg.gsub! /(\[*)1(\]*)<->(\[*)2(\]*)(<->(\[*)3(\]*))*/, ''
     cfg.gsub! /\d+\.\d deg-C/, 'XX.X deg-C'
     if cfg.include? "TEMPERATURE"
       sc = StringScanner.new cfg

@@ -31,9 +31,7 @@ class FireLinuxOS < Oxidized::Model
   end
 
   cmd 'show version system' do |cfg|
-    cfg = cfg.each_line.reject { |line| line.match /(\s+up\s+\d+\s+)|(.*days.*)/ }
-    cfg = cfg.join
-    comment cfg
+    comment cfg.reject_lines [/(\s+up\s+\d+\s+)|(.*days.*)/]
   end
 
   cmd 'show inventory' do |cfg|

@@ -73,8 +73,7 @@ Check out the [Oxidized TREX 2014 presentation](http://youtu.be/kBQ_CTUuqeU?t=3h
 ## Installation
 
 ### Debian and Ubuntu
-
-Debian "buster" or newer and Ubuntu 17.10 (artful) or newer are recommended. On Ubuntu, begin by enabling the `universe`
+Debian 12 "bookworm" or newer and Ubuntu 22.04 (Jammy Jellyfish) or newer are recommended. On Ubuntu, begin by enabling the `universe`
 repository (required for libssh2-1-dev):
 
 ```shell
@@ -84,7 +83,7 @@ add-apt-repository universe
 Install the dependencies:
 
 ```shell
-apt install ruby ruby-dev libsqlite3-dev libssl-dev pkg-config cmake libssh2-1-dev libicu-dev zlib1g-dev g++ libyaml-dev
+apt install ruby ruby-dev libsqlite3-dev libssl-dev pkg-config cmake libssh2-1-dev libicu-dev zlib1g-dev g++ libyaml-dev libzstd-dev
 ```
 
 Finally, install Oxidized:
@@ -101,7 +100,7 @@ gem install oxidized-script # Script-based input/output extensions
 ```
 
 ### Rocky Linux, Red Hat Enterprise Linux
-These instructions has been verified on Rocky Linux 9.3 and Fedora.
+These instructions has been verified on Rocky Linux 9, Rocky Linux 10 and Fedora.
 
 On Rocky Linux 9, you need to install/enable EPEL, CRB and Ruby 3.1:
 ```shell
@@ -129,7 +128,7 @@ gem install oxidized-script # Script-based input/output extensions
 ```
 
 ### FreeBSD
-These installation instructions have been tested on FreeBSD 14.2, but
+> :warning: These installation instructions have been tested on FreeBSD 14.2, but
 oxidized itself has not been tested on it.
 
 First install ruby and rubyXX-gems (Find out the name of the package with `pkg search gems`):

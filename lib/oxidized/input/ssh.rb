@@ -2,19 +2,18 @@ module Oxidized
   require 'net/ssh'
   require 'net/ssh/proxy/command'
   require 'timeout'
-  require 'oxidized/input/cli'
-  class SSH < Input
-    RESCUE_FAIL = {
-      debug: [
-        Net::SSH::Disconnect
-      ],
-      warn:  [
-        RuntimeError,
-        Net::SSH::AuthenticationFailed
-      ]
-    }.freeze
-    include Input::CLI
+  require_relative 'sshbase'
+
+  class SSH < SSHBase
     class NoShell < OxidizedError; end
+
+    RESCUE_FAIL = {
+      RuntimeError => :warn
+    }.freeze
+
+    def self.rescue_fail
+      super.merge(RESCUE_FAIL)
+    end
 
     def connect(node) # rubocop:disable Naming/PredicateMethod
       @node        = node
@@ -38,10 +37,6 @@ module Oxidized
         end
       end
       connected?
-    end
-
-    def connected?
-      @ssh && (not @ssh.closed?)
     end
 
     def cmd(cmd, expect = node.prompt)
@@ -75,18 +70,19 @@ module Oxidized
 
     private
 
+    # We need a specific disconnect for SSH in shell mode, see issue #3725
     def disconnect
       disconnect_cli
       # if disconnect does not disconnect us, give up after timeout
-      Timeout.timeout(Oxidized.config.timeout) { @ssh.loop }
+      Timeout.timeout(@node.timeout) { @ssh.loop }
     rescue Errno::ECONNRESET, Net::SSH::Disconnect, IOError => e
       logger.debug 'The other side closed the connection while ' \
-                   "disconnecting, rasing #{e.class} with #{e.messages}"
+                   "disconnecting, raising #{e.class} with #{e.message}"
     rescue Timeout::Error
       logger.debug "#{@node.name} timed out while disconnecting"
     ensure
       @log.close if Oxidized.config.input.debug?
-      (@ssh.close rescue true) unless @ssh.closed?
+      (@ssh.close rescue true) unless @ssh.closed? # rubocop:disable Style/RedundantParentheses
     end
 
     def shell_open(ssh)
@@ -126,7 +122,7 @@ module Oxidized
     def expect(*regexps)
       regexps = [regexps].flatten
       logger.debug "Expecting #{regexps.inspect} at #{node.name}"
-      Timeout.timeout(Oxidized.config.timeout) do
+      Timeout.timeout(@node.timeout) do
         @ssh.loop(0.1) do
           sleep 0.1
           match = regexps.find { |regexp| @output.match regexp }
@@ -135,49 +131,6 @@ module Oxidized
           true
         end
       end
-    end
-
-    def make_ssh_opts
-      secure = Oxidized.config.input.ssh.secure?
-      ssh_opts = {
-        number_of_password_prompts:      0,
-        keepalive:                       vars(:ssh_no_keepalive) ? false : true,
-        verify_host_key:                 secure ? :always : :never,
-        append_all_supported_algorithms: true,
-        password:                        @node.auth[:password],
-        timeout:                         Oxidized.config.timeout,
-        port:                            (vars(:ssh_port) || 22).to_i,
-        forward_agent:                   false
-      }
-
-      auth_methods = vars(:auth_methods) || %w[none publickey password]
-      ssh_opts[:auth_methods] = auth_methods
-      logger.debug "AUTH METHODS::#{auth_methods}"
-
-      ssh_opts[:proxy] = make_ssh_proxy_command(vars(:ssh_proxy), vars(:ssh_proxy_port), secure) if vars(:ssh_proxy)
-
-      ssh_opts[:keys]       = [vars(:ssh_keys)].flatten           if vars(:ssh_keys)
-      ssh_opts[:kex]        = vars(:ssh_kex).split(/,\s*/)        if vars(:ssh_kex)
-      ssh_opts[:encryption] = vars(:ssh_encryption).split(/,\s*/) if vars(:ssh_encryption)
-      ssh_opts[:host_key]   = vars(:ssh_host_key).split(/,\s*/)   if vars(:ssh_host_key)
-      ssh_opts[:hmac]       = vars(:ssh_hmac).split(/,\s*/)       if vars(:ssh_hmac)
-
-      # Use our logger for Net:SSH
-      ssh_logger = SemanticLogger[Net::SSH]
-      ssh_logger.level = Oxidized.config.input.debug? ? :debug : :fatal
-      ssh_opts[:logger] = ssh_logger
-
-      ssh_opts
-    end
-
-    def make_ssh_proxy_command(proxy_host, proxy_port, secure)
-      return nil unless !proxy_host.nil? && !proxy_host.empty?
-
-      proxy_command =  "ssh "
-      proxy_command += "-o StrictHostKeyChecking=no " unless secure
-      proxy_command += "-p #{proxy_port} "            if proxy_port
-      proxy_command += "#{proxy_host} -W [%h]:%p"
-      Net::SSH::Proxy::Command.new(proxy_command)
     end
   end
 end

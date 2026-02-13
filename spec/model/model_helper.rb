@@ -1,3 +1,5 @@
+# frozen_string_literal: true
+
 require_relative '../spec_helper'
 require_relative 'atoms'
 require 'yaml'
@@ -5,6 +7,7 @@ require 'yaml'
 def init_model_helper
   Oxidized.asetus = Asetus.new
   Oxidized.config.timeout = 5
+  Oxidized.config.prompt = /^([\w.@-]+[#>]\s?)$/
   Oxidized::Node.any_instance.stubs(:resolve_repo)
   Oxidized::Node.any_instance.stubs(:resolve_output)
 
@@ -134,7 +137,7 @@ class MockChannel
 
   def initialize(commands)
     @commands = commands
-    @queue = ''
+    @queue = String.new
   end
 
   def commands_left?
@@ -159,7 +162,7 @@ class MockChannel
 
     # Send data from @queue but clear it first to prevent new data to be lost
     data = @queue
-    @queue = ''
+    @queue = String.new
     @on_data_block.call(nil, data)
   end
 

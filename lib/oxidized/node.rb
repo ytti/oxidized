@@ -1,6 +1,5 @@
 module Oxidized
   require 'resolv'
-  require 'ostruct'
   require_relative 'node/stats'
   class MethodNotFound < OxidizedError; end
   class ModelNotFound  < OxidizedError; end
@@ -8,7 +7,7 @@ module Oxidized
   class Node
     include SemanticLogger::Loggable
 
-    attr_reader :name, :ip, :model, :input, :output, :group, :auth, :prompt, :vars, :last, :repo
+    attr_reader :name, :ip, :model, :input, :output, :group, :auth, :prompt, :timeout, :vars, :last, :repo
     attr_accessor :running, :user, :email, :msg, :from, :stats, :retry, :err_type, :err_reason
     alias running? running
 
@@ -28,7 +27,8 @@ module Oxidized
       @output = resolve_output opt
       @auth = resolve_auth opt
       @prompt = resolve_prompt opt
-      @vars = opt[:vars]
+      @timeout = resolve_timeout opt
+      @vars = opt[:vars] || {}
       @stats = Stats.new
       @retry = 0
       @repo = resolve_repo opt
@@ -64,14 +64,7 @@ module Oxidized
     end
 
     def run_input(input)
-      rescue_fail = {}
-      [input.class::RESCUE_FAIL, input.class.superclass::RESCUE_FAIL].each do |hash|
-        hash.each do |level, errors|
-          errors.each do |err|
-            rescue_fail[err] = level
-          end
-        end
-      end
+      rescue_fail = input.class.rescue_fail
       begin
         input.connect(self) && input.get
       rescue *rescue_fail.keys => err
@@ -155,6 +148,10 @@ module Oxidized
 
     def resolve_prompt(opt)
       opt[:prompt] || @model.prompt || Oxidized.config.prompt
+    end
+
+    def resolve_timeout(opt)
+      resolve_key :timeout, opt, Oxidized.config.timeout
     end
 
     def resolve_auth(opt)

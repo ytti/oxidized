@@ -3,6 +3,7 @@ require_relative 'spec_helper'
 describe Oxidized::Node do
   before(:each) do
     Oxidized.asetus = Asetus.new
+    Oxidized.config.timelimit = 300
 
     Oxidized::Node.any_instance.stubs(:resolve_repo)
     Oxidized::Node.any_instance.stubs(:resolve_output)
@@ -12,7 +13,8 @@ describe Oxidized::Node do
                                model:    'junos',
                                username: 'alma',
                                password: 'armud',
-                               prompt:   'test_prompt')
+                               prompt:   'test_prompt',
+                               timeout:  42)
   end
 
   describe '#new' do
@@ -30,6 +32,9 @@ describe Oxidized::Node do
     end
     it 'should require prompt' do
       _(@node.prompt).must_equal 'test_prompt'
+    end
+    it 'should resolve timeout, from node source' do
+      _(@node.timeout).must_equal 42
     end
   end
 
