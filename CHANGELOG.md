@@ -23,6 +23,7 @@ The format is based on [Keep a Changelog](https://keepachangelog.com/en/1.1.0/).
 - perle: remove trailing \r (the device sends \r\r\n) (@robertcheramy)
 - Reintroduce support for Ruby 3.0. Fixes #3688 (@robertcheramy)
 - githubrepo: fix authentication with ssh-agent not working. Fixes #3420 (@robertcheramy)
+- fastiron: adjust prompt to account for stacks, remove time from stack output. Fixes #3106 (@ManoftheSea)
 
 
 ## [0.35.0 - 2025-12-04]
