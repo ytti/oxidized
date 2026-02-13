@@ -45,37 +45,65 @@ module Oxidized
     private
 
     def get_http(path)
-      uri = get_uri(path)
+      res = perform_http_request(path, method: :get)
+      res.body
+    end
 
-      logger.debug "Making request to: #{uri}"
+    def post_http(path, body = nil, extra_headers = {})
+      res = perform_http_request(path, method: :post, body: body, extra_headers: extra_headers)
+      res.body
+    end
+
+    def perform_http_request(path, method: :get, body: nil, extra_headers: {})
+      uri = get_uri(path)
+      http_method = method.to_s.upcase
+
+      logger.debug "Making #{http_method} request to: #{uri}"
 
       ssl_verify = Oxidized.config.input.http.ssl_verify? ? OpenSSL::SSL::VERIFY_PEER : OpenSSL::SSL::VERIFY_NONE
 
-      res = make_request(uri, ssl_verify)
+      res = make_request(uri, ssl_verify, extra_headers, method: method, body: body)
 
       if res.code == '401' && res['www-authenticate']&.include?('Digest')
         uri.user = @username
         uri.password = URI.encode_www_form_component(@password)
         logger.debug "Server requires Digest authentication"
-        auth = Net::HTTP::DigestAuth.new.auth_header(uri, res['www-authenticate'], 'GET')
 
-        res = make_request(uri, ssl_verify, 'Authorization' => auth)
-      elsif @username && @password
+        auth = Net::HTTP::DigestAuth.new.auth_header(uri, res['www-authenticate'], http_method)
+        res = make_request(uri, ssl_verify, extra_headers.merge('Authorization' => auth),
+                           method: method, body: body)
+
+      elsif @username && @password && !authorization_header_present?(extra_headers)
         logger.debug "Falling back to Basic authentication"
-        res = make_request(uri, ssl_verify, 'Authorization' => basic_auth_header)
+        res = make_request(uri, ssl_verify, extra_headers.merge('Authorization' => basic_auth_header),
+                           method: method, body: body)
       end
 
       logger.debug "Response code: #{res.code}"
-      res.body
+      res
     end
 
-    def make_request(uri, ssl_verify, extra_headers = {})
+    def make_request(uri, ssl_verify, extra_headers = {}, method: :get, body: nil)
       Net::HTTP.start(uri.hostname, uri.port, use_ssl: uri.scheme == "https", verify_mode: ssl_verify) do |http|
-        req = Net::HTTP::Get.new(uri)
+        req_class = if method == :get
+                      Net::HTTP::Get
+                    elsif method == :post
+                      Net::HTTP::Post
+                    else
+                      raise Oxidized::OxidizedError, "Unsupported HTTP method: #{method.inspect}. " \
+                                                     "Only :get and :post are supported"
+                    end
+        req = req_class.new(uri)
         @headers.merge(extra_headers).each { |header, value| req.add_field(header, value) }
-        logger.debug "Sending request with headers: #{@headers.merge(extra_headers)}"
+        req.body = body if body
+
+        logger.debug "Sending #{method.to_s.upcase} request with headers: #{@headers.merge(extra_headers)}"
         http.request(req)
       end
+    end
+
+    def authorization_header_present?(headers)
+      headers.keys.any? { |key| key.to_s.downcase == 'authorization' }
     end
 
     def basic_auth_header
