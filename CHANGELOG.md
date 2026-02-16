@@ -9,11 +9,14 @@ The format is based on [Keep a Changelog](https://keepachangelog.com/en/1.1.0/).
 ### Added
 - String refinements: introduce `keep_lines` and `reject_lines` methods (@robertcheramy)
 - Support for storing configurations only on significant changes (@robertcheramy)
+- Add support for Ivanti Secure Connect ISA models (@candleflip)
+- smartbyte: new model for SmartByte switches (@freddy36)
 
 ### Changed
 - Refactored models: Use `keep_lines` and `reject_lines` in aosw, arubainstant, asa, efos, firelinuxos, fsos, ironware, mlnxos and perle to (@robertcheramy)
 - Refactor SSH and SCP into a common class SSHBase. Fixes #3597 (@robertcheramy)
 - Modified models to support store mode on significant changes: ios, fortios, perle (@robertcheramy)
+- netgear: extended login and pager detection to add support for GS728TPv2 and GS752TPv2 (@weberc)
 
 ### Fixed
 - apc_aos: set comment to "; " to match comments in config.ini (@robertcheramy)
@@ -22,6 +25,7 @@ The format is based on [Keep a Changelog](https://keepachangelog.com/en/1.1.0/).
 - perle: remove trailing \r (the device sends \r\r\n) (@robertcheramy)
 - Reintroduce support for Ruby 3.0. Fixes #3688 (@robertcheramy)
 - githubrepo: fix authentication with ssh-agent not working. Fixes #3420 (@robertcheramy)
+- fastiron: adjust prompt to account for stacks, remove time from stack output. Fixes #3106 (@ManoftheSea)
 
 
 ## [0.35.0 - 2025-12-04]

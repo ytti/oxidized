@@ -1,7 +1,7 @@
 class FastIron < Oxidized::Model
   using Refinements
 
-  prompt /^([\w.@()-]+[#>]\s?)$/
+  prompt /^([\w.@\/()-]+[#>]\s?)$/
   comment  '! '
 
   cmd :all do |cfg|
@@ -43,7 +43,7 @@ class FastIron < Oxidized::Model
     comment cfg
   end
 
-  cmd 'show stack' do |cfg|
+  cmd 'show stack | exclude T=' do |cfg|
     comment cfg
   end
 
