@@ -19,6 +19,7 @@ The format is based on [Keep a Changelog](https://keepachangelog.com/en/1.1.0/).
 - netgear: extended login and pager detection to add support for GS728TPv2 and GS752TPv2 (@weberc)
 
 ### Fixed
+- VyOS: Only remove SNMP community, not route-maps. Fixes #3735 (@systeembeheerder)
 - apc_aos: set comment to "; " to match comments in config.ini (@robertcheramy)
 - h3c: fix overly permissive prompt regexp causing false matches. Fixes #3673 (@robertcheramy)
 - extra/device2yaml.rb: fix \r being removed at end of line (@robertcheramy)

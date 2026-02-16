@@ -15,7 +15,7 @@ class Vyos < Oxidized::Model
   cmd :secret do |cfg|
     cfg.gsub! /secret (\S+).*/, 'secret <secret removed>'
     cfg.gsub! /password (\S+).*/, 'password <secret removed>'
-    cfg.gsub! /community (\S+)/, 'community <secret removed>'
+    cfg.gsub! /snmp community (\S+)/, 'snmp community <secret removed>'
     cfg.gsub! /preshared-key (\S+).*/, 'preshared-key <secret removed>'
     cfg.gsub! /private key (\S+).*/, 'private key <secret removed>'
     cfg.gsub! /private-key (\S+).*/, 'private-key <secret removed>'
