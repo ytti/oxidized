@@ -46,7 +46,7 @@ class Aoscx < Oxidized::Model
     end
 
     with_section(cfg, 'fan') do |content|
-      content.gsub!(/^(.*)(slow|normal|medium|fast|max) (.*?)\d+ +$/, '\\1<speed> \\3<rpm>')
+      content.gsub!(/^(.*)(slow|normal|medium|fast|max|N\/A) (.*?)\d+ +$/, '\\1<speed> \\3<rpm>')
     end
 
     with_section(cfg, 'power-consumption') do |content|
