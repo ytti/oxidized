@@ -1,0 +1,123 @@
+---
+init_prompt: |-
+    TEST-FW1234 #\x20
+commands:
+  "get system status\n": |-
+    get system status\r
+    Version: FortiGate-91G v7.4.7,build2731,250120 (GA.M)
+    First GA patch build date: 230509
+    Security Level: High
+    Firmware Signature: certified
+    Virus-DB: 1.00000(2018-04-09 18:07)
+    Extended DB: 1.00000(2018-04-09 18:07)
+    Serial-Number: FGT91GTK00000000
+    BIOS version: 06000100
+    System Part-Number: P28792-06
+    Log hard disk: Available
+    Hostname: TEST-FW1234
+    Private Encryption: Disable
+    Operation Mode: NAT
+    Current virtual domain: root
+    Max number of virtual domains: 10
+    Virtual domains status: 1 in NAT mode, 0 in TP mode
+    Virtual domain configuration: disable
+    FIPS-CC mode: disable
+    Current HA mode: standalone
+    Branch point: 2731
+    Release Version Information: GA
+    System time: Wed Jan  7 14:30:09 2026
+    Last reboot reason: warm reboot
+    
+    TEST-FW1234 #\x20
+  "get hardware status\n": |-
+    get hardware status\r
+    Model name: FortiGate-91G
+    ASIC version: SOC5
+    CPU: ARMv8
+    Number of CPUs: 8
+    RAM: 7547 MB
+    EMMC: 9982 MB(MLC) /dev/mmcblk0
+    Hard disk: 114473 MB /dev/nvme0n1
+    USB Flash: not available
+    Network Card chipset: FortiASIC NP7LITE Adapter (rev.)
+    Hardware Revision: Rev1
+    
+    TEST-FW1234 #\x20
+  "diagnose hardware deviceinfo psu\n": |-
+    diagnose hardware deviceinfo psu\r\r
+    Power Supply            Status  \r
+    PSU[1]                  OK      \r
+    PSU[2]                  LOST      \r
+    \r
+    TEST-FW1234 #\x20
+  "get system interface transceiver\n": |-
+    get system interface transceiver\r\r
+    Interface wan1 - SFP/SFP+/SFP28, 10GBASE-SR\r
+      Vendor Name  :            FORTINET        \r
+      Part No.     :            FTLX8574D3BCLFTN\r
+      Serial No.   :            NB00000         \r
+    Interface wan2 - Transceiver is not detected.\r
+    \r
+                                           Optical      Optical      Optical\r
+    SFP/SFP+     Temperature  Voltage      Tx Bias      Tx Power     Rx Power\r
+    Interface    (Celsius)    (Volts)      (mA)         (dBm)        (dBm)\r
+    ------------ ------------ ------------ ------------ ------------ ------------ \r
+    wan1          51.8         3.33         6.61         -2.7        -26.8 --    \r
+    ++ : high alarm, + : high warning, - : low warning, -- : low alarm, ? : suspect.\r
+    \r
+    TEST-FW1234 #\x20
+  "diagnose autoupdate version\n": |-
+    diagnose autoupdate version\r\r
+    \r
+    AV Engine\r
+    ---------\r
+    Version: 7.00035 signed\r
+    Contract Expiry Date: Thu Oct 12 2099\r
+    Last Updated using manual update on Thu Nov 12 12:12:12 2024\r
+    Last Update Attempt: n/a\r
+    Result: Updates Installed\r
+    \r
+    Virus Definitions\r
+    ---------\r
+    Version: 1.00000 signed\r
+    Contract Expiry Date: Thu Oct 12 2099\r
+    Last Updated using manual update on Thu Nov 12 12:12:12 2024\r
+    Last Update Attempt: n/a\r
+    Result: Updates Installed\r
+    \r
+    Attack Definitions\r
+    ---------\r
+    Version: 6.00741 signed\r
+    Contract Expiry Date: Thu Oct 12 2099\r
+    Last Updated using manual update on Thu Nov 12 12:12:12 2024\r
+    Last Update Attempt: n/a\r
+    Result: Updates Installed\r
+    \r
+    Attack Extended Definitions\r
+    ---------\r
+    Version: 0.00000\r
+    Contract Expiry Date: Thu Oct 12 2099\r
+    Last Updated using manual update on Mon Jan  1 00:00:00 2001\r
+    Last Update Attempt: n/a\r
+    Result: Updates Installed\r
+    \r
+    FDS Address\r
+    ---------\r
+    192.0.2.42:8890\r
+    \r
+    \r
+    TEST-FW1234 #\x20
+  "show | grep .\n": |-
+    show | grep .\r
+    #config-version=FGT91G-7.4.7-FW-build2731-250120:opmode=1:vdom=0:user=TACACS-USER
+    #conf_file_ver=440000000000001
+    #buildno=2731
+    #global_vdom=1
+    config system global
+        set alias \"FortiGate-91G\"
+        set hostname \"TEST-FW1234\"
+    end
+    
+    TEST-FW1234 #\x20
+  "exit\n": |-
+    exit\r

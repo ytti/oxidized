@@ -74,7 +74,7 @@
 |DELL                |PowerConnect                  |[powerconnect](/lib/oxidized/model/powerconnect.rb)
 |                    |AOSW                          |[aosw](/lib/oxidized/model/aosw.rb)              |                 |Same model as Aruba Wireless
 |                    |DellX                         |[dellx](/lib/oxidized/model/dellx.rb)
-|                    |Dell EMC Networking OS6       |[os6](/lib/oxidized/model/os6.rb)              |                 |[Dell EMC Networking OS6](Model-Notes/OS6.md)
+|                    |Dell EMC Networking OS6       |[os6](/lib/oxidized/model/os6.rb)                |                 |[Dell EMC Networking OS6](Model-Notes/OS6.md)
 |                    |Dell EMC Networking OS10      |[os10](/lib/oxidized/model/os10.rb)              |                 |[Dell EMC Networking OS10](Model-Notes/OS10.md)
 |D-Link              |D-Link                        |[dlink](/lib/oxidized/model/dlink.rb)
 |                    |D-Link cisco like CLI         |[dlinknextgen](/lib/oxidized/model/dlinknextgen.rb)
@@ -98,7 +98,7 @@
 |Firebrick           |FBxxxx                        |[firebrick](/lib/oxidized/model/firebrick.rb)
 |Force10             |DNOS                          |[dnos](/lib/oxidized/model/dnos.rb)
 |                    |FTOS                          |[ftos](/lib/oxidized/model/ftos.rb)
-|FortiGate           |FortiOS                       |[fortios](/lib/oxidized/model/fortios.rb)        |                 |[FortiOS](Model-Notes/FortiOS.md)
+|FortiGate           |FortiOS                       |[fortios](/lib/oxidized/model/fortios.rb)        |@robertcheramy   |[FortiOS](Model-Notes/FortiOS.md)
 |FortiWLC            |FortiWLC                      |[fortiwlc](/lib/oxidized/model/fortiwlc.rb)
 |Fujitsu             |PRIMERGY Blade switch 1/10Gbe |[fujitsupy](/lib/oxidized/model/fujitsupy.rb)
 |                    |1FINITY Switches              |[onefinity](/lib/oxidized/model/onefinity.rb)
@@ -128,7 +128,7 @@
 |Linuxgeneric        |CentOS                        |[linuxgeneric](/lib/oxidized/model/linuxgeneric.rb)|               |[LinuxGeneric](Model-Notes/LinuxGeneric.md)
 |Mellanox            |MLNX-OS                       |[mlnxos](/lib/oxidized/model/mlnxos.rb)
 |                    |Voltaire                      |[voltaire](/lib/oxidized/model/voltaire.rb)
-|Mikrotik            |RouterOS                      |[routeros](/lib/oxidized/model/routeros.rb)      |  |[RouterOS](Model-Notes/RouterOS.md)
+|Mikrotik            |RouterOS                      |[routeros](/lib/oxidized/model/routeros.rb)      |                 |[RouterOS](Model-Notes/RouterOS.md)
 |                    |SwOS and SwOS Lite            |[swos](/lib/oxidized/model/swos.rb)
 |Mimosa              |Mimosa (B11)                  |[mimosab11](/lib/oxidized/model/mimosab11.rb)
 |Motorola            |RFS                           |[mtrlrfs](/lib/oxidized/model/mtrlrfs.rb)
@@ -178,8 +178,8 @@
 |                    |Edgeos                        |[edgeos](/lib/oxidized/model/edgeos.rb)
 |                    |EdgeSwitch                    |[edgeswitch](/lib/oxidized/model/edgeswitch.rb)
 |                    |AirFiber                      |[airfiber](/lib/oxidized/model/airfiber.rb)
-|                    |UnifiAP                       |[unifiap](/lib/oxidized/model/unifiap.rb)              |@clifcox      |Also suports AirOS, and some Unifi switches
-|Uplink              |EP4440-DP                     |[EP4440](/lib/oxidized/model/uplinkolt.rb)             | |Might support all EP4440 series
+|                    |UnifiAP                       |[unifiap](/lib/oxidized/model/unifiap.rb)        |@clifcox         |Also suports AirOS, and some Unifi switches
+|Uplink              |EP4440-DP                     |[EP4440](/lib/oxidized/model/uplinkolt.rb)       |                 |Might support all EP4440 series
 |VMWare              |NSX Edge (configuration)      |[nsxconfig](/lib/oxidized/model/nsxconfig.rb)
 |                    |NSX Edge (firewall rules)     |[nsxfirewall](/lib/oxidized/model/nsxfirewall.rb)
 |                    |NSX Distributed Firewall      |[nsxdfw](/lib/oxidized/model/nsxdfw.rb)

@@ -1,0 +1,13 @@
+fail:
+ - 'ENC AAAAAAAAAABBBBBBBBBBCCCCCCCCCC'
+ - 'config firewall internet-service-name'
+ - 'set internet-service-id 65536'
+ - 'set private-key "-----BEGIN ENCRYPTED PRIVATE KEY-----'
+ - 'XXENCRYPTEDPRIVATEKEYXX'
+ - '-----END ENCRYPTED PRIVATE KEY-----"'
+pass:
+ - 'config system snmp user'
+ - 'set security-level auth-priv'
+ - 'config vpn certificate local'
+ - 'edit "Fortinet_CA_SSL"'
+ - 'set comment "Created by generating certificate"'

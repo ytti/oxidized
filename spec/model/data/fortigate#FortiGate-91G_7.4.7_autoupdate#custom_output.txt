@@ -1,0 +1,65 @@
+# Version: FortiGate-91G v7.4.7,build2731,250120 (GA.M)
+# Security Level: High
+# Serial-Number: FGT91GTK00000000
+# BIOS version: 06000100
+# System Part-Number: P28792-06
+# Hostname: TEST-FW1234
+# Private Encryption: Disable
+# Operation Mode: NAT
+# Current virtual domain: root
+# Max number of virtual domains: 10
+# Virtual domains status: 1 in NAT mode, 0 in TP mode
+# Virtual domain configuration: disable
+# FIPS-CC mode: disable
+# Current HA mode: standalone
+# 
+# Model name: FortiGate-91G
+# ASIC version: SOC5
+# CPU: ARMv8
+# Number of CPUs: 8
+# RAM: 7547 MB
+# EMMC: 9982 MB(MLC) /dev/mmcblk0
+# Hard disk: 114473 MB /dev/nvme0n1
+# USB Flash: not available
+# Network Card chipset: FortiASIC NP7LITE Adapter (rev.)
+# Hardware Revision: Rev1
+# 
+# Interface wan1 - SFP/SFP+/SFP28, 10GBASE-SR
+#   Vendor Name  :            FORTINET        
+#   Serial No.   :            NB00000         
+# 
+# 
+# AV Engine
+# ---------
+# Version: 7.00035 signed
+# Contract Expiry Date: Thu Oct 12 2099
+# Result: Updates Installed
+# 
+# Virus Definitions
+# ---------
+# Version: 1.00000 signed
+# Contract Expiry Date: Thu Oct 12 2099
+# Result: Updates Installed
+# 
+# Attack Definitions
+# ---------
+# Version: 6.00741 signed
+# Contract Expiry Date: Thu Oct 12 2099
+# Result: Updates Installed
+# 
+# Attack Extended Definitions
+# ---------
+# Version: 0.00000
+# Contract Expiry Date: Thu Oct 12 2099
+# Result: Updates Installed
+# 
+# 
+# 
+#config-version=FGT91G-7.4.7-FW-build2731-250120:opmode=1:vdom=0:user=TACACS-USER
+#buildno=2731
+#global_vdom=1
+config system global
+    set alias "FortiGate-91G"
+    set hostname "TEST-FW1234"
+end
+
