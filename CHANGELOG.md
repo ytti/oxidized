@@ -12,6 +12,8 @@ fortigate model for FortiGate firewalls. Be sure to check the
 ### Added
 - String refinements: introduce `keep_lines` and `reject_lines` methods (@robertcheramy)
 - Support for storing configurations only on significant changes (@robertcheramy)
+- Add support for Ivanti Secure Connect ISA models (@candleflip)
+- smartbyte: new model for SmartByte switches (@freddy36)
 
 ### Changed
 - Refactored models: Use `keep_lines` and `reject_lines` in aosw, arubainstant, asa, efos, firelinuxos, fsos, ironware, mlnxos and perle to (@robertcheramy)
@@ -20,14 +22,17 @@ fortigate model for FortiGate firewalls. Be sure to check the
 - fortios: model rewrite and split into fortios and fortigate. Fixes #3680 (@robertcheramy)
 - fortigate: Add PSU & SFP inventory (@robertcheramy)
 - fortigate: move var fortios_autoupdate (deprecated) to fortigate_autoupdate (@robertcheramy)
+- netgear: extended login and pager detection to add support for GS728TPv2 and GS752TPv2 (@weberc)
 
 ### Fixed
+- VyOS: Only remove SNMP community, not route-maps. Fixes #3735 (@systeembeheerder)
 - apc_aos: set comment to "; " to match comments in config.ini (@robertcheramy)
 - h3c: fix overly permissive prompt regexp causing false matches. Fixes #3673 (@robertcheramy)
 - extra/device2yaml.rb: fix \r being removed at end of line (@robertcheramy)
 - perle: remove trailing \r (the device sends \r\r\n) (@robertcheramy)
 - Reintroduce support for Ruby 3.0. Fixes #3688 (@robertcheramy)
 - githubrepo: fix authentication with ssh-agent not working. Fixes #3420 (@robertcheramy)
+- fastiron: adjust prompt to account for stacks, remove time from stack output. Fixes #3106 (@ManoftheSea)
 
 
 ## [0.35.0 - 2025-12-04]

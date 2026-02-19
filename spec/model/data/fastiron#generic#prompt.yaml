@@ -1,0 +1,4 @@
+pass:
+  - "SSH@switch-001#"
+  # Issue #3106 / PR #3579
+  - "SSH@switch-001/002/003/123#"

@@ -177,6 +177,35 @@ input:
     passive: false
 ```
 
+## HTTP
+### Supported HTTP Methods
+
+The HTTP input supports the following HTTP methods:
+- `:get`  - for GET requests
+- `:post` - for POST requests
+
+These methods are used internally by models that require HTTP-based 
+configuration retrieval. Models can use `get_http()` and `post_http()` methods 
+provided by the HTTP input.
+
+Example usage in a model:
+
+```ruby
+cfg :http do
+  post_response = post_http('/some/path', payload, 'Some-Extra-Header' => 'value')
+  get_response  = get_http('/some/path')
+end
+```
+
+HTTP input can be enabled by adding this block to the configuration file:
+
+```yaml
+input:
+  http:
+    scheme: https
+    ssl_verify: true
+    timeout: 30
+```
 
 ## Debugging
 

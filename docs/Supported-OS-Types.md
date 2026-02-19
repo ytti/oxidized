@@ -119,6 +119,7 @@
 |Icotera             |6400 series                   |[icotera](/lib/oxidized/model/icotera.rb)
 |Ingate              |SIParator/Firewalls           |[ingate](/lib/oxidized/model/ingate.rb)          |@thanegill
 |IP Infusion         |OcNOS                         |[ocnos](/lib/oxidized/model/ocnos.rb)
+|Ivanti              |Ivanti Connect Secure (ICS)   |[ivanti](/lib/oxidized/model/ivanti.rb)          |@candleflip      |[ICS](Model-Notes/IvantiConnectSecure.md)
 |Juniper             |JunOS                         |[junos](/lib/oxidized/model/junos.rb)            |                 |[MX/QFX/EX/SRX/J Series](Model-Notes/JunOS.md)
 |                    |ScreenOS (Netscreen)          |[screenos](/lib/oxidized/model/screenos.rb)
 |LANCOM Systems GmbH |LCOS                          |[lancom](/lib/oxidized/model/lancom.rb)
@@ -158,6 +159,7 @@
 |Siklu               |EtherHaul                     |[siklu](/lib/oxidized/model/siklu.rb)            |@bdg-robert
 |                    |Multihaul TG                  |[siklumhtg](/lib/oxidized/model/siklumhtg.rb)    |@bdg-robert      |[Siklu Multihaul TG](Model-Notes/SikluMHTG.md)
 |Seiko Solutions     |SmartCS, SmartCS mini         |[smartcs](/lib/oxidized/model/smartcs.rb)
+|SmartByte           |LT-S8228G series              |[smartbyte](/lib/oxidized/model/smartbyte.rb)    |@freddy36
 |SonicWALL           |SonicOS                       |[sonicos](/lib/oxidized/model/sonicos.rb)
 |SNR                 |SNR-S300G, S2xxx, S3xxx, S4xxx|[dcnos](/lib/oxidized/model/dcnos.rb)
 |Speedtouch          |Thomson Speedtouch            |[speedtouch](/lib/oxidized/model/speedtouch.rb)
