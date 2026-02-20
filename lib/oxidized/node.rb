@@ -37,6 +37,9 @@ module Oxidized
 
       # model instance needs to access node instance
       @model.node = self
+
+      # Disable fetch at start
+      @last = JobStruct.new(Time.now.utc, Time.now.utc, 'never', 0) if Oxidized.config.disable_fetch_at_start
     end
 
     def run
