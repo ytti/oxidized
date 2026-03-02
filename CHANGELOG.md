@@ -33,6 +33,7 @@ fortigate model for FortiGate firewalls. Be sure to check the
 - Reintroduce support for Ruby 3.0. Fixes #3688 (@robertcheramy)
 - githubrepo: fix authentication with ssh-agent not working. Fixes #3420 (@robertcheramy)
 - fastiron: adjust prompt to account for stacks, remove time from stack output. Fixes #3106 (@ManoftheSea)
+- interval: fix fetching device configuration at oxidized start when interval is 0. Fixes #3746 (@tgr229)
 
 
 ## [0.35.0 - 2025-12-04]
