@@ -23,11 +23,11 @@ module Oxidized
                      "#{@jobs_done} of #{@nodes.size}"
         # ask for next node in queue non destructive way
         nextnode = @nodes.first
-        break if Oxidized.config.interval.zero? and not nextnode.nexted?
+        break if Oxidized.config.interval.zero? && !nextnode.nexted?
+
         nextnode.nexted = false
-        unless nextnode.last.nil?
-          break if nextnode.last.end + Oxidized.config.interval > Time.now.utc
-        end
+        break if !nextnode.last.nil? && (nextnode.last.end + Oxidized.config.interval > Time.now.utc)
+
         # shift nodes and get the next node
         node = @nodes.get
         node.running? ? next : node.running = true
