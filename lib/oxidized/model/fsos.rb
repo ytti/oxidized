@@ -2,7 +2,7 @@ class FSOS < Oxidized::Model
   # Fiberstore / fs.com
   using Refinements
   comment '! '
-  prompt /^([\w.@()-]+[#>]\s?)$/
+  prompt /^([\w.@\-\/\(\)]+[#>]\s?)$/
 
   # Handle paging
   expect /^ --More--.*$/ do |data, re|
