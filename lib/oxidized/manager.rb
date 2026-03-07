@@ -59,10 +59,10 @@ module Oxidized
     # if local version of file exists, load it, else load global - return falsy value if nothing loaded
     # Guarded by @load_mutex so concurrent Node construction threads cannot race on the same model/input/output.
     def loader(hash, global_dir, local_dir, name, namespace)
-      return hash[name] if hash.has_key?(name) # fast path: already loaded, no lock needed
+      return { name => hash[name] } if hash.has_key?(name) # fast path: already loaded, no lock needed
 
       @load_mutex.synchronize do
-        return hash[name] if hash.has_key?(name) # re-check inside lock
+        return { name => hash[name] } if hash.has_key?(name) # re-check inside lock
 
         dir = File.join(Config::ROOT, local_dir)
         map = Manager.load(dir, name, namespace) if File.exist? File.join(dir, name + ".rb")
