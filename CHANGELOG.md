@@ -16,6 +16,7 @@ fortigate model for FortiGate firewalls. Be sure to check the
 - smartbyte: new model for SmartByte switches (@freddy36)
 
 ### Changed
+- eos: add `show version | no-more`; volatile fields (`Uptime`, `Free memory`) are excluded so they do not trigger spurious config-change events. (@shtern)
 - Refactored models: Use `keep_lines` and `reject_lines` in aosw, arubainstant, asa, efos, firelinuxos, fsos, ironware, mlnxos and perle to (@robertcheramy)
 - Refactor SSH and SCP into a common class SSHBase. Fixes #3597 (@robertcheramy)
 - Modified models to support store mode on significant changes: ios, fortios, perle (@robertcheramy)
