@@ -1,0 +1,54 @@
+---
+init_prompt: |-
+    EOS-ROUTER#
+commands:
+  - "show inventory | no-more\n": |-
+      show inventory | no-more
+      System information
+        Model           : DCS-7050CX3-32S
+        Serial Number   : JPE20000001
+        Mfg Date       : 2021-08-12
+        Hardware Rev    : 11.00
+      EOS-ROUTER#
+  - "show version | no-more\n": |-
+      show version | no-more
+      Arista DCS-7050CX3-32S
+      Hardware version:    11.00
+      Serial number:       JPE20000001
+      Hardware MAC address: 001c.7300.1234
+      System MAC address:  001c.7300.1234
+      Software image version: 4.28.3M
+      Architecture:           i686
+      Internal build version: 4.28.3M-29566553.4283M
+      Internal build ID:      e48e1c3b-f8e2-4b2d-a18d-f0ef78893a44
+      Internal build image:   mfgtest
+      Image format version:   3.0
+      Image optimization:     None
+      Uptime:                 5 weeks, 3 days, 4 hours and 22 minutes
+      Total memory:           8164848 kB
+      Free memory:            5637964 kB
+      EOS-ROUTER#
+  - "show running-config | no-more | exclude ! Time:\n": |-
+      show running-config | no-more | exclude ! Time:
+      ! Command: show running-config
+      ! Saved By: admin at 2024-01-01T00:00:00+00:00
+      !
+      ! boot system flash:/EOS-4.28.3M.swi
+      !
+      hostname EOS-ROUTER
+      !
+      spanning-tree mode mstp
+      !
+      interface Ethernet1
+         description uplink
+      !
+      interface Management1
+         ip address 10.0.0.1/24
+      !
+      ip routing
+      !
+      end
+      EOS-ROUTER#
+  - "exit\n": |-
+      exit
+      logout
