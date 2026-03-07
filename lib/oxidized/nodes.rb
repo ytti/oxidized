@@ -10,29 +10,22 @@ module Oxidized
     attr_accessor :source, :jobs
     alias put unshift
     def load(node_want = nil)
-      with_lock do
-        new = []
-        @source = Oxidized.config.source.default
-        Oxidized.mgr.add_source(@source) || raise(MethodNotFound, "cannot load node source '#{@source}', not found")
-        logger.info "Loading nodes"
-        nodes = Oxidized.mgr.source[@source].new.load node_want
-        nodes.each do |node|
-          # we want to load specific node(s), not all of them
-          next unless node_want? node_want, node
+      @source = Oxidized.config.source.default
+      Oxidized.mgr.add_source(@source) || raise(MethodNotFound, "cannot load node source '#{@source}', not found")
+      logger.info "Loading nodes"
 
-          begin
-            node_obj = Node.new node
-            new.push node_obj
-          rescue ModelNotFound => e
-            logger.error "node %s raised %s with message '%s'" % [node, e.class, e.message]
-          rescue Resolv::ResolvError => e
-            logger.error "node %s is not resolvable, raised %s with message '%s'" % [node, e.class, e.message]
-          end
-        end
-        size.zero? ? replace(new) : update_nodes(new)
+      # All slow I/O (network fetch, DNS resolution, Node construction) runs outside
+      # the mutex so that web-API calls remain responsive during a reload.
+      raw_nodes  = Oxidized.mgr.source[@source].new.load node_want
+      candidates = raw_nodes.select { |node| node_want?(node_want, node) }
+      new_nodes  = build_nodes_parallel(candidates)
+
+      # Only the atomic list swap needs the lock, keeping the critical section minimal.
+      with_lock do
+        size.zero? ? replace(new_nodes) : update_nodes(new_nodes)
         Output.clean_obsolete_nodes(self) if node_want.nil?
-        logger.info "Loaded #{size} nodes"
       end
+      logger.info "Loaded #{size} nodes"
     end
 
     def node_want?(node_want, node)
@@ -149,6 +142,40 @@ module Oxidized
 
     def with_lock(...)
       @mutex.synchronize(...)
+    end
+
+    # Constructs Node objects from +candidates+ (an Array of option hashes) using
+    # a thread pool so that DNS lookups run concurrently instead of serially.
+    # Results preserve the original source ordering.
+    def build_nodes_parallel(candidates)
+      return [] if candidates.empty?
+
+      num_threads = [Oxidized.config.node_load_threads || 20, candidates.size].min
+      results     = []
+      results_mu  = Mutex.new
+      queue       = Queue.new
+      candidates.each_with_index { |node, i| queue << [i, node] }
+
+      threads = num_threads.times.map do
+        Thread.new do
+          loop do
+            i, node = queue.pop(true)
+            begin
+              built = Node.new(node)
+              results_mu.synchronize { results << [i, built] }
+            rescue ModelNotFound => e
+              logger.error "node %s raised %s with message '%s'" % [node, e.class, e.message]
+            rescue Resolv::ResolvError => e
+              logger.error "node %s is not resolvable, raised %s with message '%s'" % [node, e.class, e.message]
+            end
+          rescue ThreadError
+            break # queue is empty
+          end
+        end
+      end
+      threads.each(&:join)
+
+      results.sort_by { |i, _| i }.map { |_, n| n }
     end
 
     # @param node node which is removed from nodes list

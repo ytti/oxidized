@@ -26,11 +26,12 @@ module Oxidized
     attr_reader :input, :output, :source, :model, :hook
 
     def initialize
-      @input  = {}
-      @output = {}
-      @source = {}
-      @model  = {}
-      @hook   = {}
+      @input      = {}
+      @output     = {}
+      @source     = {}
+      @model      = {}
+      @hook       = {}
+      @load_mutex = Mutex.new
     end
 
     def add_input(name)
@@ -56,11 +57,18 @@ module Oxidized
     private
 
     # if local version of file exists, load it, else load global - return falsy value if nothing loaded
+    # Guarded by @load_mutex so concurrent Node construction threads cannot race on the same model/input/output.
     def loader(hash, global_dir, local_dir, name, namespace)
-      dir   = File.join(Config::ROOT, local_dir)
-      map   = Manager.load(dir, name, namespace) if File.exist? File.join(dir, name + ".rb")
-      map ||= Manager.load(global_dir, name, namespace)
-      hash.merge!(map) if map
+      return hash[name] if hash.has_key?(name) # fast path: already loaded, no lock needed
+
+      @load_mutex.synchronize do
+        return hash[name] if hash.has_key?(name) # re-check inside lock
+
+        dir = File.join(Config::ROOT, local_dir)
+        map = Manager.load(dir, name, namespace) if File.exist? File.join(dir, name + ".rb")
+        map ||= Manager.load(global_dir, name, namespace)
+        hash.merge!(map) if map
+      end
     end
   end
 end

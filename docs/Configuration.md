@@ -90,6 +90,7 @@ threads: 30 # maximum number of threads
 # false - the number of threads is selected automatically based on the interval option, but not more than the maximum
 # true - always use the maximum number of threads
 use_max_threads: false
+node_load_threads: 20 # number of threads used to construct nodes (DNS lookups) on startup and reload
 timeout: 20
 timelimit: 300
 retries: 3
@@ -356,6 +357,23 @@ Names can instead be passed verbatim to the input:
 ```yaml
 resolve_dns: false
 ```
+
+## Parallel node loading
+
+On startup and after each SIGHUP reload, Oxidized constructs a `Node` object for
+every entry returned by the source. When `resolve_dns` is enabled (the default),
+each node triggers a DNS lookup — these lookups happen sequentially by default,
+which can add minutes of delay on large node lists.
+
+Oxidized builds nodes concurrently using a thread pool. The pool size is
+controlled by `node_load_threads` (default: 20). Increase it if your DNS server
+can handle more parallel queries:
+
+```yaml
+node_load_threads: 50
+```
+
+Set it to `1` to restore the old sequential behaviour.
 
 ## Environment variables
 

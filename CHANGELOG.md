@@ -10,12 +10,14 @@ fortigate model for FortiGate firewalls. Be sure to check the
 [Fortinet model notes](docs/Model-Notes/Fortinet.md) before upgrading.
 
 ### Added
+- Parallel node loading: DNS lookups and node construction now run concurrently via a configurable thread pool, dramatically reducing startup and reload time on large node lists. Controlled by the new `node_load_threads` configuration option (default: 20). (@shtern)
 - String refinements: introduce `keep_lines` and `reject_lines` methods (@robertcheramy)
 - Support for storing configurations only on significant changes (@robertcheramy)
 - Add support for Ivanti Secure Connect ISA models (@candleflip)
 - smartbyte: new model for SmartByte switches (@freddy36)
 
 ### Changed
+- Node list reload (SIGHUP) now runs in a background thread so the worker loop and web API remain responsive during reload. (@shtern)
 - Refactored models: Use `keep_lines` and `reject_lines` in aosw, arubainstant, asa, efos, firelinuxos, fsos, ironware, mlnxos and perle to (@robertcheramy)
 - Refactor SSH and SCP into a common class SSHBase. Fixes #3597 (@robertcheramy)
 - Modified models to support store mode on significant changes: ios, fortios, perle (@robertcheramy)
