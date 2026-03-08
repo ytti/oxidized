@@ -8,8 +8,9 @@ module Oxidized
     include SemanticLogger::Loggable
 
     attr_reader :name, :ip, :model, :input, :output, :group, :auth, :prompt, :timeout, :vars, :last, :repo
-    attr_accessor :running, :user, :email, :msg, :from, :stats, :retry, :err_type, :err_reason
+    attr_accessor :running, :user, :email, :msg, :from, :stats, :retry, :err_type, :err_reason, :nexted
     alias running? running
+    alias nexted? nexted
 
     # opt is a hash with the node parameters given in the source (:name, :group, :ip...)
     def initialize(opt)
@@ -34,6 +35,7 @@ module Oxidized
       @repo = resolve_repo opt
       @err_type = nil
       @err_reason = nil
+      @nexted = false
 
       # model instance needs to access node instance
       @model.node = self
