@@ -18,6 +18,7 @@ fortigate model for FortiGate firewalls. Be sure to check the
 
 ### Changed
 - Node list reload (SIGHUP) now runs in a background thread so the worker loop and web API remain responsive during reload. (@shtern)
+- Delta-based node reload: unchanged nodes are reused without DNS lookup or re-construction; only added, removed, or config-changed nodes are rebuilt. Runtime state (last job, stats) is preserved across reloads. (@shtern)
 - Refactored models: Use `keep_lines` and `reject_lines` in aosw, arubainstant, asa, efos, firelinuxos, fsos, ironware, mlnxos and perle to (@robertcheramy)
 - Refactor SSH and SCP into a common class SSHBase. Fixes #3597 (@robertcheramy)
 - Modified models to support store mode on significant changes: ios, fortios, perle (@robertcheramy)

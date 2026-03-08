@@ -195,6 +195,88 @@ describe Oxidized::Nodes do
     end
 
     # -------------------------------------------------------------------------
+    # Delta reload behaviour
+    # -------------------------------------------------------------------------
+
+    it 'reuses the same Node object when source opts are unchanged on reload' do
+      @fake_source_instance.stubs(:load).returns([NODE_OPTS])
+
+      @load_nodes.load
+      original_object = @load_nodes.first
+
+      @load_nodes.load
+
+      _(@load_nodes.first).must_be_same_as original_object
+    end
+
+    it 'replaces the Node object when source opts change on reload' do
+      opts_v1 = NODE_OPTS
+      opts_v2 = NODE_OPTS.merge(vars: { enable: 'newpass' })
+      @fake_source_instance.stubs(:load).returns([opts_v1]).then.returns([opts_v2])
+
+      @load_nodes.load
+      original_object = @load_nodes.first
+
+      @load_nodes.load
+
+      _(@load_nodes.first).wont_be_same_as original_object
+    end
+
+    it 'carries over last and stats when source opts change on reload' do
+      opts_v1 = NODE_OPTS
+      opts_v2 = NODE_OPTS.merge(vars: { enable: 'newpass' })
+      @fake_source_instance.stubs(:load).returns([opts_v1]).then.returns([opts_v2])
+
+      @load_nodes.load
+      node = @load_nodes.first
+
+      fake_job = mock('job')
+      fake_job.stubs(:start).returns(Time.at(1))
+      fake_job.stubs(:end).returns(Time.at(2))
+      fake_job.stubs(:status).returns(:success)
+      fake_job.stubs(:time).returns(0.5)
+      node.last  = fake_job
+      old_last   = node.last
+      fake_stats = mock('stats')
+      node.stats = fake_stats
+
+      @load_nodes.load
+
+      _(@load_nodes.first.last).must_equal old_last
+      _(@load_nodes.first.stats).must_equal fake_stats
+    end
+
+    it 'removes a node that disappears from the source on reload' do
+      opts1 = NODE_OPTS
+      opts2 = NODE_OPTS.merge(name: 'router2')
+      @fake_source_instance.stubs(:load)
+                           .returns([opts1, opts2])
+                           .then.returns([opts2])
+
+      @load_nodes.load
+      _(@load_nodes.size).must_equal 2
+
+      @load_nodes.load
+      _(@load_nodes.size).must_equal 1
+      _(@load_nodes.first.name).must_equal 'router2'
+    end
+
+    it 'adds a new node that appears in the source on reload' do
+      opts1 = NODE_OPTS
+      opts2 = NODE_OPTS.merge(name: 'router2')
+      @fake_source_instance.stubs(:load)
+                           .returns([opts1])
+                           .then.returns([opts1, opts2])
+
+      @load_nodes.load
+      _(@load_nodes.size).must_equal 1
+
+      @load_nodes.load
+      _(@load_nodes.size).must_equal 2
+      _(@load_nodes.map(&:name).sort).must_equal %w[router1 router2]
+    end
+
+    # -------------------------------------------------------------------------
     # Concurrency: the mutex must NOT be held while the source is being fetched.
     # These tests use plain Ruby objects (not mocha mocks) for the source so
     # the blocking behaviour works correctly across threads.

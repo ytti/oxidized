@@ -7,13 +7,15 @@ module Oxidized
   class Node
     include SemanticLogger::Loggable
 
-    attr_reader :name, :ip, :model, :input, :output, :group, :auth, :prompt, :timeout, :vars, :last, :repo
+    attr_reader :name, :ip, :model, :input, :output, :group, :auth, :prompt, :timeout, :vars, :last, :repo,
+                :source_opts
     attr_accessor :running, :user, :email, :msg, :from, :stats, :retry, :err_type, :err_reason, :nexted
     alias running? running
     alias nexted? nexted
 
     # opt is a hash with the node parameters given in the source (:name, :group, :ip...)
     def initialize(opt)
+      @source_opts = opt.dup.freeze
       logger.debug 'resolving DNS for %s...' % opt[:name]
       # remove the prefix if an IP Address is provided with one as IPAddr converts it to a network address.
       ip_addr, = opt[:ip].to_s.split("/")
