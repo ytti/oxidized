@@ -34,6 +34,7 @@ fortigate model for FortiGate firewalls. Be sure to check the
 - githubrepo: fix authentication with ssh-agent not working. Fixes #3420 (@robertcheramy)
 - fastiron: adjust prompt to account for stacks, remove time from stack output. Fixes #3106 (@ManoftheSea)
 - interval: fix fetching device configuration at oxidized start when interval is 0. Fixes #3746 (@tgr229)
+- voss: more cleanup of constantly changing values (fan & temp) for at least Extreme Networks 7520-48Y-8C-FabricEngine (8.10.5.0)
 
 
 ## [0.35.0 - 2025-12-04]
