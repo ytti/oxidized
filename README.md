@@ -53,6 +53,7 @@ Check out the [Oxidized TREX 2014 presentation](http://youtu.be/kBQ_CTUuqeU?t=3h
       * [Output: File](docs/Outputs.md#output-file)
       * [Output types](docs/Outputs.md#output-types)
     * [Advanced Configuration](docs/Configuration.md#advanced-configuration)
+    * [Dynamic Model Selection](docs/Dynamic-Model-Selection.md#Dynamic-Model-Selection)
     * [Advanced Group Configuration](docs/Configuration.md#advanced-group-configuration)
     * [Hooks](docs/Hooks.md)
       * [Hook: exec](docs/Hooks.md#hook-type-exec)
