@@ -25,6 +25,7 @@ module Oxidized
       asetus.default.username      = 'username'
       asetus.default.password      = 'password'
       asetus.default.model         = 'junos'
+      asetus.default.model_rules_enable = false
       asetus.default.resolve_dns   = true # if false, don't resolve DNS to IP
       asetus.default.interval      = 3600
       asetus.default.debug         = false

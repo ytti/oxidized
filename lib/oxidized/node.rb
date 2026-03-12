@@ -186,12 +186,77 @@ module Oxidized
       Oxidized.mgr.output[output]
     end
 
+
     def resolve_model(opt)
-      model = resolve_key :model, opt
-      unless Oxidized.mgr.model[model]
-        logger.debug "Loading model #{model.inspect}"
-        Oxidized.mgr.add_model(model) || raise(ModelNotFound, "#{model} not found for node #{ip}")
+      node_ip = opt[:ip] || opt['ip']
+    
+      logger.debug "========================================================================================================================"
+      logger.debug "resolve_model called for #{node_ip}"
+      logger.debug "OPTIONS: #{opt.inspect}"
+      logger.debug "========================================================================================================================"
+    
+      # 1. Explicitly defined model in the node (from the source)
+      explicit_model = opt[:model] || opt['model']
+      explicit_model = nil if explicit_model && explicit_model.to_s.strip.empty?
+      if explicit_model
+        model = explicit_model
+        logger.debug "Explicit model from node: #{model}"
+      else
+        logger.debug "No explicit model in node data"
+        model = nil
+    
+        # 2. If model_rules are enabled and they are in the config, check the rules
+        if Oxidized.config.model_rules_enable && Oxidized.config.has_key?('model_rules')
+          logger.debug "model_rules are enabled, checking rules for #{node_ip}"
+          Oxidized.config.model_rules.each do |rule|
+            logger.debug "Testing rule: #{rule.inspect}"
+            match = true
+    
+            rule.each do |k, v|
+              next if k == 'model'
+    
+              device_value = (opt[k.to_sym] || opt[k.to_s]).to_s.strip.downcase
+              rule_value = v.to_s.strip.downcase
+    
+              logger.debug "  compare #{k}: device=#{device_value.inspect} rule=#{rule_value.inspect}"
+              if device_value != rule_value
+                logger.debug "   -> mismatch"
+                match = false
+                break
+              else
+                logger.debug "   -> match"
+              end
+            end
+    
+            if match
+              model = rule['model']
+              logger.debug "model_rules matched -> #{model}"
+              break
+            end
+          end
+        else
+          logger.debug "model_rules are disabled or not present, skipping"
+        end
+    
+        # 3. If the model is not yet defined (there is no explicit one, the rules did not work or are disabled), we use the standard resolve_key
+        if model.nil? || model.empty?
+          logger.debug "No model determined yet, trying resolve_key"
+          model = resolve_key(:model, opt)
+          logger.debug "resolve_key returned: #{model.inspect}"
+        end
       end
+    
+      raise ModelNotFound, "No model resolved for node #{node_ip}" if model.nil? || model.empty?
+    
+      logger.debug "FINAL MODEL: #{model}"
+    
+      # 4. Load the model
+      unless Oxidized.mgr.model[model]
+        logger.debug "Loading model #{model}"
+        Oxidized.mgr.add_model(model) || raise(ModelNotFound, "#{model} not found for node #{node_ip}")
+      end
+    
+      logger.debug "MODEL CLASS: #{Oxidized.mgr.model[model]}"
       Oxidized.mgr.model[model].new
     end
 

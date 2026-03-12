@@ -14,6 +14,8 @@ fortigate model for FortiGate firewalls. Be sure to check the
 - Support for storing configurations only on significant changes (@robertcheramy)
 - Add support for Ivanti Secure Connect ISA models (@candleflip)
 - smartbyte: new model for SmartByte switches (@freddy36)
+- Added `model_rules` for dynamic model selection based on device attributes (e.g., vendor, group, type, IP). Controlled by `model_rules_enable` flag. (@alexnet123)
+
 
 ### Changed
 - Refactored models: Use `keep_lines` and `reject_lines` in aosw, arubainstant, asa, efos, firelinuxos, fsos, ironware, mlnxos and perle to (@robertcheramy)
