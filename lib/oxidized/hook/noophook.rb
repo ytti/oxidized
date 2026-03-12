@@ -1,9 +1,13 @@
-class Oxidized::Hook::NoopHook < Oxidized::Hook
-  def validate_cfg!
-    logger.info "Validate config"
-  end
+module Oxidized
+  module Hook
+    class NoopHook < Oxidized::Hook
+      def validate_cfg!
+        logger.info "Validate config"
+      end
 
-  def run_hook(ctx)
-    logger.info "Run hook with context: #{ctx}"
+      def run_hook(ctx)
+        logger.info "Run hook with context: #{ctx}"
+      end
+    end
   end
 end
