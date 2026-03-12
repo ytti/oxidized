@@ -130,4 +130,8 @@ module Oxidized
       raise NotImplementedError
     end
   end
+
+  # Namespace for concrete hook implementations
+  module Hooks
+  end
 end

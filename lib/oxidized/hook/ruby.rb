@@ -1,5 +1,5 @@
 module Oxidized
-  class Hook
+  module Hooks
     class Ruby < Oxidized::Hook
       def validate_cfg!
         raise ArgumentError, "ruby hook requires 'file'" unless cfg.has_key?('file')

@@ -2,7 +2,7 @@ require_relative '../spec_helper'
 require 'tmpdir'
 require 'oxidized/hook/ruby'
 
-describe Oxidized::Hook::Ruby do
+describe Oxidized::Hooks::Ruby do
   before do
     @tmpdir = Dir.mktmpdir
     Oxidized.asetus = Asetus.new
@@ -20,20 +20,20 @@ describe Oxidized::Hook::Ruby do
 
   def build_hook(file_content)
     path = make_hook_file(file_content)
-    hook = Oxidized::Hook::Ruby.new
+    hook = Oxidized::Hooks::Ruby.new
     Oxidized.config.hooks.ruby_hook.file = path
     hook.cfg = Oxidized.config.hooks.ruby_hook
     hook
   end
 
   it "raises ArgumentError when 'file' config key is missing" do
-    hook = Oxidized::Hook::Ruby.new
+    hook = Oxidized::Hooks::Ruby.new
     Oxidized.config.hooks.ruby_hook_empty = { type: 'ruby' }
     _(-> { hook.cfg = Oxidized.config.hooks.ruby_hook_empty }).must_raise ArgumentError
   end
 
   it "raises ArgumentError when file does not exist" do
-    hook = Oxidized::Hook::Ruby.new
+    hook = Oxidized::Hooks::Ruby.new
     Oxidized.config.hooks.ruby_hook_missing.file = "/nonexistent/path/hook.rb"
     _(-> { hook.cfg = Oxidized.config.hooks.ruby_hook_missing }).must_raise ArgumentError
   end

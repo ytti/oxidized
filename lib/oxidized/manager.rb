@@ -50,7 +50,7 @@ module Oxidized
     end
 
     def add_hook(name)
-      loader @hook, Config::HOOK_DIR, "hook", name, Oxidized::Hook
+      loader @hook, Config::HOOK_DIR, "hook", name, Oxidized::Hooks
     end
 
     private

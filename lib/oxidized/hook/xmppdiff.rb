@@ -2,7 +2,7 @@ require 'xmpp4r'
 require 'xmpp4r/muc/helper/simplemucclient'
 
 module Oxidized
-  class Hook
+  module Hooks
     class XMPPDiff < Oxidized::Hook
       def connect
         @client = Jabber::Client.new(Jabber::JID.new(cfg.jid))

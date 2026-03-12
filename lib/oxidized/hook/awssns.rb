@@ -1,7 +1,7 @@
 require 'aws-sdk'
 
 module Oxidized
-  class Hook
+  module Hooks
     class AwsSns < Oxidized::Hook
       def validate_cfg!
         raise KeyError, 'hook.region is required' unless cfg.has_key?('region')

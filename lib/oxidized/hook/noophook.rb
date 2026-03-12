@@ -1,5 +1,5 @@
 module Oxidized
-  class Hook
+  module Hooks
     class NoopHook < Oxidized::Hook
       def validate_cfg!
         logger.info "Validate config"

@@ -2,13 +2,13 @@ require_relative '../spec_helper'
 require 'rugged'
 require 'oxidized/hook/githubrepo'
 
-describe Oxidized::Hook::GithubRepo do
+describe Oxidized::Hooks::GithubRepo do
   let(:credentials) { mock }
   let(:remote) { mock 'remote' }
   let(:remotes) { mock 'remotes' }
   let(:repo_head) { mock 'repo_head' }
   let(:repo) { mock 'repo' }
-  let(:gr) { Oxidized::Hook::GithubRepo.new }
+  let(:gr) { Oxidized::Hooks::GithubRepo.new }
   let(:local_branch) { mock 'local_branch' }
   let(:remote_branch) { mock 'remote_branch' }
   let(:repo_branches) { mock 'repo_branches' }
@@ -85,7 +85,7 @@ describe Oxidized::Hook::GithubRepo do
       it "should not try merging when there's conflict" do
         merge_index.expects(:conflicts?).returns(true)
         Rugged::Commit.expects(:create).never
-        Oxidized::Hook::GithubRepo.logger.expects(:warn).with(
+        Oxidized::Hooks::GithubRepo.logger.expects(:warn).with(
           'Conflicts detected, skipping Rugged::Commit.create'
         )
 
@@ -143,7 +143,7 @@ describe Oxidized::Hook::GithubRepo do
         Oxidized.config.hooks.github_repo_hook.remote_repo = 'https://github.com/username/foo.git'
         Oxidized.config.hooks.github_repo_hook.username = 'username'
         Oxidized.config.hooks.github_repo_hook.password = 'password'
-        Oxidized::Hook::GithubRepo.logger.expects(:info).with(
+        Oxidized::Hooks::GithubRepo.logger.expects(:info).with(
           'Pushing local repository(/foo.git) to remote: https://github.com/username/foo.git'
         )
 
@@ -154,7 +154,7 @@ describe Oxidized::Hook::GithubRepo do
       it "will push to the remote repository using ssh" do
         Oxidized.config.hooks.github_repo_hook.remote_repo = 'git@github.com:username/foo.git'
         remote.expects(:url).returns('git@github.com:username/foo.git')
-        Oxidized::Hook::GithubRepo.logger.expects(:info).with(
+        Oxidized::Hooks::GithubRepo.logger.expects(:info).with(
           'Pushing local repository(/foo.git) to remote: git@github.com:username/foo.git'
         )
 
@@ -179,7 +179,7 @@ describe Oxidized::Hook::GithubRepo do
           Oxidized.config.output.git.repo.ggrroouupp = repository
           Oxidized.config.hooks.github_repo_hook.remote_repo.ggrroouupp = 'ggrroouupp#remote_repo'
           remote.expects(:url).returns('ggrroouupp#remote_repo')
-          Oxidized::Hook::GithubRepo.logger.expects(:info).with(
+          Oxidized::Hooks::GithubRepo.logger.expects(:info).with(
             'Pushing local repository(/foo.git) to remote: ggrroouupp#remote_repo'
           )
         end
@@ -198,7 +198,7 @@ describe Oxidized::Hook::GithubRepo do
           Oxidized.config.hooks.github_repo_hook.remote_repo = 'github_repo_hook#remote_repo'
           Oxidized.config.output.git.single_repo = true
           remote.expects(:url).returns('github_repo_hook#remote_repo')
-          Oxidized::Hook::GithubRepo.logger.expects(:info).with(
+          Oxidized::Hooks::GithubRepo.logger.expects(:info).with(
             'Pushing local repository(/foo.git) to remote: github_repo_hook#remote_repo'
           )
         end

@@ -44,21 +44,20 @@ Every hook method receives a single `ctx` argument (a `HookContext` struct). Ava
 | Field | Events | Description |
 |-------|--------|-------------|
 | `ctx.event` | all | Event name as a Symbol |
-| `ctx.node` | `node_success`, `node_fail`, `post_store` | The Oxidized node object |
+| `ctx.node` | `node_success`, `node_fail`, `post_store`, `source_node_transform` | The Oxidized node object or dict |
 | `ctx.job` | `node_success`, `node_fail`, `post_store` | The completed job object |
 | `ctx.commitref` | `post_store` | Git commit reference (or nil) |
-| `ctx.node_attrs` | `source_node_transform` | Parsed node attribute hash built from source mapping |
-| `ctx.raw_node` | `source_node_transform` | Original source record (Hash for JSON/HTTP/SQL, Array for CSV) |
+| `ctx.node_raw` | `source_node_transform` | Original source record (Hash for JSON/HTTP/SQL, Array for CSV) |
 | `ctx.binding` | `source_node_transform` | Ruby Binding at the call site |
 
 ### source_node_transform return value
 
 For `source_node_transform`, the return value matters:
 
-* Return a Hash — used as the node's attributes (can be `ctx.node_attrs` unmodified, or a merged/transformed copy).
+* Return a Hash — used as the node's attributes (can be `ctx.node` unmodified, or a merged/transformed copy).
 * Return `nil` — the node is excluded from the node list entirely.
 
-The hooks are applied in the order they are registered. The return value of each hook becomes the `ctx.node_attrs` for the next hook in the sequence.
+The hooks are applied in the order they are registered. The return value of each hook becomes the `ctx.node` for the next hook in the sequence.
 
 ### ruby configuration example
 
@@ -105,10 +104,10 @@ PLATFORM_MODEL = {
 
 def source_node_transform(ctx)
   # Return nil to exclude inactive nodes:
-  # return nil unless ctx.raw_node["active"]
+  # return nil unless ctx.node_raw["active"]
 
-  model = PLATFORM_MODEL[ctx.raw_node["platform"].to_s]
-  model ? ctx.node_attrs.merge(model: model) : ctx.node_attrs
+  model = PLATFORM_MODEL[ctx.node_raw["platform"].to_s]
+  model ? ctx.node.merge(model: model) : ctx.node
 end
 ```
 

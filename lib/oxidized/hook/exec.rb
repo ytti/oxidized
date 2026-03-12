@@ -1,5 +1,5 @@
 module Oxidized
-  class Hook
+  module Hooks
     class Exec < Oxidized::Hook
       include Process
 
