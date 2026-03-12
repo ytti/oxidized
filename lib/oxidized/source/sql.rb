@@ -46,9 +46,9 @@ module Oxidized
           end
           keys[:vars] = vars unless vars.empty?
 
-          keys = Oxidized.hooks.source_node_transform(node_attrs: keys,
-                                                       raw_node:   node.to_hash,
-                                                       binding:    binding)
+          keys = Oxidized.hooks.source_node_transform(node:     keys,
+                                                      node_raw: node.to_hash,
+                                                      binding:  binding)
           next if keys.nil?
 
           nodes << keys

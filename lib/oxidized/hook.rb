@@ -18,8 +18,8 @@ module Oxidized
     # The keyword_init: true argument forces keyword-argument initialization.
     HookContext = Struct.new(
       :event, :node, :job, :commitref,
-      :node_attrs, # parsed node attribute hash (chained in source_node_transform)
-      :raw_node,   # raw source record: JSON hash, SQL row hash, CSV field array
+      :node, # parsed node attribute hash (chained in source_node_transform)
+      :node_raw,   # raw source record: JSON hash, SQL row hash, CSV field array
       :binding,    # Ruby binding captured at the call site
       keyword_init: true
     )
