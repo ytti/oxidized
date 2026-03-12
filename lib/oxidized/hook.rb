@@ -18,7 +18,6 @@ module Oxidized
     # The keyword_init: true argument forces keyword-argument initialization.
     HookContext = Struct.new(
       :event, :node, :job, :commitref,
-      :node, # parsed node attribute hash (chained in source_node_transform)
       :node_raw,   # raw source record: JSON hash, SQL row hash, CSV field array
       :binding,    # Ruby binding captured at the call site
       keyword_init: true
@@ -64,20 +63,20 @@ module Oxidized
     # Runs source_node_transform hooks in sequence, passing the return value of
     # each hook as node_attrs to the next. Returns the final node_attrs, or nil
     # to signal that the node should be excluded.
-    def source_node_transform(node_attrs:, raw_node:, binding:)
+    def source_node_transform(node:, node_raw:, binding:)
       ctx = HookContext.new(
-        event:      :source_node_transform,
-        node_attrs: node_attrs,
-        raw_node:   raw_node,
-        binding:    binding
+        event:    :source_node_transform,
+        node:     node,
+        node_raw: node_raw,
+        binding:  binding
       )
       @registered_hooks[:source_node_transform].each do |r_hook|
-        ctx.node_attrs = r_hook.hook.run_hook(ctx)
+        ctx.node = r_hook.hook.run_hook(ctx)
       rescue StandardError => e
         logger.error "Hook #{r_hook.name} (#{r_hook.hook}) failed " \
                      "(#{e.inspect}) for event :source_node_transform"
       end
-      ctx.node_attrs
+      ctx.node
     end
 
     # --- Fire-and-forget events ---
