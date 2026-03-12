@@ -1,7 +1,7 @@
 require 'rugged'
 
 module Oxidized
-  module Hook
+  class Hook
     class GithubRepo < Oxidized::Hook
       def validate_cfg!
         raise KeyError, 'hook.remote_repo is required' unless cfg.has_key?('remote_repo')

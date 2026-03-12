@@ -6,7 +6,7 @@ require 'net/http'
 # diff defaults to true
 
 module Oxidized
-  module Hook
+  class Hook
     class SlackDiff < Oxidized::Hook
       def validate_cfg!
         raise KeyError, 'hook.token is required' unless cfg.has_key?('token')
