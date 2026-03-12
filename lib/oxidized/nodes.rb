@@ -19,6 +19,7 @@ module Oxidized
         nodes.each do |node|
           # we want to load specific node(s), not all of them
           next unless node_want? node_want, node
+          next if node[:ignore]
 
           begin
             node_obj = Node.new node
@@ -178,8 +179,10 @@ module Oxidized
       replace(nodes)
       each do |node|
         if (i = old.find_node_index(node.name))
-          node.stats = old[i].stats
-          node.last  = old[i].last
+          node.stats     = old[i].stats
+          node.last      = old[i].last
+          # API pause overrides source/config; preserve it across reloads
+          node.paused_by = :api if old[i].paused_by == :api
         end
       rescue NodeNotFound
         # Do nothing:

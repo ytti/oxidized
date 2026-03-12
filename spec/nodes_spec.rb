@@ -44,6 +44,61 @@ describe Oxidized::Nodes do
     end
   end
 
+  describe '#load' do
+    before(:each) do
+      raw_nodes = [
+        { name: 'active',     model: 'junos' },
+        { name: 'ignored',    model: 'junos', ignore: true },
+        { name: 'paused-src', model: 'junos', paused: true },
+        { name: 'paused-cfg', model: 'junos', group: 'maintenance' }
+      ]
+
+      Oxidized.config.groups['maintenance'].paused = true
+
+      source_instance = mock
+      source_instance.stubs(:load).returns(raw_nodes)
+      source_class = mock
+      source_class.stubs(:new).returns(source_instance)
+
+      Oxidized.config.source.default = 'mock'
+      Oxidized.mgr.source['mock'] = source_class
+      Oxidized.mgr.stubs(:add_source).returns(true)
+
+      @nodes = Oxidized::Nodes.new
+    end
+
+    it 'loads active nodes' do
+      _(@nodes.find { |n| n.name == 'active' }).wont_be_nil
+    end
+
+    it 'does not load ignored nodes' do
+      _(@nodes.find { |n| n.name == 'ignored' }).must_be_nil
+    end
+
+    it 'loads source-paused nodes' do
+      _(@nodes.find { |n| n.name == 'paused-src' }).wont_be_nil
+    end
+
+    it 'loads config-paused nodes' do
+      _(@nodes.find { |n| n.name == 'paused-cfg' }).wont_be_nil
+    end
+
+    it 'sets paused_by to :src for nodes paused in source' do
+      node = @nodes.find { |n| n.name == 'paused-src' }
+      _(node.paused_by).must_equal :src
+    end
+
+    it 'sets paused_by to :cfg for nodes paused via configuration' do
+      node = @nodes.find { |n| n.name == 'paused-cfg' }
+      _(node.paused_by).must_equal :cfg
+    end
+
+    it 'has nil paused_by for active nodes' do
+      node = @nodes.find { |n| n.name == 'active' }
+      _(node.paused_by).must_be_nil
+    end
+  end
+
   describe '#next' do
     before(:each) do
       Oxidized::Nodes.logger.expects(:info)

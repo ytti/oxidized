@@ -244,6 +244,59 @@ From least to most important:
 
 More important options overwrite less important ones if they are set.
 
+## Pausing nodes
+
+A node can be paused, which means it remains in the node list but its configuration is never fetched. This is useful for maintenance windows or when a device is temporarily unreachable.
+
+### Pausing via configuration
+
+The `paused` option follows the same [precedence](#options-credentials-vars-etc-precedence) as other node options. You can pause an entire group or all nodes of a given model:
+
+```yaml
+# Pause all nodes in the "legacy" group
+groups:
+  legacy:
+    paused: true
+
+# Pause all nodes using the "ios" model
+models:
+  ios:
+    paused: true
+```
+
+### Pausing via source
+
+Sources can map a `paused` field to pause individual nodes:
+
+```yaml
+source:
+  default: csv
+  csv:
+    file: /var/lib/oxidized/router.db
+    delimiter: !ruby/regexp /:/
+    map:
+      name: 0
+      model: 1
+      paused: 2   # column 2: "true" pauses the node
+```
+
+### Pausing via the API
+
+Nodes can also be paused and unpaused at runtime through the oxidized-web REST API. An API-set pause persists across source reloads: if the source does not explicitly set `paused`, the API state is preserved.
+
+### Pause state in API responses
+
+The `paused` and `paused_by` fields are included in node API responses:
+
+| `paused` | `paused_by` | Meaning |
+|----------|-------------|---------|
+| `false`  | `nil`       | Node is active |
+| `true`   | `:src`      | Paused by source data |
+| `true`   | `:cfg`      | Paused by configuration (group/model/global) |
+| `true`   | `:api`      | Paused at runtime via the API |
+
+API-set pauses take precedence: if a node is paused via the API, it stays paused on reload even if the source or config does not set `paused`.
+
 ## oxidized-web: RESTful API and web interface
 
 The RESTful API and web interface are enabled by installing the `oxidized-web`

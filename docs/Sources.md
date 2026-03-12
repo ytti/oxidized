@@ -3,6 +3,39 @@
 Note: in all sources, the map attribute `name` is mandatory. It is used to identify the node and
 for example choose the filename for the configuration output.
 
+## Skipping nodes with the `ignore` field
+
+Any source can map an `ignore` field. When the mapped field is truthy (`true`, any non-empty/non-false value), the node is skipped entirely and never loaded into Oxidized.
+
+This is useful when your source of truth contains devices that should not be backed up, without having to remove them from the source.
+
+```yaml
+source:
+  default: csv
+  csv:
+    file: /var/lib/oxidized/router.db
+    delimiter: !ruby/regexp /:/
+    map:
+      name: 0
+      model: 1
+      ignore: 2   # column 2: "true" skips the node, "false" or absent loads it
+```
+
+For JSON/HTTP sources:
+
+```yaml
+source:
+  default: http
+  http:
+    url: https://url/api
+    map:
+      name: hostname
+      model: os
+      ignore: disabled   # JSON field "disabled": true skips the node
+```
+
+The value is interpreted by the standard string-to-boolean conversion: the string `"true"` becomes `true`, `"false"` becomes `false`, and `"nil"` becomes `nil`. Any truthy value causes the node to be ignored.
+
 ## Source: CSV
 
 One line per device, colon separated. If `ip` isn't present, a DNS lookup will be done against `name`.  For large installations, setting `ip` will dramatically reduce startup time.

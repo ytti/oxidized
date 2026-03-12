@@ -8,9 +8,13 @@ module Oxidized
     include SemanticLogger::Loggable
 
     attr_reader :name, :ip, :model, :input, :output, :group, :auth, :prompt, :timeout, :vars, :last, :repo
-    attr_accessor :running, :user, :email, :msg, :from, :stats, :retry, :err_type, :err_reason, :nexted
+    attr_accessor :running, :user, :email, :msg, :from, :stats, :retry, :err_type, :err_reason, :nexted, :paused_by
     alias running? running
     alias nexted? nexted
+
+    def paused?
+      !!paused_by
+    end
 
     # opt is a hash with the node parameters given in the source (:name, :group, :ip...)
     def initialize(opt)
@@ -35,7 +39,8 @@ module Oxidized
       @repo = resolve_repo opt
       @err_type = nil
       @err_reason = nil
-      @nexted = false
+      @nexted    = false
+      @paused_by = resolve_paused opt
 
       # model instance needs to access node instance
       @model.node = self
@@ -117,6 +122,8 @@ module Oxidized
         mtime:     @stats.mtime
       }
       h[:full_name] = [@group, @name].join('/') if @group
+      h[:paused]    = paused?
+      h[:paused_by] = @paused_by
       if @last
         h[:last] = {
           start:  @last.start,
@@ -147,6 +154,12 @@ module Oxidized
     end
 
     private
+
+    def resolve_paused(opt)
+      return nil unless resolve_key(:paused, opt)
+
+      opt[:paused] ? :src : :cfg
+    end
 
     def resolve_prompt(opt)
       opt[:prompt] || @model.prompt || Oxidized.config.prompt

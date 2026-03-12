@@ -30,7 +30,15 @@ module Oxidized
 
         # shift nodes and get the next node
         node = @nodes.get
-        node.running? ? next : node.running = true
+        next if node.running?
+
+        if node.paused?
+          logger.debug "Skipping paused node #{node.group}/#{node.name}"
+          @jobs_done += 1
+          next
+        end
+
+        node.running = true
 
         @jobs.push Job.new node
         logger.debug "Added #{node.group}/#{node.name} to the job queue"
