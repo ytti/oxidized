@@ -46,8 +46,8 @@ describe Oxidized::Hook::Ruby do
     RUBY
 
     ctx = Oxidized::HookManager::HookContext.new(
-      event:      :source_node_transform,
-      node: { name: "r1" }
+      event: :source_node_transform,
+      node:  { name: "r1" }
     )
     result = hook.run_hook(ctx)
     _(result).must_equal({ name: "r1", transformed: true })
@@ -61,8 +61,8 @@ describe Oxidized::Hook::Ruby do
     RUBY
 
     ctx = Oxidized::HookManager::HookContext.new(
-      event:      :source_node_transform,
-      node: { name: "r1" }
+      event: :source_node_transform,
+      node:  { name: "r1" }
     )
     result = hook.run_hook(ctx)
     _(result).must_be_nil
@@ -72,8 +72,8 @@ describe Oxidized::Hook::Ruby do
     hook = build_hook("# no methods defined")
 
     ctx = Oxidized::HookManager::HookContext.new(
-      event:      :source_node_transform,
-      node: { name: "r1" }
+      event: :source_node_transform,
+      node:  { name: "r1" }
     )
     result = hook.run_hook(ctx)
     _(result).must_be_nil
