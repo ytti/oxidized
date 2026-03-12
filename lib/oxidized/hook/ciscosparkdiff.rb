@@ -4,7 +4,7 @@ require 'cisco_spark'
 # diff defaults to true
 # Modified from slackdiff
 
-class CiscoSparkDiff < Oxidized::Hook
+class Oxidized::Hook::CiscoSparkDiff < Oxidized::Hook
   def validate_cfg!
     raise KeyError, 'hook.accesskey is required' unless cfg.has_key?('accesskey')
     raise KeyError, 'hook.space is required' unless cfg.has_key?('space')

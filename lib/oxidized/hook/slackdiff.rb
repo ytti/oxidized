@@ -5,7 +5,7 @@ require 'net/http'
 # defaults to posting a diff, if messageformat is supplied them a message will be posted too
 # diff defaults to true
 
-class SlackDiff < Oxidized::Hook
+class Oxidized::Hook::SlackDiff < Oxidized::Hook
   def validate_cfg!
     raise KeyError, 'hook.token is required' unless cfg.has_key?('token')
     raise KeyError, 'hook.channel is required' unless cfg.has_key?('channel')

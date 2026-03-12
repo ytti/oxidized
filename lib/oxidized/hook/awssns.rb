@@ -1,6 +1,6 @@
 require 'aws-sdk'
 
-class AwsSns < Oxidized::Hook
+class Oxidized::Hook::AwsSns < Oxidized::Hook
   def validate_cfg!
     raise KeyError, 'hook.region is required' unless cfg.has_key?('region')
     raise KeyError, 'hook.topic_arn is required' unless cfg.has_key?('topic_arn')

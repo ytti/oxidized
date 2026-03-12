@@ -1,4 +1,4 @@
-class NoopHook < Oxidized::Hook
+class Oxidized::Hook::NoopHook < Oxidized::Hook
   def validate_cfg!
     logger.info "Validate config"
   end

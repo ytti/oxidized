@@ -1,4 +1,4 @@
-class Exec < Oxidized::Hook
+class Oxidized::Hook::Exec < Oxidized::Hook
   include Process
 
   def initialize

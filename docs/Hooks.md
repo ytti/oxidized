@@ -4,6 +4,7 @@ You can define an arbitrary number of hooks that subscribe to different events. 
 
 1. [Events](#events)
 2. Hook types
+ * [ruby](#hook-type-ruby)
  * [exec](#hook-type-exec)
  * [githubrepo](#hook-type-githubrepo)
  * [awssns](#hook-type-awssns)
@@ -24,6 +25,96 @@ Following configuration keys need to be defined for all hooks:
 * `node_fail`: triggered after `retries` amount of failed node pulls.
 * `post_store`: triggered after node configuration is stored (this is executed only when the configuration has changed).
 * `nodes_done`: triggered after finished fetching all nodes.
+* `source_node_transform`: triggered for each node record while the source list is being loaded, before the node is added to the node list. Hooks for this event receive the parsed node attributes and the raw source record, and must return the (possibly modified) node attributes hash. Returning `nil` excludes the node from the list entirely. Multiple hooks are chained: the return value of each hook is passed as the node attributes to the next.
+
+## Hook type: ruby
+
+The `ruby` hook type loads a Ruby file and dispatches events to methods defined in that file. Each event maps to a method of the same name. Define only the methods for the events you care about; undefined events are silently ignored.
+
+The hook file is loaded with `instance_eval`, so methods defined in it become instance methods of the hook object. This means you can also define helper methods and instance variables as needed.
+
+`ruby` recognizes the following configuration keys:
+
+* `file`: path to the Ruby hook file to load. Required.
+
+### Hook context
+
+Every hook method receives a single `ctx` argument (a `HookContext` struct). Available fields depend on the event:
+
+| Field | Events | Description |
+|-------|--------|-------------|
+| `ctx.event` | all | Event name as a Symbol |
+| `ctx.node` | `node_success`, `node_fail`, `post_store` | The Oxidized node object |
+| `ctx.job` | `node_success`, `node_fail`, `post_store` | The completed job object |
+| `ctx.commitref` | `post_store` | Git commit reference (or nil) |
+| `ctx.node_attrs` | `source_node_transform` | Parsed node attribute hash built from source mapping |
+| `ctx.raw_node` | `source_node_transform` | Original source record (Hash for JSON/HTTP/SQL, Array for CSV) |
+| `ctx.binding` | `source_node_transform` | Ruby Binding at the call site |
+
+### source_node_transform return value
+
+For `source_node_transform`, the return value matters:
+
+* Return a Hash — used as the node's attributes (can be `ctx.node_attrs` unmodified, or a merged/transformed copy).
+* Return `nil` — the node is excluded from the node list entirely.
+
+The hooks are applied in the order they are registered. The return value of each hook becomes the `ctx.node_attrs` for the next hook in the sequence.
+
+### ruby configuration example
+
+```yaml
+hooks:
+  model_by_platform:
+    type: ruby
+    events: [source_node_transform]
+    file: /etc/oxidized/hooks/ruby_source_node_transform.rb
+```
+
+### Example: override model based on vendor and platform (JSON/HTTP source)
+
+Many inventory systems expose both a vendor name and a platform/OS field. Oxidized's source mapping can only map one field to `model`, but a `source_node_transform` hook can pick the right oxidized model from the combination of both fields.
+
+Source configuration (maps `vendor` → `model` as default):
+
+```yaml
+source:
+  http:
+    url: https://inventory.example.com/api/nodes
+    map:
+      name:  name
+      ip:    ip
+      model: vendor
+```
+
+Example node record returned by the inventory API:
+
+```json
+{"name": "core-sw-01", "ip": "10.0.0.1", "vendor": "cisco", "platform": "NX-OS"}
+```
+
+Hook file (`/etc/oxidized/hooks/ruby_source_node_transform.rb`):
+
+```ruby
+PLATFORM_MODEL = {
+  "IOS"    => "ios",
+  "IOS-XE" => "iosxe",
+  "IOS-XR" => "iosxr",
+  "NX-OS"  => "nxos",
+  "Junos"  => "junos",
+}.freeze
+
+def source_node_transform(ctx)
+  # Return nil to exclude inactive nodes:
+  # return nil unless ctx.raw_node["active"]
+
+  model = PLATFORM_MODEL[ctx.raw_node["platform"].to_s]
+  model ? ctx.node_attrs.merge(model: model) : ctx.node_attrs
+end
+```
+
+With this hook, `core-sw-01` gets `model: "nxos"` instead of `model: "cisco"`. Devices whose platform is not in the map keep their vendor-based model unchanged.
+
+A ready-to-use version of this example is available at `extra/ruby_source_node_transform.rb`.
 
 ## Hook type: exec
 

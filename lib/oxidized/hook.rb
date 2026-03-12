@@ -14,11 +14,15 @@ module Oxidized
       end
     end
 
-    # HookContext is passed to each hook. It can contain anything related to the
-    # event in question. It contains at least the event name.
-    # The argument keyword_init: true is needed to force an initialization with
-    # keyword arguments and allow a different argument order
-    HookContext = Struct.new(:event, :node, :job, :commitref, keyword_init: true)
+    # HookContext is passed to each hook. It always carries the event name.
+    # The keyword_init: true argument forces keyword-argument initialization.
+    HookContext = Struct.new(
+      :event, :node, :job, :commitref,
+      :node_attrs, # parsed node attribute hash (chained in source_node_transform)
+      :raw_node,   # raw source record: JSON hash, SQL row hash, CSV field array
+      :binding,    # Ruby binding captured at the call site
+      keyword_init: true
+    )
 
     # RegisteredHook is a container for a Hook instance
     RegisteredHook = Struct.new(:name, :hook)
@@ -28,6 +32,7 @@ module Oxidized
       node_fail
       post_store
       nodes_done
+      source_node_transform
     ].freeze
     attr_reader :registered_hooks
 
@@ -54,16 +59,60 @@ module Oxidized
       logger.debug "Hook #{name.inspect} registered #{hook.class} for event #{event.inspect}"
     end
 
+    # --- Transform events ---
+
+    # Runs source_node_transform hooks in sequence, passing the return value of
+    # each hook as node_attrs to the next. Returns the final node_attrs, or nil
+    # to signal that the node should be excluded.
+    def source_node_transform(node_attrs:, raw_node:, binding:)
+      ctx = HookContext.new(
+        event:      :source_node_transform,
+        node_attrs: node_attrs,
+        raw_node:   raw_node,
+        binding:    binding
+      )
+      @registered_hooks[:source_node_transform].each do |r_hook|
+        ctx.node_attrs = r_hook.hook.run_hook(ctx)
+      rescue StandardError => e
+        logger.error "Hook #{r_hook.name} (#{r_hook.hook}) failed " \
+                     "(#{e.inspect}) for event :source_node_transform"
+      end
+      ctx.node_attrs
+    end
+
+    # --- Fire-and-forget events ---
+
+    def node_success(node:, job: nil)
+      handle(:node_success, node: node, job: job)
+    end
+
+    def node_fail(node:, job: nil)
+      handle(:node_fail, node: node, job: job)
+    end
+
+    def post_store(node:, job: nil, commitref: nil)
+      handle(:post_store, node: node, job: job, commitref: commitref)
+    end
+
+    def nodes_done
+      handle(:nodes_done)
+    end
+
+    private
+
+    # Shared implementation for fire-and-forget events: runs all registered
+    # hooks for the event, ignores return values, logs errors.
     def handle(event, ctx_params = {})
-      ctx = HookContext.new ctx_params
-      ctx.event = event
+      ctx = HookContext.new(event: event, **ctx_params)
 
       @registered_hooks[event].each do |r_hook|
-        r_hook.hook.run_hook ctx
+        r_hook.hook.run_hook(ctx)
       rescue StandardError => e
         logger.error "Hook #{r_hook.name} (#{r_hook.hook}) failed " \
                      "(#{e.inspect}) for event #{event.inspect}"
       end
+
+      nil
     end
   end
 

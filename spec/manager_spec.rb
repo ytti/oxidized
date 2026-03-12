@@ -84,7 +84,7 @@ describe Oxidized::Manager do
   describe '#add_hook' do
     it 'loads a hook when available' do
       result = Oxidized.mgr.add_hook('githubrepo')
-      _(result['githubrepo']).must_equal GithubRepo
+      _(result['githubrepo']).must_equal Oxidized::Hook::GithubRepo
     end
 
     it 'returns nil when the hook is not available' do
