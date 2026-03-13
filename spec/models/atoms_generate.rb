@@ -1,4 +1,4 @@
-require_relative 'model_helper'
+require_relative 'models_helper'
 
 # We use empty tests because we need the mock / stub feature of minitest/mocha
 # to simulate SSH in order to generate the output

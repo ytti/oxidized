@@ -1,4 +1,4 @@
-require_relative 'model_helper'
+require_relative 'models_helper'
 
 describe 'ATOMS tests' do
   ATOMS.all.each do |test|

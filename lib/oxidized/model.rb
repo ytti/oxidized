@@ -1,7 +1,7 @@
 require 'strscan'
-require_relative 'outputs'
-require_relative 'dslsetup'
-require_relative 'dslcommands'
+require 'oxidized/model/outputs'
+require 'oxidized/model/dslsetup'
+require 'oxidized/model/dslcommands'
 
 module Oxidized
   class Model

@@ -28,14 +28,14 @@ Layout/LineLength:
   # Too much models have long lines, which is unsafe to reduce without
   # having an existing model unit test.
   Exclude:
-   - lib/oxidized/model/*.rb
+   - lib/oxidized/models/*.rb
 
 # We do not enforce the cop in the models as it would not work with the
 # DSL style of the models
 Lint/AmbiguousRegexpLiteral:
   Enabled: true
   Exclude:
-   - lib/oxidized/model/*.rb
+   - lib/oxidized/models/*.rb
 
 Lint/RaiseException:
   Enabled: true

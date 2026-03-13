@@ -1,5 +1,5 @@
-require_relative '../spec_helper'
-require 'oxidized/model/model'
+require_relative 'spec_helper'
+require 'oxidized/model'
 require 'oxidized/input/ssh'
 require 'oxidized/input/scp'
 require 'oxidized/input/ftp'

@@ -75,7 +75,7 @@ class ATOMS
   # Support class for loading the YAML simulation file and the expected output
   # file for a model unit test.
   #
-  # The files are stored under ATOMS::DIRECTORY (spec/model/data) and follow the
+  # The files are stored under ATOMS::DIRECTORY (spec/models/data) and follow the
   # naming convention:
   # - YAML Simulation File: model#description#simulation.yaml
   # - Expected Output:      model#description#output.txt
@@ -137,7 +137,7 @@ class ATOMS
   # Support class for loading prompts to test against the models.
   #
   # The prompts are loaded from files stored in the directory specified by
-  # ATOMS::DIRECTORY (spec/model/data) and follow the naming convention:
+  # ATOMS::DIRECTORY (spec/models/data) and follow the naming convention:
   # model#description#prompt.yaml
   #
   # "description" is generally named 'generic', as all prompts for a model
@@ -171,7 +171,7 @@ class ATOMS
   # models.
   #
   # The test data is loaded from YAML files stored in the directory specified by
-  # ATOMS::DIRECTORY (spec/model/data) and follows the naming convention:
+  # ATOMS::DIRECTORY (spec/models/data) and follows the naming convention:
   # model#description#secret.yaml
   #
   # "description" is the name of the test case and is generally formatted as

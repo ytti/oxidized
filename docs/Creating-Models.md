@@ -26,7 +26,7 @@ An Oxidized model, at minimum, requires just three elements:
 * A class defined within this file with the same name as the file itself that inherits from `Oxidized::Model`, the base model class.
 * At least one command that will be executed and the output of which will be collected by Oxidized.
 
-A bare-bone example for a fictional model running the OS type `rootware` could be introduced by creating the file `~/.config/oxidized/model/rootware.rb`, with the following content:
+A bare-bone example for a fictional model running the OS type `rootware` could be introduced by creating the file `~/.config/oxidized/models/rootware.rb`, with the following content:
 
 ```ruby
 class RootWare < Oxidized::Model
@@ -143,7 +143,7 @@ a configured variable. For this, there are at least three solutions.
 
 #### Nested `cmd`
 You can nest `cmd` inside [`cmd` blocks](Ruby-API.md#cmd), the following example
-is taken from [nxos.rb](/lib/oxidized/model/nxos.rb):
+is taken from [nxos.rb](/lib/oxidized/models/nxos.rb):
 ```ruby
   cmd 'show inventory all' do |cfg|
     if cfg.include? "% Invalid parameter detected at '^' marker."
@@ -157,7 +157,7 @@ is taken from [nxos.rb](/lib/oxidized/model/nxos.rb):
 #### pre/post blocks
 After all the [`cmd` blocks](Ruby-API.md#cmd) have been run, the [`pre`
 and `post` blocks](Ruby-API.md#pre--post) are run. The following example is
-taken from [junos.rb](/lib/oxidized/model/junos.rb):
+taken from [junos.rb](/lib/oxidized/models/junos.rb):
 ```ruby
   post do
     out = String.new
@@ -176,7 +176,7 @@ taken from [junos.rb](/lib/oxidized/model/junos.rb):
 ```
 
 In [pre/post blocks](Ruby-API.md#pre--post), you can also use dynamic generated
-commands, for example in [eatonnetwok.rb](/lib/oxidized/model/eatonnetwork.rb):
+commands, for example in [eatonnetwok.rb](/lib/oxidized/models/eatonnetwork.rb):
 ```ruby
   post do
     cmd "save_configuration -p #{@node.auth[:password]}"
@@ -206,10 +206,10 @@ The lambda function is evaluated at runtime in the instance context.
 
 The example below can be used to extend the `JunOS` model to collect the output of `show interfaces diagnostics optics` and append the output to the configuration file as a comment. This command retrieves DOM information on pluggable optics present in a `JunOS`-powered chassis.
 
-Create the file `~/.config/oxidized/model/junos.rb` with the following contents:
+Create the file `~/.config/oxidized/models/junos.rb` with the following contents:
 
 ```ruby
-require 'oxidized/model/junos.rb'
+require 'oxidized/models/junos.rb'
 
 
 class JunOS
@@ -223,14 +223,14 @@ class JunOS
 end
 ```
 
-Due to smart loading, the user-supplied `~/.config/oxidized/model/junos.rb` file will take precedence over the model with the same name included in the Oxidized distribution.
+Due to smart loading, the user-supplied `~/.config/oxidized/models/junos.rb` file will take precedence over the model with the same name included in the Oxidized distribution.
 
 The code then uses `require` to initially load the Oxidized-supplied model, and extends the class defined therein with an additional command.
 
 Intuitively, it is also possible to:
 
-* Completely re-define an existing model by creating a file in `~/.config/oxidized/model/` with the same name as an existing model, but not `require`-ing the upstream model file.
-* Create a named variation of an existing model, by creating a file with a new name (such as `~/.config/oxidized/model/junos-extra.rb`), Then `require` the original model and extend its base class as in the above example. The named variation can then be specified as an OS type for specific devices that can benefit from the extra functionality. This allows for preservation of the base functionality for the default model types.
+* Completely re-define an existing model by creating a file in `~/.config/oxidized/models/` with the same name as an existing model, but not `require`-ing the upstream model file.
+* Create a named variation of an existing model, by creating a file with a new name (such as `~/.config/oxidized/models/junos-extra.rb`), Then `require` the original model and extend its base class as in the above example. The named variation can then be specified as an OS type for specific devices that can benefit from the extra functionality. This allows for preservation of the base functionality for the default model types.
 * Create a completely new model, with a new name, for a new operating system type.
 * Testing/validation of an updated model from the [Oxidized GitHub repo models](https://github.com/ytti/oxidized/tree/master/lib/oxidized/model) by placing an updated model in the proper location without disrupting the gem-supplied model files.
 
@@ -259,10 +259,10 @@ output:
         type_as_directory: true
 ```
 
-Then, `~/.config/oxidized/model/junos.rb` is adapted as following:
+Then, `~/.config/oxidized/models/junos.rb` is adapted as following:
 
 ```ruby
-require 'oxidized/model/junos.rb'
+require 'oxidized/models/junos.rb'
 
 
 class JunOS

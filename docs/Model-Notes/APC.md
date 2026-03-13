@@ -8,7 +8,7 @@ A ticket was opened with APC support to enable "cat config.ini"
 within an SSH shell, but APC declined to implement this feature.
 
 To overcome this limitation, a capability to run against multiple inputs (SSH + SCP)
-has been implemented in Oxidized and in the [model ApcAos](/lib/oxidized/model/apcaos.rb).
+has been implemented in Oxidized and in the [model ApcAos](/lib/oxidized/models/apcaos.rb).
 
 The old model apc_aos (SCP/FTP only) is deprecated and will be removed in a
 future release. Migrate to ApcAos.

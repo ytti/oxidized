@@ -1,9 +1,9 @@
 # LinuxGeneric model notes
 
-To expand the usage of this model for more specific needs you can create a file in `~/.config/oxidized/model/linuxgeneric.rb`
+To expand the usage of this model for more specific needs you can create a file in `~/.config/oxidized/models/linuxgeneric.rb`
 
 ```ruby
-require 'oxidized/model/linuxgeneric.rb'
+require 'oxidized/models/linuxgeneric.rb'
 
 class LinuxGeneric
   

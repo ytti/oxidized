@@ -5,12 +5,12 @@
 FTP access is only possible as admin, other users can login but cannot pull the files.
 For the XGS4600 series the config file is _config_ and not _config-0_
 
-To enable FTP backup, uncomment the following line in _oxidized/lib/oxidized/model/zynos.rb_
+To enable FTP backup, uncomment the following line in _oxidized/lib/oxidized/models/zynos.rb_
 ```text
   # cmd 'config-0'
 ```
 
-The following line in _oxidized/lib/oxidized/model/zynos.rb_ will need changing
+The following line in _oxidized/lib/oxidized/models/zynos.rb_ will need changing
 
 ```text
   cmd 'config-0'

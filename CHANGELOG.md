@@ -25,6 +25,7 @@ The SCP gem is now an optional dependency as it will rarely be used - you must i
 - fortigate: Add PSU & SFP inventory (@robertcheramy)
 - fortigate: move var fortios_autoupdate (deprecated) to fortigate_autoupdate (@robertcheramy)
 - netgear: extended login and pager detection to add support for GS728TPv2 and GS752TPv2 (@weberc)
+- device models have been moved to `lib/oxidized/models/` (with an s) (@robertcheramy)
 
 ### Fixed
 - VyOS: Only remove SNMP community, not route-maps. Fixes #3735 (@systeembeheerder)
@@ -116,7 +117,7 @@ This release contains small fixes and will include the new version of oxidized-w
 ### Fixed
 - input/ssh: hide Net::SSH errors and only display fatal logs unless input.debug = true. Fixes: #3574 (@robertcheramy)
 - junos: fix unfrozen literal strings (@robertcheramy)
-- spec/model: fix unfrozen literal strings and set a default prompt (@robertcheramy)
+- spec/models: fix unfrozen literal strings and set a default prompt (@robertcheramy)
 
 
 ## [0.34.0 - 2025-07-15]
@@ -141,7 +142,7 @@ future release, so be sure to migrate your configuration.
 - remove uri in commit-archive location for EdgeOS. Fixed #3525 (@systeembeheerder)
 - acos: remove free storage amount from show version. Fixes #3492 (@991jo)
 - Housekeeping in the code: Maximal line length: 120 char + Rubocop fixes (@robertcheramy)
-- spec/model/data uses # instead of : as a separator in the filename, so we can
+- spec/models/data uses # instead of : as a separator in the filename, so we can
   git clone under Windows. Fixes: #3481 (@robertcheramy)
 - logging: rework of the logging system, using Semantic Logger (@robertcheramy)
 

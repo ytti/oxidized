@@ -15,9 +15,9 @@ class TNSR < Oxidized::Model
   # when the --More-- pager is the last line of paged output, the prompt contains \x08\x20\x08 orphans on the begin
   # on older version (23.06) --More-- pager is sometimes misplaced
   #  you can look for context into spec simulation:
-  #    spec/model/data/tnsr#TNSR_24.10-3_short-config#simulation.yaml
-  #    spec/model/data/tnsr#TNSR_25.02-2_long-config-and-pager-at-last-line#simulation.yaml
-  #    spec/model/data/tnsr#TNSR_23.06-3_with-misplaced-pager#simulation.yaml
+  #    spec/models/data/tnsr#TNSR_24.10-3_short-config#simulation.yaml
+  #    spec/models/data/tnsr#TNSR_25.02-2_long-config-and-pager-at-last-line#simulation.yaml
+  #    spec/models/data/tnsr#TNSR_23.06-3_with-misplaced-pager#simulation.yaml
   prompt /^((\x08{8}\x20{8}\x08{8})?\r?[\w-]+\stnsr#\s?)$/
 
   comment '! '

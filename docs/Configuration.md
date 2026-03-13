@@ -525,7 +525,7 @@ This can be done in two ways:
 
 1. Interpolation string:
 ```ruby
-require 'oxidized/model/ios.rb'
+require 'oxidized/models/ios.rb'
 
 class IOS
   metadata :top, "%{comment}Model: %{model}\n"
@@ -537,7 +537,7 @@ end
    the model:
 
 ```ruby
-require 'oxidized/model/opnsense.rb'
+require 'oxidized/models/opnsense.rb'
 class OpnSense
   metadata :top do
     xmlcomment "Model:#{self.class.name}, hostname: #{@node.name}, ip:#{@node.ip}"

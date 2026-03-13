@@ -1,7 +1,7 @@
 # frozen_string_literal: true
 
-require_relative 'model_helper'
-require 'oxidized/model/ivanti'
+require_relative 'models_helper'
+require 'oxidized/models/ivanti'
 
 describe 'Model Ivanti' do
   before(:each) do

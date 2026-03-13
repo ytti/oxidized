@@ -27,7 +27,7 @@ describe 'Model apc_aos' do
     Oxidized::SCP.any_instance.stubs(:disconnect).returns(true)
     Oxidized::SCP.any_instance.stubs(:disconnect_cli).returns(true)
 
-    model = YAML.load_file('spec/model/data/apcos#SMT750IC_v2.5.0.8#custom_simulation.yaml')
+    model = YAML.load_file('spec/models/data/apcos#SMT750IC_v2.5.0.8#custom_simulation.yaml')
 
     commands = ["about", "upsabout", "detstatus -ss"]
     commands.each do |cmd|
@@ -42,7 +42,7 @@ describe 'Model apc_aos' do
 
     status, result = @node.run
 
-    output = File.read('spec/model/data/apcos#SMT750IC_v2.5.0.8#custom_output.txt')
+    output = File.read('spec/models/data/apcos#SMT750IC_v2.5.0.8#custom_output.txt')
     _(status).must_equal :success
     _(result.to_cfg).must_equal output
   end

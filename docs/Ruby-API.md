@@ -120,7 +120,7 @@ parameter of the `cmd` configuration:
 `cmd` without `input` parameter will run against every input.
 
 
-See the [ApcAos model](/lib/oxidized/model/apcaos.rb) for a full example.
+See the [ApcAos model](/lib/oxidized/models/apcaos.rb) for a full example.
 
 
 #### `cmd`
