@@ -29,8 +29,9 @@ module Oxidized
       asetus.default.interval      = 3600
       asetus.default.debug         = false
       asetus.default.run_once      = false
-      asetus.default.threads       = 30
-      asetus.default.use_max_threads = false
+      asetus.default.threads          = 30
+      asetus.default.use_max_threads  = false
+      asetus.default.node_load_threads = 20
       asetus.default.timeout       = 20
       asetus.default.timelimit     = 300
       asetus.default.retries       = 3

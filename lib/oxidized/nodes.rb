@@ -10,29 +10,22 @@ module Oxidized
     attr_accessor :source, :jobs
     alias put unshift
     def load(node_want = nil)
-      with_lock do
-        new = []
-        @source = Oxidized.config.source.default
-        Oxidized.mgr.add_source(@source) || raise(MethodNotFound, "cannot load node source '#{@source}', not found")
-        logger.info "Loading nodes"
-        nodes = Oxidized.mgr.source[@source].new.load node_want
-        nodes.each do |node|
-          # we want to load specific node(s), not all of them
-          next unless node_want? node_want, node
+      @source = Oxidized.config.source.default
+      Oxidized.mgr.add_source(@source) || raise(MethodNotFound, "cannot load node source '#{@source}', not found")
+      logger.info "Loading nodes"
 
-          begin
-            node_obj = Node.new node
-            new.push node_obj
-          rescue ModelNotFound => e
-            logger.error "node %s raised %s with message '%s'" % [node, e.class, e.message]
-          rescue Resolv::ResolvError => e
-            logger.error "node %s is not resolvable, raised %s with message '%s'" % [node, e.class, e.message]
-          end
-        end
-        size.zero? ? replace(new) : update_nodes(new)
+      # All slow I/O (network fetch, DNS resolution, Node construction) runs outside
+      # the mutex so that web-API calls remain responsive during a reload.
+      raw_nodes  = Oxidized.mgr.source[@source].new.load node_want
+      candidates = raw_nodes.select { |node| node_want?(node_want, node) }
+      new_nodes  = build_nodes_parallel(candidates)
+
+      # Only the atomic list swap needs the lock, keeping the critical section minimal.
+      with_lock do
+        size.zero? ? replace(new_nodes) : update_nodes(new_nodes)
         Output.clean_obsolete_nodes(self) if node_want.nil?
-        logger.info "Loaded #{size} nodes"
       end
+      logger.info "Loaded #{size} nodes"
     end
 
     def node_want?(node_want, node)
@@ -151,6 +144,54 @@ module Oxidized
       @mutex.synchronize(...)
     end
 
+    # Constructs Node objects from +candidates+ (an Array of option hashes) using
+    # a thread pool so that DNS lookups run concurrently instead of serially.
+    # Nodes whose source options are identical to the existing Node object are
+    # reused as-is — no DNS lookup, no object reconstruction.
+    # Results preserve the original source ordering.
+    def build_nodes_parallel(candidates)
+      return [] if candidates.empty?
+
+      # Snapshot existing nodes outside the mutex for delta comparison.
+      # A stale read here is harmless: at worst we reconstruct a node unnecessarily.
+      existing = each_with_object({}) { |n, h| h[n.name] = n }
+
+      num_threads = [Oxidized.config.node_load_threads || 20, candidates.size].min
+      results     = []
+      results_mu  = Mutex.new
+      queue       = Queue.new
+      candidates.each_with_index { |node, i| queue << [i, node] }
+
+      threads = num_threads.times.map do
+        Thread.new do
+          loop do
+            i, node = queue.pop(true)
+            existing_node = existing[node[:name]]
+            built = if existing_node&.source_opts == node
+                      existing_node # unchanged: reuse without DNS or reconstruction
+                    else
+                      begin
+                        Node.new(node)
+                      rescue ModelNotFound => e
+                        logger.error "node %s raised %s with message '%s'" % [node, e.class, e.message]
+                        nil
+                      rescue Resolv::ResolvError => e
+                        logger.error "node %s is not resolvable, raised %s with message '%s'" \
+                                     % [node, e.class, e.message]
+                        nil
+                      end
+                    end
+            results_mu.synchronize { results << [i, built] } unless built.nil?
+          rescue ThreadError
+            break # queue is empty
+          end
+        end
+      end
+      threads.each(&:join)
+
+      results.sort_by { |i, _| i }.map { |_, n| n }
+    end
+
     # @param node node which is removed from nodes list
     # @return [Node] deleted node
     def del(node)
@@ -167,26 +208,40 @@ module Oxidized
       Nodes.new nodes: select { |node| not node.running? }
     end
 
-    # walks list of new nodes, if old node contains same name, adds last and
-    # stats information from old to new.
+    # Delta-merges +new_nodes+ into the current list.
     #
-    # @todo can we trust name to be unique identifier, what about when groups are used?
-    # @param [Array] nodes Array of nodes used to replace+update old
-    def update_nodes(nodes)
-      old = dup
-      # load the Array "nodes" in self (the class Nodes inherits Array)
-      replace(nodes)
-      each do |node|
-        if (i = old.find_node_index(node.name))
-          node.stats = old[i].stats
-          node.last  = old[i].last
+    # - Unchanged nodes (same object identity from build_nodes_parallel) keep
+    #   their position and all runtime state (last job, stats, running flag, etc.).
+    # - Changed nodes (config updated in source) are replaced in-place; last/stats
+    #   are carried over so history is not lost.
+    # - New nodes (not previously in the list) are appended.
+    # - Removed nodes (present in old list but absent from new source) are deleted.
+    #
+    # The list is then re-sorted by last.end so scheduling priority is preserved.
+    def update_nodes(new_nodes)
+      new_by_name = new_nodes.each_with_object({}) { |n, h| h[n.name] = n }
+      old_by_name = each_with_object({}) { |n, h| h[n.name] = n }
+
+      # Remove nodes that are no longer present in the source
+      delete_if { |n| !new_by_name.has_key?(n.name) }
+
+      new_nodes.each do |new_node|
+        if (old_node = old_by_name[new_node.name])
+          if new_node.equal?(old_node)
+            # Identical object reused by build_nodes_parallel — nothing to do,
+            # the node is already in the list with all its runtime state intact.
+          else
+            # Source config changed: carry over job history and replace in list
+            new_node.stats = old_node.stats
+            new_node.last  = old_node.last
+            idx = index { |n| n.name == new_node.name }
+            self[idx] = new_node if idx
+          end
+        else
+          push new_node # genuinely new node
         end
-      rescue NodeNotFound
-        # Do nothing:
-        # when a node is not found, we have nothing to do:
-        # it has already been loaded by replace(nodes) and there are no
-        # stats to copy
       end
+
       sort_by! { |x| x.last.nil? ? Time.new(0) : x.last.end }
     end
 

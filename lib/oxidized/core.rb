@@ -18,6 +18,7 @@ module Oxidized
 
       @worker = Worker.new nodes
       @need_reload = false
+      @reloading   = false
 
       # If we receive a SIGHUP, queue a reload of the state
       reload_proc = proc do
@@ -64,9 +65,18 @@ module Oxidized
     private
 
     def reload
+      return if @reloading
+
       logger.info("Reloading node list")
-      @worker.reload
+      @reloading   = true
       @need_reload = false
+      Thread.new do
+        @worker.reload
+      rescue StandardError => e
+        logger.error "Reload failed: #{e.message}"
+      ensure
+        @reloading = false
+      end
     end
 
     def run
