@@ -1,6 +1,6 @@
 require_relative '../spec_helper'
-require 'oxidized/model/opnsense'
-require 'oxidized/model/pfsense'
+require 'oxidized/models/opnsense'
+require 'oxidized/models/pfsense'
 
 # Testing models with custom metatada
 

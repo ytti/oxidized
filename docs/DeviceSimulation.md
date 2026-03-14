@@ -8,7 +8,7 @@ maintaining Oxidized difficult:
 - Further developments can produce regressions.
 
 In order to address this, we can simulate the devices. An example of a
-simulation is the [model unit tests](/spec/model), but one could also simulate a
+simulation is the [model unit tests](/spec/models), but one could also simulate a
 device within an SSH server.
 
 The simulation of devices is currently focused on SSH-based devices. This may be
@@ -20,7 +20,7 @@ which we store all relevant information about the device. The most important
 information is the responses to the commands used in the Oxidized models.
 
 The YAML simulation files are stored under
-[/spec/model/data/](/spec/model/data/), with the naming convention
+[/spec/models/data/](/spec/models/data/), with the naming convention
 `<model>#<description>#simulation.yaml`, where `<model>` is the lowercase name
 of the Oxidized model and `<description>` is the name of the test case.
 `<description>` is generally formatted as `<hardware>_<software>` or
@@ -107,7 +107,7 @@ show version
 show vtp status
 show inventory
 show running-config
-exit" -o spec/model/data/ios#C8200L_16.12.1#simulation.yaml
+exit" -o spec/models/data/ios#C8200L_16.12.1#simulation.yaml
 ```
 ### Publishing the YAML Simulation File to Oxidized
 Publishing the YAML simulation file of your device helps maintain Oxidized. This
@@ -130,7 +130,7 @@ You can use search/replace to make consistent and faster changes, for example
 change the hostname everywhere.
 
 The YAML simulation files are stored under
-[/spec/model/data/](/spec/model/data/), with the naming convention
+[/spec/models/data/](/spec/models/data/), with the naming convention
 `<model>#<description>#simulation.yaml`, where `<model>` is the lowercase name
 of the Oxidized model and `<description>` is the name of the test case.
 `<description>` is generally formatted as `<hardware>_<software>` or
@@ -141,9 +141,9 @@ automatic model unit tests.
 
 Examples:
 
-- spec/model/data/aoscx#R0X25A-6410_FL.10.10.1100#simulation.yaml
-- spec/model/data/asa#5512_9.12-4-67_single-context#simulation.yaml
-- spec/model/data/ios#C9200L-24P-4G_17.09.04a#simulation.yaml
+- spec/models/data/aoscx#R0X25A-6410_FL.10.10.1100#simulation.yaml
+- spec/models/data/asa#5512_9.12-4-67_single-context#simulation.yaml
+- spec/models/data/ios#C9200L-24P-4G_17.09.04a#simulation.yaml
 
 When you are finished, commit and push to your forked repository on GitHub, and
 submit a Pull Request. Thank you for your help!

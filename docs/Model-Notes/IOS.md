@@ -2,10 +2,10 @@
 
 ## Include unsaved changes done on a device (commented) with each configuration
 
-Create the file `~/.config/oxidized/model/ios.rb` with the following contents to extend the IOS model:
+Create the file `~/.config/oxidized/models/ios.rb` with the following contents to extend the IOS model:
 
 ```ruby
-require 'oxidized/model/ios.rb'
+require 'oxidized/models/ios.rb'
 
 class IOS
 

@@ -6,7 +6,7 @@ effort to use. There are three different default unit tests for models:
 - [Secrets](ModelUnitTests.md#secrets)
 - [Significant Changes](ModelUnitTests.md#significant-changes)
 
-You only need to provide test files under [/spec/model/data](/spec/model/data),
+You only need to provide test files under [/spec/models/data](/spec/models/data),
 and the tests will be run automatically with `rake test`. See
 [CONTRIBUTING.md](/CONTRIBUTING.md) for explanations on how to set up a
 development environment. In the following examples, we use
@@ -21,7 +21,7 @@ You need a [YAML simulation file](/docs/DeviceSimulation.md) for your device.
 See the link for instructions on how to produce it.
 
 The YAML simulation files are stored under
-[/spec/model/data/](/spec/model/data/), with the naming convention
+[/spec/models/data/](/spec/models/data/), with the naming convention
 `<model>#<description>#simulation.yaml`, where `<model>` is the lowercase name
 of the Oxidized model and `<description>` is the name of the test case.
 `<description>` is generally formatted as `<hardware>_<software>` or
@@ -38,15 +38,15 @@ name as the YAML simulation file but ends with `#output.txt` instead of
 You can automatically produce an output file based on the current model for all
 YAML simulation files missing an `#output.txt`:
 ```shell
-bundle exec ruby spec/model/atoms_generate.rb
+bundle exec ruby spec/models/atoms_generate.rb
 ```
 
 In the following example,
-`spec/model/data/aoscx#R8N85A-C6000-48G-CL4_PL.10.08.1010#output.txt` (the
+`spec/models/data/aoscx#R8N85A-C6000-48G-CL4_PL.10.08.1010#output.txt` (the
 second file in the list) was missing:
 
 ```shell
-oxidized$ bundle exec ruby spec/model/atoms_generate.rb
+oxidized$ bundle exec ruby spec/models/atoms_generate.rb
 Run options: --seed 57811
 
 # Running:
@@ -85,7 +85,7 @@ output:
 
 ```
 oxidized$ bundle exec rake test
-/usr/bin/ruby3.1 -I"lib:spec" /home/xxx/oxidized/vendor/bundle/ruby/3.1.0/gems/rake-13.2.1/lib/rake/rake_test_loader.rb "spec/cli_spec.rb" "spec/config_spec.rb" "spec/hook/githubrepo_spec.rb" "spec/input/ssh_spec.rb" "spec/manager_spec.rb" "spec/model/apc_aos_spec.rb" "spec/model/model_atoms_spec.rb" "spec/model/model_helper_spec.rb" "spec/node_spec.rb" "spec/nodes_spec.rb" "spec/output/file_spec.rb" "spec/output/git_spec.rb" "spec/refinements_spec.rb" "spec/source/csv_spec.rb" "spec/source/http_spec.rb" "spec/source/jsonfile_spec.rb" "spec/source/sql_spec.rb"
+/usr/bin/ruby3.1 -I"lib:spec" /home/xxx/oxidized/vendor/bundle/ruby/3.1.0/gems/rake-13.2.1/lib/rake/rake_test_loader.rb "spec/cli_spec.rb" "spec/config_spec.rb" "spec/hook/githubrepo_spec.rb" "spec/input/ssh_spec.rb" "spec/manager_spec.rb" "spec/models/apc_aos_spec.rb" "spec/models/model_atoms_spec.rb" "spec/models/model_helper_spec.rb" "spec/node_spec.rb" "spec/nodes_spec.rb" "spec/output/file_spec.rb" "spec/output/git_spec.rb" "spec/refinements_spec.rb" "spec/source/csv_spec.rb" "spec/source/http_spec.rb" "spec/source/jsonfile_spec.rb" "spec/source/sql_spec.rb"
 Run options: --seed 31447
 
 # Running:
@@ -95,7 +95,7 @@ Run options: --seed 31447
 Finished in 7.963602s, 14.6918 runs/s, 48.7217 assertions/s.
 
   1) Failure:
-ATOMS tests#test_0006_ios#C9200L-24P-4G_17.09.04a#output has expected output [spec/model/model_atoms_spec.rb:12]:
+ATOMS tests#test_0006_ios#C9200L-24P-4G_17.09.04a#output has expected output [spec/models/model_atoms_spec.rb:12]:
 --- expected
 +++ actual
 @@ -9,6 +9,21 @@
@@ -129,7 +129,7 @@ Coverage report generated for RSpec to /home/xxx/oxidized/coverage/coverage.xml.
 Coverage report generated for RSpec to /home/xxx/oxidized/coverage.
 Line Coverage: 69.21% (2167 / 3131)
 rake aborted!
-Command failed with status (1): [ruby -I"lib:spec" /home/xxx/oxidized/vendor/bundle/ruby/3.1.0/gems/rake-13.2.1/lib/rake/rake_test_loader.rb "spec/cli_spec.rb" "spec/config_spec.rb" "spec/hook/githubrepo_spec.rb" "spec/input/ssh_spec.rb" "spec/manager_spec.rb" "spec/model/apc_aos_spec.rb" "spec/model/model_atoms_spec.rb" "spec/model/model_helper_spec.rb" "spec/node_spec.rb" "spec/nodes_spec.rb" "spec/output/file_spec.rb" "spec/output/git_spec.rb" "spec/refinements_spec.rb" "spec/source/csv_spec.rb" "spec/source/http_spec.rb" "spec/source/jsonfile_spec.rb" "spec/source/sql_spec.rb" ]
+Command failed with status (1): [ruby -I"lib:spec" /home/xxx/oxidized/vendor/bundle/ruby/3.1.0/gems/rake-13.2.1/lib/rake/rake_test_loader.rb "spec/cli_spec.rb" "spec/config_spec.rb" "spec/hook/githubrepo_spec.rb" "spec/input/ssh_spec.rb" "spec/manager_spec.rb" "spec/models/apc_aos_spec.rb" "spec/models/model_atoms_spec.rb" "spec/models/model_helper_spec.rb" "spec/node_spec.rb" "spec/nodes_spec.rb" "spec/output/file_spec.rb" "spec/output/git_spec.rb" "spec/refinements_spec.rb" "spec/source/csv_spec.rb" "spec/source/http_spec.rb" "spec/source/jsonfile_spec.rb" "spec/source/sql_spec.rb" ]
 /home/xxx/oxidized/vendor/bundle/ruby/3.1.0/gems/rake-13.2.1/exe/rake:27:in `<top (required)>'
 Tasks: TOP => test
 (See full trace by running task with --trace)
@@ -147,11 +147,11 @@ bundle exec rake test TESTOPTS="--verbose --name=/ios#C9800.*output/"
 ```
 
 You can also set `Oxidized.asetus.cfg.debug = true` in
-`spec/model/model_helper.rb` to activate debug logs.
+`spec/models/model_helper.rb` to activate debug logs.
 
 ## Device Prompt
 You can specify device prompts to test in a YAML file named
-`spec/model/data/<model>#generic#prompt.yaml`.
+`spec/models/data/<model>#generic#prompt.yaml`.
 
 The YAML file has three sections containing a list of prompts to test:
 - pass: these prompts will pass the prompt regexp.
@@ -215,5 +215,5 @@ When you write custom tests for your models, please do not use the filenames
 mentioned above, as it will interfere with the standard tests. If you need to
 store a custom simulation file, use `model#description#custom_simulation.yaml`.
 
-The [cumulus test](/spec/model/cumulus_spec.rb) is an example of a custom
+The [cumulus test](/spec/models/cumulus_spec.rb) is an example of a custom
 test.

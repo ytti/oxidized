@@ -1,5 +1,5 @@
 module Oxidized
-  require 'oxidized/model/model'
+  require 'oxidized/model'
   require 'oxidized/input/input'
   require 'oxidized/output/output'
   require 'oxidized/source/source'

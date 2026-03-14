@@ -76,8 +76,8 @@ describe Oxidized::Node do
                                 username: 'alma',
                                 password: 'armud',
                                 prompt:   'test_prompt')
-      Oxidized::Node.logger.expects(:error)
-                    .with("No suitable input found for example.com")
+      JunOS.logger.expects(:error)
+           .with("Needs one of [:telnet, :ssh] to be configured")
       status, = node.run
       _(status).must_equal :fail
     end

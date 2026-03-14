@@ -9,7 +9,7 @@ module Oxidized
     LOG        = File.join(ENV['OXIDIZED_LOGS'] || ROOT, 'logs')
     INPUT_DIR  = File.join Directory, %w[lib oxidized input]
     OUTPUT_DIR = File.join Directory, %w[lib oxidized output]
-    MODEL_DIR  = File.join Directory, %w[lib oxidized model]
+    MODEL_DIR  = File.join Directory, %w[lib oxidized models]
     SOURCE_DIR = File.join Directory, %w[lib oxidized source]
     HOOK_DIR   = File.join Directory, %w[lib oxidized hook]
     SLEEP      = 1

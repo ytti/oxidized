@@ -7,7 +7,7 @@ require 'etc'
 require 'timeout'
 
 # This script logs in a network device and outputs a YAML file that can be
-# used for model unit tests in spec/model/
+# used for model unit tests in spec/models/
 # For more information, see docs/DeviceSimulation.md
 
 ################# Methods

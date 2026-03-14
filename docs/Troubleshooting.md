@@ -28,7 +28,7 @@ SEKRET-5A-X20#
 ```
 
 Review the relevant device model file and identify the defined prompt. You can
-find the device models in the `lib/oxidized/model` subdirectory of the
+find the device models in the `lib/oxidized/models/` subdirectory of the
 repository. For example, the Cisco IOS model, `ios.rb` may use the following
 prompt:
 

@@ -16,8 +16,8 @@ def init_model_helper
 end
 
 # save the result of a node.run into @filename
-# it is already formated for copy & paste into the YAML simulation file
-# @result is formated as it is returned by "status, result = @node.run"
+# it is already formatted for copy & paste into the YAML simulation file
+# @result is formatted as it is returned by "status, result = @node.run"
 def result2file(result, filename)
   File.open(filename, 'w') do |file|
     # chomp: true removes the trailing \n after each line

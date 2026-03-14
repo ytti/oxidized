@@ -99,17 +99,17 @@ show version
 show vtp status
 show inventory
 show running-config
-exit" -o spec/model/data/ios:C8200L_16.12.1:simulation.yaml
+exit" -o spec/models/data/ios:C8200L_16.12.1:simulation.yaml
 ```
 
 - The script waits 5 seconds between commands, and outputs the response of the
   device. You can press "ESC" if you see the prompt and want to pass to next
   command without waiting for the timeout.
-- The result will be stored in `spec/model/data/`.
+- The result will be stored in `spec/models/data/`.
 - Replace any sensitive information with placeholder values in the output file.
 - Commit & push the file to github
 ```
-git add spec/model/data/ios:C8200L_16.12.1:simulation.yaml
+git add spec/models/data/ios:C8200L_16.12.1:simulation.yaml
 git commit -m "Device simulation for C8200L"
 git push
 ```
