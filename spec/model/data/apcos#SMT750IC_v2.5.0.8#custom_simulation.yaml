@@ -1,0 +1,127 @@
+---
+init_prompt: |-
+    \r
+    \r
+    Schneider Electric                      Network Management Card AOS    v2.5.0.8\r
+    (c) Copyright 2023 All Rights Reserved  Smart-UPS APP                  v2.5.0.6\r
+    -------------------------------------------------------------------------------\r
+    Name      : APC-0007                                  Date : 01/01/2026\r
+    Contact   : Oxidized_Corporation                      Time : 12:12:12
+    \rLocation  : Oxidized Headquarters                     User : Administrator
+    \rUp Time   : 42 Days 42 Hours 42 Minutes               Stat : P+ N4+ N6+ A+\r
+    -------------------------------------------------------------------------------\r
+    IPv4               : Enabled            IPv6               : Enabled\r
+    Ping Response      : Enabled\r
+    -------------------------------------------------------------------------------\r
+    HTTP               : Enabled            HTTPS              : Enabled\r
+    FTP                : Enabled            Telnet             : Disabled\r
+    SSH/SCP            : Enabled            SNMPv1             : Read/Write\r
+    SNMPv3             : Enabled            Modbus TCP         : Disabled\r
+    BACnet/IP          : Disabled\r
+    -------------------------------------------------------------------------------\r
+    Super User         : Enabled            RADIUS             : Enabled\r
+    Administrator      : 1 Enabled          Device User        : Disabled\r
+    Read-Only User     : 1 Enabled          Network-Only User  : Disabled\r
+    \r
+    \r
+    Type ? for command listing\r
+    Use tcpip command for IP address(-i), subnet(-s), and gateway(-g)\r
+    \r
+    apc>
+commands:
+  "about\n": |-
+    about\r
+    E000: Success\r
+    Hardware Factory\r
+    ---------------\r
+    Model Number: \t\tAP9640\r
+    Serial Number: \t\tF22200000001\r
+    Hardware Revision: \t5\r
+    Manufacture Date: \t01/01/2022\r
+    MAC Address: \t\t28 29 86 00 00 01\r
+    Management Uptime: \t42 Days 42 Hours 42 Minutes\r
+    \r
+    Application Module\r
+    ---------------\r
+    Name: \t\t\tsu\r
+    Version: \t\tv2.5.0.6\r
+    Date: \t\t\tMay 12 2023\r
+    Time: \t\t\t19:08:29\r
+    \r
+    APC OS(AOS)\r
+    ---------------\r
+    Name: \t\t\taos\r
+    Version: \t\tv2.5.0.8\r
+    Date: \t\t\tMay 12 2023\r
+    Time: \t\t\t19:08:29\r
+    \r
+    APC Boot Monitor\r
+    ---------------\r
+    Name: \t\t\tboot\r
+    Version: \t\tv1.5.1.1\r
+    Date: \t\t\tMar 27 2023\r
+    Time: \t\t\t12:10:09\r
+    \r
+    apc>
+  "upsabout\n": |-
+    upsabout\r
+    E000: Success\r
+    Model: Smart-UPS 750\r
+    SKU: SMT750IC\r
+    Serial Number: 3S2100000001\r
+    Firmware Revision: UPS 03.8 (ID1015) \r
+    Manufacture Date: 01/24/2021\r
+    Apparent Power Rating: 750 VA\r
+    Real Power Rating: 500 W\r
+    Battery SKU: APCRBC48\r
+    \r
+    \r
+    apc>
+  "detstatus -ss\n": |-
+    detstatus -ss\r
+    E000: Success\r
+    Status of UPS: Online\r
+    Last Transfer: UPS battery test\r
+    Input Status: Acceptable\r
+    Next Battery Replacement Date: 07/01/2027\r
+    Battery Health: Battery Life OK
+    \r\r
+    \r
+    apc>
+  "config.ini": |
+    ; Schneider Electric
+    ; Network Management Card AOS v2.5.0.8
+    ; Smart-UPS APP v2.5.0.6
+    ; (c) 2023 Schneider Electric. All rights reserved.
+    ; Configuration file, generated on 01/21/2026 at 16:08:12 by Administrator apc
+    
+    [NetworkTCP/IP]
+    Override=28 29 86 00 00 01
+    SystemIP=0.0.0.0
+    SubnetMask=0.0.0.0
+    DefaultGateway=0.0.0.0
+    IPv4=enabled
+    BootMode=DHCP Only
+    HostName=APC-0007
+    DomainName=oxidized.corp
+    PortSpeed=Auto
+    DHCPBootpVendorClass=APC
+    DHCPBootpClientID=MAC
+    
+    [EventActionConfig]
+    ; Network Interface coldstarted.
+    ; SNMP Trap: 0
+    E0001=ES,E[:::],T[:::::]
+    
+    ; Firmware Updated.
+    E0078=ES,E[:::],T[:::::]
+    
+    ; UPS: Restored the local network management interface-to-UPS communication.
+    ; SNMP Trap: 8
+    E0101=ES,E[:::],T[:::::]
+    
+    ; Environment: Return to normal state for {UPS output relay}.
+    ; SNMP Trap: 4
+    E4E04=ES,E[:::],T[:::::]
+    
+  "exit\n": |-

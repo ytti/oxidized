@@ -38,7 +38,6 @@ Gem::Specification.new do |s|
   s.add_dependency 'ed25519',              '~> 1.2'
   s.add_dependency 'net-ftp',              '~> 0.2'
   s.add_dependency 'net-http-digest_auth', '~> 1.4'
-  s.add_dependency 'net-scp',              '~> 4.1'
   s.add_dependency 'net-ssh',              '~> 7.3'
   s.add_dependency 'net-telnet',           '~> 0.2'
   s.add_dependency 'psych',                '~> 5.0'
@@ -62,6 +61,7 @@ Gem::Specification.new do |s|
 
   # Dependencies on optional libraries, used for unit tests & development
   s.add_development_dependency 'git',              '>= 2.0', '< 5'
+  s.add_development_dependency 'net-scp',          '~> 4.1'
   s.add_development_dependency 'net-tftp',         '~> 0.1.0'
   s.add_development_dependency 'oxidized-web',     '>= 0.17.1'
   s.add_development_dependency 'sequel',           '>= 5.63.0', '< 6'

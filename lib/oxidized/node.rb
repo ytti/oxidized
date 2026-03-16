@@ -43,23 +43,30 @@ module Oxidized
 
     def run
       status = :fail
-      config = nil
-      @input.each do |input|
-        # don't try input if model is missing config block, we may need strong config to class_name map
-        cfg_name = input.to_s.split('::').last.downcase
-        next unless @model.cfg[cfg_name] && (not @model.cfg[cfg_name].empty?)
+      config = Oxidized::Model::Outputs.new
+      input_sequence = @model.class.input_sequence(@input)
 
-        @model.input = input = input.new
-        if (config = run_input(input))
-          logger.debug "#{input.class.name} ran for #{name} successfully"
-          status = :success
-          break
+      input_sequence.each do |sequence|
+        status = :fail
+        sequence_config = nil
+        sequence.each do |input|
+          @model.input = input = input.new
+          if (sequence_config = run_input(input))
+            logger.debug "#{input.class.name} ran for #{name} successfully"
+            status = :success
+            break
+          else
+            logger.debug "#{input.class.name} failed for #{name}"
+            status = :no_connection
+          end
+        end
+        if status == :success
+          config.merge! sequence_config
         else
-          logger.debug "#{input.class.name} failed for #{name}"
-          status = :no_connection
+          config = nil
+          break
         end
       end
-      logger.error "No suitable input found for #{name}" unless @model.input
 
       @model.input = nil
       [status, config]

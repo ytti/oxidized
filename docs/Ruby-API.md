@@ -89,6 +89,40 @@ The block may contain commands to change some behaviour for the given methods
 
 Supports [monkey patching](#monkey-patching).
 
+### 'inputs'
+`inputs` can be used to specify multiple inputs to be run on the model. It
+takes a list of either input symbols or lists of input symbols:
+```ruby
+  inputs [:ssh, %i[scp ftp]]
+  inputs [:ssh, :scp]
+```
+
+Oxidized will run the model against each item of `inputs`. If an item is a
+list of symbols (`%i[scp ftp]`), it will try each input in the order
+configured in the `input/default` section of the oxidized configuration file.
+
+If `inputs` is not specified, Oxidized will try each input that has a `cfg`
+section in the model, in the order configured in the `input/default` section
+of the oxidized configuration file.
+
+To specify which command is to run against which input, use the `input`
+parameter of the `cmd` configuration:
+```ruby
+  cmd 'upsabout', input: :ssh do |cfg|
+    comment cfg
+  end
+
+  cmd 'config.ini', input: %i[scp ftp] do |cfg|
+    "; ========== config.ini ==========\n" + cfg
+  end
+```
+
+`cmd` without `input` parameter will run against every input.
+
+
+See the [ApcAos model](/lib/oxidized/model/apcaos.rb) for a full example.
+
+
 #### `cmd`
 
 Is used to specify commands that should be executed on a model in order to
@@ -127,10 +161,18 @@ significant changes only and will be used to
 Execution order is `:all`, `:secret`, and lastly the command specific block, if
 given.
 
-The `cmd "string"` method for accepts a lambda function via the `:if` argument
+The `cmd "string"` method accepts a lambda function via the `:if` argument
 to execute the command only when the lambda evaluates to true.
 The lambda function is evaluated at runtime in the instance context.
 See [Conditional `cmd`](Creating-Models.md#conditional-cmd) for details.
+
+The `cmd "string"` method accepts a list of supported inputs via the `:input`
+argument to limit this command to specific inputs.
+```ruby
+  cmd 'config.ini', input: %i[scp ftp] do |cfg|
+    "; ========== config.ini ==========\n" + cfg
+  end
+```
 
 Supports [monkey patching](#monkey-patching).
 

@@ -1,5 +1,6 @@
 module Oxidized
   require 'net/ssh'
+  require 'net/ssh/proxy/command'
   require 'timeout'
 
   class SSHBase < Input
@@ -96,10 +97,6 @@ module Oxidized
       logger.debug "#{@node.name} timed out while disconnecting"
     ensure
       @log.close if Oxidized.config.input.debug?
-    end
-
-    def config_name
-      self.class.name.split('::').last.downcase
     end
 
     # Methods to implement in subclasses
