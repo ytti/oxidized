@@ -1,6 +1,4 @@
 module Oxidized
-  require 'net/ssh'
-  require 'net/ssh/proxy/command'
   require 'timeout'
   require_relative 'sshbase'
 

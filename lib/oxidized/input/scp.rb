@@ -1,6 +1,10 @@
 module Oxidized
   require 'net/ssh'
-  require 'net/scp'
+  begin
+    require 'net/scp'
+  rescue LoadError
+    raise OxidizedError, 'net/scp not found: sudo gem install net-scp'
+  end
   require 'timeout'
   require_relative 'sshbase'
 

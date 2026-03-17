@@ -118,7 +118,7 @@ Metrics/AbcSize:
   Enabled: false
 
 Metrics/ClassLength:
-  Enabled: false
+  Max: 200
 
 Metrics/PerceivedComplexity:
   Enabled: false

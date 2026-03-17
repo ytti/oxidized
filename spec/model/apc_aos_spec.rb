@@ -24,6 +24,8 @@ describe 'Model apc_aos' do
     # Make sure we only run "config.ini" an no other command
     Oxidized::FTP.any_instance.expects(:cmd).never
     Oxidized::FTP.any_instance.expects(:cmd).with("config.ini").returns(CONFIGURATION_FILE)
+    Apc_aos.logger.expects(:warn)
+           .with("Apc_aos is deprecated, use ApcAos instead.")
 
     status, result = @node.run
 
@@ -47,6 +49,8 @@ describe 'Model apc_aos' do
     # Make sure we only run "config.ini" an no other command
     Oxidized::SCP.any_instance.expects(:cmd).never
     Oxidized::SCP.any_instance.expects(:cmd).with("config.ini").returns(CONFIGURATION_FILE)
+    Apc_aos.logger.expects(:warn)
+           .with("Apc_aos is deprecated, use ApcAos instead.")
 
     status, result = @node.run
 
@@ -62,8 +66,8 @@ describe 'Model apc_aos' do
                                username: 'alma',
                                password: 'armud',
                                prompt:   'test_prompt')
-    Oxidized::Node.logger.expects(:error)
-                  .with("No suitable input found for example.com")
+    Apc_aos.logger.expects(:error)
+           .with("Needs one of [:ftp, :scp] to be configured")
 
     status, = @node.run
 

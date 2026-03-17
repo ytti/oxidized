@@ -6,6 +6,13 @@
 # Note that changes in the inspected code, or installation of new
 # versions of RuboCop, may require this file to be generated again.
 
+# Offense count: 2
+# Configuration parameters: CountComments, Max, CountAsOne.
+Metrics/ClassLength:
+  Exclude:
+    - 'lib/oxidized/node.rb'
+    - 'lib/oxidized/output/git.rb'
+
 # Offense count: 1
 Style/ClassVars:
   Exclude:
