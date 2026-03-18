@@ -1,0 +1,63 @@
+! ----- output stripped -----
+! 
+! 
+! show environment led
+! Mbr/Name       State        Status    
+! ----------------------------------
+! 1/locator      off          ok        
+! 
+! 
+! show environment power-supply input-voltage
+! PSU Input Voltage Monitoring is not supported in this SKU
+! 
+! 
+! show environment power-consumption
+! 
+! Power Consumption Averaging Period : 600 seconds
+! 
+!                                       Power Usage (W)      PSU Output (W) 
+! Name Description                     Instant   Average   Instant   Average
+! ----------------------------------------------------------------------------
+! 1    6200F 12G CL4 2G/2SFP+ 139W       36.00     33.63       N/A       N/A
+! 
+! 
+! show environment power-redundancy
+! Member  Configured  Operational
+! Number  Redundancy  Redundancy
+! ---------------------------------
+! 1       n/a         n/a
+! 
+! 
+! show environment power-supply
+! --------------------------------------------------------------------------------
+!          Product  Serial            PSU                Input  Voltage    Wattage
+! Mbr/PSU  Number   Number            Status             Type   Range      Maximum
+! --------------------------------------------------------------------------------
+! 1/1      N/A      N/A               OK                 AC     100V-240V  165
+! 
+! 
+! 
+! show environment temperature
+! Temperature information
+! ------------------------------------------------------------------------------
+!                                                      Current
+! Mbr/Slot-Sensor                 Module Type        Temperature  Status
+! ------------------------------------------------------------------------------
+! 1/1-PHY-01-08                   line-card-module     <hidden>   normal
+! 1/1-PHY-09-14                   line-card-module     <hidden>   normal
+! 1/1-Switch-ASIC-Internal        line-card-module     <hidden>   normal
+! 
+! 1/1-CPU                         management-module    <hidden>   normal
+! 1/1-CPU-Zone-0                  management-module    <hidden>   normal
+! 1/1-CPU-Zone-1                  management-module    <hidden>   normal
+! 1/1-CPU-Zone-2                  management-module    <hidden>   normal
+! 1/1-CPU-Zone-3                  management-module    <hidden>   normal
+! 1/1-CPU-Zone-4                  management-module    <hidden>   normal
+! 1/1-Inlet-Air                   management-module    <hidden>   normal
+! 1/1-Internal_1                  management-module    <hidden>   normal
+! 1/1-Switch-ASIC-Remote          management-module    <hidden>   normal
+! 
+! ----- output stripped -----
+! ----- output stripped -----
+! ----- output stripped -----
+----- output stripped -----
