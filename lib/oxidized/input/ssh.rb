@@ -1,6 +1,4 @@
 module Oxidized
-  require 'net/ssh'
-  require 'net/ssh/proxy/command'
   require 'timeout'
   require_relative 'sshbase'
 
@@ -69,6 +67,21 @@ module Oxidized
     end
 
     private
+
+    # We need a specific disconnect for SSH in shell mode, see issue #3725
+    def disconnect
+      disconnect_cli
+      # if disconnect does not disconnect us, give up after timeout
+      Timeout.timeout(@node.timeout) { @ssh.loop }
+    rescue Errno::ECONNRESET, Net::SSH::Disconnect, IOError => e
+      logger.debug 'The other side closed the connection while ' \
+                   "disconnecting, raising #{e.class} with #{e.message}"
+    rescue Timeout::Error
+      logger.debug "#{@node.name} timed out while disconnecting"
+    ensure
+      @log.close if Oxidized.config.input.debug?
+      (@ssh.close rescue true) unless @ssh.closed? # rubocop:disable Style/RedundantParentheses
+    end
 
     def shell_open(ssh)
       @ses = ssh.open_channel do |ch|

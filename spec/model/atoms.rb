@@ -6,8 +6,15 @@ class ATOMS
 
   # Returns a list of all tests matching the data files under ATOMS::DIRECTORY
   def self.all
+    if Test.respond_to?(:subclasses)
+      test_classes = [Test, TestPassFail].flat_map(&:subclasses)
+    else
+      # Backward compatibility for Ruby 3.0
+      test_classes = [TestOutput, TestPrompt, TestSecret, TestSignificantChange]
+    end
+
     # enumerates through the subclasses of Test (TestPrompt, TestOutput...)
-    [Test, TestPassFail].map(&:subclasses).flatten.map do |test|
+    test_classes.flat_map do |test|
       get(test, test::GLOB) if test::GLOB
     end.flatten.compact
   end

@@ -9,9 +9,9 @@ describe Oxidized::Output::Git do
       # Default value in most tests
       Oxidized.config.output.git.single_repo = true
 
-      @mock_node = Minitest::Mock.new
-      @mock_node.expect(:repo, '/tmp/oxidized.git')
-      @mock_node.expect(:name, 'switch-42')
+      @mock_node = mock("Oxidized::Node")
+      @mock_node.expects(:repo).returns('/tmp/oxidized.git')
+      @mock_node.expects(:name).returns('switch-42')
 
       @git = Oxidized::Output::Git.new
     end
@@ -28,7 +28,7 @@ describe Oxidized::Output::Git do
 
     it 'takes the group into accout when simple_repo=true' do
       # node.name will be needed a second time
-      @mock_node.expect(:name, 'switch-42')
+      @mock_node.expects(:name).returns('switch-42')
       result = @git.send(:yield_repo_and_path, @mock_node, 'testgroup')
       _(result).must_equal ['/tmp/oxidized.git', 'testgroup/switch-42']
     end

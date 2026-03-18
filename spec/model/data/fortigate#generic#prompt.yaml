@@ -5,3 +5,4 @@ pass:
   - '(S) test-adc-sec $ '
   # FortiOS
   - 'oxidized-Firewall123 # '
+  - 'OXI-FW121 (global) # '

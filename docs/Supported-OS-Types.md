@@ -17,7 +17,7 @@
 |Allied Telesis      |Alliedware Plus               |[awplus](/lib/oxidized/model/awplus.rb)
 |                    |AT-8000S, AT-8000GS series    |[powerconnect](/lib/oxidized/model/powerconnect.rb)
 |Alvarion            |BreezeACCESS                  |[alvarion](/lib/oxidized/model/alvarion.rb)
-|APC                 |AOS                           |[apc_aos](/lib/oxidized/model/apc_aos.rb)        |@robertcheramy   |[APC AOS](Model-Notes/APC_AOS.md)
+|APC                 |AOS                           |[apcos](/lib/oxidized/model/apacos.rb)           |@robertcheramy   |[APC](Model-Notes/APC.md)
 |Arbor Networks      |ArbOS                         |[arbos](/lib/oxidized/model/arbos.rb)            |                 |[ArbOS](Model-Notes/ArbOS.md)
 |Arista              |EOS                           |[eos](/lib/oxidized/model/eos.rb)                |                 |[EOS](Model-Notes/EOS.md)
 |Arris               |C4CMTS                        |[c4cmts](/lib/oxidized/model/c4cmts.rb)
@@ -74,7 +74,7 @@
 |DELL                |PowerConnect                  |[powerconnect](/lib/oxidized/model/powerconnect.rb)
 |                    |AOSW                          |[aosw](/lib/oxidized/model/aosw.rb)              |                 |Same model as Aruba Wireless
 |                    |DellX                         |[dellx](/lib/oxidized/model/dellx.rb)
-|                    |Dell EMC Networking OS6       |[os6](/lib/oxidized/model/os6.rb)              |                 |[Dell EMC Networking OS6](Model-Notes/OS6.md)
+|                    |Dell EMC Networking OS6       |[os6](/lib/oxidized/model/os6.rb)                |                 |[Dell EMC Networking OS6](Model-Notes/OS6.md)
 |                    |Dell EMC Networking OS10      |[os10](/lib/oxidized/model/os10.rb)              |                 |[Dell EMC Networking OS10](Model-Notes/OS10.md)
 |D-Link              |D-Link                        |[dlink](/lib/oxidized/model/dlink.rb)
 |                    |D-Link cisco like CLI         |[dlinknextgen](/lib/oxidized/model/dlinknextgen.rb)
@@ -98,7 +98,7 @@
 |Firebrick           |FBxxxx                        |[firebrick](/lib/oxidized/model/firebrick.rb)
 |Force10             |DNOS                          |[dnos](/lib/oxidized/model/dnos.rb)
 |                    |FTOS                          |[ftos](/lib/oxidized/model/ftos.rb)
-|FortiGate           |FortiOS                       |[fortios](/lib/oxidized/model/fortios.rb)        |                 |[FortiOS](Model-Notes/FortiOS.md)
+|FortiGate           |FortiOS                       |[fortios](/lib/oxidized/model/fortios.rb)        |@robertcheramy   |[FortiOS](Model-Notes/FortiOS.md)
 |FortiWLC            |FortiWLC                      |[fortiwlc](/lib/oxidized/model/fortiwlc.rb)
 |Fujitsu             |PRIMERGY Blade switch 1/10Gbe |[fujitsupy](/lib/oxidized/model/fujitsupy.rb)
 |                    |1FINITY Switches              |[onefinity](/lib/oxidized/model/onefinity.rb)
@@ -119,6 +119,7 @@
 |Icotera             |6400 series                   |[icotera](/lib/oxidized/model/icotera.rb)
 |Ingate              |SIParator/Firewalls           |[ingate](/lib/oxidized/model/ingate.rb)          |@thanegill
 |IP Infusion         |OcNOS                         |[ocnos](/lib/oxidized/model/ocnos.rb)
+|Ivanti              |Ivanti Connect Secure (ICS)   |[ivanti](/lib/oxidized/model/ivanti.rb)          |@candleflip      |[ICS](Model-Notes/IvantiConnectSecure.md)
 |Juniper             |JunOS                         |[junos](/lib/oxidized/model/junos.rb)            |                 |[MX/QFX/EX/SRX/J Series](Model-Notes/JunOS.md)
 |                    |ScreenOS (Netscreen)          |[screenos](/lib/oxidized/model/screenos.rb)
 |LANCOM Systems GmbH |LCOS                          |[lancom](/lib/oxidized/model/lancom.rb)
@@ -127,7 +128,7 @@
 |Linuxgeneric        |CentOS                        |[linuxgeneric](/lib/oxidized/model/linuxgeneric.rb)|               |[LinuxGeneric](Model-Notes/LinuxGeneric.md)
 |Mellanox            |MLNX-OS                       |[mlnxos](/lib/oxidized/model/mlnxos.rb)
 |                    |Voltaire                      |[voltaire](/lib/oxidized/model/voltaire.rb)
-|Mikrotik            |RouterOS                      |[routeros](/lib/oxidized/model/routeros.rb)      |  |[RouterOS](Model-Notes/RouterOS.md)
+|Mikrotik            |RouterOS                      |[routeros](/lib/oxidized/model/routeros.rb)      |                 |[RouterOS](Model-Notes/RouterOS.md)
 |                    |SwOS and SwOS Lite            |[swos](/lib/oxidized/model/swos.rb)
 |Mimosa              |Mimosa (B11)                  |[mimosab11](/lib/oxidized/model/mimosab11.rb)
 |Motorola            |RFS                           |[mtrlrfs](/lib/oxidized/model/mtrlrfs.rb)
@@ -158,6 +159,7 @@
 |Siklu               |EtherHaul                     |[siklu](/lib/oxidized/model/siklu.rb)            |@bdg-robert
 |                    |Multihaul TG                  |[siklumhtg](/lib/oxidized/model/siklumhtg.rb)    |@bdg-robert      |[Siklu Multihaul TG](Model-Notes/SikluMHTG.md)
 |Seiko Solutions     |SmartCS, SmartCS mini         |[smartcs](/lib/oxidized/model/smartcs.rb)
+|SmartByte           |LT-S8228G series              |[smartbyte](/lib/oxidized/model/smartbyte.rb)    |@freddy36
 |SonicWALL           |SonicOS                       |[sonicos](/lib/oxidized/model/sonicos.rb)
 |SNR                 |SNR-S300G, S2xxx, S3xxx, S4xxx|[dcnos](/lib/oxidized/model/dcnos.rb)
 |Speedtouch          |Thomson Speedtouch            |[speedtouch](/lib/oxidized/model/speedtouch.rb)
@@ -176,8 +178,8 @@
 |                    |Edgeos                        |[edgeos](/lib/oxidized/model/edgeos.rb)
 |                    |EdgeSwitch                    |[edgeswitch](/lib/oxidized/model/edgeswitch.rb)
 |                    |AirFiber                      |[airfiber](/lib/oxidized/model/airfiber.rb)
-|                    |UnifiAP                       |[unifiap](/lib/oxidized/model/unifiap.rb)              |@clifcox      |Also suports AirOS, and some Unifi switches
-|Uplink              |EP4440-DP                     |[EP4440](/lib/oxidized/model/uplinkolt.rb)             | |Might support all EP4440 series
+|                    |UnifiAP                       |[unifiap](/lib/oxidized/model/unifiap.rb)        |@clifcox         |Also suports AirOS, and some Unifi switches
+|Uplink              |EP4440-DP                     |[EP4440](/lib/oxidized/model/uplinkolt.rb)       |                 |Might support all EP4440 series
 |VMWare              |NSX Edge (configuration)      |[nsxconfig](/lib/oxidized/model/nsxconfig.rb)
 |                    |NSX Edge (firewall rules)     |[nsxfirewall](/lib/oxidized/model/nsxfirewall.rb)
 |                    |NSX Distributed Firewall      |[nsxdfw](/lib/oxidized/model/nsxdfw.rb)

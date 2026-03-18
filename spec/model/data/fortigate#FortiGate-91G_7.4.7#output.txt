@@ -1,28 +1,8 @@
-# # COMMAND: get system status
 # Version: FortiGate-91G v7.4.7,build2731,250120 (GA.M)
-# First GA patch build date: 230509
 # Security Level: High
-# Firmware Signature: certified
-# Virus-DB <db version stripped>
-# Extended DB <db version stripped>
-# AV AI/ML Model <db version stripped>
-# IPS-DB <db version stripped>
-# IPS-ETDB <db version stripped>
-# APP-DB <db version stripped>
-# Proxy-IPS-DB <db version stripped>
-# Proxy-IPS-ETDB <db version stripped>
-# Proxy-APP-DB <db version stripped>
-# FMWP-DB <db version stripped>
-# IPS Malicious URL Database <db version stripped>
-# IoT-Detect <db version stripped>
-# OT-Detect-DB: 0.00000(2001-01-01 00:00)
-# OT-Patch-DB: 0.00000(2001-01-01 00:00)
-# OT-Threat-DB: 6.00741(2015-12-01 02:30)
-# IPS-Engine: 7.00559(2024-12-05 01:06)
 # Serial-Number: FGT91GTK00000000
 # BIOS version: 06000100
-#          System Part-Number: P28792-06
-# Log hard disk: Available
+# System Part-Number: P28792-06
 # Hostname: TEST-FW1234
 # Private Encryption: Disable
 # Operation Mode: NAT
@@ -32,16 +12,7 @@
 # Virtual domain configuration: disable
 # FIPS-CC mode: disable
 # Current HA mode: standalone
-# Branch point: 2731
-# Release Version Information: GA
-# System time: <stripped>
-# Last reboot reason: warm reboot
 # 
-# # COMMAND: get system ha status
-# HA Health Status: OK
-# Model: FortiGate-91G
-# Mode: Standalone
-# # COMMAND: get hardware status
 # Model name: FortiGate-91G
 # ASIC version: SOC5
 # CPU: ARMv8
@@ -53,9 +24,11 @@
 # Network Card chipset: FortiASIC NP7LITE Adapter (rev.)
 # Hardware Revision: Rev1
 # 
-# COMMAND: show | grep .
+# Interface wan1 - SFP/SFP+/SFP28, 10GBASE-SR
+#   Vendor Name  :            FORTINET        
+#   Serial No.   :            NB00000         
+# 
 #config-version=FGT91G-7.4.7-FW-build2731-250120:opmode=1:vdom=0:user=TACACS-USER
-#conf_file_ver=<stripped>
 #buildno=2731
 #global_vdom=1
 config system global
@@ -92,10 +65,18 @@ end
 config system snmp user
     edit "snmpuser"
         set notify-hosts 192.0.2.10 192.0.2.11
-        set events cpu-high mem-low log-full intf-ip vpn-tun-up vpn-tun-down ips-signature av-virus av-oversize av-pattern av-fragmented fm-if-change av-conserve av-bypass av-oversize-passed av-oversize-blocked ips-pkg-update ips-fail-open temperature-high voltage-alert faz-disconnect device-new per-cpu-high
+        set events cpu-high mem-low log-full ... device-new per-cpu-high
         set security-level auth-priv
         set auth-pwd ENC AAAAAAAAAABBBBBBBBBBCCCCCCCCCC
         set priv-pwd ENC AAAAAAAAAABBBBBBBBBBCCCCCCCCCC
+    next
+end
+config firewall internet-service-name
+    edit "Google-Other"
+        set internet-service-id 65536
+    next
+    edit "Google-Web"
+        set internet-service-id 65537
     next
 end
 config vpn certificate local
@@ -105,7 +86,23 @@ config vpn certificate local
         set range global
         set source factory
     next
-  end
+end
+config system certificate local
+    edit "certificate"
+        set password ENC AAAAAAAAAABBBBBBBBBBCCCCCCCCCC
+        set comment "Created by generating certificate"
+        set private-key "-----BEGIN ENCRYPTED PRIVATE KEY-----
+XXENCRYPTEDPRIVATEKEYXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXX
+AAAAAAAAAABBBBBBBBBBCCCCCCCCCCXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXX
+XXXXXXXXXXXXXXXXXXXXXX==
+-----END ENCRYPTED PRIVATE KEY-----"
+        set certificate "-----BEGIN CERTIFICATE-----
+XXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXX
+XXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXX
+XXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXX=
+-----END CERTIFICATE-----"
+    next
+end
 config user tacacs+
     edit "tacacs-server-name"
         set server "192.0.2.19"

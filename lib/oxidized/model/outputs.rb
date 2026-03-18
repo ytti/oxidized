@@ -31,6 +31,11 @@ module Oxidized
         @outputs.map { |out| out.type }.uniq.compact
       end
 
+      def merge!(other)
+        other.all.each { |o| @outputs << o }
+        self
+      end
+
       private
 
       def initialize

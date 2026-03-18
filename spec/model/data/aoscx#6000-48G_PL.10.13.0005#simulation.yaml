@@ -64,7 +64,7 @@ commands:
     1/1-PHY-33-40                   line-card-module     53.00 C    normal
     1/1-PHY-41-48                   line-card-module     58.00 C    normal
     
-    1/1-Inlet-Air                   management-module    22.62 C    normal
+    1/1-Inlet-Air                   management-module    -2.62 C    normal
     1/1-Switch-ASIC-Internal        management-module    48.00 C    normal
     1/1-Switch-CPU-1                management-module    47.50 C    normal
     1/1-Switch-CPU-2                management-module    49.25 C    normal

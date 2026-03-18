@@ -82,7 +82,7 @@ a regular expression.
 username: oxidized
 password: S3cr3tx
 model: junos
-interval: 3600 #interval in seconds
+interval: 3600 #interval in seconds, when 0 is configured no fetch config is done at initial start and after
 log: ~/.config/oxidized/log
 debug: false
 threads: 30 # maximum number of threads
