@@ -461,3 +461,138 @@ hooks:
 ```
 
 Note the channel name must be in quotes.
+
+
+## Hook for Dynamic Model Selection
+
+### Scenario
+
+Suppose you have a NetBox instance containing devices with the following data (simplified):
+
+| Name    | Vendor   | Device Type | Role (slug) | Primary IP      |
+|---------|----------|-------------|-------------|-----------------|
+| gw-001  | Mikrotik | RB750       | ro_ud       | 192.168.0.167/24 |
+| gw-002  | Mikrotik | RB750       | ro_ud       | 192.168.0.177/24 |
+| gw-003  | Mikrotik | RB750       | ro_bd       | 192.168.0.178/24 |
+| gw-004  | Mikrotik | RB750       | switch      | 192.168.0.181/24 |
+| gw-005  | Cisco    | 2960        | switch      | 192.168.0.179/24 |
+| gw-006  | Mikrotik | RB750       | switch      | 192.168.0.180/24 |
+| gw-007  | Arista   | 3456        | ro_ud       | 192.168.0.190/24 |
+
+**Important:** The set of rules shown below is **only for demonstrating the hook's capabilities** and does not have to reflect your actual network logic. You can combine any fields, change the order, and create your own conditions based on your data.
+
+As an illustration, we want to achieve the following model assignments:
+
+- `gw-001` (exception by name) → `asa` model
+- MikroTik in group `switch` with IP `192.168.0.180/24` → `eltex` model
+- All other MikroTik (any group) → `routeros` model
+- Cisco switches (group `switch`) → `ios` model
+- Arista devices → `eos` model
+
+### Configuration Example
+
+Below is a complete Oxidized configuration file that includes an HTTP source (NetBox) and the `model_rules` hook. Note that the `hooks` section is at the top level.
+
+```yaml
+---
+username: oxidized_ssh_user
+password: oxidized_ssh_password
+
+hooks:
+  model_rules:
+    type: ruby
+    events: [source_node_transform]
+    file: /etc/oxidized/hooks/model_rules.rb
+    rules:
+      - description: "Exception: gw-001 uses ASA model"
+        name: gw-001
+        model: asa
+
+      - description: "Mikrotik switch with IP 192.168.0.180/24 uses eltex"
+        vendor: Mikrotik
+        group: switch
+        ip: 192.168.0.180/24
+        model: eltex
+
+      - description: "All other Mikrotik devices (routers and switches)"
+        vendor: Mikrotik
+        model: routeros
+
+      - description: "Cisco switches"
+        vendor: Cisco
+        group: switch
+        model: ios
+
+      - description: "Arista devices"
+        vendor: Arista
+        model: eos
+
+resolve_dns: false
+interval: 3600
+rest: 0.0.0.0:8888
+
+log: /home/oxidized/.config/oxidized/logs/oxidized.log
+debug: true   # optional – enables detailed logging from the hook
+
+next_adds_job: false
+
+output:
+  default: file
+  file:
+    directory: "/home/oxidized/.config/oxidized/configs"
+
+source:
+  default: http
+  http:
+    url: http://netbox.test/api/dcim/devices/?status=active&has_primary_ip=true
+    scheme: http
+    delimiter: !ruby/regexp /:/
+
+    headers:
+      Authorization: Token XXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXX
+
+    map:
+      name: name
+      vendor: device_type.manufacturer.name
+      type: device_type.model
+      group: role.slug
+      ip: primary_ip.address
+
+    secure: false
+    hosts_location: results
+    pagination: true
+    pagination_key_name: next
+
+groups:
+  ro_ud: {}
+  ro_bd: {}
+  switch: {}
+```
+
+## How It Works
+
+1. **Fetching data from NetBox**  
+   Oxidized retrieves the list of devices from NetBox. For each device it collects its attributes: name, vendor, type, group, IP address, etc. Oxidized will use this data further.
+
+2. **Hook invocation**  
+   Before finally determining the device's model, Oxidized runs a special handler – our `model_rules` hook. The hook receives all attributes of the current device.
+
+3. **Rule evaluation**  
+   - The hook looks at the list of rules you wrote in the config (`rules` section).  
+   - Rules are checked one by one, from top to bottom.  
+   - For each rule, the hook compares the fields specified in it (e.g., `vendor: Mikrotik`) with the actual device attributes. If the values match (case‑insensitive), the rule is considered matching.  
+   - As soon as the first matching rule is found, the hook remembers which model (`model`) to assign and stops checking further rules.
+
+4. **What happens after the check**  
+   - **If a rule matched** – the hook **assigns** the model specified in that rule to the device.  
+   - **If no rule matched** – the hook **does nothing**. Then the device will receive the model determined by the normal order: group settings, and finally the global model from the config (or the built‑in `junos` default).
+
+5. **Node creation**  
+   After the hook finishes (with either a changed or unchanged model), Oxidized creates a node and proceeds with the usual process – connects to the device, fetches the configuration, and stores it.
+
+## Important Details
+
+- **Rule order is crucial**. If you write a generic rule (e.g., for all MikroTik) before a more specific one (e.g., for a MikroTik with a particular IP), the generic one will match first, and the device won't get the desired exceptional model. Therefore **place more specific rules higher**.
+- You can use **any device attribute** that exists after mapping: name, vendor, group, type, IP – everything you specified in the `map` section.
+- The `description` field in rules is only for documentation – it does not affect matching, but helps you understand which rule fired when `debug: true` is enabled.
+- The main benefit of this approach is that you can assign models **without changing data in NetBox**. This is handy if you don't have permissions to add a `model` field in NetBox but still want to automate backups based on existing fields (vendor, type, group, etc.).
