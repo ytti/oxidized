@@ -1,32 +1,25 @@
 class Exalink < Oxidized::Model
   using Refinements
 
-  PROMPT = /^([\w.@()-]+[#>]\s?)$/
-
-  prompt PROMPT
+  prompt /^([\w.@()-]+[#>]\s?)$/
   comment '! '
 
-  def filter(cfg)
+  cmd :all do |cfg|
     cfg.gsub! /\r\n?/, "\n"
-    cfg.gsub! PROMPT, ''
+    cfg.cut_both
   end
 
   cmd 'show version' do |cfg|
-    cfg = filter cfg
-    cfg = cfg.each_line.take_while { |line| not line.match(/uptime/i) }
-    comment cfg.join
+    comment cfg.reject_lines /uptime/i
   end
 
   cmd 'show port' do |cfg|
-    cfg = filter cfg
     comment cfg
   end
 
   cmd 'show running-config' do |cfg|
-    cfg = filter cfg
     cfg.gsub! /^(show run.*)$/, '! \1'
     cfg.gsub! /^!Time:[^\n]*\n/, ''
-    cfg.gsub! /^[\w.@_()-]+[#].*$/, ''
     cfg
   end
 
