@@ -37,7 +37,7 @@ The SCP gem is now an optional dependency as it will rarely be used - you must i
 - fastiron: adjust prompt to account for stacks, remove time from stack output. Fixes #3106 (@ManoftheSea)
 - interval: fix fetching device configuration at oxidized start when interval is 0. Fixes #3746 (@tgr229)
 - voss: more cleanup of constantly changing values (fan & temp) for at least Extreme Networks 7520-48Y-8C-FabricEngine (8.10.5.0)
-
+- truenas: Added retry logic to use sudo for reading/dumping the configuration database if needed. Fixes #3767 (@neilschelly)
 
 ## [0.35.0 - 2025-12-04]
 ### Release Notes
