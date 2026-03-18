@@ -16,6 +16,7 @@ The SCP gem is now an optional dependency as it will rarely be used - you must i
 - smartbyte: new model for SmartByte switches (@freddy36)
 - Support multiple input (@robertcheramy)
 - apcaos model with SSH + SSH capabilities, deprecates apc_aos (@robertcheramy)
+- source_node_transform hook, allows user to manipulate node data when loading from source (@ytti)
 
 ### Changed
 - Refactored models: Use `keep_lines` and `reject_lines` in aosw, arubainstant, asa, efos, firelinuxos, fsos, ironware, mlnxos and perle to (@robertcheramy)
