@@ -52,6 +52,7 @@
 |                    |AsyncOS                       |[asyncos](/lib/oxidized/model/asyncos.rb)
 |                    |CatOS                         |[catos](/lib/oxidized/model/catos.rb)
 |                    |Cisco Catalyst Express        |[ciscoce](/lib/oxidized/model/ciscoce.rb)
+|                    |ExaLink Fusion (Nexus 3550-F) |[exalink](/lib/oxidized/model/exalink.rb)        |@obol89          |[ExaLink](Model-Notes/ExaLink.md)
 |                    |FireLinuxOS                   |[firelinuxos](/lib/oxidized/model/firelinuxos.rb)
 |                    |IOS                           |[ios](/lib/oxidized/model/ios.rb)                |@robertcheramy   |[IOS](Model-Notes/IOS.md)
 |                    |IOSXR                         |[iosxr](/lib/oxidized/model/iosxr.rb)
