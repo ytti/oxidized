@@ -136,7 +136,8 @@ class Modelrulesadvanced < Oxidized::Hook
     rules.each_with_index do |rule, idx|
       match = true
       rule.each do |key, value|
-        next if key == "model" || key == "description"
+        next if %w[model description].include?(key)
+
         # Retrieve the corresponding value from the node (symbol or string key)
         node_value = node[key.to_sym] || node[key.to_s]
         if node_value.to_s.strip.downcase != value.to_s.strip.downcase
@@ -144,12 +145,12 @@ class Modelrulesadvanced < Oxidized::Hook
           break
         end
       end
-      if match
-        matched_model = rule["model"]
-        desc = rule["description"] ? " (#{rule['description']})" : ""
-        logger.debug "ModelRulesAdvanced: rule #{idx+1}#{desc} matched -> #{matched_model}"
-        break
-      end
+      next unless match
+
+      matched_model = rule["model"]
+      desc = rule["description"] ? " (#{rule['description']})" : ""
+      logger.debug "ModelRulesAdvanced: rule #{idx + 1}#{desc} matched -> #{matched_model}"
+      break
     end
 
     if matched_model
@@ -157,7 +158,9 @@ class Modelrulesadvanced < Oxidized::Hook
       node[:model] = matched_model
       logger.debug "ModelRulesAdvanced: changed model from #{old_model.inspect} to #{matched_model.inspect}"
     else
+      # rubocop:disable Layout/LineLength
       logger.debug "ModelRulesAdvanced: no rule matched, keeping existing model: #{node[:model] || node['model'].inspect}"
+      # rubocop:enable Layout/LineLength
     end
 
     node
