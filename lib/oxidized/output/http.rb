@@ -26,8 +26,12 @@ module Oxidized
         @commitref = nil
         uri = URI.parse @cfg.url
         http = Net::HTTP.new uri.host, uri.port
-        http.use_ssl = true if uri.scheme == 'https'
-        http.verify_mode = OpenSSL::SSL::VERIFY_NONE unless @cfg.secure
+
+        # if uri scheme is https, enable ssl and set verify mode
+        if uri.scheme == "https"
+          http.use_ssl = true
+          http.verify_mode = @cfg.secure ? OpenSSL::SSL::VERIFY_PEER : OpenSSL::SSL::VERIFY_NONE
+        end
 
         # map headers
         headers = {}

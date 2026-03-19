@@ -10,6 +10,7 @@ The fortios model has been split into fortigate and fortios. You need the new fo
 The SCP gem is now an optional dependency as it will rarely be used - you must install it if you need it. It is still included in the docker image.
 
 ### Added
+- Support https mode, headers, and ssl verify for HTTP output (@bahirul)
 - String refinements: introduce `keep_lines` and `reject_lines` methods (@robertcheramy)
 - Support for storing configurations only on significant changes (@robertcheramy)
 - Add support for Ivanti Secure Connect ISA models (@candleflip)
