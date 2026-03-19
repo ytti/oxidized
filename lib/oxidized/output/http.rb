@@ -26,9 +26,18 @@ module Oxidized
         @commitref = nil
         uri = URI.parse @cfg.url
         http = Net::HTTP.new uri.host, uri.port
-        # http.use_ssl = true if uri.scheme = 'https'
-        req = Net::HTTP::Post.new(uri.request_uri, 'Content-Type' => 'application/json')
-        req.basic_auth @cfg.user, @cfg.password
+        http.use_ssl = true if uri.scheme == 'https'
+        http.verify_mode = OpenSSL::SSL::VERIFY_NONE unless @cfg.secure
+
+        # map headers
+        headers = {}
+        @cfg.headers.each do |header, value|
+          headers[header] = value
+        end
+
+        req = Net::HTTP::Post.new(uri.request_uri, headers.merge('Content-Type' => 'application/json'))
+        req.basic_auth(@cfg.user, @cfg.password) if @cfg.user? && @cfg.password?
+
         req.body = generate_json(node, outputs, opt)
         response = http.request req
 
