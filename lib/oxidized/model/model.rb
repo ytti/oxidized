@@ -2,6 +2,7 @@ require 'strscan'
 require_relative 'outputs'
 require_relative 'dslsetup'
 require_relative 'dslcommands'
+require_relative 'macros'
 
 module Oxidized
   class Model
@@ -12,6 +13,7 @@ module Oxidized
     # Domain Specific Language for models
     extend Oxidized::Model::DSLSetup
     extend Oxidized::Model::DSLCommands
+    extend Oxidized::Model::Macros
 
     include Oxidized::Config::Vars
 
@@ -215,3 +217,5 @@ module Oxidized
     end
   end
 end
+
+require_relative 'defacto'
