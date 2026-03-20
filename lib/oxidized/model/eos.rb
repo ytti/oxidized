@@ -28,6 +28,11 @@ class EOS < Oxidized::Model
     comment cfg
   end
 
+  cmd 'show version | no-more' do |cfg|
+    cfg = cfg.reject_lines [/^Uptime:/, /^Free memory:/]
+    comment cfg
+  end
+
   cmd 'show running-config | no-more | exclude ! Time:' do |cfg|
     cfg
   end
