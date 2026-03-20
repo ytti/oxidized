@@ -16,7 +16,6 @@ fortigate model for FortiGate firewalls. Be sure to check the
 - smartbyte: new model for SmartByte switches (@freddy36)
 
 ### Changed
-- eos: add `show version | no-more`; volatile fields (`Uptime`, `Free memory`) are excluded so they do not trigger spurious config-change events. (@shtern)
 - Refactored models: Use `keep_lines` and `reject_lines` in aosw, arubainstant, asa, efos, firelinuxos, fsos, ironware, mlnxos and perle to (@robertcheramy)
 - Refactor SSH and SCP into a common class SSHBase. Fixes #3597 (@robertcheramy)
 - Modified models to support store mode on significant changes: ios, fortios, perle (@robertcheramy)
@@ -24,6 +23,7 @@ fortigate model for FortiGate firewalls. Be sure to check the
 - fortigate: Add PSU & SFP inventory (@robertcheramy)
 - fortigate: move var fortios_autoupdate (deprecated) to fortigate_autoupdate (@robertcheramy)
 - netgear: extended login and pager detection to add support for GS728TPv2 and GS752TPv2 (@weberc)
+- eos: add `show version | no-more` to capture hardware identity information (serial, version, model). (@garryshtern)
 
 ### Fixed
 - VyOS: Only remove SNMP community, not route-maps. Fixes #3735 (@systeembeheerder)
