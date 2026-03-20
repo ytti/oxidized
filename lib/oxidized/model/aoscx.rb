@@ -1,6 +1,8 @@
 class Aoscx < Oxidized::Model
   using Refinements
 
+  # HPE Aruba Networking - ArubaOS-CX models
+
   prompt /(^\r|\e\[24;[0-9][hH])?([\w\s.-]+[#>] )($|(\e\[24;[0-9][0-9]?[hH]){3})/
 
   comment '! '
