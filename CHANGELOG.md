@@ -18,6 +18,7 @@ The SCP gem is now an optional dependency as it will rarely be used - you must i
 - apcaos model with SSH + SSH capabilities, deprecates apc_aos (@robertcheramy)
 - exalink model for specific Cisco ExaLink Fusion (formerly Exablaze) switches (@obol89)
 - source_node_transform hook, allows user to manipulate node data when loading from source (@ytti)
+- docker image: publish major version tag (e.g. `0`) in addition to full semver tag on releases (@infabo)
 
 ### Changed
 - Refactored models: Use `keep_lines` and `reject_lines` in aosw, arubainstant, asa, efos, firelinuxos, fsos, ironware, mlnxos and perle to (@robertcheramy)
