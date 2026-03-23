@@ -211,9 +211,9 @@ output:
 
 Please note that user list is only updated once at creation.
 
-## Output: Http
+## Output: HTTP
 
-The HTTP output will POST a config to the specified HTTP URL. Basic username/password authentication is supported.
+The HTTP output will POST a config as JSON to the specified HTTP URL. It supports HTTP Basic Authentication, custom headers, and SSL/TLS verification control.
 
 Example HTTP output configuration:
 
@@ -221,10 +221,24 @@ Example HTTP output configuration:
 output:
   default: http
   http:
-    user: admin
-    password: changeit
     url: "http://192.168.162.50:8080/db/coll"
+    user: admin             # Optional - for HTTP basic auth
+    password: changeit      # Optional - for HTTP basic auth
+    secure: false           # Optional - verify SSL certs (default: false)
+    headers:                # Optional - custom HTTP headers
+      X-Custom-Header: "value"
+      X-API-Key: "secret"
 ```
+
+### Configuration Options
+
+| Option | Required | Description |
+|--------|----------|-------------|
+| `url` | Yes | Full HTTP/HTTPS URL to POST the config to |
+| `user` | No | Username for HTTP Basic Authentication |
+| `password` | No | Password for HTTP Basic Authentication |
+| `secure` | No | When `true`, verify SSL certificates (default: `false`) |
+| `headers` | No | Hash of custom HTTP headers to include in the request |
 
 ## Output types
 
