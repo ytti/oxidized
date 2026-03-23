@@ -1,21 +1,13 @@
 class Aoscx < Oxidized::Model
   using Refinements
-
   # HPE Aruba Networking - ArubaOS-CX models
 
-  prompt /(^\r|\e\[24;[0-9][hH])?([\w\s.-]+[#>] )($|(\e\[24;[0-9][0-9]?[hH]){3})/
+  prompt /^[\w\s.-]+[#>] $/
+  clean :escape_codes
 
   comment '! '
 
-  expect /(\e\[1M\e\[\??\d+(;\d+)*[A-Za-z]\e\[1L)|(\eE)/ do |data, re|
-    data.gsub re, "\n"
-  end
-
-  expect /\e\[\??\d+(;\d+)*[A-Za-z]/ do |data, re|
-    data.gsub re, ''
-  end
-
-  expect /Press any key to continue(\e\[\??\d+(;\d+)*[A-Za-z])*$/ do
+  expect /Press any key to continue$/ do
     send ' '
     ""
   end
@@ -26,11 +18,7 @@ class Aoscx < Oxidized::Model
   end
 
   cmd :all do |cfg|
-    cfg = cfg.cut_both
-    cfg = cfg.gsub /^\r/, ''
-    cfg.gsub! /\e\[\??\d+(;\d+)*[A-Za-z]/, ''
-    cfg.gsub! /^(.*AC [0-9]{3}V\/?([0-9]{3}V)?) *([0-9]{1,3}) (.*)/, '\\1 <removed> \\4'
-    cfg
+    cfg.cut_both
   end
 
   cmd :secret do |cfg|
@@ -50,18 +38,30 @@ class Aoscx < Oxidized::Model
   end
 
   cmd 'show environment' do |cfg|
-    cfg.gsub! /^(LC.*\s+)\d+\s+$/, '\\1<hidden>'
-    cfg.gsub! /^(\d\/\d\/\d.*\s+)\d+\s+$/, '\\1<hidden>'
-    cfg.gsub! /^(\d+\/?\S+\s+\S+\s+)\d+\.\d+\s+C\s+(.*)/, '\\1<hidden>   \\2'
-    cfg.gsub! /^(LC.*\s+)\d+\.\d+\s+(C.*)$/, '\\1 <hidden> \\2'
-    cfg.gsub! /^PSU(\S+\s+\S+\s+\s+\S+\s+)(slow|normal|medium|fast|max|N\/A)\s+(\S+\s+\S+\s+)\d+[[:blank:]]+/, '\\1<speed> \\3<rpm>'
-    cfg.gsub! /^(\S+\s+\S+\s+\s+\S+\s+)(slow|normal|medium|fast|max)\s+(\S+\s+\S+\s+)\d+[[:blank:]]+/, '\\1<speed> \\3<rpm>'
-    cfg.gsub! /^(\d+\s+.+\s+)(\s{2}\d{2}\.\d{2}|\s{1}\d{3}\.\d{2}|\d{4}\.\d{2})(\s+)(\s{2}\d{2}\.\d{2}|\s{1}\d{3}\.\d{2}|\d{4}\.\d{2})$/, '\\1<power>\\3<power>'
-    cfg.gsub! /^(\d+\/?\d*\s+.+\s+)(\s{1,4}\d{1,3})\sW\s*$/, '\\1<power>'
-    cfg.gsub! /^(Module|Chassis)\s(Total\sPower\sUsage)(\s+)\s(\s{4}\d{1}|\s{3}\d{2}|\s{2}\d{3}|\s{1}\d{4}|\d{5})\sW\s*$/, '\\1 <power>'
-    cfg.gsub! /^(Chassis\sTotal\sPower\sUsage)(\s+)(\s{4}\d{1}|\s{3}\d{2}|\s{2}\d{3}|\s{1}\d{4}|\d{5})\sW\s*$/, '\\1\\2<power>'
-    cfg.gsub! /^(Chassis\sTotal\sPower\s)(Allocated|Unallocated)(\s|\s\(total of all max wattages\))(\s+)(\s{4}\d{1}|\s{3}\d{2}|\s{2}\d{3}|\s{1}\d{4}|\d{5})\sW\s*$/, '\\1\\2\\3\\4<power>'
-    cfg.gsub! /^([t|T]otal\s[p|P]ower\s[c|C]onsumption\s+)(\d+\.\d\d)$/, '\\1<power>'
+    def with_section(cfg, section, &block)
+      cfg.sub!(/(show environment #{section}.*?-{10,}\n)(.*?)(?=\nshow environment|\z)/m) do
+        header = ::Regexp.last_match(1)
+        content = ::Regexp.last_match(2)
+        block.call(content) if block_given?
+        header + content
+      end
+    end
+
+    with_section(cfg, 'fan') do |content|
+      content.gsub!(/^((?:\S+ +){3})(slow  |normal|medium|fast  |max   |N\/A   ) (.*?)\d+ +$/, '\\1<speed> \\3<rpm>')
+    end
+
+    with_section(cfg, 'power-consumption') do |content|
+      content.gsub!(/^(.*?) (?:\d+\.\d+ +)+\d+\.\d+$/, '\\1 <power hidden>')
+    end
+
+    with_section(cfg, 'power-allocation') do |content|
+      content.gsub!(/^(.*) \d+ W$/, '\\1 <power>')
+    end
+
+    with_section(cfg, 'temperature') do |content|
+      content.gsub!(/^(.*) -?\d+\.\d+ C (.*)$/, '\\1 <hidden>\\2')
+    end
     comment cfg
   end
 
@@ -77,9 +77,7 @@ class Aoscx < Oxidized::Model
     comment cfg
   end
 
-  cmd 'show running-config' do |cfg|
-    cfg
-  end
+  cmd 'show running-config'
 
   cfg :telnet do
     username /Username:/
