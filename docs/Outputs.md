@@ -224,7 +224,7 @@ output:
     url: "http://192.168.162.50:8080/db/coll"
     user: admin             # Optional - for HTTP basic auth
     password: changeit      # Optional - for HTTP basic auth
-    secure: false           # Optional - verify SSL certs (default: false)
+    ssl_verify: false       # Optional - verify SSL certs (default: false)
     headers:                # Optional - custom HTTP headers
       X-Custom-Header: "value"
       X-API-Key: "secret"
@@ -237,7 +237,7 @@ output:
 | `url` | Yes | Full HTTP/HTTPS URL to POST the config to |
 | `user` | No | Username for HTTP Basic Authentication |
 | `password` | No | Password for HTTP Basic Authentication |
-| `secure` | No | When `true`, verify SSL certificates (default: `false`) |
+| `ssl_verify` | No | When `true`, verify SSL certificates (default: `false`) |
 | `headers` | No | Hash of custom HTTP headers to include in the request |
 
 ## Output types
