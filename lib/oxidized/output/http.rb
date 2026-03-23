@@ -30,14 +30,10 @@ module Oxidized
         # if uri scheme is https, enable ssl and set verify mode
         if uri.scheme == "https"
           http.use_ssl = true
-          http.verify_mode = @cfg.secure ? OpenSSL::SSL::VERIFY_PEER : OpenSSL::SSL::VERIFY_NONE
+          http.verify_mode = @cfg.ssl_verify? ? OpenSSL::SSL::VERIFY_PEER : OpenSSL::SSL::VERIFY_NONE
         end
 
-        # map headers
-        headers = {}
-        @cfg.headers.each do |header, value|
-          headers[header] = value
-        end
+        headers = @cfg.headers? ? @cfg.headers : {}
 
         req = Net::HTTP::Post.new(uri.request_uri, headers.merge('Content-Type' => 'application/json'))
         req.basic_auth(@cfg.user, @cfg.password) if @cfg.user? && @cfg.password?
