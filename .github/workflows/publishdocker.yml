@@ -32,6 +32,7 @@ jobs:
           images: ${{ env.REGISTRY_IMAGE }}
           tags: |
             type=semver,pattern={{version}}
+            type=semver,pattern={{major}}
             type=sha,prefix=master-
           flavor: |
             latest=true
@@ -100,6 +101,7 @@ jobs:
           images: ${{ env.REGISTRY_IMAGE }}
           tags: |
             type=semver,pattern={{version}}
+            type=semver,pattern={{major}}
             type=sha,prefix=master-
           flavor: |
             latest=true

@@ -8,7 +8,8 @@ as [oxidized/oxidized](https://hub.docker.com/r/oxidized/oxidized/) with a
 There are three different types of tags:
 - Each commit to the master branch will be published with the tag
   `master-(git sha oid)`
-- Each release will be published with the version as a tag
+- Each release will be published with the full version as a tag (e.g. `0.35.0`)
+- Each release will also be published with the major version as a tag (e.g. `0`)
 - Latest is the latest release, either from a commit or a release tag
 
 Currently, Docker Hub automatically builds the master branch for linux/amd64 and
