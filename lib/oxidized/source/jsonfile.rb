@@ -56,7 +56,7 @@ module Oxidized
 
           keys = Oxidized.hooks.source_node_transform(node:     keys,
                                                       node_raw: node,
-                                                      binding:  binding)
+                                                      context:  self)
           next if keys.nil?
 
           nodes << keys
