@@ -22,9 +22,11 @@ class Aoscx < Oxidized::Model
   end
 
   cmd :secret do |cfg|
+    cfg.gsub! /^(user .* group .*(?: ciphertext)?) \S+/, '\\1 <secret hidden>'
     cfg.gsub! /^(snmp-server community) \S+(.*)/, '\\1 <secret hidden> \\2'
     cfg.gsub! /^(snmp-server host \S+) \S+(.*)/, '\\1 <secret hidden> \\2'
-    cfg.gsub! /^(radius-server host \S+ key) \S+(.*)/, '\\1 <secret hidden> \\2'
+    cfg.gsub! /^(snmpv3 user).*?(auth (?:md5|sha(?:\d{1,3})?) auth-pass ciphertext).*?(priv (?:des|aes(?:\d{1,3})?) priv-pass ciphertext).*/, '\\1 <user> \\2 <auth-pass> \\3 <priv-pass>'
+    cfg.gsub! /^(radius-server host \S+ key(?: ciphertext)?) \S+ (.*)/, '\\1 <secret hidden> \\2'
     cfg.gsub! /^(radius-server key).*/, '\\1 <configuration removed>'
     cfg.gsub! /^(tacacs-server host \S+ key) \S+(.*)/, '\\1 <secret hidden> \\2'
     cfg.gsub! /^(tacacs-server key).*/, '\\1 <secret hidden>'

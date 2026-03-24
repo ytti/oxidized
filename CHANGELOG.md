@@ -30,6 +30,7 @@ The SCP gem is now an optional dependency as it will rarely be used - you must i
 - fortigate: move var fortios_autoupdate (deprecated) to fortigate_autoupdate (@robertcheramy)
 - netgear: extended login and pager detection to add support for GS728TPv2 and GS752TPv2 (@weberc)
 - comware: Hide snmp secrets for Comware (@iriseden)
+- Aruba-CX : Hide secrets for Aruba-CX (@iriseden)
 
 ### Fixed
 - VyOS: Only remove SNMP community, not route-maps. Fixes #3735 (@systeembeheerder)
