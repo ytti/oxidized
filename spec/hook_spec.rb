@@ -22,14 +22,13 @@ describe Oxidized::HookManager::HookContext do
     _(hc.event).must_be_nil
   end
 
-  it "exposes node, node_raw, and binding fields" do
+  it "exposes node, node_raw, and context fields" do
     node = { name: "router1", model: "junos" }
     raw  = { "name" => "router1" }
-    bnd  = binding
-    hc = Oxidized::HookManager::HookContext.new(node: node, node_raw: raw, binding: bnd)
+    hc = Oxidized::HookManager::HookContext.new(node: node, node_raw: raw, context: self)
     _(hc.node).must_equal node
     _(hc.node_raw).must_equal raw
-    _(hc.binding).must_equal bnd
+    _(hc.context).must_equal self
   end
 end
 
@@ -47,7 +46,7 @@ describe Oxidized::HookManager do
     registered = Oxidized::HookManager::RegisteredHook.new("test", hook)
     @mgr.registered_hooks[:source_node_transform] << registered
 
-    result = @mgr.source_node_transform(node: { name: "r1" }, node_raw: {}, binding: binding)
+    result = @mgr.source_node_transform(node: { name: "r1" }, node_raw: {}, context: self)
     _(result).must_equal({ name: "r1", extra: "added" })
   end
 
@@ -60,13 +59,13 @@ describe Oxidized::HookManager do
     registered = Oxidized::HookManager::RegisteredHook.new("test", hook)
     @mgr.registered_hooks[:source_node_transform] << registered
 
-    result = @mgr.source_node_transform(node: { name: "r1" }, node_raw: {}, binding: binding)
+    result = @mgr.source_node_transform(node: { name: "r1" }, node_raw: {}, context: self)
     _(result).must_be_nil
   end
 
   it "source_node_transform returns initial node when no hooks registered" do
     node = { name: "r1" }
-    result = @mgr.source_node_transform(node: node, node_raw: {}, binding: binding)
+    result = @mgr.source_node_transform(node: node, node_raw: {}, context: self)
     _(result).must_equal node
   end
 
