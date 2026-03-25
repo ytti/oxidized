@@ -2,4 +2,22 @@
 [ ! -d /home/oxidized/.config/oxidized ] && mkdir -p /home/oxidized/.config/oxidized
 [ -f /home/oxidized/.config/oxidized/pid ] && rm /home/oxidized/.config/oxidized/pid
 chown -R oxidized:oxidized /home/oxidized/.config/oxidized
-exec setuser oxidized oxidized
+
+# Find execution binary
+OXIDIZED_BIN=$(which oxidized)
+if [ -z "$OXIDIZED_BIN" ]; then
+    # Search in common places
+    for path in /usr/local/bin/oxidized /usr/bin/oxidized /var/lib/gems/*/bin/oxidized; do
+        if [ -x "$path" ]; then
+            OXIDIZED_BIN="$path"
+            break
+        fi
+    done
+fi
+
+if [ -z "$OXIDIZED_BIN" ]; then
+    echo "Error: oxidized binary not found"
+    exit 1
+fi
+
+exec setuser oxidized "$OXIDIZED_BIN"
