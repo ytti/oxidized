@@ -217,6 +217,28 @@ it's further processed.
 
 Supports [monkey patching](#monkey-patching).
 
+### `macro :enable`
+Implements an [handling of enable](Creating-Models.md#handling-enable-mode) for the model.
+
+### `clean :escape_codes`
+[Remove ANSI escape codes](Creating-Models.md#remove-ansi-escape-codes) from the output.
+
+### `clean :cut`
+Removes (default) the first and last line of the outputs (most of the time
+command echo and prompt).
+Arguments: head (default: 1), tail (default: 1)
+```ruby
+  clean :cut, head: 2, tail: 0
+```
+
+Equivalent to:
+```ruby
+  cmd :all do |cfg|
+    cfg.cut_both(2, 0)
+  end
+```
+
+
 ### At the second level
 
 The following methods are available:
@@ -273,7 +295,6 @@ This functionality is supported by `cfg`, `cmd`, `pre_*`, `post_*`, and `expect`
 blocks.
 
 #### `clear: true`
-
 Resets the existing block, allowing the user to completely override its contents.
 
 #### `prepend: true`
