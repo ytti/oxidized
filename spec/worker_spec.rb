@@ -20,6 +20,8 @@ describe Oxidized::Worker do
         "NVRAM config last updated at 00001\n" \
         "Configuration Version 0000A\n"
       @mock_output.stubs(:fetch).returns @old_config
+
+      @worker = Oxidized::Worker.allocate
     end
     it 'returns true when output_store_mode is not specified' do
       config =
@@ -28,13 +30,13 @@ describe Oxidized::Worker do
         "Configuration Version 0000A\n"
 
       @mock_job.stubs(:config).returns config
-      result = Oxidized::Worker.significant_changes?(@mock_job, @mock_output)
+      result = @worker.send(:significant_changes?, @mock_job, @mock_output)
       _(result).must_equal true
     end
 
     it 'returns true even if config is unchanged when output_store_mode is not specified' do
       @mock_job.stubs(:config).returns @old_config
-      result = Oxidized::Worker.significant_changes?(@mock_job, @mock_output)
+      result = @worker.send(:significant_changes?, @mock_job, @mock_output)
       _(result).must_equal true
     end
 
@@ -50,7 +52,7 @@ describe Oxidized::Worker do
       @mock_model.expects(:significant_changes).with(@old_config).returns "Configuration Version 0000A\n"
 
       @mock_job.stubs(:config).returns outputs
-      result = Oxidized::Worker.significant_changes?(@mock_job, @mock_output)
+      result = @worker.send(:significant_changes?, @mock_job, @mock_output)
       _(result).must_equal true
     end
 
@@ -66,7 +68,7 @@ describe Oxidized::Worker do
       @mock_model.expects(:significant_changes).with(outputs.to_cfg).returns significant_config
       @mock_model.expects(:significant_changes).with(@old_config).returns "Configuration Version 0000A\n"
 
-      result = Oxidized::Worker.significant_changes?(@mock_job, @mock_output)
+      result = @worker.send(:significant_changes?, @mock_job, @mock_output)
       _(result).must_equal false
     end
   end
