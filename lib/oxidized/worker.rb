@@ -62,7 +62,9 @@ module Oxidized
       @nodes.load
     end
 
-    def self.significant_changes?(job, output)
+    private
+
+    def significant_changes?(job, output)
       node = job.node
       model = node.model
       return true unless model.vars(:output_store_mode) == "on_significant"
@@ -83,8 +85,6 @@ module Oxidized
       end
     end
 
-    private
-
     def process_success(node, job)
       @jobs_done += 1 # needed for :nodes_done hook
       Oxidized.hooks.node_success(node: node, job: job)
@@ -93,7 +93,7 @@ module Oxidized
       msg += " with message '#{node.msg}'" if node.msg
       output = node.output.new
 
-      significant_changes = Worker.significant_changes?(job, output)
+      significant_changes = significant_changes?(job, output)
       if output.store(node.name, job.config,
                       msg: msg, email: node.email, user: node.user,
                       group: node.group,

@@ -19,7 +19,7 @@ module Oxidized
     HookContext = Struct.new(
       :event, :node, :job, :commitref,
       :node_raw,   # raw source record: JSON hash, SQL row hash, CSV field array
-      :binding,    # Ruby binding captured at the call site
+      :context,    # self from call site, to access methods/bindings of call site
       keyword_init: true
     )
 
@@ -63,12 +63,12 @@ module Oxidized
     # Runs source_node_transform hooks in sequence, passing the return value of
     # each hook as node to the next. Returns the final node, or nil
     # to signal that the node should be excluded.
-    def source_node_transform(node:, node_raw:, binding:)
+    def source_node_transform(node:, node_raw:, context:)
       ctx = HookContext.new(
         event:    :source_node_transform,
         node:     node,
         node_raw: node_raw,
-        binding:  binding
+        context:  context
       )
       @registered_hooks[:source_node_transform].each do |r_hook|
         ctx.node = r_hook.hook.run_hook(ctx)
