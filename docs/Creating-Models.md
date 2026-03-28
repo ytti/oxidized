@@ -146,8 +146,8 @@ You can nest `cmd` inside [`cmd` blocks](Ruby-API.md#cmd), the following example
 is taken from [nxos.rb](/lib/oxidized/model/nxos.rb):
 ```ruby
   cmd 'show inventory all' do |cfg|
-    if cfg.include? "% Invalid parameter detected at '^' marker."
-      # 'show inventory all' isn't supported on older versions (See Issue #3657)
+    if cfg.match? /^% Invalid .* at '\^' marker\./
+      # 'show inventory all' isn't supported on older versions (See Issues #3657, #3779)
       cfg = cmd 'show inventory'
     end
     comment cfg
