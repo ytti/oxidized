@@ -160,7 +160,7 @@ end
 
 `macro :enable` takes options:
 - `regex`; the regex to match the password prompt (default: `/password/i`)
-- `inputs`: a list of symbols for which inputs enable sould be activated (default: %i[telnet ssh])
+- `inputs`: a symbol or a list of symbols for which inputs enable should be activated (default: %i[telnet ssh])
 - `command`: the command needed to access privileged mode (default: `enable`)
 
 If one would want to access a german linux box as root, a minimal model would be:
