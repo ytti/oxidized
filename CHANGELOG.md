@@ -9,6 +9,8 @@ The fortios model has been split into fortigate and fortios. You need the new fo
 
 The SCP gem is now an optional dependency as it will rarely be used - you must install it if you need it. It is still included in the docker image.
 
+We may rework models in the future to clean up duplicated code (by using the macros or by inheriting from the Defacto model). To make sure your favorite model doesn’t break, please share [simulation files](/docs/DeviceSimulation.md) via issues or, preferably, pull requests, so we can detect when a change breaks a model.
+
 ### Added
 - Support https mode, headers, and ssl verify for HTTP output (@bahirul)
 - String refinements: introduce `keep_lines` and `reject_lines` methods (@robertcheramy)
@@ -20,6 +22,7 @@ The SCP gem is now an optional dependency as it will rarely be used - you must i
 - exalink model for specific Cisco ExaLink Fusion (formerly Exablaze) switches (@obol89)
 - source_node_transform hook, allows user to manipulate node data when loading from source (@ytti)
 - docker image: publish major version tag (e.g. `0`) in addition to full semver tag on releases (@infabo)
+- introduce the defacto model and macros for models (@ytti)
 
 ### Changed
 - Refactored models: Use `keep_lines` and `reject_lines` in aosw, arubainstant, asa, efos, firelinuxos, fsos, ironware, mlnxos and perle to (@robertcheramy)

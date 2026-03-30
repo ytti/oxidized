@@ -10,11 +10,15 @@ The following objects exist in Oxidized.
 - [Model](#model)
   - [At the top level](#at-the-top-level)
     - [cfg](#cfg)
+    - [inputs](#inputs)
     - [cmd](#cmd)
     - [comment](#comment)
     - [prompt](#prompt)
     - [expect](#expect)
     - [pre / post](#pre--post)
+    - [macro :enable](#macro-enable)
+    - [clean :escape_codes](#clean-escape_codes)
+    - [clean :cut](#clean-cut)
   - [At the second level](#at-the-second-level)
     - [comment](#comment-1)
     - [password](#password)
@@ -26,11 +30,11 @@ The following objects exist in Oxidized.
     - [clear: true](#clear-true)
     - [prepend: true](#prepend-true)
   - [Refinements - String Convenience Methods](#refinements)
-    - [cut_tail](#cut_tail)
-    - [cut_head](#cut_head)
-    - [cut_both](#cut_both)
-    - [keep_lines](#keep_lines)
-    - [reject_lines](#reject_lines)
+  - [cut_tail](#cut_tail)
+  - [cut_head](#cut_head)
+  - [cut_both](#cut_both)
+  - [keep_lines](#keep_lines)
+  - [reject_lines](#reject_lines)
 
 ## Input
 
@@ -89,7 +93,7 @@ The block may contain commands to change some behaviour for the given methods
 
 Supports [monkey patching](#monkey-patching).
 
-### 'inputs'
+#### 'inputs'
 `inputs` can be used to specify multiple inputs to be run on the model. It
 takes a list of either input symbols or lists of input symbols:
 ```ruby
@@ -217,6 +221,28 @@ it's further processed.
 
 Supports [monkey patching](#monkey-patching).
 
+#### `macro :enable`
+Implements an [handling of enable](Creating-Models.md#handling-enable-mode) for the model.
+
+#### `clean :escape_codes`
+[Remove ANSI escape codes](Creating-Models.md#remove-ansi-escape-codes) from the output.
+
+#### `clean :cut`
+Removes (default) the first and last line of the outputs (most of the time
+command echo and prompt).
+Arguments: head (default: 1), tail (default: 1)
+```ruby
+  clean :cut, head: 2, tail: 0
+```
+
+Equivalent to:
+```ruby
+  cmd :all do |cfg|
+    cfg.cut_both(2, 0)
+  end
+```
+
+
 ### At the second level
 
 The following methods are available:
@@ -273,7 +299,6 @@ This functionality is supported by `cfg`, `cmd`, `pre_*`, `post_*`, and `expect`
 blocks.
 
 #### `clear: true`
-
 Resets the existing block, allowing the user to completely override its contents.
 
 #### `prepend: true`

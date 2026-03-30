@@ -1,10 +1,19 @@
 # Creating and Extending Models
 
-Oxidized supports a growing list of [operating system types](Supported-OS-Types.md). Out of the box, most model implementations collect configuration data. Some implementations also include a conservative set of additional commands that collect basic device information (device make and model, software version, licensing information, ...) which are appended to the configuration as comments.
+Oxidized supports a growing list of
+[operating system types](Supported-OS-Types.md). Out of the box, most model
+implementations collect configuration data. Some implementations also include a
+conservative set of additional commands that collect basic device information
+(device make and model, software version, licensing information, ...) which are
+appended to the configuration as comments.
 
-A user may wish to extend an existing model to collect the output of additional commands. Oxidized offers smart loading of models in order to facilitate this with ease, without the need to introduce changes to the upstream source code.
+A user may wish to extend an existing model to collect the output of additional
+commands. Oxidized offers smart loading of models in order to facilitate this
+with ease, without the need to introduce changes to the upstream source code.
 
-This methodology allows local site changes to be preserved during Oxidized version updates / gem updates. It also enables convenient local development of new models.
+This methodology allows local site changes to be preserved during Oxidized
+version updates / gem updates. It also enables convenient local development
+of new models.
 
 ## Index
 - [Creating a new model](#creating-a-new-model)
@@ -19,14 +28,50 @@ This methodology allows local site changes to be preserved during Oxidized versi
 - [Help](#help)
 
 ## Creating a new model
+### Use the defacto model
+Before you create a new model, check the
+[defacto model](/lib/oxidized/model/defacto.rb). It aims to work with a lot of
+devices copying the defacto standard set by the cisco CLI:
+- login per ssh or telnet
+- disable pager
+- execute `show running-config`
+- run both `exit` and `logout`
 
+If you want to extend the defacto model, you can define your own model file,
+and inherit from `Defacto`:
+```ruby
+require 'oxidized/model/defacto'
+
+class OxiWare < Defacto
+  # Redefine how to process show running-config
+  def process_config(cfg)
+    cfg.gsub(/.*service timestamps.*/, '')
+  end
+
+  # run more commands. They will be run before 'show running-config'
+  cmd "show cdp neighbors" do |cfg|
+    comment cfg
+  end
+
+  # Send "enable" password if defined in vars("enable")
+  macro :enable
+end
+```
+
+If your model doesn't support "show running-config", or if you prefer to avoid
+the dependency of the defacto model, you will need to write a model "from
+scratch" as explained in the next session.
+
+### Create a new model from scratch
 An Oxidized model, at minimum, requires just three elements:
 
 * A model file, this file should be placed in the ~/.config/oxidized/model directory and named after the target OS type.
 * A class defined within this file with the same name as the file itself that inherits from `Oxidized::Model`, the base model class.
 * At least one command that will be executed and the output of which will be collected by Oxidized.
 
-A bare-bone example for a fictional model running the OS type `rootware` could be introduced by creating the file `~/.config/oxidized/model/rootware.rb`, with the following content:
+A bare-bone example for a fictional model running the OS type `rootware` could
+be introduced by creating the file `~/.config/oxidized/model/rootware.rb`, with
+the following content:
 
 ```ruby
 class RootWare < Oxidized::Model
@@ -73,6 +118,11 @@ prompt on the last line. To remove these for all commands, use
   end
 ```
 
+You can also use the macro `clean :cut`, which does the same:
+```ruby
+  clean :cut
+```
+
 If you want to keep only relevant lines, use
 [keep_lines](Ruby-API.md#keep_lines):
 ```ruby
@@ -97,13 +147,42 @@ use [reject_lines](Ruby-API.md#reject_lines):
 ```
 
 ### Handling 'enable' mode
-The following code snippet demonstrates how to handle sending the 'enable'
-command and an enable password.
+Some devices need to send an 'enable' command and an enable password.
 
-This example is taken from the `IOS` model. It covers scenarios where users
-need to enable privileged mode, either without providing a password (by setting
-`enable: true` in the configuration) or with a password.
+You can use the `macro :enable` command to implement this:
+```ruby
+class IOS < Oxidized::Model
+  using Refinements
+  # ... Code ...
+  macro :enable
+end
+```
 
+`macro :enable` takes options:
+- `regex`; the regex to match the password prompt (default: `/password/i`)
+- `inputs`: a symbol or a list of symbols for which inputs enable should be activated (default: %i[telnet ssh])
+- `command`: the command needed to access privileged mode (default: `enable`)
+
+If one would want to access a german linux box as root, a minimal model would be:
+```ruby
+class GermanLinux < Oxidized::Model
+  using Refinements
+
+  prompt /^(\w.*|\W.*)[:#$] /
+  comment '# '
+
+  cmd "id"
+
+  cfg :ssh do
+    pre_logout 'exit'
+    pre_logout 'exit'
+  end
+
+  macro :enable, inputs: :ssh, command: "su -", regex: /Passwort: /
+end
+```
+
+The macro (with defaults) implements following code:
 ```ruby
   cfg :telnet, :ssh do
     post_login do
@@ -116,7 +195,7 @@ need to enable privileged mode, either without providing a password (by setting
     end
   end
 ```
-Note: Remove `:telnet, ` if your device does not support telnet.
+
 
 ### Remove ANSI Escape Codes
 Some devices produce [ANSI escape codes](https://en.wikipedia.org/wiki/ANSI_escape_code#Control_Sequence_Introducer_commands)

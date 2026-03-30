@@ -2,6 +2,7 @@
 
 |Vendor              |OS model                      |oxidized model                                   |model maintainers|comment / model notes|
 |--------------------|------------------------------|-------------------------------------------------|-----------------|---------------------|
+|-generic-           |Cisco-like                    |[defacto](/lib/oxidized/model/defacto.rb)        |@ytti, @robertcheramy|[The defacto model may work on cisco like CLIs](/docs/Creating-Models.md#use-the-defacto-model)|
 |6WIND               |VSR                           |[sixwind](/lib/oxidized/model/sixwind.rb)        |@hcaldicott      |
 |A10 Networks        |ACOS                          |[acos](/lib/oxidized/model/acos.rb)              |                 |
 |Accedian Performance Elements (NIDs)|AEN           |[aen](/lib/oxidized/model/aen.rb)
