@@ -22,4 +22,10 @@ class NDMS < Oxidized::Model
     password /^Password:/
     pre_logout 'exit'
   end
+
+  cmd :significant_changes do |cfg|
+    cfg.reject_lines [
+      'Last change:'
+    ]
+  end
 end
