@@ -10,7 +10,8 @@ class SmartByte < Oxidized::Model
   end
 
   cmd :all do |cfg|
-    cfg.each_line.to_a[0..-2].join
+    cfg = cfg.delete("\r")
+    cfg.cut_tail
   end
 
   cmd 'show running-config'
