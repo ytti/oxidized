@@ -29,6 +29,10 @@ class RouterOS < Oxidized::Model
     comment cfg
   end
 
+  cmd :significant_changes do |cfg|
+    cfg.gsub(/^(#\s+installed-version: [^\n]+\n).*?^(?=# software id)/m, '\1')
+  end
+
   post do
     logger.debug "Running /export for routeros version #{@ros_version}"
     run_cmd = if vars(:remove_secret)

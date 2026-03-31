@@ -1,0 +1,10 @@
+pass:
+ - 'installed-version: 7.15.2'
+ - '# software id = A0AA-AAA0'
+ - '/interface bridge'
+fail:
+ - '# Flags: U - UNDOABLE'
+ - '# Columns: ACTION, BY, POLICY, TIME'
+ - 'bridge port changed'
+ - 'detect-internet settings changed'
+ - '2024-07-31 09:33:47'

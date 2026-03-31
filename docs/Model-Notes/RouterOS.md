@@ -12,4 +12,17 @@ and attach the public key.
 
 Oxidized can now retrieve your configuration!
 
+## Save significant changes only
+
+You can [store the configuration only on significant changes](/docs/Configuration.md#store-configuration-only-on-significant-changes)
+by setting the [variable](/docs/Configuration.md#options-credentials-vars-etc-precedence)
+`output_store_mode` to `on_significant`. On RouterOS, this prevents Oxidized from saving a
+new configuration version when only the system history has changed without any actual
+configuration change.
+
+```yaml
+vars:
+  output_store_mode: on_significant
+```
+
 Back to [Model-Notes](README.md)
