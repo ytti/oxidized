@@ -43,7 +43,6 @@
 ; Network Management Card AOS v2.5.0.8
 ; Smart-UPS APP v2.5.0.6
 ; (c) 2023 Schneider Electric. All rights reserved.
-; Configuration file, generated on 01/21/2026 at 16:08:12 by Administrator apc
 
 [NetworkTCP/IP]
 Override=28 29 86 00 00 01
