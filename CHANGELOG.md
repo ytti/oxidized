@@ -4,6 +4,15 @@ All notable changes to this project will be documented in this file.
 
 The format is based on [Keep a Changelog](https://keepachangelog.com/en/1.1.0/).
 
+## [Unreleased]
+
+### Added
+
+### Changed
+
+### Fixed
+
+
 ## [0.36.0 - 2026-03-31]
 ### Release Notes
 The fortios model has been split into fortigate and fortios. You need the new fortigate model for FortiGate firewalls. Be sure to check the [Fortinet model notes](docs/Model-Notes/Fortinet.md) before upgrading.
