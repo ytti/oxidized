@@ -217,5 +217,3 @@ module Oxidized
     end
   end
 end
-
-require_relative 'defacto'

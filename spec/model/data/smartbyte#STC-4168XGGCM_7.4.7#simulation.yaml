@@ -15,8 +15,8 @@ commands:
       logging trap 6\r
       !\r
       snmp-server location \"test\"\r
-      ip dns name-server 2a00:e60::1\r
-      ip dns name-server 2a00:e60::2\r
+      ip dns name-server 2001:db8::1\r
+      ip dns name-server 2001:db8::2\r
       spanning-tree mode rstp\r
       telnet-server enable\r
       ssh-server enable\r
@@ -25,8 +25,8 @@ commands:
       snmp-server community public ro\r
       username admin privilege 15 password 5 $5$ssssssssssssssssssssssssssssssssssssssssssssssssssssssssssss\r
       username oxidized privilege 10 password 5 $6$sssssssssssssssssssssssssssssssssssssssssssssssssssssssssssssssssssssssssssssssssssssssssssssssssssssss\r
-      ntp server host ntp.nynex.de\r
-      logging server ipv6 2a00:e60:afff:2724::1\r
+      ntp server host ntp.example.com\r
+      logging server ipv6 2001:db8:aaaa:1111::1\r
       lldp run\r
       lldp system-name testsw\r
       spanning-tree priority 36864\r
@@ -341,9 +341,9 @@ commands:
        lldp-agent\r
       !\r
       interface vlan2000\r
-       ipv6 address 2a00:e60:afff:278b::2ebe:1/64\r
+       ipv6 address 2001:db8:aaaa:1111::cafe:1/64\r
       !\r
-      ipv6 route ::/0 2a00:e60:afff:278b::1\r
+      ipv6 route ::/0 2001:db8:aaaa:1111::1\r
       !\r
       line con 0\r
       line vty 0 7\r
@@ -355,8 +355,8 @@ commands:
       show version\r\r
        Software Version: hotfix/7.4.7 (r1540 af525c9)\r
        Release Date: 2025-12-11 17:09:22\r
-       System MAC Address: fc:cd:2f:d0:4f:db\r
-       PID: STC-4168XGGCM, Hardware Version: V1.1, Serial Number: 202509160001\r
+       System MAC Address: fc:cd:2f:00:00:00\r
+       PID: STC-4168XGGCM, Hardware Version: V1.1, Serial Number: 202500000001\r
        Vendor oid: 56166\r
       testsw>
   - "show interface optical-transceiver info\n": |-
@@ -385,7 +385,7 @@ commands:
       |    SMF fiber                                    |\r
       |        -- 10km                                  |\r
       |Digital Diagnostic Monitoring  : YES             |\r
-      |Vendor Serial Number           : YXF20250509A0612|\r
+      |Vendor Serial Number           : YXF2025000000012|\r
       +-------------------------------------------------+\r
       |Transceiver current alarm information:           |\r
       +-------------------------------------------------+\r
@@ -411,7 +411,7 @@ commands:
       |    SMF fiber                                    |\r
       |        -- 10km                                  |\r
       |Digital Diagnostic Monitoring  : YES             |\r
-      |Vendor Serial Number           : YXF20250509A0365|\r
+      |Vendor Serial Number           : YXF2025000000065|\r
       +-------------------------------------------------+\r
       |Transceiver current alarm information:           |\r
       +-------------------------------------------------+\r
@@ -437,7 +437,7 @@ commands:
       |    SMF fiber                                    |\r
       |        -- 10km                                  |\r
       |Digital Diagnostic Monitoring  : YES             |\r
-      |Vendor Serial Number           : YXF20250509A0619|\r
+      |Vendor Serial Number           : YXF2025000000019|\r
       +-------------------------------------------------+\r
       |Transceiver current alarm information:           |\r
       +-------------------------------------------------+\r
@@ -463,7 +463,7 @@ commands:
       |    SMF fiber                                    |\r
       |        -- 10km                                  |\r
       |Digital Diagnostic Monitoring  : YES             |\r
-      |Vendor Serial Number           : YXF20250509A0620|\r
+      |Vendor Serial Number           : YXF2025050000000|\r
       +-------------------------------------------------+\r
       |Transceiver current alarm information:           |\r
       +-------------------------------------------------+\r
@@ -493,7 +493,7 @@ commands:
       |    50/125 um OM2 fiber                          |\r
       |        -- 550m                                  |\r
       |Digital Diagnostic Monitoring  : YES             |\r
-      |Vendor Serial Number           : FO230711S390    |\r
+      |Vendor Serial Number           : FO2300000000    |\r
       +-------------------------------------------------+\r
       |Transceiver current alarm information:           |\r
       +-------------------------------------------------+\r
@@ -520,7 +520,7 @@ commands:
       |    SMF fiber                                    |\r
       |        -- 10km                                  |\r
       |Digital Diagnostic Monitoring  : YES             |\r
-      |Vendor Serial Number           : YXF20250509A0846|\r
+      |Vendor Serial Number           : YXF2025050000006|\r
       +-------------------------------------------------+\r
       |Transceiver current alarm information:           |\r
       +-------------------------------------------------+\r
@@ -546,7 +546,7 @@ commands:
       |    SMF fiber                                    |\r
       |        -- 20km                                  |\r
       |Digital Diagnostic Monitoring  : YES             |\r
-      |Vendor Serial Number           : FO240218S0650   |\r
+      |Vendor Serial Number           : FO24020000000   |\r
       +-------------------------------------------------+\r
       |Transceiver current alarm information:           |\r
       +-------------------------------------------------+\r
@@ -573,7 +573,7 @@ commands:
       |    SMF fiber                                    |\r
       |        -- 10km                                  |\r
       |Digital Diagnostic Monitoring  : YES             |\r
-      |Vendor Serial Number           : YXF20250509A0906|\r
+      |Vendor Serial Number           : YXF2025000000006|\r
       +-------------------------------------------------+\r
       |Transceiver current alarm information:           |\r
       +-------------------------------------------------+\r
@@ -599,7 +599,7 @@ commands:
       |    SMF fiber                                    |\r
       |        -- 10km                                  |\r
       |Digital Diagnostic Monitoring  : YES             |\r
-      |Vendor Serial Number           : YXF20250509A0907|\r
+      |Vendor Serial Number           : YXF2025000000007|\r
       +-------------------------------------------------+\r
       |Transceiver current alarm information:           |\r
       +-------------------------------------------------+\r
@@ -625,7 +625,7 @@ commands:
       |    SMF fiber                                    |\r
       |        -- 10km                                  |\r
       |Digital Diagnostic Monitoring  : YES             |\r
-      |Vendor Serial Number           : YXF20250509A0908|\r
+      |Vendor Serial Number           : YXF2025000000008|\r
       +-------------------------------------------------+\r
       |Transceiver current alarm information:           |\r
       +-------------------------------------------------+\r
@@ -651,7 +651,7 @@ commands:
       |    SMF fiber                                    |\r
       |        -- 10km                                  |\r
       |Digital Diagnostic Monitoring  : YES             |\r
-      |Vendor Serial Number           : YXF20250509A0901|\r
+      |Vendor Serial Number           : YXF2025000000001|\r
       +-------------------------------------------------+\r
       |Transceiver current alarm information:           |\r
       +-------------------------------------------------+\r
@@ -677,7 +677,7 @@ commands:
       |    SMF fiber                                    |\r
       |        -- 10km                                  |\r
       |Digital Diagnostic Monitoring  : YES             |\r
-      |Vendor Serial Number           : YXF20250509A0902|\r
+      |Vendor Serial Number           : YXF2025000000002|\r
       +-------------------------------------------------+\r
       |Transceiver current alarm information:           |\r
       +-------------------------------------------------+\r
@@ -703,7 +703,7 @@ commands:
       |    SMF fiber                                    |\r
       |        -- 10km                                  |\r
       |Digital Diagnostic Monitoring  : YES             |\r
-      |Vendor Serial Number           : YXF20250509A0909|\r
+      |Vendor Serial Number           : YXF2025000000009|\r
       +-------------------------------------------------+\r
       |Transceiver current alarm information:           |\r
       +-------------------------------------------------+\r
@@ -729,7 +729,7 @@ commands:
       |    SMF fiber                                    |\r
       |        -- 10km                                  |\r
       |Digital Diagnostic Monitoring  : YES             |\r
-      |Vendor Serial Number           : YXF20250509A0903|\r
+      |Vendor Serial Number           : YXF2025000000003|\r
       +-------------------------------------------------+\r
       |Transceiver current alarm information:           |\r
       +-------------------------------------------------+\r

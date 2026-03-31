@@ -60,7 +60,7 @@ end
 
 If your model doesn't support "show running-config", or if you prefer to avoid
 the dependency of the defacto model, you will need to write a model "from
-scratch" as explained in the next session.
+scratch" as explained in the next section.
 
 ### Create a new model from scratch
 An Oxidized model, at minimum, requires just three elements:

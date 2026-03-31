@@ -7,8 +7,8 @@ logging monitor 6
 logging trap 6
 !
 snmp-server location "test"
-ip dns name-server 2a00:e60::1
-ip dns name-server 2a00:e60::2
+ip dns name-server 2001:db8::1
+ip dns name-server 2001:db8::2
 spanning-tree mode rstp
 telnet-server enable
 ssh-server enable
@@ -17,8 +17,8 @@ snmp-server group public v2c  read all write none
 snmp-server community public ro
 username admin privilege 15 password 5 $5$ssssssssssssssssssssssssssssssssssssssssssssssssssssssssssss
 username oxidized privilege 10 password 5 $6$sssssssssssssssssssssssssssssssssssssssssssssssssssssssssssssssssssssssssssssssssssssssssssssssssssssss
-ntp server host ntp.nynex.de
-logging server ipv6 2a00:e60:afff:2724::1
+ntp server host ntp.example.com
+logging server ipv6 2001:db8:aaaa:1111::1
 lldp run
 lldp system-name testsw
 spanning-tree priority 36864
@@ -333,9 +333,9 @@ interface tengigabitEthernet0/28
  lldp-agent
 !
 interface vlan2000
- ipv6 address 2a00:e60:afff:278b::2ebe:1/64
+ ipv6 address 2001:db8:aaaa:1111::cafe:1/64
 !
-ipv6 route ::/0 2a00:e60:afff:278b::1
+ipv6 route ::/0 2001:db8:aaaa:1111::1
 !
 line con 0
 line vty 0 7
@@ -345,8 +345,8 @@ end
 ! show version
 !  Software Version: hotfix/7.4.7 (r1540 af525c9)
 !  Release Date: 2025-12-11 17:09:22
-!  System MAC Address: fc:cd:2f:d0:4f:db
-!  PID: STC-4168XGGCM, Hardware Version: V1.1, Serial Number: 202509160001
+!  System MAC Address: fc:cd:2f:00:00:00
+!  PID: STC-4168XGGCM, Hardware Version: V1.1, Serial Number: 202500000001
 !  Vendor oid: 56166
 ! show interface optical-transceiver info
 ! ###################################################
@@ -373,7 +373,7 @@ end
 ! |    SMF fiber                                    |
 ! |        -- 10km                                  |
 ! |Digital Diagnostic Monitoring  : YES             |
-! |Vendor Serial Number           : YXF20250509A0612|
+! |Vendor Serial Number           : YXF2025000000012|
 ! +-------------------------------------------------+
 ! |Transceiver vendor information:                  |
 ! +-------------------------------------------------+
@@ -395,7 +395,7 @@ end
 ! |    SMF fiber                                    |
 ! |        -- 10km                                  |
 ! |Digital Diagnostic Monitoring  : YES             |
-! |Vendor Serial Number           : YXF20250509A0365|
+! |Vendor Serial Number           : YXF2025000000065|
 ! +-------------------------------------------------+
 ! |Transceiver vendor information:                  |
 ! +-------------------------------------------------+
@@ -417,7 +417,7 @@ end
 ! |    SMF fiber                                    |
 ! |        -- 10km                                  |
 ! |Digital Diagnostic Monitoring  : YES             |
-! |Vendor Serial Number           : YXF20250509A0619|
+! |Vendor Serial Number           : YXF2025000000019|
 ! +-------------------------------------------------+
 ! |Transceiver vendor information:                  |
 ! +-------------------------------------------------+
@@ -439,7 +439,7 @@ end
 ! |    SMF fiber                                    |
 ! |        -- 10km                                  |
 ! |Digital Diagnostic Monitoring  : YES             |
-! |Vendor Serial Number           : YXF20250509A0620|
+! |Vendor Serial Number           : YXF2025050000000|
 ! +-------------------------------------------------+
 ! |Transceiver vendor information:                  |
 ! +-------------------------------------------------+
@@ -465,7 +465,7 @@ end
 ! |    50/125 um OM2 fiber                          |
 ! |        -- 550m                                  |
 ! |Digital Diagnostic Monitoring  : YES             |
-! |Vendor Serial Number           : FO230711S390    |
+! |Vendor Serial Number           : FO2300000000    |
 ! +-------------------------------------------------+
 ! |Transceiver vendor information:                  |
 ! +-------------------------------------------------+
@@ -487,7 +487,7 @@ end
 ! |    SMF fiber                                    |
 ! |        -- 10km                                  |
 ! |Digital Diagnostic Monitoring  : YES             |
-! |Vendor Serial Number           : YXF20250509A0846|
+! |Vendor Serial Number           : YXF2025050000006|
 ! +-------------------------------------------------+
 ! |Transceiver vendor information:                  |
 ! +-------------------------------------------------+
@@ -509,7 +509,7 @@ end
 ! |    SMF fiber                                    |
 ! |        -- 20km                                  |
 ! |Digital Diagnostic Monitoring  : YES             |
-! |Vendor Serial Number           : FO240218S0650   |
+! |Vendor Serial Number           : FO24020000000   |
 ! +-------------------------------------------------+
 ! |Transceiver vendor information:                  |
 ! +-------------------------------------------------+
@@ -531,7 +531,7 @@ end
 ! |    SMF fiber                                    |
 ! |        -- 10km                                  |
 ! |Digital Diagnostic Monitoring  : YES             |
-! |Vendor Serial Number           : YXF20250509A0906|
+! |Vendor Serial Number           : YXF2025000000006|
 ! +-------------------------------------------------+
 ! |Transceiver vendor information:                  |
 ! +-------------------------------------------------+
@@ -553,7 +553,7 @@ end
 ! |    SMF fiber                                    |
 ! |        -- 10km                                  |
 ! |Digital Diagnostic Monitoring  : YES             |
-! |Vendor Serial Number           : YXF20250509A0907|
+! |Vendor Serial Number           : YXF2025000000007|
 ! +-------------------------------------------------+
 ! |Transceiver vendor information:                  |
 ! +-------------------------------------------------+
@@ -575,7 +575,7 @@ end
 ! |    SMF fiber                                    |
 ! |        -- 10km                                  |
 ! |Digital Diagnostic Monitoring  : YES             |
-! |Vendor Serial Number           : YXF20250509A0908|
+! |Vendor Serial Number           : YXF2025000000008|
 ! +-------------------------------------------------+
 ! |Transceiver vendor information:                  |
 ! +-------------------------------------------------+
@@ -597,7 +597,7 @@ end
 ! |    SMF fiber                                    |
 ! |        -- 10km                                  |
 ! |Digital Diagnostic Monitoring  : YES             |
-! |Vendor Serial Number           : YXF20250509A0901|
+! |Vendor Serial Number           : YXF2025000000001|
 ! +-------------------------------------------------+
 ! |Transceiver vendor information:                  |
 ! +-------------------------------------------------+
@@ -619,7 +619,7 @@ end
 ! |    SMF fiber                                    |
 ! |        -- 10km                                  |
 ! |Digital Diagnostic Monitoring  : YES             |
-! |Vendor Serial Number           : YXF20250509A0902|
+! |Vendor Serial Number           : YXF2025000000002|
 ! +-------------------------------------------------+
 ! |Transceiver vendor information:                  |
 ! +-------------------------------------------------+
@@ -641,7 +641,7 @@ end
 ! |    SMF fiber                                    |
 ! |        -- 10km                                  |
 ! |Digital Diagnostic Monitoring  : YES             |
-! |Vendor Serial Number           : YXF20250509A0909|
+! |Vendor Serial Number           : YXF2025000000009|
 ! +-------------------------------------------------+
 ! |Transceiver vendor information:                  |
 ! +-------------------------------------------------+
@@ -663,7 +663,7 @@ end
 ! |    SMF fiber                                    |
 ! |        -- 10km                                  |
 ! |Digital Diagnostic Monitoring  : YES             |
-! |Vendor Serial Number           : YXF20250509A0903|
+! |Vendor Serial Number           : YXF2025000000003|
 ! +-------------------------------------------------+
 ! |Transceiver vendor information:                  |
 ! +-------------------------------------------------+

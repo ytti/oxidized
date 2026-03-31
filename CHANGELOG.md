@@ -5,6 +5,7 @@ All notable changes to this project will be documented in this file.
 The format is based on [Keep a Changelog](https://keepachangelog.com/en/1.1.0/).
 
 ## [Unreleased]
+### Release Notes
 The fortios model has been split into fortigate and fortios. You need the new fortigate model for FortiGate firewalls. Be sure to check the [Fortinet model notes](docs/Model-Notes/Fortinet.md) before upgrading.
 
 The SCP gem is now an optional dependency as it will rarely be used - you must install it if you need it. It is still included in the docker image.
@@ -18,16 +19,16 @@ We may rework models in the future to clean up duplicated code (by using the mac
 - Add support for Ivanti Secure Connect ISA models (@candleflip)
 - smartbyte: new model for SmartByte switches (@freddy36)
 - Support multiple input (@robertcheramy)
-- apcaos model with SSH + SSH capabilities, deprecates apc_aos (@robertcheramy)
+- apcaos model with SSH + SCP capabilities, deprecates apc_aos (@robertcheramy)
 - exalink model for specific Cisco ExaLink Fusion (formerly Exablaze) switches (@obol89)
 - source_node_transform hook, allows user to manipulate node data when loading from source (@ytti)
 - docker image: publish major version tag (e.g. `0`) in addition to full semver tag on releases (@infabo)
 - introduce the defacto model and macros for models (@ytti)
 
 ### Changed
-- Refactored models: Use `keep_lines` and `reject_lines` in aosw, arubainstant, asa, efos, firelinuxos, fsos, ironware, mlnxos and perle to (@robertcheramy)
+- Refactored models: Use `keep_lines` and `reject_lines` in aosw, arubainstant, asa, efos, firelinuxos, fsos, ironware, mlnxos and perle (@robertcheramy)
 - Refactor SSH and SCP into a common class SSHBase. Fixes #3597 (@robertcheramy)
-- Modified models to support store mode on significant changes: ios, fortios, perle (@robertcheramy)
+- Modified models to support store mode on significant changes: ios, fortios, perle, ndms (@robertcheramy, @furriest)
 - fortios: model rewrite and split into fortios and fortigate. Fixes #3680 (@robertcheramy)
 - fortigate: Add PSU & SFP inventory (@robertcheramy)
 - fortigate: move var fortios_autoupdate (deprecated) to fortigate_autoupdate (@robertcheramy)
@@ -45,9 +46,10 @@ We may rework models in the future to clean up duplicated code (by using the mac
 - githubrepo: fix authentication with ssh-agent not working. Fixes #3420 (@robertcheramy)
 - fastiron: adjust prompt to account for stacks, remove time from stack output. Fixes #3106 (@ManoftheSea)
 - interval: fix fetching device configuration at oxidized start when interval is 0. Fixes #3746 (@tgr229)
-- voss: more cleanup of constantly changing values (fan & temp) for at least Extreme Networks 7520-48Y-8C-FabricEngine (8.10.5.0)
+- voss: more cleanup of constantly changing values (fan & temp) for at least Extreme Networks 7520-48Y-8C-FabricEngine (8.10.5.0) (@irrwitzer42)
 - truenas: Added retry logic to use sudo for reading/dumping the configuration database if needed. Fixes #3767 (@neilschelly)
 - aoscx: update regex to include 'N/A' in FAN speed parsing (@solrac200, @robertcheramy)
+- nxos: show inventory for older models. Fixes #3779 (@scamp)
 
 ## [0.35.0 - 2025-12-04]
 ### Release Notes
@@ -55,7 +57,7 @@ We may rework models in the future to clean up duplicated code (by using the mac
 - AosCX has been reworked and may break old OS versions. Submit an issue along with a YAML Simulation File if you encounter problems.
 - TiMOS (deprecated model) has been removed. Use SROS.
 - FortiOs will be reworked in release 0.36 (Issue #3680). Subscribe to the issue if you want to be informed and test the model before the release.
-- Support for Ruby 3.1 will be discontinued in release 0.36 (Issue #3688) if no one objects.
+- ~~Support for Ruby 3.1 will be discontinued in release 0.36 (Issue #3688) if no one objects.~~
 
 ### Added
 - Allow setting timeout on per node basis. Closes #3612 (@ytti)

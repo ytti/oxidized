@@ -232,13 +232,13 @@ output:
 
 ### Configuration Options
 
-| Option | Required | Description |
-|--------|----------|-------------|
-| `url` | Yes | Full HTTP/HTTPS URL to POST the config to |
-| `user` | No | Username for HTTP Basic Authentication |
-| `password` | No | Password for HTTP Basic Authentication |
-| `ssl_verify` | No | When `true`, verify SSL certificates (default: `false`) |
-| `headers` | No | Hash of custom HTTP headers to include in the request |
+| Option       | Required | Description                                             |
+|--------------|----------|---------------------------------------------------------|
+| `url`        | Yes      | Full HTTP/HTTPS URL to POST the config to               |
+| `user`       | No       | Username for HTTP Basic Authentication                  |
+| `password`   | No       | Password for HTTP Basic Authentication                  |
+| `ssl_verify` | No       | When `true`, verify SSL certificates (default: `false`) |
+| `headers`    | No       | Hash of custom HTTP headers to include in the request   |
 
 ## Output types
 
