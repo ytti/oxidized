@@ -86,7 +86,7 @@ ssh-keyscan gitserver.git.com >> ~/.ssh/known_hosts
 
 If you are running oxidized in a container, you need to map /home/oxidized/.ssh in the
 container to a local repository and save the known_hosts in the local repository. You can
-find an example how to do this under [examples/podman-compose](/examples/podman-compose/)
+find an example how to do this under [Docker.md](Docker.md#store-the-ssh-keys-a-remote-git-repository)
 
 ## Oxidized ignores the changes I made to its git repository
 First of all: you shouldn't manipulate the git repository of oxidized. Don't
