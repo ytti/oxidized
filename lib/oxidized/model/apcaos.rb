@@ -27,6 +27,7 @@ class ApcAos < Oxidized::Model
   end
 
   cmd 'config.ini', input: %i[scp ftp] do |cfg|
+    cfg = cfg.reject_lines [/^; Configuration file, generated on /]
     "; ========== config.ini ==========\n" + cfg
   end
 
