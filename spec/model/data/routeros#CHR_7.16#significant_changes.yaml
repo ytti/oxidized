@@ -1,0 +1,9 @@
+pass:
+ - 'installed-version: 7.16'
+ - '# software id = XX-XX'
+ - '/interface ethernet'
+fail:
+ - '# Flags: U - UNDOABLE'
+ - '# Columns: ACTION, BY, POLICY, TIME'
+ - 'bridge port changed'
+ - '2024-07-31 09:33:47'
