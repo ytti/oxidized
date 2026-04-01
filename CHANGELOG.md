@@ -10,6 +10,7 @@ The format is based on [Keep a Changelog](https://keepachangelog.com/en/1.1.0/).
 - routeros: support store mode `on_significant` (@infabo)
 
 ### Changed
+- input/ssh: validate that cmd is a String. See #3700 (@robertcheramy)
 
 ### Fixed
 

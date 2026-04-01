@@ -38,6 +38,10 @@ module Oxidized
     end
 
     def cmd(cmd, expect = node.prompt)
+      unless cmd.is_a?(String)
+        logger.error "cmd must be a String (#{cmd.class}): #{cmd.inspect} @ #{node.name}"
+        raise ArgumentError, "cmd must be a String"
+      end
       logger.debug "Sending '#{cmd.dump}' @ #{node.name} with expect: #{expect.inspect}"
       if Oxidized.config.input.debug?
         @log.puts "sent cmd #{@exec ? cmd.dump : (cmd + newline).dump}"
