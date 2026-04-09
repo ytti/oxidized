@@ -59,7 +59,18 @@ class TrueNAS < Oxidized::Model
   end
 
   def collect_ixapps_configurations
-    cmd('if [ -d /mnt/.ix-apps ]; then sudo find /mnt/.ix-apps/app_configs \( -name "app.yaml" -or -name "user_config.yaml" -or -name "metadata.yaml" \) -printf "\n\n#######################\n# %p\n#######################\n" -exec cat {} \; ;else echo "# No Apps configuration found in /mnt/.ix-apps"; fi')
+    config_command = <<~'END'
+      if [ -d /mnt/.ix-apps ];
+      then
+        sudo find /mnt/.ix-apps/app_configs
+        \( -name "app.yaml" -or -name "user_config.yaml" -or -name "metadata.yaml" \)
+        -printf "\n\n#######################\n# %p\n#######################\n"
+        -exec cat {} \; ;
+      else
+        echo "# No Apps configuration found in /mnt/.ix-apps";
+      fi
+    END
+    cmd(config_command.gsub("\n", ""))
   end
 
   cfg :ssh do
