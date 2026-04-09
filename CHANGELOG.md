@@ -11,6 +11,7 @@ The format is based on [Keep a Changelog](https://keepachangelog.com/en/1.1.0/).
 
 ### Changed
 - input/ssh: validate that cmd is a String. See #3700 (@robertcheramy)
+- truenas: capture app, replication, cloudsync configurations without constant changes. See #3795 (@neilschelly)
 
 ### Fixed
 
