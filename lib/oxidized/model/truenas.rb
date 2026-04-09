@@ -59,7 +59,7 @@ class TrueNAS < Oxidized::Model
   end
 
   def collect_ixapps_configurations
-    config_command = <<~'END'
+    config_command = <<~'CMDEND'
       if [ -d /mnt/.ix-apps ];
       then
         sudo find /mnt/.ix-apps/app_configs
@@ -69,7 +69,7 @@ class TrueNAS < Oxidized::Model
       else
         echo "# No Apps configuration found in /mnt/.ix-apps";
       fi
-    END
+    CMDEND
     cmd(config_command.gsub("\n", ""))
   end
 
