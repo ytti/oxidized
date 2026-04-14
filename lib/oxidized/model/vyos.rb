@@ -16,6 +16,7 @@ class Vyos < Oxidized::Model
     cfg.gsub! /secret (\S+).*/, 'secret <secret removed>'
     cfg.gsub! /password (\S+).*/, 'password <secret removed>'
     cfg.gsub! /snmp community (\S+)/, 'snmp community <secret removed>'
+    cfg.gsub! /snmp trap-target ([^\s\\]*) community (\S+)/, 'snmp trap-target \1 community <secret removed>'
     cfg.gsub! /preshared-key (\S+).*/, 'preshared-key <secret removed>'
     cfg.gsub! /private key (\S+).*/, 'private key <secret removed>'
     cfg.gsub! /private-key (\S+).*/, 'private-key <secret removed>'

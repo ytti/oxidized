@@ -56,6 +56,7 @@ set service ntp server 10.10.10.1
 set service snmp community snmppublic authorization 'ro'
 set service snmp contact 'user@example.com'
 set service snmp oid-enable 'ip-route-table'
+set service snmp trap-target 10.10.10.10 community 'snmppublic'
 set service ssh port '22'
 set system config-management commit-revisions '20'
 set system conntrack expect-table-size '2048'
