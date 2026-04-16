@@ -1,8 +1,10 @@
 require 'semantic_logger'
+require_relative 'cli/support'
 
 module Oxidized
   class CLI
     include SemanticLogger::Loggable
+    include Support
 
     require 'slop'
     require 'oxidized'
@@ -48,6 +50,7 @@ module Oxidized
       opts = Slop.parse do |opt|
         opt.on '-d', '--debug', 'turn on debugging'
         opt.on '--daemonize', 'Daemonize/fork the process'
+        opt.on '--support', 'show support diagnostics and exit'
         opt.string '--home-dir', 'Oxidized home dir', default: nil
         opt.string '--config-file', 'Oxidized config file', default: nil
         opt.on '-h', '--help', 'show usage' do
@@ -64,6 +67,12 @@ module Oxidized
           Kernel.exit
         end
       end
+
+      if opts[:support]
+        show_support_details
+        Kernel.exit
+      end
+
       [opts.arguments, opts]
     end
 

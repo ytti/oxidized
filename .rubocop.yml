@@ -120,6 +120,9 @@ Metrics/AbcSize:
 Metrics/ClassLength:
   Max: 200
 
+Metrics/ModuleLength:
+  Max: 200
+
 Metrics/PerceivedComplexity:
   Enabled: false
 
