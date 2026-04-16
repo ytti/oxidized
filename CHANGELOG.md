@@ -14,7 +14,7 @@ The format is based on [Keep a Changelog](https://keepachangelog.com/en/1.1.0/).
 - junos: changed "show system license" regex to reduce notification noise for PTX routers. See #3794 (@ctomkow)
 
 ### Fixed
-
+- VyOS: detect community string in SNMP traps. Fixes: #3793 (@nicolasberens)
 
 ## [0.36.0 - 2026-03-31]
 ### Release Notes
