@@ -50,7 +50,7 @@ module Oxidized
         keys = (ENV.keys.grep(/^OXIDIZED_/) + EXPLICIT_ENV_KEYS).uniq.sort
 
         keys.each do |key|
-          next unless ENV.key?(key)
+          next unless ENV.has_key?(key)
 
           value = ENV.fetch(key)
           puts key.match?(SENSITIVE_NAME_RE) ? "#{key}=[REDACTED]" : "#{key}=#{value}"
