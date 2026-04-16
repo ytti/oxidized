@@ -26,6 +26,7 @@
 # 
 # Interface wan1 - SFP/SFP+/SFP28, 10GBASE-SR
 #   Vendor Name  :            FORTINET        
+#   Part No.     :            FTLX8574D3BCLFTN
 #   Serial No.   :            NB00000         
 # 
 # 
