@@ -103,7 +103,7 @@ class FortiGate < Oxidized::Model
     cfg = cfg.keep_lines [
       /^Interface \w/,
       "Vendor Name",
-      "Part No./",
+      "Part No.",
       "Serial No."
     ]
     cfg = cfg.reject_lines ["Transceiver is not detected"]
