@@ -14,6 +14,6 @@ class GrandstreamHT8xx < Oxidized::Model
   end
 
   cmd 'export' do |cfg|
-    cfg.lines[1..-2]&.join
+    cfg.cut_both
   end
 end
