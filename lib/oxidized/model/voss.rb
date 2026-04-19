@@ -23,6 +23,9 @@ class Voss < Oxidized::Model
     cfg.gsub! /(^((.*)Last Vlan Change(.*):(.*))$)/, 'removed Last Vlan Change'
     cfg.gsub! /(^((.*)Temperature(.*):(.*))$)/, 'removed Temperature'
     cfg.gsub! /(^((.*)Total Power Usage(.*):(.*))$)/, 'removed Total Power Usage'
+    cfg.gsub! /(^((.*)(Tray \d+ Fan \d+)\s+(\w+)\s+(\w+)\s+(.*))$)/, '\3\4      \5      [removed RPM values]'
+    cfg.gsub! /(^((.*)Command Execution Time: (.*))$)/, 'Command Execution Time [removed]'
+    cfg.gsub! /(^((.*)(Ambient\s+\d+|CPU|INTERNAL\s+MAC|SODIMM)\s+\d+\s+\d+(.*))$)/, '\3\4  [removed temperature readings]'
     comment "#{cfg}\n"
   end
 

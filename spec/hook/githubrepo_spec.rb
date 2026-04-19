@@ -210,4 +210,119 @@ describe GithubRepo do
       end
     end
   end
+
+  describe '#credentials' do
+    before do
+      @node = mock('node')
+      @node.stubs(:group).returns('gr1')
+      @node.stubs(:name).returns('test_node')
+      @cfg = Oxidized.config.output.push_to_remote
+    end
+
+    it "returns UserPassword when username and password are configured" do
+      @cfg.username = 'testuser'
+      @cfg.password = '****'
+      @cfg.remote_repo = 'https://example.com/test/repo.git'
+
+      gr.cfg = @cfg
+      credproc = gr.send(:credentials, @node)
+      result = credproc.call('https://example.com/test/repo.git', 'git',
+                             %i[ssh_key plaintext])
+      _(result).must_be_instance_of Rugged::Credentials::UserPassword
+      _(result.instance_variable_get(:@username)).must_equal 'testuser'
+      _(result.instance_variable_get(:@password)).must_equal '****'
+    end
+
+    it "returns UserPassword with url user when only password is configured" do
+      @cfg.password = '****'
+      @cfg.remote_repo = 'oxidized@example.com/test/repo.git'
+
+      gr.cfg = @cfg
+      credproc = gr.send(:credentials, @node)
+      result = credproc.call('oxidized@example.com/test/repo.git', 'oxidized',
+                             %i[ssh_key plaintext])
+      _(result).must_be_instance_of Rugged::Credentials::UserPassword
+      _(result.instance_variable_get(:@username)).must_equal 'oxidized'
+      _(result.instance_variable_get(:@password)).must_equal '****'
+    end
+
+    it "returns UserPassword when only password is configured" do
+      @cfg.password = '****'
+      @cfg.remote_repo = 'https://example.com/test/repo.git'
+
+      gr.cfg = @cfg
+      credproc = gr.send(:credentials, @node)
+      result = credproc.call('https://example.com/test/repo.git', nil,
+                             %i[ssh_key plaintext])
+      _(result).must_be_instance_of Rugged::Credentials::UserPassword
+      _(result.instance_variable_get(:@username)).must_equal 'git'
+      _(result.instance_variable_get(:@password)).must_equal '****'
+    end
+
+    it "returns SshKey with both public and private keys" do
+      @cfg.privatekey = '/path/to/private_key'
+      @cfg.publickey = 'public_key'
+      @cfg.remote_repo = 'g@example.com/repo.git'
+      File.expects(:expand_path).with('/path/to/private_key').returns('/path/to/private_key')
+      File.expects(:expand_path).with('public_key').returns('/expanded/public_key')
+
+      gr.cfg = @cfg
+      credproc = gr.send(:credentials, @node)
+
+      result = credproc.call('g@example.com/repo.git', 'g',
+                             %i[ssh_key plaintext])
+      _(result).must_be_instance_of Rugged::Credentials::SshKey
+      _(result.instance_variable_get(:@username)).must_equal 'g'
+      _(result.instance_variable_get(:@privatekey)).must_equal '/path/to/private_key'
+      _(result.instance_variable_get(:@publickey)).must_equal '/expanded/public_key'
+    end
+
+    it "returns SshKey with a private key only" do
+      @cfg.privatekey = '/path/to/private_key'
+      @cfg.remote_repo = 'g@example.com/repo.git'
+      File.expects(:expand_path).with('/path/to/private_key').returns('/path/to/private_key')
+      File.expects(:expand_path).with('/path/to/private_key.pub').returns('/path/to/private_key.pub')
+
+      gr.cfg = @cfg
+      credproc = gr.send(:credentials, @node)
+
+      result = credproc.call('g@example.com/repo.git', 'g',
+                             %i[ssh_key plaintext])
+      _(result).must_be_instance_of Rugged::Credentials::SshKey
+      _(result.instance_variable_get(:@username)).must_equal 'g'
+      _(result.instance_variable_get(:@privatekey)).must_equal '/path/to/private_key'
+      _(result.instance_variable_get(:@publickey)).must_equal '/path/to/private_key.pub'
+    end
+
+    it "returns SshKey with group-specific SSH keys" do
+      @cfg.remote_repo.routers.url = 'g@example.com/routers.git'
+      @cfg.remote_repo.routers.privatekey = '/path/to/private_key'
+      @cfg.remote_repo.routers.publickey = '/path/to/public_key'
+      @node.stubs(:group).returns('routers')
+      File.expects(:expand_path).with('/path/to/private_key').returns('/path/to/private_key')
+      File.expects(:expand_path).with('/path/to/public_key').returns('/path/to/public_key')
+
+      gr.cfg = @cfg
+      credproc = gr.send(:credentials, @node)
+
+      result = credproc.call('g@example.com/routers.git', 'g',
+                             %i[ssh_key plaintext])
+      _(result).must_be_instance_of Rugged::Credentials::SshKey
+      _(result.instance_variable_get(:@username)).must_equal 'g'
+      _(result.instance_variable_get(:@privatekey)).must_equal '/path/to/private_key'
+      _(result.instance_variable_get(:@publickey)).must_equal '/path/to/public_key'
+    end
+
+    it "returns SshKeyFromAgent if no password or private key are defined" do
+      @cfg.remote_repo = 'g@example.com/repo.git'
+
+      gr.cfg = @cfg
+      credproc = gr.send(:credentials, @node)
+
+      result = credproc.call('g@example.com/repo.git', 'g',
+                             %i[ssh_key plaintext])
+      _(result).must_be_instance_of Rugged::Credentials::SshKeyFromAgent
+      _(result.instance_variable_get(:@username)).must_equal 'g'
+    end
+  end
 end

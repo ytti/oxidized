@@ -20,7 +20,7 @@ commands:
       \e[m
       Hardware vendor:  Supermicro\e[m
       Hardware model:   S373857X4512086\e[m
-      Hardware S/N:     57088070529243W\e[m
+      Hardware S/N:     57088070000000W\e[m
       Hardware UUID:    00000000-0000-0000-0000-7cc2554f1d58\e[m
       \e[m
       Copyright:        VyOS maintainers and contributors\e[m
@@ -43,10 +43,10 @@ commands:
       set firewall group network-group AUTHORIZED_PUBLIC_DNS_SERVERS network '8.8.4.4/32'
       set high-availability vrrp group VRRP_GROUP_NAME authentication password 'AAAAAAAAAABBBBBBBBBB'
       set high-availability vrrp group VRRP_GROUP_NAME authentication type 'plaintext-password'
-      set interfaces ethernet eth0 hw-id '7c:c2:55:4f:1d:58'
-      set interfaces ethernet eth1 hw-id '7c:c2:55:4f:1d:59'
-      set interfaces ethernet eth2 hw-id '7c:c2:55:4f:1d:5a'
-      set interfaces ethernet eth3 hw-id '7c:c2:55:4f:1d:5b'
+      set interfaces ethernet eth0 hw-id '7c:c2:55:00:00:08'
+      set interfaces ethernet eth1 hw-id '7c:c2:55:00:00:09'
+      set interfaces ethernet eth2 hw-id '7c:c2:55:00:00:0a'
+      set interfaces ethernet eth3 hw-id '7c:c2:55:00:00:0b'
       set interfaces loopback lo description 'config_saved_2025-09-16'
       set interfaces wireguard wg0 peer testpeer allowed-ips '172.16.1.0/25'
       set interfaces wireguard wg0 peer testpeer preshared-key 'AAAAAAAAAABBBBBBBBBB='
@@ -66,6 +66,7 @@ commands:
       set service snmp community snmppublic authorization 'ro'
       set service snmp contact 'user@example.com'
       set service snmp oid-enable 'ip-route-table'
+      set service snmp trap-target 10.10.10.10 community 'snmppublic'
       set service ssh port '22'
       set system config-management commit-revisions '20'
       set system conntrack expect-table-size '2048'

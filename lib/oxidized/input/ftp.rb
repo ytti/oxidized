@@ -1,20 +1,7 @@
 module Oxidized
   require 'net/ftp'
   require 'timeout'
-  require_relative 'cli'
-
   class FTP < Input
-    RESCUE_FAIL = {
-      debug: [
-        # Net::SSH::Disconnect,
-      ],
-      warn:  [
-        # RuntimeError,
-        # Net::SSH::AuthenticationFailed,
-      ]
-    }.freeze
-    include Input::CLI
-
     def connect(node) # rubocop:disable Naming/PredicateMethod
       @node = node
       @node.model.cfg['ftp'].each { |cb| instance_exec(&cb) }

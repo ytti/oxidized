@@ -1,0 +1,129 @@
+---
+init_prompt: |-
+    \r
+    \r
+    Cisco Nexus Operating System (NX-OS) Software\r
+    TAC support: http://www.cisco.com/tac\r
+    Copyright (c) 2002-2023, Cisco Systems, Inc. All rights reserved.\r
+    The copyrights to certain works contained in this software are\r
+    owned by other third parties and used and distributed under\r
+    license. Certain components of this software are licensed under\r
+    the GNU General Public License (GPL) version 2.0 or the GNU\r
+    Lesser General Public License (LGPL) Version 2.1. A copy of each\r
+    such license is available at\r
+    http://www.opensource.org/licenses/gpl-2.0.php and\r
+    http://www.opensource.org/licenses/lgpl-2.1.php\r
+    \rTEST-12345#\x20
+commands:
+  - "terminal length 0\n": |-
+      terminal length 0\r\r
+      \rTEST-12345#\x20
+  - "show version\n": |-
+      show version\r\r
+      Cisco Nexus Operating System (NX-OS) Software\r
+      TAC support: http://www.cisco.com/tac\r
+      Documents: http://www.cisco.com/en/US/products/ps9372/tsd_products_support_series_home.html\r
+      Copyright (c) 2002-2023, Cisco Systems, Inc. All rights reserved.\r
+      The copyrights to certain works contained herein are owned by\r
+      other third parties and are used and distributed under license.\r
+      Some parts of this software are covered under the GNU Public\r
+      License. A copy of the license is available at\r
+      http://www.gnu.org/licenses/gpl.html.\r
+      \r
+      Software\r
+        BIOS:      version 3.6.0\r
+        Power Sequencer Firmware: \r
+                   Module 1: v3.0\r
+                   Module 2: v2.0\r
+        Microcontroller Firmware:        version v1.2.0.1\r
+        QSFP Microcontroller Firmware:   \r
+                   Module not detected\r
+        CXP Microcontroller Firmware:   \r
+                   Module not detected\r
+        kickstart: version 7.3(13)N1(1)\r
+        system:    version 7.3(13)N1(1)\r
+        BIOS compile time:       05/09/2012\r
+        kickstart image file is: bootflash:///n5000-uk9-kickstart.7.3.13.N1.1.bin\r
+        kickstart compile time:  2/7/2023 2:00:00 [02/07/2023 13:42:03]\r
+        system image file is:    bootflash:///n5000-uk9.7.3.13.N1.1.bin\r
+        system compile time:     2/7/2023 2:00:00 [02/07/2023 16:03:19]\r
+      \r
+      \r
+      Hardware\r
+        cisco Nexus5548 Chassis (\"O2 32X10GE/Modular Universal Platform Supervisor\")\r
+        Intel(R) Xeon(R) CPU         with 8253792 kB of memory.\r
+        Processor Board ID FOC00000001\r
+      \r
+        Device name: TEST-12345\r
+        bootflash:    2007040 kB\r
+      \r
+      Kernel uptime is 68 day(s), 19 hour(s), 44 minute(s), 42 second(s)\r
+      \r
+      Last reset at 132520 usecs after  Mon Jan 19 00:53:59 2026\r
+      \r
+        Reason: Disruptive upgrade\r
+        System version: 7.3(9)N1(1)\r
+        Service: \r
+      \r
+      plugin\r
+        Core Plugin, Ethernet Plugin\r
+      \r
+      Active Package(s)\r
+      \rTEST-12345#\x20
+  - "show inventory all\n": |-
+      show inventory all\r\r
+                                    ^\r
+      % Invalid command at '^' marker.\r
+      \rTEST-12345#\x20
+  - "show inventory\n": |-
+      show inventory\r\r
+      NAME: \"Chassis\", DESCR: \"Nexus5548 Chassis\"\r
+      PID: N5K-C5548UP       , VID: V01 , SN: SSI00000001\r
+      \r
+      NAME: \"Module 1\", DESCR: \"O2 32X10GE/Modular Universal Platform Supervisor\"\r
+      PID: N5K-C5548UP       , VID: V01 , SN: FOC00000001\r
+      \r
+      NAME: \"Fan 1\", DESCR: \"Chassis fan module\"\r
+      PID: N5548P-FAN        , VID: N/A , SN: N/A\r
+      \r
+      NAME: \"Fan 2\", DESCR: \"Chassis fan module\"\r
+      PID: N5548P-FAN        , VID: N/A , SN: N/A\r
+      \r
+      NAME: \"Power supply 1\", DESCR: \"AC power supply\"\r
+      PID: N55-PAC-750W      , VID: V02 , SN: PST00000001\r
+      \r
+      NAME: \"Power supply 2\", DESCR: \"AC power supply\"\r
+      PID: N55-PAC-750W      , VID: V01 , SN: ART00000001\r
+      \r
+      NAME: \"Module 3\", DESCR: \"O2 Non L3 Daughter Card\"\r
+      PID: N55-DL2           , VID: V01 , SN: FOC00000001\r
+      \r
+      \rTEST-12345#\x20
+  - "show running-config\n": |-
+      show running-config\r\r
+      \r
+      !Command: show running-config\r
+      !Time: Sat Mar 28 20:40:06 2026\r
+      \r
+      version 7.3(13)N1(1)\r
+      hostname TEST-12345\r
+      \r
+      no feature telnet\r
+      feature interface-vlan\r
+      feature lacp\r
+      feature lldp\r
+      \r
+      (...)
+      clock timezone EET 2 0\r
+      clock summer-time EEST 5 sunday march 03:00 5 sunday october 04:00 60\r
+      line console\r
+      line vty\r
+        access-class Mgmt in\r
+      boot kickstart bootflash:/n5000-uk9-kickstart.7.3.13.N1.1.bin\r
+      boot system bootflash:/n5000-uk9.7.3.13.N1.1.bin \r
+      \r
+      \r
+      \rTEST-12345#\x20
+  - "exit\n": |-
+      exit\r\r
+      

@@ -1,0 +1,78 @@
+! Cisco Nexus Operating System (NX-OS) Software
+! TAC support: http://www.cisco.com/tac
+! Documents: http://www.cisco.com/en/US/products/ps9372/tsd_products_support_series_home.html
+! Copyright (c) 2002-2023, Cisco Systems, Inc. All rights reserved.
+! The copyrights to certain works contained herein are owned by
+! other third parties and are used and distributed under license.
+! Some parts of this software are covered under the GNU Public
+! License. A copy of the license is available at
+! http://www.gnu.org/licenses/gpl.html.
+! 
+! Software
+!   BIOS:      version 3.6.0
+!   Power Sequencer Firmware: 
+!              Module 1: v3.0
+!              Module 2: v2.0
+!   Microcontroller Firmware:        version v1.2.0.1
+!   QSFP Microcontroller Firmware:   
+!              Module not detected
+!   CXP Microcontroller Firmware:   
+!              Module not detected
+!   kickstart: version 7.3(13)N1(1)
+!   system:    version 7.3(13)N1(1)
+!   BIOS compile time:       05/09/2012
+!   kickstart image file is: bootflash:///n5000-uk9-kickstart.7.3.13.N1.1.bin
+!   kickstart compile time:  2/7/2023 2:00:00 [02/07/2023 13:42:03]
+!   system image file is:    bootflash:///n5000-uk9.7.3.13.N1.1.bin
+!   system compile time:     2/7/2023 2:00:00 [02/07/2023 16:03:19]
+! 
+! 
+! Hardware
+!   cisco Nexus5548 Chassis ("O2 32X10GE/Modular Universal Platform Supervisor")
+!   Intel(R) Xeon(R) CPU         with 8253792 kB of memory.
+!   Processor Board ID FOC00000001
+! 
+!   Device name: TEST-12345
+! 
+! NAME: "Chassis", DESCR: "Nexus5548 Chassis"
+! PID: N5K-C5548UP       , VID: V01 , SN: SSI00000001
+! 
+! NAME: "Module 1", DESCR: "O2 32X10GE/Modular Universal Platform Supervisor"
+! PID: N5K-C5548UP       , VID: V01 , SN: FOC00000001
+! 
+! NAME: "Fan 1", DESCR: "Chassis fan module"
+! PID: N5548P-FAN        , VID: N/A , SN: N/A
+! 
+! NAME: "Fan 2", DESCR: "Chassis fan module"
+! PID: N5548P-FAN        , VID: N/A , SN: N/A
+! 
+! NAME: "Power supply 1", DESCR: "AC power supply"
+! PID: N55-PAC-750W      , VID: V02 , SN: PST00000001
+! 
+! NAME: "Power supply 2", DESCR: "AC power supply"
+! PID: N55-PAC-750W      , VID: V01 , SN: ART00000001
+! 
+! NAME: "Module 3", DESCR: "O2 Non L3 Daughter Card"
+! PID: N55-DL2           , VID: V01 , SN: FOC00000001
+! 
+
+!Command: show running-config
+
+version 7.3(13)N1(1)
+hostname TEST-12345
+
+no feature telnet
+feature interface-vlan
+feature lacp
+feature lldp
+
+(...)
+clock timezone EET 2 0
+clock summer-time EEST 5 sunday march 03:00 5 sunday october 04:00 60
+line console
+line vty
+  access-class Mgmt in
+boot kickstart bootflash:/n5000-uk9-kickstart.7.3.13.N1.1.bin
+boot system bootflash:/n5000-uk9.7.3.13.N1.1.bin 
+
+

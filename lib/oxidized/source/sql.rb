@@ -46,6 +46,11 @@ module Oxidized
           end
           keys[:vars] = vars unless vars.empty?
 
+          keys = Oxidized.hooks.source_node_transform(node:     keys,
+                                                      node_raw: node.to_hash,
+                                                      context:  self)
+          next if keys.nil?
+
           nodes << keys
         end
         db.disconnect

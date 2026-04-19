@@ -71,9 +71,14 @@ git push origin 0.xx.yy
 ```
 
 Make a release from the tag in github.
-- Take the release notes frm CHANGELOG.md
+- Name the release `0.xx.yy`
+- Generate release notes
+- Remove `## What's changed`
+- Take the release notes from CHANGELOG.md
 - List new contributors (generated automatically)
 - Keep the Full Changelog (generated automatically)
+- Preview
+- Publish
 
 Close the corresponding milestone in github.
 

@@ -1,7 +1,10 @@
 require_relative '../spec_helper'
 require 'oxidized/model/model'
-
-# rubocop:disable Style/FormatStringToken
+require 'oxidized/input/ssh'
+require 'oxidized/input/scp'
+require 'oxidized/input/ftp'
+require 'oxidized/input/http'
+require 'oxidized/input/telnet'
 
 class TestModel < Oxidized::Model
   using Refinements
@@ -43,6 +46,13 @@ class TestModel < Oxidized::Model
     "Appended output after cmd blocks have been run\n"
   end
 
+  cmd :significant_changes do |cfg|
+    cfg.reject_lines [
+      'Last configuration change at',
+      'NVRAM config last updated at'
+    ]
+  end
+
   cfg :ssh, :telnet do
     pre_logout 'logout'
   end
@@ -52,135 +62,228 @@ class TestModelNoMetadata < Oxidized::Model
   using Refinements
   cmd 'show configuration'
   comment '// '
+  cfg :ssh do
+  end
+end
+
+class TestModelWithInputs < Oxidized::Model
+  using Refinements
+
+  inputs [:ssh, %i[scp ftp]]
 end
 
 describe 'Oxidized::Model' do
   before do
     Oxidized.asetus = Asetus.new
   end
-  describe 'class methods' do
-    describe '.metadata' do
-      it 'stores metadata at top position with a block' do
-        metadata = TestModel.instance_variable_get(:@metadata)
-        _(metadata[:top]).must_be_kind_of Proc
-      end
+  describe '.metadata' do
+    it 'stores metadata at top position with a block' do
+      metadata = TestModel.instance_variable_get(:@metadata)
+      _(metadata[:top]).must_be_kind_of Proc
+    end
 
-      it 'stores metadata at bottom position with a string' do
-        metadata = TestModel.instance_variable_get(:@metadata)
-        _(metadata[:bottom]).must_equal "! End of configuration for host %{name}\n"
-      end
+    it 'stores metadata at bottom position with a string' do
+      metadata = TestModel.instance_variable_get(:@metadata)
+      _(metadata[:bottom]).must_equal "! End of configuration for host %{name}\n" # rubocop:disable Style/FormatStringToken
+    end
 
-      it 'does not store metadata when not defined' do
-        metadata = TestModelNoMetadata.instance_variable_get(:@metadata)
-        _(metadata[:top]).must_be_nil
-        _(metadata[:bottom]).must_be_nil
+    it 'does not store metadata when not defined' do
+      metadata = TestModelNoMetadata.instance_variable_get(:@metadata)
+      _(metadata[:top]).must_be_nil
+      _(metadata[:bottom]).must_be_nil
+    end
+  end
+
+  describe '.cmd/.cmds' do
+    before do
+      @test_model = Class.new(Oxidized::Model)
+      @block_upcase = proc { |data| data.upcase }
+      @block_downcase = proc { |data| data.downcase }
+    end
+    describe 'with :all symbol' do
+      it 'adds a block' do
+        @test_model.cmd(:all, &@block_upcase)
+        _(@test_model.cmds[:all]).must_include @block_upcase
+      end
+      it 'can add multiple blocks' do
+        @test_model.cmd(:all, &@block_upcase)
+        @test_model.cmd(:all, &@block_downcase)
+        cmds = @test_model.cmds
+        _(cmds[:all].size).must_equal 2
+        _(cmds[:all]).must_include @block_upcase
+        _(cmds[:all]).must_include @block_downcase
       end
     end
 
-    describe '.cmd/.cmds' do
-      before do
-        @test_model = Class.new(Oxidized::Model)
-        @block_upcase = proc { |data| data.upcase }
-        @block_downcase = proc { |data| data.downcase }
+    describe 'with string' do
+      it 'adds a block' do
+        @test_model.cmd("show version", &@block_upcase)
+        cmds = @test_model.cmds
+
+        _(cmds[:cmd]).wont_be_empty
+        _(cmds[:cmd].first).must_equal(
+          { cmd: "show version", args: {}, block: @block_upcase }
+        )
       end
-      describe 'with :all symbol' do
-        it 'adds a block' do
-          @test_model.cmd(:all, &@block_upcase)
-          _(@test_model.cmds[:all]).must_include @block_upcase
-        end
-        it 'can add multiple blocks' do
-          @test_model.cmd(:all, &@block_upcase)
-          @test_model.cmd(:all, &@block_downcase)
-          cmds = @test_model.cmds
-          _(cmds[:all].size).must_equal 2
-          _(cmds[:all]).must_include @block_upcase
-          _(cmds[:all]).must_include @block_downcase
-        end
+      it 'adds a command without a block' do
+        @test_model.cmd("show version")
+        cmds = @test_model.cmds
+
+        _(cmds[:cmd]).wont_be_empty
+        _(cmds[:cmd].first[:cmd]).must_equal "show version"
+        _(cmds[:cmd].first[:block]).must_be_nil
       end
+      it 'adds a command multiple times' do
+        @test_model.cmd("show version", &@block_upcase)
+        @test_model.cmd("show version", &@block_downcase)
+        @test_model.cmd("show version", prepend: true)
+        cmds = @test_model.cmds
 
-      describe 'with string' do
-        it 'adds a block' do
-          @test_model.cmd("show version", &@block_upcase)
-          cmds = @test_model.cmds
-
-          _(cmds[:cmd]).wont_be_empty
-          _(cmds[:cmd].first).must_equal(
-            { cmd: "show version", args: {}, block: @block_upcase }
-          )
-        end
-        it 'adds a command without a block' do
-          @test_model.cmd("show version")
-          cmds = @test_model.cmds
-
-          _(cmds[:cmd]).wont_be_empty
-          _(cmds[:cmd].first[:cmd]).must_equal "show version"
-          _(cmds[:cmd].first[:block]).must_be_nil
-        end
-        it 'adds a command multiple times' do
-          @test_model.cmd("show version", &@block_upcase)
-          @test_model.cmd("show version", &@block_downcase)
-          @test_model.cmd("show version", prepend: true)
-          cmds = @test_model.cmds
-
-          _(cmds[:cmd].size).must_equal 3
-          _(cmds[:cmd][0][:cmd]).must_equal "show version"
-          _(cmds[:cmd][0][:block]).must_be_nil
-          _(cmds[:cmd][0][:args]).must_equal({ prepend: true })
-          _(cmds[:cmd][1][:cmd]).must_equal "show version"
-          _(cmds[:cmd][1][:block]).must_equal @block_upcase
-          _(cmds[:cmd][2][:block]).must_equal @block_downcase
-        end
-        it 'can prepend a command' do
-          @test_model.cmd("show version")
-          @test_model.cmd("prepended command", prepend: true, &@block_upcase)
-          cmds = @test_model.cmds
-          _(cmds[:cmd].size).must_equal 2
-          _(cmds[:cmd][0][:cmd]).must_equal "prepended command"
-          _(cmds[:cmd][0][:args]).must_equal({ prepend: true })
-          _(cmds[:cmd][0][:block]).must_equal @block_upcase
-          _(cmds[:cmd][1][:cmd]).must_equal "show version"
-        end
-        it 'can clear a command' do
-          @test_model.cmd("command", &@block_upcase)
-          @test_model.cmd("other")
-          @test_model.cmd("command", clear: true, &@block_downcase)
-          cmds = @test_model.cmds
-          _(cmds[:cmd].size).must_equal 2
-          _(cmds[:cmd][0][:cmd]).must_equal "other"
-          _(cmds[:cmd][1][:cmd]).must_equal "command"
-          _(cmds[:cmd][1][:args]).must_equal({ clear: true })
-          _(cmds[:cmd][1][:block]).must_equal @block_downcase
-        end
+        _(cmds[:cmd].size).must_equal 3
+        _(cmds[:cmd][0][:cmd]).must_equal "show version"
+        _(cmds[:cmd][0][:block]).must_be_nil
+        _(cmds[:cmd][0][:args]).must_equal({ prepend: true })
+        _(cmds[:cmd][1][:cmd]).must_equal "show version"
+        _(cmds[:cmd][1][:block]).must_equal @block_upcase
+        _(cmds[:cmd][2][:block]).must_equal @block_downcase
+      end
+      it 'can prepend a command' do
+        @test_model.cmd("show version")
+        @test_model.cmd("prepended command", prepend: true, &@block_upcase)
+        cmds = @test_model.cmds
+        _(cmds[:cmd].size).must_equal 2
+        _(cmds[:cmd][0][:cmd]).must_equal "prepended command"
+        _(cmds[:cmd][0][:args]).must_equal({ prepend: true })
+        _(cmds[:cmd][0][:block]).must_equal @block_upcase
+        _(cmds[:cmd][1][:cmd]).must_equal "show version"
+      end
+      it 'can clear a command' do
+        @test_model.cmd("command", &@block_upcase)
+        @test_model.cmd("other")
+        @test_model.cmd("command", clear: true, &@block_downcase)
+        cmds = @test_model.cmds
+        _(cmds[:cmd].size).must_equal 2
+        _(cmds[:cmd][0][:cmd]).must_equal "other"
+        _(cmds[:cmd][1][:cmd]).must_equal "command"
+        _(cmds[:cmd][1][:args]).must_equal({ clear: true })
+        _(cmds[:cmd][1][:block]).must_equal @block_downcase
+      end
+      it 'sanity checks the argument' do
+        @test_model.logger.expects(:error).with(
+          'cmd "test_if": if must be a lambda'
+        )
+        @test_model.logger.expects(:error).with(
+          'cmd "test_input": input must be a symbol or an array of symbols'
+        )
+        @test_model.cmd("test_if", if: true)
+        @test_model.cmd("test_input", input: "ssh")
+        cmds = @test_model.cmds
+        _(cmds[:cmd].size).must_equal 0
       end
     end
+  end
 
-    describe '.cfg/.cfgs' do
-      it 'stores and returns input configs' do
-        cfgs = TestModel.cfgs
-        _(cfgs.size).must_equal 2
-        _(cfgs).must_include "ssh"
-        _(cfgs).must_include "telnet"
-        _(cfgs["ssh"].first).must_be_kind_of Proc
-      end
+  describe '.cfg/.cfgs' do
+    it 'stores and returns input configs' do
+      cfgs = TestModel.cfgs
+      _(cfgs.size).must_equal 2
+      _(cfgs).must_include "ssh"
+      _(cfgs).must_include "telnet"
+      _(cfgs["ssh"].first).must_be_kind_of Proc
     end
-    describe '.expect/.expects' do
-      it 'stores and returns expectations' do
-        expects = TestModel.expects
-        _(expects.size).must_equal 1
-        _(expects.first[0]).must_equal(/^--More--$/)
-        _(expects.first[1]).must_be_kind_of Proc
-      end
+  end
+  describe '.expect/.expects' do
+    it 'stores and returns expectations' do
+      expects = TestModel.expects
+      _(expects.size).must_equal 1
+      _(expects.first[0]).must_equal(/^--More--$/)
+      _(expects.first[1]).must_be_kind_of Proc
+    end
+  end
+
+  describe '.procs' do
+    it 'stores and returns pre/post procs' do
+      procs = TestModel.procs
+      _(procs.size).must_equal 2
+      _(procs).must_include :pre
+      _(procs).must_include :post
+      _(procs[:pre].first).must_be_kind_of Proc
+      _(procs[:post].first).must_be_kind_of Proc
+    end
+  end
+  describe '.inputs' do
+    before do
+      @model = Class.new(Oxidized::Model)
+    end
+    it 'raises an error when not called properly' do
+      _ { @model.inputs [] }.must_raise ArgumentError
+      _ { @model.inputs :ssh }.must_raise ArgumentError
+      _ { @model.inputs [[]] }.must_raise ArgumentError
+      _ { @model.inputs [[:input], "ssh"] }.must_raise ArgumentError
+    end
+    it 'stores and restore the arguments' do
+      list = [:ssh, %i[scp ftp]]
+      @model.inputs list
+      _(@model.inputs).must_equal list
+    end
+  end
+
+  describe '.input_sequence' do
+    it 'gives the specified input sequence back' do
+      input_classes = [Oxidized::SSH, Oxidized::SCP, Oxidized::FTP]
+
+      sequence = TestModelWithInputs.input_sequence(input_classes)
+      _(sequence).must_equal [
+        [Oxidized::SSH], [Oxidized::SCP, Oxidized::FTP]
+      ]
+    end
+    it 'returns the specified input sequence in the correct order' do
+      input_classes = [Oxidized::FTP, Oxidized::SSH, Oxidized::SCP]
+
+      sequence = TestModelWithInputs.input_sequence(input_classes)
+      _(sequence).must_equal [
+        [Oxidized::SSH], [Oxidized::FTP, Oxidized::SCP]
+      ]
     end
 
-    describe '.procs' do
-      it 'stores and returns pre/post procs' do
-        procs = TestModel.procs
-        _(procs.size).must_equal 2
-        _(procs).must_include :pre
-        _(procs).must_include :post
-        _(procs[:pre].first).must_be_kind_of Proc
-        _(procs[:post].first).must_be_kind_of Proc
-      end
+    it 'gives the configured inputs back' do
+      input_classes = [Oxidized::SSH, Oxidized::SCP, Oxidized::Telnet]
+
+      sequence = TestModel.input_sequence(input_classes)
+      _(sequence).must_equal [
+        [Oxidized::SSH, Oxidized::Telnet]
+      ]
+    end
+
+    it 'ignores cfgs["input"] with a empty hash' do
+      input_classes = [Oxidized::SSH, Oxidized::HTTP]
+
+      model = Class.new(TestModel)
+      cfgs = model.cfgs
+      _(cfgs.count).must_equal 2
+      # just accessing cfgs["http"] creates an empty hash
+      _(cfgs["http"]).must_equal []
+      _(cfgs.count).must_equal 3
+
+      sequence = model.input_sequence(input_classes)
+      _(sequence).must_equal [
+        [Oxidized::SSH]
+      ]
+    end
+
+    it 'raises an error if a requested input is not configured' do
+      TestModelWithInputs.logger.expects(:error)
+                         .with("Needs one of [:scp, :ftp] to be configured")
+
+      sequence = TestModelWithInputs.input_sequence([Oxidized::SSH])
+
+      _(sequence).must_equal [[Oxidized::SSH], []]
+
+      TestModelNoMetadata.logger.expects(:error)
+                         .with("Needs one of [:ssh] to be configured")
+
+      sequence = TestModelNoMetadata.input_sequence([Oxidized::FTP])
+      _(sequence).must_equal [[]]
     end
   end
 
@@ -242,8 +345,10 @@ describe 'Oxidized::Model' do
 
         model.stubs(:vars).returns(nil)
         model.stubs(:vars).with('metadata').returns(true)
+        # rubocop:disable Style/FormatStringToken
         model.stubs(:vars).with('metadata_top').returns("%{comment}Top from vars model %{model}\n")
         model.stubs(:vars).with('metadata_bottom').returns("%{comment}Bottom from vars\n")
+        # rubocop:enable Style/FormatStringToken
 
         result = model.get.to_cfg
         _(result).must_equal(
@@ -260,8 +365,9 @@ describe 'Oxidized::Model' do
 
         model.stubs(:vars).returns(nil)
         model.stubs(:vars).with('metadata').returns(true)
+        # rubocop:disable Style/FormatStringToken
         model.stubs(:vars).with('metadata_top').returns("%{comment}Top from vars model %{model}\n")
-
+        # rubocop:enable Style/FormatStringToken
         result = model.get.to_cfg
         _(result).must_equal(
           "// Top from vars model TestModelNoMetadata\n" \
@@ -306,6 +412,7 @@ describe 'Oxidized::Model' do
         Time.stubs(:now).returns(fixed_time)
       end
       {
+        # rubocop:disable Style/FormatStringToken
         "%{model}"   => "TestModel",
         "%{name}"    => "router1",
         "%{ip}"      => "192.168.1.1",
@@ -317,12 +424,26 @@ describe 'Oxidized::Model' do
         "%{hour}"    => "14",
         "%{minute}"  => "05",
         "%{second}"  => "09"
+        # rubocop:enable Style/FormatStringToken
       }.each do |template, expected|
         it "interpolates #{template}" do
           _(@model.interpolate_string(template)).must_equal expected
         end
       end
     end
+    describe '#significant_changes' do
+      it 'shows significant changes only' do
+        config =
+          "Last configuration change at 00001\n" \
+          "NVRAM config last updated at 00001\n" \
+          "Configuration Version 0000A\n"
+
+        significant_config =
+          "Configuration Version 0000A\n"
+
+        result = @model.significant_changes config
+        _(result).must_equal significant_config
+      end
+    end
   end
 end
-# rubocop:enable Style/FormatStringToken

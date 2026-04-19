@@ -1,0 +1,200 @@
+---
+init_prompt: |-
+    OXI-FW121 #\x20
+commands:
+  - "get system status\n": |-
+      get system status\r\r
+      Version: FortiGate-501E v7.4.8,build2795,250523 (GA.M)\r
+      First GA patch build date: 230509\r
+      Current Security Level: High\r
+      Firmware Signature: certified\r
+      Virus-DB: 93.06535(2026-01-28 06:31)\r
+      Extended DB: 93.06535(2026-01-28 06:31)\r
+      Serial-Number: FG5H1E0000000000\r
+      --More--\x20
+  - " ": |-
+      \r         \rBIOS version: 05000006\r
+      System Part-Number: P21592-09\r
+      Log hard disk: Available\r
+      Hostname: OXI-FW121\r
+      Private Encryption: Disable\r
+      Operation Mode: NAT\r
+      Current virtual domain: root\r
+      Max number of virtual domains: 10\r
+      Virtual domains status: 3 in NAT mode, 0 in TP mode\r
+      Virtual domain configuration: multiple\r
+      FIPS-CC mode: disable\r
+      Current HA mode: a-p, primary\r
+      Cluster uptime: 12 days, 12 hours, 42 minutes, 42 seconds\r
+      Cluster state change time: 2026-01-12 12:12:12\r
+      Branch point: 2795\r
+      Release Version Information: GA\r
+      FortiOS x86-64: Yes\r
+      System time: Wed Jan 12 12:12:12 2026\r
+      Last reboot reason: warm reboot\r
+      \r
+      OXI-FW121 #\x20
+  - "config global\n": |-
+      config global\r\r
+      \r
+      OXI-FW121 (global) #\x20
+  - "get system ha status\n": |-
+      get system ha status\r\r
+      HA Health Status: \r
+          WARNING: FG5H1E0000000000 has hbdev down; \r
+      Model: FortiGate-501E\r
+      Mode: HA A-P\r
+      Group Name: oxid-ha\r
+      Group ID: 50\r
+      Debug: 0\r
+      Cluster Uptime: 12 days 12h:42m:42s\r
+      Cluster state change time: 2026-01-12 12:12:12\r
+      Primary selected using:\r
+          <2026/01/12 12:12:12> vcluster-1: FG5H1E0000000000 is selected as the primary because it's the only member in the cluster.\r
+      ses_pickup: enable, ses_pickup_delay=enable (delay 30 seconds)\r
+      override: enable\r
+      System Usage stats:\r
+          FG5H1E0000000000(updated 1 seconds ago):\r
+              sessions=52, average-cpu-user/nice/system/idle=0%/0%/0%/100%, memory=31%\r
+      HBDEV stats:\r
+          FG5H1E0000000000(updated 1 seconds ago):\r
+              ha: physical/00, down, rx-bytes/packets/dropped/errors=0/0/0/0, tx=0/0/0/0\r
+              port8: physical/00, down, rx-bytes/packets/dropped/errors=0/0/0/0, tx=0/0/0/0\r
+      MONDEV stats:\r
+          FG5H1E0000000000(updated 1 seconds ago):\r
+              port1: physical/1000full, up, rx-bytes/packets/dropped/errors=1880006317/10535356/0/0, tx=2252953872/5417282/0/0\r
+              port2: physical/1000full, up, rx-bytes/packets/dropped/errors=1788820458/4544002/0/0, tx=501428945/2185395/0/0\r
+      number of member: 1\r
+      OXI-FW121       , FG5H1E0000000000, HA cluster index = 0\r
+      number of vcluster: 1\r
+      vcluster 1: work 169.254.0.1\r
+      Primary: FG5H1E0000000000, HA operating index = 0\r
+      \r
+      OXI-FW121 (global) #\x20
+  - "get hardware status\n": |-
+      get hardware status\r\r
+      Model name: FortiGate-501E\r
+      ASIC version: CP9\r
+      ASIC SRAM: 64M\r
+      CPU: Intel(R) Core(TM) i7-6700 CPU @ 3.40GHz\r
+      Number of CPUs: 8\r
+      RAM: 16047 MB\r
+      Compact Flash: 15331 MB /dev/sdc\r
+      Hard disk: 228936 MB /dev/sda\r
+      USB Flash: not available\r
+      Network Card chipset: Intel(R) Gigabit Ethernet Linux Driver (rev.0003)\r
+      Network Card chipset: FortiASIC NP6 Adapter (rev.)\r
+      \r
+      OXI-FW121 (global) #\x20
+  - "diagnose hardware deviceinfo psu\n": |-
+      diagnose hardware deviceinfo psu\r\r
+      \r
+      command parse error before 'psu'\r
+      Command fail. Return code -61\r
+      \r
+      SIFI-FW50 (global) #\x20
+  - "get system interface transceiver\n": |-
+      get system interface transceiver\r\r
+      Interface port9 - Transceiver is not detected.\r
+      Interface port10 - Transceiver is not detected.\r
+      Interface port11 - Transceiver is not detected.\r
+      Interface port12 - Transceiver is not detected.\r
+      Interface s1 - Transceiver is not detected.\r
+      Interface s2 - Transceiver is not detected.\r
+      Interface vw1 - Transceiver is not detected.\r
+      Interface vw2 - Transceiver is not detected.\r
+      Interface x1 - Transceiver is not detected.\r
+      Interface x2 - Transceiver is not detected.\r
+      \r
+      SIFI-FW50 (global) #\x20
+  - "end\n": |-
+      end\r\r
+      \r
+      OXI-FW121 #\x20
+  - "show | grep .\n": |-
+      show | grep .\r\r
+      #config-version=FG5H1E-7.4.8-FW-build2795-250523:opmode=0:vdom=1:user=TACACS-USER\r
+      #conf_file_ver=2841660000000000\r
+      #buildno=2795\r
+      #global_vdom=1\r
+      config vdom\r
+      edit root\r
+      next\r
+      edit xxxx\r
+      next\r
+      edit yyyy\r
+      next\r
+      end\r
+      config global\r
+      config system global\r
+          set alias \"FortiGate-501E\"\r
+          set hostname \"OXI-FW121\"\r
+          set timezone \"Europe/Amsterdam\"\r
+          set vdom-mode multi-vdom\r
+      end\r
+      config system vdom-link\r
+          edit \"RootToXxxx\"\r
+          next\r
+      end\r
+      config system interface\r
+          edit \"ha\"\r
+              set vdom \"root\"\r
+              set type physical\r
+              set snmp-index 1\r
+          next\r
+          edit \"mgmt\"\r
+              set vdom \"root\"\r
+              set ip 192.0.2.129 255.255.255.128\r
+              set allowaccess ping https ssh\r
+              set type physical\r
+              set dedicated-to management\r
+              set role lan\r
+              set snmp-index 2\r
+          next\r
+          edit \"port1\"\r
+              set vdom \"root\"\r
+              set ip 192.0.2.1 255.255.255.128\r
+              set allowaccess ping\r
+              set type physical\r
+              set alias \"WAN\"\r
+              set snmp-index 3\r
+              config ipv6\r
+                  set ip6-address 2001:db8:cafe::/64\r
+                  set ip6-allowaccess ping\r
+                  config ip6-extra-addr\r
+                      edit fe80::42/64\r
+                      next\r
+                  end\r
+              end\r
+          next\r
+          edit \"port3\"\r
+              set vdom \"yyyy\"\r
+              set ip 198.51.100.1 255.255.255.0\r
+              set allowaccess ping\r
+              set type physical\r
+              set alias \"YYYY-Test-network\"\r
+              set snmp-index 5\r
+          next\r
+      end\r
+      config system vdom-property\r
+          edit \"root\"\r
+              set description \"property limits for vdom root\"\r
+              set snmp-index 1\r
+          next\r
+          edit \"xxxx\"\r
+              set description \"property limits for vdom xxxx\"\r
+              set snmp-index 2\r
+          next\r
+          edit \"yyyy\"\r
+              set description \"property limits for vdom yyyy\"\r
+              set snmp-index 3\r
+          next\r
+      end\r
+      config router multicast\r
+      end\r
+      end\r
+      \r
+      OXI-FW121 #\x20
+  - "exit\n": |-
+      exit\r\r
+      

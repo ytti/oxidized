@@ -1,0 +1,182 @@
+---
+init_prompt: |-
+    Firewall-1 #\x20
+commands:
+  - "get system status\n": |-
+      get system status\r\r
+      Version: FortiGate-3001F v7.4.8,build2795,250523 (GA.M)\r
+      First GA patch build date: 230509\r
+      Current Security Level: High\r
+      Firmware Signature: certified\r
+      Virus-DB: 1.00000(2018-04-09 18:07)\r
+      Serial-Number: FG3K100000000000\r
+      --More--\x20
+  - " ": |-
+      \r         \rBIOS version: 06000104\r
+      System Part-Number: P27184-07\r
+      Log hard disk: Available\r
+      Hostname: Firewall-1\r
+      Private Encryption: Disable\r
+      Operation Mode: NAT\r
+      Current virtual domain: root\r
+      Max number of virtual domains: 10\r
+      Virtual domains status: 1 in NAT mode, 0 in TP mode\r
+      Virtual domain configuration: disable\r
+      FIPS-CC mode: disable\r
+      Current HA mode: a-p, primary\r
+      Cluster uptime: 12 days, 12 hours, 42 minutes, 42 seconds\r
+      Cluster state change time: 2025-12-12 12:12:12\r
+      Branch point: 2795\r
+      Release Version Information: GA\r
+      FortiOS x86-64: Yes\r
+      System time: Mon Feb  2 12:42:42 2026\r
+      Last reboot reason: shutdown\r
+      \r
+      Firewall-1 #\x20
+  - "get system ha status\n": |-
+      get system ha status\r\r
+      HA Health Status: OK\r
+      Model: FortiGate-3001F\r
+      Mode: HA A-P\r
+      Group Name: Firewall-1 Cluster\r
+      Group ID: 50\r
+      Debug: 0\r
+      Cluster Uptime: 12 days 12:42:42\r
+      Cluster state change time: 2025-12-12 12:12:12\r
+      Primary selected using:\r
+          <2025/12/12 12:42:12> vcluster-1: FG3K100000000000 is selected as the primary because its uptime is larger than peer member FG3K100000000001.\r
+          <2025/12/12 12:12:42> vcluster-1: FG3K100000000000 is selected as the primary because it's the only member in the cluster.\r
+      ses_pickup: disable\r
+      override: disable\r
+      Configuration Status:\r
+          FG3K100000000000(updated 1 seconds ago): in-sync\r
+          FG3K100000000000 chksum dump: fe 55 7c e1 08 00 00 00 00 00 00 00 00 00 00 00 \r
+          FG3K100000000001(updated 2 seconds ago): in-sync\r
+          FG3K100000000001 chksum dump: fe 55 7c e1 08 00 00 00 00 00 00 00 00 00 00 00 \r
+      System Usage stats:\r
+          FG3K100000000000(updated 1 seconds ago):\r
+              sessions=288127, npu-sessions=0, average-cpu-user/nice/system/idle=0%/0%/0%/100%, memory=8%\r
+          FG3K100000000001(updated 2 seconds ago):\r
+              sessions=0, npu-sessions=0, average-cpu-user/nice/system/idle=0%/0%/0%/100%, memory=7%\r
+      HBDEV stats:\r
+          FG3K100000000000(updated 1 seconds ago):\r
+              ha1: physical/10000full, up, rx-bytes/packets/dropped/errors=49588871722/99361652/0/0, tx=67474118501/111665547/0/0\r
+              ha2: physical/10000full, up, rx-bytes/packets/dropped/errors=45831114946/81125308/0/0, tx=46071158478/81125326/0/0\r
+          FG3K100000000001(updated 2 seconds ago):\r
+              ha1: physical/10000full, up, rx-bytes/packets/dropped/errors=67475765122/111665536/0/0, tx=49584594422/99361655/0/0\r
+              ha2: physical/10000full, up, rx-bytes/packets/dropped/errors=46071157496/81125324/0/0, tx=45831113077/81125307/0/0\r
+      number of member: 2\r
+      Firewall-1        , FG3K100000000000, HA cluster index = 0\r
+      Firewall-1FO      , FG3K100000000001, HA cluster index = 1\r
+      number of vcluster: 1\r
+      vcluster 1: work 169.254.0.1\r
+      Primary: FG3K100000000000, HA operating index = 0\r
+      Secondary: FG3K100000000001, HA operating index = 1\r
+      \r
+      Firewall-1 #\x20
+  - "get hardware status\n": |-
+      get hardware status\r\r
+      Model name: FortiGate-3001F\r
+      ASIC version: CP9\r
+      ASIC SRAM: 64M\r
+      CPU: AMD EPYC 7502P 32-Core Processor\r
+      Number of CPUs: 64\r
+      RAM: 129072 MB\r
+      Compact Flash: 28738 MB /dev/sda\r
+      Hard disk: 915715 MB /dev/sdb\r
+      USB Flash: not available\r
+      Network Card chipset: FortiASIC NP7 Adapter (rev.)\r
+      Hardware Revision: unknown\r
+      \r
+      Firewall-1 #\x20
+  - "diagnose hardware deviceinfo psu\n": |-
+      diagnose hardware deviceinfo psu\r\r
+      PSU[1]:\r
+        Product Manufacturer  : Murata-PS\r
+        Product Name          : D1U54P-W-1200-12-HA4PC\r
+        Product Version       : RP\r
+        Product Serial        : DH2000000000\r
+        Product Extra         : Pri f/w rev: 08.01\r
+        Product Extra         : Sec f/w rev: 11.01\r
+      PSU[2]:\r
+        Product Manufacturer  : Murata-PS\r
+        Product Name          : D1U54P-W-1200-12-HA4PC\r
+        Product Version       : RP\r
+        Product Serial        : DH200000000A\r
+        Product Extra         : Pri f/w rev: 08.01\r
+        Product Extra         : Sec f/w rev: 11.01\r
+      \r
+      Firewall-1 #\x20
+  - "get system interface transceiver\n": |-
+      get system interface transceiver\r\r
+      Interface ha1 - SFP/SFP+/SFP28, 10GBASE-LR\r
+        Vendor Name  :            Fortinet        \r
+        Part No.     :            LCP-10G3B4QDRZFN\r
+        Serial No.   :            240000000000    \r
+      Interface ha2 - SFP/SFP+/SFP28, 10GBASE-LR\r
+        Vendor Name  :            Fortinet        \r
+        Part No.     :            LCP-10G3B4QDRZFN\r
+        Serial No.   :            240000000001    \r
+      Interface port17 - Transceiver is not detected.\r
+      Interface port18 - Transceiver is not detected.\r
+      Interface port19 - Transceiver is not detected.\r
+      Interface port20 - Transceiver is not detected.\r
+      Interface port21 - Transceiver is not detected.\r
+      Interface port22 - Transceiver is not detected.\r
+      Interface port23 - Transceiver is not detected.\r
+      Interface port24 - Transceiver is not detected.\r
+      Interface port25 - Transceiver is not detected.\r
+      Interface port26 - Transceiver is not detected.\r
+      Interface port27 - Transceiver is not detected.\r
+      Interface port28 - Transceiver is not detected.\r
+      Interface port29 - Transceiver is not detected.\r
+      Interface port30 - Transceiver is not detected.\r
+      --More--\x20
+  - " ": |-
+      \r         \rInterface port31 - QSFP+/QSFP28, 100G CWDM4\r
+        Vendor Name  :            FORTINET        \r
+        Part No.     :            FTLC1157RGPLFTN \r
+        Serial No.   :            U900000         \r
+      Interface port32 - QSFP+/QSFP28, 100G CWDM4\r
+        Vendor Name  :            FORTINET        \r
+        Part No.     :            FTLC1157RGPLFTN \r
+        Serial No.   :            U90000A         \r
+      Interface port33 - Transceiver is not detected.\r
+      Interface port34 - Transceiver is not detected.\r
+      Interface port35 - Transceiver is not detected.\r
+      Interface port36 - Transceiver is not detected.\r
+      \r
+                                             Optical      Optical      Optical\r
+      SFP/SFP+     Temperature  Voltage      Tx Bias      Tx Power     Rx Power\r
+      Interface    (Celsius)    (Volts)      (mA)         (dBm)        (dBm)\r
+      ------------ ------------ ------------ ------------ ------------ ------------ \r
+      ha1           29.7         3.35        32.74         -2.2         -8.1       \r
+      ha2           29.7         3.35        39.01         -2.8         -6.6       \r
+      \r
+      QSFP/QSFP+    Temperature  Voltage      Optical Tx Bias, Tx1/Tx2/...          Optical Rx Power, Rx1/Rx2/...\r
+      --More--\x20
+  - " ": |-
+      \r         \rInterface     (Celsius)    (Volts)      (mA)                                  (dBm)\r
+      ------------ ------------ ------------ ------------------------------------- ------------------------------------\r
+      port31        48.6         3.31        38.07   /39.27   /38.96   /39.15       -1.3   / -0.3   /  0.1   /  0.6   \r
+      port32        46.0         3.32        41.65   /39.87   /40.09   /41.01       -0.5   / -0.6   /  0.1   /  0.8   \r
+      ++ : high alarm, + : high warning, - : low warning, -- : low alarm, ? : suspect.\r
+      \r
+      Firewall-1 #\x20
+  - "show | grep .\n": |-
+      show | grep .\r\r
+      #config-version=FG3K1F-7.4.8-FW-build2795-250523:opmode=1:vdom=0:user=TACACS-USER\r
+      #conf_file_ver=353000000000001\r
+      #buildno=2795\r
+      #global_vdom=1\r
+      config system global\r
+          set admintimeout 15\r
+          set alias \"FortiGate-3001F\"\r
+          set autorun-log-fsck enable\r
+          set hostname \"Firewall-1\"\r
+      end\r
+      \r
+      Firewall-1 #\x20
+  - "exit\n": |-
+      exit\r\r
+      

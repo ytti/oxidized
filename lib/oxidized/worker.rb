@@ -23,11 +23,11 @@ module Oxidized
                      "#{@jobs_done} of #{@nodes.size}"
         # ask for next node in queue non destructive way
         nextnode = @nodes.first
-        unless nextnode.last.nil?
-          # Set unobtainable value for 'last' if interval checking is disabled
-          last = Oxidized.config.interval.zero? ? Time.now.utc + 10 : nextnode.last.end
-          break if last + Oxidized.config.interval > Time.now.utc
-        end
+        break if Oxidized.config.interval.zero? && !nextnode.nexted?
+
+        nextnode.nexted = false
+        break if !nextnode.last.nil? && (nextnode.last.end + Oxidized.config.interval > Time.now.utc)
+
         # shift nodes and get the next node
         node = @nodes.get
         node.running? ? next : node.running = true
@@ -64,21 +64,43 @@ module Oxidized
 
     private
 
+    def significant_changes?(job, output)
+      node = job.node
+      model = node.model
+      return true unless model.vars(:output_store_mode) == "on_significant"
+
+      unless output.respond_to?(:fetch)
+        logger.error("Detection of significant changes needs an output " \
+                     "capable of fetching the last configuration")
+        return true
+      end
+
+      old = model.significant_changes output.fetch(node, node.group)
+      new = model.significant_changes job.config.to_cfg
+      if old == new
+        logger.debug "No significant change on node #{node.name}"
+        false
+      else
+        true
+      end
+    end
+
     def process_success(node, job)
       @jobs_done += 1 # needed for :nodes_done hook
-      Oxidized.hooks.handle :node_success, node: node,
-                                           job:  job
+      Oxidized.hooks.node_success(node: node, job: job)
       msg = "update #{node.group}/#{node.name}"
       msg += " from #{node.from}" if node.from
       msg += " with message '#{node.msg}'" if node.msg
       output = node.output.new
-      if output.store node.name, job.config,
-                      msg: msg, email: node.email, user: node.user, group: node.group
+
+      significant_changes = significant_changes?(job, output)
+      if output.store(node.name, job.config,
+                      msg: msg, email: node.email, user: node.user,
+                      group: node.group,
+                      significant_changes: significant_changes)
         node.modified
         logger.info "Configuration updated for #{node.group}/#{node.name}"
-        Oxidized.hooks.handle :post_store, node:      node,
-                                           job:       job,
-                                           commitref: output.commitref
+        Oxidized.hooks.post_store(node: node, job: job, commitref: output.commitref)
       end
       node.reset
     end
@@ -97,8 +119,7 @@ module Oxidized
         @jobs_done += 1
         msg += ", retries exhausted, giving up"
         node.retry = 0
-        Oxidized.hooks.handle :node_fail, node: node,
-                                          job:  job
+        Oxidized.hooks.node_fail(node: node, job: job)
       end
       logger.warn msg
     end
@@ -110,7 +131,7 @@ module Oxidized
 
     def run_done_hook
       logger.debug "Running :nodes_done hook"
-      Oxidized.hooks.handle :nodes_done
+      Oxidized.hooks.nodes_done
     rescue StandardError => e
       # swallow the hook erros and continue as normal
       logger.error e.message

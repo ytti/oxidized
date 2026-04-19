@@ -54,6 +54,13 @@ class IOS < Oxidized::Model
     cfg
   end
 
+  cmd :significant_changes do |cfg|
+    cfg.reject_lines [
+      /^! (Last|No) configuration change (at|since)/,
+      '! NVRAM config last updated at'
+    ]
+  end
+
   cmd 'show version' do |cfg|
     comments = []
     comments << cfg.lines.first
@@ -126,12 +133,17 @@ class IOS < Oxidized::Model
     cmd_line = 'show running-config'
     cmd_line += ' view full' if vars(:ios_rbac)
     cmd cmd_line do |cfg|
-      cfg = cfg.each_line.to_a[3..-1]
-      cfg = cfg.reject { |line| line.match /^ntp clock-period / }.join
-      cfg = cfg.each_line.reject do |line|
-        line.match /^! (Last|No) configuration change (at|since).*/ unless line =~ /\d+\sby\s\S+$/
-      end.join
-      cfg.gsub! /^Current configuration : [^\n]*\n/, ''
+      cfg = cfg.cut_head(3)
+      cfg = cfg.reject_lines [
+        /^ntp clock-period /,
+        /^Current configuration : \S+/
+      ]
+      unless vars("output_store_mode") == "on_significant"
+        cfg = cfg.reject_lines [
+          # Only store the line "configuration change" when a user is specified
+          /^! (Last|No) configuration change (at|since)(?!.*\d+ by \S+$)/
+        ]
+      end
       cfg.gsub! /^ tunnel mpls traffic-eng bandwidth[^\n]*\n*(
                     (?: [^\n]*\n*)*
                     tunnel mpls traffic-eng auto-bw)/mx, '\1'
@@ -147,17 +159,11 @@ class IOS < Oxidized::Model
   end
 
   cfg :telnet, :ssh do
-    # preferred way to handle additional passwords
-    post_login do
-      if vars(:enable) == true
-        cmd "enable"
-      elsif vars(:enable)
-        cmd "enable", /^[pP]assword:/
-        cmd vars(:enable)
-      end
-    end
     post_login 'terminal length 0'
     post_login 'terminal width 0'
     pre_logout 'exit'
   end
+
+  # preferred way to handle additional passwords (enable)
+  macro :enable
 end

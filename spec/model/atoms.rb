@@ -6,8 +6,15 @@ class ATOMS
 
   # Returns a list of all tests matching the data files under ATOMS::DIRECTORY
   def self.all
+    if Test.respond_to?(:subclasses)
+      test_classes = [Test, TestPassFail].flat_map(&:subclasses)
+    else
+      # Backward compatibility for Ruby 3.0
+      test_classes = [TestOutput, TestPrompt, TestSecret, TestSignificantChange]
+    end
+
     # enumerates through the subclasses of Test (TestPrompt, TestOutput...)
-    [Test, TestPassFail].map(&:subclasses).flatten.map do |test|
+    test_classes.flat_map do |test|
       get(test, test::GLOB) if test::GLOB
     end.flatten.compact
   end
@@ -186,6 +193,18 @@ class ATOMS
     attr_reader :output_test
 
     def initialize(model, desc, type = 'secret')
+      super
+
+      @output_test = TestOutput.new(@model, @desc, 'output')
+      @skip = true if @output_test.skip?
+    end
+  end
+
+  class TestSignificantChange < TestPassFail
+    GLOB = '*#significant_changes.yaml'.freeze
+    attr_reader :output_test
+
+    def initialize(model, desc, type = 'significant_changes')
       super
 
       @output_test = TestOutput.new(@model, @desc, 'output')

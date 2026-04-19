@@ -87,4 +87,64 @@ describe Oxidized::SSH do
       ssh.connect(@node)
     end
   end
+
+  describe ".rescue_fail" do
+    it "returns RESCUE_FAIL from Oxidized::Input" do
+      result = Oxidized::SSH.rescue_fail
+
+      _(result[Errno::ECONNREFUSED]).must_equal :debug
+      _(result[IOError]).must_equal :warn
+      _(result[Timeout::Error]).must_equal :warn
+      _(result[Errno::ECONNRESET]).must_equal :warn
+    end
+    it "returns its own RESCUE_FAIL" do
+      result = Oxidized::SSH.rescue_fail
+
+      # Check that SSH-specific exceptions are included
+      _(result[Net::SSH::Disconnect]).must_equal :debug
+      _(result[RuntimeError]).must_equal :warn
+      _(result[Net::SSH::AuthenticationFailed]).must_equal :warn
+    end
+  end
+  describe '#config_name' do
+    it "returns the configuration name" do
+      ssh = Oxidized::SSH.new
+      _(ssh.config_name).must_equal 'ssh'
+    end
+  end
+
+  describe '#cmd' do
+    before(:each) do
+      @ssh = Oxidized::SSH.new
+      @node = Oxidized::Node.new(name:     'test.example.com',
+                                 input:    'ssh',
+                                 output:   'git',
+                                 model:    'junos',
+                                 username: 'admin',
+                                 password: 'password')
+      @ssh.instance_variable_set("@node", @node)
+    end
+
+    it "accepts a String command" do
+      @ssh.instance_variable_set("@exec", true)
+      mock_ssh = mock('Net::SSH')
+      @ssh.instance_variable_set("@ssh", mock_ssh)
+
+      mock_ssh.expects(:exec!).with("show version").returns("version output")
+
+      result = @ssh.cmd("show version")
+      _(result).must_equal "version output"
+    end
+
+    it "logs an error and raises ArgumentError when cmd is not a String" do
+      @ssh.logger.expects(:error).with(
+        'cmd must be a String (NilClass): nil @ test.example.com'
+      )
+      _(proc { @ssh.cmd(nil) }).must_raise ArgumentError
+      @ssh.logger.expects(:error).with(
+        'cmd must be a String (Integer): 123 @ test.example.com'
+      )
+      _(proc { @ssh.cmd(123) }).must_raise ArgumentError
+    end
+  end
 end

@@ -1,0 +1,2 @@
+fail:
+ - 'tacacs-server key 7 \$0\$AAAAAAAAAABBBBBBBBBBCCCCCCCCCC'
