@@ -112,6 +112,8 @@ class IOS < Oxidized::Model
         comments << "CPU:#{slave} #{cpu}#{cpuxtra}#{slaveslot}"
       end
 
+      comments << line.chomp if line.start_with?('Motherboard')
+
       comments << "Image: #{Regexp.last_match(1)}" if line =~ /^System image file is "([^"]*)"$/
     end
     comments << "\n"
