@@ -129,6 +129,8 @@ commands:
       logging origin-id hostname
       boot nxos bootflash:/nxos64-cs.10.4.5.M.bin\x20
       
+      (...)
+      snmp-server user admin network-admin auth md5 AAAAAAAAAABBBBBBBBBBCCCCCCCCCC priv aes-128 AAAAAAAAAABBBBBBBBBBCCCCCCCCCC localizedV2key
       
       \rTEST-12345#\x20
   - "exit\n": |-
