@@ -276,22 +276,6 @@ commands:
     1/6/48    10G-SR         J9150D       CN00AAA0AA      1990-4634  \x20
 
     Switch-cx#\x20
-  "show system | exclude \"Up Time\" | exclude \"CPU\" | exclude \"Memory\" | exclude \"Pkts .x\" | exclude \"Lowest\" | exclude \"Missed\"\n": |-
-    show system | exclude \"Up Time\" | exclude \"CPU\" | exclude \"Memor\rry\" | exclude \"Pkts .x\" | exclude \"Lowest\" | exclude \"Missed\"
-    Hostname               : Switch-cx              \x20
-    System Description     : FL.10.10.1100                \x20
-    System Contact         : SNMP Description
-    System Location        : SNMP Location                \x20
-
-    Vendor                 : Aruba                        \x20
-    Product Name           : R0X25A 6410 Chassis                 \x20
-    Chassis Serial Nbr     : SG0AAA0000                   \x20
-    Base MAC Address       : 100f00-000d00                \x20
-    ArubaOS-CX Version     : FL.10.10.1100                \x20
-
-    Time Zone              : America/Denver               \x20
-
-    Switch-cx#\x20
   "show running-config\n": |-
     show running-config
     Current configuration:
@@ -1144,7 +1128,7 @@ commands:
     show system
     Hostname               : Switch-cx              \x20
     System Description     : FL.10.10.1100                \x20
-    System Contact         : SNMP Contact Info
+    System Contact         : SNMP Contact Info            \x20
     System Location        : SNMP Location Info           \x20
 
     Vendor                 : Aruba                        \x20

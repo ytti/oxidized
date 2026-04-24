@@ -1,0 +1,194 @@
+! -----------------------------------------------------------------------------
+! ArubaOS-CX
+! (c) Copyright 2017-2025 Hewlett Packard Enterprise Development LP
+! -----------------------------------------------------------------------------
+! Version      : FL.10.13.1101                                                 
+! Build Date   : 2025-05-09 22:44:18 UTC                                       
+! Build ID     : ArubaOS-CX:FL.10.13.1101:594be74c336e:202505092217            
+! Build SHA    : 594be74c336e02b26077185fb14e90aa09f9f95e                      
+! Hot Patches  :                                                               
+! Active Image : primary                       
+! 
+! Service OS Version : FL.01.14.0002                 
+! BIOS Version       : FL.01.0007                    
+! show environment fan
+! 
+! Fan tray information
+! ------------------------------------------------------------------------------
+! Name  Description                           Status        Serial Number  Fans
+! ------------------------------------------------------------------------------
+! 1/1   JL761A Aruba X752 BF Fan Tray         ready         VN00000000     2  
+! 1/2   JL761A Aruba X752 BF Fan Tray         ready         VN00000000     2  
+! 2/1   JL761A Aruba X752 BF Fan Tray         ready         VN00000000     2  
+! 2/2   JL761A Aruba X752 BF Fan Tray         ready         VN00000000     2  
+! 
+! Fan information
+! ------------------------------------------------------------------------------
+! Location-      Product  Serial Number  Speed   Direction      Status  RPM
+! Mbr/Slot/Fan   Name
+! ------------------------------------------------------------------------------
+! PSU-1/1/1      N/A      N/A            <speed>  back-to-front  ok      <rpm>
+! PSU-1/2/1      N/A      N/A            <speed>  back-to-front  ok      <rpm>
+! PSU-2/1/1      N/A      N/A            <speed>  back-to-front  ok      <rpm>
+! PSU-2/2/1      N/A      N/A            <speed>  back-to-front  ok      <rpm>
+! Tray-1/1/1     N/A      N/A            <speed>  back-to-front  ok      <rpm>
+! Tray-1/1/2     N/A      N/A            <speed>  back-to-front  ok      <rpm>
+! Tray-1/2/1     N/A      N/A            <speed>  back-to-front  ok      <rpm>
+! Tray-1/2/2     N/A      N/A            <speed>  back-to-front  ok      <rpm>
+! Tray-2/1/1     N/A      N/A            <speed>  back-to-front  ok      <rpm>
+! Tray-2/1/2     N/A      N/A            <speed>  back-to-front  ok      <rpm>
+! Tray-2/2/1     N/A      N/A            <speed>  back-to-front  ok      <rpm>
+! Tray-2/2/2     N/A      N/A            <speed>  back-to-front  ok      <rpm>
+! 
+! 
+! 
+! show environment led
+! Mbr/Name       State        Status    
+! ----------------------------------
+! 1/locator      off          ok        
+! 
+! 
+! show environment power-consumption
+! 
+! Power Consumption Averaging Period : 600 seconds
+! 
+!                                     Instantaneous     Average
+! Name Description                        Power (W)   Power (W)
+! ---------------------------------------------------------------
+! 1    6300M 48G 4SFP56 BF Swch               <power hidden>
+! 2    6300M 48G 4SFP56 BF Swch               <power hidden>
+! 
+! Total Power Consumption                     <power hidden>
+! 
+! 
+! show environment power-redundancy
+! Member  Configured  Operational
+! Number  Redundancy  Redundancy
+! ---------------------------------
+! 1       n/a         n/a
+! 2       n/a         n/a
+! 
+! 
+! show environment power-supply
+! ------------------------------------------------------------------------------
+!          Product  Serial            PSU            Input   Voltage    Wattage
+! Mbr/PSU  Number   Number            Status         Type    Range      Maximum
+! ------------------------------------------------------------------------------
+! 1/1      JL760A   VN00000000        OK             AC      --         250
+! 1/2      JL760A   VN00000000        OK             AC      --         250
+! 2/1      JL760A   VN00000000        OK             AC      --         250
+! 2/2      JL760A   VN00000000        OK             AC      --         250
+! 
+! 
+! 
+! show environment temperature
+! Temperature information
+! ------------------------------------------------------------------------------
+!                                                      Current
+! Mbr/Slot-Sensor                 Module Type        temperature  Status
+! ------------------------------------------------------------------------------
+! 1/1-PHY-01-08                   line-card-module     <hidden>   normal
+! 1/1-PHY-09-16                   line-card-module     <hidden>   normal
+! 1/1-PHY-17-24                   line-card-module     <hidden>   normal
+! 1/1-PHY-25-32                   line-card-module     <hidden>   normal
+! 1/1-PHY-33-40                   line-card-module     <hidden>   normal
+! 1/1-PHY-41-48                   line-card-module     <hidden>   normal
+! 1/1-Switch-ASIC-Internal        line-card-module     <hidden>   normal
+! 2/1-PHY-01-08                   line-card-module     <hidden>   normal
+! 2/1-PHY-09-16                   line-card-module     <hidden>   normal
+! 2/1-PHY-17-24                   line-card-module     <hidden>   normal
+! 2/1-PHY-25-32                   line-card-module     <hidden>   normal
+! 2/1-PHY-33-40                   line-card-module     <hidden>   normal
+! 2/1-PHY-41-48                   line-card-module     <hidden>   normal
+! 2/1-Switch-ASIC-Internal        line-card-module     <hidden>   normal
+! 
+! 1/1-CPU                         management-module    <hidden>   normal
+! 1/1-CPU-Zone-0                  management-module    <hidden>   normal
+! 1/1-CPU-Zone-1                  management-module    <hidden>   normal
+! 1/1-CPU-Zone-2                  management-module    <hidden>   normal
+! 1/1-CPU-Zone-3                  management-module    <hidden>   normal
+! 1/1-CPU-Zone-4                  management-module    <hidden>   normal
+! 1/1-DDR                         management-module    <hidden>   normal
+! 1/1-Mainboard-IBC               management-module    <hidden>   normal
+! 1/1-Switch-ASIC-Remote          management-module    <hidden>   normal
+! 2/1-CPU                         management-module    <hidden>   normal
+! 2/1-CPU-Zone-0                  management-module    <hidden>   normal
+! 2/1-CPU-Zone-1                  management-module    <hidden>   normal
+! 2/1-CPU-Zone-2                  management-module    <hidden>   normal
+! 2/1-CPU-Zone-3                  management-module    <hidden>   normal
+! 2/1-CPU-Zone-4                  management-module    <hidden>   normal
+! 2/1-DDR                         management-module    <hidden>   normal
+! 2/1-Mainboard-IBC               management-module    <hidden>   normal
+! 2/1-Switch-ASIC-Remote          management-module    <hidden>   normal
+! 
+! 1/1-FT-Inlet-1                  fan_tray             <hidden>   normal
+! 1/2-FT-Inlet-2                  fan_tray             <hidden>   normal
+! 2/1-FT-Inlet-1                  fan_tray             <hidden>   normal
+! 2/2-FT-Inlet-2                  fan_tray             <hidden>   normal
+! 
+! 
+! Management Modules
+! ==================
+! 
+!      Product                                        Serial
+! Name Number  Description                            Number     Status
+! ---- ------- -------------------------------------- ---------- ----------------
+! 1/1  JL762A  6300M 48G 4SFP56 BF Swch               VN00000000 Active (local)
+! 2/1  JL762A  6300M 48G 4SFP56 BF Swch               VN00000000
+! 
+! 
+! Line Modules
+! ============
+! 
+!      Product                                        Serial
+! Name Number  Description                            Number     Status
+! ---- ------- -------------------------------------- ---------- ----------------
+! 1/1  JL762A  6300M 48G 4SFP56 BF Swch               VN00000000
+! 2/1  JL762A  6300M 48G 4SFP56 BF Swch               VN00000000
+! 
+! 
+! -------------------------------------------------------------------------
+! Port      Type             Product          Serial           Part        
+!                            Number           Number           Number      
+! -------------------------------------------------------------------------
+! 1/1/49    50G-DAC0.65      R0M46A           VN00000000       8121-1800
+! 1/1/50    50G-DAC0.65      R0M46A           VN00000000       8121-1800
+! 1/1/51    25G-DAC3         845416-B21       VN00000000       16fc-7ce7
+! 2/1/49    50G-DAC0.65      R0M46A           VN00000000       8121-1800
+! 2/1/50    50G-DAC0.65      R0M46A           VN00000000       8121-1800
+! 2/1/51    25G-DAC3         845416-B21       VN00000000       16fc-7ce7
+! 
+! Hostname               : loc0-ms-sw1                   
+! System Description     : loc0-ms-sw1                   
+! System Contact         : noc@example.com               
+! System Location        : LOCATION                      
+! 
+! Vendor                 : Aruba                         
+! Product Name           : JL762A 6300M 48G 4SFP56 BF Swch      
+! Chassis Serial Nbr     : VN00000000                    
+! Base MAC Address       : 34c515-000000                 
+! ArubaOS-CX Version     : FL.10.13.1101                 
+! 
+! Time Zone              : Europe/Zurich                 
+! 
+Current configuration:
+!
+!Version ArubaOS-CX FL.10.13.1101
+!export-password: default
+hostname loc0-ms-sw1
+user admin group administrators password ciphertext **********
+clock timezone europe/zurich
+ntp enable
+!
+!
+aaa authentication login default group tacacs local
+aaa authorization commands default group tacacs local
+aaa accounting all-mgmt default start-stop group tacacs
+!
+aruba-central
+    disable
+logging 192.0.2.130
+ssh server vrf default
+!
+https-server vrf default
+no https-server vrf mgmt
