@@ -100,22 +100,6 @@ commands:
     1/1/52    10G-SR         J9150D       CN21000000      1990-4635  \x20
     
     TEST-SW1235#\x20
-  "show system | exclude \"Up Time\" | exclude \"CPU\" | exclude \"Memory\" | exclude \"Pkts .x\" | exclude \"Lowest\" | exclude \"Missed\"\n": |-
-    show system | exclude \"Up Time\" | exclude \"CPU\" | exclude \"Memory\" |\r| exclude \"Pkts .x\" | exclude \"Lowest\" | exclude \"Missed\"
-    Hostname               : TEST-SW1235                  \x20
-    System Description     : PL.10.10.1090                \x20
-    System Contact         : System Contact               \x20
-    System Location        : Location
-    
-    Vendor                 : Aruba                        \x20
-    Product Name           : JL675A 6100 48G CL4 4SFP+ Swch      \x20
-    Chassis Serial Nbr     : CN25000000                   \x20
-    Base MAC Address       : 9460d5-000000                \x20
-    ArubaOS-CX Version     : PL.10.10.1090                \x20
-    
-    Time Zone              : Europe/Berlin                \x20
-    
-    TEST-SW1235#\x20
   "show system\n": |-
     show system
     Hostname               : TEST-SW1235                  \x20

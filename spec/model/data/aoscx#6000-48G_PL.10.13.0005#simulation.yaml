@@ -101,22 +101,6 @@ commands:
     1/1/52    1G-SX            J4858D           CN87000000       1990-4415
     
     TEST_SW123#\x20
-  "show system | exclude \"Up Time\" | exclude \"CPU\" | exclude \"Memory\" | exclude \"Pkts .x\" | exclude \"Lowest\" | exclude \"Missed\"\n": |-
-    show system | exclude \"Up Time\" | exclude \"CPU\" | exclude \"Memory\" | \r exclude \"Pkts .x\" | exclude \"Lowest\" | exclude \"Missed\"
-    Hostname               : TEST_SW123                   \x20
-    System Description     : PL.10.13.0005                \x20
-    System Contact         : SYSTEM CONTACT               \x20
-    System Location        : Location  
-    
-    Vendor                 : Aruba                        \x20
-    Product Name           : R8N85A 6000 48G CL4 4SFP Swch       \x20
-    Chassis Serial Nbr     : CN21000000                   \x20
-    Base MAC Address       : 9460d5-000000                \x20
-    ArubaOS-CX Version     : PL.10.13.0005                \x20
-    
-    Time Zone              : Europe/Berlin                \x20
-    
-    TEST_SW123#\x20
   "show system\n": |-
     show system
     Hostname               : TEST_SW123                   \x20
