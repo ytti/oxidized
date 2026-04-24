@@ -14,6 +14,7 @@ The format is based on [Keep a Changelog](https://keepachangelog.com/en/1.1.0/).
 ### Changed
 - input/ssh: validate that cmd is a String. See #3700 (@robertcheramy)
 - junos: changed "show system license" regex to reduce notification noise for PTX routers. See #3794 (@ctomkow)
+- ios: keep motherboard information in show version. Closes #3798 (@robertcheramy)
 
 ### Fixed
 - VyOS: detect community string in SNMP traps. Fixes: #3793 (@nicolasberens)
