@@ -108,6 +108,7 @@
 |[Garderos](https://garderos.com/) |GRS (Garderos Router Software) |[garderos](/lib/oxidized/model/garderos.rb) | @robertcheramy  |Routers for harsh environments
 |GCOM Technologies   |Broadband Network Platform Software|[gcombnps](/lib/oxidized/model/gcombnps.rb)
 |Grandstream Networks|GSX                           |[grandstream](/lib/oxidized/model/grandstream.rb)
+|                    |HT8xx                         |[grandstream](/lib/oxidized/model/grandstreamht8xx.rb) | @mklopocki | [Grandstream](Model-Notes/GrandstreamHT8xx.md)
 |Hatteras            |Hatteras                      |[hatteras](/lib/oxidized/model/hatteras.rb)
 |Hillstone Networks  |StoneOS                       |[stoneos](/lib/oxidized/model/stoneos.rb)
 |Hirschmann          |Classic                       |[hirschmann](/lib/oxidized/model/hirschmann.rb)

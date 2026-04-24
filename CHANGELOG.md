@@ -8,6 +8,7 @@ The format is based on [Keep a Changelog](https://keepachangelog.com/en/1.1.0/).
 
 ### Added
 - routeros: support store mode `on_significant` (@infabo)
+- model for Grandstream HT8xx (@mklopocki)
 - Add --support option to gather system diagnostics (@robertcheramy)
 
 ### Changed
@@ -16,6 +17,7 @@ The format is based on [Keep a Changelog](https://keepachangelog.com/en/1.1.0/).
 
 ### Fixed
 - VyOS: detect community string in SNMP traps. Fixes: #3793 (@nicolasberens)
+- fortigate: show Part No. of SFPs. Fixes: #3800 (@robertcheramy)
 
 ## [0.36.0 - 2026-03-31]
 ### Release Notes
