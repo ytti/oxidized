@@ -18,7 +18,6 @@ module Oxidized
     def connect(node) # rubocop:disable Naming/PredicateMethod
       @node = node
       @node.model.cfg[config_name].each { |cb| instance_exec(&cb) }
-      setup_debug_logging
       logger.debug "Connecting to #{@node.name}"
       @ssh = Net::SSH.start(@node.ip, @node.auth[:username], make_ssh_opts)
       connected?
@@ -26,14 +25,6 @@ module Oxidized
 
     def connected?
       @ssh && (not @ssh.closed?)
-    end
-
-    def setup_debug_logging
-      return unless Oxidized.config.input.debug?
-
-      logfile = Oxidized::Config::LOG + "/#{@node.ip}-#{config_name}"
-      @log = File.open(logfile, 'w')
-      logger.debug "I/O Debugging to #{logfile}"
     end
 
     def make_ssh_opts
@@ -65,7 +56,13 @@ module Oxidized
 
       # Use our logger for Net::SSH
       ssh_logger = SemanticLogger[Net::SSH]
-      ssh_logger.level = Oxidized.config.input.debug? ? :debug : :fatal
+      config_debug = Oxidized.config.input.debug
+      if config_debug == true ||
+         (config_debug.is_a?(String) && config_debug.downcase.include?('library'))
+        ssh_logger.level = :debug
+      else
+        ssh_logger.level = :fatal
+      end
       ssh_opts[:logger] = ssh_logger
 
       ssh_opts
@@ -95,8 +92,6 @@ module Oxidized
                    "disconnecting, raising #{e.class} with #{e.message}"
     rescue Timeout::Error
       logger.debug "#{@node.name} timed out while disconnecting"
-    ensure
-      @log.close if Oxidized.config.input.debug?
     end
 
     # Methods to implement in subclasses

@@ -1,7 +1,9 @@
-module Oxidized
-  require 'timeout'
-  require_relative 'sshbase'
+require 'timeout'
+require_relative 'sshbase'
+require_relative 'debugyaml'
+require_relative 'debugtext'
 
+module Oxidized
   class SSH < SSHBase
     class NoShell < OxidizedError; end
 
@@ -18,11 +20,9 @@ module Oxidized
       @output      = String.new('')
       @pty_options = { term: "vt100" }
       @node.model.cfg['ssh'].each { |cb| instance_exec(&cb) }
-      if Oxidized.config.input.debug?
-        logfile = Oxidized::Config::LOG + "/#{@node.ip}-ssh"
-        @log = File.open(logfile, 'w')
-        logger.debug "I/O Debuging to #{logfile}"
-      end
+
+      @yaml_debug = DebugYAML.new(Oxidized.config.input.debug, @node, config_name)
+      @text_debug = DebugText.new(Oxidized.config.input.debug, @node, config_name)
 
       logger.debug "Connecting to #{@node.name}"
       @ssh = Net::SSH.start(@node.ip, @node.auth[:username], make_ssh_opts)
@@ -43,24 +43,25 @@ module Oxidized
         raise ArgumentError, "cmd must be a String"
       end
       logger.debug "Sending '#{cmd.dump}' @ #{node.name} with expect: #{expect.inspect}"
-      if Oxidized.config.input.debug?
-        @log.puts "sent cmd #{@exec ? cmd.dump : (cmd + newline).dump}"
-        @log.flush
-      end
       cmd_output = if @exec
+                     @yaml_debug&.send_data(cmd)
+                     @text_debug&.send_data(cmd)
                      @ssh.exec! cmd
                    else
                      cmd_shell(cmd, expect).gsub("\r\n", "\n")
                    end
+
+      # only logging @exec as cmd_shell is handled in the ssh loop
+      @yaml_debug&.receive_data(cmd_output) if @exec
+      @text_debug&.receive_data(cmd_output) if @exec
+
       # Make sure we return a String
       cmd_output.to_s
     end
 
     def send(data)
-      if Oxidized.config.input.debug?
-        @log.puts "sent data #{data.dump}"
-        @log.flush
-      end
+      @yaml_debug&.send_data(data)
+      @text_debug&.send_data(data)
       @ses.send_data data
     end
 
@@ -83,17 +84,16 @@ module Oxidized
     rescue Timeout::Error
       logger.debug "#{@node.name} timed out while disconnecting"
     ensure
-      @log.close if Oxidized.config.input.debug?
+      @yaml_debug&.close
+      @text_debug&.close
       (@ssh.close rescue true) unless @ssh.closed? # rubocop:disable Style/RedundantParentheses
     end
 
     def shell_open(ssh)
       @ses = ssh.open_channel do |ch|
         ch.on_data do |_ch, data|
-          if Oxidized.config.input.debug?
-            @log.puts "received #{data.dump}"
-            @log.flush
-          end
+          @yaml_debug&.receive_data(data)
+          @text_debug&.receive_data(data)
           @output << data
           @output = @node.model.expects @output
         end
@@ -115,6 +115,9 @@ module Oxidized
 
     def cmd_shell(cmd, expect_re)
       @output = String.new('')
+
+      @yaml_debug&.send_data(cmd + newline)
+      @text_debug&.send_data(cmd + newline)
       @ses.send_data cmd + newline
       @ses.process
       expect expect_re if expect_re

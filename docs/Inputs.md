@@ -208,25 +208,28 @@ input:
 ```
 
 ## Debugging
-
 In case a model plugin doesn't work correctly (ios, procurve, etc.), you can
-enable live debugging of SSH/Telnet sessions. Just add a `debug` option
-containing the value true to the `input` section. The log files will be created
-depending on the parent directory of the logfile option.
+enable live debugging of SSH and Telnet sessions with the `debug` option of
+the `input` section.
 
-The following example will log an active ssh/telnet session
-`/home/oxidized/.config/oxidized/log/<IP-Address>-<PROTOCOL>`. The file will be
-truncated on each consecutive ssh/telnet session, so you need to put a `tailf`
-or `tail -f` on that file!
+`debug` can take different values:
+- `text`: log input and output to a text file (ssh, telnet)
+- `yaml`: produce a yaml simulation file (ssh, scp)
+- `library`: activate debug logging of the underlying library
+- a combination of the options above (`text, yaml`)
+- `true`; activate all debugging options
+
+The log files will be created in `~/.config/oxidized/logs/` (or `$OXIDIZED_LOGS/logs/`).
+
+The following example will log an active ssh/telnet session to
+`~/.config/oxidized/logs/<IP-Address>-<PROTOCOL>-<timestamp>.txt` and for ssh
+`~/.config/oxidized/logs/<IP-Address>-<PROTOCOL>-<timestamp>.yaml`. A new file
+is created for each session.
 
 ```yaml
-log: /home/oxidized/.config/oxidized/log
-
-# ...
-
 input:
   default: ssh, telnet
-  debug: true
+  debug: yaml, text
   ssh:
     secure: false
   http:
