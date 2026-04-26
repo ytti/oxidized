@@ -83,7 +83,6 @@ username: oxidized
 password: S3cr3tx
 model: junos
 interval: 3600 #interval in seconds, when 0 is configured no fetch config is done at initial start and after
-log: ~/.config/oxidized/log
 debug: false
 threads: 30 # maximum number of threads
 # use_max_threads:
@@ -143,6 +142,16 @@ model_map:
   cisco: ios
   juniper: junos
   !ruby/regexp /procurve/: procurve
+logger:
+  # The default level is :info
+  # level: :info
+  appenders:
+    - type: syslog
+      level: :error
+    - type: stdout
+      level: :warn
+    - type: file
+      file: ~/.config/oxidized/info.log
 ```
 
 ## Advanced Group Configuration

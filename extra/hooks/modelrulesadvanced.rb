@@ -70,7 +70,6 @@
 #   resolve_dns: false
 #   interval: 3600
 #   rest: 0.0.0.0:8888
-#   log: /home/oxidized/.config/oxidized/logs/oxidized.log
 #   debug: true   # optional – enables detailed logging from the hook
 #
 #   source:

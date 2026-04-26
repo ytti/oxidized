@@ -1,3 +1,5 @@
+require_relative 'debugtext'
+
 module Oxidized
   require 'net/telnet'
   class Telnet < Input
@@ -7,7 +9,9 @@ module Oxidized
       @node    = node
       @timeout = @node.timeout
       @node.model.cfg['telnet'].each { |cb| instance_exec(&cb) }
-      @log = File.open(Oxidized::Config::LOG + "/#{@node.ip}-telnet", 'w') if Oxidized.config.input.debug?
+
+      @text_debug = DebugText.new(Oxidized.config.input.debug, @node, config_name)
+
       port = vars(:telnet_port) || 23
 
       telnet_opts = {
@@ -15,7 +19,7 @@ module Oxidized
         'Port'    => port.to_i,
         'Timeout' => @timeout,
         'Model'   => @node.model,
-        'Log'     => @log
+        'Log'     => @text_debug
       }
 
       @telnet = Net::Telnet.new telnet_opts
@@ -38,12 +42,14 @@ module Oxidized
       # create a string to be passed to oxidized_expect and modified _there_
       # default to a single space so it shouldn't be coerced to nil by any models.
       out = String(' ')
+      @text_debug.send_data(cmd_str)
       @telnet.puts(cmd_str)
       @telnet.oxidized_expect(timeout: @timeout, expect: expect, out: out)
       out
     end
 
     def send(data)
+      @text_debug.send_data(data)
       @telnet.write data
     end
 
@@ -63,7 +69,7 @@ module Oxidized
     rescue Errno::ECONNRESET, IOError
       # This exception is intented and therefore not handled here
     ensure
-      @log.close if Oxidized.config.input.debug?
+      @text_debug.close
       (@telnet.close rescue true) unless @telnet.sock.closed? # rubocop:disable Style/RedundantParentheses
     end
   end
@@ -76,8 +82,8 @@ module Net
     attr_reader :output
 
     def oxidized_expect(options)
-      model    = @options["Model"]
-      @log     = @options["Log"]
+      model      = @options["Model"]
+      text_debug = @options["Log"]
 
       expects  = [options[:expect]].flatten
       time_out = options[:timeout] || @options["Timeout"]
@@ -103,10 +109,7 @@ module Net
             buf = preprocess(c)
             rest = ''
           end
-          if Oxidized.config.input.debug?
-            @log.print buf
-            @log.flush
-          end
+          text_debug&.receive_data buf
           line += buf
           line = model.expects line
           # match is a regexp object. we need to return that for logins to work.
