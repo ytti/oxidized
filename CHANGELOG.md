@@ -10,6 +10,7 @@ The format is based on [Keep a Changelog](https://keepachangelog.com/en/1.1.0/).
 - routeros: support store mode `on_significant` (@infabo)
 - model for Grandstream HT8xx (@mklopocki)
 - Add --support option to gather system diagnostics (@robertcheramy)
+- Added 3 new models for Palo Alto PanOS firewalls and Panorama firewall-management servers
 
 ### Changed
 - input/ssh: validate that cmd is a String. See #3700 (@robertcheramy)
