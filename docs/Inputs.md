@@ -212,12 +212,12 @@ In case a model plugin doesn't work correctly (ios, procurve, etc.), you can
 enable live debugging of SSH and Telnet sessions with the `debug` option of
 the `input` section.
 
-`debug` can take different values:
+Starting with version 0.37.0, `debug` can take different values:
 - `text`: log input and output to a text file (ssh, telnet)
 - `yaml`: produce a yaml simulation file (ssh, scp)
 - `library`: activate debug logging of the underlying library
 - a combination of the options above (`text, yaml`)
-- `true`; activate all debugging options
+- `true`; activate all debugging options (Only option for versions prior 0.37.0)
 
 The log files will be created in `~/.config/oxidized/logs/` (or `$OXIDIZED_LOGS/logs/`).
 
