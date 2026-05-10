@@ -226,7 +226,7 @@ curl -s 'http://127.0.0.1/oxidized-api/get-nodes.php?token=YOUR_TOKEN' | jq .
 # [
 #   {
 #     "name": "switch-01",
-#     "model": "dxs",
+#     "model": "dlinknextgen",
 #     "group": "DXS",
 #     "ip": "192.168.1.100"
 #   },
