@@ -1,0 +1,82 @@
+# /home/oxidized/.config/oxidized/config
+# Oxidized configuration for dynamic node discovery via Zabbix API
+# This file integrates Oxidized with Zabbix to automatically fetch devices
+# and their backup strategies based on Zabbix host inventory and tags.
+---
+
+# Source configuration: fetch device list from HTTP API (get-nodes.php)
+source:
+  default: http
+  http:
+    # URL to the PHP script that queries Zabbix API
+    # Replace 'ZabbixTokenHere' with a valid Zabbix API token
+    # (see README.md for instructions on token generation)
+    url: http://127.0.0.1/oxidized-api/get-nodes.php?token=ZabbixTokenHere
+    # Expected format: JSON array with objects containing name, ip, model, group
+    format: json
+    # Map JSON fields to Oxidized internal format
+    map:
+      name: name       # Device hostname
+      model: model     # Device model/driver (e.g., 'dxs', 'junos', 'ios')
+      group: group     # Device group for backup strategy selection
+      ip: ip           # Device IP address for connection
+
+# Default SSH credentials (used by groups without specific overrides)
+username: oxidized
+password: default_password
+
+# Group-specific backup strategies and credentials
+# Each group can have its own username/password, driver, or connection settings
+groups:
+  # Example: DXS group for D-Link devices
+  # This group requires specific credentials or driver settings
+  DXS:
+    username: oxidized
+    password: group_password
+    # Uncomment next line to specify a custom driver for this group
+    # model: dxs
+
+# Backup interval in seconds (3600 = 1 hour)
+# Oxidized will attempt to back up each device after this interval
+interval: 3600
+
+# Number of devices to back up simultaneously
+# Increase for faster backups, decrease to reduce system load
+threads: 5
+
+# Maximum time (seconds) to wait for each device command
+# Increase if you have slow or distant devices
+timeout: 30
+
+# Retry interval (seconds) if a backup fails
+# Oxidized will retry failed devices after this delay
+retry: 300
+
+# Input method: how Oxidized connects to devices
+input:
+  default: ssh
+  ssh:
+    # Set to 'true' for SSH key authentication, 'false' for password-based
+    secure: false
+
+# Output storage: where to save device configurations
+output:
+  default: git
+  git:
+    # Git commit author name and email
+    user: Oxidized
+    email: oxidized@local.lan
+    # Path to the git repository storing configurations
+    # Use 'git init --bare' to initialize this path
+    repo: "/home/oxidized/.config/oxidized/devices.git"
+
+# Optional extensions
+extensions:
+  # Web UI for browsing backed-up configurations
+  oxidized-web:
+    load: true
+    # Listen on localhost only (access via Apache reverse proxy in production)
+    listen: 127.0.0.1
+    port: 8888
+    # URL prefix for the web interface
+    url_prefix: oxidized
