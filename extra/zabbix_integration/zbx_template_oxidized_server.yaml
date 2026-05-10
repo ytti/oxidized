@@ -1,0 +1,193 @@
+zabbix_export:
+  version: '6.0'
+  date: '2026-05-10T21:02:17Z'
+  groups:
+    - uuid: 6f6799aa69e844b4b3918f779f2abf08
+      name: 'Zabbix servers'
+  templates:
+    - uuid: 19ccbe01ebfe4032bda35d1bc3f6e20f
+      template: 'Template Oxidized Server'
+      name: 'Oxidized Server'
+      groups:
+        - name: 'Zabbix servers'
+      items:
+        - uuid: 764296bc0dda42d9aee1fc59dc1e6630
+          name: 'Oxd arr nodes-raw'
+          type: HTTP_AGENT
+          key: nodes-raw
+          delay: 1h
+          history: 1d
+          trends: '0'
+          value_type: TEXT
+          url: 'http://{HOST.CONN}:{$OXIDIZEDPORT}/oxidized/nodes.json'
+          tags:
+            - tag: Backup
+              value: Oxidized
+      discovery_rules:
+        - uuid: c41f931852ca4883805bd97841f6aa14
+          name: nodes-discovery
+          type: HTTP_AGENT
+          key: nodes-discovery
+          delay: 1h
+          item_prototypes:
+            - uuid: d7988941889f4dcab60a8302d8746209
+              name: 'Oxd {#FULLNAME} Epoch'
+              type: DEPENDENT
+              key: 'oxidized-node-epoch[{#FULLNAME}]'
+              delay: '0'
+              units: unixtime
+              preprocessing:
+                - type: JSONPATH
+                  parameters:
+                    - '$[?(@.full_name == "{#FULLNAME}")].time.first()'
+                - type: JAVASCRIPT
+                  parameters:
+                    - |
+                      // Input string "2026-05-08 13:34:16 UTC"
+                      // Replace space between date and time with 'T' standard ISO 8601
+                      // Ex: "2026-05-08T13:34:16Z"
+                      
+                      var dateString = value.replace(" ", "T").replace(" UTC", "Z");
+                      var timestamp = Date.parse(dateString);
+                      
+                      // Date.parse return milliseconds
+                      return Math.floor(timestamp / 1000);
+              master_item:
+                key: nodes-raw
+              tags:
+                - tag: Bakcup
+                  value: Oxidized
+              trigger_prototypes:
+                - uuid: 95cc04ef1c5a426ab9ee18fb7eff57da
+                  expression: 'last(/Template Oxidized Server/oxidized-node-epoch[{#FULLNAME}])<"(now() - $OXIDIZED_MAX_AGE})"'
+                  name: 'Oxd {#FULLNAME} Last update too old'
+                  opdata: '{ITEM.LASTVALUE}'
+                  priority: HIGH
+            - uuid: 7dd5469893a342b7ade7f5a4553c403b
+              name: 'Oxd {#FULLNAME} Model'
+              type: DEPENDENT
+              key: 'oxidized-node-fullname[{#FULLNAME}]'
+              delay: '0'
+              trends: '0'
+              value_type: TEXT
+              preprocessing:
+                - type: JSONPATH
+                  parameters:
+                    - '$[?(@.full_name == "{#FULLNAME}")].model.first()'
+              master_item:
+                key: nodes-raw
+              tags:
+                - tag: Bakcup
+                  value: Oxidized
+            - uuid: c5028f48cb7e43b0bc32991eaf712a91
+              name: 'Oxd {#FULLNAME} Group'
+              type: DEPENDENT
+              key: 'oxidized-node-group[{#FULLNAME}]'
+              delay: '0'
+              trends: '0'
+              value_type: TEXT
+              preprocessing:
+                - type: JSONPATH
+                  parameters:
+                    - '$[?(@.full_name == "{#FULLNAME}")].group.first()'
+              master_item:
+                key: nodes-raw
+              tags:
+                - tag: Bakcup
+                  value: Oxidized
+            - uuid: 24e2f39be9a44cea9fa3bf4d951eadb8
+              name: 'Oxd {#FULLNAME} Mtime'
+              type: DEPENDENT
+              key: 'oxidized-node-mtime[{#FULLNAME}]'
+              delay: '0'
+              trends: '0'
+              value_type: TEXT
+              preprocessing:
+                - type: JSONPATH
+                  parameters:
+                    - '$[?(@.full_name == "{#FULLNAME}")].mtime.first()'
+                - type: MATCHES_REGEX
+                  parameters:
+                    - '^\d{4}-\d{2}-\d{2} \d{2}:\d{2}:\d{2} UTC$'
+              master_item:
+                key: nodes-raw
+              tags:
+                - tag: Bakcup
+                  value: Oxidized
+            - uuid: 3eb417690385404c86e16b3db77ffd43
+              name: 'Oxd {#FULLNAME} Name'
+              type: DEPENDENT
+              key: 'oxidized-node-name[{#FULLNAME}]'
+              delay: '0'
+              trends: '0'
+              value_type: TEXT
+              preprocessing:
+                - type: JSONPATH
+                  parameters:
+                    - '$[?(@.full_name == "{#FULLNAME}")].name.first()'
+              master_item:
+                key: nodes-raw
+              tags:
+                - tag: Bakcup
+                  value: Oxidized
+            - uuid: 285a35bc1f2545449c0d1a6fe4bf1e6d
+              name: 'Oxd {#FULLNAME} Status'
+              type: DEPENDENT
+              key: 'oxidized-node-status[{#FULLNAME}]'
+              delay: '0'
+              trends: '0'
+              value_type: TEXT
+              preprocessing:
+                - type: JSONPATH
+                  parameters:
+                    - '$[?(@.full_name == "{#FULLNAME}")].status.first()'
+              master_item:
+                key: nodes-raw
+              tags:
+                - tag: Bakcup
+                  value: Oxidized
+              trigger_prototypes:
+                - uuid: 5abea0d5a0724b779db11e0fa57b25bb
+                  expression: 'last(/Template Oxidized Server/oxidized-node-status[{#FULLNAME}])<>"success"'
+                  name: 'Oxd {#FULLNAME} Backup error'
+                  priority: AVERAGE
+            - uuid: 3f56e022b604495d9a819967c7908a71
+              name: 'Oxd {#FULLNAME} Time'
+              type: DEPENDENT
+              key: 'oxidized-node-time[{#FULLNAME}]'
+              delay: '0'
+              trends: '0'
+              value_type: TEXT
+              preprocessing:
+                - type: JSONPATH
+                  parameters:
+                    - '$[?(@.full_name == "{#FULLNAME}")].time.first()'
+                - type: MATCHES_REGEX
+                  parameters:
+                    - '^\d{4}-\d{2}-\d{2} \d{2}:\d{2}:\d{2} UTC$'
+              master_item:
+                key: nodes-raw
+              tags:
+                - tag: Bakcup
+                  value: Oxidized
+          url: 'http://{HOST.CONN}:{$OXIDIZEDPORT}/oxidized/nodes.json'
+          preprocessing:
+            - type: JSONPATH
+              parameters:
+                - $..full_name
+            - type: JAVASCRIPT
+              parameters:
+                - |
+                  var input = JSON.parse(value);
+                  var output = [];
+                  
+                  input.forEach(function (item) {
+                      output.push({ "{#FULLNAME}": item });
+                  });
+                  
+                  return JSON.stringify(output);
+      macros:
+        - macro: '{$OXIDIZEDPORT}'
+          value: '8888'
+        - macro: '{$OXIDIZED_MAX_AGE}'
+          value: '86400'
