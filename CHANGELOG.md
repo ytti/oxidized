@@ -21,6 +21,7 @@ The format is based on [Keep a Changelog](https://keepachangelog.com/en/1.1.0/).
 - VyOS: detect community string in SNMP traps. Fixes: #3793 (@nicolasberens)
 - fortigate: show Part No. of SFPs. Fixes: #3800 (@robertcheramy)
 - aoscx: Hide total power consumption (stacking). Fixes #3801 (@robertcheramy)
+- dlinknexgen: NULL byte handling. Fixes #3816 (@ziotibia81)
 
 ## [0.36.0 - 2026-03-31]
 ### Release Notes
