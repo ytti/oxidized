@@ -10,6 +10,7 @@ The format is based on [Keep a Changelog](https://keepachangelog.com/en/1.1.0/).
 - routeros: support store mode `on_significant` (@infabo)
 - model for Grandstream HT8xx (@mklopocki)
 - Add --support option to gather system diagnostics (@robertcheramy)
+- Documentation and scripts for an early-stage integration between Zabbix and Oxidized
 
 ### Changed
 - input/ssh: validate that cmd is a String. See #3700 (@robertcheramy)
