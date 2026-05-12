@@ -59,7 +59,7 @@ zabbix_export:
                   value: Oxidized
               trigger_prototypes:
                 - uuid: 95cc04ef1c5a426ab9ee18fb7eff57da
-                  expression: 'last(/Template Oxidized Server/oxidized-node-epoch[{#FULLNAME}])<"(now() - $OXIDIZED_MAX_AGE})"'
+                  expression: 'last(/Template Oxidized Server/oxidized-node-epoch[{#FULLNAME}])<(now() - {$OXIDIZED_MAX_AGE})'
                   name: 'Oxd {#FULLNAME} Last update too old'
                   opdata: '{ITEM.LASTVALUE}'
                   priority: HIGH
