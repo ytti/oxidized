@@ -114,6 +114,11 @@ zabbix_export:
               tags:
                 - tag: Bakcup
                   value: Oxidized
+              trigger_prototypes:
+                - uuid: c561acc63d3d45f59e38d4bb0a4cab90
+                  expression: '(last(/Template Oxidized Server/oxidized-node-mtime[{#FULLNAME}],#1)<>last(/Template Oxidized Server/oxidized-node-mtime[{#FULLNAME}],#2))> 0'
+                  name: 'Oxd {#FULLNAME} Configuration changed'
+                  priority: INFO
             - uuid: 3eb417690385404c86e16b3db77ffd43
               name: 'Oxd {#FULLNAME} Name'
               type: DEPENDENT
