@@ -8,12 +8,24 @@ The format is based on [Keep a Changelog](https://keepachangelog.com/en/1.1.0/).
 
 ### Added
 - routeros: support store mode `on_significant` (@infabo)
+- model for Grandstream HT8xx (@mklopocki)
+- Add --support option to gather system diagnostics (@robertcheramy)
 
 ### Changed
 - input/ssh: validate that cmd is a String. See #3700 (@robertcheramy)
+- junos: changed "show system license" regex to reduce notification noise for PTX routers. See #3794 (@ctomkow)
+- ios: keep motherboard information in show version. Closes #3798 (@robertcheramy)
+- aoscx: use oxidized filtering instead of "show system | exclude...". (@robertcheramy)
+- input/*: rewrite debug logging; remove unused logging; input/ssh: write a YAML simulation file (@robertcheramy)
 - truenas: capture app, replication, cloudsync configurations without constant changes. See #3795 (@neilschelly)
 
 ### Fixed
+- VyOS: detect community string in SNMP traps. Fixes: #3793 (@nicolasberens)
+- fortigate: show Part No. of SFPs. Fixes: #3800 (@robertcheramy)
+- aoscx: Hide total power consumption (stacking). Fixes #3801 (@robertcheramy)
+- linuxgeneric: fix prompt, telnet username and clean ANSI Escape Codes (@robertcheramy)
+- cumulus: fix prompt (make : and space optional). Fixes #3812 (@robertcheramy)
+- dlinknexgen: NULL byte handling. Fixes #3816 (@ziotibia81)
 
 
 ## [0.36.0 - 2026-03-31]

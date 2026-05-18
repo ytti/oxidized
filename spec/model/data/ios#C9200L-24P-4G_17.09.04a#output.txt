@@ -8,6 +8,9 @@
 ! Processor ID: JAE24FFFFFF
 ! CPU: ARM64
 ! Memory: nvram 2048K
+! Motherboard Assembly Number        : 77-22222-00
+! Motherboard Serial Number          : JAE24FFFFFF
+! Motherboard Revision Number        : A0
 ! 
 ! VTP: VTP Version capable             : 1 to 3
 ! VTP: VTP version running             : 1

@@ -44,8 +44,8 @@ class JunOS < Oxidized::Model
 
   cmd('show chassis hardware') { |cfg| comment cfg }
   cmd('show system license') do |cfg|
-    cfg.gsub!(/  fib-scale\s+(\d+)/, '  fib-scale                       <count>')
-    cfg.gsub!(/  rib-scale\s+(\d+)/, '  rib-scale                       <count>')
+    cfg.gsub!(/  fib[-\s]scale\s+(\d+)/i, '  fib-scale                       <count>')
+    cfg.gsub!(/  rib[-\s]scale\s+(\d+)/i, '  rib-scale                       <count>')
     comment cfg
   end
   cmd('show system license keys') { |cfg| comment cfg }

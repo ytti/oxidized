@@ -49,15 +49,19 @@
 # 
 # Interface ha1 - SFP/SFP+/SFP28, 10GBASE-LR
 #   Vendor Name  :            Fortinet        
+#   Part No.     :            LCP-10G3B4QDRZFN
 #   Serial No.   :            240000000000    
 # Interface ha2 - SFP/SFP+/SFP28, 10GBASE-LR
 #   Vendor Name  :            Fortinet        
+#   Part No.     :            LCP-10G3B4QDRZFN
 #   Serial No.   :            240000000001    
 # Interface port31 - QSFP+/QSFP28, 100G CWDM4
 #   Vendor Name  :            FORTINET        
+#   Part No.     :            FTLC1157RGPLFTN 
 #   Serial No.   :            U900000         
 # Interface port32 - QSFP+/QSFP28, 100G CWDM4
 #   Vendor Name  :            FORTINET        
+#   Part No.     :            FTLC1157RGPLFTN 
 #   Serial No.   :            U90000A         
 # 
 #config-version=FG3K1F-7.4.8-FW-build2795-250523:opmode=1:vdom=0:user=TACACS-USER

@@ -8,6 +8,7 @@ class DlinkNextGen < Oxidized::Model
   comment '# '
 
   cmd :all do |cfg|
+    cfg.gsub!("\0", "") # Remove NULL bytes that cause Git to detect the file as binary
     cfg.each_line.to_a[2..-2].map { |line| line.delete("\r").rstrip }.join("\n") + "\n"
   end
 

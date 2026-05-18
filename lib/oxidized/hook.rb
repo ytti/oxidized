@@ -6,6 +6,8 @@ module Oxidized
       def from_config(cfg)
         mgr = new
         cfg.hooks.each do |name, h_cfg|
+          raise("Please specify an hook type in the configuration") unless h_cfg.type?
+
           h_cfg.events.each do |event|
             mgr.register event.to_sym, name, h_cfg.type, h_cfg
           end

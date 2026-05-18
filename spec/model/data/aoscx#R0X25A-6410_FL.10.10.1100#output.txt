@@ -257,13 +257,13 @@
 ! 
 ! Hostname               : Switch-cx               
 ! System Description     : FL.10.10.1100                 
-! System Contact         : SNMP Description
-! System Location        : SNMP Location                 
+! System Contact         : SNMP Contact Info             
+! System Location        : SNMP Location Info            
 ! 
 ! Vendor                 : Aruba                         
 ! Product Name           : R0X25A 6410 Chassis                  
 ! Chassis Serial Nbr     : SG0AAA0000                    
-! Base MAC Address       : 100f00-000d00                 
+! Base MAC Address       : 100b00-000d00                 
 ! ArubaOS-CX Version     : FL.10.10.1100                 
 ! 
 ! Time Zone              : America/Denver                

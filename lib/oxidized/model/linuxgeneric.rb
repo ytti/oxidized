@@ -1,8 +1,9 @@
 class LinuxGeneric < Oxidized::Model
   using Refinements
 
-  prompt /^(\w.*|\W.*)[:#$] /
+  prompt /^\S.*[#$] $/
   comment '# '
+  clean :escape_codes
 
   # add a comment in the final conf
   def add_comment(comment)
@@ -53,7 +54,7 @@ class LinuxGeneric < Oxidized::Model
   end
 
   cfg :telnet do
-    username /^Username:/
+    username /(Username|[Ll]ogin):/
     password /^Password:/
   end
 
@@ -63,6 +64,7 @@ class LinuxGeneric < Oxidized::Model
         cmd "sudo su -", /^\[sudo\] password/
         cmd @node.auth[:password]
       elsif vars(:enable)
+        # This will only work without localisation (de: "Passwort:", fr: "Mot de passe :"...)
         cmd "su -", /^Password:/
         cmd vars(:enable)
       end
