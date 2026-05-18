@@ -23,6 +23,7 @@ The format is based on [Keep a Changelog](https://keepachangelog.com/en/1.1.0/).
 - fortigate: show Part No. of SFPs. Fixes: #3800 (@robertcheramy)
 - aoscx: Hide total power consumption (stacking). Fixes #3801 (@robertcheramy)
 - linuxgeneric: fix prompt, telnet username and clean ANSI Escape Codes (@robertcheramy)
+- cumulus: fix prompt (make : and space optional). Fixes #3812 (@robertcheramy)
 
 ## [0.36.0 - 2026-03-31]
 ### Release Notes
