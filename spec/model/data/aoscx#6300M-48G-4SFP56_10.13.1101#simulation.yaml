@@ -1,0 +1,228 @@
+---
+init_prompt: |-
+    Last login: 2026-04-15 06:55:16 from 192.168.61.5\r
+    User \"rancid\" has logged in 49 times in the past 30 days\r
+    loc0-ms-sw1#\x20
+commands:
+  - "no page\n": |-
+      no page\r
+      loc0-ms-sw1#\x20
+  - "show version\n": |-
+      show version\r
+      -----------------------------------------------------------------------------\r
+      ArubaOS-CX\r
+      (c) Copyright 2017-2025 Hewlett Packard Enterprise Development LP\r
+      -----------------------------------------------------------------------------\r
+      Version      : FL.10.13.1101                                                 \r
+      Build Date   : 2025-05-09 22:44:18 UTC                                       \r
+      Build ID     : ArubaOS-CX:FL.10.13.1101:594be74c336e:202505092217            \r
+      Build SHA    : 594be74c336e02b26077185fb14e90aa09f9f95e                      \r
+      Hot Patches  :                                                               \r
+      Active Image : primary                       \r
+      \r
+      Service OS Version : FL.01.14.0002                 \r
+      BIOS Version       : FL.01.0007                    \r
+      loc0-ms-sw1#\x20
+  - "show environment\n": |-
+      show environment\r
+      show environment fan\r
+      \r
+      Fan tray information\r
+      ------------------------------------------------------------------------------\r
+      Name  Description                           Status        Serial Number  Fans\r
+      ------------------------------------------------------------------------------\r
+      1/1   JL761A Aruba X752 BF Fan Tray         ready         VN00000000     2  \r
+      1/2   JL761A Aruba X752 BF Fan Tray         ready         VN00000000     2  \r
+      2/1   JL761A Aruba X752 BF Fan Tray         ready         VN00000000     2  \r
+      2/2   JL761A Aruba X752 BF Fan Tray         ready         VN00000000     2  \r
+      \r
+      Fan information\r
+      ------------------------------------------------------------------------------\r
+      Location-      Product  Serial Number  Speed   Direction      Status  RPM\r
+      Mbr/Slot/Fan   Name\r
+      ------------------------------------------------------------------------------\r
+      PSU-1/1/1      N/A      N/A            slow    back-to-front  ok      4140   \r
+      PSU-1/2/1      N/A      N/A            slow    back-to-front  ok      4170   \r
+      PSU-2/1/1      N/A      N/A            slow    back-to-front  ok      4140   \r
+      PSU-2/2/1      N/A      N/A            slow    back-to-front  ok      4170   \r
+      Tray-1/1/1     N/A      N/A            slow    back-to-front  ok      4147   \r
+      Tray-1/1/2     N/A      N/A            slow    back-to-front  ok      4126   \r
+      Tray-1/2/1     N/A      N/A            slow    back-to-front  ok      4145   \r
+      Tray-1/2/2     N/A      N/A            slow    back-to-front  ok      4152   \r
+      Tray-2/1/1     N/A      N/A            slow    back-to-front  ok      4141   \r
+      Tray-2/1/2     N/A      N/A            slow    back-to-front  ok      4176   \r
+      Tray-2/2/1     N/A      N/A            slow    back-to-front  ok      4100   \r
+      Tray-2/2/2     N/A      N/A            slow    back-to-front  ok      4145   \r
+      \r
+      \r
+      \r
+      show environment led\r
+      Mbr/Name       State        Status    \r
+      ----------------------------------\r
+      1/locator      off          ok        \r
+      \r
+      \r
+      show environment power-consumption\r
+      \r
+      Power Consumption Averaging Period : 600 seconds\r
+      \r
+                                          Instantaneous     Average\r
+      Name Description                        Power (W)   Power (W)\r
+      ---------------------------------------------------------------\r
+      1    6300M 48G 4SFP56 BF Swch               50.00       50.28\r
+      2    6300M 48G 4SFP56 BF Swch               49.00       49.02\r
+      \r
+      Total Power Consumption                     99.00\r
+      \r
+      \r
+      show environment power-redundancy\r
+      Member  Configured  Operational\r
+      Number  Redundancy  Redundancy\r
+      ---------------------------------\r
+      1       n/a         n/a\r
+      2       n/a         n/a\r
+      \r
+      \r
+      show environment power-supply\r
+      ------------------------------------------------------------------------------\r
+               Product  Serial            PSU            Input   Voltage    Wattage\r
+      Mbr/PSU  Number   Number            Status         Type    Range      Maximum\r
+      ------------------------------------------------------------------------------\r
+      1/1      JL760A   VN00000000        OK             AC      --         250\r
+      1/2      JL760A   VN00000000        OK             AC      --         250\r
+      2/1      JL760A   VN00000000        OK             AC      --         250\r
+      2/2      JL760A   VN00000000        OK             AC      --         250\r
+      \r
+      \r
+      \r
+      show environment temperature\r
+      Temperature information\r
+      ------------------------------------------------------------------------------\r
+                                                           Current\r
+      Mbr/Slot-Sensor                 Module Type        temperature  Status\r
+      ------------------------------------------------------------------------------\r
+      1/1-PHY-01-08                   line-card-module     51.00 C    normal\r
+      1/1-PHY-09-16                   line-card-module     45.00 C    normal\r
+      1/1-PHY-17-24                   line-card-module     48.00 C    normal\r
+      1/1-PHY-25-32                   line-card-module     46.00 C    normal\r
+      1/1-PHY-33-40                   line-card-module     49.00 C    normal\r
+      1/1-PHY-41-48                   line-card-module     48.00 C    normal\r
+      1/1-Switch-ASIC-Internal        line-card-module     57.12 C    normal\r
+      2/1-PHY-01-08                   line-card-module     47.00 C    normal\r
+      2/1-PHY-09-16                   line-card-module     45.00 C    normal\r
+      2/1-PHY-17-24                   line-card-module     48.00 C    normal\r
+      2/1-PHY-25-32                   line-card-module     46.00 C    normal\r
+      2/1-PHY-33-40                   line-card-module     48.00 C    normal\r
+      2/1-PHY-41-48                   line-card-module     47.00 C    normal\r
+      2/1-Switch-ASIC-Internal        line-card-module     55.75 C    normal\r
+      \r
+      1/1-CPU                         management-module    42.94 C    normal\r
+      1/1-CPU-Zone-0                  management-module    42.00 C    normal\r
+      1/1-CPU-Zone-1                  management-module    41.00 C    normal\r
+      1/1-CPU-Zone-2                  management-module    41.00 C    normal\r
+      1/1-CPU-Zone-3                  management-module    42.00 C    normal\r
+      1/1-CPU-Zone-4                  management-module    42.00 C    normal\r
+      1/1-DDR                         management-module    31.50 C    normal\r
+      1/1-Mainboard-IBC               management-module    34.12 C    normal\r
+      1/1-Switch-ASIC-Remote          management-module    59.00 C    normal\r
+      2/1-CPU                         management-module    42.25 C    normal\r
+      2/1-CPU-Zone-0                  management-module    42.00 C    normal\r
+      2/1-CPU-Zone-1                  management-module    42.00 C    normal\r
+      2/1-CPU-Zone-2                  management-module    42.00 C    normal\r
+      2/1-CPU-Zone-3                  management-module    42.00 C    normal\r
+      2/1-CPU-Zone-4                  management-module    43.00 C    normal\r
+      2/1-DDR                         management-module    31.50 C    normal\r
+      2/1-Mainboard-IBC               management-module    33.88 C    normal\r
+      2/1-Switch-ASIC-Remote          management-module    57.19 C    normal\r
+      \r
+      1/1-FT-Inlet-1                  fan_tray             22.56 C    normal\r
+      1/2-FT-Inlet-2                  fan_tray             23.25 C    normal\r
+      2/1-FT-Inlet-1                  fan_tray             22.94 C    normal\r
+      2/2-FT-Inlet-2                  fan_tray             23.12 C    normal\r
+      \r
+      loc0-ms-sw1#\x20
+  - "show module\n": |-
+      show module\r
+      \r
+      Management Modules\r
+      ==================\r
+      \r
+           Product                                        Serial\r
+      Name Number  Description                            Number     Status\r
+      ---- ------- -------------------------------------- ---------- ----------------\r
+      1/1  JL762A  6300M 48G 4SFP56 BF Swch               VN00000000 Active (local)\r
+      2/1  JL762A  6300M 48G 4SFP56 BF Swch               VN00000000
+      \r
+      \r
+      Line Modules\r
+      ============\r
+      \r
+           Product                                        Serial\r
+      Name Number  Description                            Number     Status\r
+      ---- ------- -------------------------------------- ---------- ----------------\r
+      1/1  JL762A  6300M 48G 4SFP56 BF Swch               VN00000000
+      2/1  JL762A  6300M 48G 4SFP56 BF Swch               VN00000000
+      \r
+      \r
+      loc0-ms-sw1#\x20
+  - "show interface transceiver\n": |-
+      show interface transceiver\r
+      -------------------------------------------------------------------------\r
+      Port      Type             Product          Serial           Part        \r
+                                 Number           Number           Number      \r
+      -------------------------------------------------------------------------\r
+      1/1/49    50G-DAC0.65      R0M46A           VN00000000       8121-1800\r
+      1/1/50    50G-DAC0.65      R0M46A           VN00000000       8121-1800\r
+      1/1/51    25G-DAC3         845416-B21       VN00000000       16fc-7ce7\r
+      2/1/49    50G-DAC0.65      R0M46A           VN00000000       8121-1800\r
+      2/1/50    50G-DAC0.65      R0M46A           VN00000000       8121-1800\r
+      2/1/51    25G-DAC3         845416-B21       VN00000000       16fc-7ce7\r
+      \r
+      loc0-ms-sw1#\x20
+  - "show system\n": |-
+      show system\r
+      Hostname               : loc0-ms-sw1                   \r
+      System Description     : loc0-ms-sw1                   \r
+      System Contact         : noc@example.com               \r
+      System Location        : LOCATION                      \r
+      \r
+      Vendor                 : Aruba                         \r
+      Product Name           : JL762A 6300M 48G 4SFP56 BF Swch      \r
+      Chassis Serial Nbr     : VN00000000                    \r
+      Base MAC Address       : 34c515-000000                 \r
+      ArubaOS-CX Version     : FL.10.13.1101                 \r
+      \r
+      Time Zone              : Europe/Zurich                 \r
+      \r
+      Up Time                : 40 weeks, 4 days, 22 hours, 32 minutes                      \r
+      CPU Util (%)           : 3                             \r
+      CPU Util (% avg 1 min) : 6                             \r
+      CPU Util (% avg 5 min) : 7                             \r
+      Memory Usage (%)       : 21                            \r
+      loc0-ms-sw1#\x20
+  - "show running-config\n": |-
+      show running-config\r
+      Current configuration:\r
+      !\r
+      !Version ArubaOS-CX FL.10.13.1101\r
+      !export-password: default\r
+      hostname loc0-ms-sw1\r
+      user admin group administrators password ciphertext **********\r
+      clock timezone europe/zurich\r
+      ntp enable\r
+      !\r
+      !\r
+      aaa authentication login default group tacacs local\r
+      aaa authorization commands default group tacacs local\r
+      aaa accounting all-mgmt default start-stop group tacacs\r
+      !\r
+      aruba-central\r
+          disable\r
+      logging 192.0.2.130\r
+      ssh server vrf default\r
+      !\r
+      https-server vrf default\r
+      no https-server vrf mgmt\r
+      loc0-ms-sw1#\x20
+  - "exit\n": |-
+      exit

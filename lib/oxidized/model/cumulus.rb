@@ -5,9 +5,9 @@ class Cumulus < Oxidized::Model
   # ^                 : match begin of line, to have the most specific prompt
   # [\w.-]+@[\w.-]+   : user@hostname
   # (:mgmt)?          : optional when logged in out of band
-  # :~[#$] $          : end of prompt, containing the linux path,
-  #                     which is always "~" in our context
-  prompt /^[\w.-]+@[\w.-]+(:mgmt)?:~[#$] $/
+  # :?~[#$] ?$        : end of prompt, containing the linux path,
+  #                     which is always "~" in our context.
+  prompt /^[\w.-]+@[\w.-]+(:mgmt)?:?~[#$] ?$/
   clean :escape_codes
   comment '# '
 

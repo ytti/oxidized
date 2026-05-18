@@ -10,7 +10,6 @@ module Oxidized
       @username = nil
       @password = nil
       @headers = {}
-      @log = File.open(Oxidized::Config::LOG + "/#{@node.ip}-http", "w") if Oxidized.config.input.debug?
       @node.model.cfg["http"].each { |cb| instance_exec(&cb) }
 
       return true unless @main_page && defined?(login)
@@ -110,13 +109,7 @@ module Oxidized
       "Basic " + ["#{@username}:#{@password}"].pack('m').delete("\r\n")
     end
 
-    def log(str)
-      @log&.write(str)
-    end
-
-    def disconnect
-      @log.close if Oxidized.config.input.debug?
-    end
+    def disconnect; end
 
     def get_uri(path)
       path = URI.parse(path)

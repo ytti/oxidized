@@ -53,6 +53,7 @@ class Aoscx < Oxidized::Model
 
     with_section(cfg, 'power-consumption') do |content|
       content.gsub!(/^(.*?) (?:\d+\.\d+ +)+\d+\.\d+$/, '\\1 <power hidden>')
+      content.gsub!(/^(Total Power Consumption +)\d+\.\d+$/, '\\1<power hidden>')
     end
 
     with_section(cfg, 'power-allocation') do |content|
@@ -73,7 +74,10 @@ class Aoscx < Oxidized::Model
     comment cfg
   end
 
-  cmd 'show system | exclude "Up Time" | exclude "CPU" | exclude "Memory" | exclude "Pkts .x" | exclude "Lowest" | exclude "Missed"' do |cfg|
+  cmd 'show system' do |cfg|
+    cfg = cfg.reject_lines [
+      "Up Time", "CPU", "Memory", /Pkts .x/, "Lowest", "Missed"
+    ]
     comment cfg
   end
 

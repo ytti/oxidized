@@ -151,8 +151,8 @@ commands:
       show interface transceiver
       ----- output stripped -----
       oxid-ized-42-sw12#\x20
-  - "show system | exclude \"Up Time\" | exclude \"CPU\" | exclude \"Memory\" | exclude \"Pkts .x\" | exclude \"Lowest\" | exclude \"Missed\"\n": |-
-      show system | exclude \"Up Time\" | exclude \"CPU\" | exclude \"Memory\" | \r exclude \"Pkts .x\" | exclude \"Lowest\" | exclude \"Missed\"
+  - "show system\n": |-
+      show system
       ----- output stripped -----
       oxid-ized-42-sw12#\x20
   - "show running-config\n": |-

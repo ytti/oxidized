@@ -142,22 +142,6 @@ commands:
     * unsupported transceiver
     
     xx-xxxx-sw01#\x20
-  "show system | exclude \"Up Time\" | exclude \"CPU\" | exclude \"Memory\" | exclude \"Pkts .x\" | exclude \"Lowest\" | exclude \"Missed\"\n": |-
-    show system
-    Hostname               : xx-xxxx-sw01                 \x20
-    System Description     : HL.10.15.1020                \x20
-    System Contact         : xxx@isnic.is                 \x20
-    System Location        : ISNIC - Katrinartun          \x20
-    
-    Vendor                 : HPE ANW                      \x20
-    Product Name           : S4B21A HPE ANW 8325H 18Y 4C BF 4Fs 2PS Sw
-    Chassis Serial Nbr     : TW00000000                   \x20
-    Base MAC Address       : 9c3708-000000                \x20
-    AOS-CX Version         : HL.10.15.1020                \x20
-    
-    Time Zone              : UTC                          \x20
-    
-    xx-xxxx-sw01#\x20
   "show system\n": |-
     show system
     Hostname               : xx-xxxx-sw01                 \x20
