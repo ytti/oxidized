@@ -189,7 +189,7 @@ The macro (with defaults) implements following code:
       if vars(:enable) == true
         cmd "enable"
       elsif vars(:enable)
-        cmd "enable", /^[pP]assword:/
+        cmd "enable", /password/i
         cmd vars(:enable)
       end
     end

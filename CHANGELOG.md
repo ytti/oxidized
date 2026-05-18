@@ -27,6 +27,7 @@ The format is based on [Keep a Changelog](https://keepachangelog.com/en/1.1.0/).
 - cumulus: fix prompt (make : and space optional). Fixes #3812 (@robertcheramy)
 - dlinknexgen: NULL byte handling. Fixes #3816 (@ziotibia81)
 - nxos: hide snmpv3 priv key when remove_secret is true. Fixes: #3805 (@robertcheramy)
+- tpink: use `\r\n` when sending commands and set `terminal length 0`. Fixes #3804 (@robertcheramy)
 
 
 ## [0.36.0 - 2026-03-31]
