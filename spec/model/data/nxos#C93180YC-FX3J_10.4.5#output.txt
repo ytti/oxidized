@@ -80,4 +80,6 @@ clock summer-time MESZ 5 Sun Mar 02:00 5 Sun Oct 03:00 60
 logging origin-id hostname
 boot nxos bootflash:/nxos64-cs.10.4.5.M.bin 
 
+(...)
+snmp-server user admin network-admin auth md5 AAAAAAAAAABBBBBBBBBBCCCCCCCCCC priv aes-128 AAAAAAAAAABBBBBBBBBBCCCCCCCCCC localizedV2key
 
