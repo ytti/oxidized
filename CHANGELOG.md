@@ -17,6 +17,7 @@ The format is based on [Keep a Changelog](https://keepachangelog.com/en/1.1.0/).
 - ios: keep motherboard information in show version. Closes #3798 (@robertcheramy)
 - aoscx: use oxidized filtering instead of "show system | exclude...". (@robertcheramy)
 - input/*: rewrite debug logging; remove unused logging; input/ssh: write a YAML simulation file (@robertcheramy)
+- truenas: capture app, replication, cloudsync configurations without constant changes. See #3795 (@neilschelly)
 
 ### Fixed
 - VyOS: detect community string in SNMP traps. Fixes: #3793 (@nicolasberens)
@@ -25,6 +26,7 @@ The format is based on [Keep a Changelog](https://keepachangelog.com/en/1.1.0/).
 - linuxgeneric: fix prompt, telnet username and clean ANSI Escape Codes (@robertcheramy)
 - cumulus: fix prompt (make : and space optional). Fixes #3812 (@robertcheramy)
 - dlinknexgen: NULL byte handling. Fixes #3816 (@ziotibia81)
+
 
 ## [0.36.0 - 2026-03-31]
 ### Release Notes
