@@ -109,50 +109,102 @@ hooks:
 
 ## Hook type: githubrepo
 
-Note: You must not use the same name as any local repo configured under output. Make sure your 'git' output has a unique name that does not match your remote_repo.
+The `githubrepo` hook executes a `git push` to a configured `remote_repo` when
+the specified event is triggered.
 
-The `githubrepo` hook executes a `git push` to a configured `remote_repo` when the specified event is triggered.
+### Configuration keys
 
-Several authentication methods are supported:
+| Key           | Description |
+|---------------|-------------|
+| `remote_repo` | The remote repository to push to. Use a URL string (no groups) or a group dictionary (see [Using groups](#using-groups)). |
+| `username`    | Username for authentication. Defaults to the user part of the `remote_repo` URI, falling back to `git`. |
+| `password`    | Password for username/password authentication. |
+| `privatekey`  | Path to the private key file. Must be in legacy PEM format (see note below). |
+| `publickey`   | Path to the public key file (optional — inferred from `privatekey` + `.pub` if omitted). |
 
-* Provide a `password` for username + password authentication
-* Provide both a `publickey` and a `privatekey` for ssh key-based authentication
-* Provide only a `privatekey` (public key filename is assumed to be `privatekey` + "`.pub`"
-* Don't provide any credentials for ssh-agent authentication
+Notes:
+- `remote_repo` must not match the name of any local `git` output repo configured under `output`. Use unique names for each.
+- If using SSH key authentication with a passphrase-protected private key, provide the passphrase with the `OXIDIZED_SSH_PASSPHRASE` environment variable.
+- The `privatekey` must be in the legacy PEM format (`BEGIN RSA PRIVATE KEY`), not the newer OpenSSH format (`BEGIN OPENSSH PRIVATE KEY`). See [#1877](https://github.com/ytti/oxidized/issues/1877) and [#2324](https://github.com/ytti/oxidized/issues/2324).
+- To convert an existing key to PEM format, run:
+  ```shell
+  ssh-keygen -p -m PEM -f $MY_KEY_HERE
+  ```
 
-The username will be set to the relevant part of the `remote_repo` URI, with a fallback to `git`. It is also possible to provide one by setting the `username` configuration key.
+### Authentication methods
 
-For ssh key-based authentication, it is possible to set the environment variable `OXIDIZED_SSH_PASSPHRASE` to a passphrase if the private key requires it.
+Choose one of the following methods:
 
-`githubrepo` hook recognizes the following configuration keys:
+| Method                        | Required keys |
+|-------------------------------|---------------|
+| Username + password           | `username` (optional), `password` |
+| SSH key pair                  | `privatekey`, `publickey` (optional - assumed to be at `privatekey` + `.pub`) |
+| SSH agent                     | no credentials needed |
 
-* `remote_repo`: the remote repository to be pushed to.
-* `username`: username for repository auth.
-* `password`: password for repository auth.
-* `publickey`: public key file path for repository auth. (optional)
-* `privatekey`: private key file path for repository auth.
-  * NOTE: this key needs to be in the legacy PEM format, not the newer OpenSSL format [#1877](https://github.com/ytti/oxidized/issues/1877), [#2324](https://github.com/ytti/oxidized/issues/2324)
-    * To convert a key beginning with `BEGIN OPENSSH PRIVATE KEY` to the legacy PEM format, run this command:
-      `ssh-keygen -p -m PEM -f $MY_KEY_HERE`
+### Configuration examples
 
-When using groups, `remote_repo` must be a dictionary of groups that the hook should apply to. If a group is missing from the dictionary, no action will be taken.
-
-The dictionary entry can either be a url alone:
+**Username and password:**
 
 ```yaml
 hooks:
   push_to_remote:
+    type: githubrepo
+    events: [post_store]
+    remote_repo: git@git.intranet:oxidized/test.git
+    username: user
+    password: pass
+```
+
+**SSH key pair:**
+
+```yaml
+hooks:
+  push_to_remote:
+    type: githubrepo
+    events: [post_store]
+    remote_repo: git@git.intranet:oxidized/test.git
+    publickey: /root/.ssh/id_rsa.pub
+    privatekey: /root/.ssh/id_rsa
+```
+
+
+**SSH agent:**
+
+```yaml
+hooks:
+  push_to_remote:
+    type: githubrepo
+    events: [post_store]
+    remote_repo: git@git.intranet:oxidized/test.git
+```
+
+### Using groups
+
+When using groups and `single_repo` is set to `true` (default) in the
+configuration section output/git, `remote_repo` must be a dictionary mapping
+group names to remote repositories. Groups not listed in the dictionary are
+silently skipped.
+
+Each entry can be either a plain URL string:
+
+```yaml
+hooks:
+  push_to_remote:
+    type: githubrepo
+    events: [post_store]
     remote_repo:
       routers: git@git.intranet:oxidized/routers.git
       switches: git@git.intranet:oxidized/switches.git
       firewalls: git@git.intranet:oxidized/firewalls.git
 ```
 
-... or it can be a dictionary with `url` and `privatekey` specified:
+...or a dictionary with `url` and `privatekey` to use a per-group SSH key:
 
 ```yaml
 hooks:
   push_to_remote:
+    type: githubrepo
+    events: [post_store]
     remote_repo:
       routers:
         url: git@git.intranet:oxidized/routers.git
@@ -165,58 +217,31 @@ hooks:
         privatekey: /root/.ssh/id_rsa_firewalls
 ```
 
-Both forms can be mixed and matched.
-
-### githubrepo hook configuration example
-
-Authenticate with a username and a password without groups in use:
-
-```yaml
-hooks:
-  push_to_remote:
-    type: githubrepo
-    events: [post_store]
-    remote_repo: git@git.intranet:oxidized/test.git
-    username: user
-    password: pass
-```
-
-Authenticate with the username `git` and an ssh key:
-
-```yaml
-hooks:
-  push_to_remote:
-    type: githubrepo
-    events: [post_store]
-    remote_repo: git@git.intranet:oxidized/test.git
-    publickey: /root/.ssh/id_rsa.pub
-    privatekey: /root/.ssh/id_rsa
-```
+Both forms can be mixed within the same configuration.
 
 ### Custom branch name
-Githubrepo will use the branch name used in the
-[git output](Outputs.md#output-git) as a remote branch name. When creating the
-git repository for the first time, Oxidized uses the default branch name
-configured in git with `git config --global init.defaultBranch <Name>`. The
-default is `master`.
 
-If you need to rename the branch name after Oxidized has created it, you may do
-it manually. Be aware that you may break things. Make backups and do not
-complain if something goes wrong!
+The `githubrepo` hook uses the branch name from the
+[git output](Outputs.md#output-git) as the remote branch name. When the
+repository is first created, Oxidized uses the default branch name from
+`git config --global init.defaultBranch`. The default is `master`.
 
-1. Stop oxidized (no one should access the git repository while doing the
-following steps)
-2. Make a backup of your oxidized data, especially the git repository
-3. Change directory to your oxidized git repository (as configured in oxidized
-configuration file)
-4. Inspect the current branches with `git branch -avv`
-5. Rename the default branch with `git branch -m <NewName>`
-6. Remove the reference to the old remote branch  with
-   `git branch -r -d origin/<OldName>`
-6. Inspect the change with `git branch -avv`
-7. Restart oxidized - you're done!
+You can manually rename the branch after Oxidized has already created the
+repository. Be aware that you may break things, so make backups.
 
-Note that you will also have to clean your remote git repository.
+To rename the branch after Oxidized has already created the repository:
+
+1. Stop oxidized.
+2. Back up your oxidized git repository.
+3. Change to your oxidized git repository directory.
+4. Inspect the current branches: `git branch -avv`
+5. Rename the local branch: `git branch -m <NewName>`
+6. Remove the stale remote-tracking reference: `git branch -r -d origin/<OldName>`
+7. Verify the result: `git branch -avv`
+8. Restart oxidized.
+
+Oxidized will push to a new remote branch. When everything is fine, you can
+remove the old branch from the remote repository.
 
 ## Hook type: awssns
 
