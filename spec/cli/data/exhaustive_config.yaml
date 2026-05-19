@@ -1,0 +1,94 @@
+---
+username: oxidized
+password: oxidized
+model: junos
+resolve_dns: true
+interval: 3600
+debug: true
+run_once: false
+threads: 10
+use_max_threads: true
+timeout: 20
+timelimit: 300
+retries: 3
+prompt: !ruby/regexp /^([\w.@-]+[#>]\s?)$/
+next_adds_job: false
+vars:
+  metadata: true
+  metadata_top: "%{comment}Model: %{model}; Device %{name} [%{ip}] at %{year}-%{month}-%{day}
+    %{hour}:%{minute}:%{second}\n"
+  output_store_mode: on_significant
+groups: {}
+group_map: {}
+models:
+  openwrt:
+    username: root
+    password: oxidized
+  routeros:
+    username: admin
+    password: oxidized
+  asa:
+    vars:
+      enable: oxidized
+  fortios:
+    vars:
+      fullconfig: true
+pid: "/home/cheramr/.config/oxidized/pid"
+extensions:
+  oxidized-web:
+    load: true
+    hide_node_vars:
+    - enable
+    - password
+    - username
+crash:
+  directory: "/home/cheramr/.config/oxidized/crashes"
+  hostnames: false
+stats:
+  history_size: 10
+input:
+  default: ssh,scp
+  debug: false
+  ssh:
+    secure: false
+  ftp:
+    passive: true
+  utf8_encoded: true
+output:
+  default: git
+  git:
+    user: Oxidized
+    email: oxidized@example.com
+    repo: "~/.config/oxidized/oxidized.git"
+    single_repo: true
+  file:
+    directory: "/home/cheramr/.config/oxidized/configs"
+source:
+  default: csv
+  csv:
+    file: "~/.config/oxidized/devicelist.db"
+    delimiter: !ruby/regexp /:/
+    map:
+      name: 0
+      model: 1
+      ip: 2
+      group: 3
+    vars_map:
+      hullo: 4
+      enable: 5
+    gpg: false
+model_map:
+  juniper: junos
+  cisco: ios
+logger:
+  appenders:
+  - type: syslog
+  - type: stdout
+hooks:
+  push_to_remote:
+    type: githubrepo
+    events:
+    - post_store
+    remote_repo: oxidized@localhost:oxidized.git
+    privatekey: "/home/cheramr/.ssh/id_ed25519"
+    publickey: "/home/cheramr/.ssh/id_ed25519.pub"
