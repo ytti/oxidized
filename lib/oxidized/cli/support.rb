@@ -3,7 +3,7 @@ require 'time'
 module Oxidized
   class CLI
     module Support
-      SENSITIVE_NAME_RE = /(password|passphrase|secret|token|
+      SENSITIVE_NAME_RE = /(password|passphrase|secret|token|enable|
                             (private|api|access)_?key|
                             community|credential|auth
                           )/ix
