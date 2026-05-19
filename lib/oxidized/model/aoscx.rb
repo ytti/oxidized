@@ -37,16 +37,16 @@ class Aoscx < Oxidized::Model
     comment cfg
   end
 
-  cmd 'show environment' do |cfg|
-    def with_section(cfg, section, &block)
-      cfg.sub!(/(show environment #{section}.*?-{10,}\n)(.*?)(?=\nshow environment|\z)/m) do
-        header = ::Regexp.last_match(1)
-        content = ::Regexp.last_match(2)
-        block.call(content) if block_given?
-        header + content
-      end
+  def with_section(cfg, section, &block)
+    cfg.sub!(/(show environment #{section}.*?-{10,}\n)(.*?)(?=\nshow environment|\z)/m) do
+      header = ::Regexp.last_match(1)
+      content = ::Regexp.last_match(2)
+      block.call(content) if block_given?
+      header + content
     end
+  end
 
+  cmd 'show environment' do |cfg|
     with_section(cfg, 'fan') do |content|
       content.gsub!(/^((?:\S+ +){3})(slow  |normal|medium|fast  |max   |N\/A   ) (.*?)\d+ +$/, '\\1<speed> \\3<rpm>')
     end
