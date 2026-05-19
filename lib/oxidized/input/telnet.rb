@@ -42,14 +42,14 @@ module Oxidized
       # create a string to be passed to oxidized_expect and modified _there_
       # default to a single space so it shouldn't be coerced to nil by any models.
       out = String(' ')
-      @text_debug.send_data(cmd_str)
+      @text_debug&.send_data(cmd_str)
       @telnet.puts(cmd_str)
       @telnet.oxidized_expect(timeout: @timeout, expect: expect, out: out)
       out
     end
 
     def send(data)
-      @text_debug.send_data(data)
+      @text_debug&.send_data(data)
       @telnet.write data
     end
 
@@ -69,7 +69,7 @@ module Oxidized
     rescue Errno::ECONNRESET, IOError
       # This exception is intented and therefore not handled here
     ensure
-      @text_debug.close
+      @text_debug&.close
       (@telnet.close rescue true) unless @telnet.sock.closed? # rubocop:disable Style/RedundantParentheses
     end
   end
