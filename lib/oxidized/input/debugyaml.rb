@@ -39,6 +39,7 @@ module Oxidized
 
     def receive_data(data)
       return unless @log
+      return if data.empty?
 
       lines = data.split("\n", -1)
 
