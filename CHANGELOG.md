@@ -18,6 +18,7 @@ The format is based on [Keep a Changelog](https://keepachangelog.com/en/1.1.0/).
 - aoscx: use oxidized filtering instead of "show system | exclude...". (@robertcheramy)
 - input/*: rewrite debug logging; remove unused logging; input/ssh: write a YAML simulation file (@robertcheramy)
 - truenas: capture app, replication, cloudsync configurations without constant changes. See #3795 (@neilschelly)
+- Set Rake::TestTask to `verbose = false` since the behavior changed with rake 13.4.2 (@robertcheramy)
 
 ### Fixed
 - VyOS: detect community string in SNMP traps. Fixes: #3793 (@nicolasberens)
