@@ -1,0 +1,2544 @@
+!   Olt Serial Number:           SNREMOVED
+!   Olt Device Model:            V1600G0-B
+!   Hardware Version:            V3.1.4
+!   Software Version:            V1.4.13R
+!   Software Created Time:       Fri, 22 Aug 2025 13:27:22 
+!   Copyright 2020-2025
+! 
+! 
+! PON 1 Transceiver information:
+! Vendor Name:   OEM             
+! Part Number:   GPON OLT C++++  
+! Revision:	 10  
+! Serial Number: SNREMOVED   
+! Manufacturing Date: 240108  
+! 
+! 
+! PON 2 Transceiver information:
+! Vendor Name:   OEM             
+! Part Number:   GPON OLT C++++  
+! Revision:	 10  
+! Serial Number: SNREMOVED   
+! Manufacturing Date: 240108  
+! 
+! 
+! PON 3 Transceiver information:
+! Vendor Name:   OEM             
+! Part Number:   GPON OLT C++++  
+! Revision:	 10  
+! Serial Number: SNREMOVED   
+! Manufacturing Date: 240108  
+! 
+! 
+! PON 4 Transceiver information:
+! Vendor Name:   OEM             
+! Part Number:   GPON OLT C++++  
+! Revision:	 10  
+! Serial Number: SNREMOVED   
+! Manufacturing Date: 240108  
+! 
+
+Current configuration:
+!
+!Software Version      :		V1.4.13R
+!Software Created Time :		Fri, 22 Aug 2025 13:27:22 
+hostname RT_01|192.0.2.4-Site_OLT
+log trap emergencies
+auto-copy running-config startup-config enable timeout 3600
+!
+line vty
+ exec-timeout 0 0
+exit
+!
+security-dos
+dos prevent level off 
+exit
+!
+interface aux
+ip address 192.168.8.200 255.255.255.0
+exit
+interface loopback
+ip address 127.0.0.1 255.0.0.0
+ipv6 address ::1/128
+exit
+!
+vlan 1
+exit
+vlan 1925
+exit
+vlan 1925
+description vlan1925_bridge_AP
+exit
+!
+interface vlan 1925
+ip address 192.0.2.4/24
+exit
+!
+interface vlan 1925
+ipv6 address fe80::200:5eff:fe00:5300 link-local
+exit
+interface aux
+exit
+ip dns 198.51.100.2  203.0.113.2
+interface vlan 1925
+ipv6 nd ra-min-interval 66 ra-max-interval 200
+ipv6 nd ra-hop-limit 64
+ipv6 nd mtu-option
+exit
+!
+!
+!
+!
+!
+interface gigabitethernet 0/1
+description Uplink_CCR
+switchport mode trunk
+switchport trunk pvid vlan 1
+switchport trunk vlan 1925
+no shutdown 
+speed 10000 
+duplex full 
+mdi force
+storm-control broadcast fps 512
+no storm-control multicast
+storm-control unknow fps 512
+no switchport isolate
+no ip igmp snooping immediate-leave
+perf-stats 15min enable
+perf-stats 24hour enable
+exit
+!
+interface gigabitethernet 0/2
+switchport mode trunk
+switchport trunk pvid vlan 1
+switchport trunk vlan 1925
+no shutdown 
+speed 10000 
+duplex full 
+mdi force
+storm-control broadcast fps 512
+no storm-control multicast
+storm-control unknow fps 512
+no switchport isolate
+no ip igmp snooping immediate-leave
+perf-stats 15min enable
+perf-stats 24hour enable
+exit
+!
+interface gigabitethernet 0/3
+switchport mode trunk
+switchport trunk pvid vlan 1
+switchport trunk vlan 1925
+no shutdown 
+speed auto 
+mdi force
+storm-control broadcast fps 512
+no storm-control multicast
+storm-control unknow fps 512
+no switchport isolate
+no ip igmp snooping immediate-leave
+perf-stats 15min enable
+perf-stats 24hour enable
+exit
+!
+interface gigabitethernet 0/4
+switchport mode trunk
+switchport trunk pvid vlan 1
+switchport trunk vlan 1925
+no shutdown 
+speed auto 
+mdi force
+storm-control broadcast fps 512
+no storm-control multicast
+storm-control unknow fps 512
+no switchport isolate
+no ip igmp snooping immediate-leave
+perf-stats 15min enable
+perf-stats 24hour enable
+exit
+!
+interface gpon 0/1
+no shutdown 
+mdi force
+storm-control broadcast fps 512
+no storm-control multicast
+storm-control unknow fps 512
+no switchport isolate
+no p2p
+no ip igmp snooping immediate-leave
+perf-stats 15min enable
+perf-stats 24hour enable
+exit
+!
+interface gpon 0/2
+description DESCREMOVED
+no shutdown 
+mdi force
+storm-control broadcast fps 512
+no storm-control multicast
+storm-control unknow fps 512
+no switchport isolate
+no p2p
+no ip igmp snooping immediate-leave
+perf-stats 15min enable
+perf-stats 24hour enable
+exit
+!
+interface gpon 0/3
+no shutdown 
+mdi force
+storm-control broadcast fps 512
+no storm-control multicast
+storm-control unknow fps 512
+no switchport isolate
+no p2p
+no ip igmp snooping immediate-leave
+perf-stats 15min enable
+perf-stats 24hour enable
+exit
+!
+interface gpon 0/4
+no shutdown 
+mdi force
+storm-control broadcast fps 512
+no storm-control multicast
+storm-control unknow fps 512
+no switchport isolate
+no p2p
+no ip igmp snooping immediate-leave
+perf-stats 15min enable
+perf-stats 24hour enable
+exit
+!
+!
+port link-flapping mode auto-recovery
+!
+!
+profile dba id 1 name dba_1
+type 4 maximum 1024000
+exit
+!
+profile dba id 511 name default1
+type 3 assured 1024 maximum 1024000
+exit
+!
+profile srv id 1 name srv_1
+portvlan eth 1 mode tag vlan 1925 pri 0
+commit
+exit
+!
+profile srv id 2 name srv_2-wifi
+portvlan veip 1 mode tag vlan 1925 pri 0
+commit
+exit
+!
+profile line id 1 name line_1
+  tcont 1 name Vlan1925 dba dba_1
+    gemport 1 tcont 1 gemport_name Vlan1925
+      service ser_1 gemport 1 vlan 1925
+      service-port 1 gemport 1 uservlan 1925 vlan 1925
+commit
+exit
+!
+profile pri id 1 name pri_1
+dhcp_server 192.168.109.1 255.255.255.0 enable 86400 192.168.109.10 192.168.109.254 pc 198.51.100.2 203.0.113.2 192.168.109.1 
+wifi_switch 1 enable etsi auto 80211acanacax 12 80
+wifi_switch 2 enable etsi 7 80211bgnax 12
+username admin_control enable admin PASSREMOVED user_control disable 
+firewall level disable
+acl ping control enable lan enable wan enable ipv4_control enable 198.51.100.26 255.255.255.0 ipv6_control disable 
+acl http control enable lan enable wan enable ipv4_control disable ipv6_control disable port 80
+exit
+!
+onu auto-learn bind matching-type exact
+!
+plug_and_play vlan 1
+set variable_vlan disable
+set plug_and_play enable
+!
+interface gpon 0/1
+no onu auto-learn
+plug_and_play disable
+onu add 1 profile default sn SNREMOVED
+onu 1 profile line name line_1
+onu 1 profile srv name srv_1
+onu 1 pri equid VSOLV802
+onu 1 pri reset_button disable
+onu add 2 profile default 
+onu 2 desc GPON0/1:2
+onu 2 profile line name line_1
+onu 2 profile srv name srv_1
+onu 2 pri equid VSOLV802
+onu add 3 profile default sn SNREMOVED
+onu 3 desc GPON0/1:3
+onu 3 profile line name line_1
+onu 3 profile srv name srv_1
+onu add 4 profile default sn SNREMOVED
+onu 4 desc GPON0/1:4
+onu 4 profile line name line_1
+onu 4 profile srv name srv_1
+onu 4 pri equid VSOLV802
+onu add 5 profile default sn SNREMOVED
+onu 5 desc GPON0/1:5
+onu 5 profile line name line_1
+onu 5 profile srv name srv_1
+onu 5 pri equid VSOLV802
+onu add 6 profile default sn SNREMOVED
+onu 6 desc GPON0/1:6
+onu 6 profile line name line_1
+onu 6 profile srv name srv_1
+onu 6 pri equid VSOLV802
+onu add 7 profile default sn SNREMOVED
+onu 7 desc GPON0/1:7
+onu 7 profile line name line_1
+onu 7 profile srv name srv_1
+onu 7 pri equid VSOLV802
+onu 7 pri wan_adv add bridge
+onu 7 pri wan_adv index 1 bridge internet 
+onu 7 pri wan_adv index 1 vlan tag wan_vlan 1925 0 
+onu 7 pri wan_adv index 1 bind lan2 
+onu add 8 profile default sn SNREMOVED
+onu 8 desc GPON0/1:8
+onu 8 profile line name line_1
+onu 8 profile srv name srv_1
+onu 8 pri equid VSOLV802
+onu add 9 profile default sn SNREMOVED
+onu 9 desc GPON0/1:9
+onu 9 profile line name line_1
+onu 9 profile srv name srv_1
+onu 9 pri equid VSOLV802
+exit
+!
+interface gpon 0/2
+no onu auto-learn
+plug_and_play disable
+onu add 1 profile default sn SNREMOVED
+onu 1 desc GPON0/2:1
+onu 1 profile line name line_1
+onu 1 profile srv name srv_2-wifi
+onu 1 profile pri name pri_1
+onu 1 pri equid MONUVPRI
+onu 1 pri wan_adv add route
+onu 1 pri wan_adv index 1 route mode internet mtu 1500 
+onu 1 pri wan_adv index 1 route ipv4 static ip 192.0.2.253 mask 255.255.255.0 gw 192.0.2.1 dns master 198.51.100.2 slave 203.0.113.2 nat enable 
+onu 1 pri wan_adv index 1 vlan tag wan_vlan 1925 0 
+onu 1 pri wifi_switch 2 enable etsi channel 7 80211ax 12
+onu 1 pri wifi_ssid 1 name SSIDREMOVED hide disable auth_mode wpa2psk/wpa3psk encrypt_type aes shared_key PASSREMOVED rekey_interval 0
+onu 1 pri wifi_ssid 5 name SSIDREMOVED hide disable auth_mode wpapsk/wpa2psk encrypt_type tkipaes shared_key PASSREMOVED rekey_interval 0
+onu 1 pri port_isolate enable
+onu add 2 profile default sn SNREMOVED
+onu 2 desc GPON0/2:2
+onu 2 profile line name line_1
+onu 2 profile srv name srv_2-wifi
+onu 2 profile pri name pri_1
+onu 2 pri equid MONUVPRI
+onu 2 pri wan_adv add route
+onu 2 pri wan_adv index 1 route mode internet mtu 1500 
+onu 2 pri wan_adv index 1 route ipv4 static ip 192.0.2.50 mask 255.255.255.128 gw 192.0.2.1 dns master 198.51.100.2 slave 203.0.113.2 nat enable 
+onu 2 pri wan_adv index 1 vlan tag wan_vlan 1925 0 
+onu 2 pri wifi_ssid 1 name SSIDREMOVED hide disable auth_mode wpa2psk/wpa3psk encrypt_type aes shared_key PASSREMOVED rekey_interval 0
+onu 2 pri username admin_control enable admin PASSREMOVED user_control enable user PASSREMOVED 
+onu 2 pri firewall level low
+onu 2 pri acl ping control enable lan enable wan enable ipv4_control enable 198.51.100.26 255.255.255.0 ipv6_control disable 
+onu 2 pri acl http control enable lan enable wan enable ipv4_control disable ipv6_control disable port 80
+onu add 3 profile default sn SNREMOVED
+onu 3 desc GPON0/2:3
+onu 3 profile line name line_1
+onu 3 profile srv name srv_2-wifi
+onu 3 profile pri name pri_1
+onu 3 pri equid MONUVPRI
+onu 3 pri wan_adv add route
+onu 3 pri wan_adv index 1 route mode internet mtu 1500 
+onu 3 pri wan_adv index 1 route ipv4 static ip 192.0.2.51 mask 255.255.255.128 gw 192.0.2.1 dns master 198.51.100.2 slave 203.0.113.2 nat enable 
+onu 3 pri wan_adv index 1 vlan tag wan_vlan 1925 0 
+onu 3 pri wifi_ssid 1 name SSIDREMOVED hide disable auth_mode wpa2psk/wpa3psk encrypt_type aes shared_key PASSREMOVED rekey_interval 0
+onu 3 pri username admin_control enable admin PASSREMOVED user_control enable user PASSREMOVED 
+onu 3 pri firewall level low
+onu 3 pri acl ping control enable lan enable wan enable ipv4_control enable 198.51.100.26 255.255.255.0 ipv6_control disable 
+onu 3 pri acl http control enable lan enable wan enable ipv4_control disable ipv6_control disable port 80
+onu add 4 profile default sn SNREMOVED
+onu 4 desc GPON0/2:4
+onu 4 profile line name line_1
+onu 4 profile srv name srv_2-wifi
+onu 4 profile pri name pri_1
+onu 4 pri equid MONUVPRI
+onu 4 pri wan_adv add route
+onu 4 pri wan_adv index 1 route mode internet mtu 1500 
+onu 4 pri wan_adv index 1 route ipv4 static ip 192.0.2.52 mask 255.255.255.128 gw 192.0.2.1 dns master 198.51.100.2 slave 203.0.113.2 nat enable 
+onu 4 pri wan_adv index 1 vlan tag wan_vlan 1925 0 
+onu 4 pri wifi_ssid 1 name SSIDREMOVED.1 hide disable auth_mode wpa2psk/wpa3psk encrypt_type aes shared_key PASSREMOVED rekey_interval 0
+onu 4 pri username admin_control enable admin PASSREMOVED user_control enable user PASSREMOVED 
+onu 4 pri firewall level low
+onu 4 pri acl ping control enable lan enable wan enable ipv4_control enable 198.51.100.26 255.255.255.0 ipv6_control disable 
+onu 4 pri acl http control enable lan enable wan enable ipv4_control disable ipv6_control disable port 80
+onu add 5 profile default sn SNREMOVED
+onu 5 desc GPON0/2:5
+onu 5 profile line name line_1
+onu 5 profile srv name srv_2-wifi
+onu 5 profile pri name pri_1
+onu 5 pri equid MONUVPRI
+onu 5 pri wan_adv add route
+onu 5 pri wan_adv index 1 route mode internet mtu 1500 
+onu 5 pri wan_adv index 1 route ipv4 static ip 192.0.2.53 mask 255.255.255.128 gw 192.0.2.1 dns master 198.51.100.2 slave 203.0.113.2 nat enable 
+onu 5 pri wan_adv index 1 vlan tag wan_vlan 1925 0 
+onu 5 pri wifi_ssid 1 name SSIDREMOVED hide disable auth_mode wpa2psk/wpa3psk encrypt_type aes shared_key PASSREMOVED rekey_interval 0
+onu 5 pri username admin_control enable admin PASSREMOVED user_control enable user PASSREMOVED 
+onu 5 pri firewall level low
+onu 5 pri acl ping control enable lan enable wan enable ipv4_control enable 198.51.100.26 255.255.255.0 ipv6_control disable 
+onu 5 pri acl http control enable lan enable wan enable ipv4_control disable ipv6_control disable port 80
+onu add 6 profile default sn SNREMOVED
+onu 6 desc GPON0/2:6
+onu 6 profile line name line_1
+onu 6 profile srv name srv_2-wifi
+onu 6 pri equid MONUVPRI
+onu 6 pri wan_adv add route
+onu 6 pri wan_adv index 1 route mode internet mtu 1500 
+onu 6 pri wan_adv index 1 route ipv4 static ip 192.0.2.64 mask 255.255.255.128 gw 192.0.2.1 dns master 198.51.100.2 slave 203.0.113.2 nat enable 
+onu 6 pri wan_adv index 1 vlan tag wan_vlan 1925 0 
+onu 6 pri dhcp_server 192.168.109.1 255.255.255.0 enable 86400 192.168.109.2 192.168.109.254 pc 198.51.100.2 203.0.113.2 192.168.109.1 
+onu 6 pri wifi_ssid 5 name SSIDREMOVED hide disable auth_mode wpapsk/wpa2psk encrypt_type tkipaes shared_key PASSREMOVED rekey_interval 0
+onu 6 pri username admin_control enable admin PASSREMOVED user_control disable 
+onu 6 pri acl ping control enable lan enable wan disable 
+onu 6 pri acl https control enable lan enable wan disable port 443
+onu add 7 profile default sn SNREMOVED
+onu 7 desc GPON0/2:7
+onu 7 profile line name line_1
+onu 7 profile srv name srv_2-wifi
+onu 7 profile pri name pri_1
+onu 7 pri equid MONUVPRI
+onu 7 pri wan_adv add route
+onu 7 pri wan_adv index 1 route mode internet mtu 1500 
+onu 7 pri wan_adv index 1 route ipv4 static ip 192.0.2.55 mask 255.255.255.128 gw 192.0.2.1 dns master 198.51.100.2 slave 203.0.113.2 nat enable 
+onu 7 pri wan_adv index 1 vlan tag wan_vlan 1925 0 
+onu 7 pri wifi_ssid 1 name SSIDREMOVED hide disable auth_mode wpa2psk/wpa3psk encrypt_type aes shared_key PASSREMOVED rekey_interval 0
+onu 7 pri username admin_control enable admin PASSREMOVED user_control enable user PASSREMOVED 
+onu 7 pri firewall level low
+onu 7 pri acl ping control enable lan enable wan enable ipv4_control enable 198.51.100.26 255.255.255.0 ipv6_control disable 
+onu 7 pri acl http control enable lan enable wan enable ipv4_control disable ipv6_control disable port 80
+onu add 8 profile default sn SNREMOVED
+onu 8 desc GPON0/2:8
+onu 8 profile line name line_1
+onu 8 profile srv name srv_2-wifi
+onu 8 profile pri name pri_1
+onu 8 pri equid MONUVPRI
+onu 8 pri wan_adv add route
+onu 8 pri wan_adv index 1 route mode internet mtu 1500 
+onu 8 pri wan_adv index 1 route ipv4 static ip 192.0.2.56 mask 255.255.255.128 gw 192.0.2.1 dns master 198.51.100.2 slave 203.0.113.2 nat enable 
+onu 8 pri wan_adv index 1 vlan tag wan_vlan 1925 0 
+onu 8 pri wifi_ssid 1 name SSIDREMOVED hide disable auth_mode wpa2psk/wpa3psk encrypt_type aes shared_key PASSREMOVED rekey_interval 0
+onu 8 pri wifi_ssid 5 name SSIDREMOVED hide disable auth_mode wpa2psk encrypt_type aes shared_key PASSREMOVED rekey_interval 0
+onu 8 pri username admin_control enable admin PASSREMOVED user_control enable user PASSREMOVED 
+onu 8 pri firewall level low
+onu 8 pri acl ping control enable lan enable wan enable ipv4_control enable 198.51.100.26 255.255.255.0 ipv6_control disable 
+onu 8 pri acl http control enable lan enable wan enable ipv4_control disable ipv6_control disable port 80
+onu add 9 profile default sn SNREMOVED
+onu 9 desc GPON0/2:9
+onu 9 profile line name line_1
+onu 9 profile srv name srv_2-wifi
+onu 9 profile pri name pri_1
+onu 9 pri equid MONUVPRI
+onu 9 pri wan_adv add route
+onu 9 pri wan_adv index 1 route mode internet mtu 1500 
+onu 9 pri wan_adv index 1 route ipv4 static ip 192.0.2.57 mask 255.255.255.128 gw 192.0.2.1 dns master 198.51.100.2 slave 203.0.113.2 nat enable 
+onu 9 pri wan_adv index 1 vlan tag wan_vlan 1925 0 
+onu 9 pri wifi_ssid 1 name SSIDREMOVED hide disable auth_mode wpa2psk/wpa3psk encrypt_type aes shared_key PASSREMOVED rekey_interval 0
+onu 9 pri wifi_ssid 5 name SSIDREMOVED hide disable auth_mode wpa2psk encrypt_type aes shared_key PASSREMOVED rekey_interval 0
+onu 9 pri username admin_control enable admin PASSREMOVED user_control enable user PASSREMOVED 
+onu 9 pri firewall level low
+onu 9 pri acl ping control enable lan enable wan enable ipv4_control enable 198.51.100.26 255.255.255.0 ipv6_control disable 
+onu 9 pri acl http control enable lan enable wan enable ipv4_control disable ipv6_control disable port 80
+onu add 10 profile default sn SNREMOVED
+onu 10 desc GPON0/2:10
+onu 10 profile line name line_1
+onu 10 profile srv name srv_2-wifi
+onu 10 profile pri name pri_1
+onu 10 pri equid MONUVPRI
+onu 10 pri wan_adv add route
+onu 10 pri wan_adv index 1 route mode internet mtu 1500 
+onu 10 pri wan_adv index 1 route ipv4 static ip 192.0.2.58 mask 255.255.255.128 gw 192.0.2.1 dns master 198.51.100.2 slave 203.0.113.2 nat enable 
+onu 10 pri wan_adv index 1 vlan tag wan_vlan 1925 0 
+onu 10 pri wifi_ssid 1 name SSIDREMOVED hide disable auth_mode wpa2psk/wpa3psk encrypt_type aes shared_key PASSREMOVED rekey_interval 0
+onu 10 pri wifi_ssid 5 name SSIDREMOVED hide disable auth_mode wpa2psk encrypt_type aes shared_key PASSREMOVED rekey_interval 0
+onu 10 pri username admin_control enable admin PASSREMOVED user_control enable user PASSREMOVED 
+onu 10 pri firewall level low
+onu 10 pri acl ping control enable lan enable wan enable ipv4_control enable 198.51.100.26 255.255.255.0 ipv6_control disable 
+onu 10 pri acl http control enable lan enable wan enable ipv4_control disable ipv6_control disable port 80
+onu add 11 profile default sn SNREMOVED
+onu 11 desc GPON0/2:11
+onu 11 profile line name line_1
+onu 11 profile srv name srv_2-wifi
+onu 11 profile pri name pri_1
+onu 11 pri equid MONUVPRI
+onu 11 pri wan_adv add route
+onu 11 pri wan_adv index 1 route mode internet mtu 1500 
+onu 11 pri wan_adv index 1 route ipv4 static ip 192.0.2.59 mask 255.255.255.128 gw 192.0.2.1 dns master 198.51.100.2 slave 203.0.113.2 nat enable 
+onu 11 pri wifi_ssid 1 name SSIDREMOVED.1 hide disable auth_mode wpa2psk/wpa3psk encrypt_type aes shared_key PASSREMOVED rekey_interval 0
+onu 11 pri wifi_ssid 5 name SSIDREMOVED.1 hide disable auth_mode wpa2psk encrypt_type aes shared_key PASSREMOVED rekey_interval 0
+onu 11 pri username admin_control enable admin PASSREMOVED user_control enable user PASSREMOVED 
+onu 11 pri firewall level low
+onu 11 pri acl ping control enable lan enable wan enable ipv4_control enable 198.51.100.26 255.255.255.0 ipv6_control disable 
+onu 11 pri acl http control enable lan enable wan enable ipv4_control disable ipv6_control disable port 80
+onu add 12 profile default sn SNREMOVED
+onu 12 desc GPON0/2:12
+onu 12 profile line name line_1
+onu 12 profile srv name srv_2-wifi
+onu 12 profile pri name pri_1
+onu 12 pri equid MONUVPRI
+onu 12 pri wan_adv add route
+onu 12 pri wan_adv index 1 route mode internet mtu 1500 
+onu 12 pri wan_adv index 1 route ipv4 static ip 192.0.2.60 mask 255.255.255.128 gw 192.0.2.1 dns master 198.51.100.2 slave 203.0.113.2 nat enable 
+onu 12 pri wan_adv index 1 vlan tag wan_vlan 1925 0 
+onu 12 pri wifi_ssid 1 name SSIDREMOVED.1 hide disable auth_mode wpa2psk encrypt_type aes shared_key PASSREMOVED rekey_interval 0
+onu 12 pri wifi_ssid 5 name SSIDREMOVED.1 hide disable auth_mode wpa2psk encrypt_type aes shared_key PASSREMOVED rekey_interval 0
+onu 12 pri username admin_control enable admin PASSREMOVED user_control enable user PASSREMOVED 
+onu 12 pri firewall level low
+onu 12 pri acl ping control enable lan enable wan enable ipv4_control enable 198.51.100.26 255.255.255.0 ipv6_control disable 
+onu 12 pri acl http control enable lan enable wan enable ipv4_control disable ipv6_control disable port 80
+onu add 13 profile default sn SNREMOVED
+onu 13 desc GPON0/2:13
+onu 13 profile line name line_1
+onu 13 profile srv name srv_2-wifi
+onu 13 profile pri name pri_1
+onu 13 pri equid MONUVPRI
+onu 13 pri wan_adv add route
+onu 13 pri wan_adv index 1 route mode internet mtu 1500 
+onu 13 pri wan_adv index 1 route ipv4 static ip 192.0.2.61 mask 255.255.255.128 gw 192.0.2.1 dns master 198.51.100.2 slave 203.0.113.2 nat enable 
+onu 13 pri wan_adv index 1 vlan tag wan_vlan 1925 0 
+onu 13 pri wifi_ssid 1 name SSIDREMOVED hide disable auth_mode wpa2psk/wpa3psk encrypt_type aes shared_key PASSREMOVED rekey_interval 0
+onu 13 pri wifi_ssid 5 name SSIDREMOVED hide disable auth_mode wpa2psk encrypt_type aes shared_key PASSREMOVED rekey_interval 0
+onu 13 pri username admin_control enable admin PASSREMOVED user_control enable user PASSREMOVED 
+onu 13 pri firewall level low
+onu 13 pri acl ping control enable lan enable wan enable ipv4_control enable 198.51.100.26 255.255.255.0 ipv6_control disable 
+onu 13 pri acl http control enable lan enable wan enable ipv4_control disable ipv6_control disable port 80
+onu add 14 profile default sn SNREMOVED
+onu 14 desc GPON0/2:14
+onu 14 profile line name line_1
+onu 14 profile srv name srv_2-wifi
+onu 14 profile pri name pri_1
+onu 14 pri equid MONUVPRI
+onu 14 pri wan_adv add route
+onu 14 pri wan_adv index 1 route mode internet mtu 1500 
+onu 14 pri wan_adv index 1 route ipv4 static ip 192.0.2.62 mask 255.255.255.128 gw 192.0.2.1 dns master 198.51.100.2 slave 203.0.113.2 nat enable 
+onu 14 pri wifi_ssid 1 name SSIDREMOVED hide disable auth_mode wpa2psk/wpa3psk encrypt_type aes shared_key PASSREMOVED rekey_interval 0
+onu 14 pri wifi_ssid 5 name SSIDREMOVED hide disable auth_mode wpa2psk encrypt_type aes shared_key PASSREMOVED rekey_interval 0
+onu 14 pri username admin_control enable admin PASSREMOVED user_control enable user PASSREMOVED 
+onu 14 pri firewall level low
+onu 14 pri acl ping control enable lan enable wan enable ipv4_control enable 198.51.100.26 255.255.255.0 ipv6_control disable 
+onu 14 pri acl http control enable lan enable wan enable ipv4_control disable ipv6_control disable port 80
+onu add 15 profile default sn SNREMOVED
+onu 15 desc GPON0/2:15
+onu 15 profile line name line_1
+onu 15 profile srv name srv_2-wifi
+onu 15 profile pri name pri_1
+onu 15 pri equid MONUVPRI
+onu 15 pri wan_adv add route
+onu 15 pri wan_adv index 1 route mode internet mtu 1500 
+onu 15 pri wan_adv index 1 route ipv4 static ip 192.0.2.63 mask 255.255.255.128 gw 192.0.2.1 dns master 198.51.100.2 slave 203.0.113.2 nat enable 
+onu 15 pri wan_adv index 1 vlan tag wan_vlan 1925 0 
+onu 15 pri wifi_ssid 1 name SSIDREMOVED.2 hide disable auth_mode wpa2psk/wpa3psk encrypt_type aes shared_key PASSREMOVED rekey_interval 0
+onu 15 pri wifi_ssid 5 name SSIDREMOVED.2 hide disable auth_mode wpa2psk encrypt_type aes shared_key PASSREMOVED rekey_interval 0
+onu 15 pri firewall level low
+onu 15 pri acl ping control enable lan enable wan enable ipv4_control enable 198.51.100.26 255.255.255.0 ipv6_control disable 
+onu 15 pri acl http control enable lan enable wan enable ipv4_control disable ipv6_control disable port 80
+onu add 16 profile default sn SNREMOVED
+onu 16 desc GPON0/2:16
+onu 16 profile line name line_1
+onu 16 profile srv name srv_2-wifi
+onu 16 profile pri name pri_1
+onu 16 pri equid MONUVPRI
+onu 16 pri wan_adv add route
+onu 16 pri wan_adv index 1 route mode internet mtu 1500 
+onu 16 pri wan_adv index 1 route ipv4 static ip 192.0.2.54 mask 255.255.255.128 gw 192.0.2.1 dns master 198.51.100.2 slave 203.0.113.2 nat enable 
+onu 16 pri wan_adv index 1 vlan tag wan_vlan 1925 0 
+onu 16 pri wifi_ssid 1 name SSIDREMOVED.2 hide disable auth_mode wpa2psk/wpa3psk encrypt_type aes shared_key PASSREMOVED rekey_interval 0
+onu 16 pri wifi_ssid 5 name SSIDREMOVED.2 hide disable auth_mode wpa2psk encrypt_type aes shared_key PASSREMOVED rekey_interval 0
+onu 16 pri username admin_control enable admin PASSREMOVED user_control enable user PASSREMOVED 
+onu 16 pri firewall level disable
+onu 16 pri acl ping control enable lan enable wan enable ipv4_control enable 198.51.100.26 255.255.255.0 ipv6_control disable 
+onu 16 pri acl http control enable lan enable wan enable ipv4_control disable ipv6_control disable port 80
+onu add 17 profile default sn SNREMOVED
+onu 17 desc GPON0/2:17
+onu 17 profile line name line_1
+onu 17 profile srv name srv_2-wifi
+onu 17 pri equid MONUVPRI
+onu 17 pri wan_adv add route
+onu 17 pri wan_adv index 1 route mode internet mtu 1500 
+onu 17 pri wan_adv index 1 route ipv4 static ip 192.0.2.65 mask 255.255.255.128 gw 192.0.2.1 dns master 198.51.100.2 slave 203.0.113.2 nat enable 
+onu 17 pri dhcp_server 192.168.109.1 255.255.255.0 enable 86400 192.168.109.2 192.168.109.254 pc 198.51.100.2 203.0.113.2 192.168.109.1 
+onu 17 pri wifi_ssid 1 name SSIDREMOVED.1_5G hide disable auth_mode wpa2psk/wpa3psk encrypt_type aes shared_key PASSREMOVED rekey_interval 0
+onu 17 pri wifi_ssid 5 name SSIDREMOVED.1 hide disable auth_mode wpapsk/wpa2psk encrypt_type tkipaes shared_key PASSREMOVED rekey_interval 0
+onu 17 pri username admin_control enable admin PASSREMOVED user_control disable 
+onu 17 pri acl ping control enable lan enable wan disable 
+onu 17 pri acl https control enable lan enable wan disable port 443
+onu add 18 profile default sn SNREMOVED
+onu 18 desc GPON0/2:18
+onu 18 profile line name line_1
+onu 18 profile srv name srv_2-wifi
+onu 18 pri equid MONUVPRI
+onu 18 pri wan_adv add route
+onu 18 pri wan_adv index 1 route mode internet mtu 1500 
+onu 18 pri wan_adv index 1 route ipv4 static ip 192.0.2.67 mask 255.255.255.128 gw 192.0.2.1 dns master 198.51.100.2 slave 203.0.113.2 nat enable 
+onu 18 pri dhcp_server 192.168.109.1 255.255.255.0 enable 86400 192.168.109.2 192.168.109.254 pc 198.51.100.2 203.0.113.2 192.168.109.1 
+onu 18 pri wifi_ssid 1 name SSIDREMOVED hide disable auth_mode wpa2psk/wpa3psk encrypt_type aes shared_key PASSREMOVED rekey_interval 0
+onu 18 pri wifi_ssid 5 name SSIDREMOVED hide disable auth_mode wpapsk/wpa2psk encrypt_type tkipaes shared_key PASSREMOVED rekey_interval 0
+onu 18 pri username admin_control enable admin PASSREMOVED user_control disable 
+onu 18 pri acl https control enable lan enable wan disable port 443
+onu add 19 profile default sn SNREMOVED
+onu 19 desc GPON0/2:19
+onu 19 profile line name line_1
+onu 19 profile srv name srv_2-wifi
+onu 19 pri equid MONUVPRI
+onu 19 pri wan_adv add route
+onu 19 pri wan_adv index 1 route mode internet mtu 1500 
+onu 19 pri wan_adv index 1 route ipv4 static ip 192.0.2.66 mask 255.255.255.128 gw 192.0.2.1 dns master 198.51.100.2 slave 203.0.113.2 nat enable 
+onu 19 pri dhcp_server 192.168.109.1 255.255.255.0 enable 86400 192.168.109.2 192.168.109.254 pc 198.51.100.2 203.0.113.2 192.168.109.1 
+onu 19 pri wifi_ssid 1 name SSIDREMOVED hide disable auth_mode wpa2psk/wpa3psk encrypt_type aes shared_key PASSREMOVED rekey_interval 0
+onu 19 pri wifi_ssid 5 name SSIDREMOVED hide disable auth_mode wpapsk/wpa2psk encrypt_type tkipaes shared_key PASSREMOVED rekey_interval 0
+onu 19 pri username admin_control enable admin PASSREMOVED user_control disable 
+onu 19 pri acl https control enable lan enable wan disable port 443
+onu add 20 profile default sn SNREMOVED
+onu 20 desc GPON0/2:20
+onu 20 profile line name line_1
+onu 20 profile srv name srv_2-wifi
+onu 20 pri equid MONUVPRI
+onu 20 pri wan_adv add route
+onu 20 pri wan_adv index 1 route mode internet mtu 1500 
+onu 20 pri wan_adv index 1 route ipv4 static ip 192.0.2.68 mask 255.255.255.128 gw 192.0.2.1 dns master 198.51.100.2 slave 203.0.113.2 nat enable 
+onu 20 pri dhcp_server 192.168.109.1 255.255.255.0 enable 86400 192.168.109.2 192.168.109.254 pc 198.51.100.2 203.0.113.2 192.168.109.1 
+onu 20 pri wifi_ssid 1 name SSIDREMOVED hide disable auth_mode wpa2psk/wpa3psk encrypt_type aes shared_key PASSREMOVED rekey_interval 0
+onu 20 pri username admin_control enable admin PASSREMOVED user_control disable 
+onu 20 pri firewall level low
+onu 20 pri acl ping control enable lan enable wan disable 
+onu 20 pri acl http control enable lan enable wan disable port 80
+onu add 21 profile default sn SNREMOVED
+onu 21 desc GPON0/2:21
+onu 21 profile line name line_1
+onu 21 profile srv name srv_2-wifi
+onu 21 pri equid MONUVPRI
+onu 21 pri wan_adv add route
+onu 21 pri wan_adv index 1 route mode internet mtu 1500 
+onu 21 pri wan_adv index 1 route ipv4 static ip 192.0.2.69 mask 255.255.255.0 gw 192.0.2.1 dns master 198.51.100.2 slave 203.0.113.2 nat enable 
+onu 21 pri dhcp_server 192.168.109.1 255.255.255.0 enable 86400 192.168.109.2 192.168.109.254 pc 198.51.100.2 203.0.113.2 192.168.109.1 
+onu 21 pri wifi_ssid 1 name SSIDREMOVED.1-5G hide disable auth_mode wpa2psk/wpa3psk encrypt_type aes shared_key PASSREMOVED rekey_interval 0
+onu 21 pri wifi_ssid 5 name SSIDREMOVED.1 hide disable auth_mode wpapsk/wpa2psk encrypt_type tkipaes shared_key PASSREMOVED rekey_interval 0
+onu 21 pri username admin_control enable admin PASSREMOVED user_control disable 
+onu 21 pri acl https control enable lan enable wan disable port 443
+onu add 22 profile default sn SNREMOVED
+onu 22 desc GPON0/2:22
+onu 22 profile line name line_1
+onu 22 profile srv name srv_2-wifi
+onu 22 pri equid MONUVPRI
+onu 22 pri wan_adv add route
+onu 22 pri wan_adv index 1 route mode internet mtu 1500 
+onu 22 pri wan_adv index 1 route ipv4 static ip 192.0.2.70 mask 255.255.255.0 gw 192.0.2.1 dns master 198.51.100.2 slave 203.0.113.2 nat enable 
+onu 22 pri dhcp_server 192.168.109.1 255.255.255.0 enable 86400 192.168.109.2 192.168.109.254 pc 198.51.100.2 203.0.113.2 192.168.109.1 
+onu 22 pri wifi_ssid 1 name SSIDREMOVED.2-5G hide disable auth_mode wpa2psk/wpa3psk encrypt_type aes shared_key PASSREMOVED rekey_interval 0
+onu 22 pri wifi_ssid 5 name SSIDREMOVED.2 hide disable auth_mode wpapsk/wpa2psk encrypt_type tkipaes shared_key PASSREMOVED rekey_interval 0
+onu 22 pri username admin_control enable admin PASSREMOVED user_control disable 
+onu 22 pri acl https control enable lan enable wan disable port 443
+onu add 23 profile default sn SNREMOVED
+onu 23 desc GPON0/2:23
+onu 23 profile line name line_1
+onu 23 profile srv name srv_2-wifi
+onu 23 pri equid MONUVPRI
+onu 23 pri wan_adv add route
+onu 23 pri wan_adv index 1 route mode internet mtu 1500 
+onu 23 pri wan_adv index 1 route ipv4 static ip 192.0.2.71 mask 255.255.255.0 gw 192.0.2.1 dns master 198.51.100.2 slave 203.0.113.2 nat enable 
+onu 23 pri dhcp_server 192.168.109.1 255.255.255.0 enable 86400 192.168.109.2 192.168.109.254 pc 198.51.100.2 203.0.113.2 192.168.109.1 
+onu 23 pri wifi_ssid 1 name SSIDREMOVED hide disable auth_mode wpa2psk/wpa3psk encrypt_type aes shared_key PASSREMOVED rekey_interval 0
+onu 23 pri wifi_ssid 5 name SSIDREMOVED hide disable auth_mode wpapsk/wpa2psk encrypt_type tkipaes shared_key PASSREMOVED rekey_interval 0
+onu 23 pri username admin_control enable admin PASSREMOVED user_control disable 
+onu 23 pri acl https control enable lan enable wan disable port 443
+onu add 24 profile default sn SNREMOVED
+onu 24 desc GPON0/2:24
+onu 24 profile line name line_1
+onu 24 profile srv name srv_2-wifi
+onu 24 pri equid MONUVPRI
+onu 24 pri wan_adv add route
+onu 24 pri wan_adv index 1 route mode internet mtu 1500 
+onu 24 pri wan_adv index 1 route ipv4 static ip 192.0.2.72 mask 255.255.255.0 gw 192.0.2.1 dns master 198.51.100.2 slave 203.0.113.2 nat enable 
+onu 24 pri dhcp_server 192.168.109.1 255.255.255.0 enable 86400 192.168.109.2 192.168.109.254 pc 198.51.100.2 203.0.113.2 192.168.109.1 
+onu 24 pri wifi_ssid 1 name SSIDREMOVED hide disable auth_mode wpa2psk/wpa3psk encrypt_type aes shared_key PASSREMOVED rekey_interval 0
+onu 24 pri wifi_ssid 5 name SSIDREMOVED hide disable auth_mode wpapsk/wpa2psk encrypt_type tkipaes shared_key PASSREMOVED rekey_interval 0
+onu 24 pri username admin_control enable admin PASSREMOVED user_control disable 
+onu 24 pri acl https control enable lan enable wan disable port 443
+onu add 25 profile default sn SNREMOVED
+onu 25 desc GPON0/2:25
+onu 25 profile line name line_1
+onu 25 profile srv name srv_2-wifi
+onu 25 pri equid MONUVPRI
+onu 25 pri wan_adv add route
+onu 25 pri wan_adv index 1 route mode internet mtu 1500 
+onu 25 pri wan_adv index 1 route ipv4 static ip 192.0.2.73 mask 255.255.255.0 gw 192.0.2.1 dns master 198.51.100.2 slave 203.0.113.2 nat enable 
+onu 25 pri dhcp_server 192.168.109.1 255.255.255.0 enable 86400 192.168.109.2 192.168.109.254 pc 198.51.100.2 203.0.113.2 192.168.109.1 
+onu 25 pri wifi_ssid 1 name SSIDREMOVED hide disable auth_mode wpa2psk/wpa3psk encrypt_type aes shared_key PASSREMOVED rekey_interval 0
+onu 25 pri wifi_ssid 5 name SSIDREMOVED hide disable auth_mode wpapsk/wpa2psk encrypt_type tkipaes shared_key PASSREMOVED rekey_interval 0
+onu 25 pri username admin_control enable admin PASSREMOVED user_control disable 
+onu 25 pri acl https control enable lan enable wan disable port 443
+onu add 26 profile default sn SNREMOVED
+onu 26 desc GPON0/2:26
+onu 26 profile line name line_1
+onu 26 profile srv name srv_2-wifi
+onu 26 pri equid MONUVPRI
+onu 26 pri wan_adv add route
+onu 26 pri wan_adv index 1 route mode internet mtu 1500 
+onu 26 pri wan_adv index 1 route ipv4 static ip 192.0.2.74 mask 255.255.255.0 gw 192.0.2.1 dns master 198.51.100.2 slave 203.0.113.2 nat enable 
+onu 26 pri dhcp_server 192.168.109.1 255.255.255.0 enable 86400 192.168.109.2 192.168.109.254 pc 198.51.100.2 203.0.113.2 192.168.109.1 
+onu 26 pri wifi_ssid 1 name SSIDREMOVED hide disable auth_mode wpa2psk/wpa3psk encrypt_type aes shared_key PASSREMOVED rekey_interval 0
+onu 26 pri wifi_ssid 5 name SSIDREMOVED hide disable auth_mode wpapsk/wpa2psk encrypt_type tkipaes shared_key PASSREMOVED rekey_interval 0
+onu 26 pri username admin_control enable admin PASSREMOVED user_control disable 
+onu 26 pri acl https control enable lan enable wan disable port 443
+onu add 27 profile default sn SNREMOVED
+onu 27 desc GPON0/2:27
+onu 27 profile line name line_1
+onu 27 profile srv name srv_2-wifi
+onu 27 pri equid MONUVPRI
+onu 27 pri wan_adv add route
+onu 27 pri wan_adv index 1 route mode internet mtu 1500 
+onu 27 pri wan_adv index 1 route ipv4 static ip 192.0.2.75 mask 255.255.255.0 gw 192.0.2.1 dns master 198.51.100.2 slave 203.0.113.2 nat enable 
+onu 27 pri dhcp_server 192.168.109.1 255.255.255.0 enable 86400 192.168.109.2 192.168.109.254 pc 198.51.100.2 203.0.113.2 192.168.109.1 
+onu 27 pri wifi_ssid 1 name SSIDREMOVED hide disable auth_mode wpa2psk/wpa3psk encrypt_type aes shared_key PASSREMOVED rekey_interval 0
+onu 27 pri wifi_ssid 5 name SSIDREMOVED hide disable auth_mode wpapsk/wpa2psk encrypt_type tkipaes shared_key PASSREMOVED rekey_interval 0
+onu 27 pri username admin_control enable admin PASSREMOVED user_control disable 
+onu 27 pri acl https control enable lan enable wan disable port 443
+onu add 28 profile default sn SNREMOVED
+onu 28 desc GPON0/2:28
+onu 28 profile line name line_1
+onu 28 profile srv name srv_2-wifi
+onu 28 pri equid MONUVPRI
+onu 28 pri wan_adv add route
+onu 28 pri wan_adv index 1 route mode internet mtu 1500 
+onu 28 pri wan_adv index 1 route ipv4 static ip 192.0.2.76 mask 255.255.255.0 gw 192.0.2.1 dns master 198.51.100.2 slave 203.0.113.2 nat enable 
+onu 28 pri dhcp_server 192.168.109.1 255.255.255.0 enable 86400 192.168.109.2 192.168.109.254 pc 198.51.100.2 203.0.113.2 192.168.109.1 
+onu 28 pri wifi_ssid 1 name SSIDREMOVED hide disable auth_mode wpa2psk/wpa3psk encrypt_type aes shared_key PASSREMOVED rekey_interval 0
+onu 28 pri wifi_ssid 5 name SSIDREMOVED hide disable auth_mode wpapsk/wpa2psk encrypt_type tkipaes shared_key PASSREMOVED rekey_interval 0
+onu 28 pri username admin_control enable admin PASSREMOVED user_control disable 
+onu 28 pri acl https control enable lan enable wan disable port 443
+onu add 29 profile default sn SNREMOVED
+onu 29 desc GPON0/2:29
+onu 29 profile line name line_1
+onu 29 profile srv name srv_2-wifi
+onu 29 pri equid MONUVPRI
+onu 29 pri wan_adv add route
+onu 29 pri wan_adv index 1 route mode internet mtu 1500 
+onu 29 pri wan_adv index 1 route ipv4 static ip 192.0.2.77 mask 255.255.255.0 g
+onu 29 pri dhcp_server 192.168.109.1 255.255.255.0 enable 86400 192.168.109.2 192.168.109.254 pc 198.51.100.2 203.0.113.2 192.168.109.1 
+onu 29 pri wifi_ssid 1 name SSIDREMOVED hide disable auth_mode wpa2psk/wpa3psk encrypt_type aes shared_key PASSREMOVED rekey_interval 0
+onu 29 pri wifi_ssid 5 name SSIDREMOVED hide disable auth_mode wpapsk/wpa2psk encrypt_type tkipaes shared_key PASSREMOVED rekey_interval 0
+onu 29 pri username admin_control enable admin PASSREMOVED user_control disable 
+onu 29 pri acl https control enable lan enable wan disable port 443
+onu add 30 profile default sn SNREMOVED
+onu 30 desc GPON0/2:30
+onu 30 profile line name line_1
+onu 30 profile srv name srv_2-wifi
+onu 30 pri equid MONUVPRI
+onu 30 pri wan_adv add route
+onu 30 pri wan_adv index 1 route mode internet mtu 1500 
+onu 30 pri wan_adv index 1 route ipv4 static ip 192.0.2.78 mask 255.255.255.0 gw 192.0.2.1 dns master 198.51.100.2 slave 203.0.113.2 nat enable 
+onu 30 pri dhcp_server 192.168.109.1 255.255.255.0 enable 86400 192.168.109.2 192.168.109.254 pc 198.51.100.2 203.0.113.2 192.168.109.1 
+onu 30 pri wifi_ssid 1 name SSIDREMOVED.1-5G hide disable auth_mode wpa2psk/wpa3psk encrypt_type aes shared_key PASSREMOVED rekey_interval 0
+onu 30 pri wifi_ssid 5 name SSIDREMOVED.1 hide disable auth_mode wpapsk/wpa2psk encrypt_type tkipaes shared_key PASSREMOVED rekey_interval 0
+onu 30 pri username admin_control enable admin PASSREMOVED user_control disable 
+onu 30 pri acl https control enable lan enable wan disable port 443
+onu add 31 profile default sn SNREMOVED
+onu 31 desc GPON0/2:31
+onu 31 profile line name line_1
+onu 31 profile srv name srv_2-wifi
+onu 31 pri equid MONUVPRI
+onu 31 pri wan_adv add route
+onu 31 pri wan_adv index 1 route mode internet mtu 1500 
+onu 31 pri wan_adv index 1 route ipv4 static ip 192.0.2.79 mask 255.255.255.0 gw 192.0.2.1 dns master 198.51.100.2 slave 203.0.113.2 nat enable 
+onu 31 pri dhcp_server 192.168.109.1 255.255.255.0 enable 86400 192.168.109.2 192.168.109.254 pc 198.51.100.2 203.0.113.2 192.168.109.1 
+onu 31 pri wifi_ssid 1 name SSIDREMOVED.2-5G hide disable auth_mode wpa2psk/wpa3psk encrypt_type aes shared_key PASSREMOVED rekey_interval 0
+onu 31 pri wifi_ssid 5 name SSIDREMOVED.2 hide disable auth_mode wpapsk/wpa2psk encrypt_type tkipaes shared_key PASSREMOVED rekey_interval 0
+onu 31 pri username admin_control enable admin PASSREMOVED user_control disable 
+onu 31 pri acl https control enable lan enable wan disable port 443
+onu add 32 profile default sn SNREMOVED
+onu 32 desc GPON0/2:32
+onu 32 profile line name line_1
+onu 32 profile srv name srv_2-wifi
+onu 32 pri equid MONUVPRI
+onu 32 pri wan_adv add route
+onu 32 pri wan_adv index 1 route mode internet mtu 1500 
+onu 32 pri wan_adv index 1 route ipv4 static ip 192.0.2.80 mask 255.255.255.0 gw 192.0.2.1 dns master 198.51.100.2 slave 203.0.113.2 nat enable 
+onu 32 pri dhcp_server 192.168.109.1 255.255.255.0 enable 86400 192.168.109.2 192.168.109.254 pc 198.51.100.2 203.0.113.2 192.168.109.1 
+onu 32 pri wifi_ssid 1 name SSIDREMOVED.1-5G hide disable auth_mode wpa2psk/wpa3psk encrypt_type aes shared_key PASSREMOVED rekey_interval 0
+onu 32 pri wifi_ssid 5 name SSIDREMOVED.1 hide disable auth_mode wpapsk/wpa2psk encrypt_type tkipaes shared_key PASSREMOVED rekey_interval 0
+onu 32 pri username admin_control enable admin PASSREMOVED user_control disable 
+onu 32 pri acl https control enable lan enable wan disable port 443
+onu add 33 profile default sn SNREMOVED
+onu 33 desc GPON0/2:33
+onu 33 profile line name line_1
+onu 33 profile srv name srv_2-wifi
+onu 33 pri equid MONUVPRI
+onu 33 pri wan_adv add route
+onu 33 pri wan_adv index 1 route mode internet mtu 1500 
+onu 33 pri wan_adv index 1 route ipv4 static ip 192.0.2.49 mask 255.255.255.128 gw 192.0.2.1 dns master 198.51.100.2 slave 203.0.113.2 nat enable 
+onu 33 pri dhcp_server 192.168.109.1 255.255.255.0 enable 86400 192.168.109.2 192.168.109.254 pc 198.51.100.2 203.0.113.2 192.168.109.1 
+onu 33 pri wifi_ssid 1 name SSIDREMOVED hide disable auth_mode wpa2psk/wpa3psk encrypt_type aes shared_key PASSREMOVED rekey_interval 0
+onu 33 pri wifi_ssid 5 name SSIDREMOVED hide disable auth_mode wpapsk/wpa2psk encrypt_type tkipaes shared_key PASSREMOVED rekey_interval 0
+onu 33 pri username admin_control enable admin PASSREMOVED user_control disable 
+onu 33 pri firewall level low
+onu 33 pri acl ping control enable lan enable wan disable 
+onu 33 pri acl http control enable lan enable wan disable port 80
+onu add 34 profile default sn SNREMOVED
+onu 34 desc GPON0/2:34
+onu 34 profile line name line_1
+onu 34 profile srv name srv_2-wifi
+onu 34 pri equid MONUVPRI
+onu 34 pri wan_adv add route
+onu 34 pri wan_adv index 1 route mode internet mtu 1500 
+onu 34 pri wan_adv index 1 route ipv4 static ip 192.0.2.48 mask 255.255.255.0 gw 192.0.2.1 dns master 198.51.100.2 slave 203.0.113.2 nat enable 
+onu 34 pri dhcp_server 192.168.109.1 255.255.255.0 enable 86400 192.168.109.2 192.168.109.254 pc 198.51.100.2 203.0.113.2 192.168.109.1 
+onu 34 pri wifi_ssid 1 name SSIDREMOVED hide disable auth_mode wpa2psk/wpa3psk encrypt_type aes shared_key PASSREMOVED rekey_interval 0
+onu 34 pri wifi_ssid 5 name SSIDREMOVED hide disable auth_mode wpapsk/wpa2psk encrypt_type tkipaes shared_key PASSREMOVED rekey_interval 0
+onu 34 pri username admin_control enable admin PASSREMOVED user_control disable 
+onu 34 pri firewall level low
+onu 34 pri acl ping control enable lan enable wan disable 
+onu 34 pri acl http control enable lan enable wan disable port 80
+onu add 35 profile default sn SNREMOVED
+onu 35 desc GPON0/2:35
+onu 35 profile line name line_1
+onu 35 profile srv name srv_2-wifi
+onu 35 pri equid MONUVPRI
+onu 35 pri wan_adv add route
+onu 35 pri wan_adv index 1 route mode internet mtu 1500 
+onu 35 pri wan_adv index 1 route ipv4 static ip 192.0.2.174 mask 255.255.255.0 gw 192.0.2.1 dns master 198.51.100.2 slave 203.0.113.2 nat enable 
+onu 35 pri wan_adv index 1 vlan tag wan_vlan 1925 0 
+onu 35 pri dhcp_server 192.168.109.1 255.255.255.0 enable 86400 192.168.109.2 192.168.109.254 pc 198.51.100.2 203.0.113.2 192.168.109.1 
+onu 35 pri wifi_ssid 1 name SSIDREMOVED hide disable auth_mode wpapsk/wpa2psk encrypt_type aes shared_key PASSREMOVED rekey_interval 0
+onu 35 pri wifi_ssid 5 name SSIDREMOVED hide disable auth_mode wpapsk/wpa2psk encrypt_type tkipaes shared_key PASSREMOVED rekey_interval 0
+onu 35 pri username admin_control enable admin PASSREMOVED user_control disable 
+onu 35 pri firewall level low
+onu 35 pri acl ping control enable lan enable wan enable ipv4_control enable 198.51.100.26 255.255.255.0 ipv6_control disable 
+onu 35 pri acl http control enable lan enable wan disable port 80
+onu add 36 profile default sn SNREMOVED
+onu 36 desc GPON0/2:36
+onu 36 profile line name line_1
+onu 36 profile srv name srv_2-wifi
+onu 36 pri equid MONUVPRI
+onu 36 pri wan_adv add route
+onu 36 pri wan_adv index 1 route mode internet mtu 1500 
+onu 36 pri wan_adv index 1 route ipv4 static ip 192.0.2.175 mask 255.255.255.0 gw 192.0.2.1 dns master 198.51.100.2 slave 203.0.113.2 nat enable 
+onu 36 pri wan_adv index 1 vlan tag wan_vlan 1925 0 
+onu 36 pri dhcp_server 192.168.109.1 255.255.255.0 enable 86400 192.168.109.2 192.168.109.254 pc 198.51.100.2 203.0.113.2 192.168.109.1 
+onu 36 pri wifi_ssid 1 name SSIDREMOVED hide disable auth_mode wpapsk/wpa2psk encrypt_type aes shared_key PASSREMOVED rekey_interval 0
+onu 36 pri wifi_ssid 5 name SSIDREMOVED hide disable auth_mode wpapsk/wpa2psk encrypt_type tkipaes shared_key PASSREMOVED rekey_interval 0
+onu 36 pri username admin_control enable admin PASSREMOVED user_control disable 
+onu 36 pri firewall level low
+onu 36 pri acl ping control enable lan enable wan enable ipv4_control enable 198.51.100.26 255.255.255.0 ipv6_control disable 
+onu 36 pri acl http control enable lan enable wan disable port 80
+onu add 37 profile default sn SNREMOVED
+onu 37 desc GPON0/2:37
+onu 37 profile line name line_1
+onu 37 profile srv name srv_2-wifi
+onu 37 pri equid MONUVPRI
+onu 37 pri wan_adv add route
+onu 37 pri wan_adv index 1 route mode internet mtu 1500 
+onu 37 pri wan_adv index 1 route ipv4 static ip 192.0.2.176 mask 255.255.255.0 gw 192.0.2.1 dns master 198.51.100.2 slave 203.0.113.2 nat enable 
+onu 37 pri wan_adv index 1 vlan tag wan_vlan 1925 0 
+onu 37 pri dhcp_server 192.168.109.1 255.255.255.0 enable 86400 192.168.109.2 192.168.109.254 pc 198.51.100.2 203.0.113.2 192.168.109.1 
+onu 37 pri wifi_ssid 1 name SSIDREMOVED.2-5G hide disable auth_mode wpa2psk/wpa3psk encrypt_type aes shared_key PASSREMOVED rekey_interval 0
+onu 37 pri wifi_ssid 5 name SSIDREMOVED.2 hide disable auth_mode wpapsk/wpa2psk encrypt_type tkipaes shared_key PASSREMOVED rekey_interval 0
+onu 37 pri username admin_control enable admin PASSREMOVED user_control disable 
+onu 37 pri firewall level low
+onu 37 pri acl ping control enable lan enable wan enable ipv4_control enable 198.51.100.26 255.255.255.0 ipv6_control disable 
+onu 37 pri acl http control enable lan enable wan disable port 80
+onu add 38 profile default sn SNREMOVED
+onu 38 desc GPON0/2:38
+onu 38 profile line name line_1
+onu 38 profile srv name srv_2-wifi
+onu 38 pri equid MONUVPRI
+onu 38 pri wan_adv add route
+onu 38 pri wan_adv index 1 route mode internet mtu 1500 
+onu 38 pri wan_adv index 1 route ipv4 static ip 192.0.2.173 mask 255.255.255.0 gw 192.0.2.1 dns master 198.51.100.2 slave 203.0.113.2 nat enable 
+onu 38 pri wan_adv index 1 vlan tag wan_vlan 1925 0 
+onu 38 pri dhcp_server 192.168.109.1 255.255.255.0 enable 86400 192.168.109.2 192.168.109.254 pc 198.51.100.2 203.0.113.2 192.168.109.1 
+onu 38 pri wifi_ssid 1 name SSIDREMOVED hide disable auth_mode wpa2psk/wpa3psk encrypt_type aes shared_key PASSREMOVED rekey_interval 0
+onu 38 pri wifi_ssid 5 name SSIDREMOVED hide disable auth_mode wpapsk/wpa2psk encrypt_type tkipaes shared_key PASSREMOVED rekey_interval 0
+onu 38 pri username admin_control enable admin PASSREMOVED user_control disable 
+onu 38 pri firewall level low
+onu 38 pri acl ping control enable lan enable wan enable ipv4_control enable 198.51.100.26 255.255.255.0 ipv6_control disable 
+onu 38 pri acl http control enable lan enable wan disable port 80
+onu add 39 profile default sn SNREMOVED
+onu 39 desc GPON0/2:39
+onu 39 profile line name line_1
+onu 39 profile srv name srv_2-wifi
+onu 39 pri equid MONUVPRI
+onu 39 pri wan_adv add route
+onu 39 pri wan_adv index 1 route mode internet mtu 1500 
+onu 39 pri wan_adv index 1 route ipv4 static ip 192.0.2.150 mask 255.255.255.0 gw 192.0.2.1 dns master 198.51.100.2 slave 203.0.113.2 nat enable 
+onu 39 pri dhcp_server 192.168.109.1 255.255.255.0 enable 86400 192.168.109.2 192.168.109.254 pc 198.51.100.2 203.0.113.2 192.168.109.1 
+onu 39 pri wifi_ssid 1 name SSIDREMOVED.2-5G hide disable auth_mode wpa2psk/wpa3psk encrypt_type aes shared_key PASSREMOVED rekey_interval 0
+onu 39 pri wifi_ssid 5 name SSIDREMOVED.2 hide disable auth_mode wpapsk/wpa2psk encrypt_type tkipaes shared_key PASSREMOVED rekey_interval 0
+onu 39 pri username admin_control enable admin PASSREMOVED user_control disable 
+onu 39 pri firewall level low
+onu 39 pri acl ping control enable lan enable wan enable ipv4_control enable 198.51.100.26 255.255.255.0 ipv6_control disable 
+onu 39 pri acl http control enable lan enable wan disable port 80
+onu add 40 profile default sn SNREMOVED
+onu 40 desc GPON0/2:40
+onu 40 profile line name line_1
+onu 40 profile srv name srv_2-wifi
+onu 40 pri equid MONUVPRI
+onu 40 pri wan_adv add route
+onu 40 pri wan_adv index 1 route mode internet mtu 1500 
+onu 40 pri wan_adv index 1 route ipv4 static ip 192.0.2.92 mask 255.255.255.0 gw 192.0.2.1 dns master 198.51.100.2 slave 203.0.113.2 nat enable 
+onu 40 pri wan_adv index 1 vlan tag wan_vlan 1925 0 
+onu 40 pri dhcp_server 192.168.109.1 255.255.255.0 enable 86400 192.168.109.2 192.168.109.254 pc 198.51.100.2 203.0.113.2 192.168.109.1 
+onu 40 pri wifi_ssid 1 name SSIDREMOVED.1-5G hide disable auth_mode wpa2psk/wpa3psk encrypt_type aes shared_key PASSREMOVED rekey_interval 0
+onu 40 pri wifi_ssid 5 name SSIDREMOVED.1 hide disable auth_mode wpapsk/wpa2psk encrypt_type tkipaes shared_key PASSREMOVED rekey_interval 0
+onu 40 pri username admin_control enable admin PASSREMOVED user_control disable 
+onu 40 pri firewall level low
+onu 40 pri acl ping control enable lan enable wan enable ipv4_control enable 198.51.100.26 255.255.255.0 ipv6_control disable 
+onu 40 pri acl http control enable lan enable wan disable port 80
+onu add 41 profile default sn SNREMOVED
+onu 41 desc GPON0/2:41
+onu 41 profile line name line_1
+onu 41 profile srv name srv_2-wifi
+onu 41 pri equid MONUVPRI
+onu 41 pri wan_adv add route
+onu 41 pri wan_adv index 1 route mode internet mtu 1500 
+onu 41 pri wan_adv index 1 route ipv4 static ip 192.0.2.108 mask 255.255.255.0 gw 192.0.2.1 dns master 198.51.100.2 slave 203.0.113.2 nat enable 
+onu 41 pri wan_adv index 1 vlan tag wan_vlan 1925 0 
+onu 41 pri dhcp_server 192.168.109.1 255.255.255.0 enable 86400 192.168.109.2 192.168.109.254 pc 198.51.100.2 203.0.113.2 192.168.109.1 
+onu 41 pri wifi_ssid 1 name SSIDREMOVED hide disable auth_mode wpa2psk/wpa3psk encrypt_type aes shared_key PASSREMOVED rekey_interval 0
+onu 41 pri wifi_ssid 5 name SSIDREMOVED hide disable auth_mode wpapsk/wpa2psk encrypt_type tkipaes shared_key PASSREMOVED rekey_interval 0
+onu 41 pri username admin_control enable admin PASSREMOVED user_control disable 
+onu 41 pri firewall level low
+onu 41 pri acl ping control enable lan enable wan enable ipv4_control enable 198.51.100.26 255.255.255.0 ipv6_control disable 
+onu 41 pri acl http control enable lan enable wan disable port 80
+onu add 42 profile default sn SNREMOVED
+onu 42 desc GPON0/2:42
+onu 42 profile line name line_1
+onu 42 profile srv name srv_2-wifi
+onu 42 pri equid MONUVPRI
+onu 42 pri wan_adv add route
+onu 42 pri wan_adv index 1 route mode internet mtu 1500 
+onu 42 pri wan_adv index 1 route ipv4 static ip 192.0.2.135 mask 255.255.255.0 gw 192.0.2.1 dns master 198.51.100.2 slave 203.0.113.2 nat enable 
+onu 42 pri wan_adv index 1 vlan tag wan_vlan 1925 0 
+onu 42 pri dhcp_server 192.168.109.1 255.255.255.0 enable 86400 192.168.109.2 192.168.109.254 pc 198.51.100.2 203.0.113.2 192.168.109.1 
+onu 42 pri wifi_switch 1 enable cn auto 80211acanacax 20 80
+onu 42 pri wifi_ssid 1 name SSIDREMOVED hide disable auth_mode wpa2psk/wpa3psk encrypt_type aes shared_key PASSREMOVED rekey_interval 0
+onu 42 pri wifi_ssid 5 name SSIDREMOVED hide disable auth_mode wpapsk/wpa2psk encrypt_type tkipaes shared_key PASSREMOVED rekey_interval 0
+onu 42 pri username admin_control enable admin PASSREMOVED user_control disable 
+onu 42 pri firewall level low
+onu 42 pri acl ping control enable lan enable wan enable ipv4_control enable 198.51.100.26 255.255.255.0 ipv6_control disable 
+onu 42 pri acl http control enable lan enable wan disable port 80
+onu add 43 profile default sn SNREMOVED
+onu 43 desc GPON0/2:43
+onu 43 profile line name line_1
+onu 43 profile srv name srv_2-wifi
+onu 43 pri equid MONUVPRI
+onu 43 pri wan_adv add route
+onu 43 pri wan_adv index 1 route mode internet mtu 1500 
+onu 43 pri wan_adv index 1 route ipv4 static ip 192.0.2.141 mask 255.255.255.0 gw 192.0.2.1 dns master 198.51.100.2 slave 203.0.113.2 nat enable 
+onu 43 pri wan_adv index 1 vlan tag wan_vlan 1925 0 
+onu 43 pri dhcp_server 192.168.109.1 255.255.255.0 enable 86400 192.168.109.2 192.168.109.254 pc 198.51.100.2 203.0.113.2 192.168.109.1 
+onu 43 pri wifi_ssid 1 name SSIDREMOVED hide disable auth_mode wpa2psk/wpa3psk encrypt_type aes shared_key PASSREMOVED rekey_interval 0
+onu 43 pri wifi_ssid 5 name SSIDREMOVED hide disable auth_mode wpapsk/wpa2psk encrypt_type tkipaes shared_key PASSREMOVED rekey_interval 0
+onu 43 pri username admin_control enable admin PASSREMOVED user_control disable 
+onu 43 pri firewall level low
+onu 43 pri acl ping control enable lan enable wan enable ipv4_control enable 198.51.100.26 255.255.255.0 ipv6_control disable 
+onu 43 pri acl http control enable lan enable wan disable port 80
+onu add 44 profile default sn SNREMOVED
+onu 44 desc GPON0/2:44
+onu 44 profile line name line_1
+onu 44 profile srv name srv_2-wifi
+onu 44 pri equid MONUVPRI
+onu 44 pri wan_adv add route
+onu 44 pri wan_adv index 1 route mode internet mtu 1500 
+onu 44 pri wan_adv index 1 route ipv4 static ip 192.0.2.148 mask 255.255.255.0 gw 192.0.2.1 dns master 198.51.100.2 slave 203.0.113.2 nat enable 
+onu 44 pri wan_adv index 1 vlan tag wan_vlan 1925 0 
+onu 44 pri dhcp_server 192.168.109.1 255.255.255.0 enable 86400 192.168.109.2 192.168.109.254 pc 198.51.100.2 203.0.113.2 192.168.109.1 
+onu 44 pri wifi_ssid 1 name SSIDREMOVED hide disable auth_mode wpa2psk/wpa3psk encrypt_type aes shared_key PASSREMOVED rekey_interval 0
+onu 44 pri wifi_ssid 5 name SSIDREMOVED hide disable auth_mode wpapsk/wpa2psk encrypt_type tkipaes shared_key PASSREMOVED rekey_interval 0
+onu 44 pri username admin_control enable admin PASSREMOVED user_control disable 
+onu 44 pri firewall level low
+onu 44 pri acl ping control enable lan enable wan enable ipv4_control enable 198.51.100.26 255.255.255.0 ipv6_control disable 
+onu 44 pri acl http control enable lan enable wan disable port 80
+onu add 45 profile default sn SNREMOVED
+onu 45 desc GPON0/2:45
+onu 45 profile line name line_1
+onu 45 profile srv name srv_2-wifi
+onu 45 pri equid MONUVPRI
+onu 45 pri wan_adv add route
+onu 45 pri wan_adv index 1 route mode internet mtu 1500 
+onu 45 pri wan_adv index 1 route ipv4 static ip 192.0.2.187 mask 255.255.255.0 gw 192.0.2.1 dns master 198.51.100.2 slave 203.0.113.2 nat enable 
+onu 45 pri wan_adv index 1 vlan tag wan_vlan 1925 0 
+onu 45 pri dhcp_server 192.168.109.1 255.255.255.0 enable 86400 192.168.109.2 192.168.109.254 pc 198.51.100.2 203.0.113.2 192.168.109.1 
+onu 45 pri wifi_ssid 1 name SSIDREMOVED hide disable auth_mode wpa2psk/wpa3psk encrypt_type aes shared_key PASSREMOVED rekey_interval 0
+onu 45 pri wifi_ssid 5 name SSIDREMOVED hide disable auth_mode wpa2psk/wpa3psk encrypt_type aes shared_key PASSREMOVED rekey_interval 0
+onu 45 pri username admin_control enable admin PASSREMOVED user_control disable 
+onu 45 pri firewall level low
+onu 45 pri acl http control enable lan enable wan disable port 80
+onu add 46 profile default sn SNREMOVED
+onu 46 desc GPON0/2:46
+onu 46 profile line name line_1
+onu 46 profile srv name srv_2-wifi
+onu 46 pri equid MONUVPRI
+onu 46 pri wan_adv add route
+onu 46 pri wan_adv index 1 route mode internet mtu 1500 
+onu 46 pri wan_adv index 1 route ipv4 static ip 192.0.2.188 mask 255.255.255.0 gw 192.0.2.1 dns master 198.51.100.2 slave 203.0.113.2 nat enable 
+onu 46 pri wan_adv index 1 vlan tag wan_vlan 1925 0 
+onu 46 pri dhcp_server 192.168.109.1 255.255.255.0 enable 86400 192.168.109.2 192.168.109.254 pc 198.51.100.2 203.0.113.2 192.168.109.1 
+onu 46 pri wifi_ssid 1 name SSIDREMOVED hide disable auth_mode wpa2psk/wpa3psk encrypt_type aes shared_key PASSREMOVED rekey_interval 0
+onu 46 pri wifi_ssid 5 name SSIDREMOVED hide disable auth_mode wpapsk/wpa2psk encrypt_type tkipaes shared_key PASSREMOVED rekey_interval 0
+onu 46 pri username admin_control enable admin PASSREMOVED user_control disable 
+onu 46 pri firewall level low
+onu 46 pri acl ping control enable lan enable wan enable ipv4_control enable 198.51.100.26 255.255.255.0 ipv6_control disable 
+onu 46 pri acl http control enable lan enable wan disable port 80
+exit
+!
+interface gpon 0/3
+no onu auto-learn
+plug_and_play disable
+onu add 1 profile default sn SNREMOVED
+onu 1 desc GPON0/3:1
+onu 1 profile line name line_1
+onu 1 profile srv name srv_2-wifi
+onu 1 pri equid MONUVPRI
+onu 1 pri wan_adv add route
+onu 1 pri wan_adv index 1 route mode internet mtu 1500 
+onu 1 pri wan_adv index 1 route ipv4 static ip 192.0.2.81 mask 255.255.255.0 gw 192.0.2.1 dns master 198.51.100.2 slave 203.0.113.2 nat enable 
+onu 1 pri dhcp_server 192.168.109.1 255.255.255.0 enable 86400 192.168.109.2 192.168.109.254 pc 198.51.100.2 203.0.113.2 192.168.109.1 
+onu 1 pri wifi_ssid 1 name SSIDREMOVED hide disable auth_mode wpa2psk/wpa3psk encrypt_type aes shared_key PASSREMOVED rekey_interval 0
+onu 1 pri wifi_ssid 5 name SSIDREMOVED hide disable auth_mode wpapsk/wpa2psk encrypt_type tkipaes shared_key PASSREMOVED rekey_interval 0
+onu 1 pri username admin_control enable admin PASSREMOVED user_control disable 
+onu 1 pri acl https control enable lan enable wan disable port 443
+onu add 2 profile default sn SNREMOVED
+onu 2 desc GPON0/3:2
+onu 2 profile line name line_1
+onu 2 profile srv name srv_2-wifi
+onu 2 pri equid MONUVPRI
+onu 2 pri wan_adv add route
+onu 2 pri wan_adv index 1 route mode internet mtu 1500 
+onu 2 pri wan_adv index 1 route ipv4 static ip 192.0.2.82 mask 255.255.255.0 gw 192.0.2.1 dns master 198.51.100.2 slave 203.0.113.2 nat enable 
+onu 2 pri dhcp_server 192.168.109.1 255.255.255.0 enable 86400 192.168.109.2 192.168.109.254 pc 198.51.100.2 203.0.113.2 192.168.109.1 
+onu 2 pri wifi_ssid 1 name SSIDREMOVED hide disable auth_mode wpa2psk/wpa3psk encrypt_type aes shared_key PASSREMOVED rekey_interval 0
+onu 2 pri wifi_ssid 5 name SSIDREMOVED hide disable auth_mode wpapsk/wpa2psk encrypt_type tkipaes shared_key PASSREMOVED rekey_interval 0
+onu 2 pri username admin_control enable admin PASSREMOVED user_control disable 
+onu 2 pri acl https control enable lan enable wan disable port 443
+onu add 3 profile default sn SNREMOVED
+onu 3 desc GPON0/3:3
+onu 3 profile line name line_1
+onu 3 profile srv name srv_2-wifi
+onu 3 pri equid MONUVPRI
+onu 3 pri wan_adv add route
+onu 3 pri wan_adv index 1 route mode internet mtu 1500 
+onu 3 pri wan_adv index 1 route ipv4 static ip 192.0.2.83 mask 255.255.255.0 gw 192.0.2.1 dns master 198.51.100.2 slave 203.0.113.2 nat enable 
+onu 3 pri dhcp_server 192.168.109.1 255.255.255.0 enable 86400 192.168.109.2 192.168.109.254 pc 198.51.100.2 203.0.113.2 192.168.109.1 
+onu 3 pri wifi_ssid 1 name SSIDREMOVED hide disable auth_mode wpa2psk/wpa3psk encrypt_type aes shared_key PASSREMOVED rekey_interval 0
+onu 3 pri wifi_ssid 5 name SSIDREMOVED hide disable auth_mode wpapsk/wpa2psk encrypt_type tkipaes shared_key PASSREMOVED rekey_interval 0
+onu 3 pri username admin_control enable admin PASSREMOVED user_control disable 
+onu 3 pri acl https control enable lan enable wan disable port 443
+onu add 4 profile default sn SNREMOVED
+onu 4 desc GPON0/3:4
+onu 4 profile line name line_1
+onu 4 profile srv name srv_2-wifi
+onu 4 pri equid MONUVPRI
+onu 4 pri wan_adv add route
+onu 4 pri wan_adv index 1 route mode internet mtu 1500 
+onu 4 pri wan_adv index 1 route ipv4 static ip 192.0.2.84 mask 255.255.255.0 gw 192.0.2.1 dns master 198.51.100.2 slave 203.0.113.2 nat enable 
+onu 4 pri dhcp_server 192.168.109.1 255.255.255.0 enable 86400 192.168.109.2 192.168.109.254 pc 198.51.100.2 203.0.113.2 192.168.109.1 
+onu 4 pri wifi_ssid 1 name SSIDREMOVED hide disable auth_mode wpa2psk/wpa3psk encrypt_type aes shared_key PASSREMOVED rekey_interval 0
+onu 4 pri wifi_ssid 5 name SSIDREMOVED hide disable auth_mode wpapsk/wpa2psk encrypt_type tkipaes shared_key PASSREMOVED rekey_interval 0
+onu 4 pri username admin_control enable admin PASSREMOVED user_control disable 
+onu 4 pri acl https control enable lan enable wan disable port 443
+onu add 5 profile default sn SNREMOVED
+onu 5 desc GPON0/3:5
+onu 5 profile line name line_1
+onu 5 profile srv name srv_2-wifi
+onu 5 pri equid MONUVPRI
+onu 5 pri wan_adv add route
+onu 5 pri wan_adv index 1 route mode internet mtu 1500 
+onu 5 pri wan_adv index 1 route ipv4 static ip 192.0.2.85 mask 255.255.255.0 gw 192.0.2.1 dns master 198.51.100.2 slave 203.0.113.2 nat enable 
+onu 5 pri dhcp_server 192.168.109.1 255.255.255.0 enable 86400 192.168.109.2 192.168.109.254 pc 198.51.100.2 203.0.113.2 192.168.109.1 
+onu 5 pri wifi_ssid 1 name SSIDREMOVED hide disable auth_mode wpa2psk/wpa3psk encrypt_type aes shared_key PASSREMOVED rekey_interval 0
+onu 5 pri wifi_ssid 5 name SSIDREMOVED hide disable auth_mode wpapsk/wpa2psk encrypt_type tkipaes shared_key PASSREMOVED rekey_interval 0
+onu 5 pri username admin_control enable admin PASSREMOVED user_control disable 
+onu 5 pri acl https control enable lan enable wan disable port 443
+onu add 6 profile default sn SNREMOVED
+onu 6 desc GPON0/3:6
+onu 6 profile line name line_1
+onu 6 profile srv name srv_2-wifi
+onu 6 pri equid MONUVPRI
+onu 6 pri wan_adv add route
+onu 6 pri wan_adv index 1 route mode internet mtu 1500 
+onu 6 pri wan_adv index 1 route ipv4 static ip 192.0.2.86 mask 255.255.255.0 gw 192.0.2.1 dns master 198.51.100.2 slave 203.0.113.2 nat enable 
+onu 6 pri dhcp_server 192.168.109.1 255.255.255.0 enable 86400 192.168.109.2 192.168.109.254 pc 198.51.100.2 203.0.113.2 192.168.109.1 
+onu 6 pri wifi_ssid 1 name SSIDREMOVED hide disable auth_mode wpa2psk/wpa3psk encrypt_type aes shared_key PASSREMOVED rekey_interval 0
+onu 6 pri wifi_ssid 5 name SSIDREMOVED hide disable auth_mode wpapsk/wpa2psk encrypt_type tkipaes shared_key PASSREMOVED rekey_interval 0
+onu 6 pri username admin_control enable admin PASSREMOVED user_control disable 
+onu 6 pri acl https control enable lan enable wan disable port 443
+onu add 7 profile default sn SNREMOVED
+onu 7 desc GPON0/3:7
+onu 7 profile line name line_1
+onu 7 profile srv name srv_2-wifi
+onu 7 pri equid MONUVPRI
+onu 7 pri wan_adv add route
+onu 7 pri wan_adv index 1 route mode internet mtu 1500 
+onu 7 pri wan_adv index 1 route ipv4 static ip 192.0.2.87 mask 255.255.255.0 gw 192.0.2.1 dns master 198.51.100.2 slave 203.0.113.2 nat enable 
+onu 7 pri dhcp_server 192.168.109.1 255.255.255.0 enable 86400 192.168.109.2 192.168.109.254 pc 198.51.100.2 203.0.113.2 192.168.109.1 
+onu 7 pri wifi_ssid 1 name SSIDREMOVED hide disable auth_mode wpa2psk/wpa3psk encrypt_type aes shared_key PASSREMOVED rekey_interval 0
+onu 7 pri wifi_ssid 5 name SSIDREMOVED hide disable auth_mode wpapsk/wpa2psk encrypt_type tkipaes shared_key PASSREMOVED rekey_interval 0
+onu 7 pri username admin_control enable admin PASSREMOVED user_control disable 
+onu 7 pri acl https control enable lan enable wan disable port 443
+onu add 8 profile default sn SNREMOVED
+onu 8 desc GPON0/3:8
+onu 8 profile line name line_1
+onu 8 profile srv name srv_2-wifi
+onu 8 pri equid MONUVPRI
+onu 8 pri wan_adv add route
+onu 8 pri wan_adv index 1 route mode internet mtu 1500 
+onu 8 pri wan_adv index 1 route ipv4 static ip 192.0.2.88 mask 255.255.255.0 gw 192.0.2.1 dns master 198.51.100.2 slave 203.0.113.2 nat enable 
+onu 8 pri dhcp_server 192.168.109.1 255.255.255.0 enable 86400 192.168.109.2 192.168.109.254 pc 198.51.100.2 203.0.113.2 192.168.109.1 
+onu 8 pri wifi_ssid 1 name SSIDREMOVED hide disable auth_mode wpa2psk/wpa3psk encrypt_type aes shared_key PASSREMOVED rekey_interval 0
+onu 8 pri wifi_ssid 5 name SSIDREMOVED hide disable auth_mode wpapsk/wpa2psk encrypt_type tkipaes shared_key PASSREMOVED rekey_interval 0
+onu 8 pri username admin_control enable admin PASSREMOVED user_control disable 
+onu 8 pri acl https control enable lan enable wan disable port 443
+onu add 9 profile default sn SNREMOVED
+onu 9 desc GPON0/3:9
+onu 9 profile line name line_1
+onu 9 profile srv name srv_2-wifi
+onu 9 pri equid MONUVPRI
+onu 9 pri wan_adv add route
+onu 9 pri wan_adv index 1 route mode internet mtu 1500 
+onu 9 pri wan_adv index 1 route ipv4 static ip 192.0.2.89 mask 255.255.255.0 gw 192.0.2.1 dns master 198.51.100.2 slave 203.0.113.2 nat enable 
+onu 9 pri dhcp_server 192.168.109.1 255.255.255.0 enable 86400 192.168.109.2 192.168.109.254 pc 198.51.100.2 203.0.113.2 192.168.109.1 
+onu 9 pri wifi_ssid 1 name SSIDREMOVED hide disable auth_mode wpa2psk/wpa3psk encrypt_type aes shared_key PASSREMOVED rekey_interval 0
+onu 9 pri wifi_ssid 5 name SSIDREMOVED hide disable auth_mode wpapsk/wpa2psk encrypt_type tkipaes shared_key PASSREMOVED rekey_interval 0
+onu 9 pri username admin_control enable admin PASSREMOVED user_control disable 
+onu 9 pri acl https control enable lan enable wan disable port 443
+onu add 10 profile default sn SNREMOVED
+onu 10 desc GPON0/3:10
+onu 10 profile line name line_1
+onu 10 profile srv name srv_2-wifi
+onu 10 pri equid MONUVPRI
+onu 10 pri wan_adv add route
+onu 10 pri wan_adv index 1 route mode internet mtu 1500 
+onu 10 pri wan_adv index 1 route ipv4 static ip 192.0.2.90 mask 255.255.255.0 gw 192.0.2.1 dns master 198.51.100.2 slave 203.0.113.2 nat enable 
+onu 10 pri dhcp_server 192.168.109.1 255.255.255.0 enable 86400 192.168.109.2 192.168.109.254 pc 198.51.100.2 203.0.113.2 192.168.109.1 
+onu 10 pri wifi_ssid 1 name SSIDREMOVED.1-5G hide disable auth_mode wpa2psk/wpa3psk encrypt_type aes shared_key PASSREMOVED rekey_interval 0
+onu 10 pri wifi_ssid 5 name SSIDREMOVED.1 hide disable auth_mode wpapsk/wpa2psk encrypt_type tkipaes shared_key PASSREMOVED rekey_interval 0
+onu 10 pri username admin_control enable admin PASSREMOVED user_control disable 
+onu 10 pri acl https control enable lan enable wan disable port 443
+onu add 11 profile default sn SNREMOVED
+onu 11 desc GPON0/3:11
+onu 11 profile line name line_1
+onu 11 profile srv name srv_2-wifi
+onu 11 pri equid MONUVPRI
+onu 11 pri wan_adv add route
+onu 11 pri wan_adv index 1 route mode internet mtu 1500 
+onu 11 pri wan_adv index 1 route ipv4 static ip 192.0.2.91 mask 255.255.255.0 gw 192.0.2.1 dns master 198.51.100.2 slave 203.0.113.2 nat enable 
+onu 11 pri dhcp_server 192.168.109.1 255.255.255.0 enable 86400 192.168.109.2 192.168.109.254 pc 198.51.100.2 203.0.113.2 192.168.109.1 
+onu 11 pri wifi_ssid 1 name SSIDREMOVED.2-5G hide disable auth_mode wpa2psk/wpa3psk encrypt_type aes shared_key PASSREMOVED rekey_interval 0
+onu 11 pri wifi_ssid 5 name SSIDREMOVED.2 hide disable auth_mode wpapsk/wpa2psk encrypt_type tkipaes shared_key PASSREMOVED rekey_interval 0
+onu 11 pri username admin_control enable admin PASSREMOVED user_control disable 
+onu 11 pri acl https control enable lan enable wan disable port 443
+onu add 12 profile default sn SNREMOVED
+onu 12 desc GPON0/3:12
+onu 12 profile line name line_1
+onu 12 profile srv name srv_2-wifi
+onu 12 pri equid MONUVPRI
+onu 12 pri wan_adv add route
+onu 12 pri wan_adv index 1 route mode internet mtu 1500 
+onu 12 pri wan_adv index 1 route ipv4 static ip 192.0.2.92 mask 255.255.255.0 gw 192.0.2.1 dns master 198.51.100.2 slave 203.0.113.2 nat enable 
+onu 12 pri dhcp_server 192.168.109.1 255.255.255.0 enable 86400 192.168.109.2 192.168.109.254 pc 198.51.100.2 203.0.113.2 192.168.109.1 
+onu 12 pri wifi_ssid 1 name SSIDREMOVED.1-5G hide disable auth_mode wpa2psk/wpa3psk encrypt_type aes shared_key PASSREMOVED rekey_interval 0
+onu 12 pri wifi_ssid 5 name SSIDREMOVED.1 hide disable auth_mode wpapsk/wpa2psk encrypt_type tkipaes shared_key PASSREMOVED rekey_interval 0
+onu 12 pri username admin_control enable admin PASSREMOVED user_control disable 
+onu 12 pri acl https control enable lan enable wan disable port 443
+onu add 13 profile default sn SNREMOVED
+onu 13 desc GPON0/3:13
+onu 13 profile line name line_1
+onu 13 profile srv name srv_2-wifi
+onu 13 pri equid MONUVPRI
+onu 13 pri wan_adv add route
+onu 13 pri wan_adv index 1 route mode internet mtu 1500 
+onu 13 pri wan_adv index 1 route ipv4 static ip 192.0.2.93 mask 255.255.255.0 gw 192.0.2.1 dns master 198.51.100.2 slave 203.0.113.2 nat enable 
+onu 13 pri dhcp_server 192.168.109.1 255.255.255.0 enable 86400 192.168.109.2 192.168.109.254 pc 198.51.100.2 203.0.113.2 192.168.109.1 
+onu 13 pri wifi_ssid 1 name SSIDREMOVED.2-5G hide disable auth_mode wpa2psk/wpa3psk encrypt_type aes shared_key PASSREMOVED rekey_interval 0
+onu 13 pri wifi_ssid 5 name SSIDREMOVED.2 hide disable auth_mode wpapsk/wpa2psk encrypt_type tkipaes shared_key PASSREMOVED rekey_interval 0
+onu 13 pri username admin_control enable admin PASSREMOVED user_control disable 
+onu 13 pri acl https control enable lan enable wan disable port 443
+onu add 14 profile default sn SNREMOVED
+onu 14 desc GPON0/3:14
+onu 14 profile line name line_1
+onu 14 profile srv name srv_2-wifi
+onu 14 pri equid MONUVPRI
+onu 14 pri wan_adv add route
+onu 14 pri wan_adv index 1 route mode internet mtu 1500 
+onu 14 pri wan_adv index 1 route ipv4 static ip 192.0.2.94 mask 255.255.255.0 gw 192.0.2.1 dns master 198.51.100.2 slave 203.0.113.2 nat enable 
+onu 14 pri dhcp_server 192.168.109.1 255.255.255.0 enable 86400 192.168.109.2 192.168.109.254 pc 198.51.100.2 203.0.113.2 192.168.109.1 
+onu 14 pri wifi_ssid 1 name SSIDREMOVED hide disable auth_mode wpa2psk/wpa3psk encrypt_type aes shared_key PASSREMOVED rekey_interval 0
+onu 14 pri wifi_ssid 5 name SSIDREMOVED hide disable auth_mode wpapsk/wpa2psk encrypt_type tkipaes shared_key PASSREMOVED rekey_interval 0
+onu 14 pri username admin_control enable admin PASSREMOVED user_control disable 
+onu 14 pri acl https control enable lan enable wan disable port 443
+onu add 15 profile default sn SNREMOVED
+onu 15 desc GPON0/3:15
+onu 15 profile line name line_1
+onu 15 profile srv name srv_2-wifi
+onu 15 pri equid MONUVPRI
+onu 15 pri wan_adv add route
+onu 15 pri wan_adv index 1 route mode internet mtu 1500 
+onu 15 pri wan_adv index 1 route ipv4 static ip 192.0.2.95 mask 255.255.255.0 gw 192.0.2.1 dns master 198.51.100.2 slave 203.0.113.2 nat enable 
+onu 15 pri dhcp_server 192.168.109.1 255.255.255.0 enable 86400 192.168.109.2 192.168.109.254 pc 198.51.100.2 203.0.113.2 192.168.109.1 
+onu 15 pri wifi_ssid 1 name SSIDREMOVED hide disable auth_mode wpa2psk/wpa3psk encrypt_type aes shared_key PASSREMOVED rekey_interval 0
+onu 15 pri wifi_ssid 5 name SSIDREMOVED hide disable auth_mode wpapsk/wpa2psk encrypt_type tkipaes shared_key PASSREMOVED rekey_interval 0
+onu 15 pri username admin_control enable admin PASSREMOVED user_control disable 
+onu 15 pri acl https control enable lan enable wan disable port 443
+onu add 16 profile default sn SNREMOVED
+onu 16 desc GPON0/3:16
+onu 16 profile line name line_1
+onu 16 profile srv name srv_2-wifi
+onu 16 pri equid MONUVPRI
+onu 16 pri wan_adv add route
+onu 16 pri wan_adv index 1 route mode internet mtu 1500 
+onu 16 pri wan_adv index 1 route ipv4 static ip 192.0.2.96 mask 255.255.255.0 gw 192.0.2.1 dns master 198.51.100.2 slave 203.0.113.2 nat enable 
+onu 16 pri dhcp_server 192.168.109.1 255.255.255.0 enable 86400 192.168.109.2 192.168.109.254 pc 198.51.100.2 203.0.113.2 192.168.109.1 
+onu 16 pri wifi_ssid 1 name SSIDREMOVED hide disable auth_mode wpa2psk/wpa3psk encrypt_type aes shared_key PASSREMOVED rekey_interval 0
+onu 16 pri wifi_ssid 5 name SSIDREMOVED hide disable auth_mode wpapsk/wpa2psk encrypt_type tkipaes shared_key PASSREMOVED rekey_interval 0
+onu 16 pri username admin_control enable admin PASSREMOVED user_control disable 
+onu 16 pri acl https control enable lan enable wan disable port 443
+onu add 17 profile default sn SNREMOVED
+onu 17 desc GPON0/3:17
+onu 17 profile line name line_1
+onu 17 profile srv name srv_2-wifi
+onu 17 pri equid MONUVPRI
+onu 17 pri wan_adv add route
+onu 17 pri wan_adv index 1 route mode internet mtu 1500 
+onu 17 pri wan_adv index 1 route ipv4 static ip 192.0.2.97 mask 255.255.255.0 gw 192.0.2.1 dns master 198.51.100.2 slave 203.0.113.2 nat enable 
+onu 17 pri dhcp_server 192.168.109.1 255.255.255.0 enable 86400 192.168.109.2 192.168.109.254 pc 198.51.100.2 203.0.113.2 192.168.109.1 
+onu 17 pri wifi_ssid 1 name SSIDREMOVED hide disable auth_mode wpa2psk/wpa3psk encrypt_type aes shared_key PASSREMOVED rekey_interval 0
+onu 17 pri wifi_ssid 5 name SSIDREMOVED hide disable auth_mode wpapsk/wpa2psk encrypt_type tkipaes shared_key PASSREMOVED rekey_interval 0
+onu 17 pri username admin_control enable admin PASSREMOVED user_control disable 
+onu 17 pri acl https control enable lan enable wan disable port 443
+onu add 18 profile default sn SNREMOVED
+onu 18 desc GPON0/3:18
+onu 18 profile line name line_1
+onu 18 profile srv name srv_2-wifi
+onu 18 pri equid MONUVPRI
+onu 18 pri wan_adv add route
+onu 18 pri wan_adv index 1 route mode internet mtu 1500 
+onu 18 pri wan_adv index 1 route ipv4 static ip 192.0.2.98 mask 255.255.255.0 gw 192.0.2.1 dns master 198.51.100.2 slave 203.0.113.2 nat enable 
+onu 18 pri dhcp_server 192.168.109.1 255.255.255.0 enable 86400 192.168.109.2 192.168.109.254 pc 198.51.100.2 203.0.113.2 192.168.109.1 
+onu 18 pri wifi_ssid 1 name SSIDREMOVED hide disable auth_mode wpa2psk/wpa3psk encrypt_type aes shared_key PASSREMOVED rekey_interval 0
+onu 18 pri wifi_ssid 5 name SSIDREMOVED hide disable auth_mode wpapsk/wpa2psk encrypt_type tkipaes shared_key PASSREMOVED rekey_interval 0
+onu 18 pri username admin_control enable admin PASSREMOVED user_control disable 
+onu 18 pri acl https control enable lan enable wan disable port 443
+onu add 19 profile default sn SNREMOVED
+onu 19 desc GPON0/3:19
+onu 19 profile line name line_1
+onu 19 profile srv name srv_2-wifi
+onu 19 pri equid MONUVPRI
+onu 19 pri wan_adv add route
+onu 19 pri wan_adv index 1 route mode internet mtu 1500 
+onu 19 pri wan_adv index 1 route ipv4 static ip 192.0.2.99 mask 255.255.255.0 gw 192.0.2.1 dns master 198.51.100.2 slave 203.0.113.2 nat enable 
+onu 19 pri dhcp_server 192.168.109.1 255.255.255.0 enable 86400 192.168.109.2 192.168.109.254 pc 198.51.100.2 203.0.113.2 192.168.109.1 
+onu 19 pri wifi_ssid 1 name SSIDREMOVED hide disable auth_mode wpa2psk/wpa3psk encrypt_type aes shared_key PASSREMOVED rekey_interval 0
+onu 19 pri wifi_ssid 5 name SSIDREMOVED hide disable auth_mode wpapsk/wpa2psk encrypt_type tkipaes shared_key PASSREMOVED rekey_interval 0
+onu 19 pri username admin_control enable admin PASSREMOVED user_control disable 
+onu 19 pri acl https control enable lan enable wan disable port 443
+onu add 20 profile default sn SNREMOVED
+onu 20 desc GPON0/3:20
+onu 20 profile line name line_1
+onu 20 profile srv name srv_2-wifi
+onu 20 pri equid MONUVPRI
+onu 20 pri wan_adv add route
+onu 20 pri wan_adv index 1 route mode internet mtu 1500 
+onu 20 pri wan_adv index 1 route ipv4 static ip 192.0.2.100 mask 255.255.255.0 gw 192.0.2.1 dns master 198.51.100.2 slave 203.0.113.2 nat enable 
+onu 20 pri dhcp_server 192.168.109.1 255.255.255.0 enable 86400 192.168.109.2 192.168.109.254 pc 198.51.100.2 203.0.113.2 192.168.109.1 
+onu 20 pri wifi_ssid 1 name SSIDREMOVED hide disable auth_mode wpa2psk/wpa3psk encrypt_type aes shared_key PASSREMOVED rekey_interval 0
+onu 20 pri wifi_ssid 5 name SSIDREMOVED hide disable auth_mode wpapsk/wpa2psk encrypt_type tkipaes shared_key PASSREMOVED rekey_interval 0
+onu 20 pri username admin_control enable admin PASSREMOVED user_control disable 
+onu 20 pri acl https control enable lan enable wan disable port 443
+onu add 21 profile default sn SNREMOVED
+onu 21 desc GPON0/3:21
+onu 21 profile line name line_1
+onu 21 profile srv name srv_2-wifi
+onu 21 pri equid MONUVPRI
+onu 21 pri wan_adv add route
+onu 21 pri wan_adv index 1 route mode internet mtu 1500 
+onu 21 pri wan_adv index 1 route ipv4 static ip 192.0.2.101 mask 255.255.255.0 gw 192.0.2.1 dns master 198.51.100.2 slave 203.0.113.2 nat enable 
+onu 21 pri dhcp_server 192.168.109.1 255.255.255.0 enable 86400 192.168.109.2 192.168.109.254 pc 198.51.100.2 203.0.113.2 192.168.109.1 
+onu 21 pri wifi_ssid 1 name SSIDREMOVED hide disable auth_mode wpa2psk/wpa3psk encrypt_type aes shared_key PASSREMOVED rekey_interval 0
+onu 21 pri wifi_ssid 5 name SSIDREMOVED hide disable auth_mode wpapsk/wpa2psk encrypt_type tkipaes shared_key PASSREMOVED rekey_interval 0
+onu 21 pri username admin_control enable admin PASSREMOVED user_control disable 
+onu 21 pri acl https control enable lan enable wan disable port 443
+onu add 22 profile default sn SNREMOVED
+onu 22 desc GPON0/3:22
+onu 22 profile line name line_1
+onu 22 profile srv name srv_2-wifi
+onu 22 pri equid MONUVPRI
+onu 22 pri wan_adv add route
+onu 22 pri wan_adv index 1 route mode internet mtu 1500 
+onu 22 pri wan_adv index 1 route ipv4 static ip 192.0.2.102 mask 255.255.255.0 gw 192.0.2.1 dns master 198.51.100.2 slave 203.0.113.2 nat enable 
+onu 22 pri dhcp_server 192.168.109.1 255.255.255.0 enable 86400 192.168.109.2 192.168.109.254 pc 198.51.100.2 203.0.113.2 192.168.109.1 
+onu 22 pri wifi_ssid 1 name SSIDREMOVED hide disable auth_mode wpa2psk/wpa3psk encrypt_type aes shared_key PASSREMOVED rekey_interval 0
+onu 22 pri wifi_ssid 5 name SSIDREMOVED hide disable auth_mode wpapsk/wpa2psk encrypt_type tkipaes shared_key PASSREMOVED rekey_interval 0
+onu 22 pri username admin_control enable admin PASSREMOVED user_control disable 
+onu 22 pri acl https control enable lan enable wan disable port 443
+onu add 23 profile default sn SNREMOVED
+onu 23 desc GPON0/3:23
+onu 23 profile line name line_1
+onu 23 profile srv name srv_2-wifi
+onu 23 pri equid MONUVPRI
+onu 23 pri wan_adv add route
+onu 23 pri wan_adv index 1 route mode internet mtu 1500 
+onu 23 pri wan_adv index 1 route ipv4 static ip 192.0.2.103 mask 255.255.255.0 gw 192.0.2.1 dns master 198.51.100.2 slave 203.0.113.2 nat enable 
+onu 23 pri dhcp_server 192.168.109.1 255.255.255.0 enable 86400 192.168.109.2 192.168.109.254 pc 198.51.100.2 203.0.113.2 192.168.109.1 
+onu 23 pri wifi_ssid 1 name SSIDREMOVED hide disable auth_mode wpa2psk/wpa3psk encrypt_type aes shared_key PASSREMOVED rekey_interval 0
+onu 23 pri wifi_ssid 5 name SSIDREMOVED hide disable auth_mode wpapsk/wpa2psk encrypt_type tkipaes shared_key PASSREMOVED rekey_interval 0
+onu 23 pri username admin_control enable admin PASSREMOVED user_control disable 
+onu 23 pri acl https control enable lan enable wan disable port 443
+onu add 24 profile default sn SNREMOVED
+onu 24 desc GPON0/3:24
+onu 24 profile line name line_1
+onu 24 profile srv name srv_2-wifi
+onu 24 pri equid MONUVPRI
+onu 24 pri wan_adv add route
+onu 24 pri wan_adv index 1 route mode internet mtu 1500 
+onu 24 pri wan_adv index 1 route ipv4 static ip 192.0.2.104 mask 255.255.255.0 gw 192.0.2.1 dns master 198.51.100.2 slave 203.0.113.2 nat enable 
+onu 24 pri dhcp_server 192.168.109.1 255.255.255.0 enable 86400 192.168.109.2 192.168.109.254 pc 198.51.100.2 203.0.113.2 192.168.109.1 
+onu 24 pri wifi_ssid 1 name SSIDREMOVED.1-5G hide disable auth_mode wpa2psk/wpa3psk encrypt_type aes shared_key PASSREMOVED rekey_interval 0
+onu 24 pri wifi_ssid 5 name SSIDREMOVED.1 hide disable auth_mode wpapsk/wpa2psk encrypt_type tkipaes shared_key PASSREMOVED rekey_interval 0
+onu 24 pri username admin_control enable admin PASSREMOVED user_control disable 
+onu 24 pri acl https control enable lan enable wan disable port 443
+onu add 25 profile default sn SNREMOVED
+onu 25 desc GPON0/3:25
+onu 25 profile line name line_1
+onu 25 profile srv name srv_2-wifi
+onu 25 pri equid MONUVPRI
+onu 25 pri wan_adv add route
+onu 25 pri wan_adv index 1 route mode internet mtu 1500 
+onu 25 pri wan_adv index 1 route ipv4 static ip 192.0.2.105 mask 255.255.255.0 gw 192.0.2.1 dns master 198.51.100.2 slave 203.0.113.2 nat enable 
+onu 25 pri dhcp_server 192.168.109.1 255.255.255.0 enable 86400 192.168.109.2 192.168.109.254 pc 198.51.100.2 203.0.113.2 192.168.109.1 
+onu 25 pri wifi_ssid 1 name SSIDREMOVED.2-5G hide disable auth_mode wpa2psk/wpa3psk encrypt_type aes shared_key PASSREMOVED rekey_interval 0
+onu 25 pri wifi_ssid 5 name SSIDREMOVED.2 hide disable auth_mode wpapsk/wpa2psk encrypt_type tkipaes shared_key PASSREMOVED rekey_interval 0
+onu 25 pri username admin_control enable admin PASSREMOVED user_control disable 
+onu 25 pri acl https control enable lan enable wan disable port 443
+onu add 26 profile default sn SNREMOVED
+onu 26 desc GPON0/3:26
+onu 26 profile line name line_1
+onu 26 profile srv name srv_2-wifi
+onu 26 pri equid MONUVPRI
+onu 26 pri wan_adv add route
+onu 26 pri wan_adv index 1 route mode internet mtu 1500 
+onu 26 pri wan_adv index 1 route ipv4 static ip 192.0.2.106 mask 255.255.255.0 gw 192.0.2.1 dns master 198.51.100.2 slave 203.0.113.2 nat enable 
+onu 26 pri dhcp_server 192.168.109.1 255.255.255.0 enable 86400 192.168.109.2 192.168.109.254 pc 198.51.100.2 203.0.113.2 192.168.109.1 
+onu 26 pri wifi_ssid 1 name SSIDREMOVED.1-5G hide disable auth_mode wpa2psk/wpa3psk encrypt_type aes shared_key PASSREMOVED rekey_interval 0
+onu 26 pri wifi_ssid 5 name SSIDREMOVED.1 hide disable auth_mode wpapsk/wpa2psk encrypt_type tkipaes shared_key PASSREMOVED rekey_interval 0
+onu 26 pri username admin_control enable admin PASSREMOVED user_control disable 
+onu 26 pri acl https control enable lan enable wan disable port 443
+onu add 27 profile default sn SNREMOVED
+onu 27 desc GPON0/3:27
+onu 27 profile line name line_1
+onu 27 profile srv name srv_2-wifi
+onu 27 pri equid MONUVPRI
+onu 27 pri wan_adv add route
+onu 27 pri wan_adv index 1 route mode internet mtu 1500 
+onu 27 pri wan_adv index 1 route ipv4 static ip 192.0.2.107 mask 255.255.255.0 gw 192.0.2.1 dns master 198.51.100.2 slave 203.0.113.2 nat enable 
+onu 27 pri dhcp_server 192.168.109.1 255.255.255.0 enable 86400 192.168.109.2 192.168.109.254 pc 198.51.100.2 203.0.113.2 192.168.109.1 
+onu 27 pri wifi_ssid 1 name SSIDREMOVED.2-5G hide disable auth_mode wpa2psk/wpa3psk encrypt_type aes shared_key PASSREMOVED rekey_interval 0
+onu 27 pri wifi_ssid 5 name SSIDREMOVED.2 hide disable auth_mode wpapsk/wpa2psk encrypt_type tkipaes shared_key PASSREMOVED rekey_interval 0
+onu 27 pri username admin_control enable admin PASSREMOVED user_control disable 
+onu 27 pri acl https control enable lan enable wan disable port 443
+onu add 28 profile default sn SNREMOVED
+onu 28 desc GPON0/3:28
+onu 28 profile line name line_1
+onu 28 profile srv name srv_2-wifi
+onu 28 pri equid MONUVPRI
+onu 28 pri wan_adv add route
+onu 28 pri wan_adv index 1 route mode internet mtu 1500 
+onu 28 pri wan_adv index 1 route ipv4 static ip 192.0.2.108 mask 255.255.255.0 gw 192.0.2.1 dns master 198.51.100.2 slave 203.0.113.2 nat enable 
+onu 28 pri dhcp_server 192.168.109.1 255.255.255.0 enable 86400 192.168.109.2 192.168.109.254 pc 198.51.100.2 203.0.113.2 192.168.109.1 
+onu 28 pri wifi_ssid 1 name SSIDREMOVED hide disable auth_mode wpa2psk/wpa3psk encrypt_type aes shared_key PASSREMOVED rekey_interval 0
+onu 28 pri wifi_ssid 5 name SSIDREMOVED hide disable auth_mode wpapsk/wpa2psk encrypt_type tkipaes shared_key PASSREMOVED rekey_interval 0
+onu 28 pri username admin_control enable admin PASSREMOVED user_control disable 
+onu 28 pri acl https control enable lan enable wan disable port 443
+onu add 29 profile default sn SNREMOVED
+onu 29 desc GPON0/3:29
+onu 29 profile line name line_1
+onu 29 profile srv name srv_2-wifi
+onu 29 pri equid MONUVPRI
+onu 29 pri wan_adv index 1 route mode internet mtu 1500 
+onu 29 pri wan_adv index 1 route ipv4 static ip 192.0.2.109 mask 255.255.255.0 gw 192.0.2.1 dns master 198.51.100.2 slave 203.0.113.2 nat enable 
+onu 29 pri dhcp_server 192.168.109.1 255.255.255.0 enable 86400 192.168.109.2 192.168.109.254 pc 198.51.100.2 203.0.113.2 192.168.109.1 
+onu 29 pri wifi_ssid 1 name SSIDREMOVED hide disable auth_mode wpa2psk/wpa3psk encrypt_type aes shared_key PASSREMOVED rekey_interval 0
+onu 29 pri wifi_ssid 5 name SSIDREMOVED hide disable auth_mode wpapsk/wpa2psk encrypt_type tkipaes shared_key PASSREMOVED rekey_interval 0
+onu 29 pri username admin_control enable admin PASSREMOVED user_control disable 
+onu 29 pri acl https control enable lan enable wan disable port 443
+onu add 30 profile default sn SNREMOVED
+onu 30 desc GPON0/3:30
+onu 30 profile line name line_1
+onu 30 profile srv name srv_2-wifi
+onu 30 pri equid MONUVPRI
+onu 30 pri wan_adv add route
+onu 30 pri wan_adv index 1 route mode internet mtu 1500 
+onu 30 pri wan_adv index 1 route ipv4 static ip 192.0.2.110 mask 255.255.255.0 gw 192.0.2.1 dns master 198.51.100.2 slave 203.0.113.2 nat enable 
+onu 30 pri dhcp_server 192.168.109.1 255.255.255.0 enable 86400 192.168.109.2 192.168.109.254 pc 198.51.100.2 203.0.113.2 192.168.109.1 
+onu 30 pri wifi_ssid 1 name SSIDREMOVED hide disable auth_mode wpa2psk/wpa3psk encrypt_type aes shared_key PASSREMOVED rekey_interval 0
+onu 30 pri wifi_ssid 5 name SSIDREMOVED hide disable auth_mode wpapsk/wpa2psk encrypt_type tkipaes shared_key PASSREMOVED rekey_interval 0
+onu 30 pri username admin_control enable admin PASSREMOVED user_control disable 
+onu 30 pri acl https control enable lan enable wan disable port 443
+onu add 31 profile default sn SNREMOVED
+onu 31 desc GPON0/3:31
+onu 31 profile line name line_1
+onu 31 profile srv name srv_2-wifi
+onu 31 pri equid MONUVPRI
+onu 31 pri wan_adv add route
+onu 31 pri wan_adv index 1 route mode internet mtu 1500 
+onu 31 pri wan_adv index 1 route ipv4 static ip 192.0.2.111 mask 255.255.255.0 gw 192.0.2.1 dns master 198.51.100.2 slave 203.0.113.2 nat enable 
+onu 31 pri dhcp_server 192.168.109.1 255.255.255.0 enable 86400 192.168.109.2 192.168.109.254 pc 198.51.100.2 203.0.113.2 192.168.109.1 
+onu 31 pri wifi_ssid 1 name SSIDREMOVED hide disable auth_mode wpa2psk/wpa3psk encrypt_type aes shared_key PASSREMOVED rekey_interval 0
+onu 31 pri wifi_ssid 5 name SSIDREMOVED hide disable auth_mode wpapsk/wpa2psk encrypt_type tkipaes shared_key PASSREMOVED rekey_interval 0
+onu 31 pri username admin_control enable admin PASSREMOVED user_control disable 
+onu 31 pri acl https control enable lan enable wan disable port 443
+onu add 32 profile default sn SNREMOVED
+onu 32 desc GPON0/3:32
+onu 32 profile line name line_1
+onu 32 profile srv name srv_2-wifi
+onu 32 pri equid MONUVPRI
+onu 32 pri wan_adv add route
+onu 32 pri wan_adv index 1 route mode internet mtu 1500 
+onu 32 pri wan_adv index 1 route ipv4 static ip 192.0.2.112 mask 255.255.255.0 gw 192.0.2.1 dns master 198.51.100.2 slave 203.0.113.2 nat enable 
+onu 32 pri dhcp_server 192.168.109.1 255.255.255.0 enable 86400 192.168.109.2 192.168.109.254 pc 198.51.100.2 203.0.113.2 192.168.109.1 
+onu 32 pri wifi_ssid 1 name SSIDREMOVED hide disable auth_mode wpa2psk/wpa3psk encrypt_type aes shared_key PASSREMOVED rekey_interval 0
+onu 32 pri wifi_ssid 5 name SSIDREMOVED hide disable auth_mode wpapsk/wpa2psk encrypt_type tkipaes shared_key PASSREMOVED rekey_interval 0
+onu 32 pri username admin_control enable admin PASSREMOVED user_control disable 
+onu 32 pri acl https control enable lan enable wan disable port 443
+onu add 33 profile default sn SNREMOVED
+onu 33 desc GPON0/3:33
+onu 33 profile line name line_1
+onu 33 profile srv name srv_2-wifi
+onu 33 pri equid MONUVPRI
+onu 33 pri wan_adv add route
+onu 33 pri wan_adv index 1 route mode internet mtu 1500 
+onu 33 pri wan_adv index 1 route ipv4 static ip 192.0.2.113 mask 255.255.255.0 gw 192.0.2.1 dns master 198.51.100.2 slave 203.0.113.2 nat enable 
+onu 33 pri dhcp_server 192.168.109.1 255.255.255.0 enable 86400 192.168.109.2 192.168.109.254 pc 198.51.100.2 203.0.113.2 192.168.109.1 
+onu 33 pri wifi_ssid 1 name SSIDREMOVED hide disable auth_mode wpa2psk/wpa3psk encrypt_type aes shared_key PASSREMOVED rekey_interval 0
+onu 33 pri wifi_ssid 5 name SSIDREMOVED hide disable auth_mode wpapsk/wpa2psk encrypt_type tkipaes shared_key PASSREMOVED rekey_interval 0
+onu 33 pri username admin_control enable admin PASSREMOVED user_control disable 
+onu 33 pri acl https control enable lan enable wan disable port 443
+onu add 34 profile default sn SNREMOVED
+onu 34 desc GPON0/3:34
+onu 34 profile line name line_1
+onu 34 profile srv name srv_2-wifi
+onu 34 pri equid MONUVPRI
+onu 34 pri wan_adv add route
+onu 34 pri wan_adv index 1 route mode internet mtu 1500 
+onu 34 pri wan_adv index 1 route ipv4 static ip 192.0.2.114 mask 255.255.255.0 gw 192.0.2.1 dns master 198.51.100.2 slave 203.0.113.2 nat enable 
+onu 34 pri dhcp_server 192.168.109.1 255.255.255.0 enable 86400 192.168.109.2 192.168.109.254 pc 198.51.100.2 203.0.113.2 192.168.109.1 
+onu 34 pri wifi_ssid 1 name SSIDREMOVED hide disable auth_mode wpa2psk/wpa3psk encrypt_type aes shared_key PASSREMOVED rekey_interval 0
+onu 34 pri wifi_ssid 5 name SSIDREMOVED hide disable auth_mode wpapsk/wpa2psk encrypt_type tkipaes shared_key PASSREMOVED rekey_interval 0
+onu 34 pri username admin_control enable admin PASSREMOVED user_control disable 
+onu 34 pri acl https control enable lan enable wan disable port 443
+onu add 35 profile default sn SNREMOVED
+onu 35 desc GPON0/3:35
+onu 35 profile line name line_1
+onu 35 profile srv name srv_2-wifi
+onu 35 pri equid MONUVPRI
+onu 35 pri wan_adv add route
+onu 35 pri wan_adv index 1 route mode internet mtu 1500 
+onu 35 pri wan_adv index 1 route ipv4 static ip 192.0.2.115 mask 255.255.255.0 gw 192.0.2.1 dns master 198.51.100.2 slave 203.0.113.2 nat enable 
+onu 35 pri dhcp_server 192.168.109.1 255.255.255.0 enable 86400 192.168.109.2 192.168.109.254 pc 198.51.100.2 203.0.113.2 192.168.109.1 
+onu 35 pri wifi_ssid 1 name SSIDREMOVED hide disable auth_mode wpa2psk/wpa3psk encrypt_type aes shared_key PASSREMOVED rekey_interval 0
+onu 35 pri wifi_ssid 5 name SSIDREMOVED hide disable auth_mode wpapsk/wpa2psk encrypt_type tkipaes shared_key PASSREMOVED rekey_interval 0
+onu 35 pri username admin_control enable admin PASSREMOVED user_control disable 
+onu 35 pri acl https control enable lan enable wan disable port 443
+onu add 36 profile default sn SNREMOVED
+onu 36 desc GPON0/3:36
+onu 36 profile line name line_1
+onu 36 profile srv name srv_2-wifi
+onu 36 pri equid MONUVPRI
+onu 36 pri wan_adv add route
+onu 36 pri wan_adv index 1 route mode internet mtu 1500 
+onu 36 pri wan_adv index 1 route ipv4 static ip 192.0.2.116 mask 255.255.255.0 gw 192.0.2.1 dns master 198.51.100.2 slave 203.0.113.2 nat enable 
+onu 36 pri dhcp_server 192.168.109.1 255.255.255.0 enable 86400 192.168.109.2 192.168.109.254 pc 198.51.100.2 203.0.113.2 192.168.109.1 
+onu 36 pri wifi_ssid 1 name SSIDREMOVED.1-5G hide disable auth_mode wpa2psk/wpa3psk encrypt_type aes shared_key PASSREMOVED rekey_interval 0
+onu 36 pri wifi_ssid 5 name SSIDREMOVED.1 hide disable auth_mode wpapsk/wpa2psk encrypt_type tkipaes shared_key PASSREMOVED rekey_interval 0
+onu 36 pri username admin_control enable admin PASSREMOVED user_control disable 
+onu 36 pri acl https control enable lan enable wan disable port 443
+onu add 37 profile default sn SNREMOVED
+onu 37 desc GPON0/3:37
+onu 37 profile line name line_1
+onu 37 profile srv name srv_2-wifi
+onu 37 pri equid MONUVPRI
+onu 37 pri wan_adv add route
+onu 37 pri wan_adv index 1 route mode internet mtu 1500 
+onu 37 pri wan_adv index 1 route ipv4 static ip 192.0.2.117 mask 255.255.255.0gw 192.0.2.1 dns master 198.51.100.2 slave 203.0.113.2 nat enable 
+onu 37 pri dhcp_server 192.168.109.1 255.255.255.0 enable 86400 192.168.109.2 192.168.109.254 pc 198.51.100.2 203.0.113.2 192.168.109.1 
+onu 37 pri wifi_ssid 1 name SSIDREMOVED.2-5G hide disable auth_mode wpa2psk/wpa3psk encrypt_type aes shared_key PASSREMOVED rekey_interval 0
+onu 37 pri wifi_ssid 5 name SSIDREMOVED.2 hide disable auth_mode wpapsk/wpa2psk encrypt_type tkipaes shared_key PASSREMOVED rekey_interval 0
+onu 37 pri username admin_control enable admin PASSREMOVED user_control disable 
+onu 37 pri firewall level low
+onu 37 pri acl ping control enable lan enable wan enable ipv4_control enable 198.51.100.26 255.255.255.0 ipv6_control disable 
+onu 37 pri acl http control enable lan enable wan disable port 80
+onu add 38 profile default sn SNREMOVED
+onu 38 desc GPON0/3:38
+onu 38 profile line name line_1
+onu 38 profile srv name srv_2-wifi
+onu 38 pri equid MONUVPRI
+onu 38 pri wan_adv add route
+onu 38 pri wan_adv index 1 route mode internet mtu 1500 
+onu 38 pri wan_adv index 1 route ipv4 static ip 192.0.2.118 mask 255.255.255.0 gw 192.0.2.1 dns master 198.51.100.2 slave 203.0.113.2 nat enable 
+onu 38 pri dhcp_server 192.168.109.1 255.255.255.0 enable 86400 192.168.109.2 192.168.109.254 pc 198.51.100.2 203.0.113.2 192.168.109.1 
+onu 38 pri wifi_ssid 1 name SSIDREMOVED.1-5G hide disable auth_mode wpa2psk/wpa3psk encrypt_type aes shared_key PASSREMOVED rekey_interval 0
+onu 38 pri wifi_ssid 5 name SSIDREMOVED.1 hide disable auth_mode wpapsk/wpa2psk encrypt_type tkipaes shared_key PASSREMOVED rekey_interval 0
+onu 38 pri username admin_control enable admin PASSREMOVED user_control disable 
+onu 38 pri acl https control enable lan enable wan disable port 443
+onu add 39 profile default sn SNREMOVED
+onu 39 desc GPON0/3:39
+onu 39 profile line name line_1
+onu 39 profile srv name srv_2-wifi
+onu 39 pri equid MONUVPRI
+onu 39 pri wan_adv add route
+onu 39 pri wan_adv index 1 route mode internet mtu 1500 
+onu 39 pri wan_adv index 1 route ipv4 static ip 192.0.2.119 mask 255.255.255.0 gw 192.0.2.1 dns master 198.51.100.2 slave 203.0.113.2 nat enable 
+onu 39 pri dhcp_server 192.168.109.1 255.255.255.0 enable 86400 192.168.109.2 192.168.109.254 pc 198.51.100.2 203.0.113.2 192.168.109.1 
+onu 39 pri wifi_ssid 1 name SSIDREMOVED.2-5G hide disable auth_mode wpa2psk/wpa3psk encrypt_type aes shared_key PASSREMOVED rekey_interval 0
+onu 39 pri wifi_ssid 5 name SSIDREMOVED.2 hide disable auth_mode wpapsk/wpa2psk encrypt_type tkipaes shared_key PASSREMOVED rekey_interval 0
+onu 39 pri username admin_control enable admin PASSREMOVED user_control disable 
+onu 39 pri acl https control enable lan enable wan disable port 443
+onu add 40 profile default sn SNREMOVED
+onu 40 desc GPON0/3:40
+onu 40 profile line name line_1
+onu 40 profile srv name srv_2-wifi
+onu 40 pri equid MONUVPRI
+onu 40 pri wan_adv add route
+onu 40 pri wan_adv index 1 route mode internet mtu 1500 
+onu 40 pri wan_adv index 1 route ipv4 static ip 192.0.2.120 mask 255.255.255.0 gw 192.0.2.1 dns master 198.51.100.2 slave 203.0.113.2 nat enable 
+onu 40 pri dhcp_server 192.168.109.1 255.255.255.0 enable 86400 192.168.109.2 192.168.109.254 pc 198.51.100.2 203.0.113.2 192.168.109.1 
+onu 40 pri wifi_ssid 1 name SSIDREMOVED hide disable auth_mode wpa2psk/wpa3psk encrypt_type aes shared_key PASSREMOVED rekey_interval 0
+onu 40 pri wifi_ssid 5 name SSIDREMOVED hide disable auth_mode wpapsk/wpa2psk encrypt_type tkipaes shared_key PASSREMOVED rekey_interval 0
+onu 40 pri username admin_control enable admin PASSREMOVED user_control disable 
+onu 40 pri acl https control enable lan enable wan disable port 443
+onu add 41 profile default sn SNREMOVED
+onu 41 desc GPON0/3:41
+onu 41 profile line name line_1
+onu 41 profile srv name srv_2-wifi
+onu 41 pri equid MONUVPRI
+onu 41 pri wan_adv add route
+onu 41 pri wan_adv index 1 route mode internet mtu 1500 
+onu 41 pri wan_adv index 1 route ipv4 static ip 192.0.2.121 mask 255.255.255.0 gw 192.0.2.1 dns master 198.51.100.2 slave 203.0.113.2 nat enable 
+onu 41 pri dhcp_server 192.168.109.1 255.255.255.0 enable 86400 192.168.109.2 192.168.109.254 pc 198.51.100.2 203.0.113.2 192.168.109.1 
+onu 41 pri wifi_ssid 1 name SSIDREMOVED hide disable auth_mode wpa2psk/wpa3psk encrypt_type aes shared_key PASSREMOVED rekey_interval 0
+onu 41 pri wifi_ssid 5 name SSIDREMOVED hide disable auth_mode wpapsk/wpa2psk encrypt_type tkipaes shared_key PASSREMOVED rekey_interval 0
+onu 41 pri username admin_control enable admin PASSREMOVED user_control disable 
+onu 41 pri acl https control enable lan enable wan disable port 443
+onu add 42 profile default sn SNREMOVED
+onu 42 desc GPON0/3:42
+onu 42 profile line name line_1
+onu 42 profile srv name srv_2-wifi
+onu 42 pri equid MONUVPRI
+onu 42 pri wan_adv add route
+onu 42 pri wan_adv index 1 route mode internet mtu 1500 
+onu 42 pri wan_adv index 1 route ipv4 static ip 192.0.2.122 mask 255.255.255.0 gw 192.0.2.1 dns master 198.51.100.2 slave 203.0.113.2 nat enable 
+onu 42 pri dhcp_server 192.168.109.1 255.255.255.0 enable 86400 192.168.109.2 192.168.109.254 pc 198.51.100.2 203.0.113.2 192.168.109.1 
+onu 42 pri wifi_ssid 1 name SSIDREMOVED hide disable auth_mode wpa2psk/wpa3psk encrypt_type aes shared_key PASSREMOVED rekey_interval 0
+onu 42 pri wifi_ssid 5 name SSIDREMOVED hide disable auth_mode wpapsk/wpa2psk encrypt_type tkipaes shared_key PASSREMOVED rekey_interval 0
+onu 42 pri username admin_control enable admin PASSREMOVED user_control disable 
+onu 42 pri acl https control enable lan enable wan disable port 443
+onu add 43 profile default sn SNREMOVED
+onu 43 desc GPON0/3:43
+onu 43 profile line name line_1
+onu 43 profile srv name srv_2-wifi
+onu 43 pri equid MONUVPRI
+onu 43 pri wan_adv add route
+onu 43 pri wan_adv index 1 route mode internet mtu 1500 
+onu 43 pri wan_adv index 1 route ipv4 static ip 192.0.2.123 mask 255.255.255.0 gw 192.0.2.1 dns master 198.51.100.2 slave 203.0.113.2 nat enable 
+onu 43 pri dhcp_server 192.168.109.1 255.255.255.0 enable 86400 192.168.109.2 192.168.109.254 pc 198.51.100.2 203.0.113.2 192.168.109.1 
+onu 43 pri wifi_ssid 1 name SSIDREMOVED hide disable auth_mode wpa2psk/wpa3psk encrypt_type aes shared_key PASSREMOVED rekey_interval 0
+onu 43 pri wifi_ssid 5 name SSIDREMOVED hide disable auth_mode wpapsk/wpa2psk encrypt_type tkipaes shared_key PASSREMOVED rekey_interval 0
+onu 43 pri username admin_control enable admin PASSREMOVED user_control disable 
+onu 43 pri acl https control enable lan enable wan disable port 443
+onu add 44 profile default sn SNREMOVED
+onu 44 desc GPON0/3:44
+onu 44 profile line name line_1
+onu 44 profile srv name srv_2-wifi
+onu 44 pri equid MONUVPRI
+onu 44 pri wan_adv add route
+onu 44 pri wan_adv index 1 route mode internet mtu 1500 
+onu 44 pri wan_adv index 1 route ipv4 static ip 192.0.2.124 mask 255.255.255.0 gw 192.0.2.1 dns master 198.51.100.2 slave 203.0.113.2 nat enable 
+onu 44 pri dhcp_server 192.168.109.1 255.255.255.0 enable 86400 192.168.109.2 192.168.109.254 pc 198.51.100.2 203.0.113.2 192.168.109.1 
+onu 44 pri wifi_ssid 1 name SSIDREMOVED hide disable auth_mode wpa2psk/wpa3psk encrypt_type aes shared_key PASSREMOVED rekey_interval 0
+onu 44 pri wifi_ssid 5 name SSIDREMOVED hide disable auth_mode wpapsk/wpa2psk encrypt_type tkipaes shared_key PASSREMOVED rekey_interval 0
+onu 44 pri username admin_control enable admin PASSREMOVED user_control disable 
+onu 44 pri acl https control enable lan enable wan disable port 443
+onu add 45 profile default sn SNREMOVED
+onu 45 desc GPON0/3:45
+onu 45 profile line name line_1
+onu 45 profile srv name srv_2-wifi
+onu 45 pri equid MONUVPRI
+onu 45 pri wan_adv add route
+onu 45 pri wan_adv index 1 route mode internet mtu 1500 
+onu 45 pri wan_adv index 1 route ipv4 static ip 192.0.2.125 mask 255.255.255.0gw 192.0.2.1 dns master 198.51.100.2 slave 203.0.113.2 nat enable 
+onu 45 pri dhcp_server 192.168.109.1 255.255.255.0 enable 86400 192.168.109.2 192.168.109.254 pc 198.51.100.2 203.0.113.2 192.168.109.1 
+onu 45 pri wifi_ssid 1 name SSIDREMOVED hide disable auth_mode wpa2psk/wpa3psk encrypt_type aes shared_key PASSREMOVED rekey_interval 0
+onu 45 pri wifi_ssid 5 name SSIDREMOVED hide disable auth_mode wpapsk/wpa2psk encrypt_type tkipaes shared_key PASSREMOVED rekey_interval 0
+onu 45 pri username admin_control enable admin PASSREMOVED user_control disable 
+onu 45 pri acl https control enable lan enable wan disable port 443
+onu add 46 profile default sn SNREMOVED
+onu 46 desc GPON0/3:46
+onu 46 profile line name line_1
+onu 46 profile srv name srv_2-wifi
+onu 46 pri equid MONUVPRI
+onu 46 pri wan_adv add route
+onu 46 pri wan_adv index 1 route mode internet mtu 1500 
+onu 46 pri wan_adv index 1 route ipv4 static ip 192.0.2.126 mask 255.255.255.0 gw 192.0.2.1 dns master 198.51.100.2 slave 203.0.113.2 nat enable 
+onu 46 pri dhcp_server 192.168.109.1 255.255.255.0 enable 86400 192.168.109.2 192.168.109.254 pc 198.51.100.2 203.0.113.2 192.168.109.1 
+onu 46 pri wifi_ssid 1 name SSIDREMOVED hide disable auth_mode wpa2psk/wpa3psk encrypt_type aes shared_key PASSREMOVED rekey_interval 0
+onu 46 pri wifi_ssid 5 name SSIDREMOVED hide disable auth_mode wpapsk/wpa2psk encrypt_type tkipaes shared_key PASSREMOVED rekey_interval 0
+onu 46 pri username admin_control enable admin PASSREMOVED user_control disable 
+onu 46 pri acl https control enable lan enable wan disable port 443
+onu add 47 profile default sn SNREMOVED
+onu 47 desc GPON0/3:47
+onu 47 profile line name line_1
+onu 47 profile srv name srv_2-wifi
+onu 47 pri equid MONUVPRI
+onu 47 pri wan_adv add route
+onu 47 pri wan_adv index 1 route mode internet mtu 1500 
+onu 47 pri wan_adv index 1 route ipv4 static ip 192.0.2.127 mask 255.255.255.0 gw 192.0.2.1 dns master 198.51.100.2 slave 203.0.113.2 nat enable 
+onu 47 pri dhcp_server 192.168.109.1 255.255.255.0 enable 86400 192.168.109.2 192.168.109.254 pc 198.51.100.2 203.0.113.2 192.168.109.1 
+onu 47 pri wifi_ssid 1 name SSIDREMOVED hide disable auth_mode wpa2psk/wpa3psk encrypt_type aes shared_key PASSREMOVED rekey_interval 0
+onu 47 pri wifi_ssid 5 name SSIDREMOVED hide disable auth_mode wpapsk/wpa2psk encrypt_type tkipaes shared_key PASSREMOVED rekey_interval 0
+onu 47 pri username admin_control enable admin PASSREMOVED user_control disable 
+onu 47 pri acl https control enable lan enable wan disable port 443
+onu add 48 profile default sn SNREMOVED
+onu 48 desc GPON0/3:48
+onu 48 profile line name line_1
+onu 48 profile srv name srv_2-wifi
+onu 48 pri equid MONUVPRI
+onu 48 pri wan_adv add route
+onu 48 pri wan_adv index 1 route mode internet mtu 1500 
+onu 48 pri wan_adv index 1 route ipv4 static ip 192.0.2.128 mask 255.255.255.0 gw 192.0.2.1 dns master 198.51.100.2 slave 203.0.113.2 nat enable 
+onu 48 pri dhcp_server 192.168.109.1 255.255.255.0 enable 86400 192.168.109.2 192.168.109.254 pc 198.51.100.2 203.0.113.2 192.168.109.1 
+onu 48 pri wifi_ssid 1 name SSIDREMOVED.2-5G hide disable auth_mode wpa2psk/wpa3psk encrypt_type aes shared_key PASSREMOVED rekey_interval 0
+onu 48 pri wifi_ssid 5 name SSIDREMOVED.2 hide disable auth_mode wpapsk/wpa2psk encrypt_type tkipaes shared_key PASSREMOVED rekey_interval 0
+onu 48 pri username admin_control enable admin PASSREMOVED user_control disable 
+onu 48 pri acl https control enable lan enable wan disable port 443
+onu add 49 profile default sn SNREMOVED
+onu 49 desc GPON0/3:49
+onu 49 profile line name line_1
+onu 49 profile srv name srv_2-wifi
+onu 49 pri equid MONUVPRI
+onu 49 pri wan_adv add route
+onu 49 pri wan_adv index 1 route mode internet mtu 1500 
+onu 49 pri wan_adv index 1 route ipv4 static ip 192.0.2.129 mask 255.255.255.0 gw 192.0.2.1 dns master 198.51.100.2 slave 203.0.113.2 nat enable 
+onu 49 pri dhcp_server 192.168.109.1 255.255.255.0 enable 86400 192.168.109.2 192.168.109.254 pc 198.51.100.2 203.0.113.2 192.168.109.1 
+onu 49 pri wifi_ssid 1 name SSIDREMOVED.1-5G hide disable auth_mode wpa2psk/wpa3psk encrypt_type aes shared_key PASSREMOVED rekey_interval 0
+onu 49 pri wifi_ssid 5 name SSIDREMOVED.1 hide disable auth_mode wpapsk/wpa2psk encrypt_type tkipaes shared_key PASSREMOVED rekey_interval 0
+onu 49 pri username admin_control enable admin PASSREMOVED user_control disable 
+onu 49 pri acl https control enable lan enable wan disable port 443
+onu add 50 profile default sn SNREMOVED
+onu 50 desc GPON0/3:50
+onu 50 profile line name line_1
+onu 50 profile srv name srv_2-wifi
+onu 50 pri equid MONUVPRI
+onu 50 pri wan_adv add route
+onu 50 pri wan_adv index 1 route mode internet mtu 1500 
+onu 50 pri wan_adv index 1 route ipv4 static ip 192.0.2.130 mask 255.255.255.0 gw 192.0.2.1 dns master 198.51.100.2 slave 203.0.113.2 nat enable 
+onu 50 pri dhcp_server 192.168.109.1 255.255.255.0 enable 86400 192.168.109.2 192.168.109.254 pc 198.51.100.2 203.0.113.2 192.168.109.1 
+onu 50 pri wifi_ssid 1 name SSIDREMOVED.2-5G hide disable auth_mode wpa2psk/wpa3psk encrypt_type aes shared_key PASSREMOVED rekey_interval 0
+onu 50 pri wifi_ssid 5 name SSIDREMOVED.2 hide disable auth_mode wpapsk/wpa2psk encrypt_type tkipaes shared_key PASSREMOVED rekey_interval 0
+onu 50 pri username admin_control enable admin PASSREMOVED user_control disable
+onu 50 pri acl https control enable lan enable wan disable port 443
+onu add 51 profile default sn SNREMOVED
+onu 51 desc GPON0/3:51
+onu 51 profile line name line_1
+onu 51 profile srv name srv_2-wifi
+onu 51 pri equid MONUVPRI
+onu 51 pri wan_adv add route
+onu 51 pri wan_adv index 1 route mode internet mtu 1500 
+onu 51 pri wan_adv index 1 route ipv4 static ip 192.0.2.131 mask 255.255.255.0 gw 192.0.2.1 dns master 198.51.100.2 slave 203.0.113.2 nat enable 
+onu 51 pri dhcp_server 192.168.109.1 255.255.255.0 enable 86400 192.168.109.2 192.168.109.254 pc 198.51.100.2 203.0.113.2 192.168.109.1 
+onu 51 pri wifi_ssid 1 name SSIDREMOVED hide disable auth_mode wpa2psk/wpa3psk encrypt_type aes shared_key PASSREMOVED rekey_interval 0
+onu 51 pri wifi_ssid 5 name SSIDREMOVED hide disable auth_mode wpapsk/wpa2psk encrypt_type tkipaes shared_key PASSREMOVED rekey_interval 0
+onu 51 pri username admin_control enable admin PASSREMOVED user_control disable 
+onu 51 pri acl https control enable lan enable wan disable port 443
+onu add 52 profile default sn SNREMOVED
+onu 52 desc GPON0/3:52
+onu 52 profile line name line_1
+onu 52 profile srv name srv_2-wifi
+onu 52 pri equid MONUVPRI
+onu 52 pri wan_adv add route
+onu 52 pri wan_adv index 1 route mode internet mtu 1500 
+onu 52 pri wan_adv index 1 route ipv4 static ip 192.0.2.132 mask 255.255.255.0 gw 192.0.2.1 dns master 198.51.100.2 slave 203.0.113.2 nat enable 
+onu 52 pri dhcp_server 192.168.109.1 255.255.255.0 enable 86400 192.168.109.2 192.168.109.254 pc 198.51.100.2 203.0.113.2 192.168.109.1 
+onu 52 pri wifi_ssid 1 name SSIDREMOVED hide disable auth_mode wpa2psk/wpa3psk encrypt_type aes shared_key PASSREMOVED rekey_interval 0
+onu 52 pri wifi_ssid 5 name SSIDREMOVED hide disable auth_mode wpapsk/wpa2psk encrypt_type tkipaes shared_key PASSREMOVED rekey_interval 0
+onu 52 pri username admin_control enable admin PASSREMOVED user_control disable 
+onu 52 pri acl https control enable lan enable wan disable port 443
+onu add 53 profile default sn SNREMOVED
+onu 53 desc GPON0/3:53
+onu 53 profile line name line_1
+onu 53 profile srv name srv_2-wifi
+onu 53 pri equid MONUVPRI
+onu 53 pri wan_adv add route
+onu 53 pri wan_adv index 1 route mode internet mtu 1500 
+onu 53 pri wan_adv index 1 route ipv4 static ip 192.0.2.133 mask 255.255.255.0 gw 192.0.2.1 dns master 198.51.100.2 slave 203.0.113.2 nat enable 
+onu 53 pri dhcp_server 192.168.109.1 255.255.255.0 enable 86400 192.168.109.2 192.168.109.254 pc 198.51.100.2 203.0.113.2 192.168.109.1 
+onu 53 pri wifi_ssid 1 name SSIDREMOVED hide disable auth_mode wpa2psk/wpa3psk encrypt_type aes shared_key PASSREMOVED rekey_interval 0
+onu 53 pri wifi_ssid 5 name SSIDREMOVED hide disable auth_mode wpapsk/wpa2psk encrypt_type tkipaes shared_key PASSREMOVED rekey_interval 0
+onu 53 pri username admin_control enable admin PASSREMOVED user_control disable 
+onu 53 pri acl https control enable lan enable wan disable port 443
+onu add 54 profile default sn SNREMOVED
+onu 54 desc GPON0/3:54
+onu 54 profile line name line_1
+onu 54 profile srv name srv_2-wifi
+onu 54 pri equid MONUVPRI
+onu 54 pri wan_adv add route
+onu 54 pri wan_adv index 1 route mode internet mtu 1500 
+onu 54 pri wan_adv index 1 route ipv4 static ip 192.0.2.134 mask 255.255.255.0 gw 192.0.2.1 dns master 198.51.100.2 slave 203.0.113.2 nat enable 
+onu 54 pri dhcp_server 192.168.109.1 255.255.255.0 enable 86400 192.168.109.2 192.168.109.254 pc 198.51.100.2 203.0.113.2 192.168.109.1 
+onu 54 pri wifi_ssid 1 name SSIDREMOVED hide disable auth_mode wpa2psk/wpa3psk encrypt_type aes shared_key PASSREMOVED rekey_interval 0
+onu 54 pri wifi_ssid 5 name SSIDREMOVED hide disable auth_mode wpapsk/wpa2psk encrypt_type tkipaes shared_key PASSREMOVED rekey_interval 0
+onu 54 pri username admin_control enable admin PASSREMOVED user_control disable 
+onu 54 pri acl https control enable lan enable wan disable port 443
+onu add 55 profile default sn SNREMOVED
+onu 55 desc GPON0/3:55
+onu 55 profile line name line_1
+onu 55 profile srv name srv_2-wifi
+onu 55 pri equid MONUVPRI
+onu 55 pri wan_adv add route
+onu 55 pri wan_adv index 1 route mode internet mtu 1500 
+onu 55 pri wan_adv index 1 route ipv4 static ip 192.0.2.135 mask 255.255.255.0 gw 192.0.2.1 dns master 198.51.100.2 slave 203.0.113.2 nat enable 
+onu 55 pri dhcp_server 192.168.109.1 255.255.255.0 enable 86400 192.168.109.2 192.168.109.254 pc 198.51.100.2 203.0.113.2 192.168.109.1 
+onu 55 pri wifi_ssid 1 name SSIDREMOVED hide disable auth_mode wpa2psk/wpa3psk encrypt_type aes shared_key PASSREMOVED rekey_interval 0
+onu 55 pri wifi_ssid 5 name SSIDREMOVED hide disable auth_mode wpapsk/wpa2psk encrypt_type tkipaes shared_key PASSREMOVED rekey_interval 0
+onu 55 pri username admin_control enable admin PASSREMOVED user_control disable 
+onu 55 pri acl https control enable lan enable wan disable port 443
+onu add 56 profile default sn SNREMOVED
+onu 56 desc GPON0/3:56
+onu 56 profile line name line_1
+onu 56 profile srv name srv_2-wifi
+onu 56 pri equid MONUVPRI
+onu 56 pri wan_adv add route
+onu 56 pri wan_adv index 1 route ipv4 static ip 192.0.2.136 mask 255.255.255.0 gw 192.0.2.1 dns master 198.51.100.2 slave 203.0.113.2 nat enable 
+onu 56 pri dhcp_server 192.168.109.1 255.255.255.0 enable 86400 192.168.109.2 192.168.109.254 pc 198.51.100.2 203.0.113.2 192.168.109.1 
+onu 56 pri wifi_ssid 1 name SSIDREMOVED hide disable auth_mode wpa2psk/wpa3psk encrypt_type aes shared_key PASSREMOVED rekey_interval 0
+onu 56 pri wifi_ssid 5 name SSIDREMOVED hide disable auth_mode wpapsk/wpa2psk encrypt_type tkipaes shared_key PASSREMOVED rekey_interval 0
+onu 56 pri username admin_control enable admin PASSREMOVED user_control disable 
+onu 56 pri acl https control enable lan enable wan disable port 443
+onu add 57 profile default sn SNREMOVED
+onu 57 desc GPON0/3:57
+onu 57 profile line name line_1
+onu 57 profile srv name srv_2-wifi
+onu 57 pri equid MONUVPRI
+onu 57 pri wan_adv add route
+onu 57 pri wan_adv index 1 route mode internet mtu 1500 
+onu 57 pri wan_adv index 1 route ipv4 static ip 192.0.2.137 mask 255.255.255.0 gw 192.0.2.1 dns master 198.51.100.2 slave 203.0.113.2 nat enable 
+onu 57 pri dhcp_server 192.168.109.1 255.255.255.0 enable 86400 192.168.109.2 192.168.109.254 pc 198.51.100.2 203.0.113.2 192.168.109.1 
+onu 57 pri wifi_ssid 1 name SSIDREMOVED hide disable auth_mode wpa2psk/wpa3psk encrypt_type aes shared_key PASSREMOVED rekey_interval 0
+onu 57 pri wifi_ssid 5 name SSIDREMOVED hide disable auth_mode wpapsk/wpa2psk encrypt_type tkipaes shared_key PASSREMOVED rekey_interval 0
+onu 57 pri username admin_control enable admin PASSREMOVED user_control disable 
+onu 57 pri acl https control enable lan enable wan disable port 443
+onu add 58 profile default sn SNREMOVED
+onu 58 desc GPON0/3:58
+onu 58 profile line name line_1
+onu 58 profile srv name srv_2-wifi
+onu 58 pri equid MONUVPRI
+onu 58 pri wan_adv add route
+onu 58 pri wan_adv index 1 route mode internet mtu 1500 
+onu 58 pri wan_adv index 1 route ipv4 static ip 192.0.2.138 mask 255.255.255.0 gw 192.0.2.1 dns master 198.51.100.2 slave 203.0.113.2 nat enable 
+onu 58 pri dhcp_server 192.168.109.1 255.255.255.0 enable 86400 192.168.109.2 192.168.109.254 pc 198.51.100.2 203.0.113.2 192.168.109.1 
+onu 58 pri wifi_ssid 1 name SSIDREMOVED hide disable auth_mode wpa2psk/wpa3psk encrypt_type aes shared_key PASSREMOVED rekey_interval 0
+onu 58 pri wifi_ssid 5 name SSIDREMOVED hide disable auth_mode wpapsk/wpa2psk encrypt_type tkipaes shared_key PASSREMOVED rekey_interval 0
+onu 58 pri username admin_control enable admin PASSREMOVED user_control disable 
+onu 58 pri acl https control enable lan enable wan disable port 443
+onu add 59 profile default sn SNREMOVED
+onu 59 desc GPON0/3:59
+onu 59 profile line name line_1
+onu 59 profile srv name srv_2-wifi
+onu 59 pri equid MONUVPRI
+onu 59 pri wan_adv add route
+onu 59 pri wan_adv index 1 route mode internet mtu 1500 
+onu 59 pri wan_adv index 1 route ipv4 static ip 192.0.2.139 mask 255.255.255.0 gw 192.0.2.1 dns master 198.51.100.2 slave 203.0.113.2 nat enable 
+onu 59 pri dhcp_server 192.168.109.1 255.255.255.0 enable 86400 192.168.109.2 192.168.109.254 pc 198.51.100.2 203.0.113.2 192.168.109.1 
+onu 59 pri wifi_ssid 1 name SSIDREMOVED.2-5G hide disable auth_mode wpa2psk/wpa3psk encrypt_type aes shared_key PASSREMOVED rekey_interval 0
+onu 59 pri wifi_ssid 5 name SSIDREMOVED.2 hide disable auth_mode wpapsk/wpa2psk encrypt_type tkipaes shared_key PASSREMOVED rekey_interval 0
+onu 59 pri username admin_control enable admin PASSREMOVED user_control disable 
+onu 59 pri acl https control enable lan enable wan disable port 443
+onu add 60 profile default sn SNREMOVED
+onu 60 desc GPON0/3:60
+onu 60 profile line name line_1
+onu 60 profile srv name srv_2-wifi
+onu 60 pri equid MONUVPRI
+onu 60 pri wan_adv add route
+onu 60 pri wan_adv index 1 route mode internet mtu 1500 
+onu 60 pri wan_adv index 1 route ipv4 static ip 192.0.2.140 mask 255.255.255.0 gw 192.0.2.1 dns master 198.51.100.2 slave 203.0.113.2 nat enable 
+onu 60 pri dhcp_server 192.168.109.1 255.255.255.0 enable 86400 192.168.109.2 192.168.109.254 pc 198.51.100.2 203.0.113.2 192.168.109.1 
+onu 60 pri wifi_ssid 1 name SSIDREMOVED.1-5G hide disable auth_mode wpa2psk/wpa3psk encrypt_type aes shared_key PASSREMOVED rekey_interval 0
+onu 60 pri wifi_ssid 5 name SSIDREMOVED.1 hide disable auth_mode wpapsk/wpa2psk encrypt_type tkipaes shared_key PASSREMOVED rekey_interval 0
+onu 60 pri username admin_control enable admin PASSREMOVED user_control disable 
+onu 60 pri acl https control enable lan enable wan disable port 443
+onu add 61 profile default sn SNREMOVED
+onu 61 desc GPON0/3:61
+onu 61 profile line name line_1
+onu 61 profile srv name srv_2-wifi
+onu 61 pri equid MONUVPRI
+onu 61 pri wan_adv add route
+onu 61 pri wan_adv index 1 route mode internet mtu 1500 
+onu 61 pri wan_adv index 1 route ipv4 static ip 192.0.2.141 mask 255.255.255.0 gw 192.0.2.1 dns master 198.51.100.2 slave 203.0.113.2 nat enable 
+onu 61 pri dhcp_server 192.168.109.1 255.255.255.0 enable 86400 192.168.109.2 192.168.109.254 pc 198.51.100.2 203.0.113.2 192.168.109.1 
+onu 61 pri wifi_ssid 1 name SSIDREMOVED hide disable auth_mode wpa2psk/wpa3psk encrypt_type aes shared_key PASSREMOVED rekey_interval 0
+onu 61 pri wifi_ssid 5 name SSIDREMOVED hide disable auth_mode wpapsk/wpa2psk encrypt_type tkipaes shared_key PASSREMOVED rekey_interval 0
+onu 61 pri username admin_control enable admin PASSREMOVED user_control disable 
+onu 61 pri acl https control enable lan enable wan disable port 443
+onu add 62 profile default sn SNREMOVED
+onu 62 desc GPON0/3:62
+onu 62 profile line name line_1
+onu 62 profile srv name srv_2-wifi
+onu 62 pri equid MONUVPRI
+onu 62 pri wan_adv add route
+onu 62 pri wan_adv index 1 route mode internet mtu 1500 
+onu 62 pri wan_adv index 1 route ipv4 static ip 192.0.2.142 mask 255.255.255.0 gw 192.0.2.1 dns master 198.51.100.2 slave 203.0.113.2 nat enable 
+onu 62 pri dhcp_server 192.168.109.1 255.255.255.0 enable 86400 192.168.109.2 192.168.109.254 pc 198.51.100.2 203.0.113.2 192.168.109.1 
+onu 62 pri wifi_ssid 1 name SSIDREMOVED hide disable auth_mode wpa2psk/wpa3psk encrypt_type aes shared_key PASSREMOVED rekey_interval 0
+onu 62 pri wifi_ssid 5 name SSIDREMOVED hide disable auth_mode wpapsk/wpa2psk encrypt_type tkipaes shared_key PASSREMOVED rekey_interval 0
+onu 62 pri username admin_control enable admin PASSREMOVED user_control disable 
+onu 62 pri acl https control enable lan enable wan disable port 443
+onu add 63 profile default sn SNREMOVED
+onu 63 desc GPON0/3:63
+onu 63 profile line name line_1
+onu 63 profile srv name srv_2-wifi
+onu 63 pri equid MONUVPRI
+onu 63 pri wan_adv add route
+onu 63 pri wan_adv index 1 route mode internet mtu 1500 
+onu 63 pri wan_adv index 1 route ipv4 static ip 192.0.2.143 mask 255.255.255.0 gw 192.0.2.1 dns master 198.51.100.2 slave 203.0.113.2 nat enable 
+onu 63 pri dhcp_server 192.168.109.1 255.255.255.0 enable 86400 192.168.109.2 192.168.109.254 pc 198.51.100.2 203.0.113.2 192.168.109.1 
+onu 63 pri wifi_ssid 1 name SSIDREMOVED hide disable auth_mode wpa2psk/wpa3psk encrypt_type aes shared_key PASSREMOVED rekey_interval 0
+onu 63 pri wifi_ssid 5 name SSIDREMOVED hide disable auth_mode wpapsk/wpa2psk encrypt_type tkipaes shared_key PASSREMOVED rekey_interval 0
+onu 63 pri username admin_control enable admin PASSREMOVED user_control disable 
+onu 63 pri acl https control enable lan enable wan disable port 443
+onu add 64 profile default sn SNREMOVED
+onu 64 desc GPON0/3:64
+onu 64 profile line name line_1
+onu 64 profile srv name srv_2-wifi
+onu 64 pri equid MONUVPRI
+onu 64 pri wan_adv add route
+onu 64 pri wan_adv index 1 route mode internet mtu 1500 
+onu 64 pri wan_adv index 1 route ipv4 static ip 192.0.2.144 mask 255.255.255.0 gw 192.0.2.1 dns master 198.51.100.2 slave 203.0.113.2 nat enable 
+onu 64 pri dhcp_server 192.168.109.1 255.255.255.0 enable 86400 192.168.109.2 192.168.109.254 pc 198.51.100.2 203.0.113.2 192.168.109.1 
+onu 64 pri wifi_ssid 1 name SSIDREMOVED hide disable auth_mode wpa2psk/wpa3psk encrypt_type aes shared_key PASSREMOVED rekey_interval 0
+onu 64 pri wifi_ssid 5 name SSIDREMOVED hide disable auth_mode wpapsk/wpa2psk encrypt_type tkipaes shared_key PASSREMOVED rekey_interval 0
+onu 64 pri username admin_control enable admin PASSREMOVED user_control disable 
+onu 64 pri acl https control enable lan enable wan disable port 443
+onu add 65 profile default sn SNREMOVED
+onu 65 desc GPON0/3:65
+onu 65 profile line name line_1
+onu 65 profile srv name srv_2-wifi
+onu 65 pri equid MONUVPRI
+onu 65 pri wan_adv add route
+onu 65 pri wan_adv index 1 route mode internet mtu 1500 
+onu 65 pri wan_adv index 1 route ipv4 static ip 192.0.2.145 mask 255.255.255.0 gw 192.0.2.1 dns master 198.51.100.2 slave 203.0.113.2 nat enable 
+onu 65 pri dhcp_server 192.168.109.1 255.255.255.0 enable 86400 192.168.109.2 192.168.109.254 pc 198.51.100.2 203.0.113.2 192.168.109.1 
+onu 65 pri wifi_ssid 1 name SSIDREMOVED hide disable auth_mode wpa2psk/wpa3psk encrypt_type aes shared_key PASSREMOVED rekey_interval 0
+onu 65 pri wifi_ssid 5 name SSIDREMOVED hide disable auth_mode wpapsk/wpa2psk encrypt_type tkipaes shared_key PASSREMOVED rekey_interval 0
+onu 65 pri username admin_control enable admin PASSREMOVED user_control disable 
+onu 65 pri acl https control enable lan enable wan disable port 443
+onu add 66 profile default sn SNREMOVED
+onu 66 desc GPON0/3:66
+onu 66 profile line name line_1
+onu 66 profile srv name srv_2-wifi
+onu 66 pri equid MONUVPRI
+onu 66 pri wan_adv add route
+onu 66 pri wan_adv index 1 route mode internet mtu 1500 
+onu 66 pri wan_adv index 1 route ipv4 static ip 192.0.2.146 mask 255.255.255.0 gw 192.0.2.1 dns master 198.51.100.2 slave 203.0.113.2 nat enable 
+onu 66 pri dhcp_server 192.168.109.1 255.255.255.0 enable 86400 192.168.109.2 192.168.109.254 pc 198.51.100.2 203.0.113.2 192.168.109.1 
+onu 66 pri wifi_ssid 1 name SSIDREMOVED hide disable auth_mode wpa2psk/wpa3psk encrypt_type aes shared_key PASSREMOVED rekey_interval 0
+onu 66 pri wifi_ssid 5 name SSIDREMOVED hide disable auth_mode wpapsk/wpa2psk encrypt_type tkipaes shared_key PASSREMOVED rekey_interval 0
+onu 66 pri username admin_control enable admin PASSREMOVED user_control disable 
+onu 66 pri acl https control enable lan enable wan disable port 443
+onu add 67 profile default sn SNREMOVED
+onu 67 desc GPON0/3:67
+onu 67 profile line name line_1
+onu 67 profile srv name srv_2-wifi
+onu 67 pri equid MONUVPRI
+onu 67 pri wan_adv add route
+onu 67 pri wan_adv index 1 route mode internet mtu 1500 
+onu 67 pri wan_adv index 1 route ipv4 static ip 192.0.2.147 mask 255.255.255.0 gw 192.0.2.1 dns master 198.51.100.2 slave 203.0.113.2 nat enable 
+onu 67 pri dhcp_server 192.168.109.1 255.255.255.0 enable 86400 192.168.109.2 192.168.109.254 pc 198.51.100.2 203.0.113.2 192.168.109.1 
+onu 67 pri wifi_ssid 1 name SSIDREMOVED hide disable auth_mode wpa2psk/wpa3psk encrypt_type aes shared_key PASSREMOVED rekey_interval 0
+onu 67 pri wifi_ssid 5 name SSIDREMOVED hide disable auth_mode wpapsk/wpa2psk encrypt_type tkipaes shared_key PASSREMOVED rekey_interval 0
+onu 67 pri username admin_control enable admin PASSREMOVED user_control disable 
+onu 67 pri acl https control enable lan enable wan disable port 443
+onu add 68 profile default sn SNREMOVED
+onu 68 desc GPON0/3:68
+onu 68 profile line name line_1
+onu 68 profile srv name srv_2-wifi
+onu 68 pri equid MONUVPRI
+onu 68 pri wan_adv add route
+onu 68 pri wan_adv index 1 route mode internet mtu 1500 
+onu 68 pri wan_adv index 1 route ipv4 static ip 192.0.2.148 mask 255.255.255.0 gw 192.0.2.1 dns master 198.51.100.2 slave 203.0.113.2 nat enable 
+onu 68 pri dhcp_server 192.168.109.1 255.255.255.0 enable 86400 192.168.109.2 192.168.109.254 pc 198.51.100.2 203.0.113.2 192.168.109.1 
+onu 68 pri wifi_ssid 1 name SSIDREMOVED hide disable auth_mode wpa2psk/wpa3psk encrypt_type aes shared_key PASSREMOVED rekey_interval 0
+onu 68 pri wifi_ssid 5 name SSIDREMOVED hide disable auth_mode wpapsk/wpa2psk encrypt_type tkipaes shared_key PASSREMOVED rekey_interval 0
+onu 68 pri username admin_control enable admin PASSREMOVED user_control disable 
+onu 68 pri acl https control enable lan enable wan disable port 443
+onu add 69 profile default sn SNREMOVED
+onu 69 desc GPON0/3:69
+onu 69 profile line name line_1
+onu 69 profile srv name srv_2-wifi
+onu 69 pri equid MONUVPRI
+onu 69 pri wan_adv add route
+onu 69 pri wan_adv index 1 route mode internet mtu 1500 
+onu 69 pri wan_adv index 1 route ipv4 static ip 192.0.2.149 mask 255.255.255.0 gw 192.0.2.1 dns master 198.51.100.2 slave 203.0.113.2 nat enable 
+onu 69 pri dhcp_server 192.168.109.1 255.255.255.0 enable 86400 192.168.109.2 192.168.109.254 pc 198.51.100.2 203.0.113.2 192.168.109.1 
+onu 69 pri wifi_ssid 1 name SSIDREMOVED hide disable auth_mode wpa2psk/wpa3psk encrypt_type aes shared_key PASSREMOVED rekey_interval 0
+onu 69 pri wifi_ssid 5 name SSIDREMOVED hide disable auth_mode wpapsk/wpa2psk encrypt_type tkipaes shared_key PASSREMOVED rekey_interval 0
+onu 69 pri username admin_control enable admin PASSREMOVED user_control disable 
+onu 69 pri acl https control enable lan enable wan disable port 443
+onu add 70 profile default sn SNREMOVED
+onu 70 desc GPON0/3:70
+onu 70 profile line name line_1
+onu 70 profile srv name srv_2-wifi
+onu 70 pri equid MONUVPRI
+onu 70 pri wan_adv add route
+onu 70 pri wan_adv index 1 route mode internet mtu 1500 
+onu 70 pri wan_adv index 1 route ipv4 static ip 192.0.2.150 mask 255.255.255.0 gw 192.0.2.1 dns master 198.51.100.2 slave 203.0.113.2 nat enable 
+onu 70 pri dhcp_server 192.168.109.1 255.255.255.0 enable 86400 192.168.109.2 192.168.109.254 pc 198.51.100.2 203.0.113.2 192.168.109.1 
+onu 70 pri wifi_ssid 1 name SSIDREMOVED.2-5G hide disable auth_mode wpa2psk/wpa3psk encrypt_type aes shared_key PASSREMOVED rekey_interval 0
+onu 70 pri wifi_ssid 5 name SSIDREMOVED.2 hide disable auth_mode wpapsk/wpa2psk encrypt_type tkipaes shared_key PASSREMOVED rekey_interval 0
+onu 70 pri username admin_control enable admin PASSREMOVED user_control disable 
+onu 70 pri acl https control enable lan enable wan disable port 443
+onu add 71 profile default sn SNREMOVED
+onu 71 desc GPON0/3:71
+onu 71 profile line name line_1
+onu 71 profile srv name srv_2-wifi
+onu 71 pri equid MONUVPRI
+onu 71 pri wan_adv add route
+onu 71 pri wan_adv index 1 route mode internet mtu 1500 
+onu 71 pri wan_adv index 1 route ipv4 static ip 192.0.2.151 mask 255.255.255.0 gw 192.0.2.1 dns master 198.51.100.2 slave 203.0.113.2 nat enable 
+onu 71 pri dhcp_server 192.168.109.1 255.255.255.0 enable 86400 192.168.109.2 192.168.109.254 pc 198.51.100.2 203.0.113.2 192.168.109.1 
+onu 71 pri wifi_ssid 1 name SSIDREMOVED.1-5G hide disable auth_mode wpa2psk/wpa3psk encrypt_type aes shared_key PASSREMOVED rekey_interval 0
+onu 71 pri wifi_ssid 5 name SSIDREMOVED.1 hide disable auth_mode wpapsk/wpa2psk encrypt_type tkipaes shared_key PASSREMOVED rekey_interval 0
+onu 71 pri username admin_control enable admin PASSREMOVED user_control disable 
+onu 71 pri acl https control enable lan enable wan disable port 443
+onu add 72 profile default sn SNREMOVED
+onu 72 desc GPON0/3:72
+onu 72 tcont 1 name Vlan1925 dba dba_1
+onu 72 gemport 1 tcont 1 gemport_name Vlan1925 portid 222
+onu 72 gemport 1 traffic-limit downstream default
+onu 72 service ser_1 gemport 1 vlan 1925
+onu 72 service-port 1 gemport 1 uservlan 1925 vlan 1925 new_cos 0
+onu 72 portvlan veip 1 mode tag vlan 1925 pri 0
+onu 72 pri equid MONUVPRI
+onu 72 pri wan_adv add route
+onu 72 pri wan_adv index 1 route mode internet mtu 1500 
+onu 72 pri wan_adv index 1 route ipv4 static ip 192.0.2.152 mask 255.255.255.0gw 192.0.2.1 dns master 198.51.100.2 slave 203.0.113.2 nat enable 
+onu 72 pri wan_adv index 1 vlan tag wan_vlan 1925 0 
+onu 72 pri dhcp_server 192.168.109.1 255.255.255.0 enable 86400 192.168.109.2 192.168.109.254 pc 198.51.100.2 203.0.113.2 192.168.109.1 
+onu 72 pri wifi_ssid 1 name SSIDREMOVED.2-5G hide disable auth_mode wpa2psk/wpa3psk encrypt_type aes shared_key PASSREMOVED rekey_interval 0
+onu 72 pri wifi_ssid 5 name SSIDREMOVED.2 hide disable auth_mode wpapsk/wpa2psk encrypt_type tkipaes shared_key PASSREMOVED rekey_interval 0
+onu 72 pri username admin_control enable admin PASSREMOVED user_control disable 
+onu 72 pri firewall level low
+onu 72 pri acl ping control enable lan enable wan enable ipv4_control enable 198.51.100.26 255.255.255.0 ipv6_control disable 
+onu 72 pri acl http control enable lan enable wan disable port 80
+onu add 73 profile default sn SNREMOVED
+onu 73 desc GPON0/3:73
+onu 73 profile line name line_1
+onu 73 profile srv name srv_2-wifi
+onu 73 pri equid MONUVPRI
+onu 73 pri wan_adv add route
+onu 73 pri wan_adv index 1 route mode internet mtu 1500 
+onu 73 pri wan_adv index 1 route ipv4 static ip 192.0.2.153 mask 255.255.255.0 gw 192.0.2.1 dns master 198.51.100.2 slave 203.0.113.2 nat enable 
+onu 73 pri dhcp_server 192.168.109.1 255.255.255.0 enable 86400 192.168.109.2 192.168.109.254 pc 198.51.100.2 203.0.113.2 192.168.109.1 
+onu 73 pri wifi_ssid 1 name SSIDREMOVED hide disable auth_mode wpa2psk/wpa3psk encrypt_type aes shared_key PASSREMOVED rekey_interval 0
+onu 73 pri wifi_ssid 5 name SSIDREMOVED hide disable auth_mode wpapsk/wpa2psk encrypt_type tkipaes shared_key PASSREMOVED rekey_interval 0
+onu 73 pri username admin_control enable admin PASSREMOVED user_control disable 
+onu 73 pri acl https control enable lan enable wan disable port 443
+onu add 74 profile default sn SNREMOVED
+onu 74 desc GPON0/3:74
+onu 74 profile line name line_1
+onu 74 profile srv name srv_2-wifi
+onu 74 pri equid MONUVPRI
+onu 74 pri wan_adv add route
+onu 74 pri wan_adv index 1 route mode internet mtu 1500 
+onu 74 pri wan_adv index 1 route ipv4 static ip 192.0.2.154 mask 255.255.255.0 gw 192.0.2.1 dns master 198.51.100.2 slave 203.0.113.2 nat enable 
+onu 74 pri dhcp_server 192.168.109.1 255.255.255.0 enable 86400 192.168.109.2 192.168.109.254 pc 198.51.100.2 203.0.113.2 192.168.109.1 
+onu 74 pri wifi_ssid 1 name SSIDREMOVED hide disable auth_mode wpa2psk/wpa3psk encrypt_type aes shared_key PASSREMOVED rekey_interval 0
+onu 74 pri wifi_ssid 5 name SSIDREMOVED hide disable auth_mode wpapsk/wpa2psk encrypt_type tkipaes shared_key PASSREMOVED rekey_interval 0
+onu 74 pri username admin_control enable admin PASSREMOVED user_control disable 
+onu 74 pri acl https control enable lan enable wan disable port 443
+onu add 75 profile default sn SNREMOVED
+onu 75 desc GPON0/3:75
+onu 75 profile line name line_1
+onu 75 profile srv name srv_2-wifi
+onu 75 pri equid MONUVPRI
+onu 75 pri wan_adv add route
+onu 75 pri wan_adv index 1 route mode internet mtu 1500 
+onu 75 pri wan_adv index 1 route ipv4 static ip 192.0.2.155 mask 255.255.255.0 gw 192.0.2.1 dns master 198.51.100.2 slave 203.0.113.2 nat enable 
+onu 75 pri dhcp_server 192.168.109.1 255.255.255.0 enable 86400 192.168.109.2 192.168.109.254 pc 198.51.100.2 203.0.113.2 192.168.109.1 
+onu 75 pri wifi_ssid 1 name SSIDREMOVED hide disable auth_mode wpa2psk/wpa3psk encrypt_type aes shared_key PASSREMOVED rekey_interval 0
+onu 75 pri wifi_ssid 5 name SSIDREMOVED hide disable auth_mode wpapsk/wpa2psk encrypt_type tkipaes shared_key PASSREMOVED rekey_interval 0
+onu 75 pri username admin_control enable admin PASSREMOVED user_control disable 
+onu 75 pri acl https control enable lan enable wan disable port 443
+onu add 76 profile default sn SNREMOVED
+onu 76 desc GPON0/3:76
+onu 76 profile line name line_1
+onu 76 profile srv name srv_2-wifi
+onu 76 pri equid MONUVPRI
+onu 76 pri wan_adv add route
+onu 76 pri wan_adv index 1 route mode internet mtu 1500 
+onu 76 pri wan_adv index 1 route ipv4 static ip 192.0.2.156 mask 255.255.255.0 gw 192.0.2.1 dns master 198.51.100.2 slave 203.0.113.2 nat enable 
+onu 76 pri dhcp_server 192.168.109.1 255.255.255.0 enable 86400 192.168.109.2 192.168.109.254 pc 198.51.100.2 203.0.113.2 192.168.109.1 
+onu 76 pri wifi_ssid 1 name SSIDREMOVED hide disable auth_mode wpa2psk/wpa3psk encrypt_type aes shared_key PASSREMOVED rekey_interval 0
+onu 76 pri wifi_ssid 5 name SSIDREMOVED hide disable auth_mode wpapsk/wpa2psk encrypt_type tkipaes shared_key PASSREMOVED rekey_interval 0
+onu 76 pri username admin_control enable admin PASSREMOVED user_control disable 
+onu 76 pri acl https control enable lan enable wan disable port 443
+onu add 77 profile default sn SNREMOVED
+onu 77 desc GPON0/3:77
+onu 77 profile line name line_1
+onu 77 profile srv name srv_2-wifi
+onu 77 pri equid MONUVPRI
+onu 77 pri wan_adv add route
+onu 77 pri wan_adv index 1 route mode internet mtu 1500 
+onu 77 pri wan_adv index 1 route ipv4 static ip 192.0.2.157 mask 255.255.255.0 gw 192.0.2.1 dns master 198.51.100.2 slave 203.0.113.2 nat enable 
+onu 77 pri dhcp_server 192.168.109.1 255.255.255.0 enable 86400 192.168.109.2 192.168.109.254 pc 198.51.100.2 203.0.113.2 192.168.109.1 
+onu 77 pri wifi_ssid 1 name SSIDREMOVED hide disable auth_mode wpa2psk/wpa3psk encrypt_type aes shared_key PASSREMOVED rekey_interval 0
+onu 77 pri wifi_ssid 5 name SSIDREMOVED hide disable auth_mode wpapsk/wpa2psk encrypt_type tkipaes shared_key PASSREMOVED rekey_interval 0
+onu 77 pri username admin_control enable admin PASSREMOVED user_control disable 
+onu 77 pri acl https control enable lan enable wan disable port 443
+onu add 78 profile default sn SNREMOVED
+onu 78 desc GPON0/3:78
+onu 78 profile line name line_1
+onu 78 profile srv name srv_2-wifi
+onu 78 pri equid MONUVPRI
+onu 78 pri wan_adv add route
+onu 78 pri wan_adv index 1 route mode internet mtu 1500 
+onu 78 pri wan_adv index 1 route ipv4 static ip 192.0.2.158 mask 255.255.255.0 gw 192.0.2.1 dns master 198.51.100.2 slave 203.0.113.2 nat enable 
+onu 78 pri dhcp_server 192.168.109.1 255.255.255.0 enable 86400 192.168.109.2 192.168.109.254 pc 198.51.100.2 203.0.113.2 192.168.109.1 
+onu 78 pri wifi_ssid 1 name SSIDREMOVED hide disable auth_mode wpa2psk/wpa3psk encrypt_type aes shared_key PASSREMOVED rekey_interval 0
+onu 78 pri wifi_ssid 5 name SSIDREMOVED hide disable auth_mode wpapsk/wpa2psk encrypt_type tkipaes shared_key PASSREMOVED rekey_interval 0
+onu 78 pri username admin_control enable admin PASSREMOVED user_control disable 
+onu 78 pri acl https control enable lan enable wan disable port 443
+onu add 79 profile default sn SNREMOVED
+onu 79 desc GPON0/3:79
+onu 79 tcont 1 name Vlan1925 dba dba_1
+onu 79 gemport 1 tcont 1 gemport_name Vlan1925 portid 223
+onu 79 gemport 1 traffic-limit downstream default
+onu 79 service ser_1 gemport 1 vlan 1925
+onu 79 service-port 1 gemport 1 uservlan 1925 vlan 1925 new_cos 0
+onu 79 portvlan veip 1 mode tag vlan 1925 pri 0
+onu 79 pri equid MONUVPRI
+onu 79 pri username admin_control enable admin PASSREMOVED user_control disable 
+onu 79 pri acl ping control enable lan enable wan enable ipv4_control enable 198.51.100.26 255.255.255.0 ipv6_control disable 
+onu add 80 profile default sn SNREMOVED
+onu 80 desc GPON0/3:80
+onu 80 tcont 1 name Vlan1925 dba dba_1
+onu 80 gemport 1 tcont 1 gemport_name Vlan1925 portid 224
+onu 80 gemport 1 traffic-limit downstream default
+onu 80 service ser_1 gemport 1 vlan 1925
+onu 80 service-port 1 gemport 1 uservlan 1925 vlan 1925 new_cos 0
+onu 80 portvlan veip 1 mode tag vlan 1925 pri 0
+onu 80 pri equid MONUVPRI
+onu 80 pri wan_adv add route
+onu 80 pri wan_adv index 1 route mode internet mtu 1500 
+onu 80 pri wan_adv index 1 route ipv4 static ip 192.0.2.160 mask 255.255.255.0gw 192.0.2.1 dns master 198.51.100.2 slave 203.0.113.2 nat enable 
+onu 80 pri wan_adv index 1 vlan tag wan_vlan 1925 0 
+onu 80 pri dhcp_server 192.168.109.1 255.255.255.0 enable 86400 192.168.109.2 192.168.109.254 pc 198.51.100.2 203.0.113.2 192.168.109.1 
+onu 80 pri wifi_ssid 1 name SSIDREMOVED.2-5G hide disable auth_mode wpa2psk/wpa3psk encrypt_type aes shared_key PASSREMOVED rekey_interval 0
+onu 80 pri wifi_ssid 5 name SSIDREMOVED.2 hide disable auth_mode wpapsk/wpa2psk encrypt_type tkipaes shared_key PASSREMOVED rekey_interval 0
+onu 80 pri username admin_control enable admin PASSREMOVED user_control disable 
+onu 80 pri firewall level low
+onu 80 pri acl ping control enable lan enable wan enable ipv4_control enable 198.51.100.26 255.255.255.0 ipv6_control disable 
+onu 80 pri acl http control enable lan enable wan disable port 80
+onu add 81 profile default sn SNREMOVED
+onu 81 desc GPON0/3:81
+onu 81 tcont 1 name Vlan1925 dba dba_1
+onu 81 gemport 1 tcont 1 gemport_name Vlan1925 portid 225
+onu 81 gemport 1 traffic-limit downstream default
+onu 81 service ser_1 gemport 1 vlan 1925
+onu 81 service-port 1 gemport 1 uservlan 1925 vlan 1925 new_cos 0
+onu 81 portvlan veip 1 mode tag vlan 1925 pri 0
+onu 81 pri equid MONUVPRI
+onu 81 pri wan_adv add route
+onu 81 pri wan_adv index 1 route mode internet mtu 1500 
+onu 81 pri wan_adv index 1 route ipv4 static ip 192.0.2.161 mask 255.255.255.0 gw 192.0.2.1 dns master 198.51.100.2 slave 203.0.113.2 nat enable 
+onu 81 pri wan_adv index 1 vlan tag wan_vlan 1925 0 
+onu 81 pri dhcp_server 192.168.109.1 255.255.255.0 enable 86400 192.168.109.2 192.168.109.254 pc 198.51.100.2 203.0.113.2 192.168.109.1 
+onu 81 pri wifi_ssid 1 name SSIDREMOVED.1-5G hide disable auth_mode wpa2psk/wpa3psk encrypt_type aes shared_key PASSREMOVED rekey_interval 0
+onu 81 pri wifi_ssid 5 name SSIDREMOVED.1 hide disable auth_mode wpapsk/wpa2psk encrypt_type tkipaes shared_key PASSREMOVED rekey_interval 0
+onu 81 pri username admin_control enable admin PASSREMOVED user_control disable 
+onu 81 pri firewall level low
+onu 81 pri acl ping control enable lan enable wan enable ipv4_control enable 198.51.100.26 255.255.255.0 ipv6_control disable 
+onu add 82 profile default sn SNREMOVED
+onu 82 desc GPON0/3:82
+onu 82 tcont 1 name Vlan1925 dba dba_1
+onu 82 gemport 1 tcont 1 gemport_name Vlan1925 portid 226
+onu 82 gemport 1 traffic-limit downstream default
+onu 82 service ser_1 gemport 1 vlan 1925
+onu 82 service-port 1 gemport 1 uservlan 1925 vlan 1925 new_cos 0
+onu 82 portvlan veip 1 mode tag vlan 1925 pri 0
+onu 82 pri equid MONUVPRI
+onu 82 pri wan_adv add route
+onu 82 pri wan_adv index 1 route mode internet mtu 1500 
+onu 82 pri wan_adv index 1 route ipv4 static ip 192.0.2.162 mask 255.255.255.0 gw 192.0.2.1 dns master 198.51.100.2 slave 203.0.113.2 nat enable 
+onu 82 pri wan_adv index 1 vlan tag wan_vlan 1925 0 
+onu 82 pri dhcp_server 192.168.109.1 255.255.255.0 enable 86400 192.168.109.2 192.168.109.254 pc 198.51.100.2 203.0.113.2 192.168.109.1 
+onu 82 pri wifi_ssid 1 name SSIDREMOVED hide disable auth_mode wpa2psk/wpa3psk encrypt_type aes shared_key PASSREMOVED rekey_interval 0
+onu 82 pri wifi_ssid 5 name SSIDREMOVED hide disable auth_mode wpapsk/wpa2psk encrypt_type tkipaes shared_key PASSREMOVED rekey_interval 0
+onu 82 pri username admin_control enable admin PASSREMOVED user_control disable 
+onu 82 pri firewall level low
+onu 82 pri acl ping control enable lan enable wan enable ipv4_control enable 198.51.100.26 255.255.255.0 ipv6_control disable 
+onu 82 pri acl http control enable lan enable wan disable port 80
+onu add 83 profile default sn SNREMOVED
+onu 83 desc GPON0/3:83
+onu 83 tcont 1 name Vlan1925 dba dba_1
+onu 83 gemport 1 tcont 1 gemport_name Vlan1925 portid 227
+onu 83 gemport 1 traffic-limit downstream default
+onu 83 service ser_1 gemport 1 vlan 1925
+onu 83 service-port 1 gemport 1 uservlan 1925 vlan 1925 new_cos 0
+onu 83 portvlan veip 1 mode tag vlan 1925 pri 0
+onu 83 pri equid MONUVPRI
+onu 83 pri wan_adv add route
+onu 83 pri wan_adv index 1 route mode internet mtu 1500 
+onu 83 pri wan_adv index 1 route ipv4 static ip 192.0.2.163 mask 255.255.255.0 gw 192.0.2.1 dns master 198.51.100.2 slave 203.0.113.2 nat enable 
+onu 83 pri wan_adv index 1 vlan tag wan_vlan 1925 0 
+onu 83 pri dhcp_server 192.168.109.1 255.255.255.0 enable 86400 192.168.109.2 192.168.109.254 pc 198.51.100.2 203.0.113.2 192.168.109.1 
+onu 83 pri wifi_ssid 1 name SSIDREMOVED hide disable auth_mode wpapsk/wpa2psk encrypt_type tkipaes shared_key PASSREMOVED rekey_interval 0
+onu 83 pri wifi_ssid 5 name SSIDREMOVED hide disable auth_mode wpapsk/wpa2psk encrypt_type tkipaes shared_key PASSREMOVED rekey_interval 0
+onu 83 pri username admin_control enable admin PASSREMOVED user_control disable 
+onu 83 pri firewall level low
+onu 83 pri acl ping control enable lan enable wan enable ipv4_control enable 198.51.100.26 255.255.255.0 ipv6_control disable 
+onu 83 pri acl http control enable lan enable wan disable port 80
+onu add 84 profile default sn SNREMOVED
+onu 84 desc GPON0/3:84
+onu 84 tcont 1 name Vlan1925 dba dba_1
+onu 84 gemport 1 tcont 1 gemport_name Vlan1925 portid 228
+onu 84 gemport 1 traffic-limit downstream default
+onu 84 service ser_1 gemport 1 vlan 1925
+onu 84 service-port 1 gemport 1 uservlan 1925 vlan 1925 new_cos 0
+onu 84 portvlan veip 1 mode tag vlan 1925 pri 0
+onu 84 pri equid MONUVPRI
+onu 84 pri wan_adv add route
+onu 84 pri wan_adv index 1 route mode internet mtu 1500 
+onu 84 pri wan_adv index 1 route ipv4 static ip 192.0.2.164 mask 255.255.255.0 gw 192.0.2.1 dns master 198.51.100.2 slave 203.0.113.2 nat enable 
+onu 84 pri wan_adv index 1 vlan tag wan_vlan 1925 0 
+onu 84 pri dhcp_server 192.168.109.1 255.255.255.0 enable 86400 192.168.109.2 192.168.109.254 pc 198.51.100.2 203.0.113.2 192.168.109.1 
+onu 84 pri wifi_ssid 1 name SSIDREMOVED hide disable auth_mode wpa2psk/wpa3psk encrypt_type aes shared_key PASSREMOVED rekey_interval 0
+onu 84 pri wifi_ssid 5 name SSIDREMOVED hide disable auth_mode wpapsk/wpa2psk encrypt_type tkipaes shared_key PASSREMOVED rekey_interval 0
+onu 84 pri username admin_control enable admin PASSREMOVED user_control disable 
+onu 84 pri firewall level low
+onu 84 pri acl ping control enable lan enable wan enable ipv4_control enable 198.51.100.26 255.255.255.0 ipv6_control disable 
+onu 84 pri acl http control enable lan enable wan disable port 80
+onu add 85 profile default sn SNREMOVED
+onu 85 desc GPON0/3:85
+onu 85 tcont 1 name Vlan1925 dba dba_1
+onu 85 gemport 1 tcont 1 gemport_name Vlan1925 portid 229
+onu 85 gemport 1 traffic-limit downstream default
+onu 85 service ser_1 gemport 1 vlan 1925
+onu 85 service-port 1 gemport 1 uservlan 1925 vlan 1925 new_cos 0
+onu 85 portvlan veip 1 mode tag vlan 1925 pri 0
+onu 85 pri equid MONUVPRI
+onu 85 pri wan_adv add route
+onu 85 pri wan_adv index 1 route mode internet mtu 1500 
+onu 85 pri wan_adv index 1 route ipv4 static ip 192.0.2.165 mask 255.255.255.0 gw 192.0.2.1 dns master 198.51.100.2 slave 203.0.113.2 nat enable 
+onu 85 pri wan_adv index 1 vlan tag wan_vlan 1925 0 
+onu 85 pri dhcp_server 192.168.109.1 255.255.255.0 enable 86400 192.168.109.2 192.168.109.254 pc 198.51.100.2 203.0.113.2 192.168.109.1 
+onu 85 pri wifi_ssid 1 name SSIDREMOVED hide disable auth_mode wpa2psk/wpa3psk encrypt_type aes shared_key PASSREMOVED rekey_interval 0
+onu 85 pri wifi_ssid 5 name SSIDREMOVED hide disable auth_mode wpapsk/wpa2psk encrypt_type tkipaes shared_key PASSREMOVED rekey_interval 0
+onu 85 pri username admin_control enable admin PASSREMOVED user_control disable 
+onu 85 pri firewall level low
+onu 85 pri acl ping control enable lan enable wan enable ipv4_control enable 198.51.100.26 255.255.255.0 ipv6_control disable 
+onu 85 pri acl http control enable lan enable wan disable port 80
+onu add 86 profile default sn SNREMOVED
+onu 86 desc GPON0/3:86
+onu 86 profile line name line_1
+onu 86 profile srv name srv_2-wifi
+onu 86 pri equid MONUVPRI
+onu 86 pri wan_adv add route
+onu 86 pri wan_adv index 1 route mode internet mtu 1500 
+onu 86 pri wan_adv index 1 route ipv4 static ip 192.0.2.166 mask 255.255.255.0 gw 192.0.2.1 dns master 198.51.100.2 slave 203.0.113.2 nat enable 
+onu 86 pri wan_adv index 1 vlan tag wan_vlan 1925 0 
+onu 86 pri dhcp_server 192.168.109.1 255.255.255.0 enable 86400 192.168.109.2 192.168.109.254 pc 198.51.100.2 203.0.113.2 192.168.109.1 
+onu 86 pri wifi_ssid 1 name SSIDREMOVED hide disable auth_mode wpa2psk/wpa3psk encrypt_type aes shared_key PASSREMOVED rekey_interval 0
+onu 86 pri wifi_ssid 5 name SSIDREMOVED hide disable auth_mode wpapsk/wpa2psk encrypt_type tkipaes shared_key PASSREMOVED rekey_interval 0
+onu 86 pri username admin_control enable admin PASSREMOVED user_control disable 
+onu 86 pri firewall level low
+onu 86 pri acl ping control enable lan enable wan enable ipv4_control enable 198.51.100.26 255.255.255.0 ipv6_control disable 
+onu 86 pri acl http control enable lan enable wan disable port 80
+onu add 87 profile default sn SNREMOVED
+onu 87 desc GPON0/3:87
+onu 87 profile line name line_1
+onu 87 profile srv name srv_2-wifi
+onu 87 pri equid MONUVPRI
+onu 87 pri wan_adv add route
+onu 87 pri wan_adv index 1 route mode internet mtu 1500 
+onu 87 pri wan_adv index 1 route ipv4 static ip 192.0.2.167 mask 255.255.255.0 gw 192.0.2.1 dns master 198.51.100.2 slave 203.0.113.2 nat enable 
+onu 87 pri wan_adv index 1 vlan tag wan_vlan 1925 0 
+onu 87 pri dhcp_server 192.168.109.1 255.255.255.0 enable 86400 192.168.109.2 192.168.109.254 pc 198.51.100.2 203.0.113.2 192.168.109.1 
+onu 87 pri wifi_ssid 1 name SSIDREMOVED hide disable auth_mode wpa2psk/wpa3psk encrypt_type aes shared_key PASSREMOVED rekey_interval 0
+onu 87 pri wifi_ssid 5 name SSIDREMOVED hide disable auth_mode wpapsk/wpa2psk encrypt_type tkipaes shared_key PASSREMOVED rekey_interval 0
+onu 87 pri username admin_control enable admin PASSREMOVED user_control disable 
+onu 87 pri firewall level low
+onu 87 pri acl ping control enable lan enable wan enable ipv4_control enable 198.51.100.26 255.255.255.0 ipv6_control disable 
+onu 87 pri acl http control enable lan enable wan disable port 80
+onu add 88 profile default sn SNREMOVED
+onu 88 desc GPON0/3:88
+onu 88 profile line name line_1
+onu 88 profile srv name srv_2-wifi
+onu 88 pri equid MONUVPRI
+onu 88 pri wan_adv add route
+onu 88 pri wan_adv index 1 route mode internet mtu 1500 
+onu 88 pri wan_adv index 1 route ipv4 static ip 192.0.2.168 mask 255.255.255.0 gw 192.0.2.1 dns master 198.51.100.2 slave 203.0.113.2 nat enable 
+onu 88 pri wan_adv index 1 vlan tag wan_vlan 1925 0 
+onu 88 pri dhcp_server 192.168.109.1 255.255.255.0 enable 86400 192.168.109.2 192.168.109.254 pc 198.51.100.2 203.0.113.2 192.168.109.1 
+onu 88 pri wifi_ssid 1 name SSIDREMOVED.2-5G hide disable auth_mode wpa2psk/wpa3psk encrypt_type aes shared_key PASSREMOVED rekey_interval 0
+onu 88 pri wifi_ssid 5 name SSIDREMOVED.2 hide disable auth_mode wpapsk/wpa2psk encrypt_type tkipaes shared_key PASSREMOVED rekey_interval 0
+onu 88 pri username admin_control enable admin PASSREMOVED user_control disable 
+onu 88 pri firewall level low
+onu 88 pri acl ping control enable lan enable wan enable ipv4_control enable 198.51.100.26 255.255.255.0 ipv6_control disable 
+onu 88 pri acl http control enable lan enable wan disable port 80
+onu add 89 profile default sn SNREMOVED
+onu 89 desc GPON0/3:89
+onu 89 profile line name line_1
+onu 89 profile srv name srv_2-wifi
+onu 89 pri equid MONUVPRI
+onu 89 pri wan_adv add route
+onu 89 pri wan_adv index 1 route mode internet mtu 1500 
+onu 89 pri wan_adv index 1 route ipv4 static ip 192.0.2.169 mask 255.255.255.0 gw 192.0.2.1 dns master 198.51.100.2 slave 203.0.113.2 nat enable 
+onu 89 pri wan_adv index 1 vlan tag wan_vlan 1925 0 
+onu 89 pri dhcp_server 192.168.109.1 255.255.255.0 enable 86400 192.168.109.2 192.168.109.254 pc 198.51.100.2 203.0.113.2 192.168.109.1 
+onu 89 pri wifi_ssid 1 name SSIDREMOVED hide disable auth_mode wpa2psk/wpa3psk encrypt_type aes shared_key PASSREMOVED rekey_interval 0
+onu 89 pri wifi_ssid 5 name SSIDREMOVED hide disable auth_mode wpapsk/wpa2psk encrypt_type tkipaes shared_key PASSREMOVED rekey_interval 0
+onu 89 pri username admin_control enable admin PASSREMOVED user_control disable 
+onu 89 pri firewall level low
+onu 89 pri acl ping control enable lan enable wan enable ipv4_control enable 198.51.100.26 255.255.255.0 ipv6_control disable 
+onu 89 pri acl http control enable lan enable wan disable port 80
+onu add 90 profile default sn SNREMOVED
+onu 90 desc GPON0/3:90
+onu 90 profile line name line_1
+onu 90 profile srv name srv_2-wifi
+onu 90 pri equid MONUVPRI
+onu 90 pri wan_adv add route
+onu 90 pri wan_adv index 1 route mode internet mtu 1500 
+onu 90 pri wan_adv index 1 route ipv4 static ip 192.0.2.170 mask 255.255.255.0 gw 192.0.2.1 dns master 198.51.100.2 slave 203.0.113.2 nat enable 
+onu 90 pri wan_adv index 1 vlan tag wan_vlan 1925 0 
+onu 90 pri dhcp_server 192.168.109.1 255.255.255.0 enable 86400 192.168.109.2 192.168.109.254 pc 198.51.100.2 203.0.113.2 192.168.109.1 
+onu 90 pri wifi_ssid 1 name SSIDREMOVED hide disable auth_mode wpa2psk/wpa3psk encrypt_type aes shared_key PASSREMOVED rekey_interval 0
+onu 90 pri wifi_ssid 5 name SSIDREMOVED hide disable auth_mode wpapsk/wpa2psk encrypt_type tkipaes shared_key PASSREMOVED rekey_interval 0
+onu 90 pri username admin_control enable admin PASSREMOVED user_control disable 
+onu 90 pri firewall level low
+onu 90 pri acl ping control enable lan enable wan enable ipv4_control enable 198.51.100.26 255.255.255.0 ipv6_control disable 
+onu 90 pri acl http control enable lan enable wan disable port 80
+onu add 91 profile default sn SNREMOVED
+onu 91 desc GPON0/3:91
+onu 91 profile line name line_1
+onu 91 profile srv name srv_2-wifi
+onu 91 pri equid MONUVPRI
+onu 91 pri wan_adv add route
+onu 91 pri wan_adv index 1 route mode internet mtu 1500 
+onu 91 pri wan_adv index 1 route ipv4 static ip 192.0.2.171 mask 255.255.255.0 gw 192.0.2.1 dns master 198.51.100.2 slave 203.0.113.2 nat enable 
+onu 91 pri wan_adv index 1 vlan tag wan_vlan 1925 0 
+onu 91 pri dhcp_server 192.168.109.1 255.255.255.0 enable 86400 192.168.109.2 192.168.109.254 pc 198.51.100.2 203.0.113.2 192.168.109.1 
+onu 91 pri wifi_ssid 1 name SSIDREMOVED hide disable auth_mode wpa2psk/wpa3psk encrypt_type aes shared_key PASSREMOVED rekey_interval 0
+onu 91 pri wifi_ssid 5 name SSIDREMOVED hide disable auth_mode wpapsk/wpa2psk encrypt_type tkipaes shared_key PASSREMOVED rekey_interval 0
+onu 91 pri username admin_control enable admin PASSREMOVED user_control disable 
+onu 91 pri firewall level low
+onu 91 pri acl ping control enable lan enable wan enable ipv4_control enable 198.51.100.26 255.255.255.0 ipv6_control disable 
+onu 91 pri acl http control enable lan enable wan disable port 80
+onu add 92 profile default sn SNREMOVED
+onu 92 desc GPON0/3:92
+onu 92 profile line name line_1
+onu 92 profile srv name srv_2-wifi
+onu 92 pri equid MONUVPRI
+onu 92 pri wan_adv add route
+onu 92 pri wan_adv index 1 route mode internet mtu 1500 
+onu 92 pri wan_adv index 1 route ipv4 static ip 192.0.2.171 mask 255.255.255.0 gw 192.0.2.1 dns master 198.51.100.2 slave 203.0.113.2 nat enable 
+onu 92 pri wan_adv index 1 vlan tag wan_vlan 1925 0 
+onu 92 pri dhcp_server 192.168.109.1 255.255.255.0 enable 86400 192.168.109.2 192.168.109.254 pc 198.51.100.2 203.0.113.2 192.168.109.1 
+onu 92 pri wifi_ssid 1 name SSIDREMOVED hide disable auth_mode wpa2psk/wpa3psk encrypt_type aes shared_key PASSREMOVED rekey_interval 0
+onu 92 pri wifi_ssid 5 name SSIDREMOVED hide disable auth_mode wpapsk/wpa2psk encrypt_type tkipaes shared_key PASSREMOVED rekey_interval 0
+onu 92 pri username admin_control enable admin PASSREMOVED user_control disable 
+onu 92 pri firewall level low
+onu 92 pri acl ping control enable lan enable wan enable ipv4_control enable 198.51.100.26 255.255.255.0 ipv6_control disable 
+onu 92 pri acl http control enable lan enable wan disable port 80
+onu add 93 profile default sn SNREMOVED
+onu 93 desc GPON0/3:93
+onu 93 profile line name line_1
+onu 93 profile srv name srv_2-wifi
+onu 93 pri equid MONUVPRI
+onu 93 pri wan_adv add route
+onu 93 pri wan_adv index 1 route mode internet mtu 1500 
+onu 93 pri wan_adv index 1 route ipv4 static ip 192.0.2.177 mask 255.255.255.0 gw 192.0.2.1 dns master 198.51.100.2 slave 203.0.113.2 nat enable 
+onu 93 pri wan_adv index 1 vlan tag wan_vlan 1925 0 
+onu 93 pri dhcp_server 192.168.109.1 255.255.255.0 enable 86400 192.168.109.2 192.168.109.254 pc 198.51.100.2 203.0.113.2 192.168.109.1 
+onu 93 pri wifi_ssid 1 name SSIDREMOVED.1-5G hide disable auth_mode wpa2psk/wpa3psk encrypt_type aes shared_key PASSREMOVED rekey_interval 0
+onu 93 pri wifi_ssid 5 name SSIDREMOVED.2 hide disable auth_mode wpapsk/wpa2psk encrypt_type tkipaes shared_key PASSREMOVED rekey_interval 0
+onu 93 pri username admin_control enable admin PASSREMOVED user_control disable 
+onu 93 pri firewall level low
+onu 93 pri acl ping control enable lan enable wan enable ipv4_control enable 198.51.100.26 255.255.255.0 ipv6_control disable 
+onu 93 pri acl http control enable lan enable wan disable port 80
+onu add 94 profile default sn SNREMOVED
+onu 94 desc GPON0/3:94
+onu 94 profile line name line_1
+onu 94 profile srv name srv_2-wifi
+onu 94 pri equid MONUVPRI
+onu 94 pri wan_adv add route
+onu 94 pri wan_adv index 1 route mode internet mtu 1500 
+onu 94 pri wan_adv index 1 route ipv4 static ip 192.0.2.178 mask 255.255.255.0 gw 192.0.2.1 dns master 198.51.100.2 slave 203.0.113.2 nat enable 
+onu 94 pri wan_adv index 1 vlan tag wan_vlan 1925 0 
+onu 94 pri dhcp_server 192.168.109.1 255.255.255.0 enable 86400 192.168.109.2 192.168.109.254 pc 198.51.100.2 203.0.113.2 192.168.109.1 
+onu 94 pri wifi_ssid 1 name SSIDREMOVED hide disable auth_mode wpa2psk/wpa3psk encrypt_type aes shared_key PASSREMOVED rekey_interval 0
+onu 94 pri wifi_ssid 5 name SSIDREMOVED hide disable auth_mode wpapsk/wpa2psk encrypt_type tkipaes shared_key PASSREMOVED rekey_interval 0
+onu 94 pri username admin_control enable admin PASSREMOVED user_control disable 
+onu 94 pri firewall level low
+onu 94 pri acl ping control enable lan enable wan enable ipv4_control enable 198.51.100.26 255.255.255.0 ipv6_control disable 
+onu 94 pri acl http control enable lan enable wan disable port 80
+onu add 95 profile default sn SNREMOVED
+onu 95 desc GPON0/3:95
+onu 95 profile line name line_1
+onu 95 profile srv name srv_2-wifi
+onu 95 pri equid MONUVPRI
+onu 95 pri wan_adv add route
+onu 95 pri wan_adv index 1 route mode internet mtu 1500 
+onu 95 pri wan_adv index 1 route ipv4 static ip 192.0.2.179 mask 255.255.255.0 gw 192.0.2.1 dns master 198.51.100.2 slave 203.0.113.2 nat enable 
+onu 95 pri wan_adv index 1 vlan tag wan_vlan 1925 0 
+onu 95 pri dhcp_server 192.168.109.1 255.255.255.0 enable 86400 192.168.109.2 192.168.109.254 pc 198.51.100.2 203.0.113.2 192.168.109.1 
+onu 95 pri wifi_ssid 1 name SSIDREMOVED hide disable auth_mode wpa2psk/wpa3psk encrypt_type aes shared_key PASSREMOVED rekey_interval 0
+onu 95 pri wifi_ssid 5 name SSIDREMOVED hide disable auth_mode wpapsk/wpa2psk encrypt_type tkipaes shared_key PASSREMOVED rekey_interval 0
+onu 95 pri username admin_control enable admin PASSREMOVED user_control disable 
+onu 95 pri firewall level low
+onu 95 pri acl ping control enable lan enable wan enable ipv4_control enable 198.51.100.26 255.255.255.0 ipv6_control disable 
+onu 95 pri acl http control enable lan enable wan disable port 80
+onu add 96 profile default sn SNREMOVED
+onu 96 desc GPON0/3:96
+onu 96 profile line name line_1
+onu 96 profile srv name srv_2-wifi
+onu 96 pri equid MONUVPRI
+onu 96 pri wan_adv add route
+onu 96 pri wan_adv index 1 route mode internet mtu 1500 
+onu 96 pri wan_adv index 1 route ipv4 static ip 192.0.2.180 mask 255.255.255.0 gw 192.0.2.1 dns master 198.51.100.2 slave 203.0.113.2 nat enable 
+onu 96 pri wan_adv index 1 vlan tag wan_vlan 1925 0 
+onu 96 pri dhcp_server 192.168.109.1 255.255.255.0 enable 86400 192.168.109.2 192.168.109.254 pc 198.51.100.2 203.0.113.2 192.168.109.1 
+onu 96 pri wifi_ssid 1 name SSIDREMOVED hide disable auth_mode wpa2psk/wpa3psk encrypt_type aes shared_key PASSREMOVED rekey_interval 0
+onu 96 pri wifi_ssid 5 name SSIDREMOVED hide disable auth_mode wpapsk/wpa2psk encrypt_type tkipaes shared_key PASSREMOVED rekey_interval 0
+onu 96 pri username admin_control enable admin PASSREMOVED user_control disable 
+onu 96 pri firewall level low
+onu 96 pri acl ping control enable lan enable wan enable ipv4_control enable 198.51.100.26 255.255.255.0 ipv6_control disable 
+onu 96 pri acl http control enable lan enable wan disable port 80
+onu add 97 profile default sn SNREMOVED
+onu 97 desc GPON0/3:97
+onu 97 profile line name line_1
+onu 97 profile srv name srv_2-wifi
+onu 97 pri equid MONUVPRI
+onu 97 pri wan_adv add route
+onu 97 pri wan_adv index 1 route mode internet mtu 1500 
+onu 97 pri wan_adv index 1 route ipv4 static ip 192.0.2.181 mask 255.255.255.0 gw 192.0.2.1 dns master 198.51.100.2 slave 203.0.113.2 nat enable 
+onu 97 pri wan_adv index 1 vlan tag wan_vlan 1925 0 
+onu 97 pri dhcp_server 192.168.109.1 255.255.255.0 enable 86400 192.168.109.2 192.168.109.254 pc 198.51.100.2 203.0.113.2 192.168.109.1 
+onu 97 pri wifi_ssid 1 name SSIDREMOVED hide disable auth_mode wpa2psk/wpa3psk encrypt_type aes shared_key PASSREMOVED rekey_interval 0
+onu 97 pri wifi_ssid 5 name SSIDREMOVED hide disable auth_mode wpapsk/wpa2psk encrypt_type tkipaes shared_key PASSREMOVED rekey_interval 0
+onu 97 pri username admin_control enable admin PASSREMOVED user_control disable 
+onu 97 pri firewall level low
+onu 97 pri acl ping control enable lan enable wan enable ipv4_control enable 198.51.100.26 255.255.255.0 ipv6_control disable 
+onu 97 pri acl http control enable lan enable wan disable port 80
+onu add 98 profile default sn SNREMOVED
+onu 98 desc GPON0/3:98
+onu 98 profile line name line_1
+onu 98 profile srv name srv_2-wifi
+onu 98 pri equid MONUVPRI
+onu 98 pri wan_adv add route
+onu 98 pri wan_adv index 1 route mode internet mtu 1500 
+onu 98 pri wan_adv index 1 route ipv4 static ip 192.0.2.182 mask 255.255.255.0 gw 192.0.2.1 dns master 198.51.100.2 slave 203.0.113.2 nat enable 
+onu 98 pri wan_adv index 1 vlan tag wan_vlan 1925 0 
+onu 98 pri dhcp_server 192.168.109.1 255.255.255.0 enable 86400 192.168.109.2 192.168.109.254 pc 198.51.100.2 203.0.113.2 192.168.109.1 
+onu 98 pri wifi_ssid 1 name SSIDREMOVED hide disable auth_mode wpa2psk/wpa3psk encrypt_type aes shared_key PASSREMOVED rekey_interval 0
+onu 98 pri wifi_ssid 5 name SSIDREMOVED hide disable auth_mode wpapsk/wpa2psk encrypt_type tkipaes shared_key PASSREMOVED rekey_interval 0
+onu 98 pri username admin_control enable admin PASSREMOVED user_control disable 
+onu 98 pri firewall level low
+onu 98 pri acl ping control enable lan enable wan enable ipv4_control enable 198.51.100.26 255.255.255.0 ipv6_control disable 
+onu 98 pri acl http control enable lan enable wan disable port 80
+onu add 99 profile default sn SNREMOVED
+onu 99 desc GPON0/3:99
+onu 99 profile line name line_1
+onu 99 profile srv name srv_2-wifi
+onu 99 pri equid MONUVPRI
+onu 99 pri wan_adv add route
+onu 99 pri wan_adv index 1 route mode internet mtu 1500 
+onu 99 pri wan_adv index 1 route ipv4 static ip 192.0.2.183 mask 255.255.255.0 gw 192.0.2.1 dns master 198.51.100.2 slave 203.0.113.2 nat enable 
+onu 99 pri wan_adv index 1 vlan tag wan_vlan 1925 0 
+onu 99 pri dhcp_server 192.168.109.1 255.255.255.0 enable 86400 192.168.109.2 192.168.109.254 pc 198.51.100.2 203.0.113.2 192.168.109.1 
+onu 99 pri wifi_ssid 1 name SSIDREMOVED hide disable auth_mode wpa2psk/wpa3psk encrypt_type aes shared_key PASSREMOVED rekey_interval 0
+onu 99 pri wifi_ssid 5 name SSIDREMOVED hide disable auth_mode wpapsk/wpa2psk encrypt_type tkipaes shared_key PASSREMOVED rekey_interval 0
+onu 99 pri username admin_control enable admin PASSREMOVED user_control disable 
+onu 99 pri firewall level low
+onu 99 pri acl ping control enable lan enable wan enable ipv4_control enable 198.51.100.26 255.255.255.0 ipv6_control disable 
+onu 99 pri acl http control enable lan enable wan disable port 80
+onu add 100 profile default sn SNREMOVED
+onu 100 desc GPON0/3:100
+onu 100 profile line name line_1
+onu 100 profile srv name srv_2-wifi
+onu 100 pri equid MONUVPRI
+onu 100 pri wan_adv add route
+onu 100 pri wan_adv index 1 route mode internet mtu 1500 
+onu 100 pri wan_adv index 1 route ipv4 static ip 192.0.2.184 mask 255.255.255.0 gw 192.0.2.1 dns master 198.51.100.2 slave 203.0.113.2 nat enable 
+onu 100 pri wan_adv index 1 vlan tag wan_vlan 1925 0 
+onu 100 pri dhcp_server 192.168.109.1 255.255.255.0 enable 86400 192.168.109.2 192.168.109.254 pc 198.51.100.2 203.0.113.2 192.168.109.1 
+onu 100 pri wifi_ssid 1 name SSIDREMOVED hide disable auth_mode wpa2psk/wpa3psk encrypt_type aes shared_key PASSREMOVED rekey_interval 0
+onu 100 pri wifi_ssid 5 name SSIDREMOVED hide disable auth_mode wpapsk/wpa2psk encrypt_type tkipaes shared_key PASSREMOVED rekey_interval 0
+onu 100 pri username admin_control enable admin PASSREMOVED user_control disable 
+onu 100 pri firewall level low
+onu 100 pri acl ping control enable lan enable wan enable ipv4_control enable 198.51.100.26 255.255.255.0 ipv6_control disable 
+onu 100 pri acl http control enable lan enable wan disable port 80
+onu add 101 profile default sn SNREMOVED
+onu 101 desc GPON0/3:101
+onu 101 profile line name line_1
+onu 101 profile srv name srv_2-wifi
+onu 101 pri equid MONUVPRI
+onu 101 pri wan_adv add route
+onu 101 pri wan_adv index 1 route mode internet mtu 1500 
+onu 101 pri wan_adv index 1 route ipv4 static ip 192.0.2.185 mask 255.255.255.0 gw 192.0.2.1 dns master 198.51.100.2 slave 203.0.113.2 nat enable 
+onu 101 pri wan_adv index 1 vlan tag wan_vlan 1925 0 
+onu 101 pri dhcp_server 192.168.109.1 255.255.255.0 enable 86400 192.168.109.2 192.168.109.254 pc 198.51.100.2 203.0.113.2 192.168.109.1 
+onu 101 pri wifi_ssid 1 name SSIDREMOVED hide disable auth_mode wpa2psk/wpa3psk encrypt_type aes shared_key PASSREMOVED rekey_interval 0
+onu 101 pri wifi_ssid 5 name SSIDREMOVED hide disable auth_mode wpapsk/wpa2psk encrypt_type tkipaes shared_key PASSREMOVED rekey_interval 0
+onu 101 pri username admin_control enable admin PASSREMOVED user_control disable 
+onu 101 pri firewall level low
+onu 101 pri acl ping control enable lan enable wan enable ipv4_control enable 198.51.100.26 255.255.255.0 ipv6_control disable 
+onu 101 pri acl http control enable lan enable wan disable port 80
+onu add 102 profile default sn SNREMOVED
+onu 102 desc GPON0/3:102
+onu 102 profile line name line_1
+onu 102 profile srv name srv_2-wifi
+onu 102 pri equid MONUVPRI
+onu 102 pri wan_adv add route
+onu 102 pri wan_adv index 1 route mode internet mtu 1500 
+onu 102 pri wan_adv index 1 route ipv4 static ip 192.0.2.186 mask 255.255.255.0 gw 192.0.2.1 dns master 198.51.100.2 slave 203.0.113.2 nat enable 
+onu 102 pri wan_adv index 1 vlan tag wan_vlan 1925 0 
+onu 102 pri dhcp_server 192.168.109.1 255.255.255.0 enable 86400 192.168.109.2 192.168.109.254 pc 198.51.100.2 203.0.113.2 192.168.109.1 
+onu 102 pri wifi_ssid 1 name SSIDREMOVED hide disable auth_mode wpa2psk/wpa3psk encrypt_type aes shared_key PASSREMOVED rekey_interval 0
+onu 102 pri wifi_ssid 5 name SSIDREMOVED hide disable auth_mode wpapsk/wpa2psk encrypt_type tkipaes shared_key PASSREMOVED rekey_interval 0
+onu 102 pri username admin_control enable admin PASSREMOVED user_control disable 
+onu 102 pri firewall level low
+onu 102 pri acl ping control enable lan enable wan enable ipv4_control enable 198.51.100.26 255.255.255.0 ipv6_control disable 
+onu 102 pri acl http control enable lan enable wan disable port 80
+exit
+!
+interface gpon 0/4
+no onu auto-learn
+plug_and_play disable
+exit
+!
+!
+!
+rogue-onu-ctrl mode early pon 1 
+rogue-onu-detect enable measurement silent auto-shutdown disable pon 1 
+rogue-onu-detect-bip8 disable pon 1 
+remote-protection
+disable
+!
+debug mode 
+exit
+!
+ip route 0.0.0.0/0 192.0.2.1
+!
+!
+access-list disable
+!
+access-list ipv6 disable
+login-access-list deny snmp 0.0.0.0 0.0.0.0
+login-access-list ipv6 deny snmp ::/0
+login-access-list deny telnet 0.0.0.0 0.0.0.0
+login-access-list ipv6 deny telnet ::/0
+login-access-list enable 
+!
+queue-scheduler strict-priority
+!
+!<RSTP Config Information>
+!
+!<dhcp server config information>
+!<dhcp relay config information>
+dhcp-relay information option disable
+dhcp-relay information strategy keep
+!<tacplus config information>
+!
+!dhcp-snooping configuration
+dhcp-snooping information option disable
+dhcp-snooping information strategy keep
+!<radius config information>
+!
+!<dhcp6 server config information>
+duid duid-llt
+!<dhcp6 relay config information>
+!
+!
+!
+!
+loopback detect enable  
+loopback mode auto-recovery
+!
+crypto key generate rsa usage-keys modulus 2048
+!
+!
+!
+snmp-server start
+snmp-server community CMNTREMOVED ro 
+snmp-server community CMNTREMOVED rw 
+snmp-server notify notify inform inform  inform 
+snmp-server notify notify trap trap  trap 
+snmp-server host domain vsol.example.com version 2c community CMNTREMOVED
+remote server vsol.example.com project-id 1234567890123456789
+!
+!
+!!!
+!!!
+alarm oamlog critical-event enable
+alarm oamlog dying-gasp enable
+alarm oamlog link-fault enable
+alarm oamlog link-event disable
+alarm oamlog organization-specific enable
+web verification-code disable
+!
+debug mode
+web security admin_control enable
+exit
+!
+!
+time zone 01:00
+timezone offset 1
+!
+telnet loging-settings retry-waiting-time enable
+telnet loging-settings retry-waiting-time 60
+!
+!
+role add custom_default permission 682
+!um
+user add admin login-password PASSREMOVED
+user role admin ADMIN enable-password PASSREMOVED
+!<MSTP Config Information>
+spanning-tree mst configuration
+exit
+!
+!
+interface gigabitethernet 0/1
+ spanning-tree mst instance 0 path-cost 20000
+exit
+!
+interface gigabitethernet 0/2
+exit
+!
+interface gigabitethernet 0/3
+exit
+!
+interface gigabitethernet 0/4
+exit
+!
+!
+!
+interface vlan 1925
+!
+debug mode 
+debug ospf6 lsa unknown
+!
+exit
+!
+interface vlan 1925
+!
+!
+ntp server 198.51.100.3 ntp.example.com
+dst continent europe location Prague
+!
+!
