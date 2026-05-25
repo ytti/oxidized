@@ -20,7 +20,6 @@ module Oxidized
       @node = node
 
       @node.model.cfg['tftp'].each { |cb| instance_exec(&cb) }
-      @log = File.open(Oxidized::Config::LOG + "/#{@node.ip}-tftp", 'w') if Oxidized.config.input.debug?
       @tftp = Net::TFTP.new @node.ip
     end
 
@@ -36,9 +35,6 @@ module Oxidized
 
     def disconnect
       # TFTP uses UDP, there is no connection to close
-      true
-    ensure
-      @log.close if Oxidized.config.input.debug?
     end
   end
 end

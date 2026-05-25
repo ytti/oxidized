@@ -30,7 +30,7 @@ task :test do
     t.ruby_opts = ['-W:deprecated']
     # Don't display ambiguity warning between regexp and division in models
     t.warning = false
-    t.verbose = true
+    t.verbose = false
   end
 end
 

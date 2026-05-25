@@ -5,7 +5,13 @@ All notable changes to this project will be documented in this file.
 The format is based on [Keep a Changelog](https://keepachangelog.com/en/1.1.0/).
 
 ## [Unreleased]
+### Added
 
+### Changed
+
+### Fixed
+
+## [0.37.0 - 2026-05-20]
 ### Added
 - routeros: support store mode `on_significant` (@infabo)
 - model for Grandstream HT8xx (@mklopocki)
@@ -16,11 +22,20 @@ The format is based on [Keep a Changelog](https://keepachangelog.com/en/1.1.0/).
 - junos: changed "show system license" regex to reduce notification noise for PTX routers. See #3794 (@ctomkow)
 - ios: keep motherboard information in show version. Closes #3798 (@robertcheramy)
 - aoscx: use oxidized filtering instead of "show system | exclude...". (@robertcheramy)
+- input/*: rewrite debug logging; remove unused logging; input/ssh: write a YAML simulation file (@robertcheramy)
+- truenas: capture app, replication, cloudsync configurations without constant changes. See #3795 (@neilschelly)
+- Set Rake::TestTask to `verbose = false` since the behavior changed with rake 13.4.2 (@robertcheramy)
 
 ### Fixed
 - VyOS: detect community string in SNMP traps. Fixes: #3793 (@nicolasberens)
 - fortigate: show Part No. of SFPs. Fixes: #3800 (@robertcheramy)
 - aoscx: Hide total power consumption (stacking). Fixes #3801 (@robertcheramy)
+- linuxgeneric: fix prompt, telnet username and clean ANSI Escape Codes (@robertcheramy)
+- cumulus: fix prompt (make : and space optional). Fixes #3812 (@robertcheramy)
+- dlinknexgen: NULL byte handling. Fixes #3816 (@ziotibia81)
+- nxos: hide snmpv3 priv key when remove_secret is true. Fixes: #3805 (@robertcheramy)
+- tpink: use `\r\n` when sending commands and set `terminal length 0`. Fixes #3804 (@robertcheramy)
+
 
 ## [0.36.0 - 2026-03-31]
 ### Release Notes

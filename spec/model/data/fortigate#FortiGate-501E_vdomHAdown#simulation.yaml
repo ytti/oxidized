@@ -92,7 +92,7 @@ commands:
       command parse error before 'psu'\r
       Command fail. Return code -61\r
       \r
-      SIFI-FW50 (global) #\x20
+      OXI-FW121 (global) #\x20
   - "get system interface transceiver\n": |-
       get system interface transceiver\r\r
       Interface port9 - Transceiver is not detected.\r
@@ -106,7 +106,7 @@ commands:
       Interface x1 - Transceiver is not detected.\r
       Interface x2 - Transceiver is not detected.\r
       \r
-      SIFI-FW50 (global) #\x20
+      OXI-FW121 (global) #\x20
   - "end\n": |-
       end\r\r
       \r
