@@ -1,4 +1,6 @@
 class WestermoWeos < Oxidized::Model
+  using Refinements
+  
   comment '# '
 
   #Prompt based on real device
