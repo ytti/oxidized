@@ -1,0 +1,10 @@
+pass:
+  - "RT87_23|87.23.4-Komin_OLT> "
+  - "RT87_23|87.23.4-Komin_OLT#"
+  - "RT87_23|87.23.4-Komin_OLT(config)# "
+  - "OLT-1(config)#"
+fail:
+  - "Password:"
+  - "2026/05/25 17:08:24   ONU Port Los   PON 0/3 ONU 50 LINK DOWN"
+  - " --More-- "
+  - "Current configuration:"
