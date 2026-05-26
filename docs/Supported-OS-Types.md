@@ -191,6 +191,7 @@
 |VMWare              |NSX Edge (configuration)      |[nsxconfig](/lib/oxidized/model/nsxconfig.rb)
 |                    |NSX Edge (firewall rules)     |[nsxfirewall](/lib/oxidized/model/nsxfirewall.rb)
 |                    |NSX Distributed Firewall      |[nsxdfw](/lib/oxidized/model/nsxdfw.rb)
+|VSOL                |GPON OLT                      |[vsololt](/lib/oxidized/model/vsololt.rb)        |@Vantomas        |
 |VYOS Networks       |VYOS                          |[vyos](/lib/oxidized/model/vyos.rb)              |                 |Fork of Vyatta, tracking the supported versions (>= 1.4.x)
 |Watchguard          |Fireware OS                   |[firewareos](/lib/oxidized/model/firewareos.rb)
 |Waystream (PacketFront)|iBOS (Intelligent Broadband OS)|[ibos](/lib/oxidized/model/ibos.rb)
