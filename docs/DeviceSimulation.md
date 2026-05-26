@@ -60,6 +60,7 @@ Usages:
     -i, --input file                 Specify an input file for commands to be run
     -o, --output file                Specify an output YAML-file
     -t, --timeout value              Specify the idle timeout beween commands (default: 5 seconds)
+    -n, --newline value              Line terminator appended to each command (default: \n)
     -e, --exec-mode                  Run ssh in exec mode (without tty)
     -u, --unordered                  The YAML simulation should not enforce an order of the commands
     -h, --help                       Print this help
@@ -91,6 +92,11 @@ you will have to use the option `-e` to run `device2yaml.rb` in SSH exec mode.
   the model uses, use the option `-u`. Note that the `unordered` mode may not
   produce a useful YAML file when combined with user input (see
   [Interactive Mode](#interactive-mode) below).
+- Commands are terminated with `\n` by default. Some CLIs (e.g. TP-Link) execute
+  a command only on a carriage return; for those, set the line terminator with
+  `-n`/`--newline` (it understands the `\n`, `\r` and `\t` escapes), e.g.
+  `-n '\r\n'`. The chosen terminator is recorded in the YAML file as a
+  `command_newline` key, so it is clear how the simulation was captured.
 
 Note that `device2yaml.rb` takes some time to run because of the idle timeout of
 (default) 5 seconds between each command. You can press the "Escape" key if you
