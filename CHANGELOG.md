@@ -8,6 +8,7 @@ The format is based on [Keep a Changelog](https://keepachangelog.com/en/1.1.0/).
 ### Added
 
 ### Changed
+- tplink: use `\r\n` as the line terminator in pre_logout, required for the model unit tests to work (@Vantomas)
 
 ### Fixed
 
