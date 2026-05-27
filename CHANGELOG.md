@@ -7,6 +7,7 @@ The format is based on [Keep a Changelog](https://keepachangelog.com/en/1.1.0/).
 ## [Unreleased]
 ### Added
 - source/sql: support defining port in configuration. Closes #3853 (@ytti)
+- tplink: add simulation data and unit tests for the TP-Link DeltaStream DS-P7001-08 GPON OLT (@Vantomas)
 
 ### Changed
 - docker: set LANG=C.UTF-8. Fixes #3690 (@ytti)
