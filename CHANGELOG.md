@@ -6,7 +6,7 @@ The format is based on [Keep a Changelog](https://keepachangelog.com/en/1.1.0/).
 
 ## [Unreleased]
 ### Added
-- westermoweos.rb: suuport for Westermo WeOS network devices (@joschi99)
+- westermoweos.rb: support for Westermo WeOS network devices (@joschi99)
 
 ### Changed
 
