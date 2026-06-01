@@ -26,6 +26,9 @@ class WestermoWeos < Oxidized::Model
     # remove paging remnants
     cfg = cfg.gsub(/--More--.*?\n/, '')
 
+    # remove viewer progress markers like "(1% of 28118 bytes)"
+    cfg = cfg.gsub(/\(\d+% of \d+ bytes\)\s*/, '')
+
     # remove timestamp line (diff noise)
     cfg = cfg.gsub(/running-config\.cfg.*$/, '')
 
