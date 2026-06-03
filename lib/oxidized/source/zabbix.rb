@@ -1,3 +1,6 @@
+Keep those comments. Here is the same minimal tag-filter version with your inline comments restored:
+
+```ruby
 # ~/.config/oxidized/source/zabbix.rb
 #
 #  ▸ Hosts can be selected by the template named in source.zabbix.template
@@ -22,6 +25,7 @@ module Oxidized
           raise NoConfig, 'Please set source.zabbix.url, token and template or tags'
         end
 
+        # Which macros you care about
         @needed = {
           @cfg.map.username.to_s => :username,
           @cfg.map.password.to_s => :password,
@@ -39,6 +43,7 @@ module Oxidized
         hosts = rpc('host.get', params, token) || []
         return [] if hosts.empty?
 
+        # Pre‐fetch interfaces
         hostids = hosts.map { |h| h['hostid'] }
         ifaces  = rpc('hostinterface.get',
                       { hostids: hostids,
@@ -50,8 +55,10 @@ module Oxidized
         hosts.each do |h|
           hid = h['hostid']
 
+          # 2a) Host’s direct templates
           direct_tpls = (h['parentTemplates'] || []).map { |pt| pt['templateid'] }
 
+          # 2b) For each direct template, fetch its parents
           all_tpls = direct_tpls.dup
           direct_tpls.each do |tid|
             parents = rpc('template.get',
@@ -64,14 +71,17 @@ module Oxidized
             end
           end
 
+          # Build the full ID list: host + direct tpl + their parents
           id_list = [hid] | all_tpls
 
+          # Pull all macros for those IDs
           macros = rpc('usermacro.get',
                        { output:  'extend',
                          hostids: id_list,
                          secrets: false },
                        token) || []
 
+          # Map macros into a hash
           macro_map = {}
           macros.each do |m|
             next unless @needed[m['macro'].to_s]
@@ -80,11 +90,13 @@ module Oxidized
             macro_map[key] = node_var_interpolate(m['value'].to_s)
           end
 
+          # Build the node
           node = {
             name: h['host'],
             ip:   pick_ip(ifaces.select { |i| i['hostid'] == hid })
           }.merge(macro_map)
 
+          # Only set enable if non‐empty
           if node[:enable] && !node[:enable].strip.empty?
             node[:vars] = { enable: node.delete(:enable) }
           end
@@ -133,11 +145,13 @@ module Oxidized
         end
       end
 
+      # pick the first non-empty IP
       def pick_ip(if_list)
         ips = if_list.map { |i| i['ip'].to_s }.reject(&:empty?)
         ips.first || ''
       end
 
+      # JSON-RPC helper, always returns an Array
       def rpc(method, params, token)
         uri  = URI.parse(@cfg.url)
         http = Net::HTTP.new(uri.host, uri.port)
@@ -159,3 +173,4 @@ module Oxidized
     end
   end
 end
+```
