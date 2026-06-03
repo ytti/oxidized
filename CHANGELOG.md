@@ -4,8 +4,9 @@ All notable changes to this project will be documented in this file.
 
 The format is based on [Keep a Changelog](https://keepachangelog.com/en/1.1.0/).
 
-## [Unreleased 1]
+## [Unreleased]
 ### Added
+- Add Zabbix source.
 Nodes can be sourced from Zabbix API. In Zabbix, add or modify template with the Macros that you then specify in Oxidized config. Example: 
 source:
   default: zabbix
@@ -20,6 +21,9 @@ source:
     vars_map:
       group:  "{$OXIDIZED_GROUP}"
       enable: "{$OXIDIZED_ENABLE}"
+
+  - Update Zabbix source to implement filtering by tags are requested by other users.
+  - 
 ### Changed
 
 ### Fixed
