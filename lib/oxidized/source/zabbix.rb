@@ -1,16 +1,19 @@
-# Hosts can be selected by template, templateids, tags, searchInventory, or filter.
-# User macros are collected from linked templates and host-level macros.
-# Host-level macro values override template macro values.
 # ~/.config/oxidized/source/zabbix.rb
+#
+# Hosts can be selected by template, templateids, tags, searchInventory, or filter.
+# Template and host macros are fetched through usermacro.get.
+# Host-level macro values override template macro values.
+
+require "net/http"
+require "net/https"
+require "json"
+require "uri"
+require "openssl"
 
 module Oxidized
   module Source
     class Zabbix < Source
-      require "json"
-      require "net/http"
-      require "net/https"
-      require "openssl"
-      require "uri"
+      class NoConfig < OxidizedError; end
 
       def initialize
         super
@@ -30,14 +33,14 @@ module Oxidized
           Oxidized.asetus.save :user
           raise NoConfig, "No source zabbix config, edit #{Oxidized::Config.configfile}"
         end
-        unless @cfg.has_key? "url"
-          raise InvalidConfig, "url is a mandatory zabbix source attribute, edit #{Oxidized::Config.configfile}"
+
+        unless @cfg.url && @cfg.token
+          raise NoConfig, "Please set source.zabbix.url and token"
         end
-        unless @cfg.has_key? "token"
-          raise InvalidConfig, "token is a mandatory zabbix source attribute, edit #{Oxidized::Config.configfile}"
-        end
+
         return if host_selector_configured?
-        raise InvalidConfig, "one of template, templateids, tags, searchInventory or filter is mandatory"
+
+        raise NoConfig, "Please set one of source.zabbix.template, templateids, tags, searchInventory or filter"
       end
 
       def load(node_want = nil)
@@ -52,6 +55,7 @@ module Oxidized
           node = Oxidized.hooks.source_node_transform(node: node, node_raw: raw, context: self)
           nodes << node unless node.nil?
         end
+
         nodes
       end
 
@@ -68,12 +72,16 @@ module Oxidized
           filter: host_filter(node_want),
           selectParentTemplates: ["templateid"]
         }
+
         templateids = configured_templateids
         params[:templateids] = templateids unless templateids.empty?
+
         tags = configured_tags
         params[:tags] = tags unless tags.empty?
+
         search_inventory = configured_search_inventory
         params[:searchInventory] = search_inventory unless search_inventory.empty?
+
         params
       end
 
@@ -92,17 +100,20 @@ module Oxidized
 
       def templateids_by_name(names)
         return [] if names.empty?
+
         params = { filter: { host: names }, output: ["templateid"] }
         rpc("template.get", params).map { |template| template["templateid"] }
       end
 
       def configured_tags
         return [] unless @cfg.has_key? "tags"
+
         array_config(@cfg.tags).map { |tag| hash_config(tag) }
       end
 
       def configured_search_inventory
         return {} unless @cfg.has_key? "searchInventory"
+
         hash_config(@cfg.searchInventory)
       end
 
@@ -126,14 +137,17 @@ module Oxidized
 
       def map_node(raw)
         node = { name: raw["host"], ip: raw["ip"] }
+
         map_config(@cfg.map).each do |key, want|
           node[key.to_sym] = node_var_interpolate(lookup(raw, want))
         end
+
         map_vars(raw).each do |key, value|
           node[key.to_sym] = value if key == "group"
           node[:vars] ||= {}
           node[:vars][key] = value unless key == "group"
         end
+
         node[:model] = map_model node[:model] if node.has_key? :model
         node[:group] = map_group node[:group] if node.has_key? :group
         node.delete_if { |_key, value| value.nil? || value == "" || value == {} }
@@ -142,21 +156,25 @@ module Oxidized
       def map_vars(raw)
         vars = {}
         return vars unless @cfg.has_key? "vars_map"
+
         @cfg.vars_map.each do |key, macro|
           value = node_var_interpolate(lookup(raw, macro))
           vars[key.to_s] = value unless value.nil? || value == ""
         end
+
         vars
       end
 
       def lookup(raw, want)
         path = want.to_s
         return raw["macros"][path] if path.start_with?("{") && path.end_with?("}")
+
         string_navigate_object(raw, path)
       end
 
       def map_config(config)
         return {} unless config
+
         config.each_with_object({}) do |(key, value), hash|
           hash[key.to_s] = value
         end
@@ -167,6 +185,7 @@ module Oxidized
         params = { output: ["hostid", "macro", "value"], hostids: ids, secrets: false }
         macros = rpc("usermacro.get", params)
         macros_by_host = macros.group_by { |macro| macro["hostid"] }
+
         ids.each_with_object({}) do |id, values|
           macros_by_host.fetch(id, []).each do |macro|
             values[macro["macro"]] = macro["value"]
@@ -177,13 +196,16 @@ module Oxidized
       def templateids_for(host)
         queue = (host["parentTemplates"] || []).map { |template| template["templateid"] }
         templateids = queue.dup
+
         until queue.empty?
           parent_templateids(queue.shift).each do |templateid|
             next if templateids.include? templateid
+
             templateids << templateid
             queue << templateid
           end
         end
+
         templateids
       end
 
@@ -211,8 +233,10 @@ module Oxidized
         uri = URI.parse(@cfg.url)
         response = http(uri).request(request(uri, method, params))
         return rpc_http_error(method, response) unless response.is_a? Net::HTTPSuccess
+
         parsed = JSON.parse(response.body)
         return rpc_zabbix_error(method, parsed["error"]) if parsed["error"]
+
         parsed["result"] || []
       rescue StandardError => e
         Oxidized.logger.error "Zabbix RPC(#{method}): #{e.class} #{e.message}"
