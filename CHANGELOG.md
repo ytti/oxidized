@@ -6,7 +6,7 @@ The format is based on [Keep a Changelog](https://keepachangelog.com/en/1.1.0/).
 
 ## [Unreleased]
 ### Added
-
+- zabbix source: add native Zabbix API host discovery with support for selecting hosts by template, template IDs, tags, searchInventory, or host.get filter. Device connection data is read from Zabbix user macros, including inherited template macros, with host-level macros overriding template values (@SerWax)
 ### Changed
 
 ### Fixed
