@@ -19,7 +19,7 @@ source:
       model:    "{$OXIDIZED_MODEL}"
     vars_map:
       group:  "{$OXIDIZED_GROUP}"
-#      enable: "{$OXIDIZED_ENABLE}"
+      enable: "{$OXIDIZED_ENABLE}"
 ### Changed
 
 ### Fixed
