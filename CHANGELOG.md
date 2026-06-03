@@ -22,8 +22,8 @@ source:
       group:  "{$OXIDIZED_GROUP}"
       enable: "{$OXIDIZED_ENABLE}"
 
-  - Update Zabbix source to implement filtering by tags are requested by other users.
-  - 
+- Update Zabbix source to implement filtering by tags are requested by other users.
+  
 ### Changed
 
 ### Fixed
