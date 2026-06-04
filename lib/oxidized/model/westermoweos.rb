@@ -32,6 +32,12 @@ class WestermoWeos < Oxidized::Model
     # remove timestamp line (diff noise)
     cfg = cfg.gsub(/running-config\.cfg.*$/, '')
 
+    # remove command echo like "hostname:/#>show running-config"
+    cfg = cfg.gsub(/^[\w\-.]+:\/.*[#>].*show .*$/, '')
+
+    # remove standalone prompt lines like "hostname:/#>"
+    cfg = cfg.gsub(/^[\w\-.]+:\/.*[#>]\s*$/, '')
+
     # normalize
     cfg.strip
   end
