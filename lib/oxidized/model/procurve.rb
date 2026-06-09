@@ -1,25 +1,25 @@
 class Procurve < Oxidized::Model
   using Refinements
 
-  # previous command is repeated followed by "\eE", which sometimes ends up on last line
-  # ssh switches prompt may start with \r, followed by the prompt itself, regex ([\w\s.-]+[#>] ), which ends the line
-  # telnet switches may start with various vt100 control characters, regex (\e\[24;[0-9][hH]), followed by the prompt, followed
-  # by at least 3 other vt100 characters
-  prompt /(^\r|\e\[24;[0-9][hH])?([\w\s.-]+[#>] )($|(\e\[24;[0-9][0-9]?[hH]){3})/
+  # The prompt is the device name followed by '#' or '>' and a
+  # space, optionally preceded by a carriage return on ssh.
+  prompt /(^\r)?([\w\s.-]+[#>] )$/
 
   comment '! '
 
-  # replace next line control sequence with a new line
+  # These sequences are line breaks in the terminal stream: \e[1M...\e[1L is a
+  # delete-line/insert-line redraw and \eE is NEL (next line). They must be
+  # converted to newlines, not stripped, or the surrounding text concatenates.
+  # This has to run before clean :escape_codes, which would otherwise remove the
+  # \e[1M / \e[1L sequences (and does not match \eE at all).
   expect /(\e\[1M\e\[\??\d+(;\d+)*[A-Za-z]\e\[1L)|(\eE)/ do |data, re|
     data.gsub re, "\n"
   end
 
-  # replace all used vt100 control sequences
-  expect /\e\[\??\d+(;\d+)*[A-Za-z]/ do |data, re|
-    data.gsub re, ''
-  end
+  # remove all other vt100 control sequences
+  clean :escape_codes
 
-  expect /Press any key to continue(\e\[\??\d+(;\d+)*[A-Za-z])*$/ do
+  expect /Press any key to continue$/ do
     send "\n"
     ""
   end
@@ -32,8 +32,6 @@ class Procurve < Oxidized::Model
   cmd :all do |cfg|
     cfg = cfg.cut_both
     cfg = cfg.gsub /^\r/, ''
-    # Additional filtering for elder switches sending vt100 control chars via telnet
-    cfg.gsub! /\e\[\??\d+(;\d+)*[A-Za-z]/, ''
     # Additional filtering for power usage reporting which obviously changes over time
     cfg.gsub! /^(.*AC [0-9]{3}V\/?([0-9]{3}V)?) *([0-9]{1,3}) (.*)/, '\\1 <removed> \\4'
     # Remove failed commands that are not supported on all models
@@ -71,16 +69,13 @@ class Procurve < Oxidized::Model
 
   # not supported on all models
   cmd 'show system-information' do |cfg|
-    cfg = cfg.split("\n")[0..-8].join("\n")
+    cfg = cfg.cut_tail(7)
     clean_comment cfg
   end
 
   # not supported on all models
   cmd 'show system information' do |cfg|
-    cfg = cfg.each_line.reject do |line|
-      line.match /(.*CPU.*)|(.*Up Time.*)|(.*Total.*)|(.*Free.*)|(.*Lowest.*)|(.*Missed.*)/
-    end
-    cfg = cfg.join
+    cfg = cfg.reject_lines ['CPU', 'Up Time', 'Total', 'Free', 'Lowest', 'Missed']
     clean_comment cfg
   end
 

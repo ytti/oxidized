@@ -10,6 +10,7 @@ The format is based on [Keep a Changelog](https://keepachangelog.com/en/1.1.0/).
 
 ### Changed
 - procurve: rstrip trailing whitespace from commented command sections; add `String#rstrip_lines` refinement (@thanegill)
+- procurve: remove ANSI escape codes with `clean :escape_codes` and simplify the prompt regexp (@thanegill)
 
 ### Fixed
 - procurve: hide the SNMP community on `snmp-server host <ip> community "<name>"` lines (@thanegill)
