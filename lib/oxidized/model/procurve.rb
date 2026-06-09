@@ -20,7 +20,7 @@ class Procurve < Oxidized::Model
   end
 
   expect /Press any key to continue(\e\[\??\d+(;\d+)*[A-Za-z])*$/ do
-    send ' '
+    send "\n"
     ""
   end
 
@@ -98,7 +98,9 @@ class Procurve < Oxidized::Model
       end
     end
     post_login 'no page'
-    pre_logout "logout\ny\nn"
+    pre_logout 'logout'
+    pre_logout 'y'
+    pre_logout 'n'
   end
 
   cfg :ssh do
