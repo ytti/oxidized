@@ -43,7 +43,9 @@ class Procurve < Oxidized::Model
 
   cmd :secret do |cfg|
     cfg.gsub! /^(snmp-server community) \S+(.*)/, '\\1 <secret hidden> \\2'
-    cfg.gsub! /^(snmp-server host \S+) \S+(.*)/, '\\1 <secret hidden> \\2'
+    cfg.gsub! /^(snmp-server host \S+)( community)? \S+(.*)/, '\\1\\2 <secret hidden>\\3'
+    # local user password hashes; the quoted hash may wrap onto the next line
+    cfg.gsub! /(sha1\s+)"\S+"/, '\\1"<secret hidden>"'
     cfg.gsub! /^(radius-server host \S+ key) \S+(.*)/, '\\1 <secret hidden> \\2'
     cfg.gsub! /^(radius-server key).*/, '\\1 <configuration removed>'
     cfg.gsub! /^(tacacs-server host \S+ key) \S+(.*)/, '\\1 <secret hidden> \\2'

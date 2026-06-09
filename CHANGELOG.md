@@ -11,6 +11,8 @@ The format is based on [Keep a Changelog](https://keepachangelog.com/en/1.1.0/).
 ### Changed
 
 ### Fixed
+- procurve: hide the SNMP community on `snmp-server host <ip> community "<name>"` lines (@thanegill)
+- procurve: hide local user password hashes (`password ... sha1 "<hash>"`) when remove_secret is true (@thanegill)
 
 ## [0.37.0 - 2026-05-20]
 ### Added
