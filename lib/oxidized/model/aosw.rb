@@ -52,31 +52,31 @@ class AOSW < Oxidized::Model
       /(Switch|AP) uptime/i,
       /Reboot Time and Cause/i
     ]
-    rstrip_cfg comment cfg
+    clean_comment cfg
   end
 
   cmd 'show inventory' do |cfg|
     # Don't show for unsupported devices (IAP and MAS)
     cfg = "" if cfg =~ /(Invalid input detected at '\^' marker|Parse error)/
-    rstrip_cfg clean cfg
+    clean(cfg).rstrip_lines
   end
 
   cmd 'show slots' do |cfg|
     # Don't show for unsupported devices (IAP and MAS)
     cfg = "" if cfg =~ /(Invalid input detected at '\^' marker|Parse error)/
-    rstrip_cfg comment cfg
+    clean_comment cfg
   end
 
   cmd 'show license' do |cfg|
     # Don't show for unsupported devices (IAP and MAS)
     cfg = "" if cfg =~ /(Invalid input detected at '\^' marker|Parse error)/
-    rstrip_cfg comment cfg
+    clean_comment cfg
   end
 
   cmd 'show license passphrase' do |cfg|
     # Don't show for unsupported devices (IAP and MAS)
     cfg = "" if cfg.match /(Invalid input detected at '\^' marker|Parse error)/
-    rstrip_cfg comment cfg
+    clean_comment cfg
   end
 
   cmd 'show running-config' do |cfg|
@@ -84,7 +84,7 @@ class AOSW < Oxidized::Model
       /^controller config \d+$/,
       /^Building Configuration/
     ]
-    rstrip_cfg cfg
+    cfg.rstrip_lines
   end
 
   cfg :telnet do
@@ -105,13 +105,8 @@ class AOSW < Oxidized::Model
     pre_logout 'exit'
   end
 
-  def rstrip_cfg(cfg)
-    out = []
-    cfg.each_line do |line|
-      out << line.rstrip
-    end
-    out = out.join "\n"
-    out << "\n"
+  def clean_comment(lines)
+    comment(lines).rstrip_lines
   end
 
   def clean(cfg)
