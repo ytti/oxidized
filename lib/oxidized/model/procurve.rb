@@ -54,25 +54,25 @@ class Procurve < Oxidized::Model
   end
 
   cmd 'show version' do |cfg|
-    comment cfg
+    clean_comment cfg
   end
 
   cmd 'show modules' do |cfg|
-    comment cfg
+    clean_comment cfg
   end
 
   cmd 'show interfaces transceiver' do |cfg|
-    comment cfg
+    clean_comment cfg
   end
 
   cmd 'show flash' do |cfg|
-    comment cfg
+    clean_comment cfg
   end
 
   # not supported on all models
   cmd 'show system-information' do |cfg|
     cfg = cfg.split("\n")[0..-8].join("\n")
-    comment cfg
+    clean_comment cfg
   end
 
   # not supported on all models
@@ -81,7 +81,7 @@ class Procurve < Oxidized::Model
       line.match /(.*CPU.*)|(.*Up Time.*)|(.*Total.*)|(.*Free.*)|(.*Lowest.*)|(.*Missed.*)/
     end
     cfg = cfg.join
-    comment cfg
+    clean_comment cfg
   end
 
   cmd 'show running-config'
@@ -107,5 +107,9 @@ class Procurve < Oxidized::Model
 
   cfg :ssh do
     pty_options(chars_wide: 1000)
+  end
+
+  def clean_comment(lines)
+    comment(lines).rstrip_lines
   end
 end

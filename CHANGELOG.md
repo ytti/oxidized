@@ -9,6 +9,7 @@ The format is based on [Keep a Changelog](https://keepachangelog.com/en/1.1.0/).
 - procurve: model unit test (@thanegill)
 
 ### Changed
+- procurve: rstrip trailing whitespace from commented command sections; add `String#rstrip_lines` refinement (@thanegill)
 
 ### Fixed
 - procurve: hide the SNMP community on `snmp-server host <ip> community "<name>"` lines (@thanegill)

@@ -1,66 +1,67 @@
-! 
-! Image stamp:   
+!
+! Image stamp:
 !  /ws/swbuildm/rel_beluru_qaoff/code/build/lvm(swbuildm_rel_beluru_qaoff_rel_belu
 ! ru)
 !                 Nov 10 2025 02:09:28
 !                 WC.16.11.0028
 !                 530
 ! Boot Image:     Secondary
-! 
+!
 ! Boot ROM Version:    WC.17.02.0007
 ! Active Boot ROM:     Primary
-! 
-! 
+!
+!
 !  Status and Counters - Module Information
-! 
+!
 !   Chassis: 2930M-48G-PoE+  JL322A         Serial Number:   XXXXXXXXXX
-! 
-! 
-!   Slot  Module Description                         Serial Number    Status    
+!
+!
+!   Slot  Module Description                         Serial Number    Status
 !   ----- ------------------------------------------ ---------------- ----------
-!   A     Aruba JL083A 4p 10GbE SFP+ Module          XXXXXXXXXX       Up        
-! 
-! 
-! 
+!   A     Aruba JL083A 4p 10GbE SFP+ Module          XXXXXXXXXX       Up
+!
+!
+!
 ! Transceiver Technical Information:
-! 
+!
 !                      Product      Serial             Part
 !  Port    Type        Number       Number             Number
 !  ------- ----------- ------------ ------------------ ----------
-!  A1      SFP+SR      J9150A       XXXXXXXXXXX        1990-4065 
-! 
+!  A1      SFP+SR      J9150A       XXXXXXXXXXX        1990-4065
+!
 ! * third-party transceiver
-! Image             Size (bytes) Date     Version 
+! Image             Size (bytes) Date     Version
 ! ----------------- ------------ -------- --------------
-! Primary Image    :    30266808 04/15/25 WC.16.11.0025        
-! Secondary Image  :    30279595 11/10/25 WC.16.11.0028       
-! 
-! Boot ROM Version 
+! Primary Image    :    30266808 04/15/25 WC.16.11.0025
+! Secondary Image  :    30279595 11/10/25 WC.16.11.0028
+!
+! Boot ROM Version
 ! ----------------
 ! Primary Boot ROM Version   : WC.17.02.0007
 ! Secondary Boot ROM Version : WC.17.02.0007
-! 
+!
 ! Default Boot Image   : Secondary
 ! Default Boot ROM     : Primary
-! 
-! 
+!
+
+!
 !  Status and Counters - General System Information
-! 
-!   System Name        : XXXXXXXXX                                       
+!
+!   System Name        : XXXXXXXXX
 !   System Contact     : xxxxxxxx@xxxxxxxx.xxx
 !   System Location    : XXXXXXXXX
-! 
-!   MAC Age Time (sec) : 300    
-! 
-!   Time Zone          : -480 
-!   Daylight Time Rule : Continental-US-and-Canada 
-! 
-!   Software revision  : WC.16.11.0028        Base MAC Addr      : aaaaaa-aaaaaa 
-!    
-!   ROM Version        : WC.17.02.0007        Serial Number      : XXXXXXXXXX  
-! 
-! 
-! 
+!
+!   MAC Age Time (sec) : 300
+!
+!   Time Zone          : -480
+!   Daylight Time Rule : Continental-US-and-Canada
+!
+!   Software revision  : WC.16.11.0028        Base MAC Addr      : aaaaaa-aaaaaa
+!
+!   ROM Version        : WC.17.02.0007        Serial Number      : XXXXXXXXXX
+!
+!
+!
 
 Running configuration:
 
