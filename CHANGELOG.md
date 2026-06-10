@@ -6,10 +6,16 @@ The format is based on [Keep a Changelog](https://keepachangelog.com/en/1.1.0/).
 
 ## [Unreleased]
 ### Added
+- procurve: model unit test (@thanegill)
 
 ### Changed
+- procurve: rstrip trailing whitespace from commented command sections; add `String#rstrip_lines` refinement (@thanegill)
+- procurve: remove ANSI escape codes with `clean :escape_codes` and simplify the prompt regexp (@thanegill)
+- procurve: redact the additional credentials exposed by `include-credentials` / `encrypt-credentials`, with unit tests (@thanegill)
 
 ### Fixed
+- procurve: hide the SNMP community on `snmp-server host <ip> community "<name>"` lines (@thanegill)
+- procurve: hide local user password hashes (`password ... sha1 "<hash>"`) when remove_secret is true (@thanegill)
 
 ## [0.37.0 - 2026-05-20]
 ### Added
