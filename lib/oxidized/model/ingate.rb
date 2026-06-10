@@ -22,8 +22,7 @@ class Ingate < Oxidized::Model
   end
 
   cmd cfg_cb do |cfg|
-    cfg.gsub! /^# Timestamp:.*$/, ''
-    cfg
+    cfg.gsub(/^# Timestamp:.*$/, '')
   end
 
   cfg :http do
