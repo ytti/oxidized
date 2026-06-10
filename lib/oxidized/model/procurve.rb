@@ -39,15 +39,44 @@ class Procurve < Oxidized::Model
     cfg
   end
 
+  # Most of these credentials only appear in the running-config when
+  # include-credentials (and/or encrypt-credentials) is enabled; see the
+  # ArubaOS-Switch Access Security Guide. encrypt-credentials renames the
+  # plaintext keyword to an encrypted- variant (key -> encrypted-key, etc.) and
+  # stores an AES blob in place of the cleartext/hashed value.
   cmd :secret do |cfg|
+    # SNMPv1 community names
     cfg.gsub! /^(snmp-server community) \S+(.*)/, '\\1 <secret hidden> \\2'
     cfg.gsub! /^(snmp-server host \S+)( community)? \S+(.*)/, '\\1\\2 <secret hidden>\\3'
-    # local user password hashes; the quoted hash may wrap onto the next line
-    cfg.gsub! /(sha1\s+)"\S+"/, '\\1"<secret hidden>"'
-    cfg.gsub! /^(radius-server host \S+ key) \S+(.*)/, '\\1 <secret hidden> \\2'
-    cfg.gsub! /^(radius-server key).*/, '\\1 <configuration removed>'
-    cfg.gsub! /^(tacacs-server host \S+ key) \S+(.*)/, '\\1 <secret hidden> \\2'
-    cfg.gsub! /^(tacacs-server key).*/, '\\1 <secret hidden>'
+    # SNMPv3 user authentication and privacy passwords
+    cfg.gsub! /( auth (?:md5|sha)) "[^"]*"/, '\\1 "<secret hidden>"'
+    cfg.gsub! /( priv (?:des|aes)) "[^"]*"/, '\\1 "<secret hidden>"'
+
+    # encrypt-credentials master pre-shared-key. Must run before the local
+    # password rule below, whose plaintext "..." pattern would also match it.
+    cfg.gsub! /^(encrypt-credentials pre-shared-key (?:plaintext|hex)) \S+(.*)/, '\\1 <secret hidden>\\2'
+    # local manager/operator/port-access and aaa local-user password values;
+    # the quoted value may wrap onto the next line. hash-type: plaintext|sha1|sha256
+    cfg.gsub! /((?:plaintext|sha1|sha256)\s+)"[^"]*"/, '\\1"<secret hidden>"'
+    # encrypt-credentials form: encrypted-password <role> [user-name "x"] <blob>
+    cfg.gsub! /^(encrypted-password \S+(?: user-name "[^"]*")?) \S+(.*)/, '\\1 <secret hidden>\\2'
+
+    # RADIUS/TACACS shared secrets (key or encrypt-credentials encrypted-key)
+    cfg.gsub! /^(radius-server host \S+ (?:encrypted-)?key) \S+(.*)/, '\\1 <secret hidden>\\2'
+    cfg.gsub! /^(radius-server (?:encrypted-)?key).*/, '\\1 <configuration removed>'
+    cfg.gsub! /^(tacacs-server host \S+ (?:encrypted-)?key) \S+(.*)/, '\\1 <secret hidden>\\2'
+    cfg.gsub! /^(tacacs-server (?:encrypted-)?key).*/, '\\1 <secret hidden>'
+
+    # key-chain (routing protocol authentication) key material; rendered as a
+    # nested block, so key-string / encrypted-key sit on their own indented line
+    cfg.gsub! /^(\s*key-string) .*/, '\\1 <secret hidden>'
+    cfg.gsub! /^(\s*encrypted-key) \S+(.*)/, '\\1 <secret hidden>\\2'
+    # 802.1X supplicant shared secret
+    cfg.gsub! /^(aaa port-access .* (?:secret|encrypted-secret)) \S+(.*)/, '\\1 <secret hidden>\\2'
+    # SNTP authentication key
+    cfg.gsub! /^(sntp authentication .* (?:key-value|encrypted-key)) \S+(.*)/, '\\1 <secret hidden>\\2'
+    # MACsec pre-shared CAK (ckn is the key name, cak/encrypted-cak the secret)
+    cfg.gsub! /^(\s*mode pre-shared-key ckn \S+ (?:encrypted-)?cak) \S+(.*)/, '\\1 <secret hidden>\\2'
     cfg
   end
 
