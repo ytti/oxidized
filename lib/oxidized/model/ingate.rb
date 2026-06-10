@@ -25,6 +25,21 @@ class Ingate < Oxidized::Model
     cfg.gsub(/^# Timestamp:.*$/, '')
   end
 
+  cmd :secret do |cfg|
+    # Private keys: any *key field whose quoted value is a PEM private key block
+    # (the value spans multiple lines).
+    cfg.gsub!(/\b([a-z_]*key)="-----BEGIN [A-Z ]*PRIVATE KEY-----.*?-----END [A-Z ]*PRIVATE KEY-----"/m,
+              '\1="<secret hidden>"')
+    # Ingate spreads credentials across many fields. Match by suffix so we cover
+    # them all (e.g. trunkuserpassword, snmppassword, radiussecret,
+    # configencpassphrase, xauth_psk, eabhmackey, api_token) without touching
+    # lookalikes such as passwordtimeout or enable_psk_rw.
+    cfg.gsub!(/\b([a-z_]*(?:password|secret|passphrase|psk|hmackey|api_token|authtoken))=(?:"[^"]*"|\S+)/,
+              '\1=<secret hidden>')
+    cfg.gsub!(/\bcommunity=(?:"[^"]*"|\S+)/, 'community=<secret hidden>')
+    cfg
+  end
+
   cfg :http do
     @secure = true
     @main_page = "/"
