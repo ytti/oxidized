@@ -12,6 +12,7 @@ The format is based on [Keep a Changelog](https://keepachangelog.com/en/1.1.0/).
 ### Fixed
 - siklu: allow parenthesis in prompt. Fixes #3841 (@ytti)
 - fortios: allow parenthesis in prompt. Fixes #3846 (@ytti)
+- fortigate: make space before parenthesis optional. Fixes #3846 (@ytti)
 
 ## [0.37.0 - 2026-05-20]
 ### Added
