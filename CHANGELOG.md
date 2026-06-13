@@ -8,6 +8,7 @@ The format is based on [Keep a Changelog](https://keepachangelog.com/en/1.1.0/).
 ### Added
 
 ### Changed
+- fsos: Add `cmd :all` block to strip carriage returns and command echo/prompts
 
 ### Fixed
 - siklu: allow parenthesis in prompt. Fixes #3841 (@ytti)
