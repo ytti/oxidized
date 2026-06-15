@@ -10,6 +10,11 @@ class FSOS < Oxidized::Model
     data.sub re, ''
   end
 
+  cmd :all do |cfg|
+    cfg = cfg.delete("\r")
+    cfg.cut_both
+  end
+
   cmd :secret do |cfg|
     cfg.gsub! /(secret \w+) (\S+).*/, '\\1 <secret hidden>'
     cfg.gsub! /(password \d+) (\S+).*/, '\\1 <secret hidden>'
