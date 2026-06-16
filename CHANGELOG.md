@@ -6,7 +6,24 @@ The format is based on [Keep a Changelog](https://keepachangelog.com/en/1.1.0/).
 
 ## [Unreleased]
 ### Added
+- Add Zabbix source.
+Nodes can be sourced from Zabbix API. In Zabbix, add or modify template with the Macros that you then specify in Oxidized config. Example: 
+source:
+  default: zabbix
+  zabbix:
+    url: "https://zabbix.yourdomain.com/api_jsonrpc.php"
+    token: "yourzabbixapitoken"
+    template: "Cisco IOS by SNMP"
+    map:
+      username: "{$OXIDIZED_USERNAME}"
+      password: "{$OXIDIZED_PASSWORD}"
+      model:    "{$OXIDIZED_MODEL}"
+    vars_map:
+      group:  "{$OXIDIZED_GROUP}"
+      enable: "{$OXIDIZED_ENABLE}"
 
+- Update Zabbix source to implement filtering by tags are requested by other users.
+  
 ### Changed
 - docker: set LANG=C.UTF-8. Fixes #3690 (@ytti)
 
