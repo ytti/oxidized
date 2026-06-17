@@ -1,0 +1,2740 @@
+---
+init_prompt: |-
+    \r\r
+    Hello, this is gpon olt platform (version 1.00).\r\r
+    Copyright 2020-2025,All Rights Reserved.\r\r
+    \r\r
+    \r\r
+    User Access Verification\r\r
+    \r\r
+    \r\r
+    Entering character mode\r\r
+    Escape character is '^]'.\r\r
+    \r
+    RT87_23|87.23.4-Komin_OLT>\x20
+commands:
+  - "enable\n": |-
+      enable\r
+      Password:\x20
+  - "\n": |-
+      \r
+      2026/05/25 18:50:59   User Login                   User admin-10.88.62.246-ssh log in.\r
+      \r
+      \r
+      RT87_23|87.23.4-Komin_OLT#\x20
+  - "configure terminal\n": |-
+      configure terminal\r
+      RT87_23|87.23.4-Komin_OLT(config)#\x20
+  - "show version\n": |-
+      show version\r
+        Olt Serial Number:           SNREMOVED\r
+        Olt Device Model:            V1600G0-B\r
+        Hardware Version:            V3.1.4\r
+        Software Version:            V1.4.13R\r
+        Software Created Time:       Fri, 22 Aug 2025 13:27:22 \r
+        Copyright 2020-2025\r
+      \r
+      RT87_23|87.23.4-Komin_OLT(config)#\x20
+  - "show pon transceiver-info all\n": |-
+      show pon transceiver-info all\r
+      \r
+      PON 1 Transceiver information:\r
+      Vendor Name:   OEM             \r
+      Part Number:   GPON OLT C++++  \r
+      Revision:\t 10  \r
+      Serial Number: SNREMOVED   \r
+      Manufacturing Date: 240108  \r
+      
+      \r
+      PON 2 Transceiver information:\r
+      Vendor Name:   OEM             \r
+      Part Number:   GPON OLT C++++  \r
+      Revision:\t 10  \r
+      Serial Number: SNREMOVED   \r
+      Manufacturing Date: 240108  \r
+      
+      \r
+      PON 3 Transceiver information:\r
+      Vendor Name:   OEM             \r
+      Part Number:   GPON OLT C++++  \r
+      Revision:\t 10  \r
+      Serial Number: SNREMOVED   \r
+      Manufacturing Date: 240108  \r
+      
+      \r
+      PON 4 Transceiver information:\r
+      Vendor Name:   OEM             \r
+      Part Number:   GPON OLT C++++  \r
+      Revision:\t 10  \r
+      Serial Number: SNREMOVED   \r
+      Manufacturing Date: 240108  \r
+      
+      RT87_23|87.23.4-Komin_OLT(config)#\x20
+  - "show running-config\n": |-
+      show running-config\r
+      \r
+      Current configuration:\r
+      !\r
+      !Software Version      :\t\tV1.4.13R\r
+      !Software Created Time :\t\tFri, 22 Aug 2025 13:27:22 \r
+      hostname RT87_23|87.23.4-Komin_OLT\r
+      log trap emergencies\r
+      auto-copy running-config startup-config enable timeout 3600\r
+      !\r
+      line vty\r
+       exec-timeout 0 0\r
+      exit\r
+      !\r
+      security-dos\r
+      dos prevent level off \r
+      exit\r
+      !\r
+      interface aux\r
+      ip address 192.168.8.200 255.255.255.0\r
+      exit\r
+      interface loopback\r
+      ip address 127.0.0.1 255.0.0.0\r
+      ipv6 address ::1/128\r
+      exit\r
+      !\r
+      vlan 1\r
+      exit\r
+      vlan 1925\r
+      exit\r
+      vlan 1925\r
+      description vlan1925_bridge_AP\r
+      exit\r
+      !\r
+      interface vlan 1925\r
+      ip address 10.87.23.4/24\r
+      exit\r
+      !\r
+      interface vlan 1925\r
+      ipv6 address fe80::781:6e68:a4ff:fede:7057 link-local\r
+      exit\r
+      interface aux\r
+      exit\r
+      ip dns 10.88.1.2  10.89.1.2\r
+      interface vlan 1925\r
+      ipv6 nd ra-min-interval 66 ra-max-interval 200\r
+      ipv6 nd ra-hop-limit 64\r
+      ipv6 nd mtu-option\r
+      exit\r
+       --More-- \x00
+  - " ": |-
+      \b\b\b\b\b\b\b\b\b\b          \b\b\b\b\b\b\b\b\b\b!\r
+      !\r
+      !\r
+      !\r
+      !\r
+      interface gigabitethernet 0/1\r
+      description Uplink_CCR\r
+      switchport mode trunk\r
+      switchport trunk pvid vlan 1\r
+      switchport trunk vlan 1925\r
+      no shutdown \r
+      speed 10000 \r
+      duplex full \r
+      mdi force\r
+      storm-control broadcast fps 512\r
+      no storm-control multicast\r
+      storm-control unknow fps 512\r
+      no switchport isolate\r
+      no ip igmp snooping immediate-leave\r
+      perf-stats 15min enable\r
+      perf-stats 24hour enable\r
+      exit\r
+      !\r
+      interface gigabitethernet 0/2\r
+      switchport mode trunk\r
+      switchport trunk pvid vlan 1\r
+      switchport trunk vlan 1925\r
+      no shutdown \r
+      speed 10000 \r
+      duplex full \r
+      mdi force\r
+      storm-control broadcast fps 512\r
+      no storm-control multicast\r
+      storm-control unknow fps 512\r
+      no switchport isolate\r
+      no ip igmp snooping immediate-leave\r
+      perf-stats 15min enable\r
+      perf-stats 24hour enable\r
+      exit\r
+      !\r
+      interface gigabitethernet 0/3\r
+      switchport mode trunk\r
+      switchport trunk pvid vlan 1\r
+      switchport trunk vlan 1925\r
+      no shutdown \r
+      speed auto \r
+      mdi force\r
+      storm-control broadcast fps 512\r
+      no storm-control multicast\r
+       --More-- \x00
+  - " ": |-
+      \b\b\b\b\b\b\b\b\b\b          \b\b\b\b\b\b\b\b\b\bstorm-control unknow fps 512\r
+      no switchport isolate\r
+      no ip igmp snooping immediate-leave\r
+      perf-stats 15min enable\r
+      perf-stats 24hour enable\r
+      exit\r
+      !\r
+      interface gigabitethernet 0/4\r
+      switchport mode trunk\r
+      switchport trunk pvid vlan 1\r
+      switchport trunk vlan 1925\r
+      no shutdown \r
+      speed auto \r
+      mdi force\r
+      storm-control broadcast fps 512\r
+      no storm-control multicast\r
+      storm-control unknow fps 512\r
+      no switchport isolate\r
+      no ip igmp snooping immediate-leave\r
+      perf-stats 15min enable\r
+      perf-stats 24hour enable\r
+      exit\r
+      !\r
+      interface gpon 0/1\r
+      no shutdown \r
+      mdi force\r
+      storm-control broadcast fps 512\r
+      no storm-control multicast\r
+      storm-control unknow fps 512\r
+      no switchport isolate\r
+      no p2p\r
+      no ip igmp snooping immediate-leave\r
+      perf-stats 15min enable\r
+      perf-stats 24hour enable\r
+      exit\r
+      !\r
+      interface gpon 0/2\r
+      description HONEST_Ricany\r
+      no shutdown \r
+      mdi force\r
+      storm-control broadcast fps 512\r
+      no storm-control multicast\r
+      storm-control unknow fps 512\r
+      no switchport isolate\r
+      no p2p\r
+      no ip igmp snooping immediate-leave\r
+      perf-stats 15min enable\r
+      perf-stats 24hour enable\r
+      exit\r
+       --More-- \x00
+  - " ": |-
+      \b\b\b\b\b\b\b\b\b\b          \b\b\b\b\b\b\b\b\b\b!\r
+      interface gpon 0/3\r
+      no shutdown \r
+      mdi force\r
+      storm-control broadcast fps 512\r
+      no storm-control multicast\r
+      storm-control unknow fps 512\r
+      no switchport isolate\r
+      no p2p\r
+      no ip igmp snooping immediate-leave\r
+      perf-stats 15min enable\r
+      perf-stats 24hour enable\r
+      exit\r
+      !\r
+      interface gpon 0/4\r
+      no shutdown \r
+      mdi force\r
+      storm-control broadcast fps 512\r
+      no storm-control multicast\r
+      storm-control unknow fps 512\r
+      no switchport isolate\r
+      no p2p\r
+      no ip igmp snooping immediate-leave\r
+      perf-stats 15min enable\r
+      perf-stats 24hour enable\r
+      exit\r
+      !\r
+      !\r
+      port link-flapping mode auto-recovery\r
+      !\r
+      !\r
+      profile dba id 1 name dba_1\r
+      type 4 maximum 1024000\r
+      exit\r
+      !\r
+      profile dba id 511 name default1\r
+      type 3 assured 1024 maximum 1024000\r
+      exit\r
+      !\r
+      profile srv id 1 name srv_1\r
+      portvlan eth 1 mode tag vlan 1925 pri 0\r
+      commit\r
+      exit\r
+      !\r
+      profile srv id 2 name srv_2-wifi\r
+      portvlan veip 1 mode tag vlan 1925 pri 0\r
+      commit\r
+      exit\r
+      !\r
+       --More-- \x00
+  - " ": |-
+      \b\b\b\b\b\b\b\b\b\b          \b\b\b\b\b\b\b\b\b\bprofile line id 1 name line_1\r
+        tcont 1 name Vlan1925 dba dba_1\r
+          gemport 1 tcont 1 gemport_name Vlan1925\r
+            service ser_1 gemport 1 vlan 1925\r
+            service-port 1 gemport 1 uservlan 1925 vlan 1925\r
+      commit\r
+      exit\r
+      !\r
+      profile pri id 1 name pri_1\r
+      dhcp_server 192.168.109.1 255.255.255.0 enable 86400 192.168.109.10 192.168.109.254 pc 10.88.1.2 10.89.1.2 192.168.109.1 \r
+      wifi_switch 1 enable etsi auto 80211acanacax 12 80\r
+      wifi_switch 2 enable etsi 7 80211bgnax 12\r
+      username admin_control enable admin PASSREMOVED user_control disable \r
+      firewall level disable\r
+      acl ping control enable lan enable wan enable ipv4_control enable 10.88.200.26 255.255.255.0 ipv6_control disable \r
+      acl http control enable lan enable wan enable ipv4_control disable ipv6_control disable port 80\r
+      exit\r
+      !\r
+      onu auto-learn bind matching-type exact\r
+      !\r
+      plug_and_play vlan 1\r
+      set variable_vlan disable\r
+      set plug_and_play enable\r
+      !\r
+      interface gpon 0/1\r
+      no onu auto-learn\r
+      plug_and_play disable\r
+      onu add 1 profile default sn SNREMOVED\r
+      onu 1 profile line name line_1\r
+      onu 1 profile srv name srv_1\r
+      onu 1 pri equid VSOLV802\r
+      onu 1 pri reset_button disable\r
+      onu add 2 profile default \r
+      onu 2 desc GPON0/1:2\r
+      onu 2 profile line name line_1\r
+      onu 2 profile srv name srv_1\r
+      onu 2 pri equid VSOLV802\r
+      onu add 3 profile default sn SNREMOVED\r
+      onu 3 desc GPON0/1:3\r
+      onu 3 profile line name line_1\r
+      onu 3 profile srv name srv_1\r
+      onu add 4 profile default sn SNREMOVED\r
+      onu 4 desc GPON0/1:4\r
+      onu 4 profile line name line_1\r
+      onu 4 profile srv name srv_1\r
+      onu 4 pri equid VSOLV802\r
+       --More-- \x00
+  - " ": |-
+      \b\b\b\b\b\b\b\b\b\b          \b\b\b\b\b\b\b\b\b\bonu add 5 profile default sn SNREMOVED\r
+      onu 5 desc GPON0/1:5\r
+      onu 5 profile line name line_1\r
+      onu 5 profile srv name srv_1\r
+      onu 5 pri equid VSOLV802\r
+      onu add 6 profile default sn SNREMOVED\r
+      onu 6 desc GPON0/1:6\r
+      onu 6 profile line name line_1\r
+      onu 6 profile srv name srv_1\r
+      onu 6 pri equid VSOLV802\r
+      onu add 7 profile default sn SNREMOVED\r
+      onu 7 desc GPON0/1:7\r
+      onu 7 profile line name line_1\r
+      onu 7 profile srv name srv_1\r
+      onu 7 pri equid VSOLV802\r
+      onu 7 pri wan_adv add bridge\r
+      onu 7 pri wan_adv index 1 bridge internet \r
+      onu 7 pri wan_adv index 1 vlan tag wan_vlan 1925 0 \r
+      onu 7 pri wan_adv index 1 bind lan2 \r
+      onu add 8 profile default sn SNREMOVED\r
+      onu 8 desc GPON0/1:8\r
+      onu 8 profile line name line_1\r
+      onu 8 profile srv name srv_1\r
+      onu 8 pri equid VSOLV802\r
+      onu add 9 profile default sn SNREMOVED\r
+      onu 9 desc GPON0/1:9\r
+      onu 9 profile line name line_1\r
+      onu 9 profile srv name srv_1\r
+      onu 9 pri equid VSOLV802\r
+      exit\r
+      !\r
+      interface gpon 0/2\r
+      no onu auto-learn\r
+      plug_and_play disable\r
+      onu add 1 profile default sn SNREMOVED\r
+      onu 1 desc GPON0/2:1\r
+      onu 1 profile line name line_1\r
+      onu 1 profile srv name srv_2-wifi\r
+      onu 1 profile pri name pri_1\r
+      onu 1 pri equid MONUVPRI\r
+      onu 1 pri wan_adv add route\r
+      onu 1 pri wan_adv index 1 route mode internet mtu 1500 \r
+      onu 1 pri wan_adv index 1 route ipv4 static ip 10.87.23.253 mask 255.255.255.0 gw 10.87.23.1 dns master 10.88.1.2 slave 10.89.1.2 nat enable \r
+      onu 1 pri wan_adv index 1 vlan tag wan_vlan 1925 0 \r
+      onu 1 pri wifi_switch 2 enable etsi channel 7 80211ax 12\r
+      onu 1 pri wifi_ssid 1 name SSIDREMOVED hide disable auth_mode wpa2psk/wpa3psk encrypt_type aes shared_key PASSREMOVED rekey_interval 0\r
+      onu 1 pri wifi_ssid 5 name SSIDREMOVED hide disable auth_mode wpapsk/wpa2psk encry --More-- \x00
+  - " ": |-
+      \b\b\b\b\b\b\b\b\b\b          \b\b\b\b\b\b\b\b\b\bpt_type tkipaes shared_key PASSREMOVED rekey_interval 0\r
+      onu 1 pri port_isolate enable\r
+      onu add 2 profile default sn SNREMOVED\r
+      onu 2 desc GPON0/2:2\r
+      onu 2 profile line name line_1\r
+      onu 2 profile srv name srv_2-wifi\r
+      onu 2 profile pri name pri_1\r
+      onu 2 pri equid MONUVPRI\r
+      onu 2 pri wan_adv add route\r
+      onu 2 pri wan_adv index 1 route mode internet mtu 1500 \r
+      onu 2 pri wan_adv index 1 route ipv4 static ip 10.87.23.50 mask 255.255.255.128 gw 10.87.23.1 dns master 10.88.1.2 slave 10.89.1.2 nat enable \r
+      onu 2 pri wan_adv index 1 vlan tag wan_vlan 1925 0 \r
+      onu 2 pri wifi_ssid 1 name Apt_708 hide disable auth_mode wpa2psk/wpa3psk encrypt_type aes shared_key PASSREMOVED rekey_interval 0\r
+      onu 2 pri username admin_control enable admin PASSREMOVED user_control enable user PASSREMOVED \r
+      onu 2 pri firewall level low\r
+      onu 2 pri acl ping control enable lan enable wan enable ipv4_control enable 10.88.200.26 255.255.255.0 ipv6_control disable \r
+      onu 2 pri acl http control enable lan enable wan enable ipv4_control disable ipv6_control disable port 80\r
+      onu add 3 profile default sn SNREMOVED\r
+      onu 3 desc GPON0/2:3\r
+      onu 3 profile line name line_1\r
+      onu 3 profile srv name srv_2-wifi\r
+      onu 3 profile pri name pri_1\r
+      onu 3 pri equid MONUVPRI\r
+      onu 3 pri wan_adv add route\r
+      onu 3 pri wan_adv index 1 route mode internet mtu 1500 \r
+      onu 3 pri wan_adv index 1 route ipv4 static ip 10.87.23.51 mask 255.255.255.128 gw 10.87.23.1 dns master 10.88.1.2 slave 10.89.1.2 nat enable \r
+      onu 3 pri wan_adv index 1 vlan tag wan_vlan 1925 0 \r
+      onu 3 pri wifi_ssid 1 name Apt_207 hide disable auth_mode wpa2psk/wpa3psk encrypt_type aes shared_key PASSREMOVED rekey_interval 0\r
+      onu 3 pri username admin_control enable admin PASSREMOVED user_control enable user PASSREMOVED \r
+      onu 3 pri firewall level low\r
+      onu 3 pri acl ping control enable lan enable wan enable ipv4_control enable 10.88.200.26 255.255.255.0 ipv6_control disable \r
+      onu 3 pri acl http control enable lan enable wan enable ipv4_control disable ipv6_control disable port 80\r
+      onu add 4 profile default sn SNREMOVED\r
+      onu 4 desc GPON0/2:4\r
+      onu 4 profile line name line_1\r
+      onu 4 profile srv name srv_2-wifi\r
+      onu 4 profile pri name pri_1\r
+      onu 4 pri equid MONUVPRI\r
+      onu 4 pri wan_adv add route\r
+       --More-- \x00
+  - " ": |-
+      \b\b\b\b\b\b\b\b\b\b          \b\b\b\b\b\b\b\b\b\bonu 4 pri wan_adv index 1 route mode internet mtu 1500 \r
+      onu 4 pri wan_adv index 1 route ipv4 static ip 10.87.23.52 mask 255.255.255.128 gw 10.87.23.1 dns master 10.88.1.2 slave 10.89.1.2 nat enable \r
+      onu 4 pri wan_adv index 1 vlan tag wan_vlan 1925 0 \r
+      onu 4 pri wifi_ssid 1 name Apt_812.1 hide disable auth_mode wpa2psk/wpa3psk encrypt_type aes shared_key PASSREMOVED rekey_interval 0\r
+      onu 4 pri username admin_control enable admin PASSREMOVED user_control enable user PASSREMOVED \r
+      onu 4 pri firewall level low\r
+      onu 4 pri acl ping control enable lan enable wan enable ipv4_control enable 10.88.200.26 255.255.255.0 ipv6_control disable \r
+      onu 4 pri acl http control enable lan enable wan enable ipv4_control disable ipv6_control disable port 80\r
+      onu add 5 profile default sn SNREMOVED\r
+      onu 5 desc GPON0/2:5\r
+      onu 5 profile line name line_1\r
+      onu 5 profile srv name srv_2-wifi\r
+      onu 5 profile pri name pri_1\r
+      onu 5 pri equid MONUVPRI\r
+      onu 5 pri wan_adv add route\r
+      onu 5 pri wan_adv index 1 route mode internet mtu 1500 \r
+      onu 5 pri wan_adv index 1 route ipv4 static ip 10.87.23.53 mask 255.255.255.128 gw 10.87.23.1 dns master 10.88.1.2 slave 10.89.1.2 nat enable \r
+      onu 5 pri wan_adv index 1 vlan tag wan_vlan 1925 0 \r
+      onu 5 pri wifi_ssid 1 name Apt_1101 hide disable auth_mode wpa2psk/wpa3psk encrypt_type aes shared_key PASSREMOVED rekey_interval 0\r
+      onu 5 pri username admin_control enable admin PASSREMOVED user_control enable user PASSREMOVED \r
+      onu 5 pri firewall level low\r
+      onu 5 pri acl ping control enable lan enable wan enable ipv4_control enable 10.88.200.26 255.255.255.0 ipv6_control disable \r
+      onu 5 pri acl http control enable lan enable wan enable ipv4_control disable ipv6_control disable port 80\r
+      onu add 6 profile default sn SNREMOVED\r
+      onu 6 desc GPON0/2:6\r
+      onu 6 profile line name line_1\r
+      onu 6 profile srv name srv_2-wifi\r
+      onu 6 pri equid MONUVPRI\r
+      onu 6 pri wan_adv add route\r
+      onu 6 pri wan_adv index 1 route mode internet mtu 1500 \r
+      onu 6 pri wan_adv index 1 route ipv4 static ip 10.87.23.64 mask 255.255.255.128 gw 10.87.23.1 dns master 10.88.1.2 slave 10.89.1.2 nat enable \r
+      onu 6 pri wan_adv index 1 vlan tag wan_vlan 1925 0 \r
+      onu 6 pri dhcp_server 192.168.109.1 255.255.255.0 enable 86400 192.168.109.2 192.168.109.254 pc 10.88.1.2 10.89.1.2 192.168.109.1 \r
+      onu 6 pri wifi_ssid 5 name Apt_505 hide disable auth_mode wpapsk/wpa2psk encrypt_type tkipaes shared_key PASSREMOVED rekey_interval 0\r
+      onu 6 pri username admin_control enable admin PASSREMOVED user_control disable \r
+       --More-- \x00
+  - " ": |-
+      \b\b\b\b\b\b\b\b\b\b          \b\b\b\b\b\b\b\b\b\bonu 6 pri acl ping control enable lan enable wan disable \r
+      onu 6 pri acl https control enable lan enable wan disable port 443\r
+      onu add 7 profile default sn SNREMOVED\r
+      onu 7 desc GPON0/2:7\r
+      onu 7 profile line name line_1\r
+      onu 7 profile srv name srv_2-wifi\r
+      onu 7 profile pri name pri_1\r
+      onu 7 pri equid MONUVPRI\r
+      onu 7 pri wan_adv add route\r
+      onu 7 pri wan_adv index 1 route mode internet mtu 1500 \r
+      onu 7 pri wan_adv index 1 route ipv4 static ip 10.87.23.55 mask 255.255.255.128 gw 10.87.23.1 dns master 10.88.1.2 slave 10.89.1.2 nat enable \r
+      onu 7 pri wan_adv index 1 vlan tag wan_vlan 1925 0 \r
+      onu 7 pri wifi_ssid 1 name SSIDREMOVED hide disable auth_mode wpa2psk/wpa3psk encrypt_type aes shared_key PASSREMOVED rekey_interval 0\r
+      onu 7 pri username admin_control enable admin PASSREMOVED user_control enable user PASSREMOVED \r
+      onu 7 pri firewall level low\r
+      onu 7 pri acl ping control enable lan enable wan enable ipv4_control enable 10.88.200.26 255.255.255.0 ipv6_control disable \r
+      onu 7 pri acl http control enable lan enable wan enable ipv4_control disable ipv6_control disable port 80\r
+      onu add 8 profile default sn SNREMOVED\r
+      onu 8 desc GPON0/2:8\r
+      onu 8 profile line name line_1\r
+      onu 8 profile srv name srv_2-wifi\r
+      onu 8 profile pri name pri_1\r
+      onu 8 pri equid MONUVPRI\r
+      onu 8 pri wan_adv add route\r
+      onu 8 pri wan_adv index 1 route mode internet mtu 1500 \r
+      onu 8 pri wan_adv index 1 route ipv4 static ip 10.87.23.56 mask 255.255.255.128 gw 10.87.23.1 dns master 10.88.1.2 slave 10.89.1.2 nat enable \r
+      onu 8 pri wan_adv index 1 vlan tag wan_vlan 1925 0 \r
+      onu 8 pri wifi_ssid 1 name Apt_604 hide disable auth_mode wpa2psk/wpa3psk encrypt_type aes shared_key PASSREMOVED rekey_interval 0\r
+      onu 8 pri wifi_ssid 5 name Apt_604 hide disable auth_mode wpa2psk encrypt_type aes shared_key PASSREMOVED rekey_interval 0\r
+      onu 8 pri username admin_control enable admin PASSREMOVED user_control enable user PASSREMOVED \r
+      onu 8 pri firewall level low\r
+      onu 8 pri acl ping control enable lan enable wan enable ipv4_control enable 10.88.200.26 255.255.255.0 ipv6_control disable \r
+      onu 8 pri acl http control enable lan enable wan enable ipv4_control disable ipv6_control disable port 80\r
+      onu add 9 profile default sn SNREMOVED\r
+      onu 9 desc GPON0/2:9\r
+      onu 9 profile line name line_1\r
+      onu 9 profile srv name srv_2-wifi\r
+      onu 9 profile pri name pri_1\r
+       --More-- \x00
+  - " ": |-
+      \b\b\b\b\b\b\b\b\b\b          \b\b\b\b\b\b\b\b\b\bonu 9 pri equid MONUVPRI\r
+      onu 9 pri wan_adv add route\r
+      onu 9 pri wan_adv index 1 route mode internet mtu 1500 \r
+      onu 9 pri wan_adv index 1 route ipv4 static ip 10.87.23.57 mask 255.255.255.128 gw 10.87.23.1 dns master 10.88.1.2 slave 10.89.1.2 nat enable \r
+      onu 9 pri wan_adv index 1 vlan tag wan_vlan 1925 0 \r
+      onu 9 pri wifi_ssid 1 name Apt_1112 hide disable auth_mode wpa2psk/wpa3psk encrypt_type aes shared_key PASSREMOVED rekey_interval 0\r
+      onu 9 pri wifi_ssid 5 name Apt_1112 hide disable auth_mode wpa2psk encrypt_type aes shared_key PASSREMOVED rekey_interval 0\r
+      onu 9 pri username admin_control enable admin PASSREMOVED user_control enable user PASSREMOVED \r
+      onu 9 pri firewall level low\r
+      onu 9 pri acl ping control enable lan enable wan enable ipv4_control enable 10.88.200.26 255.255.255.0 ipv6_control disable \r
+      onu 9 pri acl http control enable lan enable wan enable ipv4_control disable ipv6_control disable port 80\r
+      onu add 10 profile default sn SNREMOVED\r
+      onu 10 desc GPON0/2:10\r
+      onu 10 profile line name line_1\r
+      onu 10 profile srv name srv_2-wifi\r
+      onu 10 profile pri name pri_1\r
+      onu 10 pri equid MONUVPRI\r
+      onu 10 pri wan_adv add route\r
+      onu 10 pri wan_adv index 1 route mode internet mtu 1500 \r
+      onu 10 pri wan_adv index 1 route ipv4 static ip 10.87.23.58 mask 255.255.255.128 gw 10.87.23.1 dns master 10.88.1.2 slave 10.89.1.2 nat enable \r
+      onu 10 pri wan_adv index 1 vlan tag wan_vlan 1925 0 \r
+      onu 10 pri wifi_ssid 1 name Apt_605 hide disable auth_mode wpa2psk/wpa3psk encrypt_type aes shared_key PASSREMOVED rekey_interval 0\r
+      onu 10 pri wifi_ssid 5 name Apt_605 hide disable auth_mode wpa2psk encrypt_type aes shared_key PASSREMOVED rekey_interval 0\r
+      onu 10 pri username admin_control enable admin PASSREMOVED user_control enable user PASSREMOVED \r
+      onu 10 pri firewall level low\r
+      onu 10 pri acl ping control enable lan enable wan enable ipv4_control enable 10.88.200.26 255.255.255.0 ipv6_control disable \r
+      onu 10 pri acl http control enable lan enable wan enable ipv4_control disable ipv6_control disable port 80\r
+      onu add 11 profile default sn SNREMOVED\r
+      onu 11 desc GPON0/2:11\r
+      onu 11 profile line name line_1\r
+      onu 11 profile srv name srv_2-wifi\r
+      onu 11 profile pri name pri_1\r
+      onu 11 pri equid MONUVPRI\r
+      onu 11 pri wan_adv add route\r
+      onu 11 pri wan_adv index 1 route mode internet mtu 1500 \r
+      onu 11 pri wan_adv index 1 route ipv4 static ip 10.87.23.59 mask 255.255.255.128 gw 10.87.23.1 dns master 10.88.1.2 slave 10.89.1.2 nat enable \r
+       --More-- \x00\r
+      2026/05/25 18:51:33   ONU Port Los                 PON 0/3 ONU 98 sn SNREMOVED  LAN1 LINK DOWN\r
+      
+  - " ": |-
+      \b\b\b\b\b\b\b\b\b\b          \b\b\b\b\b\b\b\b\b\bonu 11 pri wan_adv index 1 vlan tag wan_vlan 1925 0 \r
+      onu 11 pri wifi_ssid 1 name Apt_712.1 hide disable auth_mode wpa2psk/wpa3psk encrypt_type aes shared_key PASSREMOVED rekey_interval 0\r
+      onu 11 pri wifi_ssid 5 name Apt_712.1 hide disable auth_mode wpa2psk encrypt_type aes shared_key PASSREMOVED rekey_interval 0\r
+      onu 11 pri username admin_control enable admin PASSREMOVED user_control enable user PASSREMOVED \r
+      onu 11 pri firewall level low\r
+      onu 11 pri acl ping control enable lan enable wan enable ipv4_control enable 10.88.200.26 255.255.255.0 ipv6_control disable \r
+      onu 11 pri acl http control enable lan enable wan enable ipv4_control disable ipv6_control disable port 80\r
+      onu add 12 profile default sn SNREMOVED\r
+      onu 12 desc GPON0/2:12\r
+      onu 12 profile line name line_1\r
+      onu 12 profile srv name srv_2-wifi\r
+      onu 12 profile pri name pri_1\r
+      onu 12 pri equid MONUVPRI\r
+      onu 12 pri wan_adv add route\r
+      onu 12 pri wan_adv index 1 route mode internet mtu 1500 \r
+      onu 12 pri wan_adv index 1 route ipv4 static ip 10.87.23.60 mask 255.255.255.128 gw 10.87.23.1 dns master 10.88.1.2 slave 10.89.1.2 nat enable \r
+      onu 12 pri wan_adv index 1 vlan tag wan_vlan 1925 0 \r
+      onu 12 pri wifi_ssid 1 name Apt_612.1 hide disable auth_mode wpa2psk encrypt_type aes shared_key PASSREMOVED rekey_interval 0\r
+      onu 12 pri wifi_ssid 5 name Apt_612.1 hide disable auth_mode wpa2psk encrypt_type aes shared_key PASSREMOVED rekey_interval 0\r
+      onu 12 pri username admin_control enable admin PASSREMOVED user_control enable user PASSREMOVED \r
+      onu 12 pri firewall level low\r
+      onu 12 pri acl ping control enable lan enable wan enable ipv4_control enable 10.88.200.26 255.255.255.0 ipv6_control disable \r
+      onu 12 pri acl http control enable lan enable wan enable ipv4_control disable ipv6_control disable port 80\r
+      onu add 13 profile default sn SNREMOVED\r
+      onu 13 desc GPON0/2:13\r
+      onu 13 profile line name line_1\r
+      onu 13 profile srv name srv_2-wifi\r
+      onu 13 profile pri name pri_1\r
+      onu 13 pri equid MONUVPRI\r
+      onu 13 pri wan_adv add route\r
+      onu 13 pri wan_adv index 1 route mode internet mtu 1500 \r
+      onu 13 pri wan_adv index 1 route ipv4 static ip 10.87.23.61 mask 255.255.255.128 gw 10.87.23.1 dns master 10.88.1.2 slave 10.89.1.2 nat enable \r
+      onu 13 pri wan_adv index 1 vlan tag wan_vlan 1925 0 \r
+      onu 13 pri wifi_ssid 1 name Apt_707 hide disable auth_mode wpa2psk/wpa3psk encrypt_type aes shared_key PASSREMOVED rekey_interval 0\r
+      onu 13 pri wifi_ssid 5 name Apt_707 hide disable auth_mode wpa2psk encrypt_type aes shared_key PASSREMOVED rekey_interval 0\r
+       --More-- \x00
+  - " ": |-
+      \b\b\b\b\b\b\b\b\b\b          \b\b\b\b\b\b\b\b\b\bonu 13 pri username admin_control enable admin PASSREMOVED user_control enable user PASSREMOVED \r
+      onu 13 pri firewall level low\r
+      onu 13 pri acl ping control enable lan enable wan enable ipv4_control enable 10.88.200.26 255.255.255.0 ipv6_control disable \r
+      onu 13 pri acl http control enable lan enable wan enable ipv4_control disable ipv6_control disable port 80\r
+      onu add 14 profile default sn SNREMOVED\r
+      onu 14 desc GPON0/2:14\r
+      onu 14 profile line name line_1\r
+      onu 14 profile srv name srv_2-wifi\r
+      onu 14 profile pri name pri_1\r
+      onu 14 pri equid MONUVPRI\r
+      onu 14 pri wan_adv add route\r
+      onu 14 pri wan_adv index 1 route mode internet mtu 1500 \r
+      onu 14 pri wan_adv index 1 route ipv4 static ip 10.87.23.62 mask 255.255.255.128 gw 10.87.23.1 dns master 10.88.1.2 slave 10.89.1.2 nat enable \r
+      onu 14 pri wifi_ssid 1 name Apt_508 hide disable auth_mode wpa2psk/wpa3psk encrypt_type aes shared_key PASSREMOVED rekey_interval 0\r
+      onu 14 pri wifi_ssid 5 name Apt_508 hide disable auth_mode wpa2psk encrypt_type aes shared_key PASSREMOVED rekey_interval 0\r
+      onu 14 pri username admin_control enable admin PASSREMOVED user_control enable user PASSREMOVED \r
+      onu 14 pri firewall level low\r
+      onu 14 pri acl ping control enable lan enable wan enable ipv4_control enable 10.88.200.26 255.255.255.0 ipv6_control disable \r
+      onu 14 pri acl http control enable lan enable wan enable ipv4_control disable ipv6_control disable port 80\r
+      onu add 15 profile default sn SNREMOVED\r
+      onu 15 desc GPON0/2:15\r
+      onu 15 profile line name line_1\r
+      onu 15 profile srv name srv_2-wifi\r
+      onu 15 profile pri name pri_1\r
+      onu 15 pri equid MONUVPRI\r
+      onu 15 pri wan_adv add route\r
+      onu 15 pri wan_adv index 1 route mode internet mtu 1500 \r
+      onu 15 pri wan_adv index 1 route ipv4 static ip 10.87.23.63 mask 255.255.255.128 gw 10.87.23.1 dns master 10.88.1.2 slave 10.89.1.2 nat enable \r
+      onu 15 pri wan_adv index 1 vlan tag wan_vlan 1925 0 \r
+      onu 15 pri wifi_ssid 1 name Apt_801.2 hide disable auth_mode wpa2psk/wpa3psk encrypt_type aes shared_key PASSREMOVED rekey_interval 0\r
+      onu 15 pri wifi_ssid 5 name Apt_801.2 hide disable auth_mode wpa2psk encrypt_type aes shared_key PASSREMOVED rekey_interval 0\r
+      onu 15 pri firewall level low\r
+      onu 15 pri acl ping control enable lan enable wan enable ipv4_control enable 10.88.200.26 255.255.255.0 ipv6_control disable \r
+      onu 15 pri acl http control enable lan enable wan enable ipv4_control disable ipv6_control disable port 80\r
+      onu add 16 profile default sn SNREMOVED\r
+       --More-- \x00
+  - " ": |-
+      \b\b\b\b\b\b\b\b\b\b          \b\b\b\b\b\b\b\b\b\bonu 16 desc GPON0/2:16\r
+      onu 16 profile line name line_1\r
+      onu 16 profile srv name srv_2-wifi\r
+      onu 16 profile pri name pri_1\r
+      onu 16 pri equid MONUVPRI\r
+      onu 16 pri wan_adv add route\r
+      onu 16 pri wan_adv index 1 route mode internet mtu 1500 \r
+      onu 16 pri wan_adv index 1 route ipv4 static ip 10.87.23.54 mask 255.255.255.128 gw 10.87.23.1 dns master 10.88.1.2 slave 10.89.1.2 nat enable \r
+      onu 16 pri wan_adv index 1 vlan tag wan_vlan 1925 0 \r
+      onu 16 pri wifi_ssid 1 name Apt_301.2 hide disable auth_mode wpa2psk/wpa3psk encrypt_type aes shared_key PASSREMOVED rekey_interval 0\r
+      onu 16 pri wifi_ssid 5 name Apt_301.2 hide disable auth_mode wpa2psk encrypt_type aes shared_key PASSREMOVED rekey_interval 0\r
+      onu 16 pri username admin_control enable admin PASSREMOVED user_control enable user PASSREMOVED \r
+      onu 16 pri firewall level disable\r
+      onu 16 pri acl ping control enable lan enable wan enable ipv4_control enable 10.88.200.26 255.255.255.0 ipv6_control disable \r
+      onu 16 pri acl http control enable lan enable wan enable ipv4_control disable ipv6_control disable port 80\r
+      onu add 17 profile default sn SNREMOVED\r
+      onu 17 desc GPON0/2:17\r
+      onu 17 profile line name line_1\r
+      onu 17 profile srv name srv_2-wifi\r
+      onu 17 pri equid MONUVPRI\r
+      onu 17 pri wan_adv add route\r
+      onu 17 pri wan_adv index 1 route mode internet mtu 1500 \r
+      onu 17 pri wan_adv index 1 route ipv4 static ip 10.87.23.65 mask 255.255.255.128 gw 10.87.23.1 dns master 10.88.1.2 slave 10.89.1.2 nat enable \r
+      onu 17 pri dhcp_server 192.168.109.1 255.255.255.0 enable 86400 192.168.109.2 192.168.109.254 pc 10.88.1.2 10.89.1.2 192.168.109.1 \r
+      onu 17 pri wifi_ssid 1 name Apt_912.1_5G hide disable auth_mode wpa2psk/wpa3psk encrypt_type aes shared_key PASSREMOVED rekey_interval 0\r
+      onu 17 pri wifi_ssid 5 name Apt_912.1 hide disable auth_mode wpapsk/wpa2psk encrypt_type tkipaes shared_key PASSREMOVED rekey_interval 0\r
+      onu 17 pri username admin_control enable admin PASSREMOVED user_control disable \r
+      onu 17 pri acl ping control enable lan enable wan disable \r
+      onu 17 pri acl https control enable lan enable wan disable port 443\r
+      onu add 18 profile default sn SNREMOVED\r
+      onu 18 desc GPON0/2:18\r
+      onu 18 profile line name line_1\r
+      onu 18 profile srv name srv_2-wifi\r
+      onu 18 pri equid MONUVPRI\r
+      onu 18 pri wan_adv add route\r
+      onu 18 pri wan_adv index 1 route mode internet mtu 1500 \r
+      onu 18 pri wan_adv index 1 route ipv4 static ip 10.87.23.67 mask 255.255.255.128 gw 10.87.23.1 dns master 10.88.1.2 slave 10.89.1.2 nat enable \r
+       --More-- \x00
+  - " ": |-
+      \b\b\b\b\b\b\b\b\b\b          \b\b\b\b\b\b\b\b\b\bonu 18 pri dhcp_server 192.168.109.1 255.255.255.0 enable 86400 192.168.109.2 192.168.109.254 pc 10.88.1.2 10.89.1.2 192.168.109.1 \r
+      onu 18 pri wifi_ssid 1 name Apt_1110_5G hide disable auth_mode wpa2psk/wpa3psk encrypt_type aes shared_key PASSREMOVED rekey_interval 0\r
+      onu 18 pri wifi_ssid 5 name Apt_1110 hide disable auth_mode wpapsk/wpa2psk encrypt_type tkipaes shared_key WTCA4A6A517 rekey_interval 0\r
+      onu 18 pri username admin_control enable admin PASSREMOVED user_control disable \r
+      onu 18 pri acl https control enable lan enable wan disable port 443\r
+      onu add 19 profile default sn SNREMOVED\r
+      onu 19 desc GPON0/2:19\r
+      onu 19 profile line name line_1\r
+      onu 19 profile srv name srv_2-wifi\r
+      onu 19 pri equid MONUVPRI\r
+      onu 19 pri wan_adv add route\r
+      onu 19 pri wan_adv index 1 route mode internet mtu 1500 \r
+      onu 19 pri wan_adv index 1 route ipv4 static ip 10.87.23.66 mask 255.255.255.128 gw 10.87.23.1 dns master 10.88.1.2 slave 10.89.1.2 nat enable \r
+      onu 19 pri dhcp_server 192.168.109.1 255.255.255.0 enable 86400 192.168.109.2 192.168.109.254 pc 10.88.1.2 10.89.1.2 192.168.109.1 \r
+      onu 19 pri wifi_ssid 1 name Apt_1108-5G hide disable auth_mode wpa2psk/wpa3psk encrypt_type aes shared_key PASSREMOVED rekey_interval 0\r
+      onu 19 pri wifi_ssid 5 name Apt_1108 hide disable auth_mode wpapsk/wpa2psk encrypt_type tkipaes shared_key PASSREMOVED rekey_interval 0\r
+      onu 19 pri username admin_control enable admin PASSREMOVED user_control disable \r
+      onu 19 pri acl https control enable lan enable wan disable port 443\r
+      onu add 20 profile default sn SNREMOVED\r
+      onu 20 desc GPON0/2:20\r
+      onu 20 profile line name line_1\r
+      onu 20 profile srv name srv_2-wifi\r
+      onu 20 pri equid MONUVPRI\r
+      onu 20 pri wan_adv add route\r
+      onu 20 pri wan_adv index 1 route mode internet mtu 1500 \r
+      onu 20 pri wan_adv index 1 route ipv4 static ip 10.87.23.68 mask 255.255.255.128 gw 10.87.23.1 dns master 10.88.1.2 slave 10.89.1.2 nat enable \r
+      onu 20 pri dhcp_server 192.168.109.1 255.255.255.0 enable 86400 192.168.109.2 192.168.109.254 pc 10.88.1.2 10.89.1.2 192.168.109.1 \r
+      onu 20 pri wifi_ssid 1 name Apt_310 hide disable auth_mode wpa2psk/wpa3psk encrypt_type aes shared_key PASSREMOVED rekey_interval 0\r
+      onu 20 pri username admin_control enable admin PASSREMOVED user_control disable \r
+      onu 20 pri firewall level low\r
+      onu 20 pri acl ping control enable lan enable wan disable \r
+      onu 20 pri acl http control enable lan enable wan disable port 80\r
+      onu add 21 profile default sn SNREMOVED\r
+      onu 21 desc GPON0/2:21\r
+      onu 21 profile line name line_1\r
+      onu 21 profile srv name srv_2-wifi\r
+      onu 21 pri equid MONUVPRI\r
+       --More-- \x00
+  - " ": |-
+      \b\b\b\b\b\b\b\b\b\b          \b\b\b\b\b\b\b\b\b\bonu 21 pri wan_adv add route\r
+      onu 21 pri wan_adv index 1 route mode internet mtu 1500 \r
+      onu 21 pri wan_adv index 1 route ipv4 static ip 10.87.23.69 mask 255.255.255.0 gw 10.87.23.1 dns master 10.88.1.2 slave 10.89.1.2 nat enable \r
+      onu 21 pri dhcp_server 192.168.109.1 255.255.255.0 enable 86400 192.168.109.2 192.168.109.254 pc 10.88.1.2 10.89.1.2 192.168.109.1 \r
+      onu 21 pri wifi_ssid 1 name Apt_201.1-5G hide disable auth_mode wpa2psk/wpa3psk encrypt_type aes shared_key PASSREMOVED rekey_interval 0\r
+      onu 21 pri wifi_ssid 5 name Apt_201.1 hide disable auth_mode wpapsk/wpa2psk encrypt_type tkipaes shared_key PASSREMOVED rekey_interval 0\r
+      onu 21 pri username admin_control enable admin PASSREMOVED user_control disable \r
+      onu 21 pri acl https control enable lan enable wan disable port 443\r
+      onu add 22 profile default sn SNREMOVED\r
+      onu 22 desc GPON0/2:22\r
+      onu 22 profile line name line_1\r
+      onu 22 profile srv name srv_2-wifi\r
+      onu 22 pri equid MONUVPRI\r
+      onu 22 pri wan_adv add route\r
+      onu 22 pri wan_adv index 1 route mode internet mtu 1500 \r
+      onu 22 pri wan_adv index 1 route ipv4 static ip 10.87.23.70 mask 255.255.255.0 gw 10.87.23.1 dns master 10.88.1.2 slave 10.89.1.2 nat enable \r
+      onu 22 pri dhcp_server 192.168.109.1 255.255.255.0 enable 86400 192.168.109.2 192.168.109.254 pc 10.88.1.2 10.89.1.2 192.168.109.1 \r
+      onu 22 pri wifi_ssid 1 name Apt_201.2-5G hide disable auth_mode wpa2psk/wpa3psk encrypt_type aes shared_key PASSREMOVED rekey_interval 0\r
+      onu 22 pri wifi_ssid 5 name Apt_201.2 hide disable auth_mode wpapsk/wpa2psk encrypt_type tkipaes shared_key PASSREMOVED rekey_interval 0\r
+      onu 22 pri username admin_control enable admin PASSREMOVED user_control disable \r
+      onu 22 pri acl https control enable lan enable wan disable port 443\r
+      onu add 23 profile default sn SNREMOVED\r
+      onu 23 desc GPON0/2:23\r
+      onu 23 profile line name line_1\r
+      onu 23 profile srv name srv_2-wifi\r
+      onu 23 pri equid MONUVPRI\r
+      onu 23 pri wan_adv add route\r
+      onu 23 pri wan_adv index 1 route mode internet mtu 1500 \r
+      onu 23 pri wan_adv index 1 route ipv4 static ip 10.87.23.71 mask 255.255.255.0 gw 10.87.23.1 dns master 10.88.1.2 slave 10.89.1.2 nat enable \r
+      onu 23 pri dhcp_server 192.168.109.1 255.255.255.0 enable 86400 192.168.109.2 192.168.109.254 pc 10.88.1.2 10.89.1.2 192.168.109.1 \r
+      onu 23 pri wifi_ssid 1 name Apt_202-5G hide disable auth_mode wpa2psk/wpa3psk encrypt_type aes shared_key PASSREMOVED rekey_interval 0\r
+      onu 23 pri wifi_ssid 5 name Apt_202 hide disable auth_mode wpapsk/wpa2psk encrypt_type tkipaes shared_key PASSREMOVED rekey_interval 0\r
+      onu 23 pri username admin_control enable admin PASSREMOVED user_control disable \r
+      onu 23 pri acl https control enable lan enable wan disable port 443\r
+       --More-- \x00
+  - " ": |-
+      \b\b\b\b\b\b\b\b\b\b          \b\b\b\b\b\b\b\b\b\bonu add 24 profile default sn SNREMOVED\r
+      onu 24 desc GPON0/2:24\r
+      onu 24 profile line name line_1\r
+      onu 24 profile srv name srv_2-wifi\r
+      onu 24 pri equid MONUVPRI\r
+      onu 24 pri wan_adv add route\r
+      onu 24 pri wan_adv index 1 route mode internet mtu 1500 \r
+      onu 24 pri wan_adv index 1 route ipv4 static ip 10.87.23.72 mask 255.255.255.0 gw 10.87.23.1 dns master 10.88.1.2 slave 10.89.1.2 nat enable \r
+      onu 24 pri dhcp_server 192.168.109.1 255.255.255.0 enable 86400 192.168.109.2 192.168.109.254 pc 10.88.1.2 10.89.1.2 192.168.109.1 \r
+      onu 24 pri wifi_ssid 1 name Apt_203-5G hide disable auth_mode wpa2psk/wpa3psk encrypt_type aes shared_key PASSREMOVED rekey_interval 0\r
+      onu 24 pri wifi_ssid 5 name Apt_203 hide disable auth_mode wpapsk/wpa2psk encrypt_type tkipaes shared_key PASSREMOVED rekey_interval 0\r
+      onu 24 pri username admin_control enable admin PASSREMOVED user_control disable \r
+      onu 24 pri acl https control enable lan enable wan disable port 443\r
+      onu add 25 profile default sn SNREMOVED\r
+      onu 25 desc GPON0/2:25\r
+      onu 25 profile line name line_1\r
+      onu 25 profile srv name srv_2-wifi\r
+      onu 25 pri equid MONUVPRI\r
+      onu 25 pri wan_adv add route\r
+      onu 25 pri wan_adv index 1 route mode internet mtu 1500 \r
+      onu 25 pri wan_adv index 1 route ipv4 static ip 10.87.23.73 mask 255.255.255.0 gw 10.87.23.1 dns master 10.88.1.2 slave 10.89.1.2 nat enable \r
+      onu 25 pri dhcp_server 192.168.109.1 255.255.255.0 enable 86400 192.168.109.2 192.168.109.254 pc 10.88.1.2 10.89.1.2 192.168.109.1 \r
+      onu 25 pri wifi_ssid 1 name Apt_204-5G hide disable auth_mode wpa2psk/wpa3psk encrypt_type aes shared_key PASSREMOVED rekey_interval 0\r
+      onu 25 pri wifi_ssid 5 name Apt_204 hide disable auth_mode wpapsk/wpa2psk encrypt_type tkipaes shared_key PASSREMOVED rekey_interval 0\r
+      onu 25 pri username admin_control enable admin PASSREMOVED user_control disable \r
+      onu 25 pri acl https control enable lan enable wan disable port 443\r
+      onu add 26 profile default sn SNREMOVED\r
+      onu 26 desc GPON0/2:26\r
+      onu 26 profile line name line_1\r
+      onu 26 profile srv name srv_2-wifi\r
+      onu 26 pri equid MONUVPRI\r
+      onu 26 pri wan_adv add route\r
+      onu 26 pri wan_adv index 1 route mode internet mtu 1500 \r
+      onu 26 pri wan_adv index 1 route ipv4 static ip 10.87.23.74 mask 255.255.255.0 gw 10.87.23.1 dns master 10.88.1.2 slave 10.89.1.2 nat enable \r
+      onu 26 pri dhcp_server 192.168.109.1 255.255.255.0 enable 86400 192.168.109.2 192.168.109.254 pc 10.88.1.2 10.89.1.2 192.168.109.1 \r
+      onu 26 pri wifi_ssid 1 name Apt_205-5G hide disable auth_mode wpa2psk/wpa3psk encrypt_type aes shared_key PASSREMOVED rekey_interval 0\r
+       --More-- \x00
+  - " ": |-
+      \b\b\b\b\b\b\b\b\b\b          \b\b\b\b\b\b\b\b\b\bonu 26 pri wifi_ssid 5 name Apt_205 hide disable auth_mode wpapsk/wpa2psk encrypt_type tkipaes shared_key PASSREMOVED rekey_interval 0\r
+      onu 26 pri username admin_control enable admin PASSREMOVED user_control disable \r
+      onu 26 pri acl https control enable lan enable wan disable port 443\r
+      onu add 27 profile default sn SNREMOVED\r
+      onu 27 desc GPON0/2:27\r
+      onu 27 profile line name line_1\r
+      onu 27 profile srv name srv_2-wifi\r
+      onu 27 pri equid MONUVPRI\r
+      onu 27 pri wan_adv add route\r
+      onu 27 pri wan_adv index 1 route mode internet mtu 1500 \r
+      onu 27 pri wan_adv index 1 route ipv4 static ip 10.87.23.75 mask 255.255.255.0 gw 10.87.23.1 dns master 10.88.1.2 slave 10.89.1.2 nat enable \r
+      onu 27 pri dhcp_server 192.168.109.1 255.255.255.0 enable 86400 192.168.109.2 192.168.109.254 pc 10.88.1.2 10.89.1.2 192.168.109.1 \r
+      onu 27 pri wifi_ssid 1 name Apt_209-5G hide disable auth_mode wpa2psk/wpa3psk encrypt_type aes shared_key PASSREMOVED rekey_interval 0\r
+      onu 27 pri wifi_ssid 5 name Apt_209 hide disable auth_mode wpapsk/wpa2psk encrypt_type tkipaes shared_key PASSREMOVED rekey_interval 0\r
+      onu 27 pri username admin_control enable admin PASSREMOVED user_control disable \r
+      onu 27 pri acl https control enable lan enable wan disable port 443\r
+      onu add 28 profile default sn SNREMOVED\r
+      onu 28 desc GPON0/2:28\r
+      onu 28 profile line name line_1\r
+      onu 28 profile srv name srv_2-wifi\r
+      onu 28 pri equid MONUVPRI\r
+      onu 28 pri wan_adv add route\r
+      onu 28 pri wan_adv index 1 route mode internet mtu 1500 \r
+      onu 28 pri wan_adv index 1 route ipv4 static ip 10.87.23.76 mask 255.255.255.0 gw 10.87.23.1 dns master 10.88.1.2 slave 10.89.1.2 nat enable \r
+      onu 28 pri dhcp_server 192.168.109.1 255.255.255.0 enable 86400 192.168.109.2 192.168.109.254 pc 10.88.1.2 10.89.1.2 192.168.109.1 \r
+      onu 28 pri wifi_ssid 1 name Apt_207-5G hide disable auth_mode wpa2psk/wpa3psk encrypt_type aes shared_key PASSREMOVED rekey_interval 0\r
+      onu 28 pri wifi_ssid 5 name Apt_207 hide disable auth_mode wpapsk/wpa2psk encrypt_type tkipaes shared_key PASSREMOVED rekey_interval 0\r
+      onu 28 pri username admin_control enable admin PASSREMOVED user_control disable \r
+      onu 28 pri acl https control enable lan enable wan disable port 443\r
+      onu add 29 profile default sn SNREMOVED\r
+      onu 29 desc GPON0/2:29\r
+      onu 29 profile line name line_1\r
+      onu 29 profile srv name srv_2-wifi\r
+      onu 29 pri equid MONUVPRI\r
+      onu 29 pri wan_adv add route\r
+      onu 29 pri wan_adv index 1 route mode internet mtu 1500 \r
+      onu 29 pri wan_adv index 1 route ipv4 static ip 10.87.23.77 mask 255.255.255.0 g --More-- \x00\r
+      2026/05/25 18:51:46   ONU Port Los                 PON 0/3 ONU 63 sn SNREMOVED  LAN1 LINK DOWN\r
+      
+  - " ": |-
+      \b\b\b\b\b\b\b\b\b\b          \b\b\b\b\b\b\b\b\b\bw 10.87.23.1 dns master 10.88.1.2 slave 10.89.1.2 nat enable \r
+      onu 29 pri dhcp_server 192.168.109.1 255.255.255.0 enable 86400 192.168.109.2 192.168.109.254 pc 10.88.1.2 10.89.1.2 192.168.109.1 \r
+      onu 29 pri wifi_ssid 1 name Apt_208-5G hide disable auth_mode wpa2psk/wpa3psk encrypt_type aes shared_key PASSREMOVED rekey_interval 0\r
+      onu 29 pri wifi_ssid 5 name Apt_208 hide disable auth_mode wpapsk/wpa2psk encrypt_type tkipaes shared_key PASSREMOVED rekey_interval 0\r
+      onu 29 pri username admin_control enable admin PASSREMOVED user_control disable \r
+      onu 29 pri acl https control enable lan enable wan disable port 443\r
+      onu add 30 profile default sn SNREMOVED\r
+      onu 30 desc GPON0/2:30\r
+      onu 30 profile line name line_1\r
+      onu 30 profile srv name srv_2-wifi\r
+      onu 30 pri equid MONUVPRI\r
+      onu 30 pri wan_adv add route\r
+      onu 30 pri wan_adv index 1 route mode internet mtu 1500 \r
+      onu 30 pri wan_adv index 1 route ipv4 static ip 10.87.23.78 mask 255.255.255.0 gw 10.87.23.1 dns master 10.88.1.2 slave 10.89.1.2 nat enable \r
+      onu 30 pri dhcp_server 192.168.109.1 255.255.255.0 enable 86400 192.168.109.2 192.168.109.254 pc 10.88.1.2 10.89.1.2 192.168.109.1 \r
+      onu 30 pri wifi_ssid 1 name Apt_210.1-5G hide disable auth_mode wpa2psk/wpa3psk encrypt_type aes shared_key PASSREMOVED rekey_interval 0\r
+      onu 30 pri wifi_ssid 5 name Apt_210.1 hide disable auth_mode wpapsk/wpa2psk encrypt_type tkipaes shared_key PASSREMOVED rekey_interval 0\r
+      onu 30 pri username admin_control enable admin PASSREMOVED user_control disable \r
+      onu 30 pri acl https control enable lan enable wan disable port 443\r
+      onu add 31 profile default sn SNREMOVED\r
+      onu 31 desc GPON0/2:31\r
+      onu 31 profile line name line_1\r
+      onu 31 profile srv name srv_2-wifi\r
+      onu 31 pri equid MONUVPRI\r
+      onu 31 pri wan_adv add route\r
+      onu 31 pri wan_adv index 1 route mode internet mtu 1500 \r
+      onu 31 pri wan_adv index 1 route ipv4 static ip 10.87.23.79 mask 255.255.255.0 gw 10.87.23.1 dns master 10.88.1.2 slave 10.89.1.2 nat enable \r
+      onu 31 pri dhcp_server 192.168.109.1 255.255.255.0 enable 86400 192.168.109.2 192.168.109.254 pc 10.88.1.2 10.89.1.2 192.168.109.1 \r
+      onu 31 pri wifi_ssid 1 name Apt_210.2-5G hide disable auth_mode wpa2psk/wpa3psk encrypt_type aes shared_key PASSREMOVED rekey_interval 0\r
+      onu 31 pri wifi_ssid 5 name Apt_210.2 hide disable auth_mode wpapsk/wpa2psk encrypt_type tkipaes shared_key PASSREMOVED rekey_interval 0\r
+      onu 31 pri username admin_control enable admin PASSREMOVED user_control disable \r
+      onu 31 pri acl https control enable lan enable wan disable port 443\r
+      onu add 32 profile default sn SNREMOVED\r
+      onu 32 desc GPON0/2:32\r
+      onu 32 profile line name line_1\r
+       --More-- \x00
+  - " ": |-
+      \b\b\b\b\b\b\b\b\b\b          \b\b\b\b\b\b\b\b\b\bonu 32 profile srv name srv_2-wifi\r
+      onu 32 pri equid MONUVPRI\r
+      onu 32 pri wan_adv add route\r
+      onu 32 pri wan_adv index 1 route mode internet mtu 1500 \r
+      onu 32 pri wan_adv index 1 route ipv4 static ip 10.87.23.80 mask 255.255.255.0 gw 10.87.23.1 dns master 10.88.1.2 slave 10.89.1.2 nat enable \r
+      onu 32 pri dhcp_server 192.168.109.1 255.255.255.0 enable 86400 192.168.109.2 192.168.109.254 pc 10.88.1.2 10.89.1.2 192.168.109.1 \r
+      onu 32 pri wifi_ssid 1 name Apt_301.1-5G hide disable auth_mode wpa2psk/wpa3psk encrypt_type aes shared_key PASSREMOVED rekey_interval 0\r
+      onu 32 pri wifi_ssid 5 name Apt_301.1 hide disable auth_mode wpapsk/wpa2psk encrypt_type tkipaes shared_key PASSREMOVED rekey_interval 0\r
+      onu 32 pri username admin_control enable admin PASSREMOVED user_control disable \r
+      onu 32 pri acl https control enable lan enable wan disable port 443\r
+      onu add 33 profile default sn SNREMOVED\r
+      onu 33 desc GPON0/2:33\r
+      onu 33 profile line name line_1\r
+      onu 33 profile srv name srv_2-wifi\r
+      onu 33 pri equid MONUVPRI\r
+      onu 33 pri wan_adv add route\r
+      onu 33 pri wan_adv index 1 route mode internet mtu 1500 \r
+      onu 33 pri wan_adv index 1 route ipv4 static ip 10.87.23.49 mask 255.255.255.128 gw 10.87.23.1 dns master 10.88.1.2 slave 10.89.1.2 nat enable \r
+      onu 33 pri dhcp_server 192.168.109.1 255.255.255.0 enable 86400 192.168.109.2 192.168.109.254 pc 10.88.1.2 10.89.1.2 192.168.109.1 \r
+      onu 33 pri wifi_ssid 1 name Apt_206-5G hide disable auth_mode wpa2psk/wpa3psk encrypt_type aes shared_key PASSREMOVED rekey_interval 0\r
+      onu 33 pri wifi_ssid 5 name Apt_206 hide disable auth_mode wpapsk/wpa2psk encrypt_type tkipaes shared_key PASSREMOVED rekey_interval 0\r
+      onu 33 pri username admin_control enable admin PASSREMOVED user_control disable \r
+      onu 33 pri firewall level low\r
+      onu 33 pri acl ping control enable lan enable wan disable \r
+      onu 33 pri acl http control enable lan enable wan disable port 80\r
+      onu add 34 profile default sn SNREMOVED\r
+      onu 34 desc GPON0/2:34\r
+      onu 34 profile line name line_1\r
+      onu 34 profile srv name srv_2-wifi\r
+      onu 34 pri equid MONUVPRI\r
+      onu 34 pri wan_adv add route\r
+      onu 34 pri wan_adv index 1 route mode internet mtu 1500 \r
+      onu 34 pri wan_adv index 1 route ipv4 static ip 10.87.23.48 mask 255.255.255.0 gw 10.87.23.1 dns master 10.88.1.2 slave 10.89.1.2 nat enable \r
+      onu 34 pri dhcp_server 192.168.109.1 255.255.255.0 enable 86400 192.168.109.2 192.168.109.254 pc 10.88.1.2 10.89.1.2 192.168.109.1 \r
+      onu 34 pri wifi_ssid 1 name Apt_1003-5G hide disable auth_mode wpa2psk/wpa3psk encrypt_type aes shared_key PASSREMOVED rekey_interval 0\r
+      onu 34 pri wifi_ssid 5 name Apt_1003 hide disable auth_mode wpapsk/wpa2psk encry --More-- \x00
+  - " ": |-
+      \b\b\b\b\b\b\b\b\b\b          \b\b\b\b\b\b\b\b\b\bpt_type tkipaes shared_key PASSREMOVED rekey_interval 0\r
+      onu 34 pri username admin_control enable admin PASSREMOVED user_control disable \r
+      onu 34 pri firewall level low\r
+      onu 34 pri acl ping control enable lan enable wan disable \r
+      onu 34 pri acl http control enable lan enable wan disable port 80\r
+      onu add 35 profile default sn SNREMOVED\r
+      onu 35 desc GPON0/2:35\r
+      onu 35 profile line name line_1\r
+      onu 35 profile srv name srv_2-wifi\r
+      onu 35 pri equid MONUVPRI\r
+      onu 35 pri wan_adv add route\r
+      onu 35 pri wan_adv index 1 route mode internet mtu 1500 \r
+      onu 35 pri wan_adv index 1 route ipv4 static ip 10.87.23.174 mask 255.255.255.0 gw 10.87.23.1 dns master 10.88.1.2 slave 10.89.1.2 nat enable \r
+      onu 35 pri wan_adv index 1 vlan tag wan_vlan 1925 0 \r
+      onu 35 pri dhcp_server 192.168.109.1 255.255.255.0 enable 86400 192.168.109.2 192.168.109.254 pc 10.88.1.2 10.89.1.2 192.168.109.1 \r
+      onu 35 pri wifi_ssid 1 name Apt_1004-5G hide disable auth_mode wpapsk/wpa2psk encrypt_type aes shared_key PASSREMOVED rekey_interval 0\r
+      onu 35 pri wifi_ssid 5 name Apt_1004 hide disable auth_mode wpapsk/wpa2psk encrypt_type tkipaes shared_key PASSREMOVED rekey_interval 0\r
+      onu 35 pri username admin_control enable admin PASSREMOVED user_control disable \r
+      onu 35 pri firewall level low\r
+      onu 35 pri acl ping control enable lan enable wan enable ipv4_control enable 10.88.200.26 255.255.255.0 ipv6_control disable \r
+      onu 35 pri acl http control enable lan enable wan disable port 80\r
+      onu add 36 profile default sn SNREMOVED\r
+      onu 36 desc GPON0/2:36\r
+      onu 36 profile line name line_1\r
+      onu 36 profile srv name srv_2-wifi\r
+      onu 36 pri equid MONUVPRI\r
+      onu 36 pri wan_adv add route\r
+      onu 36 pri wan_adv index 1 route mode internet mtu 1500 \r
+      onu 36 pri wan_adv index 1 route ipv4 static ip 10.87.23.175 mask 255.255.255.0 gw 10.87.23.1 dns master 10.88.1.2 slave 10.89.1.2 nat enable \r
+      onu 36 pri wan_adv index 1 vlan tag wan_vlan 1925 0 \r
+      onu 36 pri dhcp_server 192.168.109.1 255.255.255.0 enable 86400 192.168.109.2 192.168.109.254 pc 10.88.1.2 10.89.1.2 192.168.109.1 \r
+      onu 36 pri wifi_ssid 1 name Apt_910-5G hide disable auth_mode wpapsk/wpa2psk encrypt_type aes shared_key PASSREMOVED rekey_interval 0\r
+      onu 36 pri wifi_ssid 5 name Apt_910 hide disable auth_mode wpapsk/wpa2psk encrypt_type tkipaes shared_key PASSREMOVED rekey_interval 0\r
+      onu 36 pri username admin_control enable admin PASSREMOVED user_control disable \r
+      onu 36 pri firewall level low\r
+      onu 36 pri acl ping control enable lan enable wan enable ipv4_control enable 10.88.200.26 255.255.255.0 ipv6_control disable \r
+       --More-- \x00
+  - " ": |-
+      \b\b\b\b\b\b\b\b\b\b          \b\b\b\b\b\b\b\b\b\bonu 36 pri acl http control enable lan enable wan disable port 80\r
+      onu add 37 profile default sn SNREMOVED\r
+      onu 37 desc GPON0/2:37\r
+      onu 37 profile line name line_1\r
+      onu 37 profile srv name srv_2-wifi\r
+      onu 37 pri equid MONUVPRI\r
+      onu 37 pri wan_adv add route\r
+      onu 37 pri wan_adv index 1 route mode internet mtu 1500 \r
+      onu 37 pri wan_adv index 1 route ipv4 static ip 10.87.23.176 mask 255.255.255.0 gw 10.87.23.1 dns master 10.88.1.2 slave 10.89.1.2 nat enable \r
+      onu 37 pri wan_adv index 1 vlan tag wan_vlan 1925 0 \r
+      onu 37 pri dhcp_server 192.168.109.1 255.255.255.0 enable 86400 192.168.109.2 192.168.109.254 pc 10.88.1.2 10.89.1.2 192.168.109.1 \r
+      onu 37 pri wifi_ssid 1 name Apt_912.2-5G hide disable auth_mode wpa2psk/wpa3psk encrypt_type aes shared_key PASSREMOVED rekey_interval 0\r
+      onu 37 pri wifi_ssid 5 name Apt_912.2 hide disable auth_mode wpapsk/wpa2psk encrypt_type tkipaes shared_key PASSREMOVED rekey_interval 0\r
+      onu 37 pri username admin_control enable admin PASSREMOVED user_control disable \r
+      onu 37 pri firewall level low\r
+      onu 37 pri acl ping control enable lan enable wan enable ipv4_control enable 10.88.200.26 255.255.255.0 ipv6_control disable \r
+      onu 37 pri acl http control enable lan enable wan disable port 80\r
+      onu add 38 profile default sn SNREMOVED\r
+      onu 38 desc GPON0/2:38\r
+      onu 38 profile line name line_1\r
+      onu 38 profile srv name srv_2-wifi\r
+      onu 38 pri equid MONUVPRI\r
+      onu 38 pri wan_adv add route\r
+      onu 38 pri wan_adv index 1 route mode internet mtu 1500 \r
+      onu 38 pri wan_adv index 1 route ipv4 static ip 10.87.23.173 mask 255.255.255.0 gw 10.87.23.1 dns master 10.88.1.2 slave 10.89.1.2 nat enable \r
+      onu 38 pri wan_adv index 1 vlan tag wan_vlan 1925 0 \r
+      onu 38 pri dhcp_server 192.168.109.1 255.255.255.0 enable 86400 192.168.109.2 192.168.109.254 pc 10.88.1.2 10.89.1.2 192.168.109.1 \r
+      onu 38 pri wifi_ssid 1 name Apt_1102-5G hide disable auth_mode wpa2psk/wpa3psk encrypt_type aes shared_key PASSREMOVED rekey_interval 0\r
+      onu 38 pri wifi_ssid 5 name Apt_1102 hide disable auth_mode wpapsk/wpa2psk encrypt_type tkipaes shared_key PASSREMOVED rekey_interval 0\r
+      onu 38 pri username admin_control enable admin PASSREMOVED user_control disable \r
+      onu 38 pri firewall level low\r
+      onu 38 pri acl ping control enable lan enable wan enable ipv4_control enable 10.88.200.26 255.255.255.0 ipv6_control disable \r
+      onu 38 pri acl http control enable lan enable wan disable port 80\r
+      onu add 39 profile default sn SNREMOVED\r
+      onu 39 desc GPON0/2:39\r
+      onu 39 profile line name line_1\r
+      onu 39 profile srv name srv_2-wifi\r
+       --More-- \x00
+  - " ": |-
+      \b\b\b\b\b\b\b\b\b\b          \b\b\b\b\b\b\b\b\b\bonu 39 pri equid MONUVPRI\r
+      onu 39 pri wan_adv add route\r
+      onu 39 pri wan_adv index 1 route mode internet mtu 1500 \r
+      onu 39 pri wan_adv index 1 route ipv4 static ip 10.87.23.150 mask 255.255.255.0 gw 10.87.23.1 dns master 10.88.1.2 slave 10.89.1.2 nat enable \r
+      onu 39 pri dhcp_server 192.168.109.1 255.255.255.0 enable 86400 192.168.109.2 192.168.109.254 pc 10.88.1.2 10.89.1.2 192.168.109.1 \r
+      onu 39 pri wifi_ssid 1 name Apt_812.2-5G hide disable auth_mode wpa2psk/wpa3psk encrypt_type aes shared_key PASSREMOVED rekey_interval 0\r
+      onu 39 pri wifi_ssid 5 name Apt_812.2 hide disable auth_mode wpapsk/wpa2psk encrypt_type tkipaes shared_key PASSREMOVED rekey_interval 0\r
+      onu 39 pri username admin_control enable admin PASSREMOVED user_control disable \r
+      onu 39 pri firewall level low\r
+      onu 39 pri acl ping control enable lan enable wan enable ipv4_control enable 10.88.200.26 255.255.255.0 ipv6_control disable \r
+      onu 39 pri acl http control enable lan enable wan disable port 80\r
+      onu add 40 profile default sn SNREMOVED\r
+      onu 40 desc GPON0/2:40\r
+      onu 40 profile line name line_1\r
+      onu 40 profile srv name srv_2-wifi\r
+      onu 40 pri equid MONUVPRI\r
+      onu 40 pri wan_adv add route\r
+      onu 40 pri wan_adv index 1 route mode internet mtu 1500 \r
+      onu 40 pri wan_adv index 1 route ipv4 static ip 10.87.23.92 mask 255.255.255.0 gw 10.87.23.1 dns master 10.88.1.2 slave 10.89.1.2 nat enable \r
+      onu 40 pri wan_adv index 1 vlan tag wan_vlan 1925 0 \r
+      onu 40 pri dhcp_server 192.168.109.1 255.255.255.0 enable 86400 192.168.109.2 192.168.109.254 pc 10.88.1.2 10.89.1.2 192.168.109.1 \r
+      onu 40 pri wifi_ssid 1 name Apt_401.1-5G hide disable auth_mode wpa2psk/wpa3psk encrypt_type aes shared_key PASSREMOVED rekey_interval 0\r
+      onu 40 pri wifi_ssid 5 name Apt_401.1 hide disable auth_mode wpapsk/wpa2psk encrypt_type tkipaes shared_key PASSREMOVED rekey_interval 0\r
+      onu 40 pri username admin_control enable admin PASSREMOVED user_control disable \r
+      onu 40 pri firewall level low\r
+      onu 40 pri acl ping control enable lan enable wan enable ipv4_control enable 10.88.200.26 255.255.255.0 ipv6_control disable \r
+      onu 40 pri acl http control enable lan enable wan disable port 80\r
+      onu add 41 profile default sn SNREMOVED\r
+      onu 41 desc GPON0/2:41\r
+      onu 41 profile line name line_1\r
+      onu 41 profile srv name srv_2-wifi\r
+      onu 41 pri equid MONUVPRI\r
+      onu 41 pri wan_adv add route\r
+      onu 41 pri wan_adv index 1 route mode internet mtu 1500 \r
+      onu 41 pri wan_adv index 1 route ipv4 static ip 10.87.23.108 mask 255.255.255.0 gw 10.87.23.1 dns master 10.88.1.2 slave 10.89.1.2 nat enable \r
+      onu 41 pri wan_adv index 1 vlan tag wan_vlan 1925 0 \r
+       --More-- \x00
+  - " ": |-
+      \b\b\b\b\b\b\b\b\b\b          \b\b\b\b\b\b\b\b\b\bonu 41 pri dhcp_server 192.168.109.1 255.255.255.0 enable 86400 192.168.109.2 192.168.109.254 pc 10.88.1.2 10.89.1.2 192.168.109.1 \r
+      onu 41 pri wifi_ssid 1 name Apt_502-5G hide disable auth_mode wpa2psk/wpa3psk encrypt_type aes shared_key PASSREMOVED rekey_interval 0\r
+      onu 41 pri wifi_ssid 5 name Apt_502 hide disable auth_mode wpapsk/wpa2psk encrypt_type tkipaes shared_key PASSREMOVED rekey_interval 0\r
+      onu 41 pri username admin_control enable admin PASSREMOVED user_control disable \r
+      onu 41 pri firewall level low\r
+      onu 41 pri acl ping control enable lan enable wan enable ipv4_control enable 10.88.200.26 255.255.255.0 ipv6_control disable \r
+      onu 41 pri acl http control enable lan enable wan disable port 80\r
+      onu add 42 profile default sn SNREMOVED\r
+      onu 42 desc GPON0/2:42\r
+      onu 42 profile line name line_1\r
+      onu 42 profile srv name srv_2-wifi\r
+      onu 42 pri equid MONUVPRI\r
+      onu 42 pri wan_adv add route\r
+      onu 42 pri wan_adv index 1 route mode internet mtu 1500 \r
+      onu 42 pri wan_adv index 1 route ipv4 static ip 10.87.23.135 mask 255.255.255.0 gw 10.87.23.1 dns master 10.88.1.2 slave 10.89.1.2 nat enable \r
+      onu 42 pri wan_adv index 1 vlan tag wan_vlan 1925 0 \r
+      onu 42 pri dhcp_server 192.168.109.1 255.255.255.0 enable 86400 192.168.109.2 192.168.109.254 pc 10.88.1.2 10.89.1.2 192.168.109.1 \r
+      onu 42 pri wifi_switch 1 enable cn auto 80211acanacax 20 80\r
+      onu 42 pri wifi_ssid 1 name Apt_706-5G hide disable auth_mode wpa2psk/wpa3psk encrypt_type aes shared_key PASSREMOVED rekey_interval 0\r
+      onu 42 pri wifi_ssid 5 name Apt_706 hide disable auth_mode wpapsk/wpa2psk encrypt_type tkipaes shared_key PASSREMOVED rekey_interval 0\r
+      onu 42 pri username admin_control enable admin PASSREMOVED user_control disable \r
+      onu 42 pri firewall level low\r
+      onu 42 pri acl ping control enable lan enable wan enable ipv4_control enable 10.88.200.26 255.255.255.0 ipv6_control disable \r
+      onu 42 pri acl http control enable lan enable wan disable port 80\r
+      onu add 43 profile default sn SNREMOVED\r
+      onu 43 desc GPON0/2:43\r
+      onu 43 profile line name line_1\r
+      onu 43 profile srv name srv_2-wifi\r
+      onu 43 pri equid MONUVPRI\r
+      onu 43 pri wan_adv add route\r
+      onu 43 pri wan_adv index 1 route mode internet mtu 1500 \r
+      onu 43 pri wan_adv index 1 route ipv4 static ip 10.87.23.141 mask 255.255.255.0 gw 10.87.23.1 dns master 10.88.1.2 slave 10.89.1.2 nat enable \r
+      onu 43 pri wan_adv index 1 vlan tag wan_vlan 1925 0 \r
+      onu 43 pri dhcp_server 192.168.109.1 255.255.255.0 enable 86400 192.168.109.2 192.168.109.254 pc 10.88.1.2 10.89.1.2 192.168.109.1 \r
+      onu 43 pri wifi_ssid 1 name Apt_802-5G hide disable auth_mode wpa2psk/wpa3psk encrypt_type aes shared_key PASSREMOVED rekey_interval 0\r
+       --More-- \x00
+  - " ": |-
+      \b\b\b\b\b\b\b\b\b\b          \b\b\b\b\b\b\b\b\b\bonu 43 pri wifi_ssid 5 name Apt_802 hide disable auth_mode wpapsk/wpa2psk encrypt_type tkipaes shared_key PASSREMOVED rekey_interval 0\r
+      onu 43 pri username admin_control enable admin PASSREMOVED user_control disable \r
+      onu 43 pri firewall level low\r
+      onu 43 pri acl ping control enable lan enable wan enable ipv4_control enable 10.88.200.26 255.255.255.0 ipv6_control disable \r
+      onu 43 pri acl http control enable lan enable wan disable port 80\r
+      onu add 44 profile default sn SNREMOVED\r
+      onu 44 desc GPON0/2:44\r
+      onu 44 profile line name line_1\r
+      onu 44 profile srv name srv_2-wifi\r
+      onu 44 pri equid MONUVPRI\r
+      onu 44 pri wan_adv add route\r
+      onu 44 pri wan_adv index 1 route mode internet mtu 1500 \r
+      onu 44 pri wan_adv index 1 route ipv4 static ip 10.87.23.148 mask 255.255.255.0 gw 10.87.23.1 dns master 10.88.1.2 slave 10.89.1.2 nat enable \r
+      onu 44 pri wan_adv index 1 vlan tag wan_vlan 1925 0 \r
+      onu 44 pri dhcp_server 192.168.109.1 255.255.255.0 enable 86400 192.168.109.2 192.168.109.254 pc 10.88.1.2 10.89.1.2 192.168.109.1 \r
+      onu 44 pri wifi_ssid 1 name Apt_810-5G hide disable auth_mode wpa2psk/wpa3psk encrypt_type aes shared_key PASSREMOVED rekey_interval 0\r
+      onu 44 pri wifi_ssid 5 name Apt_810 hide disable auth_mode wpapsk/wpa2psk encrypt_type tkipaes shared_key PASSREMOVED rekey_interval 0\r
+      onu 44 pri username admin_control enable admin PASSREMOVED user_control disable \r
+      onu 44 pri firewall level low\r
+      onu 44 pri acl ping control enable lan enable wan enable ipv4_control enable 10.88.200.26 255.255.255.0 ipv6_control disable \r
+      onu 44 pri acl http control enable lan enable wan disable port 80\r
+      onu add 45 profile default sn SNREMOVED\r
+      onu 45 desc GPON0/2:45\r
+      onu 45 profile line name line_1\r
+      onu 45 profile srv name srv_2-wifi\r
+      onu 45 pri equid MONUVPRI\r
+      onu 45 pri wan_adv add route\r
+      onu 45 pri wan_adv index 1 route mode internet mtu 1500 \r
+      onu 45 pri wan_adv index 1 route ipv4 static ip 10.87.23.187 mask 255.255.255.0 gw 10.87.23.1 dns master 10.88.1.2 slave 10.89.1.2 nat enable \r
+      onu 45 pri wan_adv index 1 vlan tag wan_vlan 1925 0 \r
+      onu 45 pri dhcp_server 192.168.109.1 255.255.255.0 enable 86400 192.168.109.2 192.168.109.254 pc 10.88.1.2 10.89.1.2 192.168.109.1 \r
+      onu 45 pri wifi_ssid 1 name Apt_1011-5G hide disable auth_mode wpa2psk/wpa3psk encrypt_type aes shared_key PASSREMOVED rekey_interval 0\r
+      onu 45 pri wifi_ssid 5 name Apt_1011 hide disable auth_mode wpa2psk/wpa3psk encrypt_type aes shared_key PASSREMOVED rekey_interval 0\r
+      onu 45 pri username admin_control enable admin PASSREMOVED user_control disable \r
+      onu 45 pri firewall level low\r
+       --More-- \x00\r
+      2026/05/25 18:51:58   ONU Port Los                 PON 0/3 ONU 18 sn SNREMOVED  LAN1 LINK DOWN\r
+      
+  - " ": |-
+      \b\b\b\b\b\b\b\b\b\b          \b\b\b\b\b\b\b\b\b\bonu 45 pri acl ping control enable lan enable wan enable ipv4_control enable 10.88.200.26 255.255.255.0 ipv6_control disable \r
+      onu 45 pri acl http control enable lan enable wan disable port 80\r
+      onu add 46 profile default sn SNREMOVED\r
+      onu 46 desc GPON0/2:46\r
+      onu 46 profile line name line_1\r
+      onu 46 profile srv name srv_2-wifi\r
+      onu 46 pri equid MONUVPRI\r
+      onu 46 pri wan_adv add route\r
+      onu 46 pri wan_adv index 1 route mode internet mtu 1500 \r
+      onu 46 pri wan_adv index 1 route ipv4 static ip 10.87.23.188 mask 255.255.255.0 gw 10.87.23.1 dns master 10.88.1.2 slave 10.89.1.2 nat enable \r
+      onu 46 pri wan_adv index 1 vlan tag wan_vlan 1925 0 \r
+      onu 46 pri dhcp_server 192.168.109.1 255.255.255.0 enable 86400 192.168.109.2 192.168.109.254 pc 10.88.1.2 10.89.1.2 192.168.109.1 \r
+      onu 46 pri wifi_ssid 1 name Apt_1107-5G hide disable auth_mode wpa2psk/wpa3psk encrypt_type aes shared_key PASSREMOVED rekey_interval 0\r
+      onu 46 pri wifi_ssid 5 name Apt_1107 hide disable auth_mode wpapsk/wpa2psk encrypt_type tkipaes shared_key PASSREMOVED rekey_interval 0\r
+      onu 46 pri username admin_control enable admin PASSREMOVED user_control disable \r
+      onu 46 pri firewall level low\r
+      onu 46 pri acl ping control enable lan enable wan enable ipv4_control enable 10.88.200.26 255.255.255.0 ipv6_control disable \r
+      onu 46 pri acl http control enable lan enable wan disable port 80\r
+      exit\r
+      !\r
+      interface gpon 0/3\r
+      no onu auto-learn\r
+      plug_and_play disable\r
+      onu add 1 profile default sn SNREMOVED\r
+      onu 1 desc GPON0/3:1\r
+      onu 1 profile line name line_1\r
+      onu 1 profile srv name srv_2-wifi\r
+      onu 1 pri equid MONUVPRI\r
+      onu 1 pri wan_adv add route\r
+      onu 1 pri wan_adv index 1 route mode internet mtu 1500 \r
+      onu 1 pri wan_adv index 1 route ipv4 static ip 10.87.23.81 mask 255.255.255.0 gw 10.87.23.1 dns master 10.88.1.2 slave 10.89.1.2 nat enable \r
+      onu 1 pri dhcp_server 192.168.109.1 255.255.255.0 enable 86400 192.168.109.2 192.168.109.254 pc 10.88.1.2 10.89.1.2 192.168.109.1 \r
+      onu 1 pri wifi_ssid 1 name Apt_302-5G hide disable auth_mode wpa2psk/wpa3psk encrypt_type aes shared_key PASSREMOVED rekey_interval 0\r
+      onu 1 pri wifi_ssid 5 name Apt_302 hide disable auth_mode wpapsk/wpa2psk encrypt_type tkipaes shared_key PASSREMOVED rekey_interval 0\r
+      onu 1 pri username admin_control enable admin PASSREMOVED user_control disable \r
+      onu 1 pri acl https control enable lan enable wan disable port 443\r
+      onu add 2 profile default sn SNREMOVED\r
+       --More-- \x00
+  - " ": |-
+      \b\b\b\b\b\b\b\b\b\b          \b\b\b\b\b\b\b\b\b\bonu 2 desc GPON0/3:2\r
+      onu 2 profile line name line_1\r
+      onu 2 profile srv name srv_2-wifi\r
+      onu 2 pri equid MONUVPRI\r
+      onu 2 pri wan_adv add route\r
+      onu 2 pri wan_adv index 1 route mode internet mtu 1500 \r
+      onu 2 pri wan_adv index 1 route ipv4 static ip 10.87.23.82 mask 255.255.255.0 gw 10.87.23.1 dns master 10.88.1.2 slave 10.89.1.2 nat enable \r
+      onu 2 pri dhcp_server 192.168.109.1 255.255.255.0 enable 86400 192.168.109.2 192.168.109.254 pc 10.88.1.2 10.89.1.2 192.168.109.1 \r
+      onu 2 pri wifi_ssid 1 name Apt_303-5G hide disable auth_mode wpa2psk/wpa3psk encrypt_type aes shared_key PASSREMOVED rekey_interval 0\r
+      onu 2 pri wifi_ssid 5 name Apt_303 hide disable auth_mode wpapsk/wpa2psk encrypt_type tkipaes shared_key PASSREMOVED rekey_interval 0\r
+      onu 2 pri username admin_control enable admin PASSREMOVED user_control disable \r
+      onu 2 pri acl https control enable lan enable wan disable port 443\r
+      onu add 3 profile default sn SNREMOVED\r
+      onu 3 desc GPON0/3:3\r
+      onu 3 profile line name line_1\r
+      onu 3 profile srv name srv_2-wifi\r
+      onu 3 pri equid MONUVPRI\r
+      onu 3 pri wan_adv add route\r
+      onu 3 pri wan_adv index 1 route mode internet mtu 1500 \r
+      onu 3 pri wan_adv index 1 route ipv4 static ip 10.87.23.83 mask 255.255.255.0 gw 10.87.23.1 dns master 10.88.1.2 slave 10.89.1.2 nat enable \r
+      onu 3 pri dhcp_server 192.168.109.1 255.255.255.0 enable 86400 192.168.109.2 192.168.109.254 pc 10.88.1.2 10.89.1.2 192.168.109.1 \r
+      onu 3 pri wifi_ssid 1 name Apt_304-5G hide disable auth_mode wpa2psk/wpa3psk encrypt_type aes shared_key PASSREMOVED rekey_interval 0\r
+      onu 3 pri wifi_ssid 5 name Apt_304 hide disable auth_mode wpapsk/wpa2psk encrypt_type tkipaes shared_key PASSREMOVED rekey_interval 0\r
+      onu 3 pri username admin_control enable admin PASSREMOVED user_control disable \r
+      onu 3 pri acl https control enable lan enable wan disable port 443\r
+      onu add 4 profile default sn SNREMOVED\r
+      onu 4 desc GPON0/3:4\r
+      onu 4 profile line name line_1\r
+      onu 4 profile srv name srv_2-wifi\r
+      onu 4 pri equid MONUVPRI\r
+      onu 4 pri wan_adv add route\r
+      onu 4 pri wan_adv index 1 route mode internet mtu 1500 \r
+      onu 4 pri wan_adv index 1 route ipv4 static ip 10.87.23.84 mask 255.255.255.0 gw 10.87.23.1 dns master 10.88.1.2 slave 10.89.1.2 nat enable \r
+      onu 4 pri dhcp_server 192.168.109.1 255.255.255.0 enable 86400 192.168.109.2 192.168.109.254 pc 10.88.1.2 10.89.1.2 192.168.109.1 \r
+      onu 4 pri wifi_ssid 1 name Apt_305-5G hide disable auth_mode wpa2psk/wpa3psk encrypt_type aes shared_key PASSREMOVED rekey_interval 0\r
+      onu 4 pri wifi_ssid 5 name Apt_305 hide disable auth_mode wpapsk/wpa2psk encrypt --More-- \x00
+  - " ": |-
+      \b\b\b\b\b\b\b\b\b\b          \b\b\b\b\b\b\b\b\b\b_type tkipaes shared_key PASSREMOVED rekey_interval 0\r
+      onu 4 pri username admin_control enable admin PASSREMOVED user_control disable \r
+      onu 4 pri acl https control enable lan enable wan disable port 443\r
+      onu add 5 profile default sn SNREMOVED\r
+      onu 5 desc GPON0/3:5\r
+      onu 5 profile line name line_1\r
+      onu 5 profile srv name srv_2-wifi\r
+      onu 5 pri equid MONUVPRI\r
+      onu 5 pri wan_adv add route\r
+      onu 5 pri wan_adv index 1 route mode internet mtu 1500 \r
+      onu 5 pri wan_adv index 1 route ipv4 static ip 10.87.23.85 mask 255.255.255.0 gw 10.87.23.1 dns master 10.88.1.2 slave 10.89.1.2 nat enable \r
+      onu 5 pri dhcp_server 192.168.109.1 255.255.255.0 enable 86400 192.168.109.2 192.168.109.254 pc 10.88.1.2 10.89.1.2 192.168.109.1 \r
+      onu 5 pri wifi_ssid 1 name Apt_306-5G hide disable auth_mode wpa2psk/wpa3psk encrypt_type aes shared_key PASSREMOVED rekey_interval 0\r
+      onu 5 pri wifi_ssid 5 name Apt_306 hide disable auth_mode wpapsk/wpa2psk encrypt_type tkipaes shared_key PASSREMOVED rekey_interval 0\r
+      onu 5 pri username admin_control enable admin PASSREMOVED user_control disable \r
+      onu 5 pri acl https control enable lan enable wan disable port 443\r
+      onu add 6 profile default sn SNREMOVED\r
+      onu 6 desc GPON0/3:6\r
+      onu 6 profile line name line_1\r
+      onu 6 profile srv name srv_2-wifi\r
+      onu 6 pri equid MONUVPRI\r
+      onu 6 pri wan_adv add route\r
+      onu 6 pri wan_adv index 1 route mode internet mtu 1500 \r
+      onu 6 pri wan_adv index 1 route ipv4 static ip 10.87.23.86 mask 255.255.255.0 gw 10.87.23.1 dns master 10.88.1.2 slave 10.89.1.2 nat enable \r
+      onu 6 pri dhcp_server 192.168.109.1 255.255.255.0 enable 86400 192.168.109.2 192.168.109.254 pc 10.88.1.2 10.89.1.2 192.168.109.1 \r
+      onu 6 pri wifi_ssid 1 name Apt_307-5G hide disable auth_mode wpa2psk/wpa3psk encrypt_type aes shared_key PASSREMOVED rekey_interval 0\r
+      onu 6 pri wifi_ssid 5 name Apt_307 hide disable auth_mode wpapsk/wpa2psk encrypt_type tkipaes shared_key PASSREMOVED rekey_interval 0\r
+      onu 6 pri username admin_control enable admin PASSREMOVED user_control disable \r
+      onu 6 pri acl https control enable lan enable wan disable port 443\r
+      onu add 7 profile default sn SNREMOVED\r
+      onu 7 desc GPON0/3:7\r
+      onu 7 profile line name line_1\r
+      onu 7 profile srv name srv_2-wifi\r
+      onu 7 pri equid MONUVPRI\r
+      onu 7 pri wan_adv add route\r
+      onu 7 pri wan_adv index 1 route mode internet mtu 1500 \r
+      onu 7 pri wan_adv index 1 route ipv4 static ip 10.87.23.87 mask 255.255.255.0 gw 10.87.23.1 dns master 10.88.1.2 slave 10.89.1.2 nat enable \r
+       --More-- \x00
+  - " ": |-
+      \b\b\b\b\b\b\b\b\b\b          \b\b\b\b\b\b\b\b\b\bonu 7 pri dhcp_server 192.168.109.1 255.255.255.0 enable 86400 192.168.109.2 192.168.109.254 pc 10.88.1.2 10.89.1.2 192.168.109.1 \r
+      onu 7 pri wifi_ssid 1 name Apt_308-5G hide disable auth_mode wpa2psk/wpa3psk encrypt_type aes shared_key PASSREMOVED rekey_interval 0\r
+      onu 7 pri wifi_ssid 5 name Apt_308 hide disable auth_mode wpapsk/wpa2psk encrypt_type tkipaes shared_key PASSREMOVED rekey_interval 0\r
+      onu 7 pri username admin_control enable admin PASSREMOVED user_control disable \r
+      onu 7 pri acl https control enable lan enable wan disable port 443\r
+      onu add 8 profile default sn SNREMOVED\r
+      onu 8 desc GPON0/3:8\r
+      onu 8 profile line name line_1\r
+      onu 8 profile srv name srv_2-wifi\r
+      onu 8 pri equid MONUVPRI\r
+      onu 8 pri wan_adv add route\r
+      onu 8 pri wan_adv index 1 route mode internet mtu 1500 \r
+      onu 8 pri wan_adv index 1 route ipv4 static ip 10.87.23.88 mask 255.255.255.0 gw 10.87.23.1 dns master 10.88.1.2 slave 10.89.1.2 nat enable \r
+      onu 8 pri dhcp_server 192.168.109.1 255.255.255.0 enable 86400 192.168.109.2 192.168.109.254 pc 10.88.1.2 10.89.1.2 192.168.109.1 \r
+      onu 8 pri wifi_ssid 1 name Apt_309-5G hide disable auth_mode wpa2psk/wpa3psk encrypt_type aes shared_key PASSREMOVED rekey_interval 0\r
+      onu 8 pri wifi_ssid 5 name Apt_309 hide disable auth_mode wpapsk/wpa2psk encrypt_type tkipaes shared_key PASSREMOVED rekey_interval 0\r
+      onu 8 pri username admin_control enable admin PASSREMOVED user_control disable \r
+      onu 8 pri acl https control enable lan enable wan disable port 443\r
+      onu add 9 profile default sn SNREMOVED\r
+      onu 9 desc GPON0/3:9\r
+      onu 9 profile line name line_1\r
+      onu 9 profile srv name srv_2-wifi\r
+      onu 9 pri equid MONUVPRI\r
+      onu 9 pri wan_adv add route\r
+      onu 9 pri wan_adv index 1 route mode internet mtu 1500 \r
+      onu 9 pri wan_adv index 1 route ipv4 static ip 10.87.23.89 mask 255.255.255.0 gw 10.87.23.1 dns master 10.88.1.2 slave 10.89.1.2 nat enable \r
+      onu 9 pri dhcp_server 192.168.109.1 255.255.255.0 enable 86400 192.168.109.2 192.168.109.254 pc 10.88.1.2 10.89.1.2 192.168.109.1 \r
+      onu 9 pri wifi_ssid 1 name Apt_311-5G hide disable auth_mode wpa2psk/wpa3psk encrypt_type aes shared_key PASSREMOVED rekey_interval 0\r
+      onu 9 pri wifi_ssid 5 name Apt_311 hide disable auth_mode wpapsk/wpa2psk encrypt_type tkipaes shared_key PASSREMOVED rekey_interval 0\r
+      onu 9 pri username admin_control enable admin PASSREMOVED user_control disable \r
+      onu 9 pri acl https control enable lan enable wan disable port 443\r
+      onu add 10 profile default sn SNREMOVED\r
+      onu 10 desc GPON0/3:10\r
+      onu 10 profile line name line_1\r
+      onu 10 profile srv name srv_2-wifi\r
+       --More-- \x00
+  - " ": |-
+      \b\b\b\b\b\b\b\b\b\b          \b\b\b\b\b\b\b\b\b\bonu 10 pri equid MONUVPRI\r
+      onu 10 pri wan_adv add route\r
+      onu 10 pri wan_adv index 1 route mode internet mtu 1500 \r
+      onu 10 pri wan_adv index 1 route ipv4 static ip 10.87.23.90 mask 255.255.255.0 gw 10.87.23.1 dns master 10.88.1.2 slave 10.89.1.2 nat enable \r
+      onu 10 pri dhcp_server 192.168.109.1 255.255.255.0 enable 86400 192.168.109.2 192.168.109.254 pc 10.88.1.2 10.89.1.2 192.168.109.1 \r
+      onu 10 pri wifi_ssid 1 name Apt_312.1-5G hide disable auth_mode wpa2psk/wpa3psk encrypt_type aes shared_key PASSREMOVED rekey_interval 0\r
+      onu 10 pri wifi_ssid 5 name Apt_312.1 hide disable auth_mode wpapsk/wpa2psk encrypt_type tkipaes shared_key PASSREMOVED rekey_interval 0\r
+      onu 10 pri username admin_control enable admin PASSREMOVED user_control disable \r
+      onu 10 pri acl https control enable lan enable wan disable port 443\r
+      onu add 11 profile default sn SNREMOVED\r
+      onu 11 desc GPON0/3:11\r
+      onu 11 profile line name line_1\r
+      onu 11 profile srv name srv_2-wifi\r
+      onu 11 pri equid MONUVPRI\r
+      onu 11 pri wan_adv add route\r
+      onu 11 pri wan_adv index 1 route mode internet mtu 1500 \r
+      onu 11 pri wan_adv index 1 route ipv4 static ip 10.87.23.91 mask 255.255.255.0 gw 10.87.23.1 dns master 10.88.1.2 slave 10.89.1.2 nat enable \r
+      onu 11 pri dhcp_server 192.168.109.1 255.255.255.0 enable 86400 192.168.109.2 192.168.109.254 pc 10.88.1.2 10.89.1.2 192.168.109.1 \r
+      onu 11 pri wifi_ssid 1 name Apt_312.2-5G hide disable auth_mode wpa2psk/wpa3psk encrypt_type aes shared_key PASSREMOVED rekey_interval 0\r
+      onu 11 pri wifi_ssid 5 name Apt_312.2 hide disable auth_mode wpapsk/wpa2psk encrypt_type tkipaes shared_key PASSREMOVED rekey_interval 0\r
+      onu 11 pri username admin_control enable admin PASSREMOVED user_control disable \r
+      onu 11 pri acl https control enable lan enable wan disable port 443\r
+      onu add 12 profile default sn SNREMOVED\r
+      onu 12 desc GPON0/3:12\r
+      onu 12 profile line name line_1\r
+      onu 12 profile srv name srv_2-wifi\r
+      onu 12 pri equid MONUVPRI\r
+      onu 12 pri wan_adv add route\r
+      onu 12 pri wan_adv index 1 route mode internet mtu 1500 \r
+      onu 12 pri wan_adv index 1 route ipv4 static ip 10.87.23.92 mask 255.255.255.0 gw 10.87.23.1 dns master 10.88.1.2 slave 10.89.1.2 nat enable \r
+      onu 12 pri dhcp_server 192.168.109.1 255.255.255.0 enable 86400 192.168.109.2 192.168.109.254 pc 10.88.1.2 10.89.1.2 192.168.109.1 \r
+      onu 12 pri wifi_ssid 1 name Apt_401.1-5G hide disable auth_mode wpa2psk/wpa3psk encrypt_type aes shared_key PASSREMOVED rekey_interval 0\r
+      onu 12 pri wifi_ssid 5 name Apt_401.1 hide disable auth_mode wpapsk/wpa2psk encrypt_type tkipaes shared_key PASSREMOVED rekey_interval 0\r
+      onu 12 pri username admin_control enable admin PASSREMOVED user_control disable \r
+       --More-- \x00
+  - " ": |-
+      \b\b\b\b\b\b\b\b\b\b          \b\b\b\b\b\b\b\b\b\bonu 12 pri acl https control enable lan enable wan disable port 443\r
+      onu add 13 profile default sn SNREMOVED\r
+      onu 13 desc GPON0/3:13\r
+      onu 13 profile line name line_1\r
+      onu 13 profile srv name srv_2-wifi\r
+      onu 13 pri equid MONUVPRI\r
+      onu 13 pri wan_adv add route\r
+      onu 13 pri wan_adv index 1 route mode internet mtu 1500 \r
+      onu 13 pri wan_adv index 1 route ipv4 static ip 10.87.23.93 mask 255.255.255.0 gw 10.87.23.1 dns master 10.88.1.2 slave 10.89.1.2 nat enable \r
+      onu 13 pri dhcp_server 192.168.109.1 255.255.255.0 enable 86400 192.168.109.2 192.168.109.254 pc 10.88.1.2 10.89.1.2 192.168.109.1 \r
+      onu 13 pri wifi_ssid 1 name Apt_401.2-5G hide disable auth_mode wpa2psk/wpa3psk encrypt_type aes shared_key PASSREMOVED rekey_interval 0\r
+      onu 13 pri wifi_ssid 5 name Apt_401.2 hide disable auth_mode wpapsk/wpa2psk encrypt_type tkipaes shared_key PASSREMOVED rekey_interval 0\r
+      onu 13 pri username admin_control enable admin PASSREMOVED user_control disable \r
+      onu 13 pri acl https control enable lan enable wan disable port 443\r
+      onu add 14 profile default sn SNREMOVED\r
+      onu 14 desc GPON0/3:14\r
+      onu 14 profile line name line_1\r
+      onu 14 profile srv name srv_2-wifi\r
+      onu 14 pri equid MONUVPRI\r
+      onu 14 pri wan_adv add route\r
+      onu 14 pri wan_adv index 1 route mode internet mtu 1500 \r
+      onu 14 pri wan_adv index 1 route ipv4 static ip 10.87.23.94 mask 255.255.255.0 gw 10.87.23.1 dns master 10.88.1.2 slave 10.89.1.2 nat enable \r
+      onu 14 pri dhcp_server 192.168.109.1 255.255.255.0 enable 86400 192.168.109.2 192.168.109.254 pc 10.88.1.2 10.89.1.2 192.168.109.1 \r
+      onu 14 pri wifi_ssid 1 name Apt_402-5G hide disable auth_mode wpa2psk/wpa3psk encrypt_type aes shared_key PASSREMOVED rekey_interval 0\r
+      onu 14 pri wifi_ssid 5 name Apt_402 hide disable auth_mode wpapsk/wpa2psk encrypt_type tkipaes shared_key PASSREMOVED rekey_interval 0\r
+      onu 14 pri username admin_control enable admin PASSREMOVED user_control disable \r
+      onu 14 pri acl https control enable lan enable wan disable port 443\r
+      onu add 15 profile default sn SNREMOVED\r
+      onu 15 desc GPON0/3:15\r
+      onu 15 profile line name line_1\r
+      onu 15 profile srv name srv_2-wifi\r
+      onu 15 pri equid MONUVPRI\r
+      onu 15 pri wan_adv add route\r
+      onu 15 pri wan_adv index 1 route mode internet mtu 1500 \r
+      onu 15 pri wan_adv index 1 route ipv4 static ip 10.87.23.95 mask 255.255.255.0 gw 10.87.23.1 dns master 10.88.1.2 slave 10.89.1.2 nat enable \r
+      onu 15 pri dhcp_server 192.168.109.1 255.255.255.0 enable 86400 192.168.109.2 192.168.109.254 pc 10.88.1.2 10.89.1.2 192.168.109.1 \r
+      onu 15 pri wifi_ssid 1 name Apt_403-5G hide disable auth_mode wpa2psk/wpa3psk en --More-- \x00
+  - " ": |-
+      \b\b\b\b\b\b\b\b\b\b          \b\b\b\b\b\b\b\b\b\bcrypt_type aes shared_key PASSREMOVED rekey_interval 0\r
+      onu 15 pri wifi_ssid 5 name Apt_403 hide disable auth_mode wpapsk/wpa2psk encrypt_type tkipaes shared_key PASSREMOVED rekey_interval 0\r
+      onu 15 pri username admin_control enable admin PASSREMOVED user_control disable \r
+      onu 15 pri acl https control enable lan enable wan disable port 443\r
+      onu add 16 profile default sn SNREMOVED\r
+      onu 16 desc GPON0/3:16\r
+      onu 16 profile line name line_1\r
+      onu 16 profile srv name srv_2-wifi\r
+      onu 16 pri equid MONUVPRI\r
+      onu 16 pri wan_adv add route\r
+      onu 16 pri wan_adv index 1 route mode internet mtu 1500 \r
+      onu 16 pri wan_adv index 1 route ipv4 static ip 10.87.23.96 mask 255.255.255.0 gw 10.87.23.1 dns master 10.88.1.2 slave 10.89.1.2 nat enable \r
+      onu 16 pri dhcp_server 192.168.109.1 255.255.255.0 enable 86400 192.168.109.2 192.168.109.254 pc 10.88.1.2 10.89.1.2 192.168.109.1 \r
+      onu 16 pri wifi_ssid 1 name Apt_404-5G hide disable auth_mode wpa2psk/wpa3psk encrypt_type aes shared_key PASSREMOVED rekey_interval 0\r
+      onu 16 pri wifi_ssid 5 name Apt_404 hide disable auth_mode wpapsk/wpa2psk encrypt_type tkipaes shared_key PASSREMOVED rekey_interval 0\r
+      onu 16 pri username admin_control enable admin PASSREMOVED user_control disable \r
+      onu 16 pri acl https control enable lan enable wan disable port 443\r
+      onu add 17 profile default sn SNREMOVED\r
+      onu 17 desc GPON0/3:17\r
+      onu 17 profile line name line_1\r
+      onu 17 profile srv name srv_2-wifi\r
+      onu 17 pri equid MONUVPRI\r
+      onu 17 pri wan_adv add route\r
+      onu 17 pri wan_adv index 1 route mode internet mtu 1500 \r
+      onu 17 pri wan_adv index 1 route ipv4 static ip 10.87.23.97 mask 255.255.255.0 gw 10.87.23.1 dns master 10.88.1.2 slave 10.89.1.2 nat enable \r
+      onu 17 pri dhcp_server 192.168.109.1 255.255.255.0 enable 86400 192.168.109.2 192.168.109.254 pc 10.88.1.2 10.89.1.2 192.168.109.1 \r
+      onu 17 pri wifi_ssid 1 name Apt_405-5G hide disable auth_mode wpa2psk/wpa3psk encrypt_type aes shared_key PASSREMOVED rekey_interval 0\r
+      onu 17 pri wifi_ssid 5 name Apt_405 hide disable auth_mode wpapsk/wpa2psk encrypt_type tkipaes shared_key PASSREMOVED rekey_interval 0\r
+      onu 17 pri username admin_control enable admin PASSREMOVED user_control disable \r
+      onu 17 pri acl https control enable lan enable wan disable port 443\r
+      onu add 18 profile default sn SNREMOVED\r
+      onu 18 desc GPON0/3:18\r
+      onu 18 profile line name line_1\r
+      onu 18 profile srv name srv_2-wifi\r
+      onu 18 pri equid MONUVPRI\r
+      onu 18 pri wan_adv add route\r
+      onu 18 pri wan_adv index 1 route mode internet mtu 1500 \r
+       --More-- \x00
+  - " ": |-
+      \b\b\b\b\b\b\b\b\b\b          \b\b\b\b\b\b\b\b\b\bonu 18 pri wan_adv index 1 route ipv4 static ip 10.87.23.98 mask 255.255.255.0 gw 10.87.23.1 dns master 10.88.1.2 slave 10.89.1.2 nat enable \r
+      onu 18 pri dhcp_server 192.168.109.1 255.255.255.0 enable 86400 192.168.109.2 192.168.109.254 pc 10.88.1.2 10.89.1.2 192.168.109.1 \r
+      onu 18 pri wifi_ssid 1 name Apt_406-5G hide disable auth_mode wpa2psk/wpa3psk encrypt_type aes shared_key PASSREMOVED rekey_interval 0\r
+      onu 18 pri wifi_ssid 5 name Apt_406 hide disable auth_mode wpapsk/wpa2psk encrypt_type tkipaes shared_key PASSREMOVED rekey_interval 0\r
+      onu 18 pri username admin_control enable admin PASSREMOVED user_control disable \r
+      onu 18 pri acl https control enable lan enable wan disable port 443\r
+      onu add 19 profile default sn SNREMOVED\r
+      onu 19 desc GPON0/3:19\r
+      onu 19 profile line name line_1\r
+      onu 19 profile srv name srv_2-wifi\r
+      onu 19 pri equid MONUVPRI\r
+      onu 19 pri wan_adv add route\r
+      onu 19 pri wan_adv index 1 route mode internet mtu 1500 \r
+      onu 19 pri wan_adv index 1 route ipv4 static ip 10.87.23.99 mask 255.255.255.0 gw 10.87.23.1 dns master 10.88.1.2 slave 10.89.1.2 nat enable \r
+      onu 19 pri dhcp_server 192.168.109.1 255.255.255.0 enable 86400 192.168.109.2 192.168.109.254 pc 10.88.1.2 10.89.1.2 192.168.109.1 \r
+      onu 19 pri wifi_ssid 1 name Apt_407-5G hide disable auth_mode wpa2psk/wpa3psk encrypt_type aes shared_key PASSREMOVED rekey_interval 0\r
+      onu 19 pri wifi_ssid 5 name Apt_407 hide disable auth_mode wpapsk/wpa2psk encrypt_type tkipaes shared_key PASSREMOVED rekey_interval 0\r
+      onu 19 pri username admin_control enable admin PASSREMOVED user_control disable \r
+      onu 19 pri acl https control enable lan enable wan disable port 443\r
+      onu add 20 profile default sn SNREMOVED\r
+      onu 20 desc GPON0/3:20\r
+      onu 20 profile line name line_1\r
+      onu 20 profile srv name srv_2-wifi\r
+      onu 20 pri equid MONUVPRI\r
+      onu 20 pri wan_adv add route\r
+      onu 20 pri wan_adv index 1 route mode internet mtu 1500 \r
+      onu 20 pri wan_adv index 1 route ipv4 static ip 10.87.23.100 mask 255.255.255.0 gw 10.87.23.1 dns master 10.88.1.2 slave 10.89.1.2 nat enable \r
+      onu 20 pri dhcp_server 192.168.109.1 255.255.255.0 enable 86400 192.168.109.2 192.168.109.254 pc 10.88.1.2 10.89.1.2 192.168.109.1 \r
+      onu 20 pri wifi_ssid 1 name Apt_408-5G hide disable auth_mode wpa2psk/wpa3psk encrypt_type aes shared_key PASSREMOVED rekey_interval 0\r
+      onu 20 pri wifi_ssid 5 name Apt_408 hide disable auth_mode wpapsk/wpa2psk encrypt_type tkipaes shared_key PASSREMOVED rekey_interval 0\r
+      onu 20 pri username admin_control enable admin PASSREMOVED user_control disable \r
+      onu 20 pri acl https control enable lan enable wan disable port 443\r
+      onu add 21 profile default sn SNREMOVED\r
+      onu 21 desc GPON0/3:21\r
+       --More-- \x00
+  - " ": |-
+      \b\b\b\b\b\b\b\b\b\b          \b\b\b\b\b\b\b\b\b\bonu 21 profile line name line_1\r
+      onu 21 profile srv name srv_2-wifi\r
+      onu 21 pri equid MONUVPRI\r
+      onu 21 pri wan_adv add route\r
+      onu 21 pri wan_adv index 1 route mode internet mtu 1500 \r
+      onu 21 pri wan_adv index 1 route ipv4 static ip 10.87.23.101 mask 255.255.255.0 gw 10.87.23.1 dns master 10.88.1.2 slave 10.89.1.2 nat enable \r
+      onu 21 pri dhcp_server 192.168.109.1 255.255.255.0 enable 86400 192.168.109.2 192.168.109.254 pc 10.88.1.2 10.89.1.2 192.168.109.1 \r
+      onu 21 pri wifi_ssid 1 name Apt_409-5G hide disable auth_mode wpa2psk/wpa3psk encrypt_type aes shared_key PASSREMOVED rekey_interval 0\r
+      onu 21 pri wifi_ssid 5 name Apt_409 hide disable auth_mode wpapsk/wpa2psk encrypt_type tkipaes shared_key PASSREMOVED rekey_interval 0\r
+      onu 21 pri username admin_control enable admin PASSREMOVED user_control disable \r
+      onu 21 pri acl https control enable lan enable wan disable port 443\r
+      onu add 22 profile default sn SNREMOVED\r
+      onu 22 desc GPON0/3:22\r
+      onu 22 profile line name line_1\r
+      onu 22 profile srv name srv_2-wifi\r
+      onu 22 pri equid MONUVPRI\r
+      onu 22 pri wan_adv add route\r
+      onu 22 pri wan_adv index 1 route mode internet mtu 1500 \r
+      onu 22 pri wan_adv index 1 route ipv4 static ip 10.87.23.102 mask 255.255.255.0 gw 10.87.23.1 dns master 10.88.1.2 slave 10.89.1.2 nat enable \r
+      onu 22 pri dhcp_server 192.168.109.1 255.255.255.0 enable 86400 192.168.109.2 192.168.109.254 pc 10.88.1.2 10.89.1.2 192.168.109.1 \r
+      onu 22 pri wifi_ssid 1 name Apt_410-5G hide disable auth_mode wpa2psk/wpa3psk encrypt_type aes shared_key PASSREMOVED rekey_interval 0\r
+      onu 22 pri wifi_ssid 5 name Apt_410 hide disable auth_mode wpapsk/wpa2psk encrypt_type tkipaes shared_key PASSREMOVED rekey_interval 0\r
+      onu 22 pri username admin_control enable admin PASSREMOVED user_control disable \r
+      onu 22 pri acl https control enable lan enable wan disable port 443\r
+      onu add 23 profile default sn SNREMOVED\r
+      onu 23 desc GPON0/3:23\r
+      onu 23 profile line name line_1\r
+      onu 23 profile srv name srv_2-wifi\r
+      onu 23 pri equid MONUVPRI\r
+      onu 23 pri wan_adv add route\r
+      onu 23 pri wan_adv index 1 route mode internet mtu 1500 \r
+      onu 23 pri wan_adv index 1 route ipv4 static ip 10.87.23.103 mask 255.255.255.0 gw 10.87.23.1 dns master 10.88.1.2 slave 10.89.1.2 nat enable \r
+      onu 23 pri dhcp_server 192.168.109.1 255.255.255.0 enable 86400 192.168.109.2 192.168.109.254 pc 10.88.1.2 10.89.1.2 192.168.109.1 \r
+      onu 23 pri wifi_ssid 1 name Apt_411-5G hide disable auth_mode wpa2psk/wpa3psk encrypt_type aes shared_key PASSREMOVED rekey_interval 0\r
+      onu 23 pri wifi_ssid 5 name Apt_411 hide disable auth_mode wpapsk/wpa2psk encrypt_type tkipaes shared_key PASSREMOVED rekey_interval 0\r
+       --More-- \x00
+  - " ": |-
+      \b\b\b\b\b\b\b\b\b\b          \b\b\b\b\b\b\b\b\b\bonu 23 pri username admin_control enable admin PASSREMOVED user_control disable \r
+      onu 23 pri acl https control enable lan enable wan disable port 443\r
+      onu add 24 profile default sn SNREMOVED\r
+      onu 24 desc GPON0/3:24\r
+      onu 24 profile line name line_1\r
+      onu 24 profile srv name srv_2-wifi\r
+      onu 24 pri equid MONUVPRI\r
+      onu 24 pri wan_adv add route\r
+      onu 24 pri wan_adv index 1 route mode internet mtu 1500 \r
+      onu 24 pri wan_adv index 1 route ipv4 static ip 10.87.23.104 mask 255.255.255.0 gw 10.87.23.1 dns master 10.88.1.2 slave 10.89.1.2 nat enable \r
+      onu 24 pri dhcp_server 192.168.109.1 255.255.255.0 enable 86400 192.168.109.2 192.168.109.254 pc 10.88.1.2 10.89.1.2 192.168.109.1 \r
+      onu 24 pri wifi_ssid 1 name Apt_412.1-5G hide disable auth_mode wpa2psk/wpa3psk encrypt_type aes shared_key PASSREMOVED rekey_interval 0\r
+      onu 24 pri wifi_ssid 5 name Apt_412.1 hide disable auth_mode wpapsk/wpa2psk encrypt_type tkipaes shared_key PASSREMOVED rekey_interval 0\r
+      onu 24 pri username admin_control enable admin PASSREMOVED user_control disable \r
+      onu 24 pri acl https control enable lan enable wan disable port 443\r
+      onu add 25 profile default sn SNREMOVED\r
+      onu 25 desc GPON0/3:25\r
+      onu 25 profile line name line_1\r
+      onu 25 profile srv name srv_2-wifi\r
+      onu 25 pri equid MONUVPRI\r
+      onu 25 pri wan_adv add route\r
+      onu 25 pri wan_adv index 1 route mode internet mtu 1500 \r
+      onu 25 pri wan_adv index 1 route ipv4 static ip 10.87.23.105 mask 255.255.255.0 gw 10.87.23.1 dns master 10.88.1.2 slave 10.89.1.2 nat enable \r
+      onu 25 pri dhcp_server 192.168.109.1 255.255.255.0 enable 86400 192.168.109.2 192.168.109.254 pc 10.88.1.2 10.89.1.2 192.168.109.1 \r
+      onu 25 pri wifi_ssid 1 name Apt_412.2-5G hide disable auth_mode wpa2psk/wpa3psk encrypt_type aes shared_key PASSREMOVED rekey_interval 0\r
+      onu 25 pri wifi_ssid 5 name Apt_412.2 hide disable auth_mode wpapsk/wpa2psk encrypt_type tkipaes shared_key PASSREMOVED rekey_interval 0\r
+      onu 25 pri username admin_control enable admin PASSREMOVED user_control disable \r
+      onu 25 pri acl https control enable lan enable wan disable port 443\r
+      onu add 26 profile default sn SNREMOVED\r
+      onu 26 desc GPON0/3:26\r
+      onu 26 profile line name line_1\r
+      onu 26 profile srv name srv_2-wifi\r
+      onu 26 pri equid MONUVPRI\r
+      onu 26 pri wan_adv add route\r
+      onu 26 pri wan_adv index 1 route mode internet mtu 1500 \r
+      onu 26 pri wan_adv index 1 route ipv4 static ip 10.87.23.106 mask 255.255.255.0 gw 10.87.23.1 dns master 10.88.1.2 slave 10.89.1.2 nat enable \r
+      onu 26 pri dhcp_server 192.168.109.1 255.255.255.0 enable 86400 192.168.109.2 19 --More-- \x00
+  - " ": |-
+      \b\b\b\b\b\b\b\b\b\b          \b\b\b\b\b\b\b\b\b\b2.168.109.254 pc 10.88.1.2 10.89.1.2 192.168.109.1 \r
+      onu 26 pri wifi_ssid 1 name Apt_501.1-5G hide disable auth_mode wpa2psk/wpa3psk encrypt_type aes shared_key PASSREMOVED rekey_interval 0\r
+      onu 26 pri wifi_ssid 5 name Apt_501.1 hide disable auth_mode wpapsk/wpa2psk encrypt_type tkipaes shared_key PASSREMOVED rekey_interval 0\r
+      onu 26 pri username admin_control enable admin PASSREMOVED user_control disable \r
+      onu 26 pri acl https control enable lan enable wan disable port 443\r
+      onu add 27 profile default sn SNREMOVED\r
+      onu 27 desc GPON0/3:27\r
+      onu 27 profile line name line_1\r
+      onu 27 profile srv name srv_2-wifi\r
+      onu 27 pri equid MONUVPRI\r
+      onu 27 pri wan_adv add route\r
+      onu 27 pri wan_adv index 1 route mode internet mtu 1500 \r
+      onu 27 pri wan_adv index 1 route ipv4 static ip 10.87.23.107 mask 255.255.255.0 gw 10.87.23.1 dns master 10.88.1.2 slave 10.89.1.2 nat enable \r
+      onu 27 pri dhcp_server 192.168.109.1 255.255.255.0 enable 86400 192.168.109.2 192.168.109.254 pc 10.88.1.2 10.89.1.2 192.168.109.1 \r
+      onu 27 pri wifi_ssid 1 name Apt_501.2-5G hide disable auth_mode wpa2psk/wpa3psk encrypt_type aes shared_key PASSREMOVED rekey_interval 0\r
+      onu 27 pri wifi_ssid 5 name Apt_501.2 hide disable auth_mode wpapsk/wpa2psk encrypt_type tkipaes shared_key PASSREMOVED rekey_interval 0\r
+      onu 27 pri username admin_control enable admin PASSREMOVED user_control disable \r
+      onu 27 pri acl https control enable lan enable wan disable port 443\r
+      onu add 28 profile default sn SNREMOVED\r
+      onu 28 desc GPON0/3:28\r
+      onu 28 profile line name line_1\r
+      onu 28 profile srv name srv_2-wifi\r
+      onu 28 pri equid MONUVPRI\r
+      onu 28 pri wan_adv add route\r
+      onu 28 pri wan_adv index 1 route mode internet mtu 1500 \r
+      onu 28 pri wan_adv index 1 route ipv4 static ip 10.87.23.108 mask 255.255.255.0 gw 10.87.23.1 dns master 10.88.1.2 slave 10.89.1.2 nat enable \r
+      onu 28 pri dhcp_server 192.168.109.1 255.255.255.0 enable 86400 192.168.109.2 192.168.109.254 pc 10.88.1.2 10.89.1.2 192.168.109.1 \r
+      onu 28 pri wifi_ssid 1 name Apt_502-5G hide disable auth_mode wpa2psk/wpa3psk encrypt_type aes shared_key PASSREMOVED rekey_interval 0\r
+      onu 28 pri wifi_ssid 5 name Apt_502 hide disable auth_mode wpapsk/wpa2psk encrypt_type tkipaes shared_key PASSREMOVED rekey_interval 0\r
+      onu 28 pri username admin_control enable admin PASSREMOVED user_control disable \r
+      onu 28 pri acl https control enable lan enable wan disable port 443\r
+      onu add 29 profile default sn SNREMOVED\r
+      onu 29 desc GPON0/3:29\r
+      onu 29 profile line name line_1\r
+      onu 29 profile srv name srv_2-wifi\r
+      onu 29 pri equid MONUVPRI\r
+       --More-- \x00\r
+      2026/05/25 18:52:13   ONU AutoFind                 Unregistered ONU auto-find PON 0/2 ONU SN:HWTCa4a6a4e7\r
+      
+  - " ": |-
+      \b\b\b\b\b\b\b\b\b\b          \b\b\b\b\b\b\b\b\b\bonu 29 pri wan_adv add route\r
+      onu 29 pri wan_adv index 1 route mode internet mtu 1500 \r
+      onu 29 pri wan_adv index 1 route ipv4 static ip 10.87.23.109 mask 255.255.255.0 gw 10.87.23.1 dns master 10.88.1.2 slave 10.89.1.2 nat enable \r
+      onu 29 pri dhcp_server 192.168.109.1 255.255.255.0 enable 86400 192.168.109.2 192.168.109.254 pc 10.88.1.2 10.89.1.2 192.168.109.1 \r
+      onu 29 pri wifi_ssid 1 name Apt_503-5G hide disable auth_mode wpa2psk/wpa3psk encrypt_type aes shared_key PASSREMOVED rekey_interval 0\r
+      onu 29 pri wifi_ssid 5 name Apt_503 hide disable auth_mode wpapsk/wpa2psk encrypt_type tkipaes shared_key PASSREMOVED rekey_interval 0\r
+      onu 29 pri username admin_control enable admin PASSREMOVED user_control disable \r
+      onu 29 pri acl https control enable lan enable wan disable port 443\r
+      onu add 30 profile default sn SNREMOVED\r
+      onu 30 desc GPON0/3:30\r
+      onu 30 profile line name line_1\r
+      onu 30 profile srv name srv_2-wifi\r
+      onu 30 pri equid MONUVPRI\r
+      onu 30 pri wan_adv add route\r
+      onu 30 pri wan_adv index 1 route mode internet mtu 1500 \r
+      onu 30 pri wan_adv index 1 route ipv4 static ip 10.87.23.110 mask 255.255.255.0 gw 10.87.23.1 dns master 10.88.1.2 slave 10.89.1.2 nat enable \r
+      onu 30 pri dhcp_server 192.168.109.1 255.255.255.0 enable 86400 192.168.109.2 192.168.109.254 pc 10.88.1.2 10.89.1.2 192.168.109.1 \r
+      onu 30 pri wifi_ssid 1 name Apt_504-5G hide disable auth_mode wpa2psk/wpa3psk encrypt_type aes shared_key PASSREMOVED rekey_interval 0\r
+      onu 30 pri wifi_ssid 5 name Apt_504 hide disable auth_mode wpapsk/wpa2psk encrypt_type tkipaes shared_key PASSREMOVED rekey_interval 0\r
+      onu 30 pri username admin_control enable admin PASSREMOVED user_control disable \r
+      onu 30 pri acl https control enable lan enable wan disable port 443\r
+      onu add 31 profile default sn SNREMOVED\r
+      onu 31 desc GPON0/3:31\r
+      onu 31 profile line name line_1\r
+      onu 31 profile srv name srv_2-wifi\r
+      onu 31 pri equid MONUVPRI\r
+      onu 31 pri wan_adv add route\r
+      onu 31 pri wan_adv index 1 route mode internet mtu 1500 \r
+      onu 31 pri wan_adv index 1 route ipv4 static ip 10.87.23.111 mask 255.255.255.0 gw 10.87.23.1 dns master 10.88.1.2 slave 10.89.1.2 nat enable \r
+      onu 31 pri dhcp_server 192.168.109.1 255.255.255.0 enable 86400 192.168.109.2 192.168.109.254 pc 10.88.1.2 10.89.1.2 192.168.109.1 \r
+      onu 31 pri wifi_ssid 1 name Apt_506-5G hide disable auth_mode wpa2psk/wpa3psk encrypt_type aes shared_key PASSREMOVED rekey_interval 0\r
+      onu 31 pri wifi_ssid 5 name Apt_506 hide disable auth_mode wpapsk/wpa2psk encrypt_type tkipaes shared_key PASSREMOVED rekey_interval 0\r
+      onu 31 pri username admin_control enable admin PASSREMOVED user_control disable \r
+      onu 31 pri acl https control enable lan enable wan disable port 443\r
+       --More-- \x00
+  - " ": |-
+      \b\b\b\b\b\b\b\b\b\b          \b\b\b\b\b\b\b\b\b\bonu add 32 profile default sn SNREMOVED\r
+      onu 32 desc GPON0/3:32\r
+      onu 32 profile line name line_1\r
+      onu 32 profile srv name srv_2-wifi\r
+      onu 32 pri equid MONUVPRI\r
+      onu 32 pri wan_adv add route\r
+      onu 32 pri wan_adv index 1 route mode internet mtu 1500 \r
+      onu 32 pri wan_adv index 1 route ipv4 static ip 10.87.23.112 mask 255.255.255.0 gw 10.87.23.1 dns master 10.88.1.2 slave 10.89.1.2 nat enable \r
+      onu 32 pri dhcp_server 192.168.109.1 255.255.255.0 enable 86400 192.168.109.2 192.168.109.254 pc 10.88.1.2 10.89.1.2 192.168.109.1 \r
+      onu 32 pri wifi_ssid 1 name Apt_507-5G hide disable auth_mode wpa2psk/wpa3psk encrypt_type aes shared_key PASSREMOVED rekey_interval 0\r
+      onu 32 pri wifi_ssid 5 name Apt_507 hide disable auth_mode wpapsk/wpa2psk encrypt_type tkipaes shared_key PASSREMOVED rekey_interval 0\r
+      onu 32 pri username admin_control enable admin PASSREMOVED user_control disable \r
+      onu 32 pri acl https control enable lan enable wan disable port 443\r
+      onu add 33 profile default sn SNREMOVED\r
+      onu 33 desc GPON0/3:33\r
+      onu 33 profile line name line_1\r
+      onu 33 profile srv name srv_2-wifi\r
+      onu 33 pri equid MONUVPRI\r
+      onu 33 pri wan_adv add route\r
+      onu 33 pri wan_adv index 1 route mode internet mtu 1500 \r
+      onu 33 pri wan_adv index 1 route ipv4 static ip 10.87.23.113 mask 255.255.255.0 gw 10.87.23.1 dns master 10.88.1.2 slave 10.89.1.2 nat enable \r
+      onu 33 pri dhcp_server 192.168.109.1 255.255.255.0 enable 86400 192.168.109.2 192.168.109.254 pc 10.88.1.2 10.89.1.2 192.168.109.1 \r
+      onu 33 pri wifi_ssid 1 name Apt_509-5G hide disable auth_mode wpa2psk/wpa3psk encrypt_type aes shared_key PASSREMOVED rekey_interval 0\r
+      onu 33 pri wifi_ssid 5 name Apt_509 hide disable auth_mode wpapsk/wpa2psk encrypt_type tkipaes shared_key PASSREMOVED rekey_interval 0\r
+      onu 33 pri username admin_control enable admin PASSREMOVED user_control disable \r
+      onu 33 pri acl https control enable lan enable wan disable port 443\r
+      onu add 34 profile default sn SNREMOVED\r
+      onu 34 desc GPON0/3:34\r
+      onu 34 profile line name line_1\r
+      onu 34 profile srv name srv_2-wifi\r
+      onu 34 pri equid MONUVPRI\r
+      onu 34 pri wan_adv add route\r
+      onu 34 pri wan_adv index 1 route mode internet mtu 1500 \r
+      onu 34 pri wan_adv index 1 route ipv4 static ip 10.87.23.114 mask 255.255.255.0 gw 10.87.23.1 dns master 10.88.1.2 slave 10.89.1.2 nat enable \r
+      onu 34 pri dhcp_server 192.168.109.1 255.255.255.0 enable 86400 192.168.109.2 192.168.109.254 pc 10.88.1.2 10.89.1.2 192.168.109.1 \r
+      onu 34 pri wifi_ssid 1 name Apt_510-5G hide disable auth_mode wpa2psk/wpa3psk encrypt_type aes shared_key PASSREMOVED rekey_interval 0\r
+       --More-- \x00
+  - " ": |-
+      \b\b\b\b\b\b\b\b\b\b          \b\b\b\b\b\b\b\b\b\bonu 34 pri wifi_ssid 5 name Apt_510 hide disable auth_mode wpapsk/wpa2psk encrypt_type tkipaes shared_key PASSREMOVED rekey_interval 0\r
+      onu 34 pri username admin_control enable admin PASSREMOVED user_control disable \r
+      onu 34 pri acl https control enable lan enable wan disable port 443\r
+      onu add 35 profile default sn SNREMOVED\r
+      onu 35 desc GPON0/3:35\r
+      onu 35 profile line name line_1\r
+      onu 35 profile srv name srv_2-wifi\r
+      onu 35 pri equid MONUVPRI\r
+      onu 35 pri wan_adv add route\r
+      onu 35 pri wan_adv index 1 route mode internet mtu 1500 \r
+      onu 35 pri wan_adv index 1 route ipv4 static ip 10.87.23.115 mask 255.255.255.0 gw 10.87.23.1 dns master 10.88.1.2 slave 10.89.1.2 nat enable \r
+      onu 35 pri dhcp_server 192.168.109.1 255.255.255.0 enable 86400 192.168.109.2 192.168.109.254 pc 10.88.1.2 10.89.1.2 192.168.109.1 \r
+      onu 35 pri wifi_ssid 1 name Apt_511-5G hide disable auth_mode wpa2psk/wpa3psk encrypt_type aes shared_key PASSREMOVED rekey_interval 0\r
+      onu 35 pri wifi_ssid 5 name Apt_511 hide disable auth_mode wpapsk/wpa2psk encrypt_type tkipaes shared_key PASSREMOVED rekey_interval 0\r
+      onu 35 pri username admin_control enable admin PASSREMOVED user_control disable \r
+      onu 35 pri acl https control enable lan enable wan disable port 443\r
+      onu add 36 profile default sn SNREMOVED\r
+      onu 36 desc GPON0/3:36\r
+      onu 36 profile line name line_1\r
+      onu 36 profile srv name srv_2-wifi\r
+      onu 36 pri equid MONUVPRI\r
+      onu 36 pri wan_adv add route\r
+      onu 36 pri wan_adv index 1 route mode internet mtu 1500 \r
+      onu 36 pri wan_adv index 1 route ipv4 static ip 10.87.23.116 mask 255.255.255.0 gw 10.87.23.1 dns master 10.88.1.2 slave 10.89.1.2 nat enable \r
+      onu 36 pri dhcp_server 192.168.109.1 255.255.255.0 enable 86400 192.168.109.2 192.168.109.254 pc 10.88.1.2 10.89.1.2 192.168.109.1 \r
+      onu 36 pri wifi_ssid 1 name Apt_512.1-5G hide disable auth_mode wpa2psk/wpa3psk encrypt_type aes shared_key PASSREMOVED rekey_interval 0\r
+      onu 36 pri wifi_ssid 5 name Apt_512.1 hide disable auth_mode wpapsk/wpa2psk encrypt_type tkipaes shared_key PASSREMOVED rekey_interval 0\r
+      onu 36 pri username admin_control enable admin PASSREMOVED user_control disable \r
+      onu 36 pri acl https control enable lan enable wan disable port 443\r
+      onu add 37 profile default sn SNREMOVED\r
+      onu 37 desc GPON0/3:37\r
+      onu 37 profile line name line_1\r
+      onu 37 profile srv name srv_2-wifi\r
+      onu 37 pri equid MONUVPRI\r
+      onu 37 pri wan_adv add route\r
+      onu 37 pri wan_adv index 1 route mode internet mtu 1500 \r
+      onu 37 pri wan_adv index 1 route ipv4 static ip 10.87.23.117 mask 255.255.255.0  --More-- \x00
+  - " ": |-
+      \b\b\b\b\b\b\b\b\b\b          \b\b\b\b\b\b\b\b\b\bgw 10.87.23.1 dns master 10.88.1.2 slave 10.89.1.2 nat enable \r
+      onu 37 pri dhcp_server 192.168.109.1 255.255.255.0 enable 86400 192.168.109.2 192.168.109.254 pc 10.88.1.2 10.89.1.2 192.168.109.1 \r
+      onu 37 pri wifi_ssid 1 name Apt_512.2-5G hide disable auth_mode wpa2psk/wpa3psk encrypt_type aes shared_key PASSREMOVED rekey_interval 0\r
+      onu 37 pri wifi_ssid 5 name Apt_512.2 hide disable auth_mode wpapsk/wpa2psk encrypt_type tkipaes shared_key PASSREMOVED rekey_interval 0\r
+      onu 37 pri username admin_control enable admin PASSREMOVED user_control disable \r
+      onu 37 pri firewall level low\r
+      onu 37 pri acl ping control enable lan enable wan enable ipv4_control enable 10.88.200.26 255.255.255.0 ipv6_control disable \r
+      onu 37 pri acl http control enable lan enable wan disable port 80\r
+      onu add 38 profile default sn SNREMOVED\r
+      onu 38 desc GPON0/3:38\r
+      onu 38 profile line name line_1\r
+      onu 38 profile srv name srv_2-wifi\r
+      onu 38 pri equid MONUVPRI\r
+      onu 38 pri wan_adv add route\r
+      onu 38 pri wan_adv index 1 route mode internet mtu 1500 \r
+      onu 38 pri wan_adv index 1 route ipv4 static ip 10.87.23.118 mask 255.255.255.0 gw 10.87.23.1 dns master 10.88.1.2 slave 10.89.1.2 nat enable \r
+      onu 38 pri dhcp_server 192.168.109.1 255.255.255.0 enable 86400 192.168.109.2 192.168.109.254 pc 10.88.1.2 10.89.1.2 192.168.109.1 \r
+      onu 38 pri wifi_ssid 1 name Apt_601.1-5G hide disable auth_mode wpa2psk/wpa3psk encrypt_type aes shared_key PASSREMOVED rekey_interval 0\r
+      onu 38 pri wifi_ssid 5 name Apt_601.1 hide disable auth_mode wpapsk/wpa2psk encrypt_type tkipaes shared_key PASSREMOVED rekey_interval 0\r
+      onu 38 pri username admin_control enable admin PASSREMOVED user_control disable \r
+      onu 38 pri acl https control enable lan enable wan disable port 443\r
+      onu add 39 profile default sn SNREMOVED\r
+      onu 39 desc GPON0/3:39\r
+      onu 39 profile line name line_1\r
+      onu 39 profile srv name srv_2-wifi\r
+      onu 39 pri equid MONUVPRI\r
+      onu 39 pri wan_adv add route\r
+      onu 39 pri wan_adv index 1 route mode internet mtu 1500 \r
+      onu 39 pri wan_adv index 1 route ipv4 static ip 10.87.23.119 mask 255.255.255.0 gw 10.87.23.1 dns master 10.88.1.2 slave 10.89.1.2 nat enable \r
+      onu 39 pri dhcp_server 192.168.109.1 255.255.255.0 enable 86400 192.168.109.2 192.168.109.254 pc 10.88.1.2 10.89.1.2 192.168.109.1 \r
+      onu 39 pri wifi_ssid 1 name Apt_601.2-5G hide disable auth_mode wpa2psk/wpa3psk encrypt_type aes shared_key PASSREMOVED rekey_interval 0\r
+      onu 39 pri wifi_ssid 5 name Apt_601.2 hide disable auth_mode wpapsk/wpa2psk encrypt_type tkipaes shared_key PASSREMOVED rekey_interval 0\r
+      onu 39 pri username admin_control enable admin PASSREMOVED user_control disable \r
+      onu 39 pri acl https control enable lan enable wan disable port 443\r
+       --More-- \x00
+  - " ": |-
+      \b\b\b\b\b\b\b\b\b\b          \b\b\b\b\b\b\b\b\b\bonu add 40 profile default sn SNREMOVED\r
+      onu 40 desc GPON0/3:40\r
+      onu 40 profile line name line_1\r
+      onu 40 profile srv name srv_2-wifi\r
+      onu 40 pri equid MONUVPRI\r
+      onu 40 pri wan_adv add route\r
+      onu 40 pri wan_adv index 1 route mode internet mtu 1500 \r
+      onu 40 pri wan_adv index 1 route ipv4 static ip 10.87.23.120 mask 255.255.255.0 gw 10.87.23.1 dns master 10.88.1.2 slave 10.89.1.2 nat enable \r
+      onu 40 pri dhcp_server 192.168.109.1 255.255.255.0 enable 86400 192.168.109.2 192.168.109.254 pc 10.88.1.2 10.89.1.2 192.168.109.1 \r
+      onu 40 pri wifi_ssid 1 name Apt_602-5G hide disable auth_mode wpa2psk/wpa3psk encrypt_type aes shared_key PASSREMOVED rekey_interval 0\r
+      onu 40 pri wifi_ssid 5 name Apt_602 hide disable auth_mode wpapsk/wpa2psk encrypt_type tkipaes shared_key PASSREMOVED rekey_interval 0\r
+      onu 40 pri username admin_control enable admin PASSREMOVED user_control disable \r
+      onu 40 pri acl https control enable lan enable wan disable port 443\r
+      onu add 41 profile default sn SNREMOVED\r
+      onu 41 desc GPON0/3:41\r
+      onu 41 profile line name line_1\r
+      onu 41 profile srv name srv_2-wifi\r
+      onu 41 pri equid MONUVPRI\r
+      onu 41 pri wan_adv add route\r
+      onu 41 pri wan_adv index 1 route mode internet mtu 1500 \r
+      onu 41 pri wan_adv index 1 route ipv4 static ip 10.87.23.121 mask 255.255.255.0 gw 10.87.23.1 dns master 10.88.1.2 slave 10.89.1.2 nat enable \r
+      onu 41 pri dhcp_server 192.168.109.1 255.255.255.0 enable 86400 192.168.109.2 192.168.109.254 pc 10.88.1.2 10.89.1.2 192.168.109.1 \r
+      onu 41 pri wifi_ssid 1 name Apt_603-5G hide disable auth_mode wpa2psk/wpa3psk encrypt_type aes shared_key PASSREMOVED rekey_interval 0\r
+      onu 41 pri wifi_ssid 5 name Apt_603 hide disable auth_mode wpapsk/wpa2psk encrypt_type tkipaes shared_key PASSREMOVED rekey_interval 0\r
+      onu 41 pri username admin_control enable admin PASSREMOVED user_control disable \r
+      onu 41 pri acl https control enable lan enable wan disable port 443\r
+      onu add 42 profile default sn SNREMOVED\r
+      onu 42 desc GPON0/3:42\r
+      onu 42 profile line name line_1\r
+      onu 42 profile srv name srv_2-wifi\r
+      onu 42 pri equid MONUVPRI\r
+      onu 42 pri wan_adv add route\r
+      onu 42 pri wan_adv index 1 route mode internet mtu 1500 \r
+      onu 42 pri wan_adv index 1 route ipv4 static ip 10.87.23.122 mask 255.255.255.0 gw 10.87.23.1 dns master 10.88.1.2 slave 10.89.1.2 nat enable \r
+      onu 42 pri dhcp_server 192.168.109.1 255.255.255.0 enable 86400 192.168.109.2 192.168.109.254 pc 10.88.1.2 10.89.1.2 192.168.109.1 \r
+      onu 42 pri wifi_ssid 1 name Apt_606-5G hide disable auth_mode wpa2psk/wpa3psk encrypt_type aes shared_key PASSREMOVED rekey_interval 0\r
+       --More-- \x00
+  - " ": |-
+      \b\b\b\b\b\b\b\b\b\b          \b\b\b\b\b\b\b\b\b\bonu 42 pri wifi_ssid 5 name Apt_606 hide disable auth_mode wpapsk/wpa2psk encrypt_type tkipaes shared_key PASSREMOVED rekey_interval 0\r
+      onu 42 pri username admin_control enable admin PASSREMOVED user_control disable \r
+      onu 42 pri acl https control enable lan enable wan disable port 443\r
+      onu add 43 profile default sn SNREMOVED\r
+      onu 43 desc GPON0/3:43\r
+      onu 43 profile line name line_1\r
+      onu 43 profile srv name srv_2-wifi\r
+      onu 43 pri equid MONUVPRI\r
+      onu 43 pri wan_adv add route\r
+      onu 43 pri wan_adv index 1 route mode internet mtu 1500 \r
+      onu 43 pri wan_adv index 1 route ipv4 static ip 10.87.23.123 mask 255.255.255.0 gw 10.87.23.1 dns master 10.88.1.2 slave 10.89.1.2 nat enable \r
+      onu 43 pri dhcp_server 192.168.109.1 255.255.255.0 enable 86400 192.168.109.2 192.168.109.254 pc 10.88.1.2 10.89.1.2 192.168.109.1 \r
+      onu 43 pri wifi_ssid 1 name Apt_607-5G hide disable auth_mode wpa2psk/wpa3psk encrypt_type aes shared_key PASSREMOVED rekey_interval 0\r
+      onu 43 pri wifi_ssid 5 name Apt_607 hide disable auth_mode wpapsk/wpa2psk encrypt_type tkipaes shared_key PASSREMOVED rekey_interval 0\r
+      onu 43 pri username admin_control enable admin PASSREMOVED user_control disable \r
+      onu 43 pri acl https control enable lan enable wan disable port 443\r
+      onu add 44 profile default sn SNREMOVED\r
+      onu 44 desc GPON0/3:44\r
+      onu 44 profile line name line_1\r
+      onu 44 profile srv name srv_2-wifi\r
+      onu 44 pri equid MONUVPRI\r
+      onu 44 pri wan_adv add route\r
+      onu 44 pri wan_adv index 1 route mode internet mtu 1500 \r
+      onu 44 pri wan_adv index 1 route ipv4 static ip 10.87.23.124 mask 255.255.255.0 gw 10.87.23.1 dns master 10.88.1.2 slave 10.89.1.2 nat enable \r
+      onu 44 pri dhcp_server 192.168.109.1 255.255.255.0 enable 86400 192.168.109.2 192.168.109.254 pc 10.88.1.2 10.89.1.2 192.168.109.1 \r
+      onu 44 pri wifi_ssid 1 name Apt_608-5G hide disable auth_mode wpa2psk/wpa3psk encrypt_type aes shared_key PASSREMOVED rekey_interval 0\r
+      onu 44 pri wifi_ssid 5 name Apt_608 hide disable auth_mode wpapsk/wpa2psk encrypt_type tkipaes shared_key PASSREMOVED rekey_interval 0\r
+      onu 44 pri username admin_control enable admin PASSREMOVED user_control disable \r
+      onu 44 pri acl https control enable lan enable wan disable port 443\r
+      onu add 45 profile default sn SNREMOVED\r
+      onu 45 desc GPON0/3:45\r
+      onu 45 profile line name line_1\r
+      onu 45 profile srv name srv_2-wifi\r
+      onu 45 pri equid MONUVPRI\r
+      onu 45 pri wan_adv add route\r
+      onu 45 pri wan_adv index 1 route mode internet mtu 1500 \r
+      onu 45 pri wan_adv index 1 route ipv4 static ip 10.87.23.125 mask 255.255.255.0  --More-- \x00
+  - " ": |-
+      \b\b\b\b\b\b\b\b\b\b          \b\b\b\b\b\b\b\b\b\bgw 10.87.23.1 dns master 10.88.1.2 slave 10.89.1.2 nat enable \r
+      onu 45 pri dhcp_server 192.168.109.1 255.255.255.0 enable 86400 192.168.109.2 192.168.109.254 pc 10.88.1.2 10.89.1.2 192.168.109.1 \r
+      onu 45 pri wifi_ssid 1 name Apt_609-5G hide disable auth_mode wpa2psk/wpa3psk encrypt_type aes shared_key PASSREMOVED rekey_interval 0\r
+      onu 45 pri wifi_ssid 5 name Apt_609 hide disable auth_mode wpapsk/wpa2psk encrypt_type tkipaes shared_key PASSREMOVED rekey_interval 0\r
+      onu 45 pri username admin_control enable admin PASSREMOVED user_control disable \r
+      onu 45 pri acl https control enable lan enable wan disable port 443\r
+      onu add 46 profile default sn SNREMOVED\r
+      onu 46 desc GPON0/3:46\r
+      onu 46 profile line name line_1\r
+      onu 46 profile srv name srv_2-wifi\r
+      onu 46 pri equid MONUVPRI\r
+      onu 46 pri wan_adv add route\r
+      onu 46 pri wan_adv index 1 route mode internet mtu 1500 \r
+      onu 46 pri wan_adv index 1 route ipv4 static ip 10.87.23.126 mask 255.255.255.0 gw 10.87.23.1 dns master 10.88.1.2 slave 10.89.1.2 nat enable \r
+      onu 46 pri dhcp_server 192.168.109.1 255.255.255.0 enable 86400 192.168.109.2 192.168.109.254 pc 10.88.1.2 10.89.1.2 192.168.109.1 \r
+      onu 46 pri wifi_ssid 1 name Apt_610-5G hide disable auth_mode wpa2psk/wpa3psk encrypt_type aes shared_key PASSREMOVED rekey_interval 0\r
+      onu 46 pri wifi_ssid 5 name Apt_610 hide disable auth_mode wpapsk/wpa2psk encrypt_type tkipaes shared_key PASSREMOVED rekey_interval 0\r
+      onu 46 pri username admin_control enable admin PASSREMOVED user_control disable \r
+      onu 46 pri acl https control enable lan enable wan disable port 443\r
+      onu add 47 profile default sn SNREMOVED\r
+      onu 47 desc GPON0/3:47\r
+      onu 47 profile line name line_1\r
+      onu 47 profile srv name srv_2-wifi\r
+      onu 47 pri equid MONUVPRI\r
+      onu 47 pri wan_adv add route\r
+      onu 47 pri wan_adv index 1 route mode internet mtu 1500 \r
+      onu 47 pri wan_adv index 1 route ipv4 static ip 10.87.23.127 mask 255.255.255.0 gw 10.87.23.1 dns master 10.88.1.2 slave 10.89.1.2 nat enable \r
+      onu 47 pri dhcp_server 192.168.109.1 255.255.255.0 enable 86400 192.168.109.2 192.168.109.254 pc 10.88.1.2 10.89.1.2 192.168.109.1 \r
+      onu 47 pri wifi_ssid 1 name Apt_611-5G hide disable auth_mode wpa2psk/wpa3psk encrypt_type aes shared_key PASSREMOVED rekey_interval 0\r
+      onu 47 pri wifi_ssid 5 name Apt_611 hide disable auth_mode wpapsk/wpa2psk encrypt_type tkipaes shared_key PASSREMOVED rekey_interval 0\r
+      onu 47 pri username admin_control enable admin PASSREMOVED user_control disable \r
+      onu 47 pri acl https control enable lan enable wan disable port 443\r
+      onu add 48 profile default sn SNREMOVED\r
+      onu 48 desc GPON0/3:48\r
+      onu 48 profile line name line_1\r
+       --More-- \x00
+  - " ": |-
+      \b\b\b\b\b\b\b\b\b\b          \b\b\b\b\b\b\b\b\b\bonu 48 profile srv name srv_2-wifi\r
+      onu 48 pri equid MONUVPRI\r
+      onu 48 pri wan_adv add route\r
+      onu 48 pri wan_adv index 1 route mode internet mtu 1500 \r
+      onu 48 pri wan_adv index 1 route ipv4 static ip 10.87.23.128 mask 255.255.255.0 gw 10.87.23.1 dns master 10.88.1.2 slave 10.89.1.2 nat enable \r
+      onu 48 pri dhcp_server 192.168.109.1 255.255.255.0 enable 86400 192.168.109.2 192.168.109.254 pc 10.88.1.2 10.89.1.2 192.168.109.1 \r
+      onu 48 pri wifi_ssid 1 name Apt_612.2-5G hide disable auth_mode wpa2psk/wpa3psk encrypt_type aes shared_key PASSREMOVED rekey_interval 0\r
+      onu 48 pri wifi_ssid 5 name Apt_612.2 hide disable auth_mode wpapsk/wpa2psk encrypt_type tkipaes shared_key PASSREMOVED rekey_interval 0\r
+      onu 48 pri username admin_control enable admin PASSREMOVED user_control disable \r
+      onu 48 pri acl https control enable lan enable wan disable port 443\r
+      onu add 49 profile default sn SNREMOVED\r
+      onu 49 desc GPON0/3:49\r
+      onu 49 profile line name line_1\r
+      onu 49 profile srv name srv_2-wifi\r
+      onu 49 pri equid MONUVPRI\r
+      onu 49 pri wan_adv add route\r
+      onu 49 pri wan_adv index 1 route mode internet mtu 1500 \r
+      onu 49 pri wan_adv index 1 route ipv4 static ip 10.87.23.129 mask 255.255.255.0 gw 10.87.23.1 dns master 10.88.1.2 slave 10.89.1.2 nat enable \r
+      onu 49 pri dhcp_server 192.168.109.1 255.255.255.0 enable 86400 192.168.109.2 192.168.109.254 pc 10.88.1.2 10.89.1.2 192.168.109.1 \r
+      onu 49 pri wifi_ssid 1 name Apt_701.1-5G hide disable auth_mode wpa2psk/wpa3psk encrypt_type aes shared_key PASSREMOVED rekey_interval 0\r
+      onu 49 pri wifi_ssid 5 name Apt_701.1 hide disable auth_mode wpapsk/wpa2psk encrypt_type tkipaes shared_key PASSREMOVED rekey_interval 0\r
+      onu 49 pri username admin_control enable admin PASSREMOVED user_control disable \r
+      onu 49 pri acl https control enable lan enable wan disable port 443\r
+      onu add 50 profile default sn SNREMOVED\r
+      onu 50 desc GPON0/3:50\r
+      onu 50 profile line name line_1\r
+      onu 50 profile srv name srv_2-wifi\r
+      onu 50 pri equid MONUVPRI\r
+      onu 50 pri wan_adv add route\r
+      onu 50 pri wan_adv index 1 route mode internet mtu 1500 \r
+      onu 50 pri wan_adv index 1 route ipv4 static ip 10.87.23.130 mask 255.255.255.0 gw 10.87.23.1 dns master 10.88.1.2 slave 10.89.1.2 nat enable \r
+      onu 50 pri dhcp_server 192.168.109.1 255.255.255.0 enable 86400 192.168.109.2 192.168.109.254 pc 10.88.1.2 10.89.1.2 192.168.109.1 \r
+      onu 50 pri wifi_ssid 1 name Apt_701.2-5G hide disable auth_mode wpa2psk/wpa3psk encrypt_type aes shared_key PASSREMOVED rekey_interval 0\r
+      onu 50 pri wifi_ssid 5 name Apt_701.2 hide disable auth_mode wpapsk/wpa2psk encrypt_type tkipaes shared_key PASSREMOVED rekey_interval 0\r
+      onu 50 pri username admin_control enable admin PASSREMOVED user_control disable  --More-- \x00
+  - " ": |-
+      \b\b\b\b\b\b\b\b\b\b          \b\b\b\b\b\b\b\b\b\b\r
+      onu 50 pri acl https control enable lan enable wan disable port 443\r
+      onu add 51 profile default sn SNREMOVED\r
+      onu 51 desc GPON0/3:51\r
+      onu 51 profile line name line_1\r
+      onu 51 profile srv name srv_2-wifi\r
+      onu 51 pri equid MONUVPRI\r
+      onu 51 pri wan_adv add route\r
+      onu 51 pri wan_adv index 1 route mode internet mtu 1500 \r
+      onu 51 pri wan_adv index 1 route ipv4 static ip 10.87.23.131 mask 255.255.255.0 gw 10.87.23.1 dns master 10.88.1.2 slave 10.89.1.2 nat enable \r
+      onu 51 pri dhcp_server 192.168.109.1 255.255.255.0 enable 86400 192.168.109.2 192.168.109.254 pc 10.88.1.2 10.89.1.2 192.168.109.1 \r
+      onu 51 pri wifi_ssid 1 name Apt_702-5G hide disable auth_mode wpa2psk/wpa3psk encrypt_type aes shared_key PASSREMOVED rekey_interval 0\r
+      onu 51 pri wifi_ssid 5 name Apt_702 hide disable auth_mode wpapsk/wpa2psk encrypt_type tkipaes shared_key PASSREMOVED rekey_interval 0\r
+      onu 51 pri username admin_control enable admin PASSREMOVED user_control disable \r
+      onu 51 pri acl https control enable lan enable wan disable port 443\r
+      onu add 52 profile default sn SNREMOVED\r
+      onu 52 desc GPON0/3:52\r
+      onu 52 profile line name line_1\r
+      onu 52 profile srv name srv_2-wifi\r
+      onu 52 pri equid MONUVPRI\r
+      onu 52 pri wan_adv add route\r
+      onu 52 pri wan_adv index 1 route mode internet mtu 1500 \r
+      onu 52 pri wan_adv index 1 route ipv4 static ip 10.87.23.132 mask 255.255.255.0 gw 10.87.23.1 dns master 10.88.1.2 slave 10.89.1.2 nat enable \r
+      onu 52 pri dhcp_server 192.168.109.1 255.255.255.0 enable 86400 192.168.109.2 192.168.109.254 pc 10.88.1.2 10.89.1.2 192.168.109.1 \r
+      onu 52 pri wifi_ssid 1 name Apt_703-5G hide disable auth_mode wpa2psk/wpa3psk encrypt_type aes shared_key PASSREMOVED rekey_interval 0\r
+      onu 52 pri wifi_ssid 5 name Apt_703 hide disable auth_mode wpapsk/wpa2psk encrypt_type tkipaes shared_key PASSREMOVED rekey_interval 0\r
+      onu 52 pri username admin_control enable admin PASSREMOVED user_control disable \r
+      onu 52 pri acl https control enable lan enable wan disable port 443\r
+      onu add 53 profile default sn SNREMOVED\r
+      onu 53 desc GPON0/3:53\r
+      onu 53 profile line name line_1\r
+      onu 53 profile srv name srv_2-wifi\r
+      onu 53 pri equid MONUVPRI\r
+      onu 53 pri wan_adv add route\r
+      onu 53 pri wan_adv index 1 route mode internet mtu 1500 \r
+      onu 53 pri wan_adv index 1 route ipv4 static ip 10.87.23.133 mask 255.255.255.0 gw 10.87.23.1 dns master 10.88.1.2 slave 10.89.1.2 nat enable \r
+      onu 53 pri dhcp_server 192.168.109.1 255.255.255.0 enable 86400 192.168.109.2 192.168.109.254 pc 10.88.1.2 10.89.1.2 192.168.109.1 \r
+       --More-- \x00
+  - " ": |-
+      \b\b\b\b\b\b\b\b\b\b          \b\b\b\b\b\b\b\b\b\bonu 53 pri wifi_ssid 1 name Apt_704-5G hide disable auth_mode wpa2psk/wpa3psk encrypt_type aes shared_key PASSREMOVED rekey_interval 0\r
+      onu 53 pri wifi_ssid 5 name Apt_704 hide disable auth_mode wpapsk/wpa2psk encrypt_type tkipaes shared_key PASSREMOVED rekey_interval 0\r
+      onu 53 pri username admin_control enable admin PASSREMOVED user_control disable \r
+      onu 53 pri acl https control enable lan enable wan disable port 443\r
+      onu add 54 profile default sn SNREMOVED\r
+      onu 54 desc GPON0/3:54\r
+      onu 54 profile line name line_1\r
+      onu 54 profile srv name srv_2-wifi\r
+      onu 54 pri equid MONUVPRI\r
+      onu 54 pri wan_adv add route\r
+      onu 54 pri wan_adv index 1 route mode internet mtu 1500 \r
+      onu 54 pri wan_adv index 1 route ipv4 static ip 10.87.23.134 mask 255.255.255.0 gw 10.87.23.1 dns master 10.88.1.2 slave 10.89.1.2 nat enable \r
+      onu 54 pri dhcp_server 192.168.109.1 255.255.255.0 enable 86400 192.168.109.2 192.168.109.254 pc 10.88.1.2 10.89.1.2 192.168.109.1 \r
+      onu 54 pri wifi_ssid 1 name Apt_705-5G hide disable auth_mode wpa2psk/wpa3psk encrypt_type aes shared_key PASSREMOVED rekey_interval 0\r
+      onu 54 pri wifi_ssid 5 name Apt_705 hide disable auth_mode wpapsk/wpa2psk encrypt_type tkipaes shared_key PASSREMOVED rekey_interval 0\r
+      onu 54 pri username admin_control enable admin PASSREMOVED user_control disable \r
+      onu 54 pri acl https control enable lan enable wan disable port 443\r
+      onu add 55 profile default sn SNREMOVED\r
+      onu 55 desc GPON0/3:55\r
+      onu 55 profile line name line_1\r
+      onu 55 profile srv name srv_2-wifi\r
+      onu 55 pri equid MONUVPRI\r
+      onu 55 pri wan_adv add route\r
+      onu 55 pri wan_adv index 1 route mode internet mtu 1500 \r
+      onu 55 pri wan_adv index 1 route ipv4 static ip 10.87.23.135 mask 255.255.255.0 gw 10.87.23.1 dns master 10.88.1.2 slave 10.89.1.2 nat enable \r
+      onu 55 pri dhcp_server 192.168.109.1 255.255.255.0 enable 86400 192.168.109.2 192.168.109.254 pc 10.88.1.2 10.89.1.2 192.168.109.1 \r
+      onu 55 pri wifi_ssid 1 name Apt_706-5G hide disable auth_mode wpa2psk/wpa3psk encrypt_type aes shared_key PASSREMOVED rekey_interval 0\r
+      onu 55 pri wifi_ssid 5 name Apt_706 hide disable auth_mode wpapsk/wpa2psk encrypt_type tkipaes shared_key PASSREMOVED rekey_interval 0\r
+      onu 55 pri username admin_control enable admin PASSREMOVED user_control disable \r
+      onu 55 pri acl https control enable lan enable wan disable port 443\r
+      onu add 56 profile default sn SNREMOVED\r
+      onu 56 desc GPON0/3:56\r
+      onu 56 profile line name line_1\r
+      onu 56 profile srv name srv_2-wifi\r
+      onu 56 pri equid MONUVPRI\r
+      onu 56 pri wan_adv add route\r
+       --More-- \x00\r
+      2026/05/25 18:52:26   ONU Online                   PON 0/2 ONU 40 sn SNREMOVED \r
+      
+  - " ": |-
+      \b\b\b\b\b\b\b\b\b\b          \b\b\b\b\b\b\b\b\b\bonu 56 pri wan_adv index 1 route mode internet mtu 1500 \r
+      onu 56 pri wan_adv index 1 route ipv4 static ip 10.87.23.136 mask 255.255.255.0 gw 10.87.23.1 dns master 10.88.1.2 slave 10.89.1.2 nat enable \r
+      onu 56 pri dhcp_server 192.168.109.1 255.255.255.0 enable 86400 192.168.109.2 192.168.109.254 pc 10.88.1.2 10.89.1.2 192.168.109.1 \r
+      onu 56 pri wifi_ssid 1 name Apt_709-5G hide disable auth_mode wpa2psk/wpa3psk encrypt_type aes shared_key PASSREMOVED rekey_interval 0\r
+      onu 56 pri wifi_ssid 5 name Apt_709 hide disable auth_mode wpapsk/wpa2psk encrypt_type tkipaes shared_key PASSREMOVED rekey_interval 0\r
+      onu 56 pri username admin_control enable admin PASSREMOVED user_control disable \r
+      onu 56 pri acl https control enable lan enable wan disable port 443\r
+      onu add 57 profile default sn SNREMOVED\r
+      onu 57 desc GPON0/3:57\r
+      onu 57 profile line name line_1\r
+      onu 57 profile srv name srv_2-wifi\r
+      onu 57 pri equid MONUVPRI\r
+      onu 57 pri wan_adv add route\r
+      onu 57 pri wan_adv index 1 route mode internet mtu 1500 \r
+      onu 57 pri wan_adv index 1 route ipv4 static ip 10.87.23.137 mask 255.255.255.0 gw 10.87.23.1 dns master 10.88.1.2 slave 10.89.1.2 nat enable \r
+      onu 57 pri dhcp_server 192.168.109.1 255.255.255.0 enable 86400 192.168.109.2 192.168.109.254 pc 10.88.1.2 10.89.1.2 192.168.109.1 \r
+      onu 57 pri wifi_ssid 1 name Apt_710-5G hide disable auth_mode wpa2psk/wpa3psk encrypt_type aes shared_key PASSREMOVED rekey_interval 0\r
+      onu 57 pri wifi_ssid 5 name Apt_710 hide disable auth_mode wpapsk/wpa2psk encrypt_type tkipaes shared_key PASSREMOVED rekey_interval 0\r
+      onu 57 pri username admin_control enable admin PASSREMOVED user_control disable \r
+      onu 57 pri acl https control enable lan enable wan disable port 443\r
+      onu add 58 profile default sn SNREMOVED\r
+      onu 58 desc GPON0/3:58\r
+      onu 58 profile line name line_1\r
+      onu 58 profile srv name srv_2-wifi\r
+      onu 58 pri equid MONUVPRI\r
+      onu 58 pri wan_adv add route\r
+      onu 58 pri wan_adv index 1 route mode internet mtu 1500 \r
+      onu 58 pri wan_adv index 1 route ipv4 static ip 10.87.23.138 mask 255.255.255.0 gw 10.87.23.1 dns master 10.88.1.2 slave 10.89.1.2 nat enable \r
+      onu 58 pri dhcp_server 192.168.109.1 255.255.255.0 enable 86400 192.168.109.2 192.168.109.254 pc 10.88.1.2 10.89.1.2 192.168.109.1 \r
+      onu 58 pri wifi_ssid 1 name Apt_711-5G hide disable auth_mode wpa2psk/wpa3psk encrypt_type aes shared_key PASSREMOVED rekey_interval 0\r
+      onu 58 pri wifi_ssid 5 name Apt_711 hide disable auth_mode wpapsk/wpa2psk encrypt_type tkipaes shared_key PASSREMOVED rekey_interval 0\r
+      onu 58 pri username admin_control enable admin PASSREMOVED user_control disable \r
+      onu 58 pri acl https control enable lan enable wan disable port 443\r
+      onu add 59 profile default sn SNREMOVED\r
+       --More-- \x00
+  - " ": |-
+      \b\b\b\b\b\b\b\b\b\b          \b\b\b\b\b\b\b\b\b\bonu 59 desc GPON0/3:59\r
+      onu 59 profile line name line_1\r
+      onu 59 profile srv name srv_2-wifi\r
+      onu 59 pri equid MONUVPRI\r
+      onu 59 pri wan_adv add route\r
+      onu 59 pri wan_adv index 1 route mode internet mtu 1500 \r
+      onu 59 pri wan_adv index 1 route ipv4 static ip 10.87.23.139 mask 255.255.255.0 gw 10.87.23.1 dns master 10.88.1.2 slave 10.89.1.2 nat enable \r
+      onu 59 pri dhcp_server 192.168.109.1 255.255.255.0 enable 86400 192.168.109.2 192.168.109.254 pc 10.88.1.2 10.89.1.2 192.168.109.1 \r
+      onu 59 pri wifi_ssid 1 name Apt_712.2-5G hide disable auth_mode wpa2psk/wpa3psk encrypt_type aes shared_key PASSREMOVED rekey_interval 0\r
+      onu 59 pri wifi_ssid 5 name Apt_712.2 hide disable auth_mode wpapsk/wpa2psk encrypt_type tkipaes shared_key PASSREMOVED rekey_interval 0\r
+      onu 59 pri username admin_control enable admin PASSREMOVED user_control disable \r
+      onu 59 pri acl https control enable lan enable wan disable port 443\r
+      onu add 60 profile default sn SNREMOVED\r
+      onu 60 desc GPON0/3:60\r
+      onu 60 profile line name line_1\r
+      onu 60 profile srv name srv_2-wifi\r
+      onu 60 pri equid MONUVPRI\r
+      onu 60 pri wan_adv add route\r
+      onu 60 pri wan_adv index 1 route mode internet mtu 1500 \r
+      onu 60 pri wan_adv index 1 route ipv4 static ip 10.87.23.140 mask 255.255.255.0 gw 10.87.23.1 dns master 10.88.1.2 slave 10.89.1.2 nat enable \r
+      onu 60 pri dhcp_server 192.168.109.1 255.255.255.0 enable 86400 192.168.109.2 192.168.109.254 pc 10.88.1.2 10.89.1.2 192.168.109.1 \r
+      onu 60 pri wifi_ssid 1 name Apt_801.1-5G hide disable auth_mode wpa2psk/wpa3psk encrypt_type aes shared_key PASSREMOVED rekey_interval 0\r
+      onu 60 pri wifi_ssid 5 name Apt_801.1 hide disable auth_mode wpapsk/wpa2psk encrypt_type tkipaes shared_key PASSREMOVED rekey_interval 0\r
+      onu 60 pri username admin_control enable admin PASSREMOVED user_control disable \r
+      onu 60 pri acl https control enable lan enable wan disable port 443\r
+      onu add 61 profile default sn SNREMOVED\r
+      onu 61 desc GPON0/3:61\r
+      onu 61 profile line name line_1\r
+      onu 61 profile srv name srv_2-wifi\r
+      onu 61 pri equid MONUVPRI\r
+      onu 61 pri wan_adv add route\r
+      onu 61 pri wan_adv index 1 route mode internet mtu 1500 \r
+      onu 61 pri wan_adv index 1 route ipv4 static ip 10.87.23.141 mask 255.255.255.0 gw 10.87.23.1 dns master 10.88.1.2 slave 10.89.1.2 nat enable \r
+      onu 61 pri dhcp_server 192.168.109.1 255.255.255.0 enable 86400 192.168.109.2 192.168.109.254 pc 10.88.1.2 10.89.1.2 192.168.109.1 \r
+      onu 61 pri wifi_ssid 1 name Apt_802-5G hide disable auth_mode wpa2psk/wpa3psk encrypt_type aes shared_key PASSREMOVED rekey_interval 0\r
+      onu 61 pri wifi_ssid 5 name Apt_802 hide disable auth_mode wpapsk/wpa2psk encryp --More-- \x00
+  - " ": |-
+      \b\b\b\b\b\b\b\b\b\b          \b\b\b\b\b\b\b\b\b\bt_type tkipaes shared_key PASSREMOVED rekey_interval 0\r
+      onu 61 pri username admin_control enable admin PASSREMOVED user_control disable \r
+      onu 61 pri acl https control enable lan enable wan disable port 443\r
+      onu add 62 profile default sn SNREMOVED\r
+      onu 62 desc GPON0/3:62\r
+      onu 62 profile line name line_1\r
+      onu 62 profile srv name srv_2-wifi\r
+      onu 62 pri equid MONUVPRI\r
+      onu 62 pri wan_adv add route\r
+      onu 62 pri wan_adv index 1 route mode internet mtu 1500 \r
+      onu 62 pri wan_adv index 1 route ipv4 static ip 10.87.23.142 mask 255.255.255.0 gw 10.87.23.1 dns master 10.88.1.2 slave 10.89.1.2 nat enable \r
+      onu 62 pri dhcp_server 192.168.109.1 255.255.255.0 enable 86400 192.168.109.2 192.168.109.254 pc 10.88.1.2 10.89.1.2 192.168.109.1 \r
+      onu 62 pri wifi_ssid 1 name Apt_804-5G hide disable auth_mode wpa2psk/wpa3psk encrypt_type aes shared_key PASSREMOVED rekey_interval 0\r
+      onu 62 pri wifi_ssid 5 name Apt_804 hide disable auth_mode wpapsk/wpa2psk encrypt_type tkipaes shared_key PASSREMOVED rekey_interval 0\r
+      onu 62 pri username admin_control enable admin PASSREMOVED user_control disable \r
+      onu 62 pri acl https control enable lan enable wan disable port 443\r
+      onu add 63 profile default sn SNREMOVED\r
+      onu 63 desc GPON0/3:63\r
+      onu 63 profile line name line_1\r
+      onu 63 profile srv name srv_2-wifi\r
+      onu 63 pri equid MONUVPRI\r
+      onu 63 pri wan_adv add route\r
+      onu 63 pri wan_adv index 1 route mode internet mtu 1500 \r
+      onu 63 pri wan_adv index 1 route ipv4 static ip 10.87.23.143 mask 255.255.255.0 gw 10.87.23.1 dns master 10.88.1.2 slave 10.89.1.2 nat enable \r
+      onu 63 pri dhcp_server 192.168.109.1 255.255.255.0 enable 86400 192.168.109.2 192.168.109.254 pc 10.88.1.2 10.89.1.2 192.168.109.1 \r
+      onu 63 pri wifi_ssid 1 name Apt_805-5G hide disable auth_mode wpa2psk/wpa3psk encrypt_type aes shared_key PASSREMOVED rekey_interval 0\r
+      onu 63 pri wifi_ssid 5 name Apt_805 hide disable auth_mode wpapsk/wpa2psk encrypt_type tkipaes shared_key PASSREMOVED rekey_interval 0\r
+      onu 63 pri username admin_control enable admin PASSREMOVED user_control disable \r
+      onu 63 pri acl https control enable lan enable wan disable port 443\r
+      onu add 64 profile default sn SNREMOVED\r
+      onu 64 desc GPON0/3:64\r
+      onu 64 profile line name line_1\r
+      onu 64 profile srv name srv_2-wifi\r
+      onu 64 pri equid MONUVPRI\r
+      onu 64 pri wan_adv add route\r
+      onu 64 pri wan_adv index 1 route mode internet mtu 1500 \r
+      onu 64 pri wan_adv index 1 route ipv4 static ip 10.87.23.144 mask 255.255.255.0 gw 10.87.23.1 dns master 10.88.1.2 slave 10.89.1.2 nat enable \r
+       --More-- \x00
+  - " ": |-
+      \b\b\b\b\b\b\b\b\b\b          \b\b\b\b\b\b\b\b\b\bonu 64 pri dhcp_server 192.168.109.1 255.255.255.0 enable 86400 192.168.109.2 192.168.109.254 pc 10.88.1.2 10.89.1.2 192.168.109.1 \r
+      onu 64 pri wifi_ssid 1 name Apt_806-5G hide disable auth_mode wpa2psk/wpa3psk encrypt_type aes shared_key PASSREMOVED rekey_interval 0\r
+      onu 64 pri wifi_ssid 5 name Apt_806 hide disable auth_mode wpapsk/wpa2psk encrypt_type tkipaes shared_key PASSREMOVED rekey_interval 0\r
+      onu 64 pri username admin_control enable admin PASSREMOVED user_control disable \r
+      onu 64 pri acl https control enable lan enable wan disable port 443\r
+      onu add 65 profile default sn SNREMOVED\r
+      onu 65 desc GPON0/3:65\r
+      onu 65 profile line name line_1\r
+      onu 65 profile srv name srv_2-wifi\r
+      onu 65 pri equid MONUVPRI\r
+      onu 65 pri wan_adv add route\r
+      onu 65 pri wan_adv index 1 route mode internet mtu 1500 \r
+      onu 65 pri wan_adv index 1 route ipv4 static ip 10.87.23.145 mask 255.255.255.0 gw 10.87.23.1 dns master 10.88.1.2 slave 10.89.1.2 nat enable \r
+      onu 65 pri dhcp_server 192.168.109.1 255.255.255.0 enable 86400 192.168.109.2 192.168.109.254 pc 10.88.1.2 10.89.1.2 192.168.109.1 \r
+      onu 65 pri wifi_ssid 1 name Apt_807-5G hide disable auth_mode wpa2psk/wpa3psk encrypt_type aes shared_key PASSREMOVED rekey_interval 0\r
+      onu 65 pri wifi_ssid 5 name Apt_807 hide disable auth_mode wpapsk/wpa2psk encrypt_type tkipaes shared_key PASSREMOVED rekey_interval 0\r
+      onu 65 pri username admin_control enable admin PASSREMOVED user_control disable \r
+      onu 65 pri acl https control enable lan enable wan disable port 443\r
+      onu add 66 profile default sn SNREMOVED\r
+      onu 66 desc GPON0/3:66\r
+      onu 66 profile line name line_1\r
+      onu 66 profile srv name srv_2-wifi\r
+      onu 66 pri equid MONUVPRI\r
+      onu 66 pri wan_adv add route\r
+      onu 66 pri wan_adv index 1 route mode internet mtu 1500 \r
+      onu 66 pri wan_adv index 1 route ipv4 static ip 10.87.23.146 mask 255.255.255.0 gw 10.87.23.1 dns master 10.88.1.2 slave 10.89.1.2 nat enable \r
+      onu 66 pri dhcp_server 192.168.109.1 255.255.255.0 enable 86400 192.168.109.2 192.168.109.254 pc 10.88.1.2 10.89.1.2 192.168.109.1 \r
+      onu 66 pri wifi_ssid 1 name Apt_808-5G hide disable auth_mode wpa2psk/wpa3psk encrypt_type aes shared_key PASSREMOVED rekey_interval 0\r
+      onu 66 pri wifi_ssid 5 name Apt_808 hide disable auth_mode wpapsk/wpa2psk encrypt_type tkipaes shared_key PASSREMOVED rekey_interval 0\r
+      onu 66 pri username admin_control enable admin PASSREMOVED user_control disable \r
+      onu 66 pri acl https control enable lan enable wan disable port 443\r
+      onu add 67 profile default sn SNREMOVED\r
+      onu 67 desc GPON0/3:67\r
+      onu 67 profile line name line_1\r
+      onu 67 profile srv name srv_2-wifi\r
+       --More-- \x00
+  - " ": |-
+      \b\b\b\b\b\b\b\b\b\b          \b\b\b\b\b\b\b\b\b\bonu 67 pri equid MONUVPRI\r
+      onu 67 pri wan_adv add route\r
+      onu 67 pri wan_adv index 1 route mode internet mtu 1500 \r
+      onu 67 pri wan_adv index 1 route ipv4 static ip 10.87.23.147 mask 255.255.255.0 gw 10.87.23.1 dns master 10.88.1.2 slave 10.89.1.2 nat enable \r
+      onu 67 pri dhcp_server 192.168.109.1 255.255.255.0 enable 86400 192.168.109.2 192.168.109.254 pc 10.88.1.2 10.89.1.2 192.168.109.1 \r
+      onu 67 pri wifi_ssid 1 name Apt_809-5G hide disable auth_mode wpa2psk/wpa3psk encrypt_type aes shared_key PASSREMOVED rekey_interval 0\r
+      onu 67 pri wifi_ssid 5 name Apt_809 hide disable auth_mode wpapsk/wpa2psk encrypt_type tkipaes shared_key PASSREMOVED rekey_interval 0\r
+      onu 67 pri username admin_control enable admin PASSREMOVED user_control disable \r
+      onu 67 pri acl https control enable lan enable wan disable port 443\r
+      onu add 68 profile default sn SNREMOVED\r
+      onu 68 desc GPON0/3:68\r
+      onu 68 profile line name line_1\r
+      onu 68 profile srv name srv_2-wifi\r
+      onu 68 pri equid MONUVPRI\r
+      onu 68 pri wan_adv add route\r
+      onu 68 pri wan_adv index 1 route mode internet mtu 1500 \r
+      onu 68 pri wan_adv index 1 route ipv4 static ip 10.87.23.148 mask 255.255.255.0 gw 10.87.23.1 dns master 10.88.1.2 slave 10.89.1.2 nat enable \r
+      onu 68 pri dhcp_server 192.168.109.1 255.255.255.0 enable 86400 192.168.109.2 192.168.109.254 pc 10.88.1.2 10.89.1.2 192.168.109.1 \r
+      onu 68 pri wifi_ssid 1 name Apt_810-5G hide disable auth_mode wpa2psk/wpa3psk encrypt_type aes shared_key PASSREMOVED rekey_interval 0\r
+      onu 68 pri wifi_ssid 5 name Apt_810 hide disable auth_mode wpapsk/wpa2psk encrypt_type tkipaes shared_key PASSREMOVED rekey_interval 0\r
+      onu 68 pri username admin_control enable admin PASSREMOVED user_control disable \r
+      onu 68 pri acl https control enable lan enable wan disable port 443\r
+      onu add 69 profile default sn SNREMOVED\r
+      onu 69 desc GPON0/3:69\r
+      onu 69 profile line name line_1\r
+      onu 69 profile srv name srv_2-wifi\r
+      onu 69 pri equid MONUVPRI\r
+      onu 69 pri wan_adv add route\r
+      onu 69 pri wan_adv index 1 route mode internet mtu 1500 \r
+      onu 69 pri wan_adv index 1 route ipv4 static ip 10.87.23.149 mask 255.255.255.0 gw 10.87.23.1 dns master 10.88.1.2 slave 10.89.1.2 nat enable \r
+      onu 69 pri dhcp_server 192.168.109.1 255.255.255.0 enable 86400 192.168.109.2 192.168.109.254 pc 10.88.1.2 10.89.1.2 192.168.109.1 \r
+      onu 69 pri wifi_ssid 1 name Apt_811-5G hide disable auth_mode wpa2psk/wpa3psk encrypt_type aes shared_key PASSREMOVED rekey_interval 0\r
+      onu 69 pri wifi_ssid 5 name Apt_811 hide disable auth_mode wpapsk/wpa2psk encrypt_type tkipaes shared_key PASSREMOVED rekey_interval 0\r
+      onu 69 pri username admin_control enable admin PASSREMOVED user_control disable \r
+       --More-- \x00
+  - " ": |-
+      \b\b\b\b\b\b\b\b\b\b          \b\b\b\b\b\b\b\b\b\bonu 69 pri acl https control enable lan enable wan disable port 443\r
+      onu add 70 profile default sn SNREMOVED\r
+      onu 70 desc GPON0/3:70\r
+      onu 70 profile line name line_1\r
+      onu 70 profile srv name srv_2-wifi\r
+      onu 70 pri equid MONUVPRI\r
+      onu 70 pri wan_adv add route\r
+      onu 70 pri wan_adv index 1 route mode internet mtu 1500 \r
+      onu 70 pri wan_adv index 1 route ipv4 static ip 10.87.23.150 mask 255.255.255.0 gw 10.87.23.1 dns master 10.88.1.2 slave 10.89.1.2 nat enable \r
+      onu 70 pri dhcp_server 192.168.109.1 255.255.255.0 enable 86400 192.168.109.2 192.168.109.254 pc 10.88.1.2 10.89.1.2 192.168.109.1 \r
+      onu 70 pri wifi_ssid 1 name Apt_812.2-5G hide disable auth_mode wpa2psk/wpa3psk encrypt_type aes shared_key PASSREMOVED rekey_interval 0\r
+      onu 70 pri wifi_ssid 5 name Apt_812.2 hide disable auth_mode wpapsk/wpa2psk encrypt_type tkipaes shared_key PASSREMOVED rekey_interval 0\r
+      onu 70 pri username admin_control enable admin PASSREMOVED user_control disable \r
+      onu 70 pri acl https control enable lan enable wan disable port 443\r
+      onu add 71 profile default sn SNREMOVED\r
+      onu 71 desc GPON0/3:71\r
+      onu 71 profile line name line_1\r
+      onu 71 profile srv name srv_2-wifi\r
+      onu 71 pri equid MONUVPRI\r
+      onu 71 pri wan_adv add route\r
+      onu 71 pri wan_adv index 1 route mode internet mtu 1500 \r
+      onu 71 pri wan_adv index 1 route ipv4 static ip 10.87.23.151 mask 255.255.255.0 gw 10.87.23.1 dns master 10.88.1.2 slave 10.89.1.2 nat enable \r
+      onu 71 pri dhcp_server 192.168.109.1 255.255.255.0 enable 86400 192.168.109.2 192.168.109.254 pc 10.88.1.2 10.89.1.2 192.168.109.1 \r
+      onu 71 pri wifi_ssid 1 name Apt_901.1-5G hide disable auth_mode wpa2psk/wpa3psk encrypt_type aes shared_key PASSREMOVED rekey_interval 0\r
+      onu 71 pri wifi_ssid 5 name Apt_901.1 hide disable auth_mode wpapsk/wpa2psk encrypt_type tkipaes shared_key PASSREMOVED rekey_interval 0\r
+      onu 71 pri username admin_control enable admin PASSREMOVED user_control disable \r
+      onu 71 pri acl https control enable lan enable wan disable port 443\r
+      onu add 72 profile default sn SNREMOVED\r
+      onu 72 desc GPON0/3:72\r
+      onu 72 tcont 1 name Vlan1925 dba dba_1\r
+      onu 72 gemport 1 tcont 1 gemport_name Vlan1925 portid 222\r
+      onu 72 gemport 1 traffic-limit downstream default\r
+      onu 72 service ser_1 gemport 1 vlan 1925\r
+      onu 72 service-port 1 gemport 1 uservlan 1925 vlan 1925 new_cos 0\r
+      onu 72 portvlan veip 1 mode tag vlan 1925 pri 0\r
+      onu 72 pri equid MONUVPRI\r
+      onu 72 pri wan_adv add route\r
+      onu 72 pri wan_adv index 1 route mode internet mtu 1500 \r
+      onu 72 pri wan_adv index 1 route ipv4 static ip 10.87.23.152 mask 255.255.255.0  --More-- \x00
+  - " ": |-
+      \b\b\b\b\b\b\b\b\b\b          \b\b\b\b\b\b\b\b\b\bgw 10.87.23.1 dns master 10.88.1.2 slave 10.89.1.2 nat enable \r
+      onu 72 pri wan_adv index 1 vlan tag wan_vlan 1925 0 \r
+      onu 72 pri dhcp_server 192.168.109.1 255.255.255.0 enable 86400 192.168.109.2 192.168.109.254 pc 10.88.1.2 10.89.1.2 192.168.109.1 \r
+      onu 72 pri wifi_ssid 1 name Apt_901.2-5G hide disable auth_mode wpa2psk/wpa3psk encrypt_type aes shared_key PASSREMOVED rekey_interval 0\r
+      onu 72 pri wifi_ssid 5 name Apt_901.2 hide disable auth_mode wpapsk/wpa2psk encrypt_type tkipaes shared_key PASSREMOVED rekey_interval 0\r
+      onu 72 pri username admin_control enable admin PASSREMOVED user_control disable \r
+      onu 72 pri firewall level low\r
+      onu 72 pri acl ping control enable lan enable wan enable ipv4_control enable 10.88.200.26 255.255.255.0 ipv6_control disable \r
+      onu 72 pri acl http control enable lan enable wan disable port 80\r
+      onu add 73 profile default sn SNREMOVED\r
+      onu 73 desc GPON0/3:73\r
+      onu 73 profile line name line_1\r
+      onu 73 profile srv name srv_2-wifi\r
+      onu 73 pri equid MONUVPRI\r
+      onu 73 pri wan_adv add route\r
+      onu 73 pri wan_adv index 1 route mode internet mtu 1500 \r
+      onu 73 pri wan_adv index 1 route ipv4 static ip 10.87.23.153 mask 255.255.255.0 gw 10.87.23.1 dns master 10.88.1.2 slave 10.89.1.2 nat enable \r
+      onu 73 pri dhcp_server 192.168.109.1 255.255.255.0 enable 86400 192.168.109.2 192.168.109.254 pc 10.88.1.2 10.89.1.2 192.168.109.1 \r
+      onu 73 pri wifi_ssid 1 name Apt_902-5G hide disable auth_mode wpa2psk/wpa3psk encrypt_type aes shared_key PASSREMOVED rekey_interval 0\r
+      onu 73 pri wifi_ssid 5 name Apt_902 hide disable auth_mode wpapsk/wpa2psk encrypt_type tkipaes shared_key PASSREMOVED rekey_interval 0\r
+      onu 73 pri username admin_control enable admin PASSREMOVED user_control disable \r
+      onu 73 pri acl https control enable lan enable wan disable port 443\r
+      onu add 74 profile default sn SNREMOVED\r
+      onu 74 desc GPON0/3:74\r
+      onu 74 profile line name line_1\r
+      onu 74 profile srv name srv_2-wifi\r
+      onu 74 pri equid MONUVPRI\r
+      onu 74 pri wan_adv add route\r
+      onu 74 pri wan_adv index 1 route mode internet mtu 1500 \r
+      onu 74 pri wan_adv index 1 route ipv4 static ip 10.87.23.154 mask 255.255.255.0 gw 10.87.23.1 dns master 10.88.1.2 slave 10.89.1.2 nat enable \r
+      onu 74 pri dhcp_server 192.168.109.1 255.255.255.0 enable 86400 192.168.109.2 192.168.109.254 pc 10.88.1.2 10.89.1.2 192.168.109.1 \r
+      onu 74 pri wifi_ssid 1 name Apt_903-5G hide disable auth_mode wpa2psk/wpa3psk encrypt_type aes shared_key PASSREMOVED rekey_interval 0\r
+      onu 74 pri wifi_ssid 5 name Apt_903 hide disable auth_mode wpapsk/wpa2psk encrypt_type tkipaes shared_key PASSREMOVED rekey_interval 0\r
+      onu 74 pri username admin_control enable admin PASSREMOVED user_control disable \r
+       --More-- \x00
+  - " ": |-
+      \b\b\b\b\b\b\b\b\b\b          \b\b\b\b\b\b\b\b\b\bonu 74 pri acl https control enable lan enable wan disable port 443\r
+      onu add 75 profile default sn SNREMOVED\r
+      onu 75 desc GPON0/3:75\r
+      onu 75 profile line name line_1\r
+      onu 75 profile srv name srv_2-wifi\r
+      onu 75 pri equid MONUVPRI\r
+      onu 75 pri wan_adv add route\r
+      onu 75 pri wan_adv index 1 route mode internet mtu 1500 \r
+      onu 75 pri wan_adv index 1 route ipv4 static ip 10.87.23.155 mask 255.255.255.0 gw 10.87.23.1 dns master 10.88.1.2 slave 10.89.1.2 nat enable \r
+      onu 75 pri dhcp_server 192.168.109.1 255.255.255.0 enable 86400 192.168.109.2 192.168.109.254 pc 10.88.1.2 10.89.1.2 192.168.109.1 \r
+      onu 75 pri wifi_ssid 1 name Apt_904-5G hide disable auth_mode wpa2psk/wpa3psk encrypt_type aes shared_key PASSREMOVED rekey_interval 0\r
+      onu 75 pri wifi_ssid 5 name Apt_904 hide disable auth_mode wpapsk/wpa2psk encrypt_type tkipaes shared_key PASSREMOVED rekey_interval 0\r
+      onu 75 pri username admin_control enable admin PASSREMOVED user_control disable \r
+      onu 75 pri acl https control enable lan enable wan disable port 443\r
+      onu add 76 profile default sn SNREMOVED\r
+      onu 76 desc GPON0/3:76\r
+      onu 76 profile line name line_1\r
+      onu 76 profile srv name srv_2-wifi\r
+      onu 76 pri equid MONUVPRI\r
+      onu 76 pri wan_adv add route\r
+      onu 76 pri wan_adv index 1 route mode internet mtu 1500 \r
+      onu 76 pri wan_adv index 1 route ipv4 static ip 10.87.23.156 mask 255.255.255.0 gw 10.87.23.1 dns master 10.88.1.2 slave 10.89.1.2 nat enable \r
+      onu 76 pri dhcp_server 192.168.109.1 255.255.255.0 enable 86400 192.168.109.2 192.168.109.254 pc 10.88.1.2 10.89.1.2 192.168.109.1 \r
+      onu 76 pri wifi_ssid 1 name Apt_905-5G hide disable auth_mode wpa2psk/wpa3psk encrypt_type aes shared_key PASSREMOVED rekey_interval 0\r
+      onu 76 pri wifi_ssid 5 name Apt_905 hide disable auth_mode wpapsk/wpa2psk encrypt_type tkipaes shared_key PASSREMOVED rekey_interval 0\r
+      onu 76 pri username admin_control enable admin PASSREMOVED user_control disable \r
+      onu 76 pri acl https control enable lan enable wan disable port 443\r
+      onu add 77 profile default sn SNREMOVED\r
+      onu 77 desc GPON0/3:77\r
+      onu 77 profile line name line_1\r
+      onu 77 profile srv name srv_2-wifi\r
+      onu 77 pri equid MONUVPRI\r
+      onu 77 pri wan_adv add route\r
+      onu 77 pri wan_adv index 1 route mode internet mtu 1500 \r
+      onu 77 pri wan_adv index 1 route ipv4 static ip 10.87.23.157 mask 255.255.255.0 gw 10.87.23.1 dns master 10.88.1.2 slave 10.89.1.2 nat enable \r
+      onu 77 pri dhcp_server 192.168.109.1 255.255.255.0 enable 86400 192.168.109.2 192.168.109.254 pc 10.88.1.2 10.89.1.2 192.168.109.1 \r
+      onu 77 pri wifi_ssid 1 name Apt_906-5G hide disable auth_mode wpa2psk/wpa3psk en --More-- \x00
+  - " ": |-
+      \b\b\b\b\b\b\b\b\b\b          \b\b\b\b\b\b\b\b\b\bcrypt_type aes shared_key PASSREMOVED rekey_interval 0\r
+      onu 77 pri wifi_ssid 5 name Apt_906 hide disable auth_mode wpapsk/wpa2psk encrypt_type tkipaes shared_key PASSREMOVED rekey_interval 0\r
+      onu 77 pri username admin_control enable admin PASSREMOVED user_control disable \r
+      onu 77 pri acl https control enable lan enable wan disable port 443\r
+      onu add 78 profile default sn SNREMOVED\r
+      onu 78 desc GPON0/3:78\r
+      onu 78 profile line name line_1\r
+      onu 78 profile srv name srv_2-wifi\r
+      onu 78 pri equid MONUVPRI\r
+      onu 78 pri wan_adv add route\r
+      onu 78 pri wan_adv index 1 route mode internet mtu 1500 \r
+      onu 78 pri wan_adv index 1 route ipv4 static ip 10.87.23.158 mask 255.255.255.0 gw 10.87.23.1 dns master 10.88.1.2 slave 10.89.1.2 nat enable \r
+      onu 78 pri dhcp_server 192.168.109.1 255.255.255.0 enable 86400 192.168.109.2 192.168.109.254 pc 10.88.1.2 10.89.1.2 192.168.109.1 \r
+      onu 78 pri wifi_ssid 1 name Apt_907-5G hide disable auth_mode wpa2psk/wpa3psk encrypt_type aes shared_key PASSREMOVED rekey_interval 0\r
+      onu 78 pri wifi_ssid 5 name Apt_907 hide disable auth_mode wpapsk/wpa2psk encrypt_type tkipaes shared_key PASSREMOVED rekey_interval 0\r
+      onu 78 pri username admin_control enable admin PASSREMOVED user_control disable \r
+      onu 78 pri acl https control enable lan enable wan disable port 443\r
+      onu add 79 profile default sn SNREMOVED\r
+      onu 79 desc GPON0/3:79\r
+      onu 79 tcont 1 name Vlan1925 dba dba_1\r
+      onu 79 gemport 1 tcont 1 gemport_name Vlan1925 portid 223\r
+      onu 79 gemport 1 traffic-limit downstream default\r
+      onu 79 service ser_1 gemport 1 vlan 1925\r
+      onu 79 service-port 1 gemport 1 uservlan 1925 vlan 1925 new_cos 0\r
+      onu 79 portvlan veip 1 mode tag vlan 1925 pri 0\r
+      onu 79 pri equid MONUVPRI\r
+      onu 79 pri username admin_control enable admin PASSREMOVED user_control disable \r
+      onu 79 pri acl ping control enable lan enable wan enable ipv4_control enable 10.88.200.26 255.255.255.0 ipv6_control disable \r
+      onu add 80 profile default sn SNREMOVED\r
+      onu 80 desc GPON0/3:80\r
+      onu 80 tcont 1 name Vlan1925 dba dba_1\r
+      onu 80 gemport 1 tcont 1 gemport_name Vlan1925 portid 224\r
+      onu 80 gemport 1 traffic-limit downstream default\r
+      onu 80 service ser_1 gemport 1 vlan 1925\r
+      onu 80 service-port 1 gemport 1 uservlan 1925 vlan 1925 new_cos 0\r
+      onu 80 portvlan veip 1 mode tag vlan 1925 pri 0\r
+      onu 80 pri equid MONUVPRI\r
+      onu 80 pri wan_adv add route\r
+      onu 80 pri wan_adv index 1 route mode internet mtu 1500 \r
+      onu 80 pri wan_adv index 1 route ipv4 static ip 10.87.23.160 mask 255.255.255.0  --More-- \x00
+  - " ": |-
+      \b\b\b\b\b\b\b\b\b\b          \b\b\b\b\b\b\b\b\b\bgw 10.87.23.1 dns master 10.88.1.2 slave 10.89.1.2 nat enable \r
+      onu 80 pri wan_adv index 1 vlan tag wan_vlan 1925 0 \r
+      onu 80 pri dhcp_server 192.168.109.1 255.255.255.0 enable 86400 192.168.109.2 192.168.109.254 pc 10.88.1.2 10.89.1.2 192.168.109.1 \r
+      onu 80 pri wifi_ssid 1 name Apt_1012.2-5G hide disable auth_mode wpa2psk/wpa3psk encrypt_type aes shared_key PASSREMOVED rekey_interval 0\r
+      onu 80 pri wifi_ssid 5 name Apt_1012.2 hide disable auth_mode wpapsk/wpa2psk encrypt_type tkipaes shared_key PASSREMOVED rekey_interval 0\r
+      onu 80 pri username admin_control enable admin PASSREMOVED user_control disable \r
+      onu 80 pri firewall level low\r
+      onu 80 pri acl ping control enable lan enable wan enable ipv4_control enable 10.88.200.26 255.255.255.0 ipv6_control disable \r
+      onu 80 pri acl http control enable lan enable wan disable port 80\r
+      onu add 81 profile default sn SNREMOVED\r
+      onu 81 desc GPON0/3:81\r
+      onu 81 tcont 1 name Vlan1925 dba dba_1\r
+      onu 81 gemport 1 tcont 1 gemport_name Vlan1925 portid 225\r
+      onu 81 gemport 1 traffic-limit downstream default\r
+      onu 81 service ser_1 gemport 1 vlan 1925\r
+      onu 81 service-port 1 gemport 1 uservlan 1925 vlan 1925 new_cos 0\r
+      onu 81 portvlan veip 1 mode tag vlan 1925 pri 0\r
+      onu 81 pri equid MONUVPRI\r
+      onu 81 pri wan_adv add route\r
+      onu 81 pri wan_adv index 1 route mode internet mtu 1500 \r
+      onu 81 pri wan_adv index 1 route ipv4 static ip 10.87.23.161 mask 255.255.255.0 gw 10.87.23.1 dns master 10.88.1.2 slave 10.89.1.2 nat enable \r
+      onu 81 pri wan_adv index 1 vlan tag wan_vlan 1925 0 \r
+      onu 81 pri dhcp_server 192.168.109.1 255.255.255.0 enable 86400 192.168.109.2 192.168.109.254 pc 10.88.1.2 10.89.1.2 192.168.109.1 \r
+      onu 81 pri wifi_ssid 1 name Apt_1012.1-5G hide disable auth_mode wpa2psk/wpa3psk encrypt_type aes shared_key PASSREMOVED rekey_interval 0\r
+      onu 81 pri wifi_ssid 5 name Apt_1012.1 hide disable auth_mode wpapsk/wpa2psk encrypt_type tkipaes shared_key PASSREMOVED rekey_interval 0\r
+      onu 81 pri username admin_control enable admin PASSREMOVED user_control disable \r
+      onu 81 pri firewall level low\r
+      onu 81 pri acl ping control enable lan enable wan enable ipv4_control enable 10.88.200.26 255.255.255.0 ipv6_control disable \r
+      onu add 82 profile default sn SNREMOVED\r
+      onu 82 desc GPON0/3:82\r
+      onu 82 tcont 1 name Vlan1925 dba dba_1\r
+      onu 82 gemport 1 tcont 1 gemport_name Vlan1925 portid 226\r
+      onu 82 gemport 1 traffic-limit downstream default\r
+      onu 82 service ser_1 gemport 1 vlan 1925\r
+      onu 82 service-port 1 gemport 1 uservlan 1925 vlan 1925 new_cos 0\r
+      onu 82 portvlan veip 1 mode tag vlan 1925 pri 0\r
+      onu 82 pri equid MONUVPRI\r
+      onu 82 pri wan_adv add route\r
+       --More-- \x00
+  - " ": |-
+      \b\b\b\b\b\b\b\b\b\b          \b\b\b\b\b\b\b\b\b\bonu 82 pri wan_adv index 1 route mode internet mtu 1500 \r
+      onu 82 pri wan_adv index 1 route ipv4 static ip 10.87.23.162 mask 255.255.255.0 gw 10.87.23.1 dns master 10.88.1.2 slave 10.89.1.2 nat enable \r
+      onu 82 pri wan_adv index 1 vlan tag wan_vlan 1925 0 \r
+      onu 82 pri dhcp_server 192.168.109.1 255.255.255.0 enable 86400 192.168.109.2 192.168.109.254 pc 10.88.1.2 10.89.1.2 192.168.109.1 \r
+      onu 82 pri wifi_ssid 1 name Apt_1008-5G hide disable auth_mode wpa2psk/wpa3psk encrypt_type aes shared_key PASSREMOVED rekey_interval 0\r
+      onu 82 pri wifi_ssid 5 name Apt_1008 hide disable auth_mode wpapsk/wpa2psk encrypt_type tkipaes shared_key PASSREMOVED rekey_interval 0\r
+      onu 82 pri username admin_control enable admin PASSREMOVED user_control disable \r
+      onu 82 pri firewall level low\r
+      onu 82 pri acl ping control enable lan enable wan enable ipv4_control enable 10.88.200.26 255.255.255.0 ipv6_control disable \r
+      onu 82 pri acl http control enable lan enable wan disable port 80\r
+      onu add 83 profile default sn SNREMOVED\r
+      onu 83 desc GPON0/3:83\r
+      onu 83 tcont 1 name Vlan1925 dba dba_1\r
+      onu 83 gemport 1 tcont 1 gemport_name Vlan1925 portid 227\r
+      onu 83 gemport 1 traffic-limit downstream default\r
+      onu 83 service ser_1 gemport 1 vlan 1925\r
+      onu 83 service-port 1 gemport 1 uservlan 1925 vlan 1925 new_cos 0\r
+      onu 83 portvlan veip 1 mode tag vlan 1925 pri 0\r
+      onu 83 pri equid MONUVPRI\r
+      onu 83 pri wan_adv add route\r
+      onu 83 pri wan_adv index 1 route mode internet mtu 1500 \r
+      onu 83 pri wan_adv index 1 route ipv4 static ip 10.87.23.163 mask 255.255.255.0 gw 10.87.23.1 dns master 10.88.1.2 slave 10.89.1.2 nat enable \r
+      onu 83 pri wan_adv index 1 vlan tag wan_vlan 1925 0 \r
+      onu 83 pri dhcp_server 192.168.109.1 255.255.255.0 enable 86400 192.168.109.2 192.168.109.254 pc 10.88.1.2 10.89.1.2 192.168.109.1 \r
+      onu 83 pri wifi_ssid 1 name Apt_908-5G hide disable auth_mode wpapsk/wpa2psk encrypt_type tkipaes shared_key PASSREMOVED rekey_interval 0\r
+      onu 83 pri wifi_ssid 5 name Apt_908 hide disable auth_mode wpapsk/wpa2psk encrypt_type tkipaes shared_key PASSREMOVED rekey_interval 0\r
+      onu 83 pri username admin_control enable admin PASSREMOVED user_control disable \r
+      onu 83 pri firewall level low\r
+      onu 83 pri acl ping control enable lan enable wan enable ipv4_control enable 10.88.200.26 255.255.255.0 ipv6_control disable \r
+      onu 83 pri acl http control enable lan enable wan disable port 80\r
+      onu add 84 profile default sn SNREMOVED\r
+      onu 84 desc GPON0/3:84\r
+      onu 84 tcont 1 name Vlan1925 dba dba_1\r
+      onu 84 gemport 1 tcont 1 gemport_name Vlan1925 portid 228\r
+      onu 84 gemport 1 traffic-limit downstream default\r
+      onu 84 service ser_1 gemport 1 vlan 1925\r
+      onu 84 service-port 1 gemport 1 uservlan 1925 vlan 1925 new_cos 0\r
+       --More-- \x00
+  - " ": |-
+      \b\b\b\b\b\b\b\b\b\b          \b\b\b\b\b\b\b\b\b\bonu 84 portvlan veip 1 mode tag vlan 1925 pri 0\r
+      onu 84 pri equid MONUVPRI\r
+      onu 84 pri wan_adv add route\r
+      onu 84 pri wan_adv index 1 route mode internet mtu 1500 \r
+      onu 84 pri wan_adv index 1 route ipv4 static ip 10.87.23.164 mask 255.255.255.0 gw 10.87.23.1 dns master 10.88.1.2 slave 10.89.1.2 nat enable \r
+      onu 84 pri wan_adv index 1 vlan tag wan_vlan 1925 0 \r
+      onu 84 pri dhcp_server 192.168.109.1 255.255.255.0 enable 86400 192.168.109.2 192.168.109.254 pc 10.88.1.2 10.89.1.2 192.168.109.1 \r
+      onu 84 pri wifi_ssid 1 name Apt_909-5G hide disable auth_mode wpa2psk/wpa3psk encrypt_type aes shared_key PASSREMOVED rekey_interval 0\r
+      onu 84 pri wifi_ssid 5 name Apt_909 hide disable auth_mode wpapsk/wpa2psk encrypt_type tkipaes shared_key PASSREMOVED rekey_interval 0\r
+      onu 84 pri username admin_control enable admin PASSREMOVED user_control disable \r
+      onu 84 pri firewall level low\r
+      onu 84 pri acl ping control enable lan enable wan enable ipv4_control enable 10.88.200.26 255.255.255.0 ipv6_control disable \r
+      onu 84 pri acl http control enable lan enable wan disable port 80\r
+      onu add 85 profile default sn SNREMOVED\r
+      onu 85 desc GPON0/3:85\r
+      onu 85 tcont 1 name Vlan1925 dba dba_1\r
+      onu 85 gemport 1 tcont 1 gemport_name Vlan1925 portid 229\r
+      onu 85 gemport 1 traffic-limit downstream default\r
+      onu 85 service ser_1 gemport 1 vlan 1925\r
+      onu 85 service-port 1 gemport 1 uservlan 1925 vlan 1925 new_cos 0\r
+      onu 85 portvlan veip 1 mode tag vlan 1925 pri 0\r
+      onu 85 pri equid MONUVPRI\r
+      onu 85 pri wan_adv add route\r
+      onu 85 pri wan_adv index 1 route mode internet mtu 1500 \r
+      onu 85 pri wan_adv index 1 route ipv4 static ip 10.87.23.165 mask 255.255.255.0 gw 10.87.23.1 dns master 10.88.1.2 slave 10.89.1.2 nat enable \r
+      onu 85 pri wan_adv index 1 vlan tag wan_vlan 1925 0 \r
+      onu 85 pri dhcp_server 192.168.109.1 255.255.255.0 enable 86400 192.168.109.2 192.168.109.254 pc 10.88.1.2 10.89.1.2 192.168.109.1 \r
+      onu 85 pri wifi_ssid 1 name Apt_911-5G hide disable auth_mode wpa2psk/wpa3psk encrypt_type aes shared_key PASSREMOVED rekey_interval 0\r
+      onu 85 pri wifi_ssid 5 name Apt_911 hide disable auth_mode wpapsk/wpa2psk encrypt_type tkipaes shared_key PASSREMOVED rekey_interval 0\r
+      onu 85 pri username admin_control enable admin PASSREMOVED user_control disable \r
+      onu 85 pri firewall level low\r
+      onu 85 pri acl ping control enable lan enable wan enable ipv4_control enable 10.88.200.26 255.255.255.0 ipv6_control disable \r
+      onu 85 pri acl http control enable lan enable wan disable port 80\r
+      onu add 86 profile default sn SNREMOVED\r
+      onu 86 desc GPON0/3:86\r
+      onu 86 profile line name line_1\r
+      onu 86 profile srv name srv_2-wifi\r
+       --More-- \x00
+  - " ": |-
+      \b\b\b\b\b\b\b\b\b\b          \b\b\b\b\b\b\b\b\b\bonu 86 pri equid MONUVPRI\r
+      onu 86 pri wan_adv add route\r
+      onu 86 pri wan_adv index 1 route mode internet mtu 1500 \r
+      onu 86 pri wan_adv index 1 route ipv4 static ip 10.87.23.166 mask 255.255.255.0 gw 10.87.23.1 dns master 10.88.1.2 slave 10.89.1.2 nat enable \r
+      onu 86 pri wan_adv index 1 vlan tag wan_vlan 1925 0 \r
+      onu 86 pri dhcp_server 192.168.109.1 255.255.255.0 enable 86400 192.168.109.2 192.168.109.254 pc 10.88.1.2 10.89.1.2 192.168.109.1 \r
+      onu 86 pri wifi_ssid 1 name Apt_1007-5G hide disable auth_mode wpa2psk/wpa3psk encrypt_type aes shared_key PASSREMOVED rekey_interval 0\r
+      onu 86 pri wifi_ssid 5 name Apt_1007 hide disable auth_mode wpapsk/wpa2psk encrypt_type tkipaes shared_key PASSREMOVED rekey_interval 0\r
+      onu 86 pri username admin_control enable admin PASSREMOVED user_control disable \r
+      onu 86 pri firewall level low\r
+      onu 86 pri acl ping control enable lan enable wan enable ipv4_control enable 10.88.200.26 255.255.255.0 ipv6_control disable \r
+      onu 86 pri acl http control enable lan enable wan disable port 80\r
+      onu add 87 profile default sn SNREMOVED\r
+      onu 87 desc GPON0/3:87\r
+      onu 87 profile line name line_1\r
+      onu 87 profile srv name srv_2-wifi\r
+      onu 87 pri equid MONUVPRI\r
+      onu 87 pri wan_adv add route\r
+      onu 87 pri wan_adv index 1 route mode internet mtu 1500 \r
+      onu 87 pri wan_adv index 1 route ipv4 static ip 10.87.23.167 mask 255.255.255.0 gw 10.87.23.1 dns master 10.88.1.2 slave 10.89.1.2 nat enable \r
+      onu 87 pri wan_adv index 1 vlan tag wan_vlan 1925 0 \r
+      onu 87 pri dhcp_server 192.168.109.1 255.255.255.0 enable 86400 192.168.109.2 192.168.109.254 pc 10.88.1.2 10.89.1.2 192.168.109.1 \r
+      onu 87 pri wifi_ssid 1 name Apt_1005-5G hide disable auth_mode wpa2psk/wpa3psk encrypt_type aes shared_key PASSREMOVED rekey_interval 0\r
+      onu 87 pri wifi_ssid 5 name Apt_1005 hide disable auth_mode wpapsk/wpa2psk encrypt_type tkipaes shared_key PASSREMOVED rekey_interval 0\r
+      onu 87 pri username admin_control enable admin PASSREMOVED user_control disable \r
+      onu 87 pri firewall level low\r
+      onu 87 pri acl ping control enable lan enable wan enable ipv4_control enable 10.88.200.26 255.255.255.0 ipv6_control disable \r
+      onu 87 pri acl http control enable lan enable wan disable port 80\r
+      onu add 88 profile default sn SNREMOVED\r
+      onu 88 desc GPON0/3:88\r
+      onu 88 profile line name line_1\r
+      onu 88 profile srv name srv_2-wifi\r
+      onu 88 pri equid MONUVPRI\r
+      onu 88 pri wan_adv add route\r
+      onu 88 pri wan_adv index 1 route mode internet mtu 1500 \r
+      onu 88 pri wan_adv index 1 route ipv4 static ip 10.87.23.168 mask 255.255.255.0 gw 10.87.23.1 dns master 10.88.1.2 slave 10.89.1.2 nat enable \r
+       --More-- \x00
+  - " ": |-
+      \b\b\b\b\b\b\b\b\b\b          \b\b\b\b\b\b\b\b\b\bonu 88 pri wan_adv index 1 vlan tag wan_vlan 1925 0 \r
+      onu 88 pri dhcp_server 192.168.109.1 255.255.255.0 enable 86400 192.168.109.2 192.168.109.254 pc 10.88.1.2 10.89.1.2 192.168.109.1 \r
+      onu 88 pri wifi_ssid 1 name Apt_1001.2-5G hide disable auth_mode wpa2psk/wpa3psk encrypt_type aes shared_key PASSREMOVED rekey_interval 0\r
+      onu 88 pri wifi_ssid 5 name Apt_1001.2 hide disable auth_mode wpapsk/wpa2psk encrypt_type tkipaes shared_key PASSREMOVED rekey_interval 0\r
+      onu 88 pri username admin_control enable admin PASSREMOVED user_control disable \r
+      onu 88 pri firewall level low\r
+      onu 88 pri acl ping control enable lan enable wan enable ipv4_control enable 10.88.200.26 255.255.255.0 ipv6_control disable \r
+      onu 88 pri acl http control enable lan enable wan disable port 80\r
+      onu add 89 profile default sn SNREMOVED\r
+      onu 89 desc GPON0/3:89\r
+      onu 89 profile line name line_1\r
+      onu 89 profile srv name srv_2-wifi\r
+      onu 89 pri equid MONUVPRI\r
+      onu 89 pri wan_adv add route\r
+      onu 89 pri wan_adv index 1 route mode internet mtu 1500 \r
+      onu 89 pri wan_adv index 1 route ipv4 static ip 10.87.23.169 mask 255.255.255.0 gw 10.87.23.1 dns master 10.88.1.2 slave 10.89.1.2 nat enable \r
+      onu 89 pri wan_adv index 1 vlan tag wan_vlan 1925 0 \r
+      onu 89 pri dhcp_server 192.168.109.1 255.255.255.0 enable 86400 192.168.109.2 192.168.109.254 pc 10.88.1.2 10.89.1.2 192.168.109.1 \r
+      onu 89 pri wifi_ssid 1 name Apt_1009-5G hide disable auth_mode wpa2psk/wpa3psk encrypt_type aes shared_key WTCA4A69D87 rekey_interval 0\r
+      onu 89 pri wifi_ssid 5 name Apt_1009 hide disable auth_mode wpapsk/wpa2psk encrypt_type tkipaes shared_key WTCA4A69D87 rekey_interval 0\r
+      onu 89 pri username admin_control enable admin PASSREMOVED user_control disable \r
+      onu 89 pri firewall level low\r
+      onu 89 pri acl ping control enable lan enable wan enable ipv4_control enable 10.88.200.26 255.255.255.0 ipv6_control disable \r
+      onu 89 pri acl http control enable lan enable wan disable port 80\r
+      onu add 90 profile default sn SNREMOVED\r
+      onu 90 desc GPON0/3:90\r
+      onu 90 profile line name line_1\r
+      onu 90 profile srv name srv_2-wifi\r
+      onu 90 pri equid MONUVPRI\r
+      onu 90 pri wan_adv add route\r
+      onu 90 pri wan_adv index 1 route mode internet mtu 1500 \r
+      onu 90 pri wan_adv index 1 route ipv4 static ip 10.87.23.170 mask 255.255.255.0 gw 10.87.23.1 dns master 10.88.1.2 slave 10.89.1.2 nat enable \r
+      onu 90 pri wan_adv index 1 vlan tag wan_vlan 1925 0 \r
+      onu 90 pri dhcp_server 192.168.109.1 255.255.255.0 enable 86400 192.168.109.2 192.168.109.254 pc 10.88.1.2 10.89.1.2 192.168.109.1 \r
+      onu 90 pri wifi_ssid 1 name Apt_1203-5G hide disable auth_mode wpa2psk/wpa3psk encrypt_type aes shared_key PASSREMOVED rekey_interval 0\r
+       --More-- \x00
+  - " ": |-
+      \b\b\b\b\b\b\b\b\b\b          \b\b\b\b\b\b\b\b\b\bonu 90 pri wifi_ssid 5 name Apt_1203 hide disable auth_mode wpapsk/wpa2psk encrypt_type tkipaes shared_key PASSREMOVED rekey_interval 0\r
+      onu 90 pri username admin_control enable admin PASSREMOVED user_control disable \r
+      onu 90 pri firewall level low\r
+      onu 90 pri acl ping control enable lan enable wan enable ipv4_control enable 10.88.200.26 255.255.255.0 ipv6_control disable \r
+      onu 90 pri acl http control enable lan enable wan disable port 80\r
+      onu add 91 profile default sn SNREMOVED\r
+      onu 91 desc GPON0/3:91\r
+      onu 91 profile line name line_1\r
+      onu 91 profile srv name srv_2-wifi\r
+      onu 91 pri equid MONUVPRI\r
+      onu 91 pri wan_adv add route\r
+      onu 91 pri wan_adv index 1 route mode internet mtu 1500 \r
+      onu 91 pri wan_adv index 1 route ipv4 static ip 10.87.23.171 mask 255.255.255.0 gw 10.87.23.1 dns master 10.88.1.2 slave 10.89.1.2 nat enable \r
+      onu 91 pri wan_adv index 1 vlan tag wan_vlan 1925 0 \r
+      onu 91 pri dhcp_server 192.168.109.1 255.255.255.0 enable 86400 192.168.109.2 192.168.109.254 pc 10.88.1.2 10.89.1.2 192.168.109.1 \r
+      onu 91 pri wifi_ssid 1 name Apt_1201-5G hide disable auth_mode wpa2psk/wpa3psk encrypt_type aes shared_key HWCA4A69977 rekey_interval 0\r
+      onu 91 pri wifi_ssid 5 name Apt_1201 hide disable auth_mode wpapsk/wpa2psk encrypt_type tkipaes shared_key HWCA4A69977 rekey_interval 0\r
+      onu 91 pri username admin_control enable admin PASSREMOVED user_control disable \r
+      onu 91 pri firewall level low\r
+      onu 91 pri acl ping control enable lan enable wan enable ipv4_control enable 10.88.200.26 255.255.255.0 ipv6_control disable \r
+      onu 91 pri acl http control enable lan enable wan disable port 80\r
+      onu add 92 profile default sn SNREMOVED\r
+      onu 92 desc GPON0/3:92\r
+      onu 92 profile line name line_1\r
+      onu 92 profile srv name srv_2-wifi\r
+      onu 92 pri equid MONUVPRI\r
+      onu 92 pri wan_adv add route\r
+      onu 92 pri wan_adv index 1 route mode internet mtu 1500 \r
+      onu 92 pri wan_adv index 1 route ipv4 static ip 10.87.23.171 mask 255.255.255.0 gw 10.87.23.1 dns master 10.88.1.2 slave 10.89.1.2 nat enable \r
+      onu 92 pri wan_adv index 1 vlan tag wan_vlan 1925 0 \r
+      onu 92 pri dhcp_server 192.168.109.1 255.255.255.0 enable 86400 192.168.109.2 192.168.109.254 pc 10.88.1.2 10.89.1.2 192.168.109.1 \r
+      onu 92 pri wifi_ssid 1 name Apt_1202-5G hide disable auth_mode wpa2psk/wpa3psk encrypt_type aes shared_key PASSREMOVED rekey_interval 0\r
+      onu 92 pri wifi_ssid 5 name Apt_1202 hide disable auth_mode wpapsk/wpa2psk encrypt_type tkipaes shared_key PASSREMOVED rekey_interval 0\r
+      onu 92 pri username admin_control enable admin PASSREMOVED user_control disable \r
+      onu 92 pri firewall level low\r
+       --More-- \x00
+  - " ": |-
+      \b\b\b\b\b\b\b\b\b\b          \b\b\b\b\b\b\b\b\b\bonu 92 pri acl ping control enable lan enable wan enable ipv4_control enable 10.88.200.26 255.255.255.0 ipv6_control disable \r
+      onu 92 pri acl http control enable lan enable wan disable port 80\r
+      onu add 93 profile default sn SNREMOVED\r
+      onu 93 desc GPON0/3:93\r
+      onu 93 profile line name line_1\r
+      onu 93 profile srv name srv_2-wifi\r
+      onu 93 pri equid MONUVPRI\r
+      onu 93 pri wan_adv add route\r
+      onu 93 pri wan_adv index 1 route mode internet mtu 1500 \r
+      onu 93 pri wan_adv index 1 route ipv4 static ip 10.87.23.177 mask 255.255.255.0 gw 10.87.23.1 dns master 10.88.1.2 slave 10.89.1.2 nat enable \r
+      onu 93 pri wan_adv index 1 vlan tag wan_vlan 1925 0 \r
+      onu 93 pri dhcp_server 192.168.109.1 255.255.255.0 enable 86400 192.168.109.2 192.168.109.254 pc 10.88.1.2 10.89.1.2 192.168.109.1 \r
+      onu 93 pri wifi_ssid 1 name Apt_1001.1-5G hide disable auth_mode wpa2psk/wpa3psk encrypt_type aes shared_key PASSREMOVED rekey_interval 0\r
+      onu 93 pri wifi_ssid 5 name Apt_1001.2 hide disable auth_mode wpapsk/wpa2psk encrypt_type tkipaes shared_key PASSREMOVED rekey_interval 0\r
+      onu 93 pri username admin_control enable admin PASSREMOVED user_control disable \r
+      onu 93 pri firewall level low\r
+      onu 93 pri acl ping control enable lan enable wan enable ipv4_control enable 10.88.200.26 255.255.255.0 ipv6_control disable \r
+      onu 93 pri acl http control enable lan enable wan disable port 80\r
+      onu add 94 profile default sn SNREMOVED\r
+      onu 94 desc GPON0/3:94\r
+      onu 94 profile line name line_1\r
+      onu 94 profile srv name srv_2-wifi\r
+      onu 94 pri equid MONUVPRI\r
+      onu 94 pri wan_adv add route\r
+      onu 94 pri wan_adv index 1 route mode internet mtu 1500 \r
+      onu 94 pri wan_adv index 1 route ipv4 static ip 10.87.23.178 mask 255.255.255.0 gw 10.87.23.1 dns master 10.88.1.2 slave 10.89.1.2 nat enable \r
+      onu 94 pri wan_adv index 1 vlan tag wan_vlan 1925 0 \r
+      onu 94 pri dhcp_server 192.168.109.1 255.255.255.0 enable 86400 192.168.109.2 192.168.109.254 pc 10.88.1.2 10.89.1.2 192.168.109.1 \r
+      onu 94 pri wifi_ssid 1 name Apt_1002-5G hide disable auth_mode wpa2psk/wpa3psk encrypt_type aes shared_key PASSREMOVED rekey_interval 0\r
+      onu 94 pri wifi_ssid 5 name Apt_1002 hide disable auth_mode wpapsk/wpa2psk encrypt_type tkipaes shared_key PASSREMOVED rekey_interval 0\r
+      onu 94 pri username admin_control enable admin PASSREMOVED user_control disable \r
+      onu 94 pri firewall level low\r
+      onu 94 pri acl ping control enable lan enable wan enable ipv4_control enable 10.88.200.26 255.255.255.0 ipv6_control disable \r
+      onu 94 pri acl http control enable lan enable wan disable port 80\r
+      onu add 95 profile default sn SNREMOVED\r
+      onu 95 desc GPON0/3:95\r
+       --More-- \x00
+  - " ": |-
+      \b\b\b\b\b\b\b\b\b\b          \b\b\b\b\b\b\b\b\b\bonu 95 profile line name line_1\r
+      onu 95 profile srv name srv_2-wifi\r
+      onu 95 pri equid MONUVPRI\r
+      onu 95 pri wan_adv add route\r
+      onu 95 pri wan_adv index 1 route mode internet mtu 1500 \r
+      onu 95 pri wan_adv index 1 route ipv4 static ip 10.87.23.179 mask 255.255.255.0 gw 10.87.23.1 dns master 10.88.1.2 slave 10.89.1.2 nat enable \r
+      onu 95 pri wan_adv index 1 vlan tag wan_vlan 1925 0 \r
+      onu 95 pri dhcp_server 192.168.109.1 255.255.255.0 enable 86400 192.168.109.2 192.168.109.254 pc 10.88.1.2 10.89.1.2 192.168.109.1 \r
+      onu 95 pri wifi_ssid 1 name Apt_1010-5G hide disable auth_mode wpa2psk/wpa3psk encrypt_type aes shared_key PASSREMOVED rekey_interval 0\r
+      onu 95 pri wifi_ssid 5 name Apt_1010 hide disable auth_mode wpapsk/wpa2psk encrypt_type tkipaes shared_key PASSREMOVED rekey_interval 0\r
+      onu 95 pri username admin_control enable admin PASSREMOVED user_control disable \r
+      onu 95 pri firewall level low\r
+      onu 95 pri acl ping control enable lan enable wan enable ipv4_control enable 10.88.200.26 255.255.255.0 ipv6_control disable \r
+      onu 95 pri acl http control enable lan enable wan disable port 80\r
+      onu add 96 profile default sn SNREMOVED\r
+      onu 96 desc GPON0/3:96\r
+      onu 96 profile line name line_1\r
+      onu 96 profile srv name srv_2-wifi\r
+      onu 96 pri equid MONUVPRI\r
+      onu 96 pri wan_adv add route\r
+      onu 96 pri wan_adv index 1 route mode internet mtu 1500 \r
+      onu 96 pri wan_adv index 1 route ipv4 static ip 10.87.23.180 mask 255.255.255.0 gw 10.87.23.1 dns master 10.88.1.2 slave 10.89.1.2 nat enable \r
+      onu 96 pri wan_adv index 1 vlan tag wan_vlan 1925 0 \r
+      onu 96 pri dhcp_server 192.168.109.1 255.255.255.0 enable 86400 192.168.109.2 192.168.109.254 pc 10.88.1.2 10.89.1.2 192.168.109.1 \r
+      onu 96 pri wifi_ssid 1 name Apt_1103-5G hide disable auth_mode wpa2psk/wpa3psk encrypt_type aes shared_key PASSREMOVED rekey_interval 0\r
+      onu 96 pri wifi_ssid 5 name Apt_1103 hide disable auth_mode wpapsk/wpa2psk encrypt_type tkipaes shared_key PASSREMOVED rekey_interval 0\r
+      onu 96 pri username admin_control enable admin PASSREMOVED user_control disable \r
+      onu 96 pri firewall level low\r
+      onu 96 pri acl ping control enable lan enable wan enable ipv4_control enable 10.88.200.26 255.255.255.0 ipv6_control disable \r
+      onu 96 pri acl http control enable lan enable wan disable port 80\r
+      onu add 97 profile default sn SNREMOVED\r
+      onu 97 desc GPON0/3:97\r
+      onu 97 profile line name line_1\r
+      onu 97 profile srv name srv_2-wifi\r
+      onu 97 pri equid MONUVPRI\r
+      onu 97 pri wan_adv add route\r
+      onu 97 pri wan_adv index 1 route mode internet mtu 1500 \r
+       --More-- \x00
+  - " ": |-
+      \b\b\b\b\b\b\b\b\b\b          \b\b\b\b\b\b\b\b\b\bonu 97 pri wan_adv index 1 route ipv4 static ip 10.87.23.181 mask 255.255.255.0 gw 10.87.23.1 dns master 10.88.1.2 slave 10.89.1.2 nat enable \r
+      onu 97 pri wan_adv index 1 vlan tag wan_vlan 1925 0 \r
+      onu 97 pri dhcp_server 192.168.109.1 255.255.255.0 enable 86400 192.168.109.2 192.168.109.254 pc 10.88.1.2 10.89.1.2 192.168.109.1 \r
+      onu 97 pri wifi_ssid 1 name Apt_1104-5G hide disable auth_mode wpa2psk/wpa3psk encrypt_type aes shared_key PASSREMOVED rekey_interval 0\r
+      onu 97 pri wifi_ssid 5 name Apt_1104 hide disable auth_mode wpapsk/wpa2psk encrypt_type tkipaes shared_key PASSREMOVED rekey_interval 0\r
+      onu 97 pri username admin_control enable admin PASSREMOVED user_control disable \r
+      onu 97 pri firewall level low\r
+      onu 97 pri acl ping control enable lan enable wan enable ipv4_control enable 10.88.200.26 255.255.255.0 ipv6_control disable \r
+      onu 97 pri acl http control enable lan enable wan disable port 80\r
+      onu add 98 profile default sn SNREMOVED\r
+      onu 98 desc GPON0/3:98\r
+      onu 98 profile line name line_1\r
+      onu 98 profile srv name srv_2-wifi\r
+      onu 98 pri equid MONUVPRI\r
+      onu 98 pri wan_adv add route\r
+      onu 98 pri wan_adv index 1 route mode internet mtu 1500 \r
+      onu 98 pri wan_adv index 1 route ipv4 static ip 10.87.23.182 mask 255.255.255.0 gw 10.87.23.1 dns master 10.88.1.2 slave 10.89.1.2 nat enable \r
+      onu 98 pri wan_adv index 1 vlan tag wan_vlan 1925 0 \r
+      onu 98 pri dhcp_server 192.168.109.1 255.255.255.0 enable 86400 192.168.109.2 192.168.109.254 pc 10.88.1.2 10.89.1.2 192.168.109.1 \r
+      onu 98 pri wifi_ssid 1 name Apt_1105-5G hide disable auth_mode wpa2psk/wpa3psk encrypt_type aes shared_key PASSREMOVED rekey_interval 0\r
+      onu 98 pri wifi_ssid 5 name Apt_1105 hide disable auth_mode wpapsk/wpa2psk encrypt_type tkipaes shared_key PASSREMOVED rekey_interval 0\r
+      onu 98 pri username admin_control enable admin PASSREMOVED user_control disable \r
+      onu 98 pri firewall level low\r
+      onu 98 pri acl ping control enable lan enable wan enable ipv4_control enable 10.88.200.26 255.255.255.0 ipv6_control disable \r
+      onu 98 pri acl http control enable lan enable wan disable port 80\r
+      onu add 99 profile default sn SNREMOVED\r
+      onu 99 desc GPON0/3:99\r
+      onu 99 profile line name line_1\r
+      onu 99 profile srv name srv_2-wifi\r
+      onu 99 pri equid MONUVPRI\r
+      onu 99 pri wan_adv add route\r
+      onu 99 pri wan_adv index 1 route mode internet mtu 1500 \r
+      onu 99 pri wan_adv index 1 route ipv4 static ip 10.87.23.183 mask 255.255.255.0 gw 10.87.23.1 dns master 10.88.1.2 slave 10.89.1.2 nat enable \r
+      onu 99 pri wan_adv index 1 vlan tag wan_vlan 1925 0 \r
+      onu 99 pri dhcp_server 192.168.109.1 255.255.255.0 enable 86400 192.168.109.2 192.168.109.254 pc 10.88.1.2 10.89.1.2 192.168.109.1 \r
+       --More-- \x00
+  - " ": |-
+      \b\b\b\b\b\b\b\b\b\b          \b\b\b\b\b\b\b\b\b\bonu 99 pri wifi_ssid 1 name Apt_1106-5G hide disable auth_mode wpa2psk/wpa3psk encrypt_type aes shared_key PASSREMOVED rekey_interval 0\r
+      onu 99 pri wifi_ssid 5 name Apt_1106 hide disable auth_mode wpapsk/wpa2psk encrypt_type tkipaes shared_key PASSREMOVED rekey_interval 0\r
+      onu 99 pri username admin_control enable admin PASSREMOVED user_control disable \r
+      onu 99 pri firewall level low\r
+      onu 99 pri acl ping control enable lan enable wan enable ipv4_control enable 10.88.200.26 255.255.255.0 ipv6_control disable \r
+      onu 99 pri acl http control enable lan enable wan disable port 80\r
+      onu add 100 profile default sn SNREMOVED\r
+      onu 100 desc GPON0/3:100\r
+      onu 100 profile line name line_1\r
+      onu 100 profile srv name srv_2-wifi\r
+      onu 100 pri equid MONUVPRI\r
+      onu 100 pri wan_adv add route\r
+      onu 100 pri wan_adv index 1 route mode internet mtu 1500 \r
+      onu 100 pri wan_adv index 1 route ipv4 static ip 10.87.23.184 mask 255.255.255.0 gw 10.87.23.1 dns master 10.88.1.2 slave 10.89.1.2 nat enable \r
+      onu 100 pri wan_adv index 1 vlan tag wan_vlan 1925 0 \r
+      onu 100 pri dhcp_server 192.168.109.1 255.255.255.0 enable 86400 192.168.109.2 192.168.109.254 pc 10.88.1.2 10.89.1.2 192.168.109.1 \r
+      onu 100 pri wifi_ssid 1 name Apt_1109-5G hide disable auth_mode wpa2psk/wpa3psk encrypt_type aes shared_key PASSREMOVED rekey_interval 0\r
+      onu 100 pri wifi_ssid 5 name Apt_1109 hide disable auth_mode wpapsk/wpa2psk encrypt_type tkipaes shared_key PASSREMOVED rekey_interval 0\r
+      onu 100 pri username admin_control enable admin PASSREMOVED user_control disable \r
+      onu 100 pri firewall level low\r
+      onu 100 pri acl ping control enable lan enable wan enable ipv4_control enable 10.88.200.26 255.255.255.0 ipv6_control disable \r
+      onu 100 pri acl http control enable lan enable wan disable port 80\r
+      onu add 101 profile default sn SNREMOVED\r
+      onu 101 desc GPON0/3:101\r
+      onu 101 profile line name line_1\r
+      onu 101 profile srv name srv_2-wifi\r
+      onu 101 pri equid MONUVPRI\r
+      onu 101 pri wan_adv add route\r
+      onu 101 pri wan_adv index 1 route mode internet mtu 1500 \r
+      onu 101 pri wan_adv index 1 route ipv4 static ip 10.87.23.185 mask 255.255.255.0 gw 10.87.23.1 dns master 10.88.1.2 slave 10.89.1.2 nat enable \r
+      onu 101 pri wan_adv index 1 vlan tag wan_vlan 1925 0 \r
+      onu 101 pri dhcp_server 192.168.109.1 255.255.255.0 enable 86400 192.168.109.2 192.168.109.254 pc 10.88.1.2 10.89.1.2 192.168.109.1 \r
+      onu 101 pri wifi_ssid 1 name Apt_1111-5G hide disable auth_mode wpa2psk/wpa3psk encrypt_type aes shared_key PASSREMOVED rekey_interval 0\r
+      onu 101 pri wifi_ssid 5 name Apt_1111 hide disable auth_mode wpapsk/wpa2psk encrypt_type tkipaes shared_key PASSREMOVED rekey_interval 0\r
+      onu 101 pri username admin_control enable admin PASSREMOVED user_control disable --More-- \x00
+  - " ": |-
+      \b\b\b\b\b\b\b\b\b\b          \b\b\b\b\b\b\b\b\b\b \r
+      onu 101 pri firewall level low\r
+      onu 101 pri acl ping control enable lan enable wan enable ipv4_control enable 10.88.200.26 255.255.255.0 ipv6_control disable \r
+      onu 101 pri acl http control enable lan enable wan disable port 80\r
+      onu add 102 profile default sn SNREMOVED\r
+      onu 102 desc GPON0/3:102\r
+      onu 102 profile line name line_1\r
+      onu 102 profile srv name srv_2-wifi\r
+      onu 102 pri equid MONUVPRI\r
+      onu 102 pri wan_adv add route\r
+      onu 102 pri wan_adv index 1 route mode internet mtu 1500 \r
+      onu 102 pri wan_adv index 1 route ipv4 static ip 10.87.23.186 mask 255.255.255.0 gw 10.87.23.1 dns master 10.88.1.2 slave 10.89.1.2 nat enable \r
+      onu 102 pri wan_adv index 1 vlan tag wan_vlan 1925 0 \r
+      onu 102 pri dhcp_server 192.168.109.1 255.255.255.0 enable 86400 192.168.109.2 192.168.109.254 pc 10.88.1.2 10.89.1.2 192.168.109.1 \r
+      onu 102 pri wifi_ssid 1 name Apt_1006-5G hide disable auth_mode wpa2psk/wpa3psk encrypt_type aes shared_key PASSREMOVED rekey_interval 0\r
+      onu 102 pri wifi_ssid 5 name Apt_1006 hide disable auth_mode wpapsk/wpa2psk encrypt_type tkipaes shared_key PASSREMOVED rekey_interval 0\r
+      onu 102 pri username admin_control enable admin PASSREMOVED user_control disable \r
+      onu 102 pri firewall level low\r
+      onu 102 pri acl ping control enable lan enable wan enable ipv4_control enable 10.88.200.26 255.255.255.0 ipv6_control disable \r
+      onu 102 pri acl http control enable lan enable wan disable port 80\r
+      exit\r
+      !\r
+      interface gpon 0/4\r
+      no onu auto-learn\r
+      plug_and_play disable\r
+      exit\r
+      !\r
+      !\r
+      !\r
+      rogue-onu-ctrl mode early pon 1 \r
+      rogue-onu-detect enable measurement silent auto-shutdown disable pon 1 \r
+      rogue-onu-detect-bip8 disable pon 1 \r
+      
+      remote-protection\r
+      disable\r
+      !\r
+      debug mode \r
+      exit\r
+      !\r
+      ip route 0.0.0.0/0 10.87.23.1\r
+      !\r
+      \r
+       --More-- \x00
+  - " ": |-
+      \b\b\b\b\b\b\b\b\b\b          \b\b\b\b\b\b\b\b\b\b!\r
+      access-list disable
+      !\r
+      access-list ipv6 disable
+      login-access-list deny snmp 0.0.0.0 0.0.0.0\r
+      login-access-list ipv6 deny snmp ::/0\r
+      login-access-list deny telnet 0.0.0.0 0.0.0.0\r
+      login-access-list ipv6 deny telnet ::/0\r
+      login-access-list enable \r
+      !\r
+      queue-scheduler strict-priority\r
+      !\r
+      !<RSTP Config Information>\r
+      !\r
+      !<dhcp server config information>\r
+      !<dhcp relay config information>\r
+      dhcp-relay information option disable\r
+      dhcp-relay information strategy keep\r
+      !<tacplus config information>\r
+      !\r
+      !dhcp-snooping configuration\r
+      dhcp-snooping information option disable\r
+      dhcp-snooping information strategy keep\r
+      !<radius config information>\r
+      !\r
+      !<dhcp6 server config information>\r
+      duid duid-llt\r
+      !<dhcp6 relay config information>\r
+      !\r
+      !\r
+      !\r
+      !\r
+      loopback detect enable  \r
+      loopback mode auto-recovery\r
+      !\r
+      crypto key generate rsa usage-keys modulus 2048\r
+      !\r
+      !\r
+      !\r
+      snmp-server start\r
+      snmp-server community CMNTREMOVED ro \r
+      snmp-server community CMNTREMOVED rw \r
+      snmp-server notify notify inform inform  inform \r
+      snmp-server notify notify trap trap  trap \r
+      snmp-server host domain vsol.example.com version 2c community CMNTREMOVED\r
+      \r
+      remote server vsol.example.com project-id 1234567890123456789\r
+      !\r
+      !\r
+       --More-- \x00
+  - " ": |-
+      \b\b\b\b\b\b\b\b\b\b          \b\b\b\b\b\b\b\b\b\b\r
+      !!!\r
+      \r
+      !!!\r
+      alarm oamlog critical-event enable\r
+      alarm oamlog dying-gasp enable\r
+      alarm oamlog link-fault enable\r
+      alarm oamlog link-event disable\r
+      alarm oamlog organization-specific enable\r
+      web verification-code disable\r
+      !\r
+      debug mode\r
+      web security admin_control enable\r
+      exit\r
+      !\r
+      !\r
+      time zone 01:00\r
+      timezone offset 1\r
+      !\r
+      telnet loging-settings retry-waiting-time enable\r
+      telnet loging-settings retry-waiting-time 60\r
+      !\r
+      !\r
+      role add custom_default permission 682\r
+      !um\r
+      user add admin login-password PASSREMOVED\r
+      user role admin ADMIN enable-password PASSREMOVED\r
+      !<MSTP Config Information>\r
+      spanning-tree mst configuration\r
+      exit\r
+      !\r
+      !\r
+      interface gigabitethernet 0/1\r
+       spanning-tree mst instance 0 path-cost 20000\r
+      exit\r
+      !\r
+      interface gigabitethernet 0/2\r
+      exit\r
+      !\r
+      interface gigabitethernet 0/3\r
+      exit\r
+      !\r
+      interface gigabitethernet 0/4\r
+      exit\r
+      !\r
+      !\r
+      !\r
+      interface vlan 1925\r
+      !\r
+       --More-- \x00
+  - " ": |-
+      \b\b\b\b\b\b\b\b\b\b          \b\b\b\b\b\b\b\b\b\bdebug mode \r
+      debug ospf6 lsa unknown\r
+      !\r
+      exit\r
+      !\r
+      interface vlan 1925\r
+      !\r
+      !\r
+      ntp server 10.88.1.3 ntp.example.com\r
+      dst continent europe location Prague\r
+      !\r
+      !\r
+      RT87_23|87.23.4-Komin_OLT(config)#\x20
+  - "end\n": |-
+      end\r
+      RT87_23|87.23.4-Komin_OLT#\x20
+  - "exit\n": |-
+      exit\r
+      Connection closed by foreign host\r
+      
