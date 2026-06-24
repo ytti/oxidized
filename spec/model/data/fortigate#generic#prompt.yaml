@@ -8,3 +8,5 @@ pass:
   - 'OXI-FW121 (global) # '
   # Issue #3846
   - 'hostname(Primary) # '
+  - 'hostname(Primary) (global) # '
+
