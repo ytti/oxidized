@@ -6,3 +6,7 @@ pass:
   # FortiOS
   - 'oxidized-Firewall123 # '
   - 'OXI-FW121 (global) # '
+  # Issue #3846
+  - 'hostname(Primary) # '
+  - 'hostname(Primary) (global) # '
+

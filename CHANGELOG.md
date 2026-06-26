@@ -16,6 +16,15 @@ The format is based on [Keep a Changelog](https://keepachangelog.com/en/1.1.0/).
 ### Fixed
 - procurve: hide the SNMP community on `snmp-server host <ip> community "<name>"` lines (@thanegill)
 - procurve: hide local user password hashes (`password ... sha1 "<hash>"`) when remove_secret is true (@thanegill)
+- source/sql: support defining port in configuration. Closes #3853 (@ytti)
+
+### Changed
+- docker: set LANG=C.UTF-8. Fixes #3690 (@ytti)
+
+### Fixed
+- siklu: allow parenthesis in prompt. Fixes #3841 (@ytti)
+- fortios: allow parenthesis in prompt. Fixes #3846 (@ytti)
+- fortigate: prompt can contain HA cluster status. Fixes #3846 (@robertcheramy)
 
 ## [0.37.0 - 2026-05-20]
 ### Added
