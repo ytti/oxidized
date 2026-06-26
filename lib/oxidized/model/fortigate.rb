@@ -3,8 +3,14 @@ class FortiGate < Oxidized::Model
 
   comment '# '
 
-  prompt /^(\(\w\) )?([-\w.~]+(\s[(\w\-.)]+)?~?\s?[#>$]\s?)$/
-
+  prompt(/
+    ^
+    (?:\(\w\)\ )?          # optional status indicator, e.g. "(M) "
+    [-\w.~]+               # hostname
+    (?:\((?:\w+)\))?       # optional HA cluster status (Primary|Secondary)
+    (?:\ [(\w\-.)]+)?      # optional VDOM
+    ~?\ ?[#>$]\ ?$         # End of prompt
+  /x)
   # When a post-login-banner is enabled, you have to press "a" to log in
   expect /^\(Press\s'a'\sto\saccept\):/ do |data, re|
     send 'a'
