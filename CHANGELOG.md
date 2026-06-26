@@ -12,6 +12,7 @@ The format is based on [Keep a Changelog](https://keepachangelog.com/en/1.1.0/).
 - docker: set LANG=C.UTF-8. Fixes #3690 (@ytti)
 
 ### Fixed
+- ingate: redact secrets (private keys, passwords, secrets, passphrases, pre-shared keys, tokens and the SNMP community) when remove_secret is set (@thanegill)
 - siklu: allow parenthesis in prompt. Fixes #3841 (@ytti)
 - fortios: allow parenthesis in prompt. Fixes #3846 (@ytti)
 - fortigate: prompt can contain HA cluster status. Fixes #3846 (@robertcheramy)
