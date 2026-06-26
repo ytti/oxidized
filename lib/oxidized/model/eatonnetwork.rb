@@ -9,27 +9,22 @@ class EatonNetwork < Oxidized::Model
   # See docs/Model-Notes/EatonNetwork.md for more info
   post do
     # Get config in post to allow passing auth password to cmd.
-    cfg = cmd "save_configuration -p #{@node.auth[:password]}"
-    cfg
+    cmd "save_configuration -p #{@node.auth[:password]}"
   end
 
   cmd :all do |cfg|
-    # `save_configuration` echos the command back, outputs date time info, with
-    # last line is the prompt again.
-    json_str = cfg.each_line.select { |line| line.match /^\{/ }.join
-    json = JSON.parse(json_str)
+    # save_configuration echoes the command and date/time around the JSON
+    # config (a single line) and ends with the prompt; keep only the JSON.
+    json = JSON.parse(cfg.keep_lines([/^\{/]))
 
-    json['features']['userAndSessionManagement']['data']['settings']['all']['1.0']['local']['1.0']['predefinedAccounts'].each do |n|
-      n.delete('attemptLogin')
-      n['password'].delete('history')
-    end
-    json['features']['userAndSessionManagement']['data']['settings']['all']['1.0']['local']['1.0']['createdAccounts'].each do |n|
-      n.delete('attemptLogin')
-      n['password'].delete('history')
+    json.dig('features', 'userAndSessionManagement', 'data', 'settings', 'all', '1.0', 'local', '1.0').tap do |key|
+      (key['predefinedAccounts'] + key['createdAccounts']).each do |account|
+        account.delete('attemptLogin')
+        account['password'].delete('history')
+      end
     end
 
-    cfg = JSON.pretty_generate(json)
-    cfg
+    JSON.pretty_generate(json)
   end
 
   cmd :secret do |cfg|
@@ -37,30 +32,36 @@ class EatonNetwork < Oxidized::Model
     json = JSON.parse(cfg)
 
     json.delete('passphrase')
-    json['features']['rms']['data']['settings'].delete('proxyUsername')
-    json['features']['rms']['data']['settings'].delete('proxyPassword')
-    json['features']['rms']['data']['settings'].delete('username')
-    json['features']['rms']['data']['settings'].delete('password')
-    json['features']['rms']['data']['settings'].delete('defaultPassword')
 
-    json['features']['smtp']['data']['dmeData'].delete('password')
-
-    json['features']['snmp']['data']['dmeData']['v3']['users'].each do |n|
-      n['auth'].delete('password')
-      n['priv'].delete('password')
+    json.dig('features', 'rms', 'data', 'settings').tap do |key|
+      key.delete('proxyUsername')
+      key.delete('proxyPassword')
+      key.delete('username')
+      key.delete('password')
+      key.delete('defaultPassword')
     end
 
-    json['features']['userAndSessionManagement']['data']['settings']['all']['1.0']['ldap']['1.0']['settings']['connectivity']['bind'].delete('password')
-    json['features']['userAndSessionManagement']['data']['settings']['all']['1.0']['radius']['1.0']['settings']['connectivity']['primaryServer'].delete('secret')
-    json['features']['userAndSessionManagement']['data']['settings']['all']['1.0']['radius']['1.0']['settings']['connectivity']['secondaryServer'].delete('secret')
+    json.dig('features', 'smtp', 'data', 'dmeData').delete('password')
 
-    # Added in frimware v2.2.0
-    json['features']['peripherals']['data']['dmeData']['ethernet']['ports'].each do |n|
-      n.dig('dot1x', 'peap', 'password') && n['dot1x']['peap'].delete('password')
+    json.dig('features', 'snmp', 'data', 'dmeData', 'v3', 'users').each do |key|
+      key['auth'].delete('password')
+      key['priv'].delete('password')
     end
 
-    cfg = JSON.pretty_generate(json)
-    cfg
+    json.dig('features', 'userAndSessionManagement', 'data', 'settings', 'all', '1.0').tap do |key|
+      key.dig('ldap', '1.0', 'settings', 'connectivity', 'bind').delete('password')
+      key.dig('radius', '1.0', 'settings', 'connectivity').tap do |radius|
+        radius['primaryServer'].delete('secret')
+        radius['secondaryServer'].delete('secret')
+      end
+    end
+
+    # Added in firmware v2.2.0
+    json.dig('features', 'peripherals', 'data', 'dmeData', 'ethernet', 'ports').each do |key|
+      key.dig('dot1x', 'peap', 'password') && key['dot1x']['peap'].delete('password')
+    end
+
+    JSON.pretty_generate(json)
   end
 
   cfg :ssh do

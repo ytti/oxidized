@@ -6,6 +6,7 @@ The format is based on [Keep a Changelog](https://keepachangelog.com/en/1.1.0/).
 
 ## [Unreleased]
 ### Added
+- eatonnetwork: model unit test (@thanegill)
 - source/sql: support defining port in configuration. Closes #3853 (@ytti)
 
 ### Changed
