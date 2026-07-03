@@ -7,7 +7,7 @@ module Oxidized
   class Node
     include SemanticLogger::Loggable
 
-    attr_reader :name, :ip, :model, :input, :output, :group, :auth, :prompt, :timeout, :vars, :last, :repo
+    attr_reader :name, :ip, :model, :input, :output, :group, :auth, :prompt, :timeout, :vars, :last, :repo, :input_port
     attr_accessor :running, :user, :email, :msg, :from, :stats, :retry, :err_type, :err_reason, :nexted
     alias running? running
     alias nexted? nexted
@@ -25,6 +25,7 @@ module Oxidized
       @group = opt[:group]
       @model = resolve_model opt
       @input = resolve_input opt
+      @input_port = resolve_input_port opt
       @output = resolve_output opt
       @auth = resolve_auth opt
       @prompt = resolve_prompt opt
@@ -182,6 +183,10 @@ module Oxidized
         Oxidized.mgr.input[input]
       end
     end
+
+    def resolve_input_port(opt)
+      resolve_key :input_port, opt
+   end
 
     def resolve_output(opt)
       output = resolve_key :output, opt, Oxidized.config.output.default
