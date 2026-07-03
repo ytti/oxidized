@@ -12,7 +12,7 @@ module Oxidized
 
       @text_debug = DebugText.new(Oxidized.config.input.debug, @node, config_name)
 
-      port = vars(:telnet_port) || 23
+      port = @node.input_port || vars(:telnet_port) || 23
 
       telnet_opts = {
         'Host'    => @node.ip,
