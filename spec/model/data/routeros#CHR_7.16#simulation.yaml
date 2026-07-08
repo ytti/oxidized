@@ -39,6 +39,7 @@ commands:
     # serial number = XXXX
     /interface ethernet
     set [ find default-name=ether1 ] disable-running-check=no
+    # poe-out status: voltage_on_poe-in
     set [ find default-name=ether2 ] disable-running-check=no
     set [ find default-name=ether3 ] disable-running-check=no
     set [ find default-name=ether4 ] disable-running-check=no
