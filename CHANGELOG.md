@@ -10,6 +10,7 @@ The format is based on [Keep a Changelog](https://keepachangelog.com/en/1.1.0/).
 
 ### Changed
 - docker: set LANG=C.UTF-8. Fixes #3690 (@ytti)
+- routeros: remove intermittent POE `voltage_on_poe-in` comment (@hendrikbl)
 
 ### Fixed
 - siklu: allow parenthesis in prompt. Fixes #3841 (@ytti)
