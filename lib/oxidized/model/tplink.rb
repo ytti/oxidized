@@ -62,8 +62,8 @@ class TPLink < Oxidized::Model
     end
 
     pre_logout do
-      send "exit\r"
-      send "logout\r"
+      send "exit\r\n"
+      send "logout\r\n"
     end
   end
 end
