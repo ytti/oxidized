@@ -19,6 +19,8 @@ The format is based on [Keep a Changelog](https://keepachangelog.com/en/1.1.0/).
 - siklu: allow parenthesis in prompt. Fixes #3841 (@ytti)
 - fortios: allow parenthesis in prompt. Fixes #3846 (@ytti)
 - fortigate: prompt can contain HA cluster status. Fixes #3846 (@robertcheramy)
+- aoscx: hide power consumption on rows where PSU output is N/A. Fixes #3864 (@FusionBrah)
+- aoscx: hide input voltage readings in "show environment power-supply input-voltage". Fixes #3864 (@FusionBrah)
 
 ## [0.37.0 - 2026-05-20]
 ### Added

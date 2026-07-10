@@ -34,8 +34,8 @@
 ! Mbr/  Product  Input  Normal     Present    Average    Input Voltage Violations:       Recovery  Recovery
 ! PSU   Number   Type   Input (V)  Input (V)  Input (V)  Count  Most Recent Event           Count  Time
 ! -----------------------------------------------------------------------------------------------------------------------------
-! 1/1   JL087A   AC     99-264         233.9      234.4      0  N/A                             0  N/A                         
-! 1/2   JL087A   AC     99-264         233.2      233.9      0  N/A                             0  N/A                         
+! 1/1   JL087A   AC     99-264         <voltage hidden>      0  N/A                             0  N/A                         
+! 1/2   JL087A   AC     99-264         <voltage hidden>      0  N/A                             0  N/A                         
 ! 
 ! 
 ! show environment power-consumption

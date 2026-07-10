@@ -47,8 +47,8 @@
 ! Mbr/  Product  Input  Normal     Present    Average    Input Voltage Violations:       Recovery  Recovery
 ! PSU   Number   Type   Input (V)  Input (V)  Input (V)  Count  Most Recent Event           Count  Time
 ! -----------------------------------------------------------------------------------------------------------------------------
-! 1/1   JL601A   AC     90-264         230.0      229.7      0  N/A                             0  N/A                         
-! 1/2   JL601A   AC     90-264         229.0      228.9      0  N/A                             0  N/A                         
+! 1/1   JL601A   AC     90-264         <voltage hidden>      0  N/A                             0  N/A                         
+! 1/2   JL601A   AC     90-264         <voltage hidden>      0  N/A                             0  N/A                         
 ! 
 ! 
 ! show environment power-consumption
