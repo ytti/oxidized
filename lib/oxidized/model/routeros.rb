@@ -47,7 +47,7 @@ class RouterOS < Oxidized::Model
       cfg.gsub! "# inactive time\r\n", '' # Remove time based system comment
       cfg.gsub! /# received packet from \S+ bad format\r\n/, '' # Remove intermittent VRRP/CARP collision comment
       cfg.gsub! "# poe-out status: short_circuit\r\n", '' # Remove intermittent POE short_circuit comment
-      cfg.gsub! "# poe-out status: voltage_on_poe-in\r\n", '' # Remove intermittent POE voltage_on_poe-in comment
+      cfg.gsub! /# poe-out status: voltage_on_poe-in\r?\n/, '' # Remove intermittent POE voltage_on_poe-in comment
       cfg.gsub! "# Firmware upgraded successfully, please reboot for changes to take effect!\r\n", '' # Remove transient firmware upgrade comment
       cfg.gsub! /# \S+ not ready\r\n/, '' # Remove intermittent $interface not ready comment
       cfg.gsub! /# .+ please restart the device in order to apply the new setting\r\n/, '' # Remove intermittent restart needed comment. (e.g. for ipv6 settings)
