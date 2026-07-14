@@ -42,7 +42,7 @@ Gem::Specification.new do |s|
   s.add_dependency 'net-telnet',           '~> 0.2'
   s.add_dependency 'psych',                '~> 5.0'
   s.add_dependency 'rugged',               '~> 1.6'
-  s.add_dependency 'semantic_logger',      '~> 4.17'
+  s.add_dependency 'semantic_logger',      '>= 4.17', '< 6.0'
   s.add_dependency 'slop',                 '~> 4.6'
   s.add_dependency 'syslog',               '~> 0.3'
   s.add_dependency 'syslog_protocol',      '~> 0.9'
