@@ -37,7 +37,7 @@ module Oxidized
         timeout:                         @node.timeout,
         port:                            (vars(:ssh_port) || 22).to_i,
         forward_agent:                   false,
-        max_window_size:                 2 * 1024 * 1024 # Issue #3867 - Mikrotik ROSSH is broken
+        max_win_size:                    2 * 1024 * 1024 # Issue #3867 - Mikrotik ROSSH is broken
       }
 
       auth_methods = vars(:auth_methods) || %w[none publickey password]

@@ -43,7 +43,7 @@ describe Oxidized::SSH do
         auth_methods:                    %w[none publickey password],
         proxy:                           proxy,
         logger:                          anything,
-        max_window_size:                 2 * 1024 * 1024
+        max_win_size:                    2 * 1024 * 1024
       }
       Net::SSH.expects(:start).with('192.0.2.2', 'alma', ssh_options)
 
@@ -81,7 +81,7 @@ describe Oxidized::SSH do
         auth_methods:                    %w[none publickey password],
         proxy:                           proxy,
         logger:                          anything,
-        max_window_size:                 2 * 1024 * 1024
+        max_win_size:                    2 * 1024 * 1024
       }
       Net::SSH.expects(:start).with('example.com', 'alma', ssh_options)
 
