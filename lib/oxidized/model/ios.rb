@@ -146,9 +146,8 @@ class IOS < Oxidized::Model
           /^! (Last|No) configuration change (at|since)(?!.*\d+ by \S+$)/
         ]
       end
-      cfg.gsub! /^ tunnel mpls traffic-eng bandwidth[^\n]*\n*(
-                    (?: [^\n]*\n*)*
-                    tunnel mpls traffic-eng auto-bw)/mx, '\1'
+      # This removes 'bandwidth X' only if 'auto-bw' is configured in the same interface
+      cfg.gsub! /^ (tunnel mpls traffic-eng bandwidth [^\n]*)\n((?: [^\n]*\n)* tunnel mpls traffic-eng auto-bw)/, '\2'
       # get rid of values of custom SNMP OID's
       cfg.gsub! /^(\s+expression) \d+$/, '\\1 <value removed>'
       cfg
