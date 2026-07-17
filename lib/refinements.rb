@@ -41,6 +41,11 @@ module Refinements
       end.join
     end
 
+    # right strip whitespaces from each line
+    def rstrip_lines
+      each_line.map(&:rstrip).join("\n") + "\n"
+    end
+
     # remove lines matching any pattern (String or Regexp)
     def reject_lines(patterns)
       each_line.reject do |line|
