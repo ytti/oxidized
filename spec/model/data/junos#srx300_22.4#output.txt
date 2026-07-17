@@ -66,6 +66,15 @@ system {
             authorization info;
         }
     }
+    archival {
+        configuration {
+            transfer-on-commit;
+            archive-sites {
+                "pasvftp://demouser:CorrectHorseBattery@203.0.113.10/backup/";
+                "ftp://demouser2@203.0.113.11/backup/" password "$9$FAKEHASHDATAXXXXXXXXXXXXXXXXXXXX"; ## SECRET-DATA
+            }
+        }
+    }
     max-configurations-on-flash 5;
     max-configuration-rollbacks 5;
     license {

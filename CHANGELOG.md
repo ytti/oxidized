@@ -18,6 +18,7 @@ The format is based on [Keep a Changelog](https://keepachangelog.com/en/1.1.0/).
 - ssh: change max_window_size from 138k to 2MB to avoid triggering Mikrotik bug. Closes #3867 (@ytti)
 
 ### Fixed
+- junos: redact cleartext passwords embedded in archive-site URLs. Fixes #3640 (@KalebFenley)
 - siklu: allow parenthesis in prompt. Fixes #3841 (@ytti)
 - fortios: allow parenthesis in prompt. Fixes #3846 (@ytti)
 - fortigate: prompt can contain HA cluster status. Fixes #3846 (@robertcheramy)
