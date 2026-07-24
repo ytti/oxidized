@@ -14,6 +14,7 @@ class OS6 < Oxidized::Model
 
   cmd :secret do |cfg|
     cfg.gsub! /(password )(\S+)/, '\1<secret hidden>'
+    cfg.gsub! /^(snmp-server community )\S+(.*)/, '\1<secret hidden>\2'
     cfg
   end
 
