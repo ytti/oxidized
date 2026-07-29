@@ -10,6 +10,7 @@ The format is based on [Keep a Changelog](https://keepachangelog.com/en/1.1.0/).
 - vsololt: new model for VSOL GPON OLT (@Vantomas)
 - tplink: add simulation data and unit tests for the TP-Link DeltaStream DS-P7001-08 GPON OLT (@Vantomas)
 - device2yaml: add `-n`/`--newline` option to set the command line terminator (e.g. `-n "\r\n"`) for devices that submit a command only on a carriage return; the terminator is recorded as a `command_newline` key in the generated YAML (@Vantomas)
+- sixwind: support configurable hierarchical and fullpath configuration outputs (@hcaldicott)
 
 ### Changed
 - docker: set LANG=C.UTF-8. Fixes #3690 (@ytti)
@@ -24,6 +25,8 @@ The format is based on [Keep a Changelog](https://keepachangelog.com/en/1.1.0/).
 - fortigate: prompt can contain HA cluster status. Fixes #3846 (@robertcheramy)
 - aoscx: hide power consumption on rows where PSU output is N/A. Fixes #3864 (@FusionBrah)
 - aoscx: hide input voltage readings in "show environment power-supply input-voltage". Fixes #3864 (@FusionBrah)
+- sixwind: preserve the `secret` keyword in RADIUS server address lines and
+  redact change-of-authorization server secrets (@hcaldicott)
 
 ## [0.37.0 - 2026-05-20]
 ### Added
