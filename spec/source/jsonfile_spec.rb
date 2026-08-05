@@ -41,4 +41,27 @@ describe Oxidized::Source::JSONFile do
       _(@source.setup).must_be_nil
     end
   end
+
+  describe '#load' do
+    before(:each) do
+      Asetus.any_instance.expects(:load)
+      Asetus.any_instance.expects(:create).returns(false)
+
+      Oxidized::Config.load({ home_dir: '/cfg_path/' })
+      Oxidized.hooks = Oxidized::HookManager.new
+
+      @source = Oxidized::Source::JSONFile.new
+      Oxidized.config.source.jsonfile.map.name = 'name'
+    end
+
+    it 'parses decrypted GPG output that open_file returns as a String' do
+      # With gpg: true, Source#open_file returns the decrypted contents as a
+      # String rather than a File, so #load must not assume it can call #read
+      # on the result (issue #3879).
+      @source.stubs(:open_file).returns('[{"name": "router1"}, {"name": "router2"}]')
+
+      nodes = @source.load
+      _(nodes.map { |node| node[:name] }).must_equal %w[router1 router2]
+    end
+  end
 end

@@ -26,7 +26,11 @@ module Oxidized
       end
 
       def load(*)
-        data = JSON.parse(open_file.read)
+        file = open_file
+        # open_file returns a File on the plain path but a String on the gpg
+        # path (see Source#open_file), so only call #read when it is supported.
+        contents = file.respond_to?(:read) ? file.read : file
+        data = JSON.parse(contents)
         data = string_navigate_object(data, @cfg.hosts_location) if @cfg.hosts_location?
 
         transform_json(data)
