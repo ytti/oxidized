@@ -1,6 +1,17 @@
 require_relative '../spec_helper'
 require 'oxidized/source/jsonfile'
 
+# GPGME is an optional runtime dependency that is not installed in the test
+# environment; define a minimal stand-in so the gpg branch of #open_file can be
+# exercised.
+unless defined?(GPGME)
+  module GPGME
+    # Minimal stand-in for stubbing; the real class is provided by the optional
+    # gpgme gem, which is not installed in the test environment.
+    class Crypto; end # rubocop:disable Lint/EmptyClass
+  end
+end
+
 describe Oxidized::Source::JSONFile do
   describe '#setup' do
     before(:each) do
@@ -42,26 +53,31 @@ describe Oxidized::Source::JSONFile do
     end
   end
 
-  describe '#load' do
+  describe '#open_file' do
     before(:each) do
       Asetus.any_instance.expects(:load)
       Asetus.any_instance.expects(:create).returns(false)
 
       Oxidized::Config.load({ home_dir: '/cfg_path/' })
-      Oxidized.hooks = Oxidized::HookManager.new
 
       @source = Oxidized::Source::JSONFile.new
-      Oxidized.config.source.jsonfile.map.name = 'name'
     end
 
-    it 'parses decrypted GPG output that open_file returns as a String' do
-      # With gpg: true, Source#open_file returns the decrypted contents as a
-      # String rather than a File, so #load must not assume it can call #read
-      # on the result (issue #3879).
-      @source.stubs(:open_file).returns('[{"name": "router1"}, {"name": "router2"}]')
+    it 'returns a readable IO for a gpg-encrypted source' do
+      # GPG decryption yields a String; open_file wraps it in an IO so every
+      # source consumes it the same way as a plain File (issue #3879).
+      Oxidized.config.source.jsonfile.file = '/cfg_path/router.json.gpg'
+      Oxidized.config.source.jsonfile.gpg  = true
 
-      nodes = @source.load
-      _(nodes.map { |node| node[:name] }).must_equal %w[router1 router2]
+      crypto = mock('crypto')
+      crypto.stubs(:decrypt).returns('[{"name": "router1"}]')
+      GPGME::Crypto.stubs(:new).returns(crypto)
+      File.stubs(:open).returns(StringIO.new(''))
+
+      io = @source.send(:open_file)
+
+      _(io).must_respond_to(:read)
+      _(io.read).must_equal('[{"name": "router1"}]')
     end
   end
 end

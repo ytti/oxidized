@@ -1,3 +1,5 @@
+require "stringio"
+
 module Oxidized
   module Source
     class Source
@@ -61,7 +63,9 @@ module Oxidized
         file = File.expand_path(@cfg.file)
         if @cfg.gpg?
           crypto = GPGME::Crypto.new password: @cfg.gpg_password
-          crypto.decrypt(File.open(file)).to_s
+          # GPG decryption yields a String; wrap it in an IO so every source
+          # can consume open_file the same way as a plain File (issue #3879).
+          StringIO.new(crypto.decrypt(File.open(file)).to_s)
         else
           File.open(file)
         end
