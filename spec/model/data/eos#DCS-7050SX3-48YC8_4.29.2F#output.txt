@@ -1,0 +1,29 @@
+! System Information
+!   Model                     Description
+!   ------------------------- ------------------------------------
+!   DCS-7050SX3-48YC8         48x25GbE SFP+ & 8x100GbE QSFP Switch
+!   HW Version    Serial Number    Mfg Date
+!   ------------  ---------------  ----------
+!   11.03         SSJ00000000      2021-05-14
+! device: eos-test-01 (DCS-7050SX3-48YC8, EOS-4.29.2F)
+!
+no aaa root
+!
+transceiver qsfp default-mode 4x10G
+!
+service routing protocols model multi-agent
+!
+hostname eos-test-01
+!
+spanning-tree mode mstp
+!
+snmp-server community publiccom ro
+snmp-server host 10.1.2.3 version 1 string123
+snmp-server host 10.1.2.4 version 2c string456
+!
+interface Management1
+   ip address 192.0.2.10/24
+!
+ip routing
+!
+end
