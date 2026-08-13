@@ -11,7 +11,7 @@ class RouterOS < Oxidized::Model
       cfg.gsub! /^\r+(.+)/, '\1'
       cfg.gsub! /([^\r]*)\r+$/, '\1'
     end
-    cfg.lines.map { |line| line.rstrip }.join("\n") + "\n" # strip trailing whitespace
+    cfg.rstrip_lines # strip trailing whitespace
   end
 
   cmd '/system resource print' do |cfg|

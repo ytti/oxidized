@@ -114,7 +114,7 @@
 |Hirschmann          |Classic                       |[hirschmann](/lib/oxidized/model/hirschmann.rb)
 |                    |HiOS                          |[hios](/lib/oxidized/model/hios.rb)
 |HP                  |Comware (HP A-series, H3C, 3Com)|[comware](/lib/oxidized/model/comware.rb)      |@robertcheramy   |[Comware](Model-Notes/Comware.md)
-|                    |Procurve                      |[procurve](/lib/oxidized/model/procurve.rb)      |@robertcheramy
+|                    |Procurve                      |[procurve](/lib/oxidized/model/procurve.rb)      |@robertcheramy, @thanegill
 |                    |BladeSystem (Onboard Administrator)|[hpebladesystem](/lib/oxidized/model/hpebladesystem.rb)
 |                    |MSA                           |[hpemsa](/lib/oxidized/model/hpemsa.rb)
 |                    |MSM (Wireless Controller)     |[hpmsm](/lib/oxidized/model/hpmsm.rb)
