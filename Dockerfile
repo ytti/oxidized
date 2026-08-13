@@ -1,5 +1,7 @@
 FROM docker.io/debian:trixie-slim
 
+ENV LANG=C.UTF-8
+
 ##### Place "static" commands at the beginning to optimize image size and build speed
 
 # add non-privileged user

@@ -1,0 +1,10 @@
+pass:
+  - "RT_02-TPLink_OLT>"
+  - "RT_02-TPLink_OLT> "
+  - "RT_02-TPLink_OLT#"
+  - "\rRT_02-TPLink_OLT#"
+  - "TL-SG3210#"
+fail:
+  - "Password:"
+  - "Error: Bad command"
+  - "Press any key to continue (Q to quit)"

@@ -9,8 +9,20 @@ The format is based on [Keep a Changelog](https://keepachangelog.com/en/1.1.0/).
 - westermoweos.rb: support for Westermo WeOS network devices (@joschi99)
 
 ### Changed
+- docker: set LANG=C.UTF-8. Fixes #3690 (@ytti)
+- routeros: remove intermittent POE `voltage_on_poe-in` comment (@hendrikbl)
+- tplink: use `\r\n` as the line terminator in pre_logout, required for the model unit tests to work (@Vantomas)
+- ssh: change max_window_size from 138k to 2MB to avoid triggering Mikrotik bug. Closes #3867 (@ytti)
+- ingate: redact secrets (private keys, passwords, secrets, passphrases, pre-shared keys, tokens and the SNMP community) when remove_secret is set (@thanegill)
 
 ### Fixed
+- junos: redact cleartext passwords embedded in archive-site URLs. Fixes #3640 (@KalebFenley)
+- siklu: allow parenthesis in prompt. Fixes #3841 (@ytti)
+- fortios: allow parenthesis in prompt. Fixes #3846 (@ytti)
+- fortigate: prompt can contain HA cluster status. Fixes #3846 (@robertcheramy)
+- aoscx: hide power consumption on rows where PSU output is N/A. Fixes #3864 (@FusionBrah)
+- aoscx: hide input voltage readings in "show environment power-supply input-voltage". Fixes #3864 (@FusionBrah)
+- source: return the decrypted contents of a `gpg`-encrypted source as an IO object, so JSONFile (and any source reading via `#read`) loads it instead of crashing with a `NoMethodError`. Fixes #3879 (@youdie006)
 
 ## [0.37.0 - 2026-05-20]
 ### Added

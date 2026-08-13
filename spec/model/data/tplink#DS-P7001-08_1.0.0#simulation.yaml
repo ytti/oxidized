@@ -1,0 +1,285 @@
+---
+# NOTE: this simulation file was edited by hand. The ATOMS model unit tests
+# cannot inject node variables, so there is no way to set vars(:enable) and make
+# the model (macro :enable) issue "enable". The "enable" step is therefore
+# commented out below and init_prompt is the privileged "#" prompt, so the
+# privileged show commands can still be exercised by the test.
+command_newline: "\r\n"
+init_prompt: |-
+    \r
+    \rRT_02-TPLink_OLT#
+commands:
+#  - "enable\r\n": |-
+#      enable\r
+#      \r
+#      \rRT_02-TPLink_OLT#
+  - "terminal length 0\r\n": |-
+      terminal length 0\r
+      \r
+      \rRT_02-TPLink_OLT#
+  - "show system-info\r\n": |-
+      show system-info\r
+       System Description   - DeltaStream 8-Port Pizza-box GPON Optical Line Terminal\r
+       System Name          - RT_02-TPLink_OLT\r
+       System Location      - RT_02\r
+       Contact Information  - EMAILREMOVED\r
+       Hardware Version     - DS-P7001-08 1.0\r
+       Software Version     - 1.0.0 Build 20210907 Rel.69162\r
+       Bootloader Version   - TP-LINK BOOTUTIL(v1.0.0)\r
+       Mac Address          - MA-CR-EM-OV-ED-00\r
+       Serial Number        - SNREMOVED\r
+       System Time          - 2026-05-26 15:40:15\r
+       Running Time         - 325 day - 19 hour - 31 min - 29 sec\r
+      \r
+      \rRT_02-TPLink_OLT#
+  - "show running-config\r\n": |-
+      show running-config\r
+      !DS-P7001-08\r
+      #\r
+      vlan 1921\r
+       name \"Klienti\"\r
+      #\r
+      #\r
+      #\r
+      #\r
+      #\r
+      #\r
+      #\r
+      #\r
+      #\r
+      #\r
+      #\r
+      #\r
+      #\r
+      #\r
+      #\r
+      #\r
+      #\r
+      #\r
+      #\r
+      hostname \"RT_02-TPLink_OLT\"\r
+      location \"RT_02\"\r
+      contact-info \"EMAILREMOVED\"\r
+      serial_port baud_rate 38400\r
+      #\r
+      logging host index 1 198.51.100.24 6\r
+      #\r
+      system-time ntp UTC+01:00 198.51.100.3 192.0.2.163 12\r
+      system-time dst predefined Europe\r
+      #\r
+      #\r
+      #\r
+      user name admin privilege admin secret 5 PASSREMOVED\r
+      no service reset-disable\r
+      #\r
+      #\r
+      #\r
+      #\r
+      #\r
+      #\r
+      #\r
+      #\r
+      ip ssh server \r
+      #\r
+      #\r
+      spanning-tree\r
+      spanning-tree mode rstp\r
+      #\r
+      #\r
+      lldp\r
+      #\r
+      ip route 0.0.0.0 0.0.0.0 198.51.100.129\r
+      #\r
+      #\r
+      \r
+      #\r
+      #\r
+      loopback-detection\r
+      #\r
+      #\r
+      #\r
+      #\r
+      #\r
+      dba-profile profile-id 0 profile-name default type4 max 1024000\r
+      dba-profile profile-id 10 profile-name dba-profile_10 type4 max 1024000\r
+      ont-srvprofile gpon profile-id 0 profile-name default\r
+        mac-learning\r
+        native-vlan unconcern\r
+        multicast-mode unconcern\r
+        multicast-forward unconcern\r
+        ont-port eth adaptive 4\r
+        port priority-policy eth 1 unconcern\r
+        port igmp-forward eth 1 unconcern\r
+        port q-in-q eth 1 unconcern\r
+        port eth 1 max-mac-count unlimited\r
+        port priority-policy eth 2 unconcern\r
+        port igmp-forward eth 2 unconcern\r
+        port q-in-q eth 2 unconcern\r
+        port eth 2 max-mac-count unlimited\r
+        port priority-policy eth 3 unconcern\r
+        port igmp-forward eth 3 unconcern\r
+        port q-in-q eth 3 unconcern\r
+        port eth 3 max-mac-count unlimited\r
+        port priority-policy eth 4 unconcern\r
+        port igmp-forward eth 4 unconcern\r
+        port q-in-q eth 4 unconcern\r
+        port eth 4 max-mac-count unlimited\r
+        ont-port pots adaptive 2\r
+      #\r
+      ont-srvprofile gpon profile-id 11 profile-name srv-profile_vlan1921\r
+        mac-learning\r
+        native-vlan concern\r
+        multicast-mode unconcern\r
+        multicast-forward unconcern\r
+        ont-port eth adaptive 4\r
+        port priority-policy eth 1 unconcern\r
+        port igmp-forward eth 1 unconcern\r
+        port q-in-q eth 1 unconcern\r
+        port eth 1 max-mac-count unlimited\r
+        port priority-policy eth 2 unconcern\r
+        port igmp-forward eth 2 unconcern\r
+        port q-in-q eth 2 unconcern\r
+        port eth 2 max-mac-count unlimited\r
+        port priority-policy eth 3 unconcern\r
+        port igmp-forward eth 3 unconcern\r
+        port q-in-q eth 3 unconcern\r
+        port eth 3 max-mac-count unlimited\r
+        port priority-policy eth 4 unconcern\r
+        port igmp-forward eth 4 unconcern\r
+        port q-in-q eth 4 unconcern\r
+        port eth 4 max-mac-count unlimited\r
+        ont-port pots adaptive 2\r
+      #\r
+      ont-lineprofile gpon profile-id 0 profile-name default\r
+        no fec-upstream\r
+        mapping-mode vlan\r
+        omcc encrypt\r
+        tcont 1 dba-profile-id 0\r
+        gem add 1 tcont 1 encrypt enable\r
+        gem mapping 1 1 vlan-untag\r
+      #\r
+      ont-lineprofile gpon profile-id 10 profile-name line-profile_10\r
+        fec-upstream\r
+        mapping-mode vlan\r
+        omcc encrypt\r
+        tcont 4 dba-profile-id 10\r
+        gem add 11 tcont 4 encrypt enable\r
+        gem mapping 11 1 vlan 1921\r
+      #\r
+      #\r
+      service-port 1 config gpon 1/0/1 ont 0 gem-id 11 svlan 1921 user-vlan 1921 tag-action translate statistic-performance enable\r
+      service-port 2 config gpon 1/0/1 ont 0 gem-id 11 svlan 1921 user-vlan 1921 tag-action translate adminstatus disable statistic-performance enable\r
+      service-port 3 config gpon 1/0/1 ont 1 gem-id 11 svlan 1921 user-vlan 1921 tag-action translate statistic-performance enable\r
+      service-port 4 config gpon 1/0/1 ont 2 gem-id 11 svlan 1921 user-vlan 1921 tag-action translate statistic-performance enable\r
+      service-port 5 config gpon 1/0/1 ont 3 gem-id 11 svlan 1921 user-vlan 1921 tag-action translate statistic-performance enable\r
+      service-port 6 config gpon 1/0/1 ont 4 gem-id 11 svlan 1921 user-vlan 1921 tag-action translate statistic-performance enable\r
+      service-port 7 config gpon 1/0/1 ont 5 gem-id 11 svlan 1921 user-vlan 1921 tag-action translate statistic-performance enable\r
+      service-port 8 config gpon 1/0/1 ont 6 gem-id 11 svlan 1921 user-vlan 1921 tag-action translate statistic-performance enable\r
+      service-port 9 config gpon 1/0/1 ont 7 gem-id 11 svlan 1921 user-vlan 1921 tag-action translate\r
+      service-port 10 config gpon 1/0/1 ont 8 gem-id 11 svlan 1921 user-vlan 1921 tag-action translate statistic-performance enable\r
+      service-port 11 config gpon 1/0/1 ont 9 gem-id 11 svlan 1921 user-vlan 1921 tag-action translate statistic-performance enable\r
+      service-port 12 config gpon 1/0/1 ont 10 gem-id 11 svlan 1921 user-vlan 1921 tag-action translate statistic-performance enable\r
+      service-port 13 config gpon 1/0/1 ont 11 gem-id 11 svlan 1921 user-vlan 1921 tag-action translate statistic-performance enable\r
+      service-port 14 config gpon 1/0/1 ont 12 gem-id 11 svlan 1921 user-vlan 1921 tag-action translate statistic-performance enable\r
+      service-port 15 config gpon 1/0/1 ont 13 gem-id 11 svlan 1921 user-vlan 1921 tag-action translate statistic-performance enable\r
+      service-port 16 config gpon 1/0/1 ont 14 gem-id 11 svlan 1921 user-vlan 1921 tag-action translate statistic-performance enable\r
+      service-port 17 config gpon 1/0/1 ont 15 gem-id 11 svlan 1921 user-vlan 1921 tag-action translate statistic-performance enable\r
+      service-port 19 config gpon 1/0/1 ont 17 gem-id 11 svlan 1921 user-vlan 1921 tag-action translate statistic-performance enable\r
+      interface port-channel 1\r
+        switchport general allowed vlan 1921 tagged\r
+        spanning-tree\r
+      #\r
+      interface gpon 1/0/1\r
+        downstream-fec\r
+        ont auto-auth authmode sn-auth\r
+        ont add 0 sn-auth TPLG-BA123456 desc \"Klient\" ont-lineprofile-id 10 ont-srvprofile-id 11\r
+        ont add 1 sn-auth TPLG-BA123456 desc \"Klient\" ont-lineprofile-id 10 ont-srvprofile-id 11\r
+        ont add 2 sn-auth TPLG-BA123456 desc \"Klient\" ont-lineprofile-id 10 ont-srvprofile-id 11\r
+        ont add 3 sn-auth TPLG-BA123456 desc \"Klient\" ont-lineprofile-id 10 ont-srvprofile-id 11\r
+        ont add 4 sn-auth TPLG-BA123456 desc \"Klient\" ont-lineprofile-id 10 ont-srvprofile-id 11\r
+        ont add 5 sn-auth TPLG-BA123456 desc \"Klient\" ont-lineprofile-id 10 ont-srvprofile-id 11\r
+        ont add 6 sn-auth TPLG-BA123456 desc \"Klient\" ont-lineprofile-id 10 ont-srvprofile-id 11\r
+        ont add 7 sn-auth TPLG-BA123456 desc \"Klient\" ont-lineprofile-id 10 ont-srvprofile-id 11\r
+        ont add 8 sn-auth TPLG-BA123456 desc \"Klient\" ont-lineprofile-id 10 ont-srvprofile-id 11\r
+        ont add 9 sn-auth TPLG-BA123456 desc \"Klient\" ont-lineprofile-id 10 ont-srvprofile-id 11\r
+        ont add 10 sn-auth TPLG-BA123456 desc \"Klient\" ont-lineprofile-id 10 ont-srvprofile-id 11\r
+        ont add 11 sn-auth TPLG-BA123456 desc \"Klient\" ont-lineprofile-id 10 ont-srvprofile-id 11\r
+        ont add 12 sn-auth TPLG-BA123456 desc \"Klient\" ont-lineprofile-id 10 ont-srvprofile-id 11\r
+        ont add 13 sn-auth TPLG-BA123456 desc \"Klient\" ont-lineprofile-id 10 ont-srvprofile-id 11\r
+        ont add 14 sn-auth TPLG-BA123456 desc \"Klient\" ont-lineprofile-id 10 ont-srvprofile-id 11\r
+        ont add 15 sn-auth TPLG-BA123456 desc \"Klient\" ont-lineprofile-id 10 ont-srvprofile-id 11\r
+        ont add 17 sn-auth TPLG-BA123456 desc \"Klient\" ont-lineprofile-id 10 ont-srvprofile-id 11\r
+        ont auto-auth rule 1 ont-lineprofile-id 0 ont-srvprofile-id 0\r
+        ont port attribute 0 eth 1 admin-status enable\r
+      #\r
+      interface gpon 1/0/2\r
+        ont auto-auth authmode sn-auth\r
+        ont auto-auth rule 1 ont-lineprofile-id 0 ont-srvprofile-id 0\r
+      #\r
+      interface gpon 1/0/3\r
+        ont auto-auth authmode sn-auth\r
+        ont auto-auth rule 1 ont-lineprofile-id 0 ont-srvprofile-id 0\r
+      #\r
+      interface gpon 1/0/4\r
+        ont auto-auth authmode sn-auth\r
+        ont auto-auth rule 1 ont-lineprofile-id 0 ont-srvprofile-id 0\r
+      #\r
+      interface gpon 1/0/5\r
+        ont auto-auth authmode sn-auth\r
+        ont auto-auth rule 1 ont-lineprofile-id 0 ont-srvprofile-id 0\r
+      #\r
+      interface gpon 1/0/6\r
+        ont auto-auth authmode sn-auth\r
+        ont auto-auth rule 1 ont-lineprofile-id 0 ont-srvprofile-id 0\r
+      #\r
+      interface gpon 1/0/7\r
+        ont auto-auth authmode sn-auth\r
+        ont auto-auth rule 1 ont-lineprofile-id 0 ont-srvprofile-id 0\r
+      #\r
+      interface gpon 1/0/8\r
+        ont auto-auth authmode sn-auth\r
+        ont auto-auth rule 1 ont-lineprofile-id 0 ont-srvprofile-id 0\r
+      #\r
+      interface management 1\r
+        ip address 192.168.1.1 255.255.255.0\r
+        ipv6 enable\r
+      #\r
+      interface vlan 1\r
+        ip address 192.168.0.1 255.255.255.0\r
+        ipv6 enable\r
+        dpms interface-id 1\r
+      #\r
+      interface vlan 1921\r
+        ip address 198.51.100.130 255.255.255.128\r
+        no ipv6 enable\r
+      #\r
+      interface ten-gigabitEthernet 1/0/1\r
+        speed 1000\r
+        duplex full\r
+        switchport general allowed vlan 1921 tagged\r
+        spanning-tree\r
+        \r
+        channel-group 1 mode active\r
+      #\r
+      interface ten-gigabitEthernet 1/0/2\r
+        speed 1000\r
+        duplex full\r
+        switchport general allowed vlan 1921 tagged\r
+        spanning-tree\r
+        \r
+        channel-group 1 mode active\r
+      #\r
+      interface gigabitEthernet 1/0/3\r
+        switchport general allowed vlan 1921 tagged\r
+        spanning-tree\r
+        \r
+        channel-group 1 mode active\r
+      #\r
+      end\r
+      \r
+      \rRT_02-TPLink_OLT#
+  - "exit\r\n": |-
+      exit\r
+      \r
+      \rRT_02-TPLink_OLT>
+  - "logout\r\n": |-

@@ -19,6 +19,10 @@ class JunOS < Oxidized::Model
     cfg.gsub!(/community (\S+) {/, 'community <hidden> {')
     cfg.gsub!(/(ssh-(rsa|dsa|ecdsa|ecdsa-sk|ed25519|ed25519-sk) )".*; ## SECRET-DATA/, '<secret removed>')
     cfg.gsub!(/ "\$\d\$\S+; ## SECRET-DATA/, ' <secret removed>;')
+    # archive-site URLs may carry a cleartext password (user:pass@host) that
+    # Junos does not tag with "## SECRET-DATA", e.g. under
+    # system archival configuration archive-sites
+    cfg.gsub!(/((?:ftp|pasvftp|sftp|scp|https?):\/\/[^\/@"]+):[^@"]+@/, '\1:<secret removed>@')
     cfg
   end
 

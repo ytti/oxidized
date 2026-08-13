@@ -52,12 +52,16 @@ class Aoscx < Oxidized::Model
     end
 
     with_section(cfg, 'power-consumption') do |content|
-      content.gsub!(/^(.*?) (?:\d+\.\d+ +)+\d+\.\d+$/, '\\1 <power hidden>')
+      content.gsub!(/^(.*?) (?:\d+\.\d+ +)+\d+\.\d+(?: +N\/A)*$/, '\\1 <power hidden>')
       content.gsub!(/^(Total Power Consumption +)\d+\.\d+$/, '\\1<power hidden>')
     end
 
     with_section(cfg, 'power-allocation') do |content|
       content.gsub!(/^(.*) \d+ W$/, '\\1 <power>')
+    end
+
+    with_section(cfg, 'power-supply input-voltage') do |content|
+      content.gsub!(/^((?:\S+ +){3}\d+-\d+ +)\d+\.\d+ +\d+\.\d+/, '\\1<voltage hidden>')
     end
 
     with_section(cfg, 'temperature') do |content|

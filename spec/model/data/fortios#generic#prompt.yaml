@@ -1,0 +1,3 @@
+pass:
+  # Issue #3846
+  - 'hostname(Primary) #'
