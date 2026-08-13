@@ -1,0 +1,1087 @@
+{
+  "passphrase": "REDACTED",
+  "version": "1.0",
+  "features": {
+    "certificateSettings": {
+      "data": {
+        "version": "1.0",
+        "dmeData": {
+          "country": "FR",
+          "state": "38",
+          "location": "Lab",
+          "organizationName": "Eaton",
+          "organizationUnit": "Power Quality",
+          "contact": ""
+        }
+      }
+    },
+    "date": {
+      "data": {
+        "version": "3.0",
+        "dmeData": {
+          "ntp": {
+            "settings": {
+              "enabled": true,
+              "fromDhcp": true,
+              "servers": [
+                "",
+                "",
+                "",
+                "",
+                ""
+              ]
+            }
+          },
+          "timeZone": "America/Los_Angeles"
+        }
+      }
+    },
+    "email": {
+      "data": {
+        "version": "2.0",
+        "dmeData": {
+          "globalHideIpAddress": false,
+          "configurations": []
+        }
+      }
+    },
+    "firewall": {
+      "data": {
+        "version": "1.0",
+        "settings": {
+          "interfaces": [
+            {
+              "id": "eth0",
+              "icmp": {
+                "v4": {
+                  "enabled": true
+                },
+                "v6": {
+                  "enabled": true
+                }
+              },
+              "natRules": {
+                "userEditable": [
+                  {
+                    "id": "HTTP_REDIRECT",
+                    "enabled": true,
+                    "port": 80,
+                    "address": ""
+                  },
+                  {
+                    "id": "SECURE_WEB",
+                    "enabled": true,
+                    "port": 443,
+                    "address": ""
+                  },
+                  {
+                    "id": "SSH",
+                    "enabled": true,
+                    "port": 22,
+                    "address": ""
+                  },
+                  {
+                    "id": "SNMP",
+                    "enabled": true,
+                    "port": 161,
+                    "address": ""
+                  },
+                  {
+                    "id": "MQTT",
+                    "enabled": true,
+                    "port": 8883,
+                    "address": ""
+                  }
+                ]
+              }
+            },
+            {
+              "id": "usb0",
+              "icmp": {
+                "v4": {
+                  "enabled": true
+                },
+                "v6": {
+                  "enabled": true
+                }
+              },
+              "natRules": {
+                "userEditable": []
+              }
+            }
+          ]
+        }
+      }
+    },
+    "identification": {
+      "data": {
+        "version": "1.0",
+        "dmeData": {
+          "identification": {
+            "name": "example-UPS",
+            "contact": "user@example.com",
+            "location": "Lab"
+          }
+        }
+      }
+    },
+    "mqtt": {
+      "data": {
+        "version": "1.1",
+        "certificateData": {
+          "ca": [],
+          "trustedClient": []
+        }
+      }
+    },
+    "network": {
+      "data": {
+        "version": "3.0",
+        "settings": {
+          "interfaces": [
+            {
+              "id": "eth0",
+              "link": {
+                "config": 0
+              },
+              "domain": {
+                "settings": {
+                  "mode": 1,
+                  "manual": {
+                    "domainName": "",
+                    "dns": {
+                      "preferredServer": "192.0.2.10",
+                      "alternateServer": "2001:db8::1"
+                    }
+                  }
+                }
+              },
+              "ipv4": {
+                "settings": {
+                  "enabled": true,
+                  "mode": 2,
+                  "manual": {
+                    "address": "192.0.2.10",
+                    "subnetMask": "255.255.255.0",
+                    "gateway": "192.0.2.10"
+                  },
+                  "dhcpServer": {
+                    "address": "192.0.2.10",
+                    "subnetMask": "255.255.255.0"
+                  }
+                }
+              },
+              "ipv6": {
+                "settings": {
+                  "enabled": true,
+                  "mode": 2,
+                  "manual": {
+                    "address": "2001:db8::1",
+                    "prefixLength": 64,
+                    "gateway": "2001:db8::1"
+                  },
+                  "dhcpServer": {
+                    "address": "2001:db8::1",
+                    "prefixLength": 64
+                  }
+                }
+              }
+            },
+            {
+              "id": "eth1",
+              "link": {
+                "config": 0
+              },
+              "domain": {
+                "settings": {
+                  "mode": 1,
+                  "manual": {
+                    "domainName": "",
+                    "dns": {
+                      "preferredServer": "192.0.2.10",
+                      "alternateServer": "2001:db8::1"
+                    }
+                  }
+                }
+              },
+              "ipv4": {
+                "settings": {
+                  "enabled": true,
+                  "mode": 2,
+                  "manual": {
+                    "address": "192.0.2.10",
+                    "subnetMask": "255.255.255.0",
+                    "gateway": "192.0.2.10"
+                  },
+                  "dhcpServer": {
+                    "address": "192.0.2.10",
+                    "subnetMask": "255.255.255.0"
+                  }
+                }
+              },
+              "ipv6": {
+                "settings": {
+                  "enabled": true,
+                  "mode": 2,
+                  "manual": {
+                    "address": "2001:db8::1",
+                    "prefixLength": 64,
+                    "gateway": "2001:db8::1"
+                  },
+                  "dhcpServer": {
+                    "address": "2001:db8::1",
+                    "prefixLength": 64
+                  }
+                }
+              }
+            },
+            {
+              "id": "usb0",
+              "link": {
+                "config": 0
+              },
+              "domain": {
+                "settings": {
+                  "mode": 1,
+                  "manual": {
+                    "domainName": "",
+                    "dns": {
+                      "preferredServer": "",
+                      "alternateServer": ""
+                    }
+                  }
+                }
+              },
+              "ipv4": {
+                "settings": {
+                  "enabled": true,
+                  "mode": 2,
+                  "manual": {
+                    "address": "192.0.2.10",
+                    "subnetMask": "255.255.0.0",
+                    "gateway": ""
+                  },
+                  "dhcpServer": {
+                    "address": "192.0.2.10",
+                    "subnetMask": "255.255.255.0"
+                  }
+                }
+              },
+              "ipv6": {
+                "settings": {
+                  "enabled": false,
+                  "mode": 2,
+                  "manual": {
+                    "address": "",
+                    "prefixLength": 64,
+                    "gateway": ""
+                  },
+                  "dhcpServer": {
+                    "address": "",
+                    "prefixLength": 64
+                  }
+                }
+              }
+            }
+          ],
+          "hostname": "example.com"
+        }
+      }
+    },
+    "peripherals": {
+      "data": {
+        "version": "1.0",
+        "dmeData": {
+          "ethernet": {
+            "mode": "single",
+            "ports": [
+              {
+                "id": "1",
+                "physicalName": "eth0",
+                "dot1x": {
+                  "enabled": false,
+                  "authenticationMethod": 0,
+                  "tls": {
+                    "identity": ""
+                  },
+                  "peap": {
+                    "identity": "",
+                    "password": {
+                      "plaintext": null,
+                      "cyphered": "REDACTED"
+                    }
+                  },
+                  "verifyServer": false
+                }
+              }
+            ]
+          },
+          "usb": {
+            "enabled": true,
+            "devices": [
+              {
+                "id": "usb0",
+                "enabled": true,
+                "mode": ""
+              },
+              {
+                "id": "usb1",
+                "enabled": true,
+                "mode": "{acm,rndis}"
+              }
+            ],
+            "serialConsoleOverUsbAux": false
+          }
+        }
+      }
+    },
+    "powerDistributionMeasure": {
+      "data": {
+        "version": "1.0",
+        "settings": {
+          "periodicity": 10
+        }
+      }
+    },
+    "powerOutagePolicy": {
+      "data": {
+        "version": "2.0",
+        "settings": {
+          "shutdown": {
+            "panicShutdownTriggers": {
+              "onLowStateOfCharge": true
+            }
+          },
+          "restart": {
+            "forcedReboot": true,
+            "enabled": true,
+            "minStateOfCharge": 0
+          }
+        },
+        "suppliersSettings": [
+          {
+            "id": "1",
+            "settings": {
+              "localShutdownDuration": 120,
+              "shutdownTriggers": {
+                "powerOutage": {
+                  "enabled": false,
+                  "capacityLessThan": 0,
+                  "afterBackupTime": 300,
+                  "startShutdownBeforeEndOfBackup": 0,
+                  "endShutdownBeforeEndOfBackup": 30
+                }
+              },
+              "restartTriggers": {
+                "powerOutage": {
+                  "after": 0
+                }
+              }
+            }
+          },
+          {
+            "id": "2",
+            "settings": {
+              "localShutdownDuration": 120,
+              "shutdownTriggers": {
+                "powerOutage": {
+                  "enabled": false,
+                  "capacityLessThan": 0,
+                  "afterBackupTime": 300,
+                  "startShutdownBeforeEndOfBackup": 0,
+                  "endShutdownBeforeEndOfBackup": 30
+                }
+              },
+              "restartTriggers": {
+                "powerOutage": {
+                  "after": 3
+                }
+              }
+            }
+          },
+          {
+            "id": "3",
+            "settings": {
+              "localShutdownDuration": 120,
+              "shutdownTriggers": {
+                "powerOutage": {
+                  "enabled": false,
+                  "capacityLessThan": 0,
+                  "afterBackupTime": 300,
+                  "startShutdownBeforeEndOfBackup": 0,
+                  "endShutdownBeforeEndOfBackup": 30
+                }
+              },
+              "restartTriggers": {
+                "powerOutage": {
+                  "after": 6
+                }
+              }
+            }
+          }
+        ]
+      }
+    },
+    "predictpulse": {
+      "data": {
+        "version": "1.0",
+        "dmeData": {
+          "enabled": false,
+          "organization": {
+            "code": "",
+            "country": "",
+            "email": ""
+          },
+          "serverUrl": "user@example.com",
+          "period": 900
+        }
+      }
+    },
+    "productAnalytics": {
+      "data": {
+        "version": "1.0",
+        "dmeData": {
+          "optOut": true
+        }
+      }
+    },
+    "rms": {
+      "data": {
+        "version": "2.0",
+        "certificates": {
+          "ca": [
+            {
+              "data": "-----BEGIN CERTIFICATE-----\nMIIDxTCCAq2gAwIBAgIBADANBgkqhkiG9w0BAQsFADCBgzELMAkGA1UEBhMCVVMx\nEDAOBgNVBAgTB0FyaXpvbmExEzARBgNVBAcTClNjb3R0c2RhbGUxGjAYBgNVBAoT\nEUdvRGFkZHkuY29tLCBJbmMuMTEwLwYDVQQDEyhHbyBEYWRkeSBSb290IENlcnRp\nZmljYXRlIEF1dGhvcml0eSAtIEcyMB4XDTA5MDkwMTAwMDAwMFoXDTM3MTIzMTIz\nNTk1OVowgYMxCzAJBgNVBAYTAlVTMRAwDgYDVQQIEwdBcml6b25hMRMwEQYDVQQH\nEwpTY290dHNkYWxlMRowGAYDVQQKExFHb0RhZGR5LmNvbSwgSW5jLjExMC8GA1UE\nAxMoR28gRGFkZHkgUm9vdCBDZXJ0aWZpY2F0ZSBBdXRob3JpdHkgLSBHMjCCASIw\nDQYJKoZIhvcNAQEBBQADggEPADCCAQoCggEBAL9xYgjx+lk09xvJGKP3gElY6SKD\nE6bFIEMBO4Tx5oVJnyfq9oQbTqC023CYxzIBsQU+B07u9PpPL1kwIuerGVZr4oAH\n/PMWdYA5UXvl+TW2dE6pjYIT5LY/qQOD+qK+ihVqf94Lw7YZFAXK6sOoBJQ7Rnwy\nDfMAZiLIjWltNowRGLfTshxgtDj6AozO091GB94KPutdfMh8+7ArU6SSYmlRJQVh\nGkSBjCypQ5Yj36w6gZoOKcUcqeldHraenjAKOc7xiID7S13MMuyFYkMlNAJWJwGR\ntDtwKj9useiciAF9n9T521NtYJ2/LOdYq7hfRvzOxBsDPAnrSTFcaUaz4EcCAwEA\nAaNCMEAwDwYDVR0TAQH/BAUwAwEB/zAOBgNVHQ8BAf8EBAMCAQYwHQYDVR0OBBYE\nFDqahQcQZyi27/a9BUFuIMGU2g/eMA0GCSqGSIb3DQEBCwUAA4IBAQCZ21151fmX\nWWcDYfF+OwYxdS2hII5PZYe096acvNjpL9DbWu7PdIxztDhC2gV7+AJ1uP2lsdeu\n9tfeE8tTEH6KRtGX+rcuKxGrkLAngPnon1rpN5+r5N9ss4UXnT3ZJE95kTXWXwTr\ngIOrmgIttRD02JDHBHNA7XIloKmf7J6raBKZV8aPEjoJpL1E/QYVN8Gb5DKj7Tjo\n2GTzLH4U/ALqn83/B2gX2yKQOC16jdFU8WnjXzPKej17CuPKf1855eJ1usV2GDPO\nLPAvTK33sefOT6jEm0pUBsV/fdUID+Ic/n4XuKxe9tQWskMJDE32p2u0mYRlynqI\n4uJEvlz36hz1\n-----END CERTIFICATE-----\n"
+            }
+          ]
+        },
+        "settings": {
+          "enabled": false,
+          "proxy": "",
+          "proxyUsername": {
+            "plaintext": null,
+            "cyphered": "REDACTED"
+          },
+          "proxyPassword": {
+            "plaintext": null,
+            "cyphered": "REDACTED"
+          },
+          "endpoint": "https://eatonpq.cumulocity.com",
+          "proxyAuthEnabled": false,
+          "tenant": "",
+          "username": {
+            "plaintext": null,
+            "cyphered": "REDACTED"
+          },
+          "password": {
+            "plaintext": null,
+            "cyphered": "REDACTED"
+          },
+          "defaultUsername": "management/devicebootstrap",
+          "defaultPassword": {
+            "plaintext": null,
+            "cyphered": "REDACTED"
+          }
+        }
+      }
+    },
+    "rsyslog": {
+      "data": {
+        "version": "1.0",
+        "certificates": {
+          "ca": [],
+          "trustedClient": []
+        },
+        "settings": {
+          "enabled": false,
+          "servers": [
+            {
+              "name": "Primary",
+              "enabled": false,
+              "hostname": "",
+              "protocol": 2,
+              "port": 6514,
+              "tcpFraming": 1,
+              "usingByteOrderMask": false,
+              "security": {
+                "ssl": 2,
+                "verifyTlsCert": true
+              }
+            },
+            {
+              "name": "",
+              "enabled": false,
+              "hostname": "",
+              "protocol": 2,
+              "port": 6514,
+              "tcpFraming": 1,
+              "usingByteOrderMask": false,
+              "security": {
+                "ssl": 2,
+                "verifyTlsCert": true
+              }
+            }
+          ]
+        }
+      }
+    },
+    "schedule": {
+      "data": {
+        "version": "1.0",
+        "dmeData": []
+      }
+    },
+    "sensorMeasure": {
+      "data": {
+        "version": "1.0",
+        "settings": {
+          "periodicity": 10
+        }
+      }
+    },
+    "smtp": {
+      "data": {
+        "version": "2.0",
+        "certificateData": {
+          "ca": []
+        },
+        "dmeData": {
+          "port": 25,
+          "enabled": true,
+          "server": "",
+          "requireAuth": false,
+          "user": "",
+          "password": {
+            "plaintext": null,
+            "cyphered": "REDACTED"
+          },
+          "fromAddress": "user@example.com",
+          "ssl": 3,
+          "verifyTlsCert": false
+        }
+      }
+    },
+    "snmp": {
+      "data": {
+        "version": "2.0",
+        "dmeData": {
+          "v1": {
+            "enabled": true,
+            "communities": {
+              "readOnly": {
+                "name": "public",
+                "enabled": true
+              },
+              "readWrite": {
+                "name": "private",
+                "enabled": false
+              }
+            }
+          },
+          "v3": {
+            "enabled": true,
+            "users": [
+              {
+                "name": "readonly",
+                "allowWrite": false,
+                "enabled": false,
+                "auth": {
+                  "enabled": true,
+                  "algorithm": 2,
+                  "password": {
+                    "plaintext": null,
+                    "cyphered": "REDACTED"
+                  }
+                },
+                "priv": {
+                  "enabled": true,
+                  "algorithm": 1,
+                  "password": {
+                    "plaintext": null,
+                    "cyphered": "REDACTED"
+                  }
+                }
+              },
+              {
+                "name": "readwrite",
+                "allowWrite": true,
+                "enabled": false,
+                "auth": {
+                  "enabled": true,
+                  "algorithm": 2,
+                  "password": {
+                    "plaintext": null,
+                    "cyphered": "REDACTED"
+                  }
+                },
+                "priv": {
+                  "enabled": true,
+                  "algorithm": 1,
+                  "password": {
+                    "plaintext": null,
+                    "cyphered": "REDACTED"
+                  }
+                }
+              }
+            ]
+          },
+          "traps": {
+            "receivers": [
+              {
+                "name": "LibreNMS",
+                "host": "librenms.host.example.example.org",
+                "port": 162,
+                "community": "public",
+                "protocol": 2,
+                "user": "",
+                "enabled": true
+              }
+            ]
+          }
+        }
+      }
+    },
+    "userAndSessionManagement": {
+      "data": {
+        "version": "1.0",
+        "settings": {
+          "version": "2.0",
+          "all": {
+            "1.0": {
+              "SessionsSettings": {
+                "1.0": {
+                  "leaseTime": 7200,
+                  "inactivityTimeout": 3600
+                }
+              },
+              "local": {
+                "1.0": {
+                  "predefinedAccounts": [
+                    {
+                      "id": "0",
+                      "name": "admin",
+                      "enabled": true,
+                      "neverBlock": true,
+                      "neverExpire": true,
+                      "profile": "administrators",
+                      "vcard": {
+                        "fullName": "",
+                        "email": "",
+                        "phone": "",
+                        "organization": ""
+                      },
+                      "preferences": {
+                        "language": "en_US",
+                        "dateFormat": "",
+                        "timeFormat": "",
+                        "temperatureUnit": "",
+                        "licenceAgreement": "accepted"
+                      },
+                      "password": {
+                        "lastChangeISO": "2024-11-03T23:45:26Z"
+                      }
+                    }
+                  ],
+                  "createdAccounts": [],
+                  "settings": {
+                    "passwordStrength": {
+                      "minLength": 8,
+                      "maxLength": 32,
+                      "minUppercase": 1,
+                      "minLowercase": 1,
+                      "minDigit": 1,
+                      "minSpecial": 1
+                    },
+                    "passwordExpiration": {
+                      "enabled": false,
+                      "daysUntilExpire": 90
+                    },
+                    "lockAccount": {
+                      "enabled": true,
+                      "numberOfTries": 10,
+                      "lockDuration": 1800
+                    }
+                  }
+                }
+              },
+              "ldap": {
+                "1.0": {
+                  "settings": {
+                    "enabled": false,
+                    "connectivity": {
+                      "primaryServer": {
+                        "name": "Primary",
+                        "uri": "",
+                        "port": 389
+                      },
+                      "secondaryServer": {
+                        "name": "Secondary",
+                        "uri": "",
+                        "port": 389
+                      },
+                      "userDomain": {
+                        "nameAttribute": "",
+                        "dn": ""
+                      },
+                      "groupDomain": {
+                        "nameAttribute": "",
+                        "dn": ""
+                      },
+                      "bind": {
+                        "dn": "",
+                        "password": {
+                          "plaintext": null,
+                          "ciphered": null,
+                          "cyphered": "REDACTED"
+                        }
+                      },
+                      "security": {
+                        "type": "ssl",
+                        "verifyCertificate": true
+                      }
+                    },
+                    "mappings": [
+                      {
+                        "id": "0",
+                        "remoteGroup": "",
+                        "profileName": ""
+                      },
+                      {
+                        "id": "1",
+                        "remoteGroup": "",
+                        "profileName": ""
+                      },
+                      {
+                        "id": "2",
+                        "remoteGroup": "",
+                        "profileName": ""
+                      },
+                      {
+                        "id": "3",
+                        "remoteGroup": "",
+                        "profileName": ""
+                      },
+                      {
+                        "id": "4",
+                        "remoteGroup": "",
+                        "profileName": ""
+                      },
+                      {
+                        "id": "5",
+                        "remoteGroup": "",
+                        "profileName": ""
+                      },
+                      {
+                        "id": "6",
+                        "remoteGroup": "",
+                        "profileName": ""
+                      },
+                      {
+                        "id": "7",
+                        "remoteGroup": "",
+                        "profileName": ""
+                      },
+                      {
+                        "id": "8",
+                        "remoteGroup": "",
+                        "profileName": ""
+                      },
+                      {
+                        "id": "9",
+                        "remoteGroup": "",
+                        "profileName": ""
+                      },
+                      {
+                        "id": "10",
+                        "remoteGroup": "",
+                        "profileName": ""
+                      },
+                      {
+                        "id": "11",
+                        "remoteGroup": "",
+                        "profileName": ""
+                      },
+                      {
+                        "id": "12",
+                        "remoteGroup": "",
+                        "profileName": ""
+                      },
+                      {
+                        "id": "13",
+                        "remoteGroup": "",
+                        "profileName": ""
+                      },
+                      {
+                        "id": "14",
+                        "remoteGroup": "",
+                        "profileName": ""
+                      },
+                      {
+                        "id": "15",
+                        "remoteGroup": "",
+                        "profileName": ""
+                      },
+                      {
+                        "id": "16",
+                        "remoteGroup": "",
+                        "profileName": ""
+                      },
+                      {
+                        "id": "17",
+                        "remoteGroup": "",
+                        "profileName": ""
+                      },
+                      {
+                        "id": "18",
+                        "remoteGroup": "",
+                        "profileName": ""
+                      },
+                      {
+                        "id": "19",
+                        "remoteGroup": "",
+                        "profileName": ""
+                      }
+                    ],
+                    "preferences": {
+                      "language": "en_US",
+                      "dateFormat": "",
+                      "timeFormat": "",
+                      "temperatureUnit": "Fahrenheit",
+                      "licenceAgreement": ""
+                    }
+                  }
+                }
+              },
+              "radius": {
+                "1.0": {
+                  "settings": {
+                    "enabled": false,
+                    "connectivity": {
+                      "protocol": "pap",
+                      "primaryServer": {
+                        "name": "Primary",
+                        "secret": {
+                          "plaintext": null,
+                          "ciphered": null,
+                          "cyphered": "REDACTED"
+                        },
+                        "url": "",
+                        "port": 1812,
+                        "timeout": 3,
+                        "retryCount": 0
+                      },
+                      "secondaryServer": {
+                        "name": "Secondary",
+                        "secret": {
+                          "plaintext": null,
+                          "ciphered": null,
+                          "cyphered": "REDACTED"
+                        },
+                        "url": "",
+                        "port": 1812,
+                        "timeout": 3,
+                        "retryCount": 0
+                      },
+                      "nas": {
+                        "identifier": "",
+                        "ip": ""
+                      }
+                    },
+                    "profileFallback": {
+                      "enabled": false,
+                      "profile": ""
+                    },
+                    "mappings": [
+                      {
+                        "id": "0",
+                        "profile": "administrators",
+                        "attribute": 28,
+                        "value": 1,
+                        "vendor": 534
+                      },
+                      {
+                        "id": "1",
+                        "profile": "",
+                        "attribute": 0,
+                        "value": 0,
+                        "vendor": 0
+                      },
+                      {
+                        "id": "2",
+                        "profile": "",
+                        "attribute": 0,
+                        "value": 0,
+                        "vendor": 0
+                      },
+                      {
+                        "id": "3",
+                        "profile": "",
+                        "attribute": 0,
+                        "value": 0,
+                        "vendor": 0
+                      },
+                      {
+                        "id": "4",
+                        "profile": "",
+                        "attribute": 0,
+                        "value": 0,
+                        "vendor": 0
+                      },
+                      {
+                        "id": "5",
+                        "profile": "",
+                        "attribute": 0,
+                        "value": 0,
+                        "vendor": 0
+                      },
+                      {
+                        "id": "6",
+                        "profile": "",
+                        "attribute": 0,
+                        "value": 0,
+                        "vendor": 0
+                      },
+                      {
+                        "id": "7",
+                        "profile": "",
+                        "attribute": 0,
+                        "value": 0,
+                        "vendor": 0
+                      },
+                      {
+                        "id": "8",
+                        "profile": "",
+                        "attribute": 0,
+                        "value": 0,
+                        "vendor": 0
+                      },
+                      {
+                        "id": "9",
+                        "profile": "",
+                        "attribute": 0,
+                        "value": 0,
+                        "vendor": 0
+                      },
+                      {
+                        "id": "10",
+                        "profile": "",
+                        "attribute": 0,
+                        "value": 0,
+                        "vendor": 0
+                      },
+                      {
+                        "id": "11",
+                        "profile": "",
+                        "attribute": 0,
+                        "value": 0,
+                        "vendor": 0
+                      },
+                      {
+                        "id": "12",
+                        "profile": "",
+                        "attribute": 0,
+                        "value": 0,
+                        "vendor": 0
+                      },
+                      {
+                        "id": "13",
+                        "profile": "",
+                        "attribute": 0,
+                        "value": 0,
+                        "vendor": 0
+                      },
+                      {
+                        "id": "14",
+                        "profile": "",
+                        "attribute": 0,
+                        "value": 0,
+                        "vendor": 0
+                      },
+                      {
+                        "id": "15",
+                        "profile": "",
+                        "attribute": 0,
+                        "value": 0,
+                        "vendor": 0
+                      },
+                      {
+                        "id": "16",
+                        "profile": "",
+                        "attribute": 0,
+                        "value": 0,
+                        "vendor": 0
+                      },
+                      {
+                        "id": "17",
+                        "profile": "",
+                        "attribute": 0,
+                        "value": 0,
+                        "vendor": 0
+                      },
+                      {
+                        "id": "18",
+                        "profile": "",
+                        "attribute": 0,
+                        "value": 0,
+                        "vendor": 0
+                      },
+                      {
+                        "id": "19",
+                        "profile": "",
+                        "attribute": 0,
+                        "value": 0,
+                        "vendor": 0
+                      }
+                    ],
+                    "preferences": {
+                      "language": "",
+                      "dateFormat": "",
+                      "timeFormat": "",
+                      "temperatureUnit": "",
+                      "licenceAgreement": ""
+                    }
+                  }
+                }
+              }
+            }
+          }
+        }
+      }
+    },
+    "wol": {
+      "data": {
+        "version": "1.0",
+        "dmeData": {
+          "configurations": []
+        }
+      }
+    },
+    "ztp": {
+      "data": {
+        "version": "1.0",
+        "settings": {
+          "userEnabled": false,
+          "protocols": [
+            {
+              "id": "http",
+              "enabled": true
+            },
+            {
+              "id": "https",
+              "enabled": true
+            },
+            {
+              "id": "ftps",
+              "enabled": true
+            },
+            {
+              "id": "ftp",
+              "enabled": true
+            }
+          ]
+        }
+      }
+    }
+  },
+  "firmwareVersion": "2.3.3"
+}
