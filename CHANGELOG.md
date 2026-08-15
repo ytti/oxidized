@@ -20,6 +20,7 @@ The format is based on [Keep a Changelog](https://keepachangelog.com/en/1.1.0/).
 - ingate: redact secrets (private keys, passwords, secrets, passphrases, pre-shared keys, tokens and the SNMP community) when remove_secret is set (@thanegill)
 
 ### Fixed
+- aoscx: mask the community string in snmp-server host lines instead of the token after the host address. Fixes #3881 (@FusionBrah)
 - junos: redact cleartext passwords embedded in archive-site URLs. Fixes #3640 (@KalebFenley)
 - siklu: allow parenthesis in prompt. Fixes #3841 (@ytti)
 - fortios: allow parenthesis in prompt. Fixes #3846 (@ytti)
