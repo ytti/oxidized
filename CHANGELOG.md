@@ -6,6 +6,7 @@ The format is based on [Keep a Changelog](https://keepachangelog.com/en/1.1.0/).
 
 ## [Unreleased]
 ### Added
+- eatonnetwork: model unit test (@thanegill)
 - source/sql: support defining port in configuration. Closes #3853 (@ytti)
 - vsololt: new model for VSOL GPON OLT (@Vantomas)
 - tplink: add simulation data and unit tests for the TP-Link DeltaStream DS-P7001-08 GPON OLT (@Vantomas)
@@ -16,12 +17,15 @@ The format is based on [Keep a Changelog](https://keepachangelog.com/en/1.1.0/).
 - routeros: remove intermittent POE `voltage_on_poe-in` comment (@hendrikbl)
 - tplink: use `\r\n` as the line terminator in pre_logout, required for the model unit tests to work (@Vantomas)
 - ssh: change max_window_size from 138k to 2MB to avoid triggering Mikrotik bug. Closes #3867 (@ytti)
+- ingate: redact secrets (private keys, passwords, secrets, passphrases, pre-shared keys, tokens and the SNMP community) when remove_secret is set (@thanegill)
 
 ### Fixed
 - eos: hide the community string / v3 user in snmp-server host lines. Fixes #3882 (@FusionBrah)
+- aoscx: mask the community string in snmp-server host lines instead of the token after the host address. Fixes #3881 (@FusionBrah)
 - junos: redact cleartext passwords embedded in archive-site URLs. Fixes #3640 (@KalebFenley)
 - siklu: allow parenthesis in prompt. Fixes #3841 (@ytti)
 - fortios: allow parenthesis in prompt. Fixes #3846 (@ytti)
+- os6: hide snmp-server community strings in the secret filter (@Jurgen1994)
 - fortigate: prompt can contain HA cluster status. Fixes #3846 (@robertcheramy)
 - aoscx: hide power consumption on rows where PSU output is N/A. Fixes #3864 (@FusionBrah)
 - aoscx: hide input voltage readings in "show environment power-supply input-voltage". Fixes #3864 (@FusionBrah)
