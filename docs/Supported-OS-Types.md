@@ -92,6 +92,7 @@
 |                    |XOS, ExtremeWare              |[xos](/lib/oxidized/model/xos.rb)
 |F5                  |F5OS                          |[tmos](/lib/oxidized/model/f5os.rb)
 |                    |TMOS                          |[tmos](/lib/oxidized/model/tmos.rb)
+|                    |TMOS with AAA                 |[tmos](/lib/oxidized/model/tmos_aaa.rb)
 |Fiberstore (fs.com) |S3400                         |[fsos](/lib/oxidized/model/fsos.rb)              |                 |[FSOS](Model-Notes/FSOS.md)
 |                    |S3800                         |[gcombnps](/lib/oxidized/model/gcombnps.rb)
 |                    |S3900                         |[edgecos](/lib/oxidized/model/edgecos.rb)
