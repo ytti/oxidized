@@ -21,6 +21,10 @@ class CNOS < Oxidized::Model
     comment cfg
   end
 
+  cmd 'show license' do |cfg|
+    comment cfg
+  end
+
   cmd 'show transceiver' do |cfg|
     cfg.gsub! /^Port \S+ Transceiver Diagnostic:([\s\S]*?-{79}){3}/m, ''
     comment cfg
