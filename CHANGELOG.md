@@ -6,6 +6,9 @@ The format is based on [Keep a Changelog](https://keepachangelog.com/en/1.1.0/).
 
 ## [Unreleased]
 ### Added
+- cnos: remove transceiver DDM data (@freddy36)
+- cnos: add show license output (@freddy36)
+- cnos: add FS-S58580 simulation data (@freddy36)
 - eatonnetwork: model unit test (@thanegill)
 - source/sql: support defining port in configuration. Closes #3853 (@ytti)
 - vsololt: new model for VSOL GPON OLT (@Vantomas)
