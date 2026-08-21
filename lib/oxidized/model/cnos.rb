@@ -21,9 +21,13 @@ class CNOS < Oxidized::Model
     comment cfg
   end
 
+  # show license in combination with terminal length 0 is broken on older software versions (missing new line at the end of the output)
   cmd 'show license' do |cfg|
     comment cfg
   end
+
+  # set terminal length 0 after show license to support older software versions
+  cmd 'terminal length 0'
 
   cmd 'show transceiver' do |cfg|
     cfg.gsub! /^Port \S+ Transceiver Diagnostic:([\s\S]*?-{79}){3}/m, ''
@@ -37,7 +41,7 @@ class CNOS < Oxidized::Model
   end
 
   cfg :telnet, :ssh do
-    post_login 'terminal length 0'
+    post_login 'terminal length 512'
     pre_logout 'exit'
   end
 end

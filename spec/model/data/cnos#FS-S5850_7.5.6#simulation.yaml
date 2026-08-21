@@ -4,8 +4,8 @@ init_prompt: |-
     \r
     sim-switch#\x20
 commands:
-  - "terminal length 0\n": |-
-      terminal length 0\r
+  - "terminal length 512\n": |-
+      terminal length 512\r
       sim-switch#\x20
   - "show version\n": |-
       show version\r
@@ -40,6 +40,9 @@ commands:
                       ETHOAM EXTEND_ACL PTP HW_MONITOR IPFIX\r\r
                       EFD VPWS VPLS HVPLS TPOAM\r\r
                       RSVP OSPF_TE EVPN MPLSSR\r\r
+      sim-switch#\x20
+  - "terminal length 0\n": |-
+      terminal length 0\r
       sim-switch#\x20
   - "show transceiver\n": |-
       show transceiver\r
