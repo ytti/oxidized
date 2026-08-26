@@ -16,7 +16,8 @@ require 'net/http'
 require 'uri'
 require 'json'
 require 'cgi'
-require 'thread'
+
+# rubocop:disable Metrics/ClassLength
 
 class GoogleChat < Oxidized::Hook
   DEFAULT_MAX_DIFF_CHARS = 15_000
@@ -130,8 +131,8 @@ class GoogleChat < Oxidized::Hook
     payload = {
       cards: [
         {
-          header: {
-            title: 'Oxidized Config Change',
+          header:   {
+            title:    'Oxidized Config Change',
             subtitle: "#{display_name} (#{ip})",
             imageUrl: 'https://www.gstatic.com/images/icons/material/system/2x/settings_ethernet_black_48dp.png'
           },
@@ -190,9 +191,7 @@ class GoogleChat < Oxidized::Hook
     return nil if result == 'no diffs'
 
     patch =
-      if result.respond_to?(:[])
-        result[:patch] || result['patch']
-      end
+      (result[:patch] || result['patch'] if result.respond_to?(:[]))
 
     return nil unless patch
 
@@ -290,9 +289,7 @@ class GoogleChat < Oxidized::Hook
 
     # Add type only when useful and when it isn't already effectively
     # duplicated by the reason.
-    if show_error_type? && !error_type.empty?
-      text += " [#{error_type}]"
-    end
+    text += " [#{error_type}]" if show_error_type? && !error_type.empty?
 
     payload = {
       text: text
@@ -317,9 +314,7 @@ class GoogleChat < Oxidized::Hook
     values << node.err_reason.to_s if node.respond_to?(:err_reason)
     values << node.msg.to_s if node.respond_to?(:msg)
 
-    if ctx.job && ctx.job.respond_to?(:status)
-      values << ctx.job.status.to_s
-    end
+    values << ctx.job.status.to_s if ctx.job.respond_to?(:status)
 
     reason = values.find { |value| !value.nil? && !value.strip.empty? }
 
@@ -571,9 +566,7 @@ class GoogleChat < Oxidized::Hook
 
   def http_request(uri, request)
     proxy_uri =
-      if cfg.has_key?('proxy') && !cfg.proxy.to_s.strip.empty?
-        URI.parse(cfg.proxy.to_s)
-      end
+      (URI.parse(cfg.proxy.to_s) if cfg.has_key?('proxy') && !cfg.proxy.to_s.strip.empty?)
 
     http =
       if proxy_uri
@@ -590,14 +583,18 @@ class GoogleChat < Oxidized::Hook
     http.use_ssl = uri.scheme == 'https'
 
     http.open_timeout =
-      cfg.has_key?('open_timeout') \
-        ? cfg.open_timeout.to_i \
-        : DEFAULT_OPEN_TIMEOUT
+      if cfg.has_key?('open_timeout')
+        cfg.open_timeout.to_i
+      else
+        DEFAULT_OPEN_TIMEOUT
+      end
 
     http.read_timeout =
-      cfg.has_key?('read_timeout') \
-        ? cfg.read_timeout.to_i \
-        : DEFAULT_READ_TIMEOUT
+      if cfg.has_key?('read_timeout')
+        cfg.read_timeout.to_i
+      else
+        DEFAULT_READ_TIMEOUT
+      end
 
     http.request(request)
   end
@@ -621,7 +618,7 @@ class GoogleChat < Oxidized::Hook
   end
 
   def safe_node_identifier(ctx)
-    return 'unknown node' unless ctx && ctx.node
+    return 'unknown node' unless ctx&.node
 
     "#{ctx.node.group}/#{ctx.node.name}"
   end
@@ -640,3 +637,4 @@ class GoogleChat < Oxidized::Hook
     text[0, 500]
   end
 end
+# rubocop:enable Metrics/ClassLength

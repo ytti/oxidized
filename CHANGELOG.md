@@ -6,6 +6,7 @@ The format is based on [Keep a Changelog](https://keepachangelog.com/en/1.1.0/).
 
 ## [Unreleased]
 ### Added
+- hook/googlechat: add Google Chat notifications for configuration changes and node failures (@dbusse-wcr7)
 - eatonnetwork: model unit test (@thanegill)
 - source/sql: support defining port in configuration. Closes #3853 (@ytti)
 - vsololt: new model for VSOL GPON OLT (@Vantomas)
