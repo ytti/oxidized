@@ -59,6 +59,7 @@ Check out the [Oxidized TREX 2014 presentation](http://youtu.be/kBQ_CTUuqeU?t=3h
       * [Hook: githubrepo](docs/Hooks.md#hook-type-githubrepo)
       * [Hook: awssns](docs/Hooks.md#hook-type-awssns)
       * [Hook: slackdiff](docs/Hooks.md#hook-type-slackdiff)
+      * [Hook: googlechat](docs/Hooks.md#hook-type-googlechat)
       * [Hook: xmppdiff](docs/Hooks.md#hook-type-xmppdiff)
       * [Hook: ciscosparkdiff](docs/Hooks.md#hook-type-ciscosparkdiff)
 5. [Creating and Extending Models](docs/Creating-Models.md)
