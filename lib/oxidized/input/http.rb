@@ -54,6 +54,11 @@ module Oxidized
       res.body
     end
 
+    def delete_http(path)
+      res = perform_http_request(path, method: :delete)
+      res.body
+    end
+
     def perform_http_request(path, method: :get, body: nil, extra_headers: {})
       uri = get_uri(path)
       http_method = method.to_s.upcase
@@ -85,13 +90,16 @@ module Oxidized
 
     def make_request(uri, ssl_verify, extra_headers = {}, method: :get, body: nil)
       Net::HTTP.start(uri.hostname, uri.port, use_ssl: uri.scheme == "https", verify_mode: ssl_verify) do |http|
-        req_class = if method == :get
+        req_class = case method
+                    when :get
                       Net::HTTP::Get
-                    elsif method == :post
+                    when :post
                       Net::HTTP::Post
+                    when :delete
+                      Net::HTTP::Delete
                     else
                       raise Oxidized::OxidizedError, "Unsupported HTTP method: #{method.inspect}. " \
-                                                     "Only :get and :post are supported"
+                                                     "Only :get, :post and :delete are supported"
                     end
         req = req_class.new(uri)
         @headers.merge(extra_headers).each { |header, value| req.add_field(header, value) }

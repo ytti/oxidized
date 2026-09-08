@@ -152,4 +152,27 @@ describe Oxidized::HTTP do
       _(body).must_equal "no body"
     end
   end
+
+  describe "#delete_http" do
+    it "performs a DELETE request and returns the response body" do
+      http = build_http(secure: true)
+
+      response = mock("Net::HTTPResponse")
+      response.stubs(:code).returns("200")
+      response.stubs(:[]).returns(nil)
+      response.stubs(:body).returns("OK")
+
+      net_http = mock("Net::HTTP")
+      net_http.expects(:request).with do |req|
+        _(req).must_be_instance_of Net::HTTP::Delete
+        _(req.path).must_equal "/api/test/path/1"
+        true
+      end.returns(response)
+
+      Net::HTTP.expects(:start).yields(net_http).returns(response)
+
+      body = http.send(:delete_http, "/api/test/path/1")
+      _(body).must_equal "OK"
+    end
+  end
 end
