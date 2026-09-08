@@ -18,6 +18,7 @@ The format is based on [Keep a Changelog](https://keepachangelog.com/en/1.1.0/).
 - tplink: use `\r\n` as the line terminator in pre_logout, required for the model unit tests to work (@Vantomas)
 - ssh: change max_window_size from 138k to 2MB to avoid triggering Mikrotik bug. Closes #3867 (@ytti)
 - ingate: redact secrets (private keys, passwords, secrets, passphrases, pre-shared keys, tokens and the SNMP community) when remove_secret is set (@thanegill)
+- http: support overriding port (@mgrocock-cwcs)
 
 ### Fixed
 - input/cli: raise an error when a requested login credential is missing. Fixes #3700 (@robertcheramy)

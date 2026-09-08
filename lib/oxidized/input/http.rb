@@ -7,6 +7,7 @@ module Oxidized
     def connect(node)
       @node = node
       @secure = false
+      @port = nil
       @username = nil
       @password = nil
       @headers = {}
@@ -115,6 +116,7 @@ module Oxidized
       path = URI.parse(path)
       uri_class = @secure ? URI::HTTPS : URI::HTTP
       uri_class.build(host:  @node.ip,
+                      port:  @port,
                       path:  path.path,
                       query: path.query)
     end

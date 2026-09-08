@@ -19,15 +19,16 @@ describe Oxidized::HTTP do
                        password: 'pass')
   end
 
-  def build_http(ip = "127.0.0.1", secure: false)
+  def build_http(ip = "127.0.0.1", secure: false, port: nil)
     http = Oxidized::HTTP.new
     http.connect(get_node(ip))
     http.instance_variable_set("@secure", secure)
+    http.instance_variable_set("@port", port)
     http
   end
 
-  def get_uri(ip, path, secure: false)
-    build_http(ip, secure: secure).send("get_uri", path)
+  def get_uri(ip, path, secure: false, port: nil)
+    build_http(ip, secure: secure, port: port).send("get_uri", path)
   end
 
   describe "#get_uri" do
@@ -42,6 +43,10 @@ describe Oxidized::HTTP do
     it "it should return valid secure IPv6 URI for a path without query" do
       uri = get_uri("2001:db8::42", "/path", secure: true)
       _(uri.to_s).must_equal "https://[2001:db8::42]/path"
+    end
+    it "it should return valid secure IPv6 URI with port for a path with query" do
+      uri = get_uri("2001:db8::42", "/path?query", secure: true, port: 8443)
+      _(uri.to_s).must_equal "https://[2001:db8::42]:8443/path?query"
     end
   end
 
