@@ -13,7 +13,6 @@ Wants=network-online.target
 [Service]
 ExecStart=/usr/local/bin/oxidized
 User=oxidized
-KillSignal=SIGKILL
 #Environment="OXIDIZED_HOME=/etc/oxidized"
 Restart=on-failure
 RestartSec=300s
