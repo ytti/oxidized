@@ -35,18 +35,27 @@ describe Oxidized::HTTP do
     it "it should return valid insecure IPv6 URI for a path with query" do
       uri = get_uri("2001:db8::42", "/path?query")
       _(uri.to_s).must_equal "http://[2001:db8::42]/path?query"
+      _(uri.port).must_equal 80
+    end
+    it "it should return valid insecure IPv4 URI with port for a path without query" do
+      uri = get_uri("192.0.0.42", "/path", port: 8080)
+      _(uri.to_s).must_equal "http://192.0.0.42:8080/path"
+      _(uri.port).must_equal 8080
     end
     it "it should return valid secure IPv4 URI for a path with query" do
       uri = get_uri("192.0.0.42", "/this/is/path?and=this&is=query", secure: true)
       _(uri.to_s).must_equal "https://192.0.0.42/this/is/path?and=this&is=query"
+      _(uri.port).must_equal 443
     end
     it "it should return valid secure IPv6 URI for a path without query" do
       uri = get_uri("2001:db8::42", "/path", secure: true)
       _(uri.to_s).must_equal "https://[2001:db8::42]/path"
+      _(uri.port).must_equal 443
     end
     it "it should return valid secure IPv6 URI with port for a path with query" do
       uri = get_uri("2001:db8::42", "/path?query", secure: true, port: 8443)
       _(uri.to_s).must_equal "https://[2001:db8::42]:8443/path?query"
+      _(uri.port).must_equal 8443
     end
   end
 
