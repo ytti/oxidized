@@ -11,6 +11,7 @@ The format is based on [Keep a Changelog](https://keepachangelog.com/en/1.1.0/).
 - vsololt: new model for VSOL GPON OLT (@Vantomas)
 - tplink: add simulation data and unit tests for the TP-Link DeltaStream DS-P7001-08 GPON OLT (@Vantomas)
 - device2yaml: add `-n`/`--newline` option to set the command line terminator (e.g. `-n "\r\n"`) for devices that submit a command only on a carriage return; the terminator is recorded as a `command_newline` key in the generated YAML (@Vantomas)
+- AGENTS.md: add guidance for AI coding agents, and document the AI contribution policy in CONTRIBUTING.md (@robertcheramy)
 
 ### Changed
 - docker: set LANG=C.UTF-8. Fixes #3690 (@ytti)
