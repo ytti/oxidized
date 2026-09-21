@@ -4,25 +4,53 @@ require 'zip'
 class FTD < Oxidized::Model
   class FTDError < Oxidized::OxidizedError; end
 
-  cfg_cb = lambda do
+  # Encapsulates the multi-step FTD configuration export workflow. Given the
+  # http input, it drives the Secure Firewall Device Manager (FDM - Firepower
+  # Device Manager) REST API: authenticate, schedule a config
+  # export job, poll it, download the resulting zip and extract the config.
+  class ConfigExporter
+    include SemanticLogger::Loggable
+
+    def initialize(http:, auth:, headers:, settings:)
+      @http            = http
+      @auth            = auth
+      @headers         = headers
+      @api_endpoint    = settings[:api_endpoint]
+      @config_filename = settings[:config_filename]
+      @polls           = settings[:polls]
+      @poll_wait       = settings[:poll_wait]
+    end
+
+    def run
+      login
+      # Delete any pre-existing config file, otherwise the config export will fail.
+      delete_config_file
+      job_id = schedule_config_export
+      job_status = poll_job_status(job_id)
+      check_job_status(job_status)
+      config_file = download_config_file
+      delete_config_file
+      extract_config(config_file)
+    end
+
+    private
+
     def login
       payload = {
         'grant_type' => 'password',
-        'username'   => @node.auth[:username],
-        'password'   => @node.auth[:password]
+        'username'   => @auth[:username],
+        'password'   => @auth[:password]
       }.to_json
 
-      begin
-        body = post_http("#{@api_endpoint}/fdm/token", payload)
-        token = JSON.parse(body)
-        @headers['Authorization'] = "#{token['token_type']} #{token['access_token']}"
-      rescue StandardError => e
-        raise FTDError, "Login failed: #{e.message}"
-      end
+      body = @http.post_http("#{@api_endpoint}/fdm/token", payload)
+      token = JSON.parse(body)
+      @headers['Authorization'] = "#{token['token_type']} #{token['access_token']}"
+    rescue StandardError => e
+      raise FTDError, "Login failed: #{e.message}"
     end
 
     def delete_config_file
-      delete_http("#{@api_endpoint}/action/configfiles/#{@config_filename}")
+      @http.delete_http("#{@api_endpoint}/action/configfiles/#{@config_filename}")
     rescue StandardError => e
       # Try to continue even if deletion fails.
       logger.debug "Deleting config file failed: #{e.message}"
@@ -36,13 +64,11 @@ class FTD < Oxidized::Model
         'deployedObjectsOnly' => true
       }.to_json
 
-      begin
-        body = post_http("#{@api_endpoint}/action/configexport", payload)
-        config_export = JSON.parse(body)
-        config_export['jobHistoryUuid']
-      rescue StandardError => e
-        raise FTDError, "Scheduling config export failed: #{e.message}"
-      end
+      body = @http.post_http("#{@api_endpoint}/action/configexport", payload)
+      config_export = JSON.parse(body)
+      config_export['jobHistoryUuid']
+    rescue StandardError => e
+      raise FTDError, "Scheduling config export failed: #{e.message}"
     end
 
     def poll_job_status(job_id)
@@ -52,7 +78,7 @@ class FTD < Oxidized::Model
         sleep(@poll_wait)
 
         begin
-          body = get_http("#{@api_endpoint}/jobs/configexportstatus/#{job_id}")
+          body = @http.get_http("#{@api_endpoint}/jobs/configexportstatus/#{job_id}")
           job_status = JSON.parse(body)
         rescue StandardError => e
           # Keep polling if a poll fails.
@@ -80,7 +106,7 @@ class FTD < Oxidized::Model
     end
 
     def download_config_file
-      get_http("#{@api_endpoint}/action/downloadconfigfile/#{@config_filename}")
+      @http.get_http("#{@api_endpoint}/action/downloadconfigfile/#{@config_filename}")
     rescue StandardError => e
       raise FTDError, "Downloading config file failed: #{e.message}"
     end
@@ -98,32 +124,33 @@ class FTD < Oxidized::Model
     rescue StandardError => e
       raise FTDError, "Extracting config failed: #{e.message}"
     end
+  end
 
-    login
-    delete_config_file # Delete any pre-existing config file, otherwise the config export will fail.
-    job_id = schedule_config_export
-    job_status = poll_job_status(job_id)
-    check_job_status(job_status)
-    config_file = download_config_file
-    delete_config_file
-    extract_config(config_file)
+  cfg_cb = lambda do
+    FTD::ConfigExporter.new(
+      # This callback is run via instance_exec on the http input, so `self` is
+      # the HTTP input instance providing get_http/post_http/delete_http.
+      http:     self,
+      auth:     @node.auth,
+      headers:  @headers,
+      settings: {
+        api_endpoint:    @api_endpoint,
+        config_filename: @config_filename,
+        polls:           @polls,
+        poll_wait:       @poll_wait
+      }
+    ).run
   rescue FTDError => e
     logger.debug e.message
     false
   end
 
   cmd cfg_cb do |cfg|
-    def sort_list!(cfg, type, key)
-      cfg.each_with_index.select { |element, _| element['type'] == 'identitywrapper' and element['data']['type'] == type }.map(&:last).each do |i|
-        cfg[i]['data'][key].sort_by! { |element| element['id'] }
-      end
-    end
-
     # generatedOn contains the timestamp of the config export. Delete it to avoid unnecessary differences.
     cfg[0].delete('generatedOn')
 
-    # Some lists seem to change order between exports. Sort them to avoid unnecessary differences.
-    sort_list!(cfg, 'distinguishednamegroup', 'distiniguishedNames') # This needs to be 'distiniguishedNames', not 'distinguishedNames'.
+    # This needs to be 'distiniguishedNames', not 'distinguishedNames'.
+    sort_list!(cfg, 'distinguishednamegroup', 'distiniguishedNames')
     sort_list!(cfg, 'geolocation', 'locations')
 
     JSON.pretty_generate(cfg)
@@ -142,5 +169,15 @@ class FTD < Oxidized::Model
       'Accept'       => 'application/json',
       'Content-Type' => 'application/json'
     }
+  end
+
+  private
+
+  # Some lists seem to change order between exports. Sort the given list type
+  # in-place by id to avoid unnecessary differences.
+  def sort_list!(cfg, type, key)
+    cfg.each_with_index.select { |element, _| element['type'] == 'identitywrapper' and element['data']['type'] == type }.map(&:last).each do |i|
+      cfg[i]['data'][key].sort_by! { |element| element['id'] }
+    end
   end
 end

@@ -77,7 +77,7 @@ describe Oxidized::HTTP do
 
       Net::HTTP.expects(:start).yields(net_http).returns(response)
 
-      body = http.send(:get_http, "/api/test/path/1")
+      body = http.get_http("/api/test/path/1")
       _(body).must_equal "OK"
     end
   end
@@ -103,11 +103,10 @@ describe Oxidized::HTTP do
 
       Net::HTTP.expects(:start).yields(net_http).returns(response)
 
-      body = http.send(:post_http,
-                       "/api/test/path/2",
-                       '{"header-name":"Some data"}',
-                       "Content-Type" => "application/json",
-                       "X-Test"       => "42")
+      body = http.post_http("/api/test/path/2",
+                            '{"header-name":"Some data"}',
+                            "Content-Type" => "application/json",
+                            "X-Test"       => "42")
 
       _(body).must_equal '{"result":"ok"}'
     end
@@ -134,10 +133,9 @@ describe Oxidized::HTTP do
 
       Net::HTTP.expects(:start).yields(net_http).returns(response)
 
-      http.send(:post_http,
-                "/api/test/path/2",
-                '{"header-name":"Some data"}',
-                "Authorization" => expected_auth)
+      http.post_http("/api/test/path/2",
+                     '{"header-name":"Some data"}',
+                     "Authorization" => expected_auth)
     end
 
     it "handles nil body without raising and sends an empty POST body" do
@@ -157,7 +155,7 @@ describe Oxidized::HTTP do
 
       Net::HTTP.expects(:start).yields(net_http).returns(response)
 
-      body = http.send(:post_http, "/api/test-nil-body", nil, {})
+      body = http.post_http("/api/test-nil-body", nil, {})
       _(body).must_equal "no body"
     end
   end
@@ -180,7 +178,7 @@ describe Oxidized::HTTP do
 
       Net::HTTP.expects(:start).yields(net_http).returns(response)
 
-      body = http.send(:delete_http, "/api/test/path/1")
+      body = http.delete_http("/api/test/path/1")
       _(body).must_equal "OK"
     end
   end

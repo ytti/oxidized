@@ -42,8 +42,6 @@ module Oxidized
       get_http path
     end
 
-    private
-
     def get_http(path)
       res = perform_http_request(path, method: :get)
       res.body
@@ -58,6 +56,8 @@ module Oxidized
       res = perform_http_request(path, method: :delete)
       res.body
     end
+
+    private
 
     def perform_http_request(path, method: :get, body: nil, extra_headers: {})
       uri = get_uri(path)
