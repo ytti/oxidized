@@ -183,17 +183,19 @@ input:
 The HTTP input supports the following HTTP methods:
 - `:get`  - for GET requests
 - `:post` - for POST requests
+- `:delete` - for DELETE requests
 
 These methods are used internally by models that require HTTP-based 
-configuration retrieval. Models can use `get_http()` and `post_http()` methods 
-provided by the HTTP input.
+configuration retrieval. Models can use `get_http()`, `post_http()` and
+`delete_http()` methods provided by the HTTP input.
 
 Example usage in a model:
 
 ```ruby
 cfg :http do
-  post_response = post_http('/some/path', payload, 'Some-Extra-Header' => 'value')
-  get_response  = get_http('/some/path')
+  post_response   = post_http('/some/path', payload, 'Some-Extra-Header' => 'value')
+  get_response    = get_http('/some/path')
+  delete_response = delete_http('/some/path')
 end
 ```
 
