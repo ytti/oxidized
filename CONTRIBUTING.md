@@ -101,6 +101,30 @@ The current active maintainers of Oxidized are:
 ## How to contribute content
 Content can be code, but also documentation and other things.
 
+### Using AI coding agents
+Using AI coding assistants (Copilot, Claude, ChatGPT, ...) to help write your
+contribution is fine. But whatever tool you use, **you remain the
+author and are responsible for the code you submit**:
+
+* A human must read, understand and be able to explain every line before it is
+  submitted. If you don't understand what the code does, do not submit it.
+* Test your contribution and make sure it actually works (see
+  [Run tests](#run-tests)). Agents happily produce plausible-looking code that
+  does not work.
+* Keep the change focused and minimal — agents tend to add unrelated
+  "improvements", verbose comments and dead code. Clean this up before opening
+  a pull request.
+
+Please do not open pull requests containing raw, unreviewed agent output.
+Oxidized is maintained by only a few volunteers, and every pull request is
+reviewed carefully by a human. Reviewing code that the author has not read or
+understood themselves is a lot of work and rather thankless — it shifts the
+effort of understanding the change onto the maintainers. Respect their time by
+submitting code you have genuinely reviewed and stand behind.
+
+If you use an agent, the repository provides [AGENTS.md](AGENTS.md) with project
+conventions the agent should follow.
+
 ### Fork the repository
 Fork this repository to your GitHub account by clicking the "Fork" button at the top right. This creates a personal copy of the project you can work on.
 
