@@ -2,7 +2,7 @@
 # HW Version 1
 # Multiple version of this switch (Hardware and Firmware) - Commands are not the same... Thanks to the engineers are thinking this logic for the NetAdmins...
 
-class Planet8P2SHW1 < Oxidized::Model
+class PlanetWGS42158P2SHW1 < Oxidized::Model
   using Refinements
 
   prompt /^[^\r\n]+[>#]\s?$/
