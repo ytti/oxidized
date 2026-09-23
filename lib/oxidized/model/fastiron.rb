@@ -2,7 +2,16 @@ class FastIron < Oxidized::Model
   using Refinements
 
   prompt /^([\w.@\/()-]+[#>]\s?)$/
-  comment  '! '
+  comment '! '
+
+  # The pager cannot always be disabled with 'skip-page-display', for example
+  # when the user has no enable rights. See issue #3819
+  expect /--More--|Press any key to continue|Press <space> to continue/i do |data, re|
+    send ' '
+    data.sub re, ''
+  end
+
+  clean :escape_codes
 
   cmd :all do |cfg|
     # cfg.gsub! /\cH+\s{8}/, ''         # example how to handle pager
