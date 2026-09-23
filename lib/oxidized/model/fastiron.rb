@@ -11,10 +11,7 @@ class FastIron < Oxidized::Model
     data.sub re, ''
   end
 
-  # Remove ANSI escape sequences used by the pager to redraw the screen
-  expect /\e\[[\d;]*[A-Za-z]/ do |data, re|
-    data.gsub(re, '')
-  end
+  clean :escape_codes
 
   cmd :all do |cfg|
     # cfg.gsub! /\cH+\s{8}/, ''         # example how to handle pager
