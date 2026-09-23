@@ -149,4 +149,36 @@ describe Oxidized::SSH do
       _(proc { @ssh.cmd(123) }).must_raise ArgumentError
     end
   end
+
+  describe '#login' do
+    before(:each) do
+      @ssh = Oxidized::SSH.new
+      @prompt = /^switch\#$/
+      @password_prompt = /^Password:/
+      @ssh.instance_variable_set(:@password, @password_prompt)
+    end
+
+    it "sends a configured credential" do
+      node = mock("Oxidized::Node")
+      node.stubs(name: 'switch.example.com', prompt: @prompt, auth: { password: 'secret' })
+      @ssh.instance_variable_set(:@node, node)
+      @ssh.expects(:expect).with([@prompt, @password_prompt]).returns(@password_prompt)
+      @ssh.expects(:cmd).with('secret', nil)
+      @ssh.expects(:expect).with([@prompt]).returns(@prompt)
+
+      @ssh.login
+    end
+
+    it "logs an error and raises ArgumentError when a credential is missing" do
+      node = mock("Oxidized::Node")
+      node.stubs(name: 'switch.example.com', prompt: @prompt, auth: { password: nil })
+      @ssh.instance_variable_set(:@node, node)
+      @ssh.expects(:expect).with([@prompt, @password_prompt]).returns(@password_prompt)
+      @ssh.logger.expects(:error).with('Missing password for CLI login at switch.example.com')
+      @ssh.expects(:cmd).never
+
+      error = _(proc { @ssh.login }).must_raise ArgumentError
+      _(error.message).must_equal 'missing password for CLI login'
+    end
+  end
 end

@@ -1,6 +1,6 @@
 # Writing good issues
 If you're experiencing a problem with Oxidized or need a new feature, you can
-[submit an issue on github](https://github.com/ytti/oxidized/issues). We have
+[submit an issue on GitHub](https://github.com/ytti/oxidized/issues). We have
 a great community where users help each other through the issue system.
 
 This guide provides tips on writing your issue to make it easier for the
@@ -18,8 +18,9 @@ could be invested in new code. Therefore, issues will be worked on with the
 following rules:
 
 - Use the predefined templates for bugs, feature requests and support requests.
-- If you don't provide the necessary information (read this file, fill in the
-  questions in the templates), expect your issue to be closed without a comment.
+- If important information is missing (read this file, fill in the questions in
+  the templates), maintainers may ask you to provide the missing details or
+  close the issue.
 - Inactive issues will be marked "stale" automatically after 90 days. Issues
   are not closed automatically; this is a manual action by a maintainer.
 - A feature request may be closed after some time of inactivity, as obviously
@@ -52,12 +53,12 @@ If you can, please also test against the latest git version, or at least read
 ## Format your issue
 - Use [GitHub Markdown](https://docs.github.com/en/get-started/writing-on-github/getting-started-with-writing-and-formatting-on-github/basic-writing-and-formatting-syntax) to format your issue.
 - Preview your text before submitting to ensure it renders correctly.
-- Avoid screenshots of text. Instead, use [code formating](https://docs.github.com/en/get-started/writing-on-github/getting-started-with-writing-and-formatting-on-github/basic-writing-and-formatting-syntax#quoting-code) for any relevant code snippets.
+- Avoid screenshots of text. Instead, use [code formatting](https://docs.github.com/en/get-started/writing-on-github/getting-started-with-writing-and-formatting-on-github/basic-writing-and-formatting-syntax#quoting-code) for any relevant code snippets.
 
 ## Choose your title well
 Keep the title brief yet descriptive. Aim to summarize the main issue or request in a few words.
 
-## Provide detailled informations
+## Provide detailed information
 Include as many relevant details as possible. At a minimum, specify:
 
 - Oxidized version and operating system.
@@ -66,6 +67,21 @@ Include as many relevant details as possible. At a minimum, specify:
 - Output of the error, if relevant.
 - For issues related to specific devices, consider creating a YAML Simulation file (instructions below).
 
+Please include the output of `oxidized --support` whenever possible. Run the
+command in the same environment and as the same user as the regular Oxidized
+process so that it finds the correct configuration, environment and gems. For
+Docker installations, run it inside the running container as the `oxidized`
+user, for example:
+
+```shell
+docker exec --user oxidized <container-name> oxidized --support
+```
+
+The command prints the Oxidized version, operating system, Ruby environment, a
+sanitized copy of your configuration and the relevant installed gems. Sensitive
+keys (passwords, tokens, ...) are redacted, but please review the output and
+remove any remaining sensitive data before sharing it.
+
 Also, provide clear steps to reproduce the issue, if applicable.
 
 ## Making feature requests
@@ -73,13 +89,33 @@ Feature requests are welcome, but please understand that unaddressed requests
 may be closed after some time. If you need a feature urgently, consider
 contributing code via a pull request (PR) or hiring a developer.
 
-## Sumbit a YAML Simulation File
+## Submit a YAML Simulation File
 To help developers troubleshoot device-specific issues, you may be asked to submit a
-[YAML simulation file](/docs/DeviceSimulation.md#creating-a-yaml-file-with-device2yamlrb) for your device.
+[YAML simulation file](/docs/DeviceSimulation.md) for your device.
 
-Here's a brief overview how to do it, you can find more details in the link
-above.
-- Fork Oxidized on github
+By submitting a YAML simulation file (or any other contribution), you agree that
+it may be integrated into the project and distributed under its license
+(Apache-2.0). Always remove sensitive information (passwords, IP addresses,
+serial numbers) before sharing.
+
+The easiest way to produce a simulation file is to enable the `yaml` debug
+option in your Oxidized configuration. This is the preferred method when the
+issue can be reproduced with the current Oxidized model unchanged, because it
+captures the real Oxidized backup session:
+
+```yaml
+input:
+  debug: yaml
+```
+
+After the next backup, the file is written to `~/.config/oxidized/logs/`. See
+[Creating a YAML Simulation File with the debug option](/docs/DeviceSimulation.md#creating-a-yaml-simulation-file-with-the-debug-option)
+for details.
+
+Alternatively, you can generate the file with the `extra/device2yaml.rb` script
+when you need to capture a specific command list manually. Here's a brief
+overview how to do it, you can find more details in the link above.
+- Fork Oxidized on GitHub
 - Install dependencies (git and Ruby's Net::SSH):
 ```
 # Adapt when not using a debian-based distro
@@ -99,7 +135,7 @@ show version
 show vtp status
 show inventory
 show running-config
-exit" -o spec/model/data/ios:C8200L_16.12.1:simulation.yaml
+exit" -o spec/model/data/ios#C8200L_16.12.1#simulation.yaml
 ```
 
 - The script waits 5 seconds between commands, and outputs the response of the
@@ -107,9 +143,9 @@ exit" -o spec/model/data/ios:C8200L_16.12.1:simulation.yaml
   command without waiting for the timeout.
 - The result will be stored in `spec/model/data/`.
 - Replace any sensitive information with placeholder values in the output file.
-- Commit & push the file to github
+- Commit & push the file to GitHub
 ```
-git add spec/model/data/ios:C8200L_16.12.1:simulation.yaml
+git add spec/model/data/ios#C8200L_16.12.1#simulation.yaml
 git commit -m "Device simulation for C8200L"
 git push
 ```
