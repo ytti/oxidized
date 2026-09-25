@@ -3,6 +3,12 @@ class TMOS < Oxidized::Model
 
   comment '# '
 
+  cmd :all do |cfg|
+    cfg.gsub!(/^\s*(checksum SHA1:|revision |size |create-time|last-update-time|updated-by|created-by)\b.*$/, '')
+    cfg.gsub!(/^.*\brevision\s+\d+\s*$/, '')
+    cfg
+  end
+
   cmd :secret do |cfg|
     cfg.gsub!(/^([\s\t]*)secret \S+/, '\1secret <secret removed>')
     cfg.gsub!(/^([\s\t]*\S*)password \S+/, '\1password <secret removed>')
