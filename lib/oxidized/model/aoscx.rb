@@ -57,7 +57,7 @@ class Aoscx < Oxidized::Model
     end
 
     with_section(cfg, 'power-allocation') do |content|
-      content.gsub!(/^(.*) \d+ W$/, '\\1 <power>')
+      content.gsub!(/^(.*) \d+\.\d+ W$/, '\\1 <power>')
     end
 
     with_section(cfg, 'power-supply input-voltage') do |content|
