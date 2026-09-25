@@ -319,13 +319,13 @@ If you want the model to be integrated into Oxidized, you can
 This is a greatly appreciated submission, as there are probably other users
 using the same network device as you are.
 
-A good (and optional) practice for submissions is to provide a
-[unit test for your model](/docs/ModelUnitTests.md). This reduces the risk that
-further developments could break it, and facilitates debugging issues without
-having access to a physical network device for the model.
+Every model submission should include at least a
+[YAML simulation file](/docs/DeviceSimulation.md), with the expected
+output needed for an automated [unit test](/docs/ModelUnitTests.md). These
+reduce the risk that further developments could break the model and facilitate
+debugging issues without access to a physical network device.
 
 ## Advanced feature: output type
-
 The loosely-coupled architecture of Oxidized allows for easy extensibility in more advanced use cases as well.
 
 The example below extends the functionality of the `JunOS` model further to collect `display set` formatted configuration from the device, and utilizes the multi-output functionality of the `git` output to place the returned configuration in a separate file within a git repository.

@@ -2,12 +2,19 @@
 name: Feature request
 about: Suggest an idea for this project
 title: ''
-labels: feature request
+labels: feature_request
 assignees: ''
 
 ---
-<!-- Check the box [X] -->
-- [ ] I have read and understood [docs/Issues.md](https://github.com/ytti/oxidized/blob/master/docs/Issues.md).
+<!--
+Thanks for suggesting an improvement to Oxidized!
+
+Please read docs/Issues.md on how to write a good issue:
+https://github.com/ytti/oxidized/blob/master/docs/Issues.md
+-->
+
+> By submitting content here, I agree that it may be integrated into the project
+> under its license (Apache-2.0).
 
 **Is your feature request related to a problem? Please describe.**
 A clear and concise description of what the problem is. Ex. I'm always frustrated when [...]

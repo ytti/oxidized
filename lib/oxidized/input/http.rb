@@ -7,6 +7,7 @@ module Oxidized
     def connect(node)
       @node = node
       @secure = false
+      @port = nil
       @username = nil
       @password = nil
       @headers = {}
@@ -41,8 +42,6 @@ module Oxidized
       get_http path
     end
 
-    private
-
     def get_http(path)
       res = perform_http_request(path, method: :get)
       res.body
@@ -52,6 +51,13 @@ module Oxidized
       res = perform_http_request(path, method: :post, body: body, extra_headers: extra_headers)
       res.body
     end
+
+    def delete_http(path)
+      res = perform_http_request(path, method: :delete)
+      res.body
+    end
+
+    private
 
     def perform_http_request(path, method: :get, body: nil, extra_headers: {})
       uri = get_uri(path)
@@ -84,13 +90,16 @@ module Oxidized
 
     def make_request(uri, ssl_verify, extra_headers = {}, method: :get, body: nil)
       Net::HTTP.start(uri.hostname, uri.port, use_ssl: uri.scheme == "https", verify_mode: ssl_verify) do |http|
-        req_class = if method == :get
+        req_class = case method
+                    when :get
                       Net::HTTP::Get
-                    elsif method == :post
+                    when :post
                       Net::HTTP::Post
+                    when :delete
+                      Net::HTTP::Delete
                     else
                       raise Oxidized::OxidizedError, "Unsupported HTTP method: #{method.inspect}. " \
-                                                     "Only :get and :post are supported"
+                                                     "Only :get, :post and :delete are supported"
                     end
         req = req_class.new(uri)
         @headers.merge(extra_headers).each { |header, value| req.add_field(header, value) }
@@ -115,6 +124,7 @@ module Oxidized
       path = URI.parse(path)
       uri_class = @secure ? URI::HTTPS : URI::HTTP
       uri_class.build(host:  @node.ip,
+                      port:  @port,
                       path:  path.path,
                       query: path.query)
     end

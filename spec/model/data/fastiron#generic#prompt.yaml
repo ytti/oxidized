@@ -2,3 +2,7 @@ pass:
   - "SSH@switch-001#"
   # Issue #3106 / PR #3579
   - "SSH@switch-001/002/003/123#"
+pass_with_expect:
+  # Issue #3819: the pager redraws the screen with ANSI escape sequences
+  - "\e[24;1H\e[2KSSH@switch-001#"
+  - "\e[2J\e[HSSH@switch-001/002/003/123# "

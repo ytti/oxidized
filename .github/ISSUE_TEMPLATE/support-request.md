@@ -6,8 +6,15 @@ labels: question
 assignees: ''
 
 ---
-<!-- Check the box [X] -->
-- [ ] I have read and understood [docs/Issues.md](https://github.com/ytti/oxidized/blob/master/docs/Issues.md).
+<!--
+Thanks for reaching out!
+
+Please read docs/Issues.md on how to write a good issue:
+https://github.com/ytti/oxidized/blob/master/docs/Issues.md
+-->
+
+> By submitting content here (especially YAML simulation files), I agree that it
+> may be integrated into the project under its license (Apache-2.0).
 
 **Describe the problem**
 A clear and concise description of what your problem is.
@@ -27,12 +34,31 @@ If applicable, add logs to help explain your problem.
 
 **Running environment (please complete the following information):**
 <!-- complete the following information and add further details if needed.
-Always test the latest version of oxidized -->
+Always test the latest version of oxidized.
+Tip: run `oxidized --support` as the same user and in the same environment as
+the regular Oxidized process. With Docker, use
+`docker exec --user oxidized <container-name> oxidized --support`. Remove any
+sensitive data before sharing the output. -->
 - OS: [e.g. Debian Bookworm, official container version xxx, ...]
 - oxidized version: [e.g. 0.32.2]
 - oxidized-web version: [e.g. 0.15.1, if applicable]
-- Manufacturer model an software version:
+- Manufacturer model and software version:
 - oxidized model name:
+
+**Device simulation (for model-specific issues)**
+<!--
+If your issue is about a specific device/model, a YAML simulation file helps us
+a lot. When the issue can be reproduced with the current Oxidized model
+unchanged, the easiest way is to enable the yaml debug option in your input
+section:
+
+    input:
+      debug: yaml
+
+Reproduce the backup, then attach the generated file from
+~/.config/oxidized/logs/. See docs/DeviceSimulation.md for details, and remember
+to remove sensitive data (passwords, IP addresses, serial numbers).
+-->
 
 **Additional context**
 Add any other context about the problem here.

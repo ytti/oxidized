@@ -129,7 +129,7 @@ optparse = OptionParser.new do |opts|
       command2
       command3" [options]
 
-    -i and -c are mutualy exclusive, one must be specified
+    -i and -c are mutually exclusive, one must be specified
 
     [options]:
   HEREDOC
@@ -144,7 +144,7 @@ optparse = OptionParser.new do |opts|
     options[:output] = file
   end
   opts.on('-t', '--timeout value', Integer,
-          'Specify the idle timeout beween commands (default: 5 seconds)') do |timeout|
+          'Specify the idle timeout between commands (default: 5 seconds)') do |timeout|
     options[:timeout] = timeout
   end
   opts.on('-n', '--newline value',

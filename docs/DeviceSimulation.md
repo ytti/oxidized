@@ -26,6 +26,31 @@ of the Oxidized model and `<description>` is the name of the test case.
 `<description>` is generally formatted as `<hardware>_<software>` or
 `<hardware>_<software>_<information>`.
 
+### YAML Format
+The YAML file has two sections:
+- init_prompt: describing the lines sent by the device before we can send a
+command. It usually includes MOTD banners and must include the first prompt.
+- commands: the commands the Oxidized model sends to the network device and
+their outputs.
+
+The outputs are multiline and use YAML block scalars (`|`), with the trailing \n
+removed (`-` after `|`). The outputs include the echo of the given command and
+the next prompt. Escape characters are coded in Ruby style (\n, \r...).
+
+Here is a shortened example of a YAML file:
+```yaml
+---
+init_prompt: |-
+  \e[4m\rLAB-R1234_Garderos#\e[m\x20
+commands:
+  show system version: |-
+    show system version
+    grs-gwuz-armel/003_005_068 (Garderos; 2021-04-30 16:19:35)
+    \e[4m\rLAB-R1234_Garderos#\e[m\x20
+# ...
+  exit: ""
+```
+
 ### Creating a YAML Simulation File with device2yaml.rb
 A device does not only output the ASCII text we can see in the console.
 It adds ANSI escape codes for nice colors, bold and underline, \r, and so on.
@@ -53,13 +78,13 @@ Usages:
   command2
   command3" [options]
 
--i and -c are mutualy exclusive, one must be specified
+-i and -c are mutually exclusive, one must be specified
 
 [options]:
     -c, --commands "command list"    specify the commands to be run
     -i, --input file                 Specify an input file for commands to be run
     -o, --output file                Specify an output YAML-file
-    -t, --timeout value              Specify the idle timeout beween commands (default: 5 seconds)
+    -t, --timeout value              Specify the idle timeout between commands (default: 5 seconds)
     -n, --newline value              Line terminator appended to each command (default: \n)
     -e, --exec-mode                  Run ssh in exec mode (without tty)
     -u, --unordered                  The YAML simulation should not enforce an order of the commands
@@ -69,9 +94,9 @@ Usages:
 - `[user@]host` specifies the user and host to connect to the device. The
 password will be prompted interactively by the script. If you do not specify a
 user, it will use the user executing the script.
-- The commands that will be run on the device must be defined in
-`deviceyaml.rb`. You can give the commands online with `-c` or read them from a
-file (one line per command) with `-i`. The commands should match exactly the
+- The commands that will be run on the device are passed to
+`device2yaml.rb`. You can give them on the command line with `-c` or read them
+from a file (one line per command) with `-i`. The commands should match exactly the
 ones of the model (no abbreviations) and include the commands of the
 `post_login` and `pre_logout` sections. When using `-c` and editing the shell
 command line, `CTRL-V CTRL-J` is very useful to add a line break.
@@ -115,6 +140,49 @@ show inventory
 show running-config
 exit" -o spec/model/data/ios#C8200L_16.12.1#simulation.yaml
 ```
+
+#### Interactive Mode
+The `device2yaml.rb` script is basic and sometimes needs some help, especially
+when dealing with a device that sends its output page by page and requires you
+to press space for the next page. `device2yaml.rb` does not know how to handle
+this.
+
+While `device2yaml.rb` is running, you can type anything on the keyboard, and it
+will be sent to the remote device. So you can press space or 'n' to get the next
+page.
+
+You can also use this to enter an enable password.
+
+Every key press will be recorded in the YAML file, so that it can be used
+in the simulation afterwards, especially for devices that paginate output. You
+may need to clean the YAML file manually if you don't want some input (such
+as passwords) to be included.
+
+If you press the "Esc" key, `device2yaml.rb` will not wait for the idle timeout
+and will process the next command right away.
+
+### Creating a YAML Simulation File with the debug option
+Instead of running `device2yaml.rb` separately, you can let a running Oxidized
+instance produce the YAML simulation file directly from a real backup session.
+This is handy because it captures exactly the commands your model sends,
+including the `post_login` and `pre_logout` sections, without having to list
+them manually.
+
+Starting with version 0.37.0, enable the `yaml` value of the `debug` option in
+the `input` section of your Oxidized configuration:
+
+```yaml
+input:
+  default: ssh
+  debug: yaml
+```
+
+The YAML simulation file is created for `ssh` sessions in
+`~/.config/oxidized/logs/` (or `$OXIDIZED_LOGS/logs/`), with the naming
+convention `<IP-Address>-ssh-<timestamp>.yaml`. A new file is created for
+each session. See [Debugging](/docs/Inputs.md#debugging) for the other available
+`debug` values.
+
 ### Publishing the YAML Simulation File to Oxidized
 Publishing the YAML simulation file of your device helps maintain Oxidized. This
 task may take some time, and we are very grateful that you take this time for
@@ -153,50 +221,4 @@ Examples:
 
 When you are finished, commit and push to your forked repository on GitHub, and
 submit a Pull Request. Thank you for your help!
-
-### Interactive Mode
-The `device2yaml.rb` script is basic and sometimes needs some help, especially
-when dealing with a device that sends its output page by page and requires you
-to press space for the next page. `device2yaml.rb` does not know how to handle
-this.
-
-While `device2yaml.rb` is running, you can type anything on the keyboard, and it
-will be sent to the remote device. So you can press space or 'n' to get the next
-page.
-
-You can also use this to enter an enable password.
-
-Every key press will be recorded in the YAML file, so that it can be used
-in the simulation afterwards, especialy for devices that paginate output. You
-may need to clean the YAML file manually if you don't want some input (such
-as passwords) to be included.
-
-If you press the "Esc" key, `device2yaml.rb` will not wait for the idle timeout
-and will process the next command right away.
-
-### YAML Format
-The YAML file has two sections:
-- init_prompt: describing the lines sent by the device before we can send a
-command. It usually includes MOTD banners and must include the first prompt.
-- commands: the commands the Oxidized model sends to the network device and
-their outputs.
-
-The outputs are multiline and use YAML block scalars (`|`), with the trailing \n
-removed (`-` after `|`). The outputs include the echo of the given command and
-the next prompt. Escape characters are coded in Ruby style (\n, \r...).
-
-Here is a shortened example of a YAML file:
-```yaml
----
-init_prompt: |-
-  \e[4m\rLAB-R1234_Garderos#\e[m\x20
-commands:
-  show system version: |-
-    show system version
-    grs-gwuz-armel/003_005_068 (Garderos; 2021-04-30 16:19:35)
-    \e[4m\rLAB-R1234_Garderos#\e[m\x20
-# ...
-  exit: ""
-```
-
 

@@ -62,10 +62,22 @@ module Oxidized
         match_re << @username if @username
         match_re << @password if @password
         until (match = expect(match_re)) == @node.prompt
-          cmd(@node.auth[:username], nil) if match == @username
-          cmd(@node.auth[:password], nil) if match == @password
+          send_credential(:username) if match == @username
+          send_credential(:password) if match == @password
           match_re.delete match
         end
+      end
+
+      private
+
+      def send_credential(type)
+        credential = @node.auth[type]
+        unless credential.is_a?(String)
+          logger.error "Missing #{type} for CLI login at #{@node.name}"
+          raise ArgumentError, "missing #{type} for CLI login"
+        end
+
+        cmd credential, nil
       end
     end
   end
