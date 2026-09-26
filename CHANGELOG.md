@@ -45,6 +45,7 @@ The format is based on [Keep a Changelog](https://keepachangelog.com/en/1.1.0/).
 - routeros: support store mode `on_significant` (@infabo)
 - model for Grandstream HT8xx (@mklopocki)
 - Add --support option to gather system diagnostics (@robertcheramy)
+- Add `tmos_aaa` model for F5 TMOS devices using AAA authentication (@martinberg)
 
 ### Changed
 - input/ssh: validate that cmd is a String. See #3700 (@robertcheramy)
