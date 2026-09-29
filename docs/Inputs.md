@@ -183,17 +183,19 @@ input:
 The HTTP input supports the following HTTP methods:
 - `:get`  - for GET requests
 - `:post` - for POST requests
+- `:delete` - for DELETE requests
 
 These methods are used internally by models that require HTTP-based 
-configuration retrieval. Models can use `get_http()` and `post_http()` methods 
-provided by the HTTP input.
+configuration retrieval. Models can use `get_http()`, `post_http()` and
+`delete_http()` methods provided by the HTTP input.
 
 Example usage in a model:
 
 ```ruby
 cfg :http do
-  post_response = post_http('/some/path', payload, 'Some-Extra-Header' => 'value')
-  get_response  = get_http('/some/path')
+  post_response   = post_http('/some/path', payload, 'Some-Extra-Header' => 'value')
+  get_response    = get_http('/some/path')
+  delete_response = delete_http('/some/path')
 end
 ```
 
@@ -214,7 +216,7 @@ the `input` section.
 
 Starting with version 0.37.0, `debug` can take different values:
 - `text`: log input and output to a text file (ssh, telnet)
-- `yaml`: produce a yaml simulation file (ssh, scp)
+- `yaml`: produce a yaml simulation file (ssh)
 - `library`: activate debug logging of the underlying library
 - a combination of the options above (`text, yaml`)
 - `true`; activate all debugging options (Only option for versions prior 0.37.0)

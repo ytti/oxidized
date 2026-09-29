@@ -1,0 +1,583 @@
+! FSOS Software, S5850, Version 7.5.6
+! Copyright (C) 2009-2025 FS.COM Inc.  All Rights Reserved.
+! The current running image is flash:/boot/softv756.bin
+! 
+! Hardware Type is 48B8C
+! Hardware Version is 3.3
+! SDRAM size 2048M
+! Flash size 8192M
+! EPLD Version is 1.3
+! BootRom Version is A.1.20
+! System serial number is CG2401231347N00000
+! Current Web Version is 7.5.6
+! License files: 
+! ======================================================================
+! flash:/649D990F1111.1.lic:
+!   Created Time: Thu Mar  7 15:59:21 CST 2024
+!   Vendor:       Unspecified
+!   Customer:     Unspecified
+!   Device MAC:   64:9D:99:0F:11:11
+!   Feature Set:  PIM_SM IGMP BGP BFD IPV6
+!                 OSPF6 PIM_SM6 MVR6 RIPNG TUNNEL_V6
+!                 SSM PIM_DM PBR OSPF MLAG
+!                 ISIS MACSEC BGP4+ VRF MPLS
+!                 LDP QINQ MVR ERPS MEF
+!                 ETHOAM EXTEND_ACL PTP HW_MONITOR IPFIX
+!                 EFD VPWS VPLS HVPLS TPOAM
+!                 RSVP OSPF_TE EVPN MPLSSR
+! Port eth-0-1 transceiver info: 
+! Transceiver Type: 10GBASE-LR
+!  Transceiver Vendor Name : fiberONE        
+!  Transceiver PN          : SFP-10G-LR-10   
+!  Transceiver S/N         : FO240218S0922   
+! Transceiver Output Wavelength: 1310 nm
+! Supported Link Type and Length: 
+!       Link Length for 9/125um single mode fiber: 10 km
+! 
+! 
+! Port eth-0-2 transceiver info: 
+! Transceiver Type: 10GBASE-LR
+!  Transceiver Vendor Name : fiberONE        
+!  Transceiver PN          : SFP-10G-BX      
+!  Transceiver S/N         : F1O20240801A0784
+! Transceiver Output Wavelength: 1270 nm
+! Supported Link Type and Length: 
+!       Link Length for 9/125um single mode fiber: 20 km
+! 
+! 
+! Port eth-0-3 transceiver info: 
+! Transceiver Type: 10GBASE-LR
+!  Transceiver Vendor Name : fiberONE        
+!  Transceiver PN          : SFP-10G-BX      
+!  Transceiver S/N         : F1O20240801A0786
+! Transceiver Output Wavelength: 1270 nm
+! Supported Link Type and Length: 
+!       Link Length for 9/125um single mode fiber: 20 km
+! 
+! 
+! Port eth-0-4 transceiver info: 
+! Transceiver Type: 10GBASE-LR
+!  Transceiver Vendor Name : fiberONE        
+!  Transceiver PN          : SFP-10G-BX      
+!  Transceiver S/N         : F1O20240801A0785
+! Transceiver Output Wavelength: 1270 nm
+! Supported Link Type and Length: 
+!       Link Length for 9/125um single mode fiber: 20 km
+! 
+! 
+! Port eth-0-5 transceiver info: 
+! Transceiver Type: 10GBASE-LR
+!  Transceiver Vendor Name : fiberONE        
+!  Transceiver PN          : SFP-10G-BX      
+!  Transceiver S/N         : F1O20240801A0787
+! Transceiver Output Wavelength: 1270 nm
+! Supported Link Type and Length: 
+!       Link Length for 9/125um single mode fiber: 20 km
+! 
+! 
+! Port eth-0-6 transceiver info: 
+! Transceiver Type: 10GBASE-LR
+!  Transceiver Vendor Name : Arista Networks 
+!  Transceiver PN          : SFP-10GLR-31    
+!  Transceiver S/N         : R0706240004     
+! Transceiver Output Wavelength: 1310 nm
+! Supported Link Type and Length: 
+!       Link Length for 9/125um single mode fiber: 10 km
+! 
+! 
+! Port eth-0-11 transceiver info: 
+! Transceiver Type: 10GBASE-LR
+!  Transceiver Vendor Name : fiberONE        
+!  Transceiver PN          : SFP-10G-LR-10   
+!  Transceiver S/N         : FO240218S0921   
+! Transceiver Output Wavelength: 1310 nm
+! Supported Link Type and Length: 
+!       Link Length for 9/125um single mode fiber: 10 km
+! 
+! 
+! Port eth-0-41 transceiver info: 
+! Transceiver Type: 25GAUI-C2M-AOC-BER-H
+!  Transceiver Vendor Name : OEM             
+!  Transceiver PN          : GLC-T-C         
+!  Transceiver S/N         : CE12030730187   
+! Transceiver Output Wavelength: 16652 nm
+! Supported Link Type and Length: 
+!       Link Length for copper: 100 m
+! 
+! Port eth-0-42 transceiver info: 
+! Transceiver Type: 25GAUI-C2M-AOC-BER-H
+!  Transceiver Vendor Name : OEM             
+!  Transceiver PN          : GLC-T-C         
+!  Transceiver S/N         : CE12030730197   
+! Transceiver Output Wavelength: 16652 nm
+! Supported Link Type and Length: 
+!       Link Length for copper: 100 m
+! 
+! Port eth-0-47 transceiver info: 
+! Transceiver Type: 25GAUI-C2M-AOC-BER-H
+!  Transceiver Vendor Name : OEM             
+!  Transceiver PN          : GLC-T-C         
+!  Transceiver S/N         : CE12030730193   
+! Transceiver Output Wavelength: 16652 nm
+! Supported Link Type and Length: 
+!       Link Length for copper: 100 m
+! 
+! Port eth-0-51 transceiver info: 
+! Transceiver Type: 100GBASE-SR4
+!  Transceiver Vendor Name : fiberONE        
+!  Transceiver PN          : QSFP28-SR4-100G 
+!  Transceiver S/N         : G1908020603     
+! Transceiver Output Wavelength: 850 nm
+! Supported Link Type and Length: 
+!       Link Length for 50/125um multi-mode OM3 fiber: 70 m
+!       Link Length for 50/125um multi-mode OM4 fiber: 100 m
+! 
+! 
+! Port eth-0-52 transceiver info: 
+! Transceiver Type: 100GBASE-LR4
+!  Transceiver Vendor Name : fiberONE        
+!  Transceiver PN          : QSFP-100G-BX10D 
+!  Transceiver S/N         : F1O20240801A0001
+! Transceiver Output Wavelength: 1310 nm
+! Supported Link Type and Length: 
+!       Link Length for 9/125um single mode fiber: 10 km
+! 
+! 
+! Port eth-0-53 transceiver info: 
+! Transceiver Type: 100GBASE-LR4
+!  Transceiver Vendor Name : fiberONE        
+!  Transceiver PN          : QSFP-100G-LR4-10
+!  Transceiver S/N         : YXF20250509A1177
+! Transceiver Output Wavelength: 1302 nm
+! Supported Link Type and Length: 
+!       Link Length for 9/125um single mode fiber: 10 km
+! 
+! 
+! Port eth-0-54 transceiver info: 
+! Transceiver Type: 100GBASE-CR4
+!  Transceiver Vendor Name : fiberONE        
+!  Transceiver PN          : QSFP-100G-PC0.5 
+!  Transceiver S/N         : F1O20240801A0028
+! Transceiver Output Wavelength: N/A
+! Supported Link Type and Length: 
+!       Link Length for copper: 1 m
+! 
+! Port eth-0-55 transceiver info: 
+! Transceiver Type: 100GBASE-CWDM4
+!  Transceiver Vendor Name : INNOLIGHT       
+!  Transceiver PN          : TR-FC13T-NFB    
+!  Transceiver S/N         : INIAF7403821    
+! Transceiver Output Wavelength: 1301 nm
+! Supported Link Type and Length: 
+!       Link Length for 9/125um single mode fiber: 2 km
+! 
+! 
+! Port eth-0-56 transceiver info: 
+! Transceiver Type: 100GBASE-ER4
+!  Transceiver Vendor Name : fiberONE        
+!  Transceiver PN          : QSFP-100G-BX30D 
+!  Transceiver S/N         : F1O20240801A0005
+! Transceiver Output Wavelength: 1310 nm
+! Supported Link Type and Length: 
+!       Link Length for 9/125um single mode fiber: 30 km
+! 
+Building configuration...
+version 7.5.6
+!
+!
+logging buffer 1000
+!
+!
+management ip address 10.159.255.104/24
+management route add gateway 10.159.255.1
+!
+!
+service password-encryption
+!
+no local-user policy password change
+!
+http server load flash:/web.bin
+service http enable
+!
+dns server 109.236.144.144
+dns server 109.236.159.159
+!
+hostname sim-switch
+!
+!
+username root privilege 4 password 8 ssssssssssssssssssssssssssssssssssssssssssssssss
+username oxidized privilege 4 password 8 ssssssssssssssssssssssssssssssssssssssssssssssss
+!
+!
+!
+!
+!
+!
+ntp server 109.236.144.144
+ntp server 109.236.159.159
+!
+ipv6 enable
+raw vlan group 1 vlan 2000-3500
+!
+snmp-server enable 
+snmp-server system-contact info@example.com
+snmp-server system-location sim-rack
+snmp-server community 8 sssssssssssssssssssssssssssss read-only 
+snmp-server version v2c
+!
+vlan database
+ vlan 2-4094
+ vlan 3 name test1
+ vlan 4 name test2
+ vlan 2200 name test3
+!
+spanning-tree mode mstp
+spanning-tree hello-time 1
+spanning-tree max-age 10
+spanning-tree enable
+spanning-tree edgeport bpdu-filter
+!
+spanning-tree mst configuration
+ instance 20 vlan 20
+ instance 21 vlan 21
+ region test
+ revision 1
+!
+ethernet evc evc52
+ dot1q mapped-vlan 165
+!
+ethernet evc evc1
+ dot1q mapped-vlan 300
+!
+ethernet evc evc2
+ dot1q mapped-vlan 301
+!
+ethernet evc evc3
+ dot1q mapped-vlan 302
+!
+ethernet evc evc4
+ dot1q mapped-vlan 303
+!
+ethernet evc evc5
+ dot1q mapped-vlan 304
+!
+ethernet evc evc99
+ dot1q mapped-vlan 306
+!
+ethernet evc evc98
+!
+ethernet evc evc-vlan-305
+ dot1q mapped-vlan 305
+!
+ethernet evc evc-vlan-306
+ dot1q mapped-vlan 306
+!
+vlan mapping table vmt52
+ raw-vlan group 1 evc evc52
+!
+vlan mapping table vmt1
+ raw-vlan group 1 evc evc1
+ raw-vlan 306 evc evc-vlan-306
+!
+vlan mapping table vmt2
+ raw-vlan group 1 evc evc2
+!
+vlan mapping table vmt3
+ raw-vlan group 1 evc evc3
+!
+vlan mapping table vmt4
+ raw-vlan group 1 evc evc4
+ raw-vlan 305 evc evc-vlan-305
+!
+vlan mapping table vmt5
+ raw-vlan group 1 evc evc5
+!
+interface eth-0-1
+ switchport mode dot1q-tunnel
+ switchport dot1q-tunnel type selective
+ switchport dot1q-tunnel vlan mapping table vmt1
+ switchport dot1q-tunnel allowed vlan add 300,306,309
+ switchport dot1q-tunnel vlan mapping miss-forward
+ storm-control broadcast pps 1000
+ storm-control multicast pps 1000
+ no lldp tlv basic system-description system-capabilities management-address
+ no lldp tlv med all
+ spanning-tree port disable
+ spanning-tree edgeport enable
+ spanning-tree edgeport bpdu-filter enable
+!
+interface eth-0-2
+ switchport mode dot1q-tunnel
+ switchport dot1q-tunnel type selective
+ switchport dot1q-tunnel vlan mapping table vmt2
+ switchport dot1q-tunnel allowed vlan add 166,301
+ switchport dot1q-tunnel allowed vlan remove 1
+ switchport dot1q-tunnel vlan mapping miss-forward
+ storm-control broadcast pps 1000
+ storm-control multicast pps 1000
+ no lldp tlv basic system-description system-capabilities management-address
+ no lldp tlv med all
+ spanning-tree port disable
+ spanning-tree edgeport enable
+ spanning-tree edgeport bpdu-filter enable
+!
+interface eth-0-3
+ switchport mode dot1q-tunnel
+ switchport dot1q-tunnel type selective
+ switchport dot1q-tunnel vlan mapping table vmt3
+ switchport dot1q-tunnel allowed vlan add 302
+ switchport dot1q-tunnel allowed vlan remove 1
+ switchport dot1q-tunnel vlan mapping miss-forward
+ storm-control broadcast pps 1000
+ storm-control multicast pps 1000
+ no lldp tlv basic system-description system-capabilities management-address
+ no lldp tlv med all
+ spanning-tree port disable
+ spanning-tree edgeport enable
+ spanning-tree edgeport bpdu-filter enable
+!
+interface eth-0-4
+ switchport mode dot1q-tunnel
+ switchport dot1q-tunnel type selective
+ switchport dot1q-tunnel vlan mapping table vmt4
+ switchport dot1q-tunnel allowed vlan add 303,305
+ switchport dot1q-tunnel allowed vlan remove 1
+ switchport dot1q-tunnel vlan mapping miss-forward
+ storm-control broadcast pps 1000
+ storm-control multicast pps 1000
+ no lldp tlv basic system-description system-capabilities management-address
+ no lldp tlv med all
+ spanning-tree port disable
+ spanning-tree edgeport enable
+ spanning-tree edgeport bpdu-filter enable
+!
+interface eth-0-5
+ switchport mode dot1q-tunnel
+ switchport dot1q-tunnel type selective
+ switchport dot1q-tunnel vlan mapping table vmt5
+ switchport dot1q-tunnel allowed vlan add 304
+ switchport dot1q-tunnel allowed vlan remove 1
+ switchport dot1q-tunnel vlan mapping miss-forward
+ storm-control broadcast pps 1000
+ storm-control multicast pps 1000
+ no lldp tlv basic system-description system-capabilities management-address
+ no lldp tlv med all
+ spanning-tree port disable
+ spanning-tree edgeport enable
+ spanning-tree edgeport bpdu-filter enable
+!
+interface eth-0-6
+!
+interface eth-0-7
+!
+interface eth-0-8
+!
+interface eth-0-9
+!
+interface eth-0-10
+!
+interface eth-0-11
+!
+interface eth-0-12
+!
+interface eth-0-13
+!
+interface eth-0-14
+!
+interface eth-0-15
+!
+interface eth-0-16
+!
+interface eth-0-17
+!
+interface eth-0-18
+!
+interface eth-0-19
+!
+interface eth-0-20
+!
+interface eth-0-21
+!
+interface eth-0-22
+!
+interface eth-0-23
+!
+interface eth-0-24
+!
+interface eth-0-25
+ fec rs
+!
+interface eth-0-26
+!
+interface eth-0-27
+!
+interface eth-0-28
+!
+interface eth-0-29
+!
+interface eth-0-30
+!
+interface eth-0-31
+ speed 10G
+!
+interface eth-0-32
+!
+interface eth-0-33
+!
+interface eth-0-34
+!
+interface eth-0-35
+!
+interface eth-0-36
+!
+interface eth-0-37
+!
+interface eth-0-38
+!
+interface eth-0-39
+!
+interface eth-0-40
+!
+interface eth-0-41
+ speed 1000
+ switchport mode trunk
+ switchport trunk allowed vlan add 511
+!
+interface eth-0-42
+!
+interface eth-0-43
+!
+interface eth-0-44
+!
+interface eth-0-45
+!
+interface eth-0-46
+!
+interface eth-0-47
+ speed 1000
+ switchport mode trunk
+ switchport trunk allowed vlan add 22,61,279,400-403,405,511-513,520,560,561
+!
+interface eth-0-48
+!
+interface eth-0-49
+ fec rs
+ switchport mode trunk
+ switchport trunk allowed vlan add 513
+ switchport trunk allowed vlan remove 1
+ spanning-tree edgeport bpdu-filter enable
+!
+interface eth-0-50
+ fec rs
+ switchport mode trunk
+ switchport trunk allowed vlan add 513
+ switchport trunk allowed vlan remove 1
+ no lldp tlv basic system-description system-capabilities management-address
+ no lldp tlv med all
+ spanning-tree edgeport bpdu-filter enable
+!
+interface eth-0-51
+ fec rs
+ switchport mode trunk
+ switchport trunk allowed vlan add 279,404,510,511,513,514,520,566
+ switchport trunk allowed vlan remove 1
+ no lldp tlv basic system-description system-capabilities management-address
+ no lldp tlv med all
+ spanning-tree edgeport bpdu-filter enable
+!
+interface eth-0-52
+ fec none
+ switchport mode dot1q-tunnel
+ switchport dot1q-tunnel type selective
+ switchport dot1q-tunnel vlan mapping table vmt52
+ switchport dot1q-tunnel allowed vlan remove 1
+ storm-control broadcast pps 1000
+ storm-control multicast pps 1000
+ no lldp tlv basic system-description system-capabilities management-address
+ no lldp tlv med all
+ spanning-tree port disable
+ spanning-tree edgeport enable
+ spanning-tree edgeport bpdu-filter enable
+!
+interface eth-0-53
+ description link11
+ switchport access vlan 566
+ spanning-tree edgeport bpdu-filter enable
+!
+interface eth-0-54
+ description sw3.eqixfr5 - eth-0-54
+ fec none
+ switchport mode trunk
+ switchport trunk allowed vlan add 102,103,107-109,117-119,135-137,149,155,157-160
+ switchport trunk allowed vlan add 162-164,166,167,183-185,271,272,351-354
+ switchport trunk allowed vlan add 404,510,511,513,514,520,566
+ switchport trunk allowed vlan remove 1
+ overlay uplink enable
+ spanning-tree edgeport bpdu-filter enable
+!
+interface eth-0-55
+ description edge5 - 2A
+ fec rs
+ switchport mode trunk
+ switchport trunk allowed vlan add 102,103,107-109,117-119,135-137,149,155,157,158
+ switchport trunk allowed vlan add 160,162,166,167,183-185,201,271,272,300-306
+ switchport trunk allowed vlan add 309,351-354,510,513
+ switchport trunk allowed vlan remove 1
+ no lldp tlv basic system-description system-capabilities management-address
+ no lldp tlv med all
+ spanning-tree edgeport bpdu-filter enable
+!
+interface eth-0-56
+ description sw2.ixfr11 - eth-0-56 (1310nm BiDi WDM)
+ fec none
+ switchport mode trunk
+ switchport trunk allowed vlan add 159,163,164,404
+ switchport trunk allowed vlan remove 1
+ spanning-tree edgeport bpdu-filter enable
+!
+interface vlan1
+ ip address 192.168.0.26/24
+!
+interface vlan306
+ ip address 192.168.66.4/24
+!
+interface vlan513
+ ip address 10.159.254.64/24
+!
+interface vlan514
+ ip address 10.159.240.14/24
+ ipv6 address 2a00:e60:11ff:6::14/64
+!
+interface vlan520
+ ip address 10.158.254.8/24
+!
+interface null0
+!
+overlay
+ source 10.159.240.14
+ source 2a00:e60:11ff:6::14
+ remote-vtep 1 ip-address 10.151.240.12 type vxlan
+ remote-vtep 1 dot1q ethertype cccc
+ vlan 165 vni 10165
+ vlan 165 remote-vtep 1 
+!
+ip route 0.0.0.0/0 10.159.254.1
+ip route 10.151.240.0/24 10.159.240.5
+!
+ipv6 route 2a00:e60:14ff:5::/64 2a00:e60:11ff:6::5
+!
+lldp enable
+!
+!
+!
+line con 0
+ no line-password
+ no login
+line vty 0 7
+ exec-timeout 35791 0
+ privilege level 4
+ no line-password
+ login local
+!
+!
+end

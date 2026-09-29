@@ -1,0 +1,27 @@
+---
+# Simulation of a Ruckus ICX 7150-48P where the pager cannot be disabled
+# with 'skip-page-display' (issue #3819). The pager prompt is answered with a
+# space and the device redraws the line with ANSI escape sequences.
+init_prompt: |-
+    \r\nSSH@ICX7150-48P#\x20
+commands:
+  - "skip-page-display\n": |-
+      skip-page-display\r\n\e[2K\e[1GInvalid input -> skip-page-display\r\nType ? for a list\r\nSSH@ICX7150-48P#\x20
+  - "show version\n": |-
+      show version\r\n  Copyright (c) 2017 Ruckus Networks, Inc. All rights reserved.\r\n    UNIT 1: compiled on Oct 21 2020 at 02:22:14 labeled as SPS08095\r\n      (35651584 bytes) from Primary SPS08095.bin (UFI)\r\n        SW: Version 08.0.95T211\r\n      Compressed Boot-Monitor Image size = 786432, Version:10.1.18T215 (mnz10118)\r\n       Compiled on Thu Oct  1 12:00:00 2020\r\n\r\n  HW: Stackable ICX7150-48P\r\n==========================================================================\r\nUNIT 1: SL 1: ICX7150-48P POE 48-port Management Module\r\n      Serial  #:FEK3222N0AB\r\n      Software Package: ICX7150_L3_SOFT_PACKAGE\r\n      Current License: 2X10GR\r\n      P-ENGINE  0: type DEF0, rev 01\r\n==========================================================================\r\n770 MHz ARM processor ARMv7 88 MHz bus\r\n8 MB boot flash memory\r\n2 GB code flash memory\r\n1 GB DRAM\r\nSTACKID 1  system uptime is 120 day(s) 3 hour(s) 12 minute(s) 5 second(s)\r\nThe system started at 08:00:00 GMT+00 Mon Jan 06 2025\r\n\r\nThe system\x20:\x20\x20\x20\x20 started=warm start\r\nSSH@ICX7150-48P#\x20
+  - "show module\n": |-
+      show module\r\n     Module                                        Status      Ports  Starting MAC\r\n M1 (left):                                                                    \r\n M2 (right):ICX7150-2X10GF 2-port 20G Module   OK           2      609c.9f11.2233\r\n U1:ICX7150-48P POE 48-port Mgmt Module        OK          48      609c.9f11.2200\r\nSSH@ICX7150-48P#\x20
+  - "show media | exclude EMPTY\n": |-
+      show media | exclude EMPTY\r\nPort   1/2/1:  Type  : 10GE SR 300m (SFP +)\r\n                Vendor: RUCKUS            , Version: A\r\n                Part# : 57-0000075-01     , Serial#: AAA111222333\r\nPort   1/2/2:  Type  : 10GE SR 300m (SFP +)\r\n                Vendor: RUCKUS            , Version: A\r\n                Part# : 57-0000075-01     , Serial#: AAA111222334\r\nSSH@ICX7150-48P#\x20
+  - "show hardware-info\n": |-
+      show hardware-info\r\nDRAM info:\r\n    Total: 1048576 KB\r\nFlash info:\r\n    Code flash: 2097152 KB\r\n    Boot flash: 8192 KB\r\nSSH@ICX7150-48P#\x20
+  - "show stack | exclude T=\n": |-
+      show stack | exclude T=\r\nalone: standalone, D: dynamic config, S: static config\r\nID    Type          Role     Mac Address     Pri State    Comment\r\n1  S ICX7150-48P   active   609c.9f11.2200  128 local    Ready\r\nSSH@ICX7150-48P#\x20
+  - "show running-config\n": |-
+      show running-config\r\nCurrent configuration:\r\n!\r\nver 08.0.95T211\r\n!\r\nstack unit 1\r\n  module 1 icx7150-48p-poe-port-management-module\r\n  module 2 icx7150-2-copper-port-2g-module\r\n!\r\nglobal-stp\r\n!\r\nvlan 1 name DEFAULT-VLAN by port\r\n spanning-tree\r\n!\r\nvlan 100 name USERS by port\r\n untagged ethe 1/1/1 to 1/1/24\r\n spanning-tree\r\n!\r\nvlan 200 name SERVERS by port\r\n tagged ethe 1/2/1 to 1/2/2\r\n spanning-tree\r\n!\r\n--More--
+  - " ": |-
+      \e[2K\e[1Ghostname ICX7150-48P\r\nip dns domain-list example.com\r\nip dns server-address 192.0.2.53\r\n!\r\naaa authentication login default local\r\nenable telnet authentication\r\n!\r\ninterface ethernet 1/1/1\r\n port-name uplink-to-core\r\n!\r\ninterface ve 100\r\n ip address 192.0.2.1 255.255.255.0\r\n!\r\nend\r\nSSH@ICX7150-48P#\x20
+  - "exit\n": |-
+      exit\r\nSSH@ICX7150-48P>\x20
+  - "exit\n": |-
+      exit\r\n
