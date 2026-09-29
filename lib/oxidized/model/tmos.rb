@@ -3,12 +3,6 @@ class TMOS < Oxidized::Model
 
   comment '# '
 
-  cmd :all do |cfg|
-    cfg.gsub!(/^\s*(checksum SHA1:|revision |size |create-time|last-update-time|updated-by|created-by)\b.*$/, '')
-    cfg.gsub!(/^.*\brevision\s+\d+\s*$/, '')
-    cfg
-  end
-
   cmd :secret do |cfg|
     cfg.gsub!(/^([\s\t]*)secret \S+/, '\1secret <secret removed>')
     cfg.gsub!(/^([\s\t]*\S*)password \S+/, '\1password <secret removed>')
@@ -39,7 +33,7 @@ class TMOS < Oxidized::Model
     cfg.gsub!(/^\s+bandwidth-cps (\d+)/, '')
     cfg.gsub!(/^\s+bandwidth-pps (\d+)\n/, '')
     cfg.gsub!(/^\s*\S*encrypted \S+\n/, '')
-    cfg
+    strip_object_metadata cfg
   end
 
   cmd('tmsh -q list net route all') { |cfg| comment cfg }
@@ -57,9 +51,18 @@ class TMOS < Oxidized::Model
 
   cmd('[ -d "/config/zebos" ] && cat /config/zebos/*/ZebOS.conf') { |cfg| comment cfg }
 
-  cmd('cat /config/partitions/*/bigip*.conf') { |cfg| comment cfg }
+  cmd('cat /config/partitions/*/bigip*.conf') { |cfg| comment strip_object_metadata(cfg) }
 
   cfg :ssh do
     exec true # don't run shell, run each command in exec channel
+  end
+
+  # tmsh objects (sys file ssl-cert, ifile, data-group...) carry a checksum,
+  # revision, size and create/update time and author, which change without any
+  # configuration change
+  def strip_object_metadata(cfg)
+    cfg.gsub!(/^[ \t]*(checksum SHA1:|revision |size |create-time|last-update-time|updated-by|created-by)\b.*\n/, '')
+    cfg.gsub!(/^.*\brevision[ \t]+\d+[ \t]*\r?\n/, '')
+    cfg
   end
 end
