@@ -4,7 +4,7 @@ class IPOS < Oxidized::Model
   # Ericsson SSR (IPOS)
   # Redback SE (SEOS)
 
-  prompt /^([\[\]\w.@-]+[#:>]\s?)$/
+  prompt /\r?([\[\]\w.@-]+[#:>]\s?)$/
   comment '! '
 
   cmd 'show chassis' do |cfg|
@@ -28,8 +28,11 @@ class IPOS < Oxidized::Model
 
     # Keeps the issued command commented but removes the uncommented "Building configuration..."
     # and "Current configuration:" lines as well as the last prompt at the end.
-    cfg = cfg[4..-2].unshift comment cfg[0]
-
+    first_line = comment cfg.first
+    cfg = cfg[1..-1]
+    cfg = cfg.reject { |line| line.match /^(Building configuration|Current configuration)$/ }
+    cfg.unshift first_line
+    
     # Later IPOS releases add this line in addition to the usual "last changed" line.
     # It's touched regularly (as often as multiple times per minute) by the OS without actual visible config changes.
     cfg = cfg.reject { |line| line.match "Configuration last changed by system user" }
@@ -43,6 +46,8 @@ class IPOS < Oxidized::Model
     cfg = cfg.reject { |line| line.match "Configuration last changed by user '<NO USER>' at" }
     cfg = cfg.reject { |line| line.match "Configuration last changed by user '' at" }
 
+    # remove last prompt
+    cfg.pop if cfg.last.match(/[#:>]\s?$/)
     cfg.join
   end
 
@@ -52,7 +57,7 @@ class IPOS < Oxidized::Model
   end
 
   cfg :telnet, :ssh do
-    post_login 'terminal length 0'
+    post_login 'paginate false'
     if vars :enable
       post_login do
         cmd "enable"
@@ -61,7 +66,6 @@ class IPOS < Oxidized::Model
     end
     pre_logout do
       send "exit\n"
-      send "n\n"
     end
   end
 end
