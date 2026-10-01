@@ -156,6 +156,13 @@ module Oxidized
         end
 
         repo = Rugged::Repository.new repo_path
+        
+        # Early exit if repo not changed since cached
+        current_head = repo.head.target.oid
+        if current_head == @gitcache[repo_path][:last_commit]
+          Oxidized.logger.debug { "git.update_cache hit, skipping walker for #{repo_path}" }
+          return
+        end
 
         walker = Rugged::Walker.new(repo)
         walker.sorting(Rugged::SORT_DATE)
