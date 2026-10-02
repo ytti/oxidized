@@ -8,6 +8,7 @@ You can define an arbitrary number of hooks that subscribe to different events. 
  * [githubrepo](#hook-type-githubrepo)
  * [awssns](#hook-type-awssns)
  * [slackdiff](#hook-type-slackdiff)
+ * [googlechat](#hook-type-googlechat)
  * [ciscosparkdiff](#ciscosparkdiff)
  * [xmppdiff](#hook-type-xmppdiff)
 
@@ -320,6 +321,273 @@ hooks:
     token: SLACK_BOT_TOKEN
     channel: "#CHANNEL_ID"
     proxy: http://myproxy:8080
+```
+
+## Hook type: googlechat
+
+The `googlechat` hook sends Oxidized configuration change and configuration retrieval failure notifications to a [Google Chat](https://chat.google.com/) space using an incoming webhook.
+
+The hook supports the following events:
+
+* `post_store`: sends a Google Chat card containing a colorized configuration diff after a changed configuration is stored.
+* `node_fail`: sends a plain-text notification after Oxidized exhausts the configured number of retries for a node.
+
+### Required configuration
+
+The following configuration key is required:
+
+| Key | Description |
+|-----|-------------|
+| `webhook_url` | Google Chat incoming webhook URL. |
+
+A Google Chat incoming webhook can be created for a Google Chat space by following the [Google Chat incoming webhook documentation](https://developers.google.com/workspace/chat/quickstart/webhooks).
+
+### Basic googlechat hook configuration example
+
+```yaml
+hooks:
+  google_chat:
+    type: googlechat
+    events: [post_store, node_fail]
+    webhook_url: "https://chat.googleapis.com/v1/spaces/SPACE/messages?key=KEY&token=TOKEN"
+```
+
+### LibreNMS device name lookup
+
+The hook can optionally query the LibreNMS API to retrieve a device's SNMP `sysName`.
+
+This is useful when Oxidized receives devices from LibreNMS using management IP addresses as their node names.
+
+For example, Oxidized may know a node as:
+
+```text
+192.168.1.20
+```
+
+while LibreNMS knows the device's SNMP system name as:
+
+```text
+Switch1
+```
+
+With LibreNMS integration enabled, Google Chat notifications will use:
+
+```text
+Switch1 (192.168.1.20)
+```
+
+instead of only the IP address.
+
+Configure the LibreNMS API URL and API token:
+
+```yaml
+hooks:
+  google_chat:
+    type: googlechat
+    events: [post_store, node_fail]
+    webhook_url: "https://chat.googleapis.com/v1/spaces/SPACE/messages?key=KEY&token=TOKEN"
+
+    librenms_api: "http://librenms:8000/api/v0/devices"
+    librenms_token: "LIBRENMS_API_TOKEN"
+```
+
+The LibreNMS integration is optional.
+
+If the LibreNMS API is unavailable, returns an error, returns invalid JSON, does not contain the device, or does not provide a `sysName`, the hook falls back to the Oxidized node IP or node name.
+
+A LibreNMS failure does not prevent the Google Chat notification from being sent.
+
+### LibreNMS cache
+
+The complete LibreNMS device listing is cached in memory to avoid requesting the device list for every Oxidized event.
+
+The default cache lifetime is 300 seconds.
+
+It can be changed with:
+
+```yaml
+hooks:
+  google_chat:
+    type: googlechat
+    events: [post_store, node_fail]
+    webhook_url: "https://chat.googleapis.com/v1/spaces/SPACE/messages?key=KEY&token=TOKEN"
+
+    librenms_api: "http://librenms:8000/api/v0/devices"
+    librenms_token: "LIBRENMS_API_TOKEN"
+    librenms_cache_ttl: 300
+```
+
+If a LibreNMS refresh fails after a valid device list has already been cached, the hook continues using the previous cached device list.
+
+Set `librenms_cache_ttl` to `0` to disable cache reuse.
+
+### Configuration diff size
+
+Configuration diffs are limited to 15,000 characters by default to prevent excessively large Google Chat messages.
+
+The limit can be changed with:
+
+```yaml
+hooks:
+  google_chat:
+    type: googlechat
+    events: [post_store]
+    webhook_url: "https://chat.googleapis.com/v1/spaces/SPACE/messages?key=KEY&token=TOKEN"
+    max_diff_chars: 15000
+```
+
+When the limit is exceeded, the diff is truncated and the message contains:
+
+```text
+[truncated...]
+```
+
+### Failure notification cooldown
+
+By default, every `node_fail` event sends a notification.
+
+A cooldown can optionally be configured to reduce repeated notifications for a device that remains unreachable.
+
+For example, to send at most one failure notification per device every hour:
+
+```yaml
+hooks:
+  google_chat:
+    type: googlechat
+    events: [node_fail]
+    webhook_url: "https://chat.googleapis.com/v1/spaces/SPACE/messages?key=KEY&token=TOKEN"
+    failure_cooldown: 3600
+```
+
+The default value is:
+
+```yaml
+failure_cooldown: 0
+```
+
+A value of `0` disables failure notification suppression.
+
+The cooldown is maintained in memory and is reset when Oxidized restarts.
+
+### Error type in failure notifications
+
+By default, failure notifications contain the human readable failure reason without the Ruby exception type.
+
+For example:
+
+```text
+Config check failed on Switch1 (192.168.1.20). Connection refused
+```
+
+The exception type can optionally be appended:
+
+```yaml
+hooks:
+  google_chat:
+    type: googlechat
+    events: [node_fail]
+    webhook_url: "https://chat.googleapis.com/v1/spaces/SPACE/messages?key=KEY&token=TOKEN"
+    show_error_type: true
+```
+
+This may produce a notification similar to:
+
+```text
+Config check failed on Switch1 (192.168.1.20). Connection refused [Errno::ECONNREFUSED]
+```
+
+### Proxy
+
+An HTTP proxy can optionally be configured for Google Chat and LibreNMS HTTP requests:
+
+```yaml
+hooks:
+  google_chat:
+    type: googlechat
+    events: [post_store, node_fail]
+    webhook_url: "https://chat.googleapis.com/v1/spaces/SPACE/messages?key=KEY&token=TOKEN"
+    proxy: "http://proxy.example.com:8080"
+```
+
+Proxy URLs containing credentials are also supported:
+
+```yaml
+proxy: "http://username:password@proxy.example.com:8080"
+```
+
+### HTTP timeouts
+
+HTTP connection and response timeouts can optionally be configured:
+
+```yaml
+hooks:
+  google_chat:
+    type: googlechat
+    events: [post_store, node_fail]
+    webhook_url: "https://chat.googleapis.com/v1/spaces/SPACE/messages?key=KEY&token=TOKEN"
+
+    open_timeout: 10
+    read_timeout: 20
+```
+
+The defaults are:
+
+```yaml
+open_timeout: 10
+read_timeout: 20
+```
+
+### Full googlechat configuration example
+
+```yaml
+hooks:
+  google_chat:
+    type: googlechat
+    events: [post_store, node_fail]
+
+    webhook_url: "https://chat.googleapis.com/v1/spaces/SPACE/messages?key=KEY&token=TOKEN"
+
+    # Optional LibreNMS integration
+    librenms_api: "http://librenms:8000/api/v0/devices"
+    librenms_token: "LIBRENMS_API_TOKEN"
+    librenms_cache_ttl: 300
+
+    # Maximum configuration diff included in a message
+    max_diff_chars: 15000
+
+    # 0 sends a notification for every node_fail event
+    failure_cooldown: 0
+
+    # Append the exception type to node_fail notifications
+    show_error_type: false
+
+    # HTTP settings
+    open_timeout: 10
+    read_timeout: 20
+```
+
+### Google Chat message formats
+
+For a `post_store` event, the hook sends a Google Chat card containing:
+
+* Device SNMP `sysName`, when available through LibreNMS
+* Device IP or Oxidized node name
+* Job timestamp
+* Colorized configuration diff
+  * Added lines are green
+  * Removed lines are red
+  * Other lines are gray
+
+For a `node_fail` event, the hook sends a plain-text message:
+
+```text
+Config check failed on Switch1 (192.168.1.20). Connection refused
+```
+
+If LibreNMS name lookup is not configured or is unavailable, the IP or Oxidized node name is used instead:
+
+```text
+Config check failed on 192.168.1.20 (192.168.1.20). Connection refused
 ```
 
 ## Hook type: ciscosparkdiff

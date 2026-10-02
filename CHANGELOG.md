@@ -6,6 +6,7 @@ The format is based on [Keep a Changelog](https://keepachangelog.com/en/1.1.0/).
 
 ## [Unreleased]
 ### Added
+- hook/googlechat: add Google Chat notifications for configuration changes and node failures (@dbusse-wcr7)
 - cnos: remove transceiver DDM data (@freddy36)
 - cnos: add show license output (@freddy36)
 - cnos: add FS-S58580 simulation data (@freddy36)
