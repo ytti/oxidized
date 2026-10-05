@@ -55,7 +55,7 @@ Gem::Specification.new do |s|
   # Rubocop introduces new rules in minor versions, so we limit automatic
   # updates to patches
   s.add_development_dependency 'rubocop',          '~> 1.89.0'
-  s.add_development_dependency 'rubocop-minitest', '~> 0.40.0'
+  s.add_development_dependency 'rubocop-minitest', '~> 0.41.0'
   s.add_development_dependency 'rubocop-rake',     '~> 0.7.0'
   s.add_development_dependency 'rubocop-sequel',   '~> 0.4.0'
   s.add_development_dependency 'simplecov',        '~> 0.22'
