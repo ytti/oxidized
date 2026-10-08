@@ -49,11 +49,12 @@ module Oxidized
           vars(:ssh_proxy), vars(:ssh_proxy_port), must_secure?
         )
       end
-      ssh_opts[:keys]       = [vars(:ssh_keys)].flatten           if vars(:ssh_keys)
-      ssh_opts[:kex]        = vars(:ssh_kex).split(/,\s*/)        if vars(:ssh_kex)
-      ssh_opts[:encryption] = vars(:ssh_encryption).split(/,\s*/) if vars(:ssh_encryption)
-      ssh_opts[:host_key]   = vars(:ssh_host_key).split(/,\s*/)   if vars(:ssh_host_key)
-      ssh_opts[:hmac]       = vars(:ssh_hmac).split(/,\s*/)       if vars(:ssh_hmac)
+      ssh_opts[:keys]              = [vars(:ssh_keys)].flatten                  if vars(:ssh_keys)
+      ssh_opts[:kex]               = vars(:ssh_kex).split(/,\s*/)               if vars(:ssh_kex)
+      ssh_opts[:encryption]        = vars(:ssh_encryption).split(/,\s*/)        if vars(:ssh_encryption)
+      ssh_opts[:host_key]          = vars(:ssh_host_key).split(/,\s*/)          if vars(:ssh_host_key)
+      ssh_opts[:hmac]              = vars(:ssh_hmac).split(/,\s*/)              if vars(:ssh_hmac)
+      ssh_opts[:pubkey_algorithms] = vars(:ssh_pubkey_algorithms).split(/,\s*/) if vars(:ssh_pubkey_algorithms)
 
       # Use our logger for Net::SSH
       ssh_logger = SemanticLogger[Net::SSH]
