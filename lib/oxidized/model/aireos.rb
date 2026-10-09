@@ -5,7 +5,7 @@ class Aireos < Oxidized::Model
   # Used in Cisco WLC 5500
 
   comment '# ' # this complains too, can't find real comment char
-  prompt /^\([^)]+\)\s>/
+  prompt /^\([^)]+\)\s*[>#]/
 
   cmd :all do |cfg|
     cfg.cut_both
@@ -29,7 +29,7 @@ class Aireos < Oxidized::Model
   end
 
   cfg :telnet, :ssh do
-    username /^User:\s*/
+    username /^(User|Username):\s*/
     password /^Password:\s*/
     post_login 'config paging disable'
   end
