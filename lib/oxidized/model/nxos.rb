@@ -37,6 +37,7 @@ class NXOS < Oxidized::Model
 
   cmd 'show running-config' do |cfg|
     cfg.gsub! /^(show run.*)$/, '! \1'
+    cfg.gsub! /^!Running configuration last done at:[^\n]*\n/, ''
     cfg.gsub! /^!Time:[^\n]*\n/, ''
     cfg.gsub! /^[\w.@_()-]+\#.*$/, ''
     cfg
