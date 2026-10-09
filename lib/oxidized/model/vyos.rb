@@ -30,7 +30,7 @@ class Vyos < Oxidized::Model
   end
 
   cmd 'show system commit' do |cfg|
-    comment "Last commits:\n#{cfg.lines.first(4).join}"
+    comment "# Last commits:\n#{cfg.lines.first(4).join}"
   end
 
   cmd 'show configuration commands | no-more'
