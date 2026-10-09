@@ -29,6 +29,10 @@ class Vyos < Oxidized::Model
     comment cfg
   end
 
+  cmd 'show system commit' do |cfg|
+    comment "# Last commits:\n#{cfg.lines.first(4).join}"
+  end
+
   cmd 'show configuration commands | no-more'
 
   cfg :ssh do
