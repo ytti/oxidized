@@ -137,6 +137,26 @@ vars_map:
 # ...
 ```
 
+### SSH public key algorithms
+Net::SSH signs RSA keys with `rsa-sha2-512` or `rsa-sha2-256` first and falls
+back to `ssh-rsa` only when the device rejects them. Some devices instead drop
+the connection, e.g. Huawei SmartAX MA5683T, which accepts the key and then
+disconnects on the `rsa-sha2-256` signature. Others log a failed login before
+the fallback succeeds (#2875).
+
+Set the variable `ssh_pubkey_algorithms` to choose the algorithms, in order,
+for these devices:
+
+```yaml
+models:
+  smartax:
+    vars:
+      ssh_pubkey_algorithms: ssh-rsa
+```
+
+This only applies to RSA keys. Valid values are `rsa-sha2-512`,
+`rsa-sha2-256` and `ssh-rsa`; other values are ignored.
+
 ### Custom SSH port
 Set the variable `ssh_port` to the desired value (default is 22).
 
