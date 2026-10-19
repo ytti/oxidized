@@ -27,6 +27,8 @@ The format is based on [Keep a Changelog](https://keepachangelog.com/en/1.1.0/).
 - http: support overriding port (@mgrocock-cwcs)
 - http: support DELETE method (@mgrocock-cwcs)
 - tmos: strip volatile object metadata (checksum, revision, size, create/update time and author) from `tmsh -q list` and the partition configs (@dahlmo)
+- panos_api: back up the running configuration with `show config running` instead of the candidate configuration export. A custom admin role now needs the XML API `Operational Requests` permission; set `panos_api_candidate: true` to keep the previous behaviour. Fixes #2759 (@macmandr197)
+- gemspec: add nokogiri as a development dependency for the panos_api unit tests (@macmandr197)
 
 ### Fixed
 - input/cli: raise an error when a requested login credential is missing. Fixes #3700 (@robertcheramy)
