@@ -41,6 +41,7 @@ The format is based on [Keep a Changelog](https://keepachangelog.com/en/1.1.0/).
 - aoscx: hide power consumption on rows where PSU output is N/A. Fixes #3864 (@FusionBrah)
 - aoscx: hide input voltage readings in "show environment power-supply input-voltage". Fixes #3864 (@FusionBrah)
 - source: return the decrypted contents of a `gpg`-encrypted source as an IO object, so JSONFile (and any source reading via `#read`) loads it instead of crashing with a `NoMethodError`. Fixes #3879 (@youdie006)
+- scp: rescue the `ArgumentError` net-scp raises when a device answers with an error message missing the `\2` prefix, so the node fails instead of crashing Oxidized. Fixes #3900 (@SAY-5)
 
 ## [0.37.0 - 2026-05-20]
 ### Added
