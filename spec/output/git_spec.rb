@@ -65,7 +65,7 @@ describe Oxidized::Output::Git do
       _(hashlist.length).must_equal 2
       _(hashlist[0][:oid]).must_equal oid
       _(hashlist[0][:time]).must_equal Time.new(2003)
-      _(hashlist[0][:date]).must_equal Time.new(2003).to_s
+      _(hashlist[0].has_key?(:date)).must_equal false
       _(hashlist[0][:message]).must_equal 'update'
       _(hashlist[0][:author][:name]).must_equal 'oxidized'
     end

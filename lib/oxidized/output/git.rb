@@ -183,9 +183,6 @@ module Oxidized
               next unless delta.added? || delta.modified?
 
               new_commits[delta.new_file[:path]] << {
-                # We keep :date for reverse compatibility on oxidized-web <= 0.15.1
-                date:    commit.time.to_s,
-                # date as a Time instance for more flexibility in oxidized-web
                 time:    commit.time,
                 oid:     commit.oid,
                 author:  author,
