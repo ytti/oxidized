@@ -35,6 +35,9 @@ The git and gitcrypt outputs no longer provide the `:date` field in the node ver
 - output/git, output/gitcrypt: remove the `:date` field from node versions, use `:time` instead. Requires oxidized-web >= 0.17.0 (@robertcheramy)
 
 ### Fixed
+- output/git: `get_diff` only returns the diff of the requested node when a commit contains several nodes (@robertcheramy)
+- output/gitcrypt: `get_diff` only returns the diff of the requested node when a commit contains several nodes, and works with groups in a single repository (@robertcheramy)
+- output/gitcrypt: reference the `git` gem as `::Git`, as `Git` resolved to `Oxidized::Output::Git` when the git output was loaded too (@robertcheramy)
 - input/cli: raise an error when a requested login credential is missing. Fixes #3700 (@robertcheramy)
 - eos: hide the community string / v3 user in snmp-server host lines. Fixes #3882 (@FusionBrah)
 - aoscx: mask the community string in snmp-server host lines instead of the token after the host address. Fixes #3881 (@FusionBrah)

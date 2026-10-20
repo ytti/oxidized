@@ -267,6 +267,42 @@ describe Oxidized::Output::Git do
     end
   end
 
+  describe '#get_diff' do
+    include GitHelper
+
+    before do
+      Oxidized.asetus = Asetus.new
+      Oxidized.config.output.git.single_repo = true
+      @repo_path = File.join(@tmpdir, 'oxidized.git')
+      @repo = init_repo(@repo_path)
+      @node1 = stub(repo: @repo_path, name: 'node1')
+      @git = Oxidized::Output::Git.new
+    end
+
+    it 'only returns the diff of the node when the commit contains several nodes' do
+      oid1 = commit_files(@repo, { 'grp/node1' => "a\n", 'grp/node10' => "a\n", 'grp/node2' => "a\n" })
+      oid2 = commit_files(@repo, { 'grp/node1' => "b\n", 'grp/node10' => "b\n", 'grp/node2' => "b\n" })
+
+      [nil, oid1].each do |old|
+        diff = @git.get_diff(@node1, 'grp', oid2, old)
+        _(diff[:patch]).must_include 'grp/node1'
+        _(diff[:patch]).wont_include 'grp/node10'
+        _(diff[:patch]).wont_include 'grp/node2'
+        _(diff[:stat]).must_equal [1, 1]
+      end
+    end
+
+    it 'returns "no diffs" when the commit does not exist' do
+      commit_files(@repo, { 'grp/node1' => "a\n" })
+      _(@git.get_diff(@node1, 'grp', 'deadbeef' * 5, nil)).must_equal 'no diffs'
+    end
+
+    it 'returns "no diffs" when oid2 does not exist' do
+      oid = commit_files(@repo, { 'grp/node1' => "a\n" })
+      _(@git.get_diff(@node1, 'grp', oid, 'deadbeef' * 5)).must_equal 'no diffs'
+    end
+  end
+
   describe '.clean_obsolete_nodes' do
     include GitHelper
 

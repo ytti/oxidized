@@ -103,29 +103,16 @@ module Oxidized
       end
 
       # give a hash with the patch of a diff between 2 revision and the stats (added and deleted lines)
+      # The diff is limited to the node, as a commit may contain several nodes
       def get_diff(node, group, oid1, oid2)
-        diff_commits = nil
-        repo, = yield_repo_and_path(node, group)
+        repo, path = yield_repo_and_path(node, group)
         repo = Rugged::Repository.new repo
         commit = repo.lookup(oid1)
+        commit_old = oid2 ? repo.lookup(oid2) : commit.parents[0]
 
-        if oid2
-          commit_old = repo.lookup(oid2)
-          diff = repo.diff(commit_old, commit)
-          diff.each do |patch|
-            if /#{node.name}\s+/ =~ patch.to_s.lines.first
-              diff_commits = { patch: patch.to_s, stat: patch.stat }
-              break
-            end
-          end
-        else
-          stat = commit.parents[0].diff(commit).stat
-          stat = [stat[1], stat[2]]
-          patch = commit.parents[0].diff(commit).patch
-          diff_commits = { patch: patch, stat: stat }
-        end
-
-        diff_commits
+        diff = repo.diff(commit_old, commit, paths: [path], disable_pathspec_match: true)
+        _files, additions, deletions = diff.stat
+        { patch: diff.patch, stat: [additions, deletions] }
       rescue StandardError
         'no diffs'
       end
