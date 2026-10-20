@@ -172,6 +172,13 @@ module Oxidized
 
           new_commits = Hash.new { |hash, key| hash[key] = [] }
           walker.each do |commit|
+            # Deduplicate repeated strings (String#-@) to reduce the memory
+            # footprint of large repositories
+            author = commit.author
+            author[:name]  = -author[:name]
+            author[:email] = -author[:email]
+            message = -commit.message
+
             commit.diff.each_delta do |delta|
               next unless delta.added? || delta.modified?
 
@@ -181,8 +188,8 @@ module Oxidized
                 # date as a Time instance for more flexibility in oxidized-web
                 time:    commit.time,
                 oid:     commit.oid,
-                author:  commit.author,
-                message: commit.message
+                author:  author,
+                message: message
               }
             end
           end

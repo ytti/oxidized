@@ -86,6 +86,16 @@ describe Oxidized::Output::Git do
       _(oids('file1').length).must_equal 2
     end
 
+    it 'deduplicates author and message strings to save memory' do
+      commit_files(@repo, { 'file1' => 'v1' })
+      commit_files(@repo, { 'file1' => 'v2' })
+
+      hashlist = Oxidized::Output::Git.hash_list('file1', @repo_path)
+      _(hashlist[0][:message]).must_be_same_as hashlist[1][:message]
+      _(hashlist[0][:author][:name]).must_be_same_as hashlist[1][:author][:name]
+      _(hashlist[0][:author][:email]).must_be_same_as hashlist[1][:author][:email]
+    end
+
     it 'returns recent commits in the right order' do
       c1 = commit_files(@repo, { 'file1' => 'v1', 'file2' => 'v1' }, time: Time.new(2001))
       c2 = commit_files(@repo, { 'file3' => 'v1', 'file1' => 'v2' }, time: Time.new(2002))
