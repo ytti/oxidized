@@ -1,4 +1,5 @@
 require_relative 'git_helper'
+require 'tmpdir'
 
 describe Oxidized::Output::Git do
   describe '#yield_repo_and_path' do
@@ -94,6 +95,90 @@ describe Oxidized::Output::Git do
     end
   end
 
+  describe '.hash_list with a real repository' do
+    before do
+      @time = Time.new(2024, 1, 1)
+    end
+
+    after do
+      Oxidized::Output::Git.clear_cache
+    end
+
+    def with_repo
+      Dir.mktmpdir do |dir|
+        @repo_path = File.join(dir, 'oxidized.git')
+        @repo = Rugged::Repository.init_at(@repo_path, :bare)
+        yield
+      end
+    end
+
+    def commit_file(data)
+      index = @repo.index
+      index.add path: 'node1', oid: @repo.write(data, :blob), mode: 0o100644
+      signature = { name: 'oxidized', email: 'ox@id.iz', time: @time }
+      oid = Rugged::Commit.create(@repo,
+                                  tree:       index.write_tree(@repo),
+                                  message:    data,
+                                  author:     signature,
+                                  committer:  signature,
+                                  parents:    @repo.empty? ? [] : [@repo.head.target],
+                                  update_ref: 'HEAD')
+      index.write
+      oid
+    end
+
+    def messages
+      Oxidized::Output::Git.hash_list('node1', @repo_path).map { |h| h[:message] }
+    end
+
+    it 'keeps all commits made within the same second in the right order' do
+      with_repo do
+        commit_file('v1')
+        _(messages).must_equal %w[v1]
+
+        %w[v2 v3 v4 v5].each { |data| commit_file(data) }
+        _(messages).must_equal %w[v5 v4 v3 v2 v1]
+      end
+    end
+
+    it 'rebuilds the cache when the history has been rewritten' do
+      with_repo do
+        commit_file('v1')
+        oid_v2 = commit_file('v2')
+        commit_file('v3')
+        _(messages).must_equal %w[v3 v2 v1]
+
+        Oxidized::Output::Git.logger.expects(:warn)
+                             .with(regexp_matches(/^update_cache: history of .* rewritten, rebuilding cache/))
+
+        @repo.references.update('refs/heads/master', oid_v2)
+        _(messages).must_equal %w[v2 v1]
+      end
+    end
+
+    it 'does not lose a commit made while walking the logs' do
+      with_repo do
+        commit_file('v1')
+
+        # Manipulated walker to simulate a worker committing during the walk
+        walker = Rugged::Walker.new(@repo)
+        test = self
+        walker.define_singleton_method(:push) do |oid|
+          super(oid)
+          test.commit_file('v2')
+        end
+        Rugged::Walker.expects(:new).returns(walker)
+
+        # First call: v2 committed after HEAD was read
+        _(messages).must_equal %w[v1]
+
+        # Second call (with a normal walker) should include the commit made during the first call
+        Rugged::Walker.unstub(:new)
+        _(messages).must_equal %w[v2 v1]
+      end
+    end
+  end
+
   describe '#version' do
     after do
       # Clean the persistent cache at the end of the test
@@ -147,7 +232,8 @@ describe Oxidized::Output::Git do
 
       Rugged::Repository.expects(:new).with('/tmp/oxidized.git').returns(@repo).twice
       walker = WalkerMock.new(@repo)
-      Rugged::Walker.expects(:new).with(@repo).returns(walker).twice
+      # The second call hits the cache, as HEAD did not change
+      Rugged::Walker.expects(:new).with(@repo).returns(walker).once
       @mock_node1 = mock('Oxidized::Node')
       @mock_node1.expects(:repo).returns('/tmp/oxidized.git')
       @mock_node1.expects(:name).returns('node1').twice

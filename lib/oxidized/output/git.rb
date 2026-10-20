@@ -143,73 +143,74 @@ module Oxidized
         @gitcache[repo_path][:nodes][node_path] || []
       end
 
+      # As oxidized-web works with multiple threads, we need a mutex to protect the cache
+      @cache_mutex = Mutex.new
+
       # Update @gitcache, a class instance variable, ensuring persistence
       # by saving the cache independently of object instances
       def self.update_cache(repo_path)
-        # initialize our cache as a class instance variable
-        @gitcache ||= {}
-        # When single_repo == false, we have multiple repositories
-        unless @gitcache[repo_path]
-          @gitcache[repo_path] = {}
-          @gitcache[repo_path][:nodes] = {}
-          @gitcache[repo_path][:last_commit] = nil
-        end
+        @cache_mutex.synchronize do
+          # @gitcache (class instance variable) is keyed by repo_path:
+          # with single_repo == false, each group has its own repo
+          @gitcache ||= {}
+          repo = Rugged::Repository.new repo_path
+          # Read HEAD only once, as a worker may commit while we walk the logs
+          head_oid = repo.head.target.oid
+          cache = @gitcache[repo_path]
 
-        repo = Rugged::Repository.new repo_path
-        
-        # Early exit if repo not changed since cached
-        current_head = repo.head.target.oid
-        if current_head == @gitcache[repo_path][:last_commit]
-          Oxidized.logger.debug { "git.update_cache hit, skipping walker for #{repo_path}" }
-          return
-        end
-
-        walker = Rugged::Walker.new(repo)
-        walker.sorting(Rugged::SORT_DATE)
-        walker.push(repo.head.target.oid)
-
-        # We store the commits into a temporary cache. It will be prepended
-        # to @gitcache to preserve the order of the commits.
-        cache = {}
-        walker.each do |commit|
-          if commit.oid == @gitcache[repo_path][:last_commit]
-            # we have reached the last cached commit, so we're done
-            break
+          if cache && cache[:last_commit] == head_oid
+            logger.debug "update_cache: #{repo_path} unchanged since last update, using cached versions"
+            return cache
           end
 
-          commit.diff.each_delta do |delta|
-            next unless delta.added? || delta.modified?
+          walker = Rugged::Walker.new(repo)
+          walker.sorting(Rugged::SORT_TOPO | Rugged::SORT_DATE)
+          walker.push(head_oid)
+          if cache.nil?
+            logger.debug "update_cache: building cache for #{repo_path}"
+            cache = { nodes: {}, last_commit: nil }
+          elsif descendant?(repo, head_oid, cache[:last_commit])
+            logger.debug "update_cache: walking new commits in #{repo_path}"
+            walker.hide(cache[:last_commit])
+          else
+            logger.warn "update_cache: history of #{repo_path} rewritten, rebuilding cache"
+            cache = { nodes: {}, last_commit: nil }
+          end
 
-            hash = {}
-            # We keep :date for reverse compatibility on oxidized-web <= 0.15.1
-            hash[:date] = commit.time.to_s
-            # date as a Time instance for more flexibility in oxidized-web
-            hash[:time] = commit.time
-            hash[:oid] = commit.oid
-            hash[:author] = commit.author
-            hash[:message] = commit.message
+          new_commits = Hash.new { |hash, key| hash[key] = [] }
+          walker.each do |commit|
+            commit.diff.each_delta do |delta|
+              next unless delta.added? || delta.modified?
 
-            filename = delta.new_file[:path]
-            if cache[filename]
-              cache[filename].append hash
-            else
-              cache[filename] = [hash]
+              new_commits[delta.new_file[:path]] << {
+                # We keep :date for reverse compatibility on oxidized-web <= 0.15.1
+                date:    commit.time.to_s,
+                # date as a Time instance for more flexibility in oxidized-web
+                time:    commit.time,
+                oid:     commit.oid,
+                author:  commit.author,
+                message: commit.message
+              }
             end
           end
-        end
 
-        cache.each_pair do |filename, hashlist|
-          if @gitcache[repo_path][:nodes][filename]
-            # using the splat operator (*) should be OK as hashlist should
-            # not be very big when working on deltas
-            @gitcache[repo_path][:nodes][filename].prepend(*hashlist)
-          else
-            @gitcache[repo_path][:nodes][filename] = hashlist
+          # Build new arrays instead of modifying them, as lists returned
+          # by hash_list may be in use by another thread
+          new_commits.each_pair do |filename, hashlist|
+            cache[:nodes][filename] = hashlist + (cache[:nodes][filename] || [])
           end
-        end
 
-        # Store the most recent commit
-        @gitcache[repo_path][:last_commit] = repo.head.target.oid
+          cache[:last_commit] = head_oid
+          @gitcache[repo_path] = cache
+        end
+      end
+
+      # True if ancestor is in the history of commit, false if not or if
+      # ancestor does not exist (e.g. after a history rewrite)
+      def self.descendant?(repo, commit, ancestor)
+        repo.descendant_of?(commit, ancestor)
+      rescue Rugged::Error
+        false
       end
 
       # Currently only used in unit tests

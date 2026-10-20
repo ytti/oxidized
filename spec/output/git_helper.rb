@@ -23,6 +23,13 @@ class RepoMock
     # #head.target.oid
     @head = HeadMock.new(TargetMock.new(oid))
   end
+
+  def descendant_of?(commit_oid, ancestor_oid)
+    oids = @commits.map(&:oid)
+    commit_index = oids.index(commit_oid)
+    ancestor_index = oids.index(ancestor_oid)
+    !commit_index.nil? && !ancestor_index.nil? && ancestor_index < commit_index
+  end
 end
 
 class CommitMock
@@ -80,9 +87,19 @@ class WalkerMock
 
   def sorting(*); end
 
-  def push(*); end
+  def push(*)
+    @hidden = nil
+  end
 
-  def each(&block)
-    @repo.commits.reverse_each(&block)
+  def hide(oid)
+    @hidden = oid
+  end
+
+  def each
+    @repo.commits.reverse_each do |commit|
+      break if commit.oid == @hidden
+
+      yield commit
+    end
   end
 end

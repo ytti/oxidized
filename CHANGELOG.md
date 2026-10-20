@@ -27,6 +27,7 @@ The format is based on [Keep a Changelog](https://keepachangelog.com/en/1.1.0/).
 - http: support overriding port (@mgrocock-cwcs)
 - http: support DELETE method (@mgrocock-cwcs)
 - tmos: strip volatile object metadata (checksum, revision, size, create/update time and author) from `tmsh -q list` and the partition configs (@dahlmo)
+- output/git: skip walking the git logs in the version cache when HEAD did not change, speeding up node lists in oxidized-web. Closes #3895 (@zaits07)
 
 ### Fixed
 - input/cli: raise an error when a requested login credential is missing. Fixes #3700 (@robertcheramy)
@@ -41,6 +42,7 @@ The format is based on [Keep a Changelog](https://keepachangelog.com/en/1.1.0/).
 - aoscx: hide power consumption on rows where PSU output is N/A. Fixes #3864 (@FusionBrah)
 - aoscx: hide input voltage readings in "show environment power-supply input-voltage". Fixes #3864 (@FusionBrah)
 - source: return the decrypted contents of a `gpg`-encrypted source as an IO object, so JSONFile (and any source reading via `#read`) loads it instead of crashing with a `NoMethodError`. Fixes #3879 (@youdie006)
+- output/git: fix the version cache losing commits made within the same second or during a cache update. Log an error and rebuild the cache if the git history has been rewritten while Oxidized is running (@robertcheramy)
 
 ## [0.37.0 - 2026-05-20]
 ### Added
