@@ -43,6 +43,7 @@ The format is based on [Keep a Changelog](https://keepachangelog.com/en/1.1.0/).
 - aoscx: hide input voltage readings in "show environment power-supply input-voltage". Fixes #3864 (@FusionBrah)
 - source: return the decrypted contents of a `gpg`-encrypted source as an IO object, so JSONFile (and any source reading via `#read`) loads it instead of crashing with a `NoMethodError`. Fixes #3879 (@youdie006)
 - output/git: fix the version cache losing commits made within the same second or during a cache update. Log an error and rebuild the cache if the git history has been rewritten while Oxidized is running (@robertcheramy)
+- output/git: rebuild the git index from HEAD before each commit, so that changes merged by the githubrepo hook or pushed to the repository are no longer reverted by the next commit, and read configurations from HEAD instead of the index. Fixes #3887 (@robertcheramy)
 
 ## [0.37.0 - 2026-05-20]
 ### Added

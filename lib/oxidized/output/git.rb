@@ -74,17 +74,10 @@ module Oxidized
       # Returns the configuration of group/node_name
       #
       # #fetch is called by Nodes#fetch
-      # Nodes#fetch creates a new Output object each time, so it not easy
-      # to cache the repo index in memory. But as we keep the repo index up
-      # to date on disk in #update_repo, we can read it from disk instead of
-      # rebuilding it each time.
       def fetch(node, group)
         repo, path = yield_repo_and_path(node, group)
         repo = Rugged::Repository.new repo
-        # Read the index from disk
-        index = repo.index
-
-        repo.read(index.get(path)[:oid]).data
+        repo.blob_at(repo.head.target_id, path).content
       rescue StandardError
         'node not found'
       end
@@ -257,6 +250,7 @@ module Oxidized
         logger.info "clean_obsolete_nodes: removing " \
                     "#{files_to_delete.size} obsolete configs"
         index = repo.index
+        index.read_tree(tree)
 
         files_to_delete.each { |file_path| index.remove(file_path) }
 
@@ -315,18 +309,16 @@ module Oxidized
 
       # Uploads data into file in the repository repo
       #
-      # update_repo caches the index on disk. An index is usually used in a
-      # working directory and not in a bare repository, which confuses users.
-      # The alternative would be to rebuild the index each time, which a little
-      # time consuming. Caching the index in memory is difficult because a new
-      # Output object is created each time #store is called.
+      # The index is rebuilt from HEAD, as HEAD may have been changed without
+      # updating the index (e.g. by the githubrepo hook). It is still written
+      # to disk, so that older versions of Oxidized do not use a stale index.
       def update_repo(repo, file, data) # rubocop:disable Naming/PredicateMethod
         oid_old = repo.blob_at(repo.head.target_id, file) rescue nil
         return false if oid_old && (oid_old.content.b == data.b)
 
         oid = repo.write data, :blob
-        # Read the index from disk
         index = repo.index
+        repo.empty? ? index.clear : index.read_tree(repo.head.target.tree)
         index.add path: file, oid: oid, mode: 0o100644
 
         repo.config['user.name']  = @user

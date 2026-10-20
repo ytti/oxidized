@@ -179,6 +179,76 @@ describe Oxidized::Output::Git do
     end
   end
 
+  describe '#store and #fetch with a real repository' do
+    before do
+      Oxidized.asetus = Asetus.new
+      Oxidized.config.output.git.single_repo = true
+      Oxidized.config.output.git.user = 'Oxidized'
+      Oxidized.config.output.git.email = 'oxidized@example.com'
+    end
+
+    after do
+      Oxidized::Output::Git.clear_cache
+    end
+
+    def store(git, node, data)
+      outputs = Oxidized::Model::Outputs.new
+      outputs << data
+      git.store(node, outputs, msg: "update #{node}")
+    end
+
+    it 'keeps changes merged into HEAD without updating the index (githubrepo hook)' do
+      Dir.mktmpdir do |dir|
+        repo_path = File.join(dir, 'oxidized.git')
+        Oxidized.config.output.git.repo = repo_path
+        git = Oxidized::Output::Git.new
+        store(git, 'node1', "node1 v1\n")
+        store(git, 'node2', "node2 v1\n")
+
+        # Merge an upstream change like Hook::GithubRepo#fetch_and_merge_remote
+        repo = Rugged::Repository.new(repo_path)
+        base = repo.head.target
+        index = Rugged::Index.new
+        index.read_tree(base.tree)
+        index.add path: 'node2', oid: repo.write("node2 upstream\n", :blob), mode: 0o100644
+        upstream = Rugged::Commit.create(repo, tree: index.write_tree(repo), message: 'upstream', parents: [base])
+        merge_index = repo.merge_commits(base.oid, upstream)
+        Rugged::Commit.create(repo,
+                              parents:    [base, repo.lookup(upstream)],
+                              tree:       merge_index.write_tree(repo),
+                              message:    'merge',
+                              update_ref: 'HEAD')
+
+        node2 = stub(repo: repo_path, name: 'node2')
+        _(git.fetch(node2, nil)).must_equal "node2 upstream\n"
+
+        store(git, 'node1', "node1 v2\n")
+        _(git.fetch(node2, nil)).must_equal "node2 upstream\n"
+
+        # The index on disk is kept in sync with HEAD for older Oxidized versions
+        repo = Rugged::Repository.new(repo_path)
+        _(repo.index.write_tree(repo)).must_equal repo.head.target.tree_id
+      end
+    end
+
+    it 'works without an index file on disk (#3887)' do
+      Dir.mktmpdir do |dir|
+        repo_path = File.join(dir, 'oxidized.git')
+        Oxidized.config.output.git.repo = repo_path
+        git = Oxidized::Output::Git.new
+        store(git, 'node1', "node1 v1\n")
+        store(git, 'node2', "node2 v1\n")
+        File.delete(File.join(repo_path, 'index'))
+
+        node2 = stub(repo: repo_path, name: 'node2')
+        _(git.fetch(node2, nil)).must_equal "node2 v1\n"
+
+        store(git, 'node1', "node1 v2\n")
+        _(git.fetch(node2, nil)).must_equal "node2 v1\n"
+      end
+    end
+  end
+
   describe '#version' do
     after do
       # Clean the persistent cache at the end of the test
@@ -331,6 +401,7 @@ describe Oxidized::Output::Git do
 
       mock_index = mock('Index')
       mock_repo.expects(:index).returns(mock_index)
+      mock_index.expects(:read_tree).with(mock_tree)
       mock_index.expects(:remove).with('node3')
       mock_index.expects(:remove).with('gr1/node12')
       mock_index.expects(:remove).with('gr1/gr2/node122')
