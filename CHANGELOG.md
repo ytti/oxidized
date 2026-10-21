@@ -8,6 +8,8 @@ The format is based on [Keep a Changelog](https://keepachangelog.com/en/1.1.0/).
 ### Release Notes
 The git and gitcrypt outputs no longer provide the `:date` field in the node versions, as it was only used by oxidized-web <= 0.16.0. You need oxidized-web >= 0.17.0, older versions will fail to display node versions and diffs.
 
+Oxidized no longer patches Puma's signal handling (needed for Puma 8). With oxidized-web < 0.17.0, Puma takes over the INT, TERM and HUP signals again. Oxidized logs a warning at startup if it finds such a version.
+
 ### Added
 - cnos: remove transceiver DDM data (@freddy36)
 - cnos: add show license output (@freddy36)
@@ -26,6 +28,7 @@ The git and gitcrypt outputs no longer provide the `:date` field in the node ver
 - routeros: remove intermittent POE `voltage_on_poe-in` comment (@hendrikbl)
 - tplink: use `\r\n` as the line terminator in pre_logout, required for the model unit tests to work (@Vantomas)
 - ssh: change max_window_size from 138k to 2MB to avoid triggering Mikrotik bug. Closes #3867 (@ytti)
+- core: log a warning at startup when the loaded oxidized-web is older than 0.17.0 (@robertcheramy)
 - ingate: redact secrets (private keys, passwords, secrets, passphrases, pre-shared keys, tokens and the SNMP community) when remove_secret is set (@thanegill)
 - http: support overriding port (@mgrocock-cwcs)
 - http: support DELETE method (@mgrocock-cwcs)
@@ -35,6 +38,8 @@ The git and gitcrypt outputs no longer provide the `:date` field in the node ver
 - output/git, output/gitcrypt: remove the `:date` field from node versions, use `:time` instead. Requires oxidized-web >= 0.17.0 (@robertcheramy)
 
 ### Fixed
+- extra/oxidized.service: remove `KillSignal=SIGKILL`, Oxidized exits on SIGTERM since #3059 (@robertcheramy)
+- signals: remove the `Puma::Signal` monkey patch, which broke Puma 8 (`undefined method 'list' for class Puma::Signal`) when Oxidized was loaded before Puma. The patch is no longer needed since oxidized-web 0.17.0 (ytti/oxidized-web#357) starts `Puma::Server` directly instead of using the Puma launcher. With oxidized-web < 0.17.0, Puma traps INT, TERM and HUP again (@robertcheramy)
 - output/git: `get_diff` only returns the diff of the requested node when a commit contains several nodes (@robertcheramy)
 - output/gitcrypt: `get_diff` only returns the diff of the requested node when a commit contains several nodes, and works with groups in a single repository (@robertcheramy)
 - output/gitcrypt: reference the `git` gem as `::Git`, as `Git` resolved to `Oxidized::Output::Git` when the git output was loaded too (@robertcheramy)
