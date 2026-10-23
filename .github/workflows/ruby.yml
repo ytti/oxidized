@@ -16,10 +16,17 @@ on: [ push, pull_request ]
 jobs:
   test:
 
-    runs-on: ubuntu-latest
+    runs-on: ${{ matrix.os }}
     strategy:
       matrix:
-        ruby-version: ['3.0', '3.1', '3.2', '3.3', '3.4', '4.0']
+        ruby-version: ['3.2', '3.3', '3.4', '4.0']
+        os: [ubuntu-latest]
+        # ubuntu-26.04 (ubuntu-latest) only provides Ruby >= 3.2
+        include:
+          - ruby-version: '3.0'
+            os: ubuntu-24.04
+          - ruby-version: '3.1'
+            os: ubuntu-24.04
     continue-on-error: ${{ matrix.ruby-version == 'ruby-head' }}
 
     steps:
