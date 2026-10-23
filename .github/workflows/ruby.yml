@@ -33,7 +33,9 @@ jobs:
     steps:
     - uses: actions/checkout@v7
     # rugged links libgit2 statically; on ubuntu-26.04 OpenSSL's static
-    # dependencies (zstd, jitterentropy) are not installed by default
+    # dependency libjitterentropy is not installed by default
+    # See https://bugs.launchpad.net/ubuntu/+source/openssl/+bug/2158026
+    # See https://github.com/actions/runner-images/issues/15068
     - name: Install rugged build dependencies
       if: matrix.os == 'ubuntu-latest'
       run: sudo apt-get update && sudo apt-get install -y libjitterentropy3-dev
