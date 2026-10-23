@@ -97,12 +97,11 @@ In some situations, you may need to make changes to the git repository of
 oxidized. Stop oxidized, make backups, and be sure you know exactly what you
 are doing. You have been warned.
 
-If you simply clone the git repository, make changes and push them, oxidized
-will ignore these modifications. This is because oxidized caches the HEAD tree
-in the index and `git push` does not update the index because the repository is
-a bare repo and not a working directory repository.
+Oxidized 0.37.0 and older cached the HEAD tree in the git index and
+ignored changes pushed to the repository. If you use such a version, update
+the index manually after pushing: go into the oxidized repo and run
+`git ls-tree -r HEAD | git update-index --index-info`.
 
-So, you have to update the index manually. For this, go into oxidized repo, and
-run `git ls-tree -r HEAD | git update-index --index-info`. While you're at it,
-consider running `git gc`, as oxidized cannot garbage collect the repo (this
-is not supported in [Rugged](https://github.com/libgit2/rugged)).
+Consider running `git gc` from time to time, as oxidized cannot garbage
+collect the repo (this is not supported in
+[Rugged](https://github.com/libgit2/rugged)).

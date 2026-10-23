@@ -1,88 +1,52 @@
-require 'simplecov'
-require 'minitest/autorun'
-require 'mocha/minitest'
-
-require 'oxidized'
+require_relative '../spec_helper'
 require 'oxidized/output/git'
+require 'fileutils'
+require 'tmpdir'
 
-Oxidized.mgr = Oxidized::Manager.new
-
-class RepoMock
-  attr_reader :commits, :head
-
-  def initialize
-    @commits = []
+# Helpers to work with real Rugged repositories in a temporary directory
+# (@tmpdir), which is removed after each test
+module GitHelper
+  def setup
+    super
+    @tmpdir = Dir.mktmpdir('oxidized-git-spec')
   end
 
-  HeadMock = Struct.new(:target)
-  TargetMock = Struct.new(:oid)
-
-  def add_commit(added_files, modified_files, time, oid)
-    @commits.append CommitMock.new(added_files, modified_files, time, oid)
-
-    # #head.target.oid
-    @head = HeadMock.new(TargetMock.new(oid))
+  def teardown
+    Oxidized::Output::Git.clear_cache
+    FileUtils.remove_entry(@tmpdir)
+    super
   end
-end
 
-class CommitMock
-  attr_reader :oid, :time, :author, :message, :diff,
-              :added_files, :modified_files
+  def init_repo(path)
+    Rugged::Repository.init_at(path, :bare)
+  end
 
-  def initialize(added_files, modified_files, time, oid)
-    @added_files = added_files
-    @modified_files = modified_files
-    @time = time
-    @oid = oid
-    @author =  { email: 'ox@id.iz', time: time, name: 'oxidized' }
-    @message = "Commit ##{oid}"
-    deltas = added_files.map do |file|
-      DeltaMock.new(file, :added)
+  # Commits files ({ path => content }) on top of HEAD. A nil content
+  # removes the file. Returns the oid of the new commit.
+  def commit_files(repo, files, message: 'update', time: Time.now)
+    index = Rugged::Index.new
+    index.read_tree(repo.head.target.tree) unless repo.empty?
+    files.each do |path, data|
+      if data.nil?
+        index.remove(path)
+      else
+        index.add(path: path, oid: repo.write(data, :blob), mode: 0o100644)
+      end
     end
-    deltas += modified_files.map do |file|
-      DeltaMock.new(file, :modified)
-    end
-    @diff = DiffMock.new deltas
-  end
-end
-
-class DiffMock
-  def initialize(deltas)
-    @deltas = deltas
+    signature = { name: 'oxidized', email: 'ox@id.iz', time: time }
+    Rugged::Commit.create(repo,
+                          tree:       index.write_tree(repo),
+                          message:    message,
+                          author:     signature,
+                          committer:  signature,
+                          parents:    repo.empty? ? [] : [repo.head.target],
+                          update_ref: 'HEAD')
   end
 
-  def each_delta(&block)
-    @deltas.each(&block)
-  end
-end
-
-class DeltaMock
-  attr_reader :new_file
-
-  def initialize(filename, status)
-    @new_file = { path: filename }
-    @status = status
-  end
-
-  def added?
-    @status == :added
-  end
-
-  def modified?
-    @status == :modified
-  end
-end
-
-class WalkerMock
-  def initialize(repo)
-    @repo = repo
-  end
-
-  def sorting(*); end
-
-  def push(*); end
-
-  def each(&block)
-    @repo.commits.reverse_each(&block)
+  # Sorted list of the files in the tree of HEAD
+  def head_files(repo)
+    files = []
+    repo.head.target.tree.walk_blobs { |root, entry| files << "#{root}#{entry[:name]}" }
+    files.sort
   end
 end

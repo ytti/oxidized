@@ -10,6 +10,8 @@ module Oxidized
 
     class NoNodesFound < OxidizedError; end
 
+    MIN_WEB_VERSION = '0.17.0'.freeze
+
     def initialize(_args)
       Oxidized.mgr = Manager.new
       Oxidized.hooks = HookManager.from_config(Oxidized.config)
@@ -56,12 +58,30 @@ module Oxidized
                 'configuration'
         end
         @rest = API::Web.new nodes, configuration
+        check_web_version
         @rest.run
       end
       run
     end
 
     private
+
+    # WEB_VERSION is defined by oxidized/web/webapp, loaded by API::Web.new.
+    # Extracted from check_web_version so that core_spec can stub it in tests.
+    def web_version
+      API::WEB_VERSION if API.const_defined?(:WEB_VERSION)
+    end
+
+    def check_web_version
+      version = web_version
+      return if version.nil? || Gem::Version.new(version) >= Gem::Version.new(MIN_WEB_VERSION)
+
+      logger.warn(
+        "oxidized-web #{version} is older than #{MIN_WEB_VERSION}: " \
+        'the display of node versions and diffs fails, and puma may ' \
+        'override the signal handlers. Please update oxidized-web'
+      )
+    end
 
     def reload
       logger.info("Reloading node list")

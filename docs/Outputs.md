@@ -62,6 +62,7 @@ output:
     user: Oxidized
     email: o@example.com
     repo: "/var/lib/oxidized/devices.git"
+    single_repo: true
 ```
 
 And for group-based repositories:
