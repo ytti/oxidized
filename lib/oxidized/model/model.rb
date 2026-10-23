@@ -212,6 +212,10 @@ module Oxidized
 
     def process_cmd_output(output, name)
       output = String.new('') unless output.instance_of?(String)
+      # Model blocks may return (chilled) string literals, e.g.
+      # cmd 'config global' do ''; end
+      # process_cmd sets instance variables, so the string must be mutable
+      output = +output
       output.process_cmd(name)
       output
     end

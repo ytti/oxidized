@@ -74,17 +74,10 @@ module Oxidized
       # Returns the configuration of group/node_name
       #
       # #fetch is called by Nodes#fetch
-      # Nodes#fetch creates a new Output object each time, so it not easy
-      # to cache the repo index in memory. But as we keep the repo index up
-      # to date on disk in #update_repo, we can read it from disk instead of
-      # rebuilding it each time.
       def fetch(node, group)
         repo, path = yield_repo_and_path(node, group)
         repo = Rugged::Repository.new repo
-        # Read the index from disk
-        index = repo.index
-
-        repo.read(index.get(path)[:oid]).data
+        repo.blob_at(repo.head.target_id, path).content
       rescue StandardError
         'node not found'
       end
@@ -110,29 +103,16 @@ module Oxidized
       end
 
       # give a hash with the patch of a diff between 2 revision and the stats (added and deleted lines)
+      # The diff is limited to the node, as a commit may contain several nodes
       def get_diff(node, group, oid1, oid2)
-        diff_commits = nil
-        repo, = yield_repo_and_path(node, group)
+        repo, path = yield_repo_and_path(node, group)
         repo = Rugged::Repository.new repo
         commit = repo.lookup(oid1)
+        commit_old = oid2 ? repo.lookup(oid2) : commit.parents[0]
 
-        if oid2
-          commit_old = repo.lookup(oid2)
-          diff = repo.diff(commit_old, commit)
-          diff.each do |patch|
-            if /#{node.name}\s+/ =~ patch.to_s.lines.first
-              diff_commits = { patch: patch.to_s, stat: patch.stat }
-              break
-            end
-          end
-        else
-          stat = commit.parents[0].diff(commit).stat
-          stat = [stat[1], stat[2]]
-          patch = commit.parents[0].diff(commit).patch
-          diff_commits = { patch: patch, stat: stat }
-        end
-
-        diff_commits
+        diff = repo.diff(commit_old, commit, paths: [path], disable_pathspec_match: true)
+        _files, additions, deletions = diff.stat
+        { patch: diff.patch, stat: [additions, deletions] }
       rescue StandardError
         'no diffs'
       end
@@ -143,66 +123,78 @@ module Oxidized
         @gitcache[repo_path][:nodes][node_path] || []
       end
 
+      # As oxidized-web works with multiple threads, we need a mutex to protect the cache
+      @cache_mutex = Mutex.new
+
       # Update @gitcache, a class instance variable, ensuring persistence
       # by saving the cache independently of object instances
       def self.update_cache(repo_path)
-        # initialize our cache as a class instance variable
-        @gitcache ||= {}
-        # When single_repo == false, we have multiple repositories
-        unless @gitcache[repo_path]
-          @gitcache[repo_path] = {}
-          @gitcache[repo_path][:nodes] = {}
-          @gitcache[repo_path][:last_commit] = nil
-        end
+        @cache_mutex.synchronize do
+          # @gitcache (class instance variable) is keyed by repo_path:
+          # with single_repo == false, each group has its own repo
+          @gitcache ||= {}
+          repo = Rugged::Repository.new repo_path
+          # Read HEAD only once, as a worker may commit while we walk the logs
+          head_oid = repo.head.target.oid
+          cache = @gitcache[repo_path]
 
-        repo = Rugged::Repository.new repo_path
-
-        walker = Rugged::Walker.new(repo)
-        walker.sorting(Rugged::SORT_DATE)
-        walker.push(repo.head.target.oid)
-
-        # We store the commits into a temporary cache. It will be prepended
-        # to @gitcache to preserve the order of the commits.
-        cache = {}
-        walker.each do |commit|
-          if commit.oid == @gitcache[repo_path][:last_commit]
-            # we have reached the last cached commit, so we're done
-            break
+          if cache && cache[:last_commit] == head_oid
+            logger.debug "update_cache: #{repo_path} unchanged since last update, using cached versions"
+            return cache
           end
 
-          commit.diff.each_delta do |delta|
-            next unless delta.added? || delta.modified?
+          walker = Rugged::Walker.new(repo)
+          walker.sorting(Rugged::SORT_TOPO | Rugged::SORT_DATE)
+          walker.push(head_oid)
+          if cache.nil?
+            logger.debug "update_cache: building cache for #{repo_path}"
+            cache = { nodes: {}, last_commit: nil }
+          elsif descendant?(repo, head_oid, cache[:last_commit])
+            logger.debug "update_cache: walking new commits in #{repo_path}"
+            walker.hide(cache[:last_commit])
+          else
+            logger.warn "update_cache: history of #{repo_path} rewritten, rebuilding cache"
+            cache = { nodes: {}, last_commit: nil }
+          end
 
-            hash = {}
-            # We keep :date for reverse compatibility on oxidized-web <= 0.15.1
-            hash[:date] = commit.time.to_s
-            # date as a Time instance for more flexibility in oxidized-web
-            hash[:time] = commit.time
-            hash[:oid] = commit.oid
-            hash[:author] = commit.author
-            hash[:message] = commit.message
+          new_commits = Hash.new { |hash, key| hash[key] = [] }
+          walker.each do |commit|
+            # Deduplicate repeated strings (String#-@) to reduce the memory
+            # footprint of large repositories
+            author = commit.author
+            author[:name]  = -author[:name]
+            author[:email] = -author[:email]
+            message = -commit.message
 
-            filename = delta.new_file[:path]
-            if cache[filename]
-              cache[filename].append hash
-            else
-              cache[filename] = [hash]
+            commit.diff.each_delta do |delta|
+              next unless delta.added? || delta.modified?
+
+              new_commits[delta.new_file[:path]] << {
+                time:    commit.time,
+                oid:     commit.oid,
+                author:  author,
+                message: message
+              }
             end
           end
-        end
 
-        cache.each_pair do |filename, hashlist|
-          if @gitcache[repo_path][:nodes][filename]
-            # using the splat operator (*) should be OK as hashlist should
-            # not be very big when working on deltas
-            @gitcache[repo_path][:nodes][filename].prepend(*hashlist)
-          else
-            @gitcache[repo_path][:nodes][filename] = hashlist
+          # Build new arrays instead of modifying them, as lists returned
+          # by hash_list may be in use by another thread
+          new_commits.each_pair do |filename, hashlist|
+            cache[:nodes][filename] = hashlist + (cache[:nodes][filename] || [])
           end
-        end
 
-        # Store the most recent commit
-        @gitcache[repo_path][:last_commit] = repo.head.target.oid
+          cache[:last_commit] = head_oid
+          @gitcache[repo_path] = cache
+        end
+      end
+
+      # True if ancestor is in the history of commit, false if not or if
+      # ancestor does not exist (e.g. after a history rewrite)
+      def self.descendant?(repo, commit, ancestor)
+        repo.descendant_of?(commit, ancestor)
+      rescue Rugged::Error
+        false
       end
 
       # Currently only used in unit tests
@@ -249,6 +241,7 @@ module Oxidized
         logger.info "clean_obsolete_nodes: removing " \
                     "#{files_to_delete.size} obsolete configs"
         index = repo.index
+        index.read_tree(tree)
 
         files_to_delete.each { |file_path| index.remove(file_path) }
 
@@ -307,18 +300,16 @@ module Oxidized
 
       # Uploads data into file in the repository repo
       #
-      # update_repo caches the index on disk. An index is usually used in a
-      # working directory and not in a bare repository, which confuses users.
-      # The alternative would be to rebuild the index each time, which a little
-      # time consuming. Caching the index in memory is difficult because a new
-      # Output object is created each time #store is called.
+      # The index is rebuilt from HEAD, as HEAD may have been changed without
+      # updating the index (e.g. by the githubrepo hook). It is still written
+      # to disk, so that older versions of Oxidized do not use a stale index.
       def update_repo(repo, file, data) # rubocop:disable Naming/PredicateMethod
         oid_old = repo.blob_at(repo.head.target_id, file) rescue nil
         return false if oid_old && (oid_old.content.b == data.b)
 
         oid = repo.write data, :blob
-        # Read the index from disk
         index = repo.index
+        repo.empty? ? index.clear : index.read_tree(repo.head.target.tree)
         index.add path: file, oid: oid, mode: 0o100644
 
         repo.config['user.name']  = @user
