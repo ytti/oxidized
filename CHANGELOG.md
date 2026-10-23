@@ -11,6 +11,7 @@ The git and gitcrypt outputs no longer provide the `:date` field in the node ver
 Oxidized no longer patches Puma's signal handling (needed for Puma 8). With oxidized-web < 0.17.0, Puma takes over the INT, TERM and HUP signals again. Oxidized logs a warning at startup if it finds such a version.
 
 ### Added
+- IOSXR: Add show vesion (@Mascherus, @systeembeheerder)
 - cnos: remove transceiver DDM data (@freddy36)
 - cnos: add show license output (@freddy36)
 - cnos: add FS-S58580 simulation data (@freddy36)
