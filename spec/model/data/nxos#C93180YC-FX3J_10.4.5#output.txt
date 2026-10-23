@@ -68,7 +68,6 @@
 ! 
 
 !Command: show running-config
-!Running configuration last done at: Tue Sep 30 09:02:26 2025
 
 version 10.4(5) Bios:version 01.11 
 hostname TEST-12345
