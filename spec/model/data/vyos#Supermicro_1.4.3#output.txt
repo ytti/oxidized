@@ -17,6 +17,11 @@
 # Hardware UUID:    00000000-0000-0000-0000-7cc2554f1d58
 # 
 # Copyright:        VyOS maintainers and contributors
+# # Last commits:
+#  0  2026-10-23 16:34:35                                            by vyos  via cli
+#  1  2026-10-23 16:33:56                                            by vyos  via cli
+#     Set hostname
+#  2  2026-10-23 16:33:32                                            by vyos  via cli
 set firewall global-options all-ping 'enable'
 set firewall global-options broadcast-ping 'disable'
 set firewall global-options ip-src-route 'disable'

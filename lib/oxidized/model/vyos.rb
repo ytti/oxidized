@@ -9,7 +9,7 @@ class Vyos < Oxidized::Model
   clean :escape_codes
 
   cmd :all do |cfg|
-    cfg.lines.to_a[1..-2].join
+    cfg.cut_both
   end
 
   cmd :secret do |cfg|
@@ -29,7 +29,7 @@ class Vyos < Oxidized::Model
     comment cfg
   end
 
-  cmd 'show system commit' do |cfg|
+  cmd 'show system commit | no-more' do |cfg|
     comment "# Last commits:\n#{cfg.lines.first(4).join}"
   end
 
