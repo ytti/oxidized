@@ -18,6 +18,7 @@ jobs:
 
     runs-on: ${{ matrix.os }}
     strategy:
+      fail-fast: false
       matrix:
         ruby-version: ['3.2', '3.3', '3.4', '4.0']
         os: [ubuntu-latest]
@@ -36,5 +37,8 @@ jobs:
       with:
         ruby-version: ${{ matrix.ruby-version }}
         bundler-cache: true # runs 'bundle install' and caches installed gems automatically
+    - name: Show mkmf.log of failed native extensions
+      if: failure()
+      run: cat vendor/bundle/ruby/*/extensions/*/*/*/mkmf.log
     - name: Run tests
       run: bundle exec rake
