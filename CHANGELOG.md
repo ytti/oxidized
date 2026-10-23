@@ -46,6 +46,7 @@ Oxidized no longer patches Puma's signal handling (needed for Puma 8). With oxid
 - input/cli: raise an error when a requested login credential is missing. Fixes #3700 (@robertcheramy)
 - eos: hide the community string / v3 user in snmp-server host lines. Fixes #3882 (@FusionBrah)
 - aoscx: mask the community string in snmp-server host lines instead of the token after the host address. Fixes #3881 (@FusionBrah)
+- fortigate: answer the `Do you want to continue? (y/n)` prompt from `diagnose hardware deviceinfo psu`. Fixes #3940 (@suryakant-source)
 - fastiron: answer the pager prompt with a space and strip ANSI escape sequences, as `skip-page-display` is not available to users without enable rights. Fixes #3819 (@FusionBrah)
 - junos: redact cleartext passwords embedded in archive-site URLs. Fixes #3640 (@KalebFenley)
 - siklu: allow parenthesis in prompt. Fixes #3841 (@ytti)
