@@ -28,6 +28,8 @@ Oxidized no longer patches Puma's signal handling (needed for Puma 8). With oxid
 - routeros: remove intermittent POE `voltage_on_poe-in` comment (@hendrikbl)
 - tplink: use `\r\n` as the line terminator in pre_logout, required for the model unit tests to work (@Vantomas)
 - ssh: change max_window_size from 138k to 2MB to avoid triggering Mikrotik bug. Closes #3867 (@ytti)
+- CI: run Ruby 3.0 and 3.1 on ubuntu-24.04, as ubuntu-26.04 (ubuntu-latest) only provides Ruby >= 3.2; install libjitterentropy3-dev needed to build rugged on ubuntu-26.04 (@robertcheramy)
+- README: document libjitterentropy3-dev as a dependency on Ubuntu 26.04 (Ubuntu bug #2158026) (@robertcheramy)
 - core: log a warning at startup when the loaded oxidized-web is older than 0.17.0 (@robertcheramy)
 - ingate: redact secrets (private keys, passwords, secrets, passphrases, pre-shared keys, tokens and the SNMP community) when remove_secret is set (@thanegill)
 - http: support overriding port (@mgrocock-cwcs)
