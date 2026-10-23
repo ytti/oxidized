@@ -36,7 +36,7 @@ jobs:
     # dependencies (zstd, jitterentropy) are not installed by default
     - name: Install rugged build dependencies
       if: matrix.os == 'ubuntu-latest'
-      run: sudo apt-get update && sudo apt-get install -y libzstd-dev libjitterentropy3-dev
+      run: sudo apt-get update && sudo apt-get install -y libjitterentropy3-dev
     - name: Set up Ruby
       uses: ruby/setup-ruby@v1
       with:
