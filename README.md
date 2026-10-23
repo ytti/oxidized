@@ -86,6 +86,12 @@ Install the dependencies:
 apt install ruby ruby-dev libsqlite3-dev libssl-dev pkg-config cmake libssh2-1-dev libicu-dev zlib1g-dev g++ libyaml-dev libzstd-dev
 ```
 
+On Ubuntu 26.04 or newer, you also need `libjitterentropy3-dev`:
+
+```shell
+apt install libjitterentropy3-dev
+```
+
 Finally, install Oxidized:
 
 ```shell

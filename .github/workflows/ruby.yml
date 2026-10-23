@@ -32,13 +32,15 @@ jobs:
 
     steps:
     - uses: actions/checkout@v7
+    # rugged links libgit2 statically; on ubuntu-26.04 OpenSSL's static
+    # dependencies (zstd, jitterentropy) are not installed by default
+    - name: Install rugged build dependencies
+      if: matrix.os == 'ubuntu-latest'
+      run: sudo apt-get update && sudo apt-get install -y libzstd-dev libjitterentropy3-dev
     - name: Set up Ruby
       uses: ruby/setup-ruby@v1
       with:
         ruby-version: ${{ matrix.ruby-version }}
         bundler-cache: true # runs 'bundle install' and caches installed gems automatically
-    - name: Show mkmf.log of failed native extensions
-      if: failure()
-      run: cat vendor/bundle/ruby/*/extensions/*/*/*/mkmf.log
     - name: Run tests
       run: bundle exec rake
