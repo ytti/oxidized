@@ -8,7 +8,7 @@ class IOSXR < Oxidized::Model
 
   cmd :all do |cfg|
     cfg.gsub! /\r\n?/, "\n"
-    cfg.each_line.to_a[1..-2].join
+    cfg.cut_both
   end
 
   cmd :secret do |cfg|
@@ -32,8 +32,7 @@ class IOSXR < Oxidized::Model
 
   cmd 'show running-config' do |cfg|
     cfg.gsub! /^Building\sconfiguration\.{3}\n?/, ''
-    cfg = cfg.each_line.to_a[1..-1].join
-    cfg
+    cfg.cut_head
   end
 
   cfg :telnet do
