@@ -20,7 +20,7 @@ jobs:
     strategy:
       fail-fast: false
       matrix:
-        ruby-version: ['3.2', '3.3', '3.4', '4.0']
+        ruby-version: ['3.2', '3.3', '3.4', '4.0', 'ruby-head']
         os: [ubuntu-latest]
         # ubuntu-26.04 (ubuntu-latest) only provides Ruby >= 3.2
         include:
