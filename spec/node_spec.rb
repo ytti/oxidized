@@ -68,6 +68,21 @@ describe Oxidized::Node do
       _(fails).must_equal 1
     end
 
+    it 'should expand ~ in the crash directory' do
+      Dir.mktmpdir do |dir|
+        home = Dir.home
+        ENV['HOME'] = dir
+        Oxidized.config.crash.directory = '~/crashes'
+        Oxidized::SSH.any_instance.stubs(:connect).raises(StandardError, 'crash')
+
+        Dir.chdir(dir) { @node.run }
+
+        assert_path_exists File.join(dir, 'crashes', @node.ip)
+      ensure
+        ENV['HOME'] = home
+      end
+    end
+
     it 'should warn when no suitable input has been found' do
       node = Oxidized::Node.new(name:     'example.com',
                                 input:    'http',

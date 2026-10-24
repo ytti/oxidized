@@ -95,7 +95,7 @@ module Oxidized
           return false
         end
 
-        crashdir  = Oxidized.config.crash.directory
+        crashdir  = File.expand_path(Oxidized.config.crash.directory)
         crashfile = Oxidized.config.crash.hostnames? ? name : ip.to_s
         FileUtils.mkdir_p(crashdir) unless File.directory?(crashdir)
 
