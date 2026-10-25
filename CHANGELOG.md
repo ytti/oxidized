@@ -13,6 +13,7 @@ Oxidized no longer patches Puma's signal handling (needed for Puma 8). With oxid
 When loading a single node (`oxs <host>` in oxidized-script, `/reload?node=<host>` in oxidized-web), the node name must now match exactly. Previously, a node also matched when its name was contained in the requested name, so `oxs router10` could run on `router1`.
 
 ### Added
+- IOSXR: Add show vesion (@Mascherus, @systeembeheerder)
 - cnos: remove transceiver DDM data (@freddy36)
 - cnos: add show license output (@freddy36)
 - cnos: add FS-S58580 simulation data (@freddy36)
@@ -30,6 +31,8 @@ When loading a single node (`oxs <host>` in oxidized-script, `/reload?node=<host
 - routeros: remove intermittent POE `voltage_on_poe-in` comment (@hendrikbl)
 - tplink: use `\r\n` as the line terminator in pre_logout, required for the model unit tests to work (@Vantomas)
 - ssh: change max_window_size from 138k to 2MB to avoid triggering Mikrotik bug. Closes #3867 (@ytti)
+- CI: run Ruby 3.0 and 3.1 on ubuntu-24.04, as ubuntu-26.04 (ubuntu-latest) only provides Ruby >= 3.2; install libjitterentropy3-dev needed to build rugged on ubuntu-26.04 (@robertcheramy)
+- README: document libjitterentropy3-dev as a dependency on Ubuntu 26.04 (Ubuntu bug #2158026) (@robertcheramy)
 - core: log a warning at startup when the loaded oxidized-web is older than 0.17.0 (@robertcheramy)
 - ingate: redact secrets (private keys, passwords, secrets, passphrases, pre-shared keys, tokens and the SNMP community) when remove_secret is set (@thanegill)
 - http: support overriding port (@mgrocock-cwcs)
@@ -48,6 +51,7 @@ When loading a single node (`oxs <host>` in oxidized-script, `/reload?node=<host
 - input/cli: raise an error when a requested login credential is missing. Fixes #3700 (@robertcheramy)
 - eos: hide the community string / v3 user in snmp-server host lines. Fixes #3882 (@FusionBrah)
 - aoscx: mask the community string in snmp-server host lines instead of the token after the host address. Fixes #3881 (@FusionBrah)
+- fortigate: answer the `Do you want to continue? (y/n)` prompt from `diagnose hardware deviceinfo psu`. Fixes #3940 (@suryakant-source)
 - fastiron: answer the pager prompt with a space and strip ANSI escape sequences, as `skip-page-display` is not available to users without enable rights. Fixes #3819 (@FusionBrah)
 - junos: redact cleartext passwords embedded in archive-site URLs. Fixes #3640 (@KalebFenley)
 - siklu: allow parenthesis in prompt. Fixes #3841 (@ytti)
