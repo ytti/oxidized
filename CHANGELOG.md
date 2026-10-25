@@ -10,6 +10,8 @@ The git and gitcrypt outputs no longer provide the `:date` field in the node ver
 
 Oxidized no longer patches Puma's signal handling (needed for Puma 8). With oxidized-web < 0.17.0, Puma takes over the INT, TERM and HUP signals again. Oxidized logs a warning at startup if it finds such a version.
 
+When loading a single node (`oxs <host>` in oxidized-script, `/reload?node=<host>` in oxidized-web), the node name must now match exactly. Previously, a node also matched when its name was contained in the requested name, so `oxs router10` could run on `router1`.
+
 ### Added
 - cnos: remove transceiver DDM data (@freddy36)
 - cnos: add show license output (@freddy36)
@@ -57,6 +59,7 @@ Oxidized no longer patches Puma's signal handling (needed for Puma 8). With oxid
 - source: return the decrypted contents of a `gpg`-encrypted source as an IO object, so JSONFile (and any source reading via `#read`) loads it instead of crashing with a `NoMethodError`. Fixes #3879 (@youdie006)
 - output/git: fix the version cache losing commits made within the same second or during a cache update. Log an error and rebuild the cache if the git history has been rewritten while Oxidized is running (@robertcheramy)
 - output/git: rebuild the git index from HEAD before each commit, so that changes merged by the githubrepo hook or pushed to the repository are no longer reverted by the next commit, and read configurations from HEAD instead of the index. Fixes #3887 (@robertcheramy)
+- nodes: match the node name exactly when loading a single node, instead of matching the node name as a regexp against the requested name, which could select the wrong node (e.g. `router1` for `router10`) (@robertcheramy)
 
 ## [0.37.0 - 2026-05-20]
 ### Added

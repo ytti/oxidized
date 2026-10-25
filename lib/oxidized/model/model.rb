@@ -17,10 +17,9 @@ module Oxidized
 
     include Oxidized::Config::Vars
 
-    # rubocop:disable Style/FormatStringToken
+    # rubocop:disable-next Style/FormatStringToken
     METADATA_DEFAULT = "%{comment}Fetched by Oxidized with model %{model} " \
                        "from host %{name} [%{ip}]\n".freeze
-    # rubocop:enable Style/FormatStringToken
 
     class << self
       def inherited(klass)
