@@ -85,8 +85,8 @@ class ACOS < Oxidized::Model
   end
 
   cfg :telnet do
-    username  /login:/
-    password  /^Password:/
+    username /login:/
+    password /^Password:/
   end
 
   cfg :telnet, :ssh do
