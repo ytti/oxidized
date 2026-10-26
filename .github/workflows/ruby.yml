@@ -16,14 +16,28 @@ on: [ push, pull_request ]
 jobs:
   test:
 
-    runs-on: ubuntu-latest
+    runs-on: ${{ matrix.os }}
     strategy:
       matrix:
-        ruby-version: ['3.0', '3.1', '3.2', '3.3', '3.4', '4.0']
+        ruby-version: ['3.2', '3.3', '3.4', '4.0', 'ruby-head']
+        os: [ubuntu-latest]
+        # ubuntu-26.04 (ubuntu-latest) only provides Ruby >= 3.2
+        include:
+          - ruby-version: '3.0'
+            os: ubuntu-24.04
+          - ruby-version: '3.1'
+            os: ubuntu-24.04
     continue-on-error: ${{ matrix.ruby-version == 'ruby-head' }}
 
     steps:
     - uses: actions/checkout@v7
+    # rugged links libgit2 statically; on ubuntu-26.04 OpenSSL's static
+    # dependency libjitterentropy is not installed by default
+    # See https://bugs.launchpad.net/ubuntu/+source/openssl/+bug/2158026
+    # See https://github.com/actions/runner-images/issues/15068
+    - name: Install rugged build dependencies
+      if: matrix.os == 'ubuntu-latest'
+      run: sudo apt-get update && sudo apt-get install -y libjitterentropy3-dev
     - name: Set up Ruby
       uses: ruby/setup-ruby@v1
       with:

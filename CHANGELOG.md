@@ -5,7 +5,15 @@ All notable changes to this project will be documented in this file.
 The format is based on [Keep a Changelog](https://keepachangelog.com/en/1.1.0/).
 
 ## [Unreleased]
+### Release Notes
+The git and gitcrypt outputs no longer provide the `:date` field in the node versions, as it was only used by oxidized-web <= 0.16.0. You need oxidized-web >= 0.17.0, older versions will fail to display node versions and diffs.
+
+Oxidized no longer patches Puma's signal handling (needed for Puma 8). With oxidized-web < 0.17.0, Puma takes over the INT, TERM and HUP signals again. Oxidized logs a warning at startup if it finds such a version.
+
+When loading a single node (`oxs <host>` in oxidized-script, `/reload?node=<host>` in oxidized-web), the node name must now match exactly. Previously, a node also matched when its name was contained in the requested name, so `oxs router10` could run on `router1`.
+
 ### Added
+- IOSXR: Add show vesion (@Mascherus, @systeembeheerder)
 - cnos: remove transceiver DDM data (@freddy36)
 - cnos: add show license output (@freddy36)
 - cnos: add FS-S58580 simulation data (@freddy36)
@@ -19,21 +27,34 @@ The format is based on [Keep a Changelog](https://keepachangelog.com/en/1.1.0/).
 - ssh: add the `ssh_pubkey_algorithms` variable to choose the public key signature algorithms, for devices that disconnect on `rsa-sha2-*` such as Huawei SmartAX. Closes #2875 (@fmcglinn)
 
 ### Changed
+- vyos: add commit info (@systeembeheerder)
 - docker: set LANG=C.UTF-8. Fixes #3690 (@ytti)
 - routeros: remove intermittent POE `voltage_on_poe-in` comment (@hendrikbl)
 - tplink: use `\r\n` as the line terminator in pre_logout, required for the model unit tests to work (@Vantomas)
 - ssh: change max_window_size from 138k to 2MB to avoid triggering Mikrotik bug. Closes #3867 (@ytti)
+- CI: run Ruby 3.0 and 3.1 on ubuntu-24.04, as ubuntu-26.04 (ubuntu-latest) only provides Ruby >= 3.2; install libjitterentropy3-dev needed to build rugged on ubuntu-26.04 (@robertcheramy)
+- README: document libjitterentropy3-dev as a dependency on Ubuntu 26.04 (Ubuntu bug #2158026) (@robertcheramy)
+- core: log a warning at startup when the loaded oxidized-web is older than 0.17.0 (@robertcheramy)
 - ingate: redact secrets (private keys, passwords, secrets, passphrases, pre-shared keys, tokens and the SNMP community) when remove_secret is set (@thanegill)
 - http: support overriding port (@mgrocock-cwcs)
 - http: support DELETE method (@mgrocock-cwcs)
 - tmos: strip volatile object metadata (checksum, revision, size, create/update time and author) from `tmsh -q list` and the partition configs (@dahlmo)
 - panos_api: back up the running configuration with `show config running` instead of the candidate configuration export. A custom admin role now needs the XML API `Operational Requests` permission; set `panos_api_candidate: true` to keep the previous behaviour. Fixes #2759 (@macmandr197)
 - gemspec: add nokogiri as a development dependency for the panos_api unit tests (@macmandr197)
+- output/git: skip walking the git logs in the version cache when HEAD did not change, speeding up node lists in oxidized-web. Closes #3895 (@zaits07)
+- output/git: reduce the memory footprint of the version cache by deduplicating author and message strings (@robertcheramy)
+- output/git, output/gitcrypt: remove the `:date` field from node versions, use `:time` instead. Requires oxidized-web >= 0.17.0 (@robertcheramy)
 
 ### Fixed
+- extra/oxidized.service: remove `KillSignal=SIGKILL`, Oxidized exits on SIGTERM since #3059 (@robertcheramy)
+- signals: remove the `Puma::Signal` monkey patch, which broke Puma 8 (`undefined method 'list' for class Puma::Signal`) when Oxidized was loaded before Puma. The patch is no longer needed since oxidized-web 0.17.0 (ytti/oxidized-web#357) starts `Puma::Server` directly instead of using the Puma launcher. With oxidized-web < 0.17.0, Puma traps INT, TERM and HUP again (@robertcheramy)
+- output/git: `get_diff` only returns the diff of the requested node when a commit contains several nodes (@robertcheramy)
+- output/gitcrypt: `get_diff` only returns the diff of the requested node when a commit contains several nodes, and works with groups in a single repository (@robertcheramy)
+- output/gitcrypt: reference the `git` gem as `::Git`, as `Git` resolved to `Oxidized::Output::Git` when the git output was loaded too (@robertcheramy)
 - input/cli: raise an error when a requested login credential is missing. Fixes #3700 (@robertcheramy)
 - eos: hide the community string / v3 user in snmp-server host lines. Fixes #3882 (@FusionBrah)
 - aoscx: mask the community string in snmp-server host lines instead of the token after the host address. Fixes #3881 (@FusionBrah)
+- fortigate: answer the `Do you want to continue? (y/n)` prompt from `diagnose hardware deviceinfo psu`. Fixes #3940 (@suryakant-source)
 - fastiron: answer the pager prompt with a space and strip ANSI escape sequences, as `skip-page-display` is not available to users without enable rights. Fixes #3819 (@FusionBrah)
 - junos: redact cleartext passwords embedded in archive-site URLs. Fixes #3640 (@KalebFenley)
 - siklu: allow parenthesis in prompt. Fixes #3841 (@ytti)
@@ -43,6 +64,9 @@ The format is based on [Keep a Changelog](https://keepachangelog.com/en/1.1.0/).
 - aoscx: hide power consumption on rows where PSU output is N/A. Fixes #3864 (@FusionBrah)
 - aoscx: hide input voltage readings in "show environment power-supply input-voltage". Fixes #3864 (@FusionBrah)
 - source: return the decrypted contents of a `gpg`-encrypted source as an IO object, so JSONFile (and any source reading via `#read`) loads it instead of crashing with a `NoMethodError`. Fixes #3879 (@youdie006)
+- output/git: fix the version cache losing commits made within the same second or during a cache update. Log an error and rebuild the cache if the git history has been rewritten while Oxidized is running (@robertcheramy)
+- output/git: rebuild the git index from HEAD before each commit, so that changes merged by the githubrepo hook or pushed to the repository are no longer reverted by the next commit, and read configurations from HEAD instead of the index. Fixes #3887 (@robertcheramy)
+- nodes: match the node name exactly when loading a single node, instead of matching the node name as a regexp against the requested name, which could select the wrong node (e.g. `router1` for `router10`) (@robertcheramy)
 
 ## [0.37.0 - 2026-05-20]
 ### Added

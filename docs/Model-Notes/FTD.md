@@ -25,7 +25,7 @@ When integrating with LibreNMS, you may need to override the IP address used by 
 lnms config:set oxidized.maps.ip.hostname.+ '{"match": "HOSTNAME", "value": "IP"}'
 ```
 
-(Where `HOSTNAME` is the hosname/IP address used when adding the device to LibreNMS, and `IP` is the IP address for the HTTP API.)
+(Where `HOSTNAME` is the hostname/IP address used when adding the device to LibreNMS, and `IP` is the IP address for the HTTP API.)
 
 The port for the HTTP API can be overridden with a variable. For example, create a mapping rule to assign the device to a group, e.g.:
 
@@ -33,7 +33,7 @@ The port for the HTTP API can be overridden with a variable. For example, create
 lnms config:set oxidized.maps.group.hostname.+ '{"match": "HOSTNAME", "value": "GROUP"}'
 ```
 
-(Where `HOSTNAME` is the hosname/IP address used when adding the device to LibreNMS, and `GROUP` is an appropriate group name.)
+(Where `HOSTNAME` is the hostname/IP address used when adding the device to LibreNMS, and `GROUP` is an appropriate group name.)
 
 Then set the port variable at the group level. You can also override the password here if necessary, e.g.:
 

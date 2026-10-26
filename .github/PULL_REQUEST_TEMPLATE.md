@@ -4,8 +4,7 @@
 
 - [ ] Passes rubocop code analysis (try `rubocop --auto-correct`)
 - [ ] Tests added or adapted (try `rake test`)
-- [ ] Model changes include a [YAML simulation file](/docs/DeviceSimulation.md)
-	and the [expected output](/docs/ModelUnitTests.md#expected-output)
+- [ ] Model changes include a [YAML simulation file](/docs/DeviceSimulation.md) and the [expected output](/docs/ModelUnitTests.md#expected-output)
 - [ ] Changes are reflected in the documentation
 - [ ] User-visible changes appended to [CHANGELOG.md](/CHANGELOG.md)
 

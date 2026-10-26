@@ -42,7 +42,7 @@ Gem::Specification.new do |s|
   s.add_dependency 'net-telnet',           '~> 0.2'
   s.add_dependency 'psych',                '~> 5.0'
   s.add_dependency 'rubyzip',              '>= 2.3.2', '< 4'
-  s.add_dependency 'rugged',               '~> 1.6'
+  s.add_dependency 'rugged',               '~> 1.9'
   s.add_dependency 'semantic_logger',      '>= 4.17', '< 5'
   s.add_dependency 'slop',                 '~> 4.6'
   s.add_dependency 'syslog',               '~> 0.3'
@@ -54,8 +54,8 @@ Gem::Specification.new do |s|
   s.add_development_dependency 'rake',             '~> 13.0'
   # Rubocop introduces new rules in minor versions, so we limit automatic
   # updates to patches
-  s.add_development_dependency 'rubocop',          '~> 1.89.0'
-  s.add_development_dependency 'rubocop-minitest', '~> 0.40.0'
+  s.add_development_dependency 'rubocop',          '~> 1.92.0'
+  s.add_development_dependency 'rubocop-minitest', '~> 0.41.0'
   s.add_development_dependency 'rubocop-rake',     '~> 0.7.0'
   s.add_development_dependency 'rubocop-sequel',   '~> 0.4.0'
   s.add_development_dependency 'simplecov',        '~> 0.22'
