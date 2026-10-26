@@ -27,6 +27,7 @@ When loading a single node (`oxs <host>` in oxidized-script, `/reload?node=<host
 - ssh: add the `ssh_pubkey_algorithms` variable to choose the public key signature algorithms, for devices that disconnect on `rsa-sha2-*` such as Huawei SmartAX. Closes #2875 (@fmcglinn)
 
 ### Changed
+- vyos: add commit info (@systeembeheerder)
 - docker: set LANG=C.UTF-8. Fixes #3690 (@ytti)
 - routeros: remove intermittent POE `voltage_on_poe-in` comment (@hendrikbl)
 - tplink: use `\r\n` as the line terminator in pre_logout, required for the model unit tests to work (@Vantomas)
