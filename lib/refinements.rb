@@ -27,9 +27,8 @@ module Refinements
     # sets @cmd and @name unless @name is already set
     def process_cmd(command)
       @cmd = command
-      # rubocop:disable Naming/MemoizedInstanceVariableName
+      # rubocop:disable-next Naming/MemoizedInstanceVariableName
       @name ||= @cmd.to_s.strip.gsub(/\s+/, '_') # what to do when command is proc? #to_s seems ghetto
-      # rubocop:enable Naming/MemoizedInstanceVariableName
     end
 
     # keeps lines matching any pattern (String or Regexp)

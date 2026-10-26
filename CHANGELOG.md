@@ -10,6 +10,8 @@ The git and gitcrypt outputs no longer provide the `:date` field in the node ver
 
 Oxidized no longer patches Puma's signal handling (needed for Puma 8). With oxidized-web < 0.17.0, Puma takes over the INT, TERM and HUP signals again. Oxidized logs a warning at startup if it finds such a version.
 
+When loading a single node (`oxs <host>` in oxidized-script, `/reload?node=<host>` in oxidized-web), the node name must now match exactly. Previously, a node also matched when its name was contained in the requested name, so `oxs router10` could run on `router1`.
+
 ### Added
 - IOSXR: Add show vesion (@Mascherus, @systeembeheerder)
 - cnos: remove transceiver DDM data (@freddy36)
@@ -25,6 +27,7 @@ Oxidized no longer patches Puma's signal handling (needed for Puma 8). With oxid
 - ssh: add the `ssh_pubkey_algorithms` variable to choose the public key signature algorithms, for devices that disconnect on `rsa-sha2-*` such as Huawei SmartAX. Closes #2875 (@fmcglinn)
 
 ### Changed
+- vyos: add commit info (@systeembeheerder)
 - docker: set LANG=C.UTF-8. Fixes #3690 (@ytti)
 - routeros: remove intermittent POE `voltage_on_poe-in` comment (@hendrikbl)
 - tplink: use `\r\n` as the line terminator in pre_logout, required for the model unit tests to work (@Vantomas)
@@ -36,6 +39,8 @@ Oxidized no longer patches Puma's signal handling (needed for Puma 8). With oxid
 - http: support overriding port (@mgrocock-cwcs)
 - http: support DELETE method (@mgrocock-cwcs)
 - tmos: strip volatile object metadata (checksum, revision, size, create/update time and author) from `tmsh -q list` and the partition configs (@dahlmo)
+- panos_api: back up the running configuration with `show config running` instead of the candidate configuration export. A custom admin role now needs the XML API `Operational Requests` permission; set `panos_api_candidate: true` to keep the previous behaviour. Fixes #2759 (@macmandr197)
+- gemspec: add nokogiri as a development dependency for the panos_api unit tests (@macmandr197)
 - output/git: skip walking the git logs in the version cache when HEAD did not change, speeding up node lists in oxidized-web. Closes #3895 (@zaits07)
 - output/git: reduce the memory footprint of the version cache by deduplicating author and message strings (@robertcheramy)
 - output/git, output/gitcrypt: remove the `:date` field from node versions, use `:time` instead. Requires oxidized-web >= 0.17.0 (@robertcheramy)
@@ -62,6 +67,7 @@ Oxidized no longer patches Puma's signal handling (needed for Puma 8). With oxid
 - output/git: fix the version cache losing commits made within the same second or during a cache update. Log an error and rebuild the cache if the git history has been rewritten while Oxidized is running (@robertcheramy)
 - output/git: rebuild the git index from HEAD before each commit, so that changes merged by the githubrepo hook or pushed to the repository are no longer reverted by the next commit, and read configurations from HEAD instead of the index. Fixes #3887 (@robertcheramy)
 - scp: rescue the `ArgumentError` net-scp raises when a device answers with an error message missing the `\2` prefix, so the node fails instead of crashing Oxidized. Fixes #3900 (@SAY-5)
+- nodes: match the node name exactly when loading a single node, instead of matching the node name as a regexp against the requested name, which could select the wrong node (e.g. `router1` for `router10`) (@robertcheramy)
 
 ## [0.37.0 - 2026-05-20]
 ### Added

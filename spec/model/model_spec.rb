@@ -365,9 +365,8 @@ describe 'Oxidized::Model' do
 
         model.stubs(:vars).returns(nil)
         model.stubs(:vars).with('metadata').returns(true)
-        # rubocop:disable Style/FormatStringToken
+        # rubocop:disable-next Style/FormatStringToken
         model.stubs(:vars).with('metadata_top').returns("%{comment}Top from vars model %{model}\n")
-        # rubocop:enable Style/FormatStringToken
         result = model.get.to_cfg
         _(result).must_equal(
           "// Top from vars model TestModelNoMetadata\n" \

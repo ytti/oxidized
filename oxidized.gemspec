@@ -54,7 +54,7 @@ Gem::Specification.new do |s|
   s.add_development_dependency 'rake',             '~> 13.0'
   # Rubocop introduces new rules in minor versions, so we limit automatic
   # updates to patches
-  s.add_development_dependency 'rubocop',          '~> 1.89.0'
+  s.add_development_dependency 'rubocop',          '~> 1.92.0'
   s.add_development_dependency 'rubocop-minitest', '~> 0.41.0'
   s.add_development_dependency 'rubocop-rake',     '~> 0.7.0'
   s.add_development_dependency 'rubocop-sequel',   '~> 0.4.0'
@@ -64,6 +64,7 @@ Gem::Specification.new do |s|
   s.add_development_dependency 'git',              '>= 2.0', '< 5'
   s.add_development_dependency 'net-scp',          '~> 4.1'
   s.add_development_dependency 'net-tftp',         '~> 0.1.0'
+  s.add_development_dependency 'nokogiri',         '>= 1.16', '< 2'
   s.add_development_dependency 'oxidized-web',     '>= 0.17.1'
   s.add_development_dependency 'sequel',           '>= 5.63.0', '< 6'
 end
