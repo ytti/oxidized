@@ -39,6 +39,8 @@ When loading a single node (`oxs <host>` in oxidized-script, `/reload?node=<host
 - http: support overriding port (@mgrocock-cwcs)
 - http: support DELETE method (@mgrocock-cwcs)
 - tmos: strip volatile object metadata (checksum, revision, size, create/update time and author) from `tmsh -q list` and the partition configs (@dahlmo)
+- panos_api: back up the running configuration with `show config running` instead of the candidate configuration export. A custom admin role now needs the XML API `Operational Requests` permission; set `panos_api_candidate: true` to keep the previous behaviour. Fixes #2759 (@macmandr197)
+- gemspec: add nokogiri as a development dependency for the panos_api unit tests (@macmandr197)
 - output/git: skip walking the git logs in the version cache when HEAD did not change, speeding up node lists in oxidized-web. Closes #3895 (@zaits07)
 - output/git: reduce the memory footprint of the version cache by deduplicating author and message strings (@robertcheramy)
 - output/git, output/gitcrypt: remove the `:date` field from node versions, use `:time` instead. Requires oxidized-web >= 0.17.0 (@robertcheramy)
