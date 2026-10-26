@@ -68,6 +68,7 @@ When loading a single node (`oxs <host>` in oxidized-script, `/reload?node=<host
 - output/git: rebuild the git index from HEAD before each commit, so that changes merged by the githubrepo hook or pushed to the repository are no longer reverted by the next commit, and read configurations from HEAD instead of the index. Fixes #3887 (@robertcheramy)
 - scp: rescue the `ArgumentError` net-scp raises when a device answers with an error message missing the `\2` prefix, so the node fails instead of crashing Oxidized. Fixes #3900 (@SAY-5)
 - nodes: match the node name exactly when loading a single node, instead of matching the node name as a regexp against the requested name, which could select the wrong node (e.g. `router1` for `router10`) (@robertcheramy)
+- core: expand `~` in `crash.directory` before writing crash dumps. Fixes #3945. (@wleeaf, @robertcheramy)
 
 ## [0.37.0 - 2026-05-20]
 ### Added
