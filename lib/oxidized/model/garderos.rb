@@ -25,6 +25,10 @@ class Garderos < Oxidized::Model
   end
 
   cmd 'show hardware all' do |cfg|
+    cfg = cfg.reject_lines [
+      /^ +VLAN \d+/,
+      /^ +Port \d+/
+    ]
     comment cfg + "\n"
   end
 

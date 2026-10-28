@@ -26,11 +26,6 @@
 #   0. switch0 (Marvell 88e6071), connected to 'eth1', 4 ports
 #     Switch is managed.
 # 
-#     VLAN 100     Port(s): 0*, 1*
-#     Port 0: up, untagged (vid=100)
-#     Port 1: up, untagged (vid=1)
-#     Port 2: blocked
-#     Port 3: blocked
 # 
 # 2 serial device(s) found:
 #   0. ttyS0
