@@ -13,12 +13,19 @@ class Garderos < Oxidized::Model
     cfg.cut_both
   end
 
-  cmd 'show system version' do |cfg|
-    comment "#{cfg}\n"
+  cmd 'show system information' do |cfg|
+    cfg = cfg.reject_lines [
+      /^Uptime +:/,
+      /^Config Age +:/,
+      /^Startup +/,
+      /^Wakeup Int +:/,
+      /^Temperature *:/
+    ]
+    comment cfg + "\n"
   end
 
-  cmd 'show system serial' do |cfg|
-    comment "#{cfg}\n"
+  cmd 'show hardware all' do |cfg|
+    comment cfg + "\n"
   end
 
   # If we have a radio modem installed, we'd like to list the SIM Card
@@ -26,7 +33,7 @@ class Garderos < Oxidized::Model
     if cfg.start_with? 'Unknown command'
       String.new('')
     else
-      comment "#{cfg}\n"
+      comment cfg + "\n"
     end
   end
 

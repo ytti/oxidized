@@ -44,6 +44,7 @@ When loading a single node (`oxs <host>` in oxidized-script, `/reload?node=<host
 - output/git: skip walking the git logs in the version cache when HEAD did not change, speeding up node lists in oxidized-web. Closes #3895 (@zaits07)
 - output/git: reduce the memory footprint of the version cache by deduplicating author and message strings (@robertcheramy)
 - output/git, output/gitcrypt: remove the `:date` field from node versions, use `:time` instead. Requires oxidized-web >= 0.17.0 (@robertcheramy)
+- garderos: replace `show system version` & `show system serial` with `show system information` and `show hardware all` to get more hardware details (@robertcheramy)
 
 ### Fixed
 - extra/oxidized.service: remove `KillSignal=SIGKILL`, Oxidized exits on SIGTERM since #3059 (@robertcheramy)
