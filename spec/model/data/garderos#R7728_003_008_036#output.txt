@@ -1,0 +1,61 @@
+# System Name: LAB-R10091_Garderos
+# Serial     : R7728910xxxx
+# Version    : grs-gwuz-armel/003_008_036 (Garderos; 2026-06-19 12:34:25)
+# Description: Oxidized Test
+# Contact    : Oxidized Example
+# Location   : HQ
+# System MAC : 00:e0:33:00:00:00
+# Config Src : remote, https://192.0.2.67:443/configserver/config 
+# 
+# Model:      R-7728 J03
+# Board Type: GWUZ
+# Board Rev:  G32-
+# Board Ser:  6000000
+# 
+# 3 LAN device(s) found:
+#   0. eth0
+#     MAC: 00:e0:33:00:00:00
+#     Supported link-types:   10baseT-HD 10baseT-FD 100baseT-HD 100baseT-FD 1000baseT-FD
+# 
+#   1. eth1
+#     MAC: 00:e0:33:00:00:01
+#     Supported link-types:   10baseT-HD 10baseT-FD 100baseT-HD 100baseT-FD 1000baseT-FD
+# 
+#   2. eth2
+#     MAC: 00:e0:33:00:00:02
+#     Supported link-types:   10baseT-HD 10baseT-FD 100baseT-HD 100baseT-FD 1000baseT-FD
+# 
+# 2 serial device(s) found:
+#   0. ttyS0
+#     Speed: 115200
+#     Type:  RS-232
+#   1. ttyS2
+#     Speed: 115200
+#     Type:  RS-485
+# 
+# No WiFi cards found.
+# 
+# 
+# 1 WWAN device(s) found:
+#   0. wwan0:  LE910-EU V2 2xWWAN
+#     Port:    2-1.1
+#     Type:    GSM UMTS LTE 
+#     Bands:   GSM: B3/B8, UMTS: B1/B8, LTE: B1/B3/B7/B8/B20
+#     Max. TX: 33dBm
+#     FW-Rev.: 20.00.405
+#     IMEI:    300000000000000
+#     Since:   003_005_057
+# 
+# IMSI:           200000000000000
+# SIM ID:         8000000000000000000
+# Phone number:   +4915100000000
+# 
+acl.ipv4.input.1.action=ACCEPT
+acl.ipv4.input.1.description=allow ssh from management
+acl.ipv4.input.1.dest-ports=22
+acl.ipv4.input.1.protocol=tcp
+acl.ipv4.input.1.source-network=192.0.2.67/24
+user.account.0.level=15
+user.account.0.name=oxidized
+user.account.0.password={sha256}AAAAAAAAAABBBBBBBBBBCCCCCCCCCCDDDDDDDDDD
+user.enable.0.password={sha256}AAAAAAAAAABBBBBBBBBBCCCCCCCCCCDDDDDDDDDD
