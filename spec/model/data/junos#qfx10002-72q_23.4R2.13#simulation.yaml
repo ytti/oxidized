@@ -1,0 +1,899 @@
+---
+init_prompt: |-
+
+commands:
+  - "show version\n": |-
+      Hostname: ROUTER-EDGE-01
+      Model: qfx10002-72q
+      Junos: 23.4R2.13 flex
+      JUNOS OS Kernel 64-bit FLEX [20240604.39c9257_builder_stable_12_234]
+      JUNOS OS libs [20240604.39c9257_builder_stable_12_234]
+      JUNOS OS runtime [20240604.39c9257_builder_stable_12_234]
+      JUNOS OS time zone information [20240604.39c9257_builder_stable_12_234]
+      JUNOS OS libs compat32 [20240604.39c9257_builder_stable_12_234]
+      JUNOS OS 32-bit compatibility [20240604.39c9257_builder_stable_12_234]
+      JUNOS py extensions [20240705.152839_builder_junos_234_r2]
+      JUNOS py base [20240705.152839_builder_junos_234_r2]
+      JUNOS OS vmguest [20240604.39c9257_builder_stable_12_234]
+      JUNOS OS package [20240623.004723_builder_main]
+      JUNOS network stack and utilities [20240705.152839_builder_junos_234_r2]
+      JUNOS OS network modules [20240604.39c9257_builder_stable_12_234]
+      JUNOS OS crypto [20240604.39c9257_builder_stable_12_234]
+      JUNOS OS boot-ve files [20240604.39c9257_builder_stable_12_234]
+      JUNOS libs [20240705.152839_builder_junos_234_r2]
+      JUNOS libs compat32 [20240705.152839_builder_junos_234_r2]
+      JUNOS runtime [20240705.152839_builder_junos_234_r2]
+      JUNOS na telemetry [23.4R2.13]
+      JUNOS Web Management Platform Package [20240705.152839_builder_junos_234_r2]
+      JUNOS vmguest  [20240705.152839_builder_junos_234_r2]
+      JUNOS qfx modules [20240705.152839_builder_junos_234_r2]
+      JUNOS lite sysmond [20240705.152839_builder_junos_234_r2]
+      JUNOS qfx runtime [20240705.152839_builder_junos_234_r2]
+      JUNOS python routing scripts for consistency check in RIB/FIB/PFE [20240705.152839_builder_junos_234_r2]
+      JUNOS Routing Protocol Services Daemons [23.4R2.13]
+      JUNOS Routing mpls-oam-basic [20240705.152839_builder_junos_234_r2]
+      JUNOS Routing mpls-oam-advanced [20240705.152839_builder_junos_234_r2]
+      JUNOS Routing lsys [20240705.152839_builder_junos_234_r2]
+      JUNOS Routing controller-internal [20240705.152839_builder_junos_234_r2]
+      JUNOS Routing controller-external [20240705.152839_builder_junos_234_r2]
+      JUNOS Routing 32-bit Compatible Version [20240705.152839_builder_junos_234_r2]
+      JUNOS Routing aggregated [20240705.152839_builder_junos_234_r2]
+      JUNOS probe utility [20240705.152839_builder_junos_234_r2]
+      JUNOS common platform support [20240705.152839_builder_junos_234_r2]
+      JUNOS qfx platform support [20240705.152839_builder_junos_234_r2]
+      JUNOS Openconfig [23.4R2.13]
+      JUNOS dcp network modules [20240705.152839_builder_junos_234_r2]
+      JUNOS modules [20240705.152839_builder_junos_234_r2]
+      JUNOS L2 RSI Scripts [20240705.152839_builder_junos_234_r2]
+      JUNOS qfx Data Plane Crypto Support [20240705.152839_builder_junos_234_r2]
+      JUNOS daemons [20240705.152839_builder_junos_234_r2]
+      JUNOS qfx daemons [20240705.152839_builder_junos_234_r2]
+      JUNOS SDN Software Suite [20240705.152839_builder_junos_234_r2]
+      JUNOS Extension Toolkit [20240705.152839_builder_junos_234_r2]
+      JUNOS Phone-home [20240705.152839_builder_junos_234_r2]
+      JUNOS Packet Forwarding Engine Support (DC-PFE) [20240705.152839_builder_junos_234_r2]
+      JUNOS Packet Forwarding Engine Support (M/T Common) [20240705.152839_builder_junos_234_r2]
+      JUNOS Juniper Malware Removal Tool (JMRT) [1.0.0+20240705.152839_builder_junos_234_r2]
+      JUNOS Juniper Malware Removal Tool (JMRT) Test [1.0.0+20240705.152839_builder_junos_234_r2]
+      JUNOS J-Insight [20240705.152839_builder_junos_234_r2]
+      JUNOS jfirmware [20240515.054255_builder_junos_234_r2]
+      JUNOS Online Documentation [20240705.152839_builder_junos_234_r2]
+      JUNOS jail runtime [20240604.39c9257_builder_stable_12_234]
+      JUNOS dsa [20240705.152839_builder_junos_234_r2]
+      JUNOS Host Software [3.14.64-rt67-WR7.0.0.31_ovp:3.1.0]
+      JUNOS Host qfx-10-f platform package [23.4R2.13]
+      JUNOS Host qfx-10-f base package [23.4R2.13]
+      JUNOS Host qfx-10-f data-plane package [23.4R2.13]
+      JUNOS Host qfx-10-f control-plane flex package [23.4R2.13]
+      Junos for Automation Enhancement
+      
+
+  - "show chassis hardware\n": |-
+      Hardware inventory:
+      Item             Version  Part number  Serial number     Description
+      Chassis                                TEST00000001      QFX10002-72Q
+      Pseudo CB 0    \x20
+      Routing Engine 0          BUILTIN      BUILTIN           RE-QFX10002-72Q
+      FPC 0            REV 41   750-055415   TEST00000002      QFX10002-72Q
+        CPU                     BUILTIN      BUILTIN           FPC CPU
+        PIC 0                   BUILTIN      BUILTIN           72X40G
+          Xcvr 11               NON-JNPR     OPTIC00000001     QSFP-100GBASE-LR4
+          Xcvr 13               NON-JNPR     OPTIC00000002     QSFP-100GBASE-LR4
+          Xcvr 17               NON-JNPR     OPTIC00000003     QSFP-100GBASE-LR4
+          Xcvr 35               NON-JNPR     OPTIC00000004     UNKNOWN
+          Xcvr 37               NON-JNPR     OPTIC00000005     QSFP+-40G-ACU5M
+          Xcvr 41               NON-JNPR     OPTIC00000006     QSFP+-40G-ACU5M
+          Xcvr 43               NON-JNPR     OPTIC00000007     QSFP+-40G-ACU5M
+          Xcvr 47               NON-JNPR     OPTIC00000008     QSFP+-40G-ACU5M
+          Xcvr 71               NON-JNPR     OPTIC00000009     QSFP-100GBASE-SR4
+        Mezz           REV 04   711-090775   TEST00000003      Mezz Board 36X40GE
+      Power Supply 0   REV 04   740-054405   PSU0000000001     AC AFO 1600W PSU
+      Power Supply 1   REV 04   740-054405   PSU0000000002     AC AFO 1600W PSU
+      Power Supply 2   REV 04   740-054405   PSU0000000003     AC AFO 1600W PSU
+      Power Supply 3   REV 04   740-054405   PSU0000000004     AC AFO 1600W PSU
+      Fan Tray 0                                               QFX10002 Fan Tray 0, Front to Back Airflow - AFO
+      Fan Tray 1                                               QFX10002 Fan Tray 1, Front to Back Airflow - AFO
+      Fan Tray 2                                               QFX10002 Fan Tray 2, Front to Back Airflow - AFO
+      
+
+  - "show system license\n": |-
+      License usage:\x20
+                                       Licensed     Licensed    Licensed
+                                        Feature      Feature     Feature
+        Feature name                       used    installed      needed    Expiry
+        bgp                                   1            0           1    invalid
+        mpls                                  1            0           1    invalid
+        filter-based-forwarding               0            1           0    permanent
+        connectivity-fault-management         0            1           0    permanent
+        vrrp                                  0            1           0    permanent
+        dot1q-tunneling                       0            1           0    permanent
+        mc-lag                                0            1           0    permanent
+        Timing License                        0            1           0    permanent
+        ldp                                   1            0           1    invalid
+        igmp-multicast                        0            1           0    permanent
+        pim                                   0            1           0    permanent
+        gre_tunnel                            0            1           0    permanent
+        rip                                   0            1           0    permanent
+        ospf                                  1            1           0    permanent
+        switching-vc-license                  0            1           0    permanent
+        inmon-sflow                           0            1           0    permanent
+      
+      Licenses installed: none
+      
+
+  - "show system license keys\n": |-
+
+  - "show configuration | display omit\n": |-
+      ## Last commit: 2026-10-27 11:27:00 UTC by admin
+      version 23.4R2.13;
+      # Placeholder for QFX platform config.\x20
+      system {
+          host-name ROUTER-EDGE-01;
+          root-authentication {
+              encrypted-password \"$6$SALTdummy$0123456789abcdefghijklmnopqrstuvwxyzABCDEFGHIJKLMNOPQRSTUVWXYZ0123456789abcdefghijklmn\"; ## SECRET-DATA
+          }
+          login {
+              class backup-class {
+                  permissions [ secret trace view view-configuration ];
+              }
+              user backup1 {
+                  uid 2002;
+                  class backup-class;
+                  authentication {
+                      encrypted-password \"$6$SALTdummy$0123456789abcdefghijklmnopqrstuvwxyzABCDEFGHIJKLMNOPQRSTUVWXYZ0123456789abcdefghijklmn\"; ## SECRET-DATA
+                  }
+              }
+              user netadmin1 {
+                  uid 2003;
+                  class super-user;
+                  authentication {
+                      encrypted-password \"$6$SALTdummy$0123456789abcdefghijklmnopqrstuvwxyzABCDEFGHIJKLMNOPQRSTUVWXYZ0123456789abcdefghijklmn\"; ## SECRET-DATA
+                  }
+              }
+              user netadmin2 {
+                  uid 2004;
+                  class super-user;
+                  authentication {
+                      encrypted-password \"$6$SALTdummy$0123456789abcdefghijklmnopqrstuvwxyzABCDEFGHIJKLMNOPQRSTUVWXYZ0123456789abcdefghijklmn\"; ## SECRET-DATA
+                  }
+              }
+              user testuser {
+                  uid 2001;
+                  class super-user;
+                  authentication {
+                      encrypted-password \"$6$SALTdummy$0123456789abcdefghijklmnopqrstuvwxyzABCDEFGHIJKLMNOPQRSTUVWXYZ0123456789abcdefghijklmn\"; ## SECRET-DATA
+                  }
+              }
+              user admin {
+                  uid 2000;
+                  class super-user;
+                  authentication {
+                      encrypted-password \"$6$SALTdummy$0123456789abcdefghijklmnopqrstuvwxyzABCDEFGHIJKLMNOPQRSTUVWXYZ0123456789abcdefghijklmn\"; ## SECRET-DATA
+                  }
+              }
+          }
+          services {
+              ssh {
+                  port 22;
+              }
+              telnet;
+          }
+          syslog {
+              file interactive-commands {
+                  interactive-commands any;
+              }
+              file messages {
+                  any notice;
+                  authorization info;
+              }
+          }
+      }
+      chassis {
+          aggregated-devices {
+              ethernet {
+                  device-count 10;
+              }
+          }
+          fpc 0 {
+              pic 0 {
+                  port 7 {
+                      speed 100g;
+                  }
+                  port 11 {
+                      speed 100g;
+                  }
+                  port 13 {
+                      speed 100g;
+                  }
+                  port 17 {
+                      speed 100g;
+                  }
+                  port 19 {
+                      speed 100g;
+                  }
+                  port 23 {
+                      speed 100g;
+                  }
+                  port 35 {
+                      speed 100g;
+                  }
+                  port 37 {
+                      speed 100g;
+                  }
+                  port 41 {
+                      speed 100g;
+                  }
+                  port 43 {
+                      speed 100g;
+                  }
+                  port 47 {
+                      speed 100g;
+                  }
+                  port 67 {
+                      speed 100g;
+                  }
+                  port 71 {
+                      speed 100g;
+                  }
+              }
+          }
+      }
+      services {
+          rpm {
+              probe C1 {
+                  test v4 {
+                      probe-type icmp-ping;
+                      target address 192.0.2.1;
+                      probe-count 5;
+                      probe-interval 1;
+                      test-interval 60;
+                      source-address 198.51.100.2;
+                  }
+                  test v6 {
+                      probe-type icmp6-ping;
+                      target inet6-address 2001:db8::1;
+                      inet6-options {
+                          source-address 2001:db8:10::2;
+                      }
+                      probe-count 5;
+                      probe-interval 1;
+                      test-interval 60;
+                  }
+                  test peer-v4 {
+                      probe-type icmp-ping;
+                      target address 198.51.100.1;
+                      probe-count 5;
+                      probe-interval 1;
+                      test-interval 60;
+                      source-address 198.51.100.2;
+                  }
+                  test peer-v6 {
+                      probe-type icmp6-ping;
+                      target inet6-address 2001:db8:10::1;
+                      inet6-options {
+                          source-address 2001:db8:10::2;
+                      }
+                      probe-count 5;
+                      probe-interval 1;
+                      test-interval 60;
+                  }
+              }
+              probe C2 {
+                  test v4 {
+                      probe-type icmp-ping;
+                      target address 192.0.2.1;
+                      probe-count 5;
+                      probe-interval 1;
+                      test-interval 60;
+                      source-address 198.51.100.6;
+                  }
+                  test v6 {
+                      probe-type icmp6-ping;
+                      target inet6-address 2001:db8::1;
+                      inet6-options {
+                          source-address 2001:db8:10::6;
+                      }
+                      probe-count 5;
+                      probe-interval 1;
+                      test-interval 60;
+                  }
+                  test peer-v4 {
+                      probe-type icmp-ping;
+                      target address 198.51.100.5;
+                      probe-count 5;
+                      probe-interval 1;
+                      test-interval 60;
+                      source-address 198.51.100.6;
+                  }
+                  test peer-v6 {
+                      probe-type icmp6-ping;
+                      target inet6-address 2001:db8:10::5;
+                      inet6-options {
+                          source-address 2001:db8:10::6;
+                      }
+                      probe-count 5;
+                      probe-interval 1;
+                      test-interval 60;
+                  }
+              }
+              probe C3 {
+                  test v4 {
+                      probe-type icmp-ping;
+                      target address 192.0.2.1;
+                      probe-count 5;
+                      probe-interval 1;
+                      test-interval 60;
+                      source-address 198.51.100.10;
+                  }
+                  test v6 {
+                      probe-type icmp6-ping;
+                      target inet6-address 2001:db8::1;
+                      inet6-options {
+                          source-address 2001:db8:10::a;
+                      }
+                      probe-count 5;
+                      probe-interval 1;
+                      test-interval 60;
+                  }
+                  test peer-v4 {
+                      probe-type icmp-ping;
+                      target address 198.51.100.9;
+                      probe-count 5;
+                      probe-interval 1;
+                      test-interval 60;
+                      source-address 198.51.100.10;
+                  }
+                  test peer-v6 {
+                      probe-type icmp6-ping;
+                      target inet6-address 2001:db8:10::9;
+                      inet6-options {
+                          source-address 2001:db8:10::a;
+                      }
+                      probe-count 5;
+                      probe-interval 1;
+                      test-interval 60;
+                  }
+              }
+              probe AS65001 {
+                  test ICMP-DNS-IPV6-01 {
+                      probe-type icmp6-ping;
+                      target inet6-address 2001:db8::1;
+                      inet6-options {
+                          source-address 2001:db8:20::;
+                      }
+                      probe-count 5;
+                      probe-interval 1;
+                      test-interval 60;
+                  }
+              }
+              probe AS65002 {
+                  test ICMP-DNS-IPV6-01 {
+                      probe-type icmp6-ping;
+                      target inet6-address 2001:db8::1;
+                      inet6-options {
+                          source-address 2001:db8:30::37;
+                      }
+                      probe-count 5;
+                      probe-interval 1;
+                      test-interval 60;
+                  }
+              }
+          }
+      }
+      interfaces {
+          et-0/0/1 {
+              description SIN-USO;
+              mtu 9216;
+          }
+          et-0/0/2 {
+              description SIN-USO;
+              mtu 9216;
+          }
+          et-0/0/3 {
+              description SIN-USO;
+              mtu 9216;
+          }
+          et-0/0/4 {
+              description SIN-USO;
+              mtu 9216;
+          }
+          et-0/0/5 {
+              description SIN-USO;
+              mtu 9216;
+          }
+          et-0/0/6 {
+              description SIN-USO;
+              mtu 9216;
+          }
+          et-0/0/7 {
+              description SIN-USO;
+              mtu 9216;
+          }
+          et-0/0/8 {
+              description SIN-USO;
+              mtu 9216;
+          }
+          et-0/0/9 {
+              description SIN-USO;
+              mtu 9216;
+          }
+          et-0/0/10 {
+              description SIN-USO;
+              mtu 9216;
+          }
+          et-0/0/11 {
+              description UPSTREAM-PEERING-01;
+              mtu 9216;
+              unit 0 {
+                  family inet {
+                      address 198.51.100.2/30;
+                  }
+                  family inet6 {
+                      address 2001:db8:10::2/126;
+                      address 2001:db8:30::37/127;
+                  }
+              }
+          }
+          et-0/0/12 {
+              description SIN-USO;
+              mtu 9216;
+          }
+          et-0/0/13 {
+              description UPSTREAM-PEERING-02;
+              mtu 9216;
+              gigether-options {
+                  fec fec91;
+              }
+              unit 0 {
+                  family inet {
+                      address 198.51.100.6/30;
+                  }
+                  family inet6 {
+                      address 2001:db8:10::6/126;
+                  }
+              }
+          }
+          et-0/0/14 {
+              description SIN-USO;
+              mtu 9216;
+          }
+          et-0/0/15 {
+              description SIN-USO;
+              mtu 9216;
+          }
+          et-0/0/16 {
+              description SIN-USO;
+              mtu 9216;
+          }
+          et-0/0/17 {
+              description UPSTREAM-PEERING-03;
+              mtu 9216;
+              unit 0 {
+                  family inet {
+                      address 198.51.100.10/30;
+                  }
+                  family inet6 {
+                      address 2001:db8:10::a/126;
+                  }
+              }
+          }
+          et-0/0/18 {
+              description SIN-USO;
+              mtu 9216;
+          }
+          et-0/0/19 {
+              description UPSTREAM-100-03;
+              mtu 9216;
+          }
+          et-0/0/20 {
+              description SIN-USO;
+              mtu 9216;
+          }
+          et-0/0/21 {
+              description SIN-USO;
+              mtu 9216;
+          }
+          et-0/0/22 {
+              description SIN-USO;
+              mtu 9216;
+          }
+          et-0/0/23 {
+              description UPSTREAM-100-04;
+              mtu 9216;
+          }
+          et-0/0/24 {
+              description SIN-USO;
+              mtu 9216;
+          }
+          et-0/0/25 {
+              description SIN-USO;
+              mtu 9216;
+          }
+          et-0/0/26 {
+              description SIN-USO;
+              mtu 9216;
+          }
+          et-0/0/27 {
+              description SIN-USO;
+              mtu 9216;
+          }
+          et-0/0/28 {
+              description SIN-USO;
+              mtu 9216;
+          }
+          et-0/0/29 {
+              description SIN-USO;
+              mtu 9216;
+          }
+          et-0/0/30 {
+              description SIN-USO;
+              mtu 9216;
+          }
+          et-0/0/31 {
+              description SIN-USO;
+              mtu 9216;
+          }
+          et-0/0/32 {
+              description SIN-USO;
+              mtu 9216;
+          }
+          et-0/0/33 {
+              description SIN-USO;
+              mtu 9216;
+          }
+          et-0/0/34 {
+              description SIN-USO;
+              mtu 9216;
+          }
+          et-0/0/35 {
+              description SW-CORE-MPLS-ETH0/0/30;
+              ether-options {
+                  802.3ad ae3;
+              }
+              gigether-options {
+                  fec fec91;
+              }
+          }
+          et-0/0/36 {
+              description SIN-USO;
+              mtu 9216;
+          }
+          et-0/0/37 {
+              description AOC-LAG-01;
+              ether-options {
+                  802.3ad ae6;
+              }
+              gigether-options {
+                  fec fec91;
+              }
+          }
+          et-0/0/38 {
+              description SIN-USO;
+              mtu 9216;
+          }
+          et-0/0/39 {
+              description SIN-USO;
+              mtu 9216;
+          }
+          et-0/0/40 {
+              description SIN-USO;
+              mtu 9216;
+          }
+          et-0/0/41 {
+              description AOC-LAG-02;
+              ether-options {
+                  802.3ad ae6;
+              }
+              gigether-options {
+                  fec fec91;
+              }
+          }
+          et-0/0/42 {
+              description SIN-USO;
+              mtu 9216;
+          }
+          et-0/0/43 {
+              description AOC-LAG-03;
+              ether-options {
+                  802.3ad ae6;
+              }
+              gigether-options {
+                  fec fec91;
+              }
+          }
+          et-0/0/44 {
+              description SIN-USO;
+              mtu 9216;
+          }
+          et-0/0/45 {
+              description SIN-USO;
+              mtu 9216;
+          }
+          et-0/0/46 {
+              description SIN-USO;
+              mtu 9216;
+          }
+          et-0/0/47 {
+              description AOC-LAG-04;
+              ether-options {
+                  802.3ad ae6;
+              }
+              gigether-options {
+                  fec fec91;
+              }
+          }
+          et-0/0/48 {
+              description SIN-USO;
+              mtu 9216;
+          }
+          et-0/0/49 {
+              description SIN-USO;
+              mtu 9216;
+          }
+          et-0/0/50 {
+              description SIN-USO;
+              mtu 9216;
+          }
+          et-0/0/51 {
+              description SIN-USO;
+              mtu 9216;
+          }
+          et-0/0/52 {
+              description SIN-USO;
+              mtu 9216;
+          }
+          et-0/0/53 {
+              description SIN-USO;
+              mtu 9216;
+          }
+          et-0/0/54 {
+              description SIN-USO;
+              mtu 9216;
+          }
+          et-0/0/55 {
+              description SIN-USO;
+              mtu 9216;
+          }
+          et-0/0/56 {
+              description SIN-USO;
+              mtu 9216;
+          }
+          et-0/0/57 {
+              description SIN-USO;
+              mtu 9216;
+          }
+          et-0/0/58 {
+              description SIN-USO;
+              mtu 9216;
+          }
+          et-0/0/59 {
+              description SIN-USO;
+              mtu 9216;
+          }
+          et-0/0/60 {
+              description SIN-USO;
+              mtu 9216;
+          }
+          et-0/0/61 {
+              description SIN-USO;
+              mtu 9216;
+          }
+          et-0/0/62 {
+              description SIN-USO;
+              mtu 9216;
+          }
+          et-0/0/63 {
+              description SIN-USO;
+              mtu 9216;
+          }
+          et-0/0/64 {
+              description SIN-USO;
+              mtu 9216;
+          }
+          et-0/0/65 {
+              description SIN-USO;
+              mtu 9216;
+          }
+          et-0/0/66 {
+              description SIN-USO;
+              mtu 9216;
+          }
+          et-0/0/67 {
+              description SIN-USO;
+              mtu 9216;
+          }
+          et-0/0/68 {
+              description SIN-USO;
+              mtu 9216;
+          }
+          et-0/0/69 {
+              description SIN-USO;
+              mtu 9216;
+          }
+          et-0/0/70 {
+              description SIN-USO;
+              mtu 9216;
+          }
+          et-0/0/71 {
+              description SW-CORE-MPLS-ETH0/0/31;
+              ether-options {
+                  802.3ad ae3;
+              }
+              gigether-options {
+                  fec fec91;
+              }
+          }
+          ae3 {
+              description SW-CORE-MPLS;
+              flexible-vlan-tagging;
+              mtu 9216;
+              encapsulation flexible-ethernet-services;
+              aggregated-ether-options {
+                  lacp {
+                      active;
+                  }
+              }
+              unit 1008 {
+                  description CLIENT-B-BGP;
+                  vlan-id 1008;
+                  family inet {
+                      address 10.0.128.29/30;
+                  }
+              }
+              unit 1012 {
+                  description CLIENT-B-IPV6;
+                  vlan-id 1012;
+                  family inet6 {
+                      address 2001:db8:100:1::2/127;
+                  }
+              }
+              unit 2801 {
+                  vlan-id 2801;
+                  family inet {
+                      address 10.0.16.1/30;
+                  }
+                  family inet6 {
+                      address 2001:db8:20::/127;
+                  }
+              }
+              unit 2812 {
+                  vlan-id 2812;
+                  family inet {
+                      address 10.0.16.45/30;
+                  }
+              }
+              unit 4011 {
+                  vlan-id 4011;
+                  family inet {
+                      address 198.51.100.165/27;
+                  }
+              }
+          }
+          ae6 {
+              description TRUNK-AGGREGATION;
+              flexible-vlan-tagging;
+              mtu 9216;
+              aggregated-ether-options {
+                  lacp {
+                      active;
+                  }
+              }
+              unit 1007 {
+                  description PTP-CLIENT-A;
+                  vlan-id 1007;
+                  family inet {
+                      address 10.0.128.25/30;
+                  }
+              }
+              unit 1017 {
+                  description PTP-IPV6-CLIENT-A;
+                  vlan-id 1017;
+                  family inet6 {
+                      address 2001:db8:100:11::2/127;
+                  }
+              }
+          }
+          em0 {
+              unit 0 {
+                  family inet {
+                      address 192.168.100.254/24;
+                  }
+              }
+          }
+          lo0 {
+              unit 0 {
+                  family inet {
+                      address 10.0.0.1/32;
+                  }
+                  family inet6 {
+                      address 2001:db8::1/128;
+                  }
+              }
+          }
+      }
+      snmp {
+          v3 {
+              usm {
+                  local-engine {
+                      user monitor-user {
+                          authentication-md5 {
+                              authentication-key \"$9$SALTdummySNMPauthKeyDummyStringForTestingOnlyOxidizedSim1234567890abcdef\"; ## SECRET-DATA
+                          }
+                          privacy-aes128 {
+                              privacy-key \"$9$SALTdummySNMPprivKeyDummyStringForTestingOnlyOxidizedSim1234567890abcdef\"; ## SECRET-DATA
+                          }
+                      }
+                  }
+              }
+              vacm {
+                  security-to-group {
+                      security-model usm {
+                          security-name monitor-user {
+                              group monitor-group;
+                          }
+                      }
+                  }
+                  access {
+                      group monitor-group {
+                          default-context-prefix {
+                              security-model usm {
+                                  security-level authentication {
+                                      context-match exact;
+                                      read-view readview;
+                                  }
+                              }
+                          }
+                      }
+                  }
+              }
+          }
+          view readview {
+              oid .1 include;
+          }
+      }
+      forwarding-options {
+          storm-control-profiles default {
+              all;
+          }
+      }
+      protocols {
+          ldp {
+              interface all;
+          }
+          mpls {
+              interface ae3.2801;
+          }
+          ospf {
+              traffic-engineering;
+              area 0.0.0.0 {
+                  interface lo0.0 {
+                      passive;
+                  }
+                  interface ae3.2801 {
+                      interface-type p2p;
+                  }
+                  interface ae3.2812 {
+                      interface-type p2p;
+                  }
+              }
+              export OSPF-OUT;
+              import IGNORAR-OSPF-TAG100;
+          }
+          ospf3 {
+              area 0.0.0.0 {
+                  interface lo0.0 {
+                      passive;
+                  }
+                  interface ae3.2801 {
+                      interface-type p2p;
+                  }
+              }
+              export OSPF-OUT;
+          }
+          lldp-med;
+      }
+      
+
+  - "show virtual-chassis\n": |-
+      
+      error: syntax error, expecting <command>: virtual-chassis
