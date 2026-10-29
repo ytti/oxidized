@@ -37,7 +37,9 @@ describe 'Model RouterOS export normalization' do
   end
 
   def routeros_export(header:, address:, line_ending: "\n", indent: '', note: nil)
-    lines = ["#{indent}# #{header}", '/ip address', "add address=#{address} interface=ether1"]
+    lines = ["#{indent}# #{header}", '/interface ethernet', 'set [ find default-name=ether1 ] comment=uplink',
+             '/ip address', "add address=#{address} interface=ether1", '/ip firewall filter',
+             'add chain=input action=accept comment=allow-management']
     lines.insert(1, "##{note}") if note
     lines.join(line_ending) + line_ending
   end
@@ -55,16 +57,18 @@ describe 'Model RouterOS export normalization' do
     _(identical.to_cfg).must_equal first.to_cfg
     _(store(identical).map { |revision| revision[:oid] }).must_equal [first_oid]
 
-    timestamp_only = backup(
-      version: '6.49.17',
-      export:  routeros_export(
-        header: 'oct/24/2026 12:04:57 by RouterOS 6.49.17',
-        address: '192.0.2.1/24', line_ending: "\r\n", indent: '  ',
-        note: ' 2026-10-24 maintenance note'
-      )
+    timestamp_only_export = routeros_export(
+      header: 'oct/24/2026 12:04:57 by RouterOS 6.49.17',
+      address: '192.0.2.1/24', line_ending: "\r\n", indent: '  ',
+      note: ' 2026-10-24 maintenance note'
     )
+    timestamp_only = backup(version: '6.49.17', export: timestamp_only_export)
     _(timestamp_only.to_cfg).must_equal first.to_cfg
-    _(store(timestamp_only).map { |revision| revision[:oid] }).must_equal [first_oid]
+    3.times do
+      repeated = backup(version: '6.49.17', export: timestamp_only_export)
+      _(repeated.to_cfg).must_equal first.to_cfg
+      _(store(repeated).map { |revision| revision[:oid] }).must_equal [first_oid]
+    end
     _(Rugged::Repository.new(@repo_path).head.target.parent_ids).must_equal []
   end
 
@@ -86,6 +90,34 @@ describe 'Model RouterOS export normalization' do
     _(changed_timestamp.to_cfg).must_equal first.to_cfg
     _(store(first).length).must_equal 1
     _(store(changed_timestamp).length).must_equal 1
+  end
+
+  it 'does not create a revision when only the export line endings differ' do
+    lf = routeros_export(header: '2026-10-29 17:22:58 by RouterOS 7.25', address: '192.0.2.1/24')
+    crlf = lf.gsub("\n", "\r\n")
+    first = backup(version: '7.25', export: lf)
+    _(store(first).length).must_equal 1
+    second = backup(version: '7.25', export: crlf)
+    _(second.to_cfg).must_equal first.to_cfg
+    _(store(second).length).must_equal 1
+  end
+
+  it 'creates one isolated Git revision for a firewall rule change' do
+    initial = routeros_export(header: '2026-10-29 17:22:58 by RouterOS 7.25', address: '192.0.2.1/24')
+    first = backup(version: '7.25', export: initial)
+    store(first)
+    changed = backup(version: '7.25', export: initial.sub('action=accept', 'action=drop'))
+    _(changed.to_cfg).wont_equal first.to_cfg
+    _(store(changed).length).must_equal 2
+  end
+
+  it 'creates one isolated Git revision for an interface configuration change' do
+    initial = routeros_export(header: '2026-10-29 17:22:58 by RouterOS 7.25', address: '192.0.2.1/24')
+    first = backup(version: '7.25', export: initial)
+    store(first)
+    changed = backup(version: '7.25', export: initial.sub('comment=uplink', 'comment=core-uplink'))
+    _(changed.to_cfg).wont_equal first.to_cfg
+    _(store(changed).length).must_equal 2
   end
 
   it 'creates revisions for real configuration changes and meaningful RouterOS version changes' do
