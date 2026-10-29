@@ -9,7 +9,7 @@ module Oxidized
 
     attr_accessor :source, :jobs
     alias put unshift
-    def load(node_want = nil)
+    def load(node_want = nil, clean_obsolete: true)
       with_lock do
         new = []
         @source = Oxidized.config.source.default
@@ -24,13 +24,16 @@ module Oxidized
             node_obj = Node.new node
             new.push node_obj
           rescue ModelNotFound => e
-            logger.error "node %s raised %s with message '%s'" % [node, e.class, e.message]
+            logger.error "node %s raised %s with message '%s'" % [node[:name] || node[:ip], e.class, e.message]
           rescue Resolv::ResolvError => e
-            logger.error "node %s is not resolvable, raised %s with message '%s'" % [node, e.class, e.message]
+            logger.error(
+              "node %s is not resolvable, raised %s with message '%s'" %
+                [node[:name] || node[:ip], e.class, e.message]
+            )
           end
         end
         size.zero? ? replace(new) : update_nodes(new)
-        Output.clean_obsolete_nodes(self) if node_want.nil?
+        Output.clean_obsolete_nodes(self) if node_want.nil? && clean_obsolete
         logger.info "Loaded #{size} nodes"
       end
     end
