@@ -11,6 +11,16 @@ The format is based on [Keep a Changelog](https://keepachangelog.com/en/1.1.0/).
 - Log only device identity when model loading or DNS resolution fails, avoiding credential exposure from source rows.
 
 ## [Unreleased]
+
+## [0.37.2] - 2026-10-29
+
+### Fixed
+- Normalize generated RouterOS 6 and 7 export timestamp comments before Git storage, including leading whitespace and CRLF exports, while retaining real config and firmware-version changes.
+- Add regression coverage for identical backups, timestamp-only changes, real configuration edits, and RouterOS version changes without rewriting existing history.
+
+### Compatibility
+- Works with Oxidized Web 0.21.0 for the enterprise integration release.
+
 ### Release Notes
 The git and gitcrypt outputs no longer provide the `:date` field in the node versions, as it was only used by oxidized-web <= 0.16.0. You need oxidized-web >= 0.17.0, older versions will fail to display node versions and diffs.
 
