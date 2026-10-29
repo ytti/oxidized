@@ -30,9 +30,10 @@ describe 'Model RouterOS export normalization' do
   end
 
   def store(outputs)
-    content = outputs.to_cfg
-    previous = @repo.empty? ? nil : @repo.blob_at(@repo.head.target_id, @node.name).content
-    commit_files(@repo, { @node.name => content }, message: 'RouterOS backup') unless content == previous
+    Oxidized.config.output.git.repo = @repo_path
+    Oxidized.config.output.git.user = 'RouterOS test'
+    Oxidized.config.output.git.email = 'routeros@example.invalid'
+    Oxidized::Output::Git.new.store(@node.name, outputs, msg: 'RouterOS backup')
     Oxidized::Output::Git.hash_list(@node.name, @repo_path)
   end
 

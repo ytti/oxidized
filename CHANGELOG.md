@@ -4,6 +4,17 @@ All notable changes to this project will be documented in this file.
 
 The format is based on [Keep a Changelog](https://keepachangelog.com/en/1.1.0/).
 
+## [0.37.3] - 2026-10-29
+
+### Added
+- Add atomic manual queue and status APIs for all or selected devices, reusing the configured worker concurrency budget.
+- Track queued, running, succeeded and failed collections through retries and completed output storage; suppress duplicate active requests.
+- Ignore stale completion from inventory instances replaced during reload, and expose unavailable state after restart instead of false success.
+- Verify unchanged RouterOS output through the production Git output plugin, while retaining one revision for actual changes.
+
+### Compatibility
+- Pair with Oxidized Web 0.25.0. No parallel SSH engine or historical Git migration is introduced.
+
 ## [0.37.1] - 2026-10-29
 
 ### Added
