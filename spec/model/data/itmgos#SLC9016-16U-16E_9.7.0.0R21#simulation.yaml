@@ -1,0 +1,742 @@
+---
+command_newline: "\n"
+init_prompt: |-
+    \r
+    Welcome to the Lantronix SLC9000 Advanced Console Manager\r
+    Model Number: SLC9016-16U-16E\r
+    Percepxion: registered to cloud: percepxion.example.com\r
+    For a list of commands, type 'help'.\r
+    \r
+    [SLC9016-LAB]>\x20
+commands:
+  - "set cli terminallines disable\n": |-
+      set cli terminallines disable\r
+      CLI settings successfully updated.\r
+      [SLC9016-LAB]>\x20
+  - "admin version\n": |-
+      admin version\r
+      ___Current Version_____________________________________________________________\r
+      Model: SLC9032\r
+      Firmware Version: 9.7.0.0R21\r
+      Firmware Updated: Mon Jun 29 16:04:00 2026\r
+      OS Version: IT Management Gateway OS 7.0\r
+      Bootloader Version: 2.0.0.0R13\r
+      EC Version: 2.1\r
+      Secure Boot: Disabled\r
+      S/N: 0080A3000001\r
+      Device ID: 00204AEXAMPLE0000000000000000001\r
+      Memory: 8 GB\r
+      Flash Size: 128 GB, Kingston-Y29128 (Revision 0x8)\r
+      Power Supply: AC, 2 power supplies\r
+      Number of External USB Ports: 2\r
+      Cellular Modem: Not Installed\r
+      Ethernet Switch: Installed, 16 ports\r
+      Eth1 HW Address: 00:00:5e:00:53:01\r
+      Eth2 HW Address: 00:00:5e:00:53:02\r
+      Eth3 HW Address: 00:00:5e:00:53:03\r
+      Eth4 HW Address: 00:00:5e:00:53:04\r
+      Ethernet Switch HW Address: 00:00:5e:00:53:05\r
+      Main Board Revision: unknown\r
+      NIC Board Eth3 SFP: [none]\r
+      NIC Board Eth4 SFP: [none]\r
+      I/O Module Type(s): RJ45-16, USB-16, ETH-16\r
+      I/O Module Revision(s): 16SPF, 16UBB, 16ESB \r
+      I/O Module Part Number(s): , , \r
+      I/O Module Serial Number(s): , , \r
+      Admin Password Unique to Device: Enabled\r
+      Uptime: 0 days, 6 hours, 26 minutes\r
+      Last Boot: 10/28/26 23:37:20\r
+      Last Restart Reason: Lost Power\r
+      Last Power Outage Event: 10/28/26 19:00:37 to 10/28/26 23:36:23\r
+      Last Power Outage Length: 4 hours, 35 minutes, 46 seconds\r
+      Software Revisions:\r
+        Kernel: 6.6.52\r
+        Web/TLS: OpenSSL 3.4.1 11 Feb 2025 (Library: OpenSSL 3.4.1 11 Feb 2025)\r
+        SSH/TLS: OpenSSH_10.0p2, OpenSSL 3.4.1 11 Feb 2025\r
+        Telnet: netkit-telnet-0.17\r
+        NTP: ntpd 4.2.8p18@1.4062-o Thu Jun 25 04:23:52 UTC 2026 (1)\r
+        RIP: 9.1.3\r
+        Web Server: mini_httpd/1.30\r
+        LDAP: 153\r
+        RADIUS: 3.0.0\r
+        TACACS+: 1.6.0\r
+        ttyd: 1.7.7\r
+        VPN: Linux strongSwan U5.9.14/K6.6.52\r
+        Expect: 5.45.4\r
+        Tcl: 8.6\r
+        Python: 3.13.2\r
+        Dnsmasq: 2.90\r
+        Syslog: 2.7.1\r
+        Docker: 27.5.1\r
+      \r
+      Bootloader Configuration:\r
+        Number of Ports: 32\r
+        Model Number: 155\r
+        Product Name: SLC\r
+        Options: 0080a300000100ffff02\r
+        Features: 0xffff\r
+      [SLC9016-LAB]>\x20
+  - "admin config commands copypaste\n": |-
+      admin config commands copypaste\r
+      The configuration will be output (including passwords in cleartext).\r
+      Do you want to continue? [no]\x20
+  - "yes\n": |-
+      yes\r\r
+      One moment while the file is generated...\r
+      set network port 1 state dhcp\r
+      set network port 1 mtu 1500\r
+      set network port 1 ipv6addr ::/0\r
+      set network port 2 state dhcp\r
+      set network port 2 mtu 1500\r
+      set network port 2 ipv6addr ::/0\r
+      set network port 3 state dhcp\r
+      set network port 3 mtu 1500\r
+      set network port 3 ipv6addr ::/0\r
+      set network port 4 state dhcp\r
+      set network port 4 mtu 1500\r
+      set network port 4 ipv6addr ::/0\r
+      set network ipforwarding disable\r
+      set network ipv6 enable\r
+      set network ipv6forwarding disable\r
+      set network reversepathfilter disable\r
+      set network bonding disable\r
+      set network probes 5\r
+      set network interval 60\r
+      set network startprobes 600\r
+      set network gateway default 0.0.0.0\r
+      set network gateway ipv6default 0:0:0:0:0:0:0:0\r
+      set network gateway precedence auto failover 0.0.0.0 pingip 0.0.0.0 primaryport eth1 ethport 1 failoverport eth2 pingdelay 3 failedpings 10\r
+      set network gateway faildevice none\r
+      set virtual port 1 state disable\r
+      set virtual port 1 ipaddr 0.0.0.0 mask 0.0.0.0 ipv6addr ::/0\r
+      set virtual port 1 state disable\r
+      set virtual port 2 state disable\r
+      set virtual port 2 ipaddr 0.0.0.0 mask 0.0.0.0 ipv6addr ::/0\r
+      set virtual port 2 state disable\r
+      set network host SLC9016-LAB domain \"\"\r
+      set network fqdnlist 15 ipaddr 0.0.0.0 fqdn delete\r
+      set network fqdnlist 14 ipaddr 0.0.0.0 fqdn delete\r
+      set network fqdnlist 13 ipaddr 0.0.0.0 fqdn delete\r
+      set network fqdnlist 12 ipaddr 0.0.0.0 fqdn delete\r
+      set network fqdnlist 11 ipaddr 0.0.0.0 fqdn delete\r
+      set network fqdnlist 10 ipaddr 0.0.0.0 fqdn delete\r
+      set network fqdnlist 9 ipaddr 0.0.0.0 fqdn delete\r
+      set network fqdnlist 8 ipaddr 0.0.0.0 fqdn delete\r
+      set network fqdnlist 7 ipaddr 0.0.0.0 fqdn delete\r
+      set network fqdnlist 6 ipaddr 0.0.0.0 fqdn delete\r
+      set network fqdnlist 5 ipaddr 0.0.0.0 fqdn delete\r
+      set network fqdnlist 4 ipaddr 0.0.0.0 fqdn delete\r
+      set network fqdnlist 3 ipaddr 0.0.0.0 fqdn delete\r
+      set network fqdnlist 2 ipaddr 0.0.0.0 fqdn delete\r
+      set network fqdnlist 1 ipaddr 0.0.0.0 fqdn delete\r
+      set network dnsipv4prec enable\r
+      set network dnssrcipaddr none\r
+      set network dnssrcipv6addr none\r
+      set network dns 1 ipaddr 0.0.0.0\r
+      set network dns 2 ipaddr 0.0.0.0\r
+      set network dns 3 ipaddr 0.0.0.0\r
+      set network dns 4 ipaddr 0.0.0.0\r
+      set network dns 5 ipaddr 0.0.0.0\r
+      set network dns 6 ipaddr 0.0.0.0\r
+      set network dns 7 ipaddr 0.0.0.0\r
+      set network dns 8 ipaddr 0.0.0.0\r
+      set network dns 9 ipaddr 0.0.0.0\r
+      set network dns 10 ipaddr 0.0.0.0\r
+      set ipfilter delete all\r
+      set ipfilter state disable\r
+      set routing rip disable\r
+      set routing version 2\r
+      set routing route 1 ipaddr 0.0.0.0 mask 0.0.0.0 gateway 0.0.0.0\r
+      set routing route 2 ipaddr 0.0.0.0 mask 0.0.0.0 gateway 0.0.0.0\r
+      set routing route 3 ipaddr 0.0.0.0 mask 0.0.0.0 gateway 0.0.0.0\r
+      set routing route 4 ipaddr 0.0.0.0 mask 0.0.0.0 gateway 0.0.0.0\r
+      set routing route 5 ipaddr 0.0.0.0 mask 0.0.0.0 gateway 0.0.0.0\r
+      set routing route 6 ipaddr 0.0.0.0 mask 0.0.0.0 gateway 0.0.0.0\r
+      set routing route 7 ipaddr 0.0.0.0 mask 0.0.0.0 gateway 0.0.0.0\r
+      set routing route 8 ipaddr 0.0.0.0 mask 0.0.0.0 gateway 0.0.0.0\r
+      set routing route 9 ipaddr 0.0.0.0 mask 0.0.0.0 gateway 0.0.0.0\r
+      set routing route 10 ipaddr 0.0.0.0 mask 0.0.0.0 gateway 0.0.0.0\r
+      set routing route 11 ipaddr 0.0.0.0 mask 0.0.0.0 gateway 0.0.0.0\r
+      set routing route 12 ipaddr 0.0.0.0 mask 0.0.0.0 gateway 0.0.0.0\r
+      set routing route 13 ipaddr 0.0.0.0 mask 0.0.0.0 gateway 0.0.0.0\r
+      set routing route 14 ipaddr 0.0.0.0 mask 0.0.0.0 gateway 0.0.0.0\r
+      set routing route 15 ipaddr 0.0.0.0 mask 0.0.0.0 gateway 0.0.0.0\r
+      set routing route 16 ipaddr 0.0.0.0 mask 0.0.0.0 gateway 0.0.0.0\r
+      set routing route 17 ipaddr 0.0.0.0 mask 0.0.0.0 gateway 0.0.0.0\r
+      set routing route 18 ipaddr 0.0.0.0 mask 0.0.0.0 gateway 0.0.0.0\r
+      set routing route 19 ipaddr 0.0.0.0 mask 0.0.0.0 gateway 0.0.0.0\r
+      set routing route 20 ipaddr 0.0.0.0 mask 0.0.0.0 gateway 0.0.0.0\r
+      set routing route 21 ipaddr 0.0.0.0 mask 0.0.0.0 gateway 0.0.0.0\r
+      set routing route 22 ipaddr 0.0.0.0 mask 0.0.0.0 gateway 0.0.0.0\r
+      set routing route 23 ipaddr 0.0.0.0 mask 0.0.0.0 gateway 0.0.0.0\r
+      set routing route 24 ipaddr 0.0.0.0 mask 0.0.0.0 gateway 0.0.0.0\r
+      set routing route 25 ipaddr 0.0.0.0 mask 0.0.0.0 gateway 0.0.0.0\r
+      set routing route 26 ipaddr 0.0.0.0 mask 0.0.0.0 gateway 0.0.0.0\r
+      set routing route 27 ipaddr 0.0.0.0 mask 0.0.0.0 gateway 0.0.0.0\r
+      set routing route 28 ipaddr 0.0.0.0 mask 0.0.0.0 gateway 0.0.0.0\r
+      set routing route 29 ipaddr 0.0.0.0 mask 0.0.0.0 gateway 0.0.0.0\r
+      set routing route 30 ipaddr 0.0.0.0 mask 0.0.0.0 gateway 0.0.0.0\r
+      set routing route 31 ipaddr 0.0.0.0 mask 0.0.0.0 gateway 0.0.0.0\r
+      set routing route 32 ipaddr 0.0.0.0 mask 0.0.0.0 gateway 0.0.0.0\r
+      set routing route 33 ipaddr 0.0.0.0 mask 0.0.0.0 gateway 0.0.0.0\r
+      set routing route 34 ipaddr 0.0.0.0 mask 0.0.0.0 gateway 0.0.0.0\r
+      set routing route 35 ipaddr 0.0.0.0 mask 0.0.0.0 gateway 0.0.0.0\r
+      set routing route 36 ipaddr 0.0.0.0 mask 0.0.0.0 gateway 0.0.0.0\r
+      set routing route 37 ipaddr 0.0.0.0 mask 0.0.0.0 gateway 0.0.0.0\r
+      set routing route 38 ipaddr 0.0.0.0 mask 0.0.0.0 gateway 0.0.0.0\r
+      set routing route 39 ipaddr 0.0.0.0 mask 0.0.0.0 gateway 0.0.0.0\r
+      set routing route 40 ipaddr 0.0.0.0 mask 0.0.0.0 gateway 0.0.0.0\r
+      set routing route 41 ipaddr 0.0.0.0 mask 0.0.0.0 gateway 0.0.0.0\r
+      set routing route 42 ipaddr 0.0.0.0 mask 0.0.0.0 gateway 0.0.0.0\r
+      set routing route 43 ipaddr 0.0.0.0 mask 0.0.0.0 gateway 0.0.0.0\r
+      set routing route 44 ipaddr 0.0.0.0 mask 0.0.0.0 gateway 0.0.0.0\r
+      set routing route 45 ipaddr 0.0.0.0 mask 0.0.0.0 gateway 0.0.0.0\r
+      set routing route 46 ipaddr 0.0.0.0 mask 0.0.0.0 gateway 0.0.0.0\r
+      set routing route 47 ipaddr 0.0.0.0 mask 0.0.0.0 gateway 0.0.0.0\r
+      set routing route 48 ipaddr 0.0.0.0 mask 0.0.0.0 gateway 0.0.0.0\r
+      set routing route 49 ipaddr 0.0.0.0 mask 0.0.0.0 gateway 0.0.0.0\r
+      set routing route 50 ipaddr 0.0.0.0 mask 0.0.0.0 gateway 0.0.0.0\r
+      set routing route 51 ipaddr 0.0.0.0 mask 0.0.0.0 gateway 0.0.0.0\r
+      set routing route 52 ipaddr 0.0.0.0 mask 0.0.0.0 gateway 0.0.0.0\r
+      set routing route 53 ipaddr 0.0.0.0 mask 0.0.0.0 gateway 0.0.0.0\r
+      set routing route 54 ipaddr 0.0.0.0 mask 0.0.0.0 gateway 0.0.0.0\r
+      set routing route 55 ipaddr 0.0.0.0 mask 0.0.0.0 gateway 0.0.0.0\r
+      set routing route 56 ipaddr 0.0.0.0 mask 0.0.0.0 gateway 0.0.0.0\r
+      set routing route 57 ipaddr 0.0.0.0 mask 0.0.0.0 gateway 0.0.0.0\r
+      set routing route 58 ipaddr 0.0.0.0 mask 0.0.0.0 gateway 0.0.0.0\r
+      set routing route 59 ipaddr 0.0.0.0 mask 0.0.0.0 gateway 0.0.0.0\r
+      set routing route 60 ipaddr 0.0.0.0 mask 0.0.0.0 gateway 0.0.0.0\r
+      set routing route 61 ipaddr 0.0.0.0 mask 0.0.0.0 gateway 0.0.0.0\r
+      set routing route 62 ipaddr 0.0.0.0 mask 0.0.0.0 gateway 0.0.0.0\r
+      set routing route 63 ipaddr 0.0.0.0 mask 0.0.0.0 gateway 0.0.0.0\r
+      set routing route 64 ipaddr 0.0.0.0 mask 0.0.0.0 gateway 0.0.0.0\r
+      set routing ipv6route 1 ipv6addr 0:0:0:0:0:0:0:0/0 ipv6gateway 0:0:0:0:0:0:0:0\r
+      set routing ipv6route 2 ipv6addr 0:0:0:0:0:0:0:0/0 ipv6gateway 0:0:0:0:0:0:0:0\r
+      set routing ipv6route 3 ipv6addr 0:0:0:0:0:0:0:0/0 ipv6gateway 0:0:0:0:0:0:0:0\r
+      set routing ipv6route 4 ipv6addr 0:0:0:0:0:0:0:0/0 ipv6gateway 0:0:0:0:0:0:0:0\r
+      set routing ipv6route 5 ipv6addr 0:0:0:0:0:0:0:0/0 ipv6gateway 0:0:0:0:0:0:0:0\r
+      set routing ipv6route 6 ipv6addr 0:0:0:0:0:0:0:0/0 ipv6gateway 0:0:0:0:0:0:0:0\r
+      set routing ipv6route 7 ipv6addr 0:0:0:0:0:0:0:0/0 ipv6gateway 0:0:0:0:0:0:0:0\r
+      set routing ipv6route 8 ipv6addr 0:0:0:0:0:0:0:0/0 ipv6gateway 0:0:0:0:0:0:0:0\r
+      set routing ipv6route 9 ipv6addr 0:0:0:0:0:0:0:0/0 ipv6gateway 0:0:0:0:0:0:0:0\r
+      set routing ipv6route 10 ipv6addr 0:0:0:0:0:0:0:0/0 ipv6gateway 0:0:0:0:0:0:0:0\r
+      set routing ipv6route 11 ipv6addr 0:0:0:0:0:0:0:0/0 ipv6gateway 0:0:0:0:0:0:0:0\r
+      set routing ipv6route 12 ipv6addr 0:0:0:0:0:0:0:0/0 ipv6gateway 0:0:0:0:0:0:0:0\r
+      set routing ipv6route 13 ipv6addr 0:0:0:0:0:0:0:0/0 ipv6gateway 0:0:0:0:0:0:0:0\r
+      set routing ipv6route 14 ipv6addr 0:0:0:0:0:0:0:0/0 ipv6gateway 0:0:0:0:0:0:0:0\r
+      set routing ipv6route 15 ipv6addr 0:0:0:0:0:0:0:0/0 ipv6gateway 0:0:0:0:0:0:0:0\r
+      set routing ipv6route 16 ipv6addr 0:0:0:0:0:0:0:0/0 ipv6gateway 0:0:0:0:0:0:0:0\r
+      set routing ipv6route 17 ipv6addr 0:0:0:0:0:0:0:0/0 ipv6gateway 0:0:0:0:0:0:0:0\r
+      set routing ipv6route 18 ipv6addr 0:0:0:0:0:0:0:0/0 ipv6gateway 0:0:0:0:0:0:0:0\r
+      set routing ipv6route 19 ipv6addr 0:0:0:0:0:0:0:0/0 ipv6gateway 0:0:0:0:0:0:0:0\r
+      set routing ipv6route 20 ipv6addr 0:0:0:0:0:0:0:0/0 ipv6gateway 0:0:0:0:0:0:0:0\r
+      set routing ipv6route 21 ipv6addr 0:0:0:0:0:0:0:0/0 ipv6gateway 0:0:0:0:0:0:0:0\r
+      set routing ipv6route 22 ipv6addr 0:0:0:0:0:0:0:0/0 ipv6gateway 0:0:0:0:0:0:0:0\r
+      set routing ipv6route 23 ipv6addr 0:0:0:0:0:0:0:0/0 ipv6gateway 0:0:0:0:0:0:0:0\r
+      set routing ipv6route 24 ipv6addr 0:0:0:0:0:0:0:0/0 ipv6gateway 0:0:0:0:0:0:0:0\r
+      set routing ipv6route 25 ipv6addr 0:0:0:0:0:0:0:0/0 ipv6gateway 0:0:0:0:0:0:0:0\r
+      set routing ipv6route 26 ipv6addr 0:0:0:0:0:0:0:0/0 ipv6gateway 0:0:0:0:0:0:0:0\r
+      set routing ipv6route 27 ipv6addr 0:0:0:0:0:0:0:0/0 ipv6gateway 0:0:0:0:0:0:0:0\r
+      set routing ipv6route 28 ipv6addr 0:0:0:0:0:0:0:0/0 ipv6gateway 0:0:0:0:0:0:0:0\r
+      set routing ipv6route 29 ipv6addr 0:0:0:0:0:0:0:0/0 ipv6gateway 0:0:0:0:0:0:0:0\r
+      set routing ipv6route 30 ipv6addr 0:0:0:0:0:0:0:0/0 ipv6gateway 0:0:0:0:0:0:0:0\r
+      set routing ipv6route 31 ipv6addr 0:0:0:0:0:0:0:0/0 ipv6gateway 0:0:0:0:0:0:0:0\r
+      set routing ipv6route 32 ipv6addr 0:0:0:0:0:0:0:0/0 ipv6gateway 0:0:0:0:0:0:0:0\r
+      set routing ipv6route 33 ipv6addr 0:0:0:0:0:0:0:0/0 ipv6gateway 0:0:0:0:0:0:0:0\r
+      set routing ipv6route 34 ipv6addr 0:0:0:0:0:0:0:0/0 ipv6gateway 0:0:0:0:0:0:0:0\r
+      set routing ipv6route 35 ipv6addr 0:0:0:0:0:0:0:0/0 ipv6gateway 0:0:0:0:0:0:0:0\r
+      set routing ipv6route 36 ipv6addr 0:0:0:0:0:0:0:0/0 ipv6gateway 0:0:0:0:0:0:0:0\r
+      set routing ipv6route 37 ipv6addr 0:0:0:0:0:0:0:0/0 ipv6gateway 0:0:0:0:0:0:0:0\r
+      set routing ipv6route 38 ipv6addr 0:0:0:0:0:0:0:0/0 ipv6gateway 0:0:0:0:0:0:0:0\r
+      set routing ipv6route 39 ipv6addr 0:0:0:0:0:0:0:0/0 ipv6gateway 0:0:0:0:0:0:0:0\r
+      set routing ipv6route 40 ipv6addr 0:0:0:0:0:0:0:0/0 ipv6gateway 0:0:0:0:0:0:0:0\r
+      set routing ipv6route 41 ipv6addr 0:0:0:0:0:0:0:0/0 ipv6gateway 0:0:0:0:0:0:0:0\r
+      set routing ipv6route 42 ipv6addr 0:0:0:0:0:0:0:0/0 ipv6gateway 0:0:0:0:0:0:0:0\r
+      set routing ipv6route 43 ipv6addr 0:0:0:0:0:0:0:0/0 ipv6gateway 0:0:0:0:0:0:0:0\r
+      set routing ipv6route 44 ipv6addr 0:0:0:0:0:0:0:0/0 ipv6gateway 0:0:0:0:0:0:0:0\r
+      set routing ipv6route 45 ipv6addr 0:0:0:0:0:0:0:0/0 ipv6gateway 0:0:0:0:0:0:0:0\r
+      set routing ipv6route 46 ipv6addr 0:0:0:0:0:0:0:0/0 ipv6gateway 0:0:0:0:0:0:0:0\r
+      set routing ipv6route 47 ipv6addr 0:0:0:0:0:0:0:0/0 ipv6gateway 0:0:0:0:0:0:0:0\r
+      set routing ipv6route 48 ipv6addr 0:0:0:0:0:0:0:0/0 ipv6gateway 0:0:0:0:0:0:0:0\r
+      set routing ipv6route 49 ipv6addr 0:0:0:0:0:0:0:0/0 ipv6gateway 0:0:0:0:0:0:0:0\r
+      set routing ipv6route 50 ipv6addr 0:0:0:0:0:0:0:0/0 ipv6gateway 0:0:0:0:0:0:0:0\r
+      set routing ipv6route 51 ipv6addr 0:0:0:0:0:0:0:0/0 ipv6gateway 0:0:0:0:0:0:0:0\r
+      set routing ipv6route 52 ipv6addr 0:0:0:0:0:0:0:0/0 ipv6gateway 0:0:0:0:0:0:0:0\r
+      set routing ipv6route 53 ipv6addr 0:0:0:0:0:0:0:0/0 ipv6gateway 0:0:0:0:0:0:0:0\r
+      set routing ipv6route 54 ipv6addr 0:0:0:0:0:0:0:0/0 ipv6gateway 0:0:0:0:0:0:0:0\r
+      set routing ipv6route 55 ipv6addr 0:0:0:0:0:0:0:0/0 ipv6gateway 0:0:0:0:0:0:0:0\r
+      set routing ipv6route 56 ipv6addr 0:0:0:0:0:0:0:0/0 ipv6gateway 0:0:0:0:0:0:0:0\r
+      set routing ipv6route 57 ipv6addr 0:0:0:0:0:0:0:0/0 ipv6gateway 0:0:0:0:0:0:0:0\r
+      set routing ipv6route 58 ipv6addr 0:0:0:0:0:0:0:0/0 ipv6gateway 0:0:0:0:0:0:0:0\r
+      set routing ipv6route 59 ipv6addr 0:0:0:0:0:0:0:0/0 ipv6gateway 0:0:0:0:0:0:0:0\r
+      set routing ipv6route 60 ipv6addr 0:0:0:0:0:0:0:0/0 ipv6gateway 0:0:0:0:0:0:0:0\r
+      set routing ipv6route 61 ipv6addr 0:0:0:0:0:0:0:0/0 ipv6gateway 0:0:0:0:0:0:0:0\r
+      set routing ipv6route 62 ipv6addr 0:0:0:0:0:0:0:0/0 ipv6gateway 0:0:0:0:0:0:0:0\r
+      set routing ipv6route 63 ipv6addr 0:0:0:0:0:0:0:0/0 ipv6gateway 0:0:0:0:0:0:0:0\r
+      set routing ipv6route 64 ipv6addr 0:0:0:0:0:0:0:0/0 ipv6gateway 0:0:0:0:0:0:0:0\r
+      set routing static disable\r
+      \r
+      set vpn xauthpassword\r
+      \r
+      \r
+      set vpn key\r
+      \r
+      \r
+      \r
+      set vpn tunnel disable name \"\" localip 0.0.0.0 auth rsa remotehost 0.0.0.0 remoteid \"\" remotehop 0.0.0.0 remotesubnet \"\" remotesourceip \"\" localid \"\" localhop 0.0.0.0 localsubnet \"\" localsourceip \"\" ikenegotiation main ikeenc any ikeauth any ikedhgroup any ikever ikev2 espenc any espauth any espdhgroup any lifetime 3600 xauthclient disable xauthlogin \"\" ciscounity disable modeconfig push forceencaps disable deadpeerdelay 30\r
+      set vpn deadpeertimeout 120 deadpeeraction hold tunnelrestart enable email \"\" startvpnfailoveronly disable\r
+      set datetime timezone America/New_York\r
+      set ntp state disable sync broadcast poll local localserver1 0.0.0.0 localserver2 0.0.0.0 localserver3 0.0.0.0 localserver4 0.0.0.0 localserver5 0.0.0.0 localserver6 0.0.0.0 publicserver 0.0.0.0\r
+      set ntp localserverid 1 keyindex 1 hash disable\r
+      set ntp localserverid 2 keyindex 1 hash disable\r
+      set ntp localserverid 3 keyindex 1 hash disable\r
+      set ntp localserverid 4 keyindex 1 hash disable\r
+      set ntp localserverid 5 keyindex 1 hash disable\r
+      set ntp localserverid 6 keyindex 1 hash disable\r
+      set ntp srcipaddr none\r
+      set ntp srcipv6addr none\r
+      set services netlog warning\r
+      set services authlog warning\r
+      set services diaglog warning\r
+      set services servlog warning\r
+      set services devlog warning\r
+      set services genlog warning\r
+      set services syslogserver1 0.0.0.0\r
+      set services syslogserver2 0.0.0.0\r
+      set services rpmlogsize 20\r
+      set services otherlogsize 200\r
+      set services syslogsrcipaddr none\r
+      set services syslogsrcipv6addr none\r
+      set services auditlog enable\r
+      set services auditsize 50\r
+      set services includesyslog disable\r
+      set services clicommands disable\r
+      set services telnet disable telnetdatadir both\r
+      set services timeouttelnet disable\r
+      set services outgoingtelnet enable\r
+      set services ssh enable portssh 22 sshdatadir both\r
+      set services timeoutssh disable\r
+      set services requiresshpublickey disable\r
+      set services sshalgorithms 'Ciphers:chacha20-poly1305@openssh.com;'\r
+      set services smtpserver 0.0.0.0 smtpsender donotreply@$host.$domain\r
+      set services smtppassword\r
+      \r
+      \r
+      set services smtplogin CLEAR\r
+      set services smtpauth none smtpport 25 smtpsecurity none\r
+      set services webterminal enable webtermrequirelogin disable\r
+      set services webtermtimeout disable\r
+      set snmp agent disable v1 disable v2c enable v3 disable v3tls disable tlsport 10161\r
+      set snmp nms1 0.0.0.0 nms2 0.0.0.0\r
+      set snmp traps disable trapversion 2 trapsovertls disable alarmdelay 60\r
+      set snmp trapenable 5.1,5.3,5.4,5.5,0.1,0.2,0.3,0.4,0.5,0.6,0.7,0.8,0.9,0.10,0.11,0.12,0.13,0.15,0.16,0.17,0.18,0.19,0.20,0.21,0.22,0.23,0.24,0.26,0.27,0.28,0.29,0.30,0.31,0.32\r
+      set snmp location 'location' contact 'contact'\r
+      set snmp rocommunity 'public' rwcommunity 'private' trapcommunity 'public'\r
+      set snmp v3security auth v3auth md5 v3encrypt des\r
+      set snmp v3user 'snmpuser' v3rwuser 'snmprwuser' v3trapuser 'snmptrapuser'\r
+      set snmp trapsrcipaddr none\r
+      set snmp trapsrcipv6addr none\r
+      set snmp v3password\r
+      SNMPPASS\r
+      SNMPPASS\r
+      set snmp v3phrase\r
+      \r
+      \r
+      set snmp v3rwpassword\r
+      SNMPRWPASS\r
+      SNMPRWPASS\r
+      set snmp v3rwphrase\r
+      \r
+      \r
+      set snmp v3trappassword\r
+      SNMPTRAPPASS\r
+      SNMPTRAPPASS\r
+      set snmp v3trapphrase\r
+      \r
+      \r
+      \r
+      set nfs mount 1 remdir CLEAR locdir CLEAR rw disable\r
+      set nfs mount 2 remdir CLEAR locdir CLEAR rw disable\r
+      set nfs mount 3 remdir CLEAR locdir CLEAR rw disable\r
+      set px client disable\r
+      set px devicename SLC9016-LAB description \"SLC9000 Advanced Console Manager\"\r
+      set px statusinterval 2 fwconfiginterval 24 fwupdate enable configupdate enable rebootafterupdate disable allowremoteconnection enable\r
+      set px timeoutcli 600 timeoutdp 600\r
+      set px connection cloud host api.percepxion.example.com port 443\r
+      set px connection cloud secureport enable validatecerts enable\r
+      set px connection onpremise host percepxion.example.com port 443\r
+      set px connection onpremise secureport enable validatecerts disable\r
+      set px connection cloud\r
+      set px client enable\r
+      set groups delete all\r
+      set localusers complexpasswords disable\r
+      set localusers allowreuse disable\r
+      set localusers reusehistory 4\r
+      set localusers lifetime 90\r
+      set localusers periodwarning 7\r
+      set localusers maxloginattempts 0\r
+      set localusers periodlockout 0\r
+      set localusers multipleadminlogins enable\r
+      set localusers consoleonlyadmin disable\r
+      set localusers delete all\r
+      set localusers edit sysadmin group 'admin' dataports 1-32,U1,U2 listenports 1-32,U1,U2 clearports 1-32,U1,U2 escapeseq \\x1bA breakseq \\x1bB custommenu CLEAR displaymenu enable allowdialback disable dialbacknumber CLEAR changepassword enable passwordexpires disable changenextlogin disable\r
+      set localusers password sysadmin enc 0000000000000000000000000000000000000000000000000000000000000000\r
+      set localusers state enable\r
+      set ldap server1 0.0.0.0 server2 0.0.0.0 base CLEAR bindname CLEAR bindwithlogin disable useldapschema disable adsupport disable encrypt disable port 389\r
+      set ldap filteruser CLEAR filtergroup CLEAR grmemberattr CLEAR grmembervalue dn\r
+      set ldap group default custommenu CLEAR dataports 1-32,U1,U2 listenports 1-32,U1,U2 clearports 1-32,U1,U2 escapeseq \\x1bA breakseq \\x1bB allowdialback disable dialbacknumber CLEAR\r
+      set ldap bindpassword\r
+      \r
+      \r
+      set ldap state disable\r
+      \r
+      set radius server 1 host 0.0.0.0 port 1812\r
+      set radius server 2 host 0.0.0.0 port 1812\r
+      set radius server 1 secret\r
+      \r
+      \r
+      set radius server 2 secret\r
+      \r
+      \r
+      set radius timeout 30 usevsa disable\r
+      set radius group default custommenu CLEAR dataports 1-32,U1,U2 listenports 1-32,U1,U2 clearports 1-32,U1,U2 escapeseq \\x1bA breakseq \\x1bB allowdialback disable dialbacknumber CLEAR\r
+      set radius state disable\r
+      set tacacs+ server1 0.0.0.0 server2 0.0.0.0 server3 0.0.0.0 timeout 5\r
+      set tacacs+ encrypt enable authservice pap service shell protocol CLEAR\r
+      set tacacs+ port 49 srcipaddr none\r
+      set tacacs+ srcipv6addr none\r
+      set tacacs+ group default custommenu CLEAR dataports 1-32,U1,U2 listenports 1-32,U1,U2 clearports 1-32,U1,U2 escapeseq \\x1bA breakseq \\x1bB allowdialback disable dialbacknumber CLEAR\r
+      set tacacs+ secret\r
+      \r
+      \r
+      admin ftp password\r
+      FtpExample-7f3a\r
+      FtpExample-7f3a\r
+      set site dialoutpassword branch-a\r
+      SiteExample-91c2\r
+      SiteExample-91c2\r
+      admin events add pingfails host 192.0.2.10 action snmptrap nms 192.0.2.20 community TrapExample-55\r
+      set tacacs+ state disable\r
+      \r
+      set auth authusenextmethod enable\r
+      set auth localusers 1 \r
+      set remoteusers listonlyauth disable\r
+      set remoteusers denyaccessnocustomgroup disable\r
+      set remoteusers delete all\r
+      set consoleport access enable mode auto\r
+      set consoleport baud 9600 databits 8 stopbits 1 parity none flowcontrol none timeout disable showlines 24 group \"\"\r
+      set hostlist delete all\r
+      set accesslist delete all\r
+      set deviceport global telnetport 2001 sshport 3001 tcpport 4001 autorefreshcounters disable\r
+      connect global outgoingtimeout 5\r
+      set deviceport port 1 name Port-01 device none banner \"\" group \"\" breakseq \\x1bB telnetin disable telnetport 2001 telnetauth enable telnetsoftiac disable telnettimeout 600 telnetdatadir both sshin enable sshport 3001 sshauth enable sshtimeout 600 sshdatadir both tcpin disable tcpport 4001 tcpauth disable tcptimeout 600 tcpdatadir netin ipaddr 0.0.0.0 sendtermstr disable termstr \"\" baud 9600 databits 8 stopbits 1 parity none flowcontrol none logins disable maxdirect 3 showlines 24\r
+      set deviceport port 1 checkdsr disable closedsr disable assertdtr enable dtrcontrol none reversepinout enable locallogging disable sysloglogging disable nfslogging disable nfsmaxfiles 10 nfsmaxsize 2048 nfsdir CLEAR usblogging disable usbmaxfiles 10 usbmaxsize 2048 usbport U1\r
+      set deviceport port 1 usbchannel 1 detectname disable detecttokens []<>#%$ numsessionsmsg disable connectedmsg enable newusermsg disable idletimeoutmsg disable portlogseq \\x1bV viewportlog disable powermgmtseq \\x1bP minimizelatency disable\r
+      set deviceport port 1 modemstate disable modemmode text usesites disable localipaddr negotiate remoteipaddr negotiate cbcpnocallback disable cbcptype admin auth pap chaphost \"\" dodauth pap dodchaphost \"\" initscript \"\" timeoutlogins disable dialoutnumber \"\" dialoutlogin \"\" dialbacknumber usernumber dialbackdelay 15 dialbackretries 3 nat disable modemtimeout disable restartdelay 30 calleridlogging disable calleridcmd \"\"\r
+      set deviceport port 1 dialoutpassword\r
+      \r
+      \r
+      set deviceport port 1 chapsecret\r
+      \r
+      \r
+      set deviceport port 1 dodchapsecret\r
+      \r
+      \r
+      set deviceport port 1 tokendatadetect disable tokentrigger bytecnt bytethreshold 100 tokenstring \"\" tokenaction none actiondelay 60 actionrestart 60 emailsubj 'Port %d Logging' sendstring \"\" powersupply \"\" poweraction cycle\r
+      set deviceport port 2 name Port-02 device none banner \"\" group \"\" breakseq \\x1bB telnetin disable telnetport 2002 telnetauth enable telnetsoftiac disable telnettimeout 600 telnetdatadir both sshin enable sshport 3002 sshauth enable sshtimeout 600 sshdatadir both tcpin disable tcpport 4002 tcpauth disable tcptimeout 600 tcpdatadir netin ipaddr 0.0.0.0 sendtermstr disable termstr \"\" baud 9600 databits 8 stopbits 1 parity none flowcontrol none logins disable maxdirect 3 showlines 24\r
+      set deviceport port 2 checkdsr disable closedsr disable assertdtr enable dtrcontrol none reversepinout enable locallogging disable sysloglogging disable nfslogging disable nfsmaxfiles 10 nfsmaxsize 2048 nfsdir CLEAR usblogging disable usbmaxfiles 10 usbmaxsize 2048 usbport U1\r
+      set deviceport port 2 usbchannel 1 detectname disable detecttokens []<>#%$ numsessionsmsg disable connectedmsg enable newusermsg disable idletimeoutmsg disable portlogseq \\x1bV viewportlog disable powermgmtseq \\x1bP minimizelatency disable\r
+      set deviceport port 2 modemstate disable modemmode text usesites disable localipaddr negotiate remoteipaddr negotiate cbcpnocallback disable cbcptype admin auth pap chaphost \"\" dodauth pap dodchaphost \"\" initscript \"\" timeoutlogins disable dialoutnumber \"\" dialoutlogin \"\" dialbacknumber usernumber dialbackdelay 15 dialbackretries 3 nat disable modemtimeout disable restartdelay 30 calleridlogging disable calleridcmd \"\"\r
+      set deviceport port 2 dialoutpassword\r
+      \r
+      \r
+      set deviceport port 2 chapsecret\r
+      \r
+      \r
+      set deviceport port 2 dodchapsecret\r
+      \r
+      \r
+      set deviceport port 2 tokendatadetect disable tokentrigger bytecnt bytethreshold 100 tokenstring \"\" tokenaction none actiondelay 60 actionrestart 60 emailsubj 'Port %d Logging' sendstring \"\" powersupply \"\" poweraction cycle\r
+      set deviceport port 3 name Port-03 device none banner \"\" group \"\" breakseq \\x1bB telnetin disable telnetport 2003 telnetauth enable telnetsoftiac disable telnettimeout 600 telnetdatadir both sshin enable sshport 3003 sshauth enable sshtimeout 600 sshdatadir both tcpin disable tcpport 4003 tcpauth disable tcptimeout 600 tcpdatadir netin ipaddr 0.0.0.0 sendtermstr disable termstr \"\" baud 9600 databits 8 stopbits 1 parity none flowcontrol none logins disable maxdirect 3 showlines 24\r
+      set deviceport port 3 checkdsr disable closedsr disable assertdtr enable dtrcontrol none reversepinout enable locallogging disable sysloglogging disable nfslogging disable nfsmaxfiles 10 nfsmaxsize 2048 nfsdir CLEAR usblogging disable usbmaxfiles 10 usbmaxsize 2048 usbport U1\r
+      set deviceport port 3 usbchannel 1 detectname disable detecttokens []<>#%$ numsessionsmsg disable connectedmsg enable newusermsg disable idletimeoutmsg disable portlogseq \\x1bV viewportlog disable powermgmtseq \\x1bP minimizelatency disable\r
+      set deviceport port 3 modemstate disable modemmode text usesites disable localipaddr negotiate remoteipaddr negotiate cbcpnocallback disable cbcptype admin auth pap chaphost \"\" dodauth pap dodchaphost \"\" initscript \"\" timeoutlogins disable dialoutnumber \"\" dialoutlogin \"\" dialbacknumber usernumber dialbackdelay 15 dialbackretries 3 nat disable modemtimeout disable restartdelay 30 calleridlogging disable calleridcmd \"\"\r
+      set deviceport port 3 dialoutpassword\r
+      \r
+      \r
+      set deviceport port 3 chapsecret\r
+      \r
+      \r
+      set deviceport port 3 dodchapsecret\r
+      \r
+      \r
+      set deviceport port 3 tokendatadetect disable tokentrigger bytecnt bytethreshold 100 tokenstring \"\" tokenaction none actiondelay 60 actionrestart 60 emailsubj 'Port %d Logging' sendstring \"\" powersupply \"\" poweraction cycle\r
+      set deviceport port 4 name Port-04 device none banner \"\" group \"\" breakseq \\x1bB telnetin disable telnetport 2004 telnetauth enable telnetsoftiac disable telnettimeout 600 telnetdatadir both sshin enable sshport 3004 sshauth enable sshtimeout 600 sshdatadir both tcpin disable tcpport 4004 tcpauth disable tcptimeout 600 tcpdatadir netin ipaddr 0.0.0.0 sendtermstr disable termstr \"\" baud 9600 databits 8 stopbits 1 parity none flowcontrol none logins disable maxdirect 3 showlines 24\r
+      set deviceport port 4 checkdsr disable closedsr disable assertdtr enable dtrcontrol none reversepinout enable locallogging disable sysloglogging disable nfslogging disable nfsmaxfiles 10 nfsmaxsize 2048 nfsdir CLEAR usblogging disable usbmaxfiles 10 usbmaxsize 2048 usbport U1\r
+      set deviceport port 4 usbchannel 1 detectname disable detecttokens []<>#%$ numsessionsmsg disable connectedmsg enable newusermsg disable idletimeoutmsg disable portlogseq \\x1bV viewportlog disable powermgmtseq \\x1bP minimizelatency disable\r
+      set deviceport port 4 modemstate disable modemmode text usesites disable localipaddr negotiate remoteipaddr negotiate cbcpnocallback disable cbcptype admin auth pap chaphost \"\" dodauth pap dodchaphost \"\" initscript \"\" timeoutlogins disable dialoutnumber \"\" dialoutlogin \"\" dialbacknumber usernumber dialbackdelay 15 dialbackretries 3 nat disable modemtimeout disable restartdelay 30 calleridlogging disable calleridcmd \"\"\r
+      set deviceport port 4 dialoutpassword\r
+      \r
+      \r
+      set deviceport port 4 chapsecret\r
+      \r
+      \r
+      set deviceport port 4 dodchapsecret\r
+      \r
+      \r
+      set deviceport port 4 tokendatadetect disable tokentrigger bytecnt bytethreshold 100 tokenstring \"\" tokenaction none actiondelay 60 actionrestart 60 emailsubj 'Port %d Logging' sendstring \"\" powersupply \"\" poweraction cycle\r
+      set deviceport port 5 name Port-05 device none banner \"\" group \"\" breakseq \\x1bB telnetin disable telnetport 2005 telnetauth enable telnetsoftiac disable telnettimeout 600 telnetdatadir both sshin enable sshport 3005 sshauth enable sshtimeout 600 sshdatadir both tcpin disable tcpport 4005 tcpauth disable tcptimeout 600 tcpdatadir netin ipaddr 0.0.0.0 sendtermstr disable termstr \"\" baud 9600 databits 8 stopbits 1 parity none flowcontrol none logins disable maxdirect 3 showlines 24\r
+      set deviceport port 5 checkdsr disable closedsr disable assertdtr enable dtrcontrol none reversepinout enable locallogging disable sysloglogging disable nfslogging disable nfsmaxfiles 10 nfsmaxsize 2048 nfsdir CLEAR usblogging disable usbmaxfiles 10 usbmaxsize 2048 usbport U1\r
+      set deviceport port 5 usbchannel 1 detectname disable detecttokens []<>#%$ numsessionsmsg disable connectedmsg enable newusermsg disable idletimeoutmsg disable portlogseq \\x1bV viewportlog disable powermgmtseq \\x1bP minimizelatency disable\r
+      set deviceport port 5 modemstate disable modemmode text usesites disable localipaddr negotiate remoteipaddr negotiate cbcpnocallback disable cbcptype admin auth pap chaphost \"\" dodauth pap dodchaphost \"\" initscript \"\" timeoutlogins disable dialoutnumber \"\" dialoutlogin \"\" dialbacknumber usernumber dialbackdelay 15 dialbackretries 3 nat disable modemtimeout disable restartdelay 30 calleridlogging disable calleridcmd \"\"\r
+      set deviceport port 5 dialoutpassword\r
+      \r
+      \r
+      set deviceport port 5 chapsecret\r
+      \r
+      \r
+      set deviceport port 5 dodchapsecret\r
+      \r
+      \r
+      set deviceport port 5 tokendatadetect disable tokentrigger bytecnt bytethreshold 100 tokenstring \"\" tokenaction none actiondelay 60 actionrestart 60 emailsubj 'Port %d Logging' sendstring \"\" powersupply \"\" poweraction cycle\r
+      set deviceport port 6 name Port-06 device none banner \"\" group \"\" breakseq \\x1bB telnetin disable telnetport 2006 telnetauth enable telnetsoftiac disable telnettimeout 600 telnetdatadir both sshin enable sshport 3006 sshauth enable sshtimeout 600 sshdatadir both tcpin disable tcpport 4006 tcpauth disable tcptimeout 600 tcpdatadir netin ipaddr 0.0.0.0 sendtermstr disable termstr \"\" baud 9600 databits 8 stopbits 1 parity none flowcontrol none logins disable maxdirect 3 showlines 24\r
+      set deviceport port 6 checkdsr disable closedsr disable assertdtr enable dtrcontrol none reversepinout enable locallogging disable sysloglogging disable nfslogging disable nfsmaxfiles 10 nfsmaxsize 2048 nfsdir CLEAR usblogging disable usbmaxfiles 10 usbmaxsize 2048 usbport U1\r
+      set deviceport port 6 usbchannel 1 detectname disable detecttokens []<>#%$ numsessionsmsg disable connectedmsg enable newusermsg disable idletimeoutmsg disable portlogseq \\x1bV viewportlog disable powermgmtseq \\x1bP minimizelatency disable\r
+      set deviceport port 6 modemstate disable modemmode text usesites disable localipaddr negotiate remoteipaddr negotiate cbcpnocallback disable cbcptype admin auth pap chaphost \"\" dodauth pap dodchaphost \"\" initscript \"\" timeoutlogins disable dialoutnumber \"\" dialoutlogin \"\" dialbacknumber usernumber dialbackdelay 15 dialbackretries 3 nat disable modemtimeout disable restartdelay 30 calleridlogging disable calleridcmd \"\"\r
+      set deviceport port 6 dialoutpassword\r
+      \r
+      \r
+      set deviceport port 6 chapsecret\r
+      \r
+      \r
+      set deviceport port 6 dodchapsecret\r
+      \r
+      \r
+      set deviceport port 6 tokendatadetect disable tokentrigger bytecnt bytethreshold 100 tokenstring \"\" tokenaction none actiondelay 60 actionrestart 60 emailsubj 'Port %d Logging' sendstring \"\" powersupply \"\" poweraction cycle\r
+      set deviceport port 7 name Port-07 device none banner \"\" group \"\" breakseq \\x1bB telnetin disable telnetport 2007 telnetauth enable telnetsoftiac disable telnettimeout 600 telnetdatadir both sshin enable sshport 3007 sshauth enable sshtimeout 600 sshdatadir both tcpin disable tcpport 4007 tcpauth disable tcptimeout 600 tcpdatadir netin ipaddr 0.0.0.0 sendtermstr disable termstr \"\" baud 9600 databits 8 stopbits 1 parity none flowcontrol none logins disable maxdirect 3 showlines 24\r
+      set deviceport port 7 checkdsr disable closedsr disable assertdtr enable dtrcontrol none reversepinout enable locallogging disable sysloglogging disable nfslogging disable nfsmaxfiles 10 nfsmaxsize 2048 nfsdir CLEAR usblogging disable usbmaxfiles 10 usbmaxsize 2048 usbport U1\r
+      set deviceport port 7 usbchannel 1 detectname disable detecttokens []<>#%$ numsessionsmsg disable connectedmsg enable newusermsg disable idletimeoutmsg disable portlogseq \\x1bV viewportlog disable powermgmtseq \\x1bP minimizelatency disable\r
+      set deviceport port 7 modemstate disable modemmode text usesites disable localipaddr negotiate remoteipaddr negotiate cbcpnocallback disable cbcptype admin auth pap chaphost \"\" dodauth pap dodchaphost \"\" initscript \"\" timeoutlogins disable dialoutnumber \"\" dialoutlogin \"\" dialbacknumber usernumber dialbackdelay 15 dialbackretries 3 nat disable modemtimeout disable restartdelay 30 calleridlogging disable calleridcmd \"\"\r
+      set deviceport port 7 dialoutpassword\r
+      \r
+      \r
+      set deviceport port 7 chapsecret\r
+      \r
+      \r
+      set deviceport port 7 dodchapsecret\r
+      \r
+      \r
+      set deviceport port 7 tokendatadetect disable tokentrigger bytecnt bytethreshold 100 tokenstring \"\" tokenaction none actiondelay 60 actionrestart 60 emailsubj 'Port %d Logging' sendstring \"\" powersupply \"\" poweraction cycle\r
+      set deviceport port 8 name Port-08 device none banner \"\" group \"\" breakseq \\x1bB telnetin disable telnetport 2008 telnetauth enable telnetsoftiac disable telnettimeout 600 telnetdatadir both sshin enable sshport 3008 sshauth enable sshtimeout 600 sshdatadir both tcpin disable tcpport 4008 tcpauth disable tcptimeout 600 tcpdatadir netin ipaddr 0.0.0.0 sendtermstr disable termstr \"\" baud 9600 databits 8 stopbits 1 parity none flowcontrol none logins disable maxdirect 3 showlines 24\r
+      set deviceport port 8 checkdsr disable closedsr disable assertdtr enable dtrcontrol none reversepinout enable locallogging disable sysloglogging disable nfslogging disable nfsmaxfiles 10 nfsmaxsize 2048 nfsdir CLEAR usblogging disable usbmaxfiles 10 usbmaxsize 2048 usbport U1\r
+      set deviceport port 8 usbchannel 1 detectname disable detecttokens []<>#%$ numsessionsmsg disable connectedmsg enable newusermsg disable idletimeoutmsg disable portlogseq \\x1bV viewportlog disable powermgmtseq \\x1bP minimizelatency disable\r
+      set deviceport port 8 modemstate disable modemmode text usesites disable localipaddr negotiate remoteipaddr negotiate cbcpnocallback disable cbcptype admin auth pap chaphost \"\" dodauth pap dodchaphost \"\" initscript \"\" timeoutlogins disable dialoutnumber \"\" dialoutlogin \"\" dialbacknumber usernumber dialbackdelay 15 dialbackretries 3 nat disable modemtimeout disable restartdelay 30 calleridlogging disable calleridcmd \"\"\r
+      set deviceport port 8 dialoutpassword\r
+      \r
+      \r
+      set deviceport port 8 chapsecret\r
+      \r
+      \r
+      set deviceport port 8 dodchapsecret\r
+      \r
+      \r
+      set deviceport port 8 tokendatadetect disable tokentrigger bytecnt bytethreshold 100 tokenstring \"\" tokenaction none actiondelay 60 actionrestart 60 emailsubj 'Port %d Logging' sendstring \"\" powersupply \"\" poweraction cycle\r
+      set deviceport port 9 name Port-09 device none banner \"\" group \"\" breakseq \\x1bB telnetin disable telnetport 2009 telnetauth enable telnetsoftiac disable telnettimeout 600 telnetdatadir both sshin enable sshport 3009 sshauth enable sshtimeout 600 sshdatadir both tcpin disable tcpport 4009 tcpauth disable tcptimeout 600 tcpdatadir netin ipaddr 0.0.0.0 sendtermstr disable termstr \"\" baud 9600 databits 8 stopbits 1 parity none flowcontrol none logins disable maxdirect 3 showlines 24\r
+      set deviceport port 9 checkdsr disable closedsr disable assertdtr enable dtrcontrol none reversepinout enable locallogging disable sysloglogging disable nfslogging disable nfsmaxfiles 10 nfsmaxsize 2048 nfsdir CLEAR usblogging disable usbmaxfiles 10 usbmaxsize 2048 usbport U1\r
+      set deviceport port 9 usbchannel 1 detectname disable detecttokens []<>#%$ numsessionsmsg disable connectedmsg enable newusermsg disable idletimeoutmsg disable portlogseq \\x1bV viewportlog disable powermgmtseq \\x1bP minimizelatency disable\r
+      set deviceport port 9 modemstate disable modemmode text usesites disable localipaddr negotiate remoteipaddr negotiate cbcpnocallback disable cbcptype admin auth pap chaphost \"\" dodauth pap dodchaphost \"\" initscript \"\" timeoutlogins disable dialoutnumber \"\" dialoutlogin \"\" dialbacknumber usernumber dialbackdelay 15 dialbackretries 3 nat disable modemtimeout disable restartdelay 30 calleridlogging disable calleridcmd \"\"\r
+      set deviceport port 9 dialoutpassword\r
+      \r
+      \r
+      set deviceport port 9 chapsecret\r
+      \r
+      \r
+      set deviceport port 9 dodchapsecret\r
+      \r
+      \r
+      set deviceport port 9 tokendatadetect disable tokentrigger bytecnt bytethreshold 100 tokenstring \"\" tokenaction none actiondelay 60 actionrestart 60 emailsubj 'Port %d Logging' sendstring \"\" powersupply \"\" poweraction cycle\r
+      set deviceport port 10 name Port-10 device none banner \"\" group \"\" breakseq \\x1bB telnetin disable telnetport 2010 telnetauth enable telnetsoftiac disable telnettimeout 600 telnetdatadir both sshin enable sshport 3010 sshauth enable sshtimeout 600 sshdatadir both tcpin disable tcpport 4010 tcpauth disable tcptimeout 600 tcpdatadir netin ipaddr 0.0.0.0 sendtermstr disable termstr \"\" baud 9600 databits 8 stopbits 1 parity none flowcontrol none logins disable maxdirect 3 showlines 24\r
+      set deviceport port 10 checkdsr disable closedsr disable assertdtr enable dtrcontrol none reversepinout enable locallogging disable sysloglogging disable nfslogging disable nfsmaxfiles 10 nfsmaxsize 2048 nfsdir CLEAR usblogging disable usbmaxfiles 10 usbmaxsize 2048 usbport U1\r
+      set deviceport port 10 usbchannel 1 detectname disable detecttokens []<>#%$ numsessionsmsg disable connectedmsg enable newusermsg disable idletimeoutmsg disable portlogseq \\x1bV viewportlog disable powermgmtseq \\x1bP minimizelatency disable\r
+      set deviceport port 10 modemstate disable modemmode text usesites disable localipaddr negotiate remoteipaddr negotiate cbcpnocallback disable cbcptype admin auth pap chaphost \"\" dodauth pap dodchaphost \"\" initscript \"\" timeoutlogins disable dialoutnumber \"\" dialoutlogin \"\" dialbacknumber usernumber dialbackdelay 15 dialbackretries 3 nat disable modemtimeout disable restartdelay 30 calleridlogging disable calleridcmd \"\"\r
+      set deviceport port 10 dialoutpassword\r
+      \r
+      \r
+      set deviceport port 10 chapsecret\r
+      \r
+      \r
+      set deviceport port 10 dodchapsecret\r
+      \r
+      \r
+      set deviceport port 10 tokendatadetect disable tokentrigger bytecnt bytethreshold 100 tokenstring \"\" tokenaction none actiondelay 60 actionrestart 60 emailsubj 'Port %d Logging' sendstring \"\" powersupply \"\" poweraction cycle\r
+      set deviceport port 11 name Port-11 device none banner \"\" group \"\" breakseq \\x1bB telnetin disable telnetport 2011 telnetauth enable telnetsoftiac disable telnettimeout 600 telnetdatadir both sshin enable sshport 3011 sshauth enable sshtimeout 600 sshdatadir both tcpin disable tcpport 4011 tcpauth disable tcptimeout 600 tcpdatadir netin ipaddr 0.0.0.0 sendtermstr disable termstr \"\" baud 9600 databits 8 stopbits 1 parity none flowcontrol none logins disable maxdirect 3 showlines 24\r
+      set deviceport port 11 checkdsr disable closedsr disable assertdtr enable dtrcontrol none reversepinout enable locallogging disable sysloglogging disable nfslogging disable nfsmaxfiles 10 nfsmaxsize 2048 nfsdir CLEAR usblogging disable usbmaxfiles 10 usbmaxsize 2048 usbport U1\r
+      set deviceport port 11 usbchannel 1 detectname disable detecttokens []<>#%$ numsessionsmsg disable connectedmsg enable newusermsg disable idletimeoutmsg disable portlogseq \\x1bV viewportlog disable powermgmtseq \\x1bP minimizelatency disable\r
+      set deviceport port 11 modemstate disable modemmode text usesites disable localipaddr negotiate remoteipaddr negotiate cbcpnocallback disable cbcptype admin auth pap chaphost \"\" dodauth pap dodchaphost \"\" initscript \"\" timeoutlogins disable dialoutnumber \"\" dialoutlogin \"\" dialbacknumber usernumber dialbackdelay 15 dialbackretries 3 nat disable modemtimeout disable restartdelay 30 calleridlogging disable calleridcmd \"\"\r
+      set deviceport port 11 dialoutpassword\r
+      \r
+      \r
+      set deviceport port 11 chapsecret\r
+      \r
+      \r
+      set deviceport port 11 dodchapsecret\r
+      \r
+      \r
+      set deviceport port 11 tokendatadetect disable tokentrigger bytecnt bytethreshold 100 tokenstring \"\" tokenaction none actiondelay 60 actionrestart 60 emailsubj 'Port %d Logging' sendstring \"\" powersupply \"\" poweraction cycle\r
+      set deviceport port 12 name Port-12 device none banner \"\" group \"\" breakseq \\x1bB telnetin disable telnetport 2012 telnetauth enable telnetsoftiac disable telnettimeout 600 telnetdatadir both sshin enable sshport 3012 sshauth enable sshtimeout 600 sshdatadir both tcpin disable tcpport 4012 tcpauth disable tcptimeout 600 tcpdatadir netin ipaddr 0.0.0.0 sendtermstr disable termstr \"\" baud 9600 databits 8 stopbits 1 parity none flowcontrol none logins disable maxdirect 3 showlines 24\r
+      set deviceport port 12 checkdsr disable closedsr disable assertdtr enable dtrcontrol none reversepinout enable locallogging disable sysloglogging disable nfslogging disable nfsmaxfiles 10 nfsmaxsize 2048 nfsdir CLEAR usblogging disable usbmaxfiles 10 usbmaxsize 2048 usbport U1\r
+      set deviceport port 12 usbchannel 1 detectname disable detecttokens []<>#%$ numsessionsmsg disable connectedmsg enable newusermsg disable idletimeoutmsg disable portlogseq \\x1bV viewportlog disable powermgmtseq \\x1bP minimizelatency disable\r
+      set deviceport port 12 modemstate disable modemmode text usesites disable localipaddr negotiate remoteipaddr negotiate cbcpnocallback disable cbcptype admin auth pap chaphost \"\" dodauth pap dodchaphost \"\" initscript \"\" timeoutlogins disable dialoutnumber \"\" dialoutlogin \"\" dialbacknumber usernumber dialbackdelay 15 dialbackretries 3 nat disable modemtimeout disable restartdelay 30 calleridlogging disable calleridcmd \"\"\r
+      set deviceport port 12 dialoutpassword\r
+      \r
+      \r
+      set deviceport port 12 chapsecret\r
+      \r
+      \r
+      set deviceport port 12 dodchapsecret\r
+      \r
+      \r
+      set deviceport port 12 tokendatadetect disable tokentrigger bytecnt bytethreshold 100 tokenstring \"\" tokenaction none actiondelay 60 actionrestart 60 emailsubj 'Port %d Logging' sendstring \"\" powersupply \"\" poweraction cycle\r
+      set deviceport port 13 name Port-13 device none banner \"\" group \"\" breakseq \\x1bB telnetin disable telnetport 2013 telnetauth enable telnetsoftiac disable telnettimeout 600 telnetdatadir both sshin enable sshport 3013 sshauth enable sshtimeout 600 sshdatadir both tcpin disable tcpport 4013 tcpauth disable tcptimeout 600 tcpdatadir netin ipaddr 0.0.0.0 sendtermstr disable termstr \"\" baud 9600 databits 8 stopbits 1 parity none flowcontrol none logins disable maxdirect 3 showlines 24\r
+      set deviceport port 13 checkdsr disable closedsr disable assertdtr enable dtrcontrol none reversepinout enable locallogging disable sysloglogging disable nfslogging disable nfsmaxfiles 10 nfsmaxsize 2048 nfsdir CLEAR usblogging disable usbmaxfiles 10 usbmaxsize 2048 usbport U1\r
+      set deviceport port 13 usbchannel 1 detectname disable detecttokens []<>#%$ numsessionsmsg disable connectedmsg enable newusermsg disable idletimeoutmsg disable portlogseq \\x1bV viewportlog disable powermgmtseq \\x1bP minimizelatency disable\r
+      set deviceport port 13 modemstate disable modemmode text usesites disable localipaddr negotiate remoteipaddr negotiate cbcpnocallback disable cbcptype admin auth pap chaphost \"\" dodauth pap dodchaphost \"\" initscript \"\" timeoutlogins disable dialoutnumber \"\" dialoutlogin \"\" dialbacknumber usernumber dialbackdelay 15 dialbackretries 3 nat disable modemtimeout disable restartdelay 30 calleridlogging disable calleridcmd \"\"\r
+      set deviceport port 13 dialoutpassword\r
+      \r
+      \r
+      set deviceport port 13 chapsecret\r
+      \r
+      \r
+      set deviceport port 13 dodchapsecret\r
+      \r
+      \r
+      set deviceport port 13 tokendatadetect disable tokentrigger bytecnt bytethreshold 100 tokenstring \"\" tokenaction none actiondelay 60 actionrestart 60 emailsubj 'Port %d Logging' sendstring \"\" powersupply \"\" poweraction cycle\r
+      set deviceport port 14 name Port-14 device none banner \"\" group \"\" breakseq \\x1bB telnetin disable telnetport 2014 telnetauth enable telnetsoftiac disable telnettimeout 600 telnetdatadir both sshin enable sshport 3014 sshauth enable sshtimeout 600 sshdatadir both tcpin disable tcpport 4014 tcpauth disable tcptimeout 600 tcpdatadir netin ipaddr 0.0.0.0 sendtermstr disable termstr \"\" baud 9600 databits 8 stopbits 1 parity none flowcontrol none logins disable maxdirect 3 showlines 24\r
+      set deviceport port 14 checkdsr disable closedsr disable assertdtr enable dtrcontrol none reversepinout enable locallogging disable sysloglogging disable nfslogging disable nfsmaxfiles 10 nfsmaxsize 2048 nfsdir CLEAR usblogging disable usbmaxfiles 10 usbmaxsize 2048 usbport U1\r
+      set deviceport port 14 usbchannel 1 detectname disable detecttokens []<>#%$ numsessionsmsg disable connectedmsg enable newusermsg disable idletimeoutmsg disable portlogseq \\x1bV viewportlog disable powermgmtseq \\x1bP minimizelatency disable\r
+      set deviceport port 14 modemstate disable modemmode text usesites disable localipaddr negotiate remoteipaddr negotiate cbcpnocallback disable cbcptype admin auth pap chaphost \"\" dodauth pap dodchaphost \"\" initscript \"\" timeoutlogins disable dialoutnumber \"\" dialoutlogin \"\" dialbacknumber usernumber dialbackdelay 15 dialbackretries 3 nat disable modemtimeout disable restartdelay 30 calleridlogging disable calleridcmd \"\"\r
+      set deviceport port 14 dialoutpassword\r
+      \r
+      \r
+      set deviceport port 14 chapsecret\r
+      \r
+      \r
+      set deviceport port 14 dodchapsecret\r
+      \r
+      \r
+      set deviceport port 14 tokendatadetect disable tokentrigger bytecnt bytethreshold 100 tokenstring \"\" tokenaction none actiondelay 60 actionrestart 60 emailsubj 'Port %d Logging' sendstring \"\" powersupply \"\" poweraction cycle\r
+      set deviceport port 15 name Port-15 device none banner \"\" group \"\" breakseq \\x1bB telnetin disable telnetport 2015 telnetauth enable telnetsoftiac disable telnettimeout 600 telnetdatadir both sshin enable sshport 3015 sshauth enable sshtimeout 600 sshdatadir both tcpin disable tcpport 4015 tcpauth disable tcptimeout 600 tcpdatadir netin ipaddr 0.0.0.0 sendtermstr disable termstr \"\" baud 9600 databits 8 stopbits 1 parity none flowcontrol none logins disable maxdirect 3 showlines 24\r
+      set deviceport port 15 checkdsr disable closedsr disable assertdtr enable dtrcontrol none reversepinout enable locallogging disable sysloglogging disable nfslogging disable nfsmaxfiles 10 nfsmaxsize 2048 nfsdir CLEAR usblogging disable usbmaxfiles 10 usbmaxsize 2048 usbport U1\r
+      set deviceport port 15 usbchannel 1 detectname disable detecttokens []<>#%$ numsessionsmsg disable connectedmsg enable newusermsg disable idletimeoutmsg disable portlogseq \\x1bV viewportlog disable powermgmtseq \\x1bP minimizelatency disable\r
+      set deviceport port 15 modemstate disable modemmode text usesites disable localipaddr negotiate remoteipaddr negotiate cbcpnocallback disable cbcptype admin auth pap chaphost \"\" dodauth pap dodchaphost \"\" initscript \"\" timeoutlogins disable dialoutnumber \"\" dialoutlogin \"\" dialbacknumber usernumber dialbackdelay 15 dialbackretries 3 nat disable modemtimeout disable restartdelay 30 calleridlogging disable calleridcmd \"\"\r
+      set deviceport port 15 dialoutpassword\r
+      \r
+      \r
+      set deviceport port 15 chapsecret\r
+      \r
+      \r
+      set deviceport port 15 dodchapsecret\r
+      \r
+      \r
+      set deviceport port 15 tokendatadetect disable tokentrigger bytecnt bytethreshold 100 tokenstring \"\" tokenaction none actiondelay 60 actionrestart 60 emailsubj 'Port %d Logging' sendstring \"\" powersupply \"\" poweraction cycle\r
+      set deviceport port 16 name Port-16 device none banner \"\" group \"\" breakseq \\x1bB telnetin disable telnetport 2016 telnetauth enable telnetsoftiac disable telnettimeout 600 telnetdatadir both sshin enable sshport 3016 sshauth enable sshtimeout 600 sshdatadir both tcpin disable tcpport 4016 tcpauth disable tcptimeout 600 tcpdatadir netin ipaddr 0.0.0.0 sendtermstr disable termstr \"\" baud 9600 databits 8 stopbits 1 parity none flowcontrol none logins disable maxdirect 3 showlines 24\r
+      set deviceport port 16 checkdsr disable closedsr disable assertdtr enable dtrcontrol none reversepinout enable locallogging disable sysloglogging disable nfslogging disable nfsmaxfiles 10 nfsmaxsize 2048 nfsdir CLEAR usblogging disable usbmaxfiles 10 usbmaxsize 2048 usbport U1\r
+      set deviceport port 16 usbchannel 1 detectname disable detecttokens []<>#%$ numsessionsmsg disable connectedmsg enable newusermsg disable idletimeoutmsg disable portlogseq \\x1bV viewportlog disable powermgmtseq \\x1bP minimizelatency disable\r
+      set deviceport port 16 modemstate disable modemmode text usesites disable localipaddr negotiate remoteipaddr negotiate cbcpnocallback disable cbcptype admin auth pap chaphost \"\" dodauth pap dodchaphost \"\" initscript \"\" timeoutlogins disable dialoutnumber \"\" dialoutlogin \"\" dialbacknumber usernumber dialbackdelay 15 dialbackretries 3 nat disable modemtimeout disable restartdelay 30 calleridlogging disable calleridcmd \"\"\r
+      set deviceport port 16 dialoutpassword\r
+      \r
+      \r
+      set deviceport port 16 chapsecret\r
+      \r
+      \r
+      set deviceport port 16 dodchapsecret\r
+      \r
+      \r
+      set deviceport port 16 tokendatadetect disable tokentrigger bytecnt bytethreshold 100 tokenstring \"\" tokenaction none actiondelay 60 actionrestart 60 emailsubj 'Port %d Logging' sendstring \"\" powersupply \"\" poweraction cycle\r
+      set deviceport port 17 name Port-17 device none banner \"\" group \"\" breakseq \\x1bB telnetin disable telnetport 2017 telnetauth enable telnetsoftiac disable telnettimeout 600 telnetdatadir both sshin enable sshport 3017 sshauth enable sshtimeout 600 sshdatadir both tcpin disable tcpport 4017 tcpauth disable tcptimeout 600 tcpdatadir netin ipaddr 0.0.0.0 sendtermstr disable termstr \"\" baud 9600 databits 8 stopbits 1 parity none flowcontrol none logins disable maxdirect 3 showlines 24\r
+      set deviceport port 17 usbvbus enable locallogging disable sysloglogging disable nfslogging disable nfsmaxfiles 10 nfsmaxsize 2048 nfsdir CLEAR usblogging disable usbmaxfiles 10 usbmaxsize 2048 usbport U1\r
+      set deviceport port 17 usbchannel 1 detectname disable detecttokens []<>#%$ numsessionsmsg disable connectedmsg enable newusermsg disable idletimeoutmsg disable portlogseq \\x1bV viewportlog disable powermgmtseq \\x1bP minimizelatency disable\r
+      set deviceport port 17 tokendatadetect disable tokentrigger bytecnt bytethreshold 100 tokenstring \"\" tokenaction none actiondelay 60 actionrestart 60 emailsubj 'Port %d Logging' sendstring \"\" powersupply \"\" poweraction cycle\r
+      set deviceport port 18 name Port-18 device none banner \"\" group \"\" breakseq \\x1bB telnetin disable telnetport 2018 telnetauth enable telnetsoftiac disable telnettimeout 600 telnetdatadir both sshin enable sshport 3018 sshauth enable sshtimeout 600 sshdatadir both tcpin disable tcpport 4018 tcpauth disable tcptimeout 600 tcpdatadir netin ipaddr 0.0.0.0 sendtermstr disable termstr \"\" baud 9600 databits 8 stopbits 1 parity none flowcontrol none logins disable maxdirect 3 showlines 24\r
+      set deviceport port 18 locallogging disable sysloglogging disable nfslogging disable nfsmaxfiles 10 nfsmaxsize 2048 nfsdir CLEAR usblogging disable usbmaxfiles 10 usbmaxsize 2048 usbport U1\r
+      set deviceport port 18 usbchannel 1 detectname disable detecttokens []<>#%$ numsessionsmsg disable connectedmsg enable newusermsg disable idletimeoutmsg disable portlogseq \\x1bV viewportlog disable powermgmtseq \\x1bP minimizelatency disable\r
+      set deviceport port 18 tokendatadetect disable tokentrigger bytecnt bytethreshold 100 tokenstring \"\" tokenaction none actiondelay 60 actionrestart 60 emailsubj 'Port %d Logging' sendstring \"\" powersupply \"\" poweraction cycle\r
+      set deviceport port 19 name Port-19 device none banner \"\" group \"\" breakseq \\x1bB telnetin disable telnetport 2019 telnetauth enable telnetsoftiac disable telnettimeout 600 telnetdatadir both sshin enable sshport 3019 sshauth enable sshtimeout 600 sshdatadir both tcpin disable tcpport 4019 tcpauth disable tcptimeout 600 tcpdatadir netin ipaddr 0.0.0.0 sendtermstr disable termstr \"\" baud 9600 databits 8 stopbits 1 parity none flowcontrol none logins disable maxdirect 3 showlines 24\r
+      set deviceport port 19 locallogging disable sysloglogging disable nfslogging disable nfsmaxfiles 10 nfsmaxsize 2048 nfsdir CLEAR usblogging disable usbmaxfiles 10 usbmaxsize 2048 usbport U1\r
+      set deviceport port 19 usbchannel 1 detectname disable detecttokens []<>#%$ numsessionsmsg disable connectedmsg enable newusermsg disable idletimeoutmsg disable portlogseq \\x1bV viewportlog disable powermgmtseq \\x1bP minimizelatency disable\r
+      set deviceport port 19 tokendatadetect disable tokentrigger bytecnt bytethreshold 100 tokenstring \"\" tokenaction none actiondelay 60 actionrestart 60 emailsubj 'Port %d Logging' sendstring \"\" powersupply \"\" poweraction cycle\r
+      set deviceport port 20 name Port-20 device none banner \"\" group \"\" breakseq \\x1bB telnetin disable telnetport 2020 telnetauth enable telnetsoftiac disable telnettimeout 600 telnetdatadir both sshin enable sshport 3020 sshauth enable sshtimeout 600 sshdatadir both tcpin disable tcpport 4020 tcpauth disable tcptimeout 600 tcpdatadir netin ipaddr 0.0.0.0 sendtermstr disable termstr \"\" baud 9600 databits 8 stopbits 1 parity none flowcontrol none logins disable maxdirect 3 showlines 24\r
+      set deviceport port 20 locallogging disable sysloglogging disable nfslogging disable nfsmaxfiles 10 nfsmaxsize 2048 nfsdir CLEAR usblogging disable usbmaxfiles 10 usbmaxsize 2048 usbport U1\r
+      set deviceport port 20 usbchannel 1 detectname disable detecttokens []<>#%$ numsessionsmsg disable connectedmsg enable newusermsg disable idletimeoutmsg disable portlogseq \\x1bV viewportlog disable powermgmtseq \\x1bP minimizelatency disable\r
+      set deviceport port 20 tokendatadetect disable tokentrigger bytecnt bytethreshold 100 tokenstring \"\" tokenaction none actiondelay 60 actionrestart 60 emailsubj 'Port %d Logging' sendstring \"\" powersupply \"\" poweraction cycle\r
+      set deviceport port 21 name Port-21 device none banner \"\" group \"\" breakseq \\x1bB telnetin disable telnetport 2021 telnetauth enable telnetsoftiac disable telnettimeout 600 telnetdatadir both sshin enable sshport 3021 sshauth enable sshtimeout 600 sshdatadir both tcpin disable tcpport 4021 tcpauth disable tcptimeout 600 tcpdatadir netin ipaddr 0.0.0.0 sendtermstr disable termstr \"\" baud 9600 databits 8 stopbits 1 parity none flowcontrol none logins disable maxdirect 3 showlines 24\r
+      set deviceport port 21 locallogging disable sysloglogging disable nfslogging disable nfsmaxfiles 10 nfsmaxsize 2048 nfsdir CLEAR usblogging disable usbmaxfiles 10 usbmaxsize 2048 usbport U1\r
+      set deviceport port 21 usbchannel 1 detectname disable detecttokens []<>#%$ numsessionsmsg disable connectedmsg enable newusermsg disable idletimeoutmsg disable portlogseq \\x1bV viewportlog disable powermgmtseq \\x1bP minimizelatency disable\r
+      set deviceport port 21 tokendatadetect disable tokentrigger bytecnt bytethreshold 100 tokenstring \"\" tokenaction none actiondelay 60 actionrestart 60 emailsubj 'Port %d Logging' sendstring \"\" powersupply \"\" poweraction cycle\r
+      set deviceport port 22 name Port-22 device none banner \"\" group \"\" breakseq \\x1bB telnetin disable telnetport 2022 telnetauth enable telnetsoftiac disable telnettimeout 600 telnetdatadir both sshin enable sshport 3022 sshauth enable sshtimeout 600 sshdatadir both tcpin disable tcpport 4022 tcpauth disable tcptimeout 600 tcpdatadir netin ipaddr 0.0.0.0 sendtermstr disable termstr \"\" baud 9600 databits 8 stopbits 1 parity none flowcontrol none logins disable maxdirect 3 showlines 24\r
+      set deviceport port 22 locallogging disable sysloglogging disable nfslogging disable nfsmaxfiles 10 nfsmaxsize 2048 nfsdir CLEAR usblogging disable usbmaxfiles 10 usbmaxsize 2048 usbport U1\r
+      set deviceport port 22 usbchannel 1 detectname disable detecttokens []<>#%$ numsessionsmsg disable connectedmsg enable newusermsg disable idletimeoutmsg disable portlogseq \\x1bV viewportlog disable powermgmtseq \\x1bP minimizelatency disable\r
+      set deviceport port 22 tokendatadetect disable tokentrigger bytecnt bytethreshold 100 tokenstring \"\" tokenaction none actiondelay 60 actionrestart 60 emailsubj 'Port %d Logging' sendstring \"\" powersupply \"\" poweraction cycle\r
+      set deviceport port 23 name Port-23 device none banner \"\" group \"\" breakseq \\x1bB telnetin disable telnetport 2023 telnetauth enable telnetsoftiac disable telnettimeout 600 telnetdatadir both sshin enable sshport 3023 sshauth enable sshtimeout 600 sshdatadir both tcpin disable tcpport 4023 tcpauth disable tcptimeout 600 tcpdatadir netin ipaddr 0.0.0.0 sendtermstr disable termstr \"\" baud 9600 databits 8 stopbits 1 parity none flowcontrol none logins disable maxdirect 3 showlines 24\r
+      set deviceport port 23 locallogging disable sysloglogging disable nfslogging disable nfsmaxfiles 10 nfsmaxsize 2048 nfsdir CLEAR usblogging disable usbmaxfiles 10 usbmaxsize 2048 usbport U1\r
+      set deviceport port 23 usbchannel 1 detectname disable detecttokens []<>#%$ numsessionsmsg disable connectedmsg enable newusermsg disable idletimeoutmsg disable portlogseq \\x1bV viewportlog disable powermgmtseq \\x1bP minimizelatency disable\r
+      set deviceport port 23 tokendatadetect disable tokentrigger bytecnt bytethreshold 100 tokenstring \"\" tokenaction none actiondelay 60 actionrestart 60 emailsubj 'Port %d Logging' sendstring \"\" powersupply \"\" poweraction cycle\r
+      set deviceport port 24 name Port-24 device none banner \"\" group \"\" breakseq \\x1bB telnetin disable telnetport 2024 telnetauth enable telnetsoftiac disable telnettimeout 600 telnetdatadir both sshin enable sshport 3024 sshauth enable sshtimeout 600 sshdatadir both tcpin disable tcpport 4024 tcpauth disable tcptimeout 600 tcpdatadir netin ipaddr 0.0.0.0 sendtermstr disable termstr \"\" baud 9600 databits 8 stopbits 1 parity none flowcontrol none logins disable maxdirect 3 showlines 24\r
+      set deviceport port 24 locallogging disable sysloglogging disable nfslogging disable nfsmaxfiles 10 nfsmaxsize 2048 nfsdir CLEAR usblogging disable usbmaxfiles 10 usbmaxsize 2048 usbport U1\r
+      set deviceport port 24 usbchannel 1 detectname disable detecttokens []<>#%$ numsessionsmsg disable connectedmsg enable newusermsg disable idletimeoutmsg disable portlogseq \\x1bV viewportlog disable powermgmtseq \\x1bP minimizelatency disable\r
+      set deviceport port 24 tokendatadetect disable tokentrigger bytecnt bytethreshold 100 tokenstring \"\" tokenaction none actiondelay 60 actionrestart 60 emailsubj 'Port %d Logging' sendstring \"\" powersupply \"\" poweraction cycle\r
+      set deviceport port 25 name Port-25 device none banner \"\" group \"\" breakseq \\x1bB telnetin disable telnetport 2025 telnetauth enable telnetsoftiac disable telnettimeout 600 telnetdatadir both sshin enable sshport 3025 sshauth enable sshtimeout 600 sshdatadir both tcpin disable tcpport 4025 tcpauth disable tcptimeout 600 tcpdatadir netin ipaddr 0.0.0.0 sendtermstr disable termstr \"\" baud 9600 databits 8 stopbits 1 parity none flowcontrol none logins disable maxdirect 3 showlines 24\r
+      set deviceport port 25 locallogging disable sysloglogging disable nfslogging disable nfsmaxfiles 10 nfsmaxsize 2048 nfsdir CLEAR usblogging disable usbmaxfiles 10 usbmaxsize 2048 usbport U1\r
+      set deviceport port 25 usbchannel 1 detectname disable detecttokens []<>#%$ numsessionsmsg disable connectedmsg enable newusermsg disable idletimeoutmsg disable portlogseq \\x1bV viewportlog disable powermgmtseq \\x1bP minimizelatency disable\r
+      set deviceport port 25 tokendatadetect disable tokentrigger bytecnt bytethreshold 100 tokenstring \"\" tokenaction none actiondelay 60 actionrestart 60 emailsubj 'Port %d Logging' sendstring \"\" powersupply \"\" poweraction cycle\r
+      set deviceport port 26 name Port-26 device none banner \"\" group \"\" breakseq \\x1bB telnetin disable telnetport 2026 telnetauth enable telnetsoftiac disable telnettimeout 600 telnetdatadir both sshin enable sshport 3026 sshauth enable sshtimeout 600 sshdatadir both tcpin disable tcpport 4026 tcpauth disable tcptimeout 600 tcpdatadir netin ipaddr 0.0.0.0 sendtermstr disable termstr \"\" baud 9600 databits 8 stopbits 1 parity none flowcontrol none logins disable maxdirect 3 showlines 24\r
+      set deviceport port 26 locallogging disable sysloglogging disable nfslogging disable nfsmaxfiles 10 nfsmaxsize 2048 nfsdir CLEAR usblogging disable usbmaxfiles 10 usbmaxsize 2048 usbport U1\r
+      set deviceport port 26 usbchannel 1 detectname disable detecttokens []<>#%$ numsessionsmsg disable connectedmsg enable newusermsg disable idletimeoutmsg disable portlogseq \\x1bV viewportlog disable powermgmtseq \\x1bP minimizelatency disable\r
+      set deviceport port 26 tokendatadetect disable tokentrigger bytecnt bytethreshold 100 tokenstring \"\" tokenaction none actiondelay 60 actionrestart 60 emailsubj 'Port %d Logging' sendstring \"\" powersupply \"\" poweraction cycle\r
+      set deviceport port 27 name Port-27 device none banner \"\" group \"\" breakseq \\x1bB telnetin disable telnetport 2027 telnetauth enable telnetsoftiac disable telnettimeout 600 telnetdatadir both sshin enable sshport 3027 sshauth enable sshtimeout 600 sshdatadir both tcpin disable tcpport 4027 tcpauth disable tcptimeout 600 tcpdatadir netin ipaddr 0.0.0.0 sendtermstr disable termstr \"\" baud 9600 databits 8 stopbits 1 parity none flowcontrol none logins disable maxdirect 3 showlines 24\r
+      set deviceport port 27 locallogging disable sysloglogging disable nfslogging disable nfsmaxfiles 10 nfsmaxsize 2048 nfsdir CLEAR usblogging disable usbmaxfiles 10 usbmaxsize 2048 usbport U1\r
+      set deviceport port 27 usbchannel 1 detectname disable detecttokens []<>#%$ numsessionsmsg disable connectedmsg enable newusermsg disable idletimeoutmsg disable portlogseq \\x1bV viewportlog disable powermgmtseq \\x1bP minimizelatency disable\r
+      set deviceport port 27 tokendatadetect disable tokentrigger bytecnt bytethreshold 100 tokenstring \"\" tokenaction none actiondelay 60 actionrestart 60 emailsubj 'Port %d Logging' sendstring \"\" powersupply \"\" poweraction cycle\r
+      set deviceport port 28 name Port-28 device none banner \"\" group \"\" breakseq \\x1bB telnetin disable telnetport 2028 telnetauth enable telnetsoftiac disable telnettimeout 600 telnetdatadir both sshin enable sshport 3028 sshauth enable sshtimeout 600 sshdatadir both tcpin disable tcpport 4028 tcpauth disable tcptimeout 600 tcpdatadir netin ipaddr 0.0.0.0 sendtermstr disable termstr \"\" baud 9600 databits 8 stopbits 1 parity none flowcontrol none logins disable maxdirect 3 showlines 24\r
+      set deviceport port 28 locallogging disable sysloglogging disable nfslogging disable nfsmaxfiles 10 nfsmaxsize 2048 nfsdir CLEAR usblogging disable usbmaxfiles 10 usbmaxsize 2048 usbport U1\r
+      set deviceport port 28 usbchannel 1 detectname disable detecttokens []<>#%$ numsessionsmsg disable connectedmsg enable newusermsg disable idletimeoutmsg disable portlogseq \\x1bV viewportlog disable powermgmtseq \\x1bP minimizelatency disable\r
+      set deviceport port 28 tokendatadetect disable tokentrigger bytecnt bytethreshold 100 tokenstring \"\" tokenaction none actiondelay 60 actionrestart 60 emailsubj 'Port %d Logging' sendstring \"\" powersupply \"\" poweraction cycle\r
+      set deviceport port 29 name Port-29 device none banner \"\" group \"\" breakseq \\x1bB telnetin disable telnetport 2029 telnetauth enable telnetsoftiac disable telnettimeout 600 telnetdatadir both sshin enable sshport 3029 sshauth enable sshtimeout 600 sshdatadir both tcpin disable tcpport 4029 tcpauth disable tcptimeout 600 tcpdatadir netin ipaddr 0.0.0.0 sendtermstr disable termstr \"\" baud 9600 databits 8 stopbits 1 parity none flowcontrol none logins disable maxdirect 3 showlines 24\r
+      set deviceport port 29 locallogging disable sysloglogging disable nfslogging disable nfsmaxfiles 10 nfsmaxsize 2048 nfsdir CLEAR usblogging disable usbmaxfiles 10 usbmaxsize 2048 usbport U1\r
+      set deviceport port 29 usbchannel 1 detectname disable detecttokens []<>#%$ numsessionsmsg disable connectedmsg enable newusermsg disable idletimeoutmsg disable portlogseq \\x1bV viewportlog disable powermgmtseq \\x1bP minimizelatency disable\r
+      set deviceport port 29 tokendatadetect disable tokentrigger bytecnt bytethreshold 100 tokenstring \"\" tokenaction none actiondelay 60 actionrestart 60 emailsubj 'Port %d Logging' sendstring \"\" powersupply \"\" poweraction cycle\r
+      set deviceport port 30 name Port-30 device none banner \"\" group \"\" breakseq \\x1bB telnetin disable telnetport 2030 telnetauth enable telnetsoftiac disable telnettimeout 600 telnetdatadir both sshin enable sshport 3030 sshauth enable sshtimeout 600 sshdatadir both tcpin disable tcpport 4030 tcpauth disable tcptimeout 600 tcpdatadir netin ipaddr 0.0.0.0 sendtermstr disable termstr \"\" baud 9600 databits 8 stopbits 1 parity none flowcontrol none logins disable maxdirect 3 showlines 24\r
+      set deviceport port 30 locallogging disable sysloglogging disable nfslogging disable nfsmaxfiles 10 nfsmaxsize 2048 nfsdir CLEAR usblogging disable usbmaxfiles 10 usbmaxsize 2048 usbport U1\r
+      set deviceport port 30 usbchannel 1 detectname disable detecttokens []<>#%$ numsessionsmsg disable connectedmsg enable newusermsg disable idletimeoutmsg disable portlogseq \\x1bV viewportlog disable powermgmtseq \\x1bP minimizelatency disable\r
+      set deviceport port 30 tokendatadetect disable tokentrigger bytecnt bytethreshold 100 tokenstring \"\" tokenaction none actiondelay 60 actionrestart 60 emailsubj 'Port %d Logging' sendstring \"\" powersupply \"\" poweraction cycle\r
+      set deviceport port 31 name Port-31 device none banner \"\" group \"\" breakseq \\x1bB telnetin disable telnetport 2031 telnetauth enable telnetsoftiac disable telnettimeout 600 telnetdatadir both sshin enable sshport 3031 sshauth enable sshtimeout 600 sshdatadir both tcpin disable tcpport 4031 tcpauth disable tcptimeout 600 tcpdatadir netin ipaddr 0.0.0.0 sendtermstr disable termstr \"\" baud 9600 databits 8 stopbits 1 parity none flowcontrol none logins disable maxdirect 3 showlines 24\r
+      set deviceport port 31 locallogging disable sysloglogging disable nfslogging disable nfsmaxfiles 10 nfsmaxsize 2048 nfsdir CLEAR usblogging disable usbmaxfiles 10 usbmaxsize 2048 usbport U1\r
+      set deviceport port 31 usbchannel 1 detectname disable detecttokens []<>#%$ numsessionsmsg disable connectedmsg enable newusermsg disable idletimeoutmsg disable portlogseq \\x1bV viewportlog disable powermgmtseq \\x1bP minimizelatency disable\r
+      set deviceport port 31 tokendatadetect disable tokentrigger bytecnt bytethreshold 100 tokenstring \"\" tokenaction none actiondelay 60 actionrestart 60 emailsubj 'Port %d Logging' sendstring \"\" powersupply \"\" poweraction cycle\r
+      set deviceport port 32 name Port-32 device none banner \"\" group \"\" breakseq \\x1bB telnetin disable telnetport 2032 telnetauth enable telnetsoftiac disable telnettimeout 600 telnetdatadir both sshin enable sshport 3032 sshauth enable sshtimeout 600 sshdatadir both tcpin disable tcpport 4032 tcpauth disable tcptimeout 600 tcpdatadir netin ipaddr 0.0.0.0 sendtermstr disable termstr \"\" baud 9600 databits 8 stopbits 1 parity none flowcontrol none logins disable maxdirect 3 showlines 24\r
+      set deviceport port 32 locallogging disable sysloglogging disable nfslogging disable nfsmaxfiles 10 nfsmaxsize 2048 nfsdir CLEAR usblogging disable usbmaxfiles 10 usbmaxsize 2048 usbport U1\r
+      set deviceport port 32 usbchannel 1 detectname disable detecttokens []<>#%$ numsessionsmsg disable connectedmsg enable newusermsg disable idletimeoutmsg disable portlogseq \\x1bV viewportlog disable powermgmtseq \\x1bP minimizelatency disable\r
+      set deviceport port 32 tokendatadetect disable tokentrigger bytecnt bytethreshold 100 tokenstring \"\" tokenaction none actiondelay 60 actionrestart 60 emailsubj 'Port %d Logging' sendstring \"\" powersupply \"\" poweraction cycle\r
+      set usb access enable\r
+      set temperature low 0 high 75 calibrate 0\r
+      admin ftp server 0.0.0.0 login '' path ''\r
+      admin ftp password\r
+      \r
+      \r
+      admin site row 1 cluster 1 rack 1\r
+      admin site tag \"\"\r
+      admin banner welcome \"Welcome to the SLC\"\r
+      admin banner login \"\"\r
+      admin banner logout \"\"\r
+      admin banner ssh \"\"\r
+      admin web timeout 30\r
+      admin web tlsv10 disable\r
+      admin web tlsv11 disable\r
+      admin web tlsv12 enable\r
+      admin web ciphers ''\r
+      admin web group ''\r
+      admin web server enable\r
+      admin web banner \"\"\r
+      admin web iface eth1,eth2,ppp,eth3,eth4\r
+      [SLC9016-LAB]>\x20
+  - "logout\n": |-

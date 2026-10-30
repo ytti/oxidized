@@ -129,6 +129,7 @@
 |Juniper             |JunOS                         |[junos](/lib/oxidized/model/junos.rb)            |                 |[MX/QFX/EX/SRX/J Series](Model-Notes/JunOS.md)
 |                    |ScreenOS (Netscreen)          |[screenos](/lib/oxidized/model/screenos.rb)
 |LANCOM Systems GmbH |LCOS                          |[lancom](/lib/oxidized/model/lancom.rb)
+|[Lantronix](https://www.lantronix.com)|IT Management Gateway OS (SLC 8000, SLC 9000, EMG, SLB)|[itmgos](/lib/oxidized/model/itmgos.rb)|                 |[ITMGOS](Model-Notes/ITMGOS.md)
 |Lenovo              |Lenovo Network OS             |[lenovonos](/lib/oxidized/model/lenovonos.rb)    |                 |[Lenovo Network OS](Model-Notes/LenovoNOS.md)
 |Linkys              |SRW                           |[linksyssrw](/lib/oxidized/model/linksyssrw.rb)  |                 |[LinksysSRW](Model-Notes/LinksysSRW.md)
 |Linuxgeneric        |CentOS                        |[linuxgeneric](/lib/oxidized/model/linuxgeneric.rb)|               |[LinuxGeneric](Model-Notes/LinuxGeneric.md)
