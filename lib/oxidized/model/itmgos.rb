@@ -19,12 +19,26 @@ class ITMGOS < Oxidized::Model
     cfg.cut_both
   end
 
+  # Prompted secrets are exported as the command, then the value and its confirmation on
+  # the next two lines: "set tacacs+ secret", "admin ftp password", "set site chapsecret
+  # <site>" and so on. Those two lines are hidden whatever they contain.
+  PROMPTED_SECRET = /^(?:set|admin) (?:.*(?:password|phrase|secret|key)|site (?:dialoutpassword|chapsecret) \S.*?)\s*$/
+
+  # Lines the export prints before the first command.
+  EXPORT_PREAMBLE = /^(?:\s*|The configuration will be output.*|yes|One moment while the file is generated.*)$/
+
   cmd :secret do |cfg|
-    # Prompted secrets are exported as the command, then the value and its confirmation:
-    # "set tacacs+ secret", "admin ftp password", "set site chapsecret <site>" and so on.
-    cfg.gsub!(/^((?:set|admin) (?:[^\n]*(?:password|phrase|secret|key)|site (?:dialoutpassword|chapsecret) [^\n]+)\n)[^\n]*\n[^\n]*\n/) do
-      "#{Regexp.last_match(1)}<secret hidden>\n<secret hidden>\n"
+    lines = cfg.lines
+    i = 0
+    while i < lines.length
+      if lines[i].match?(PROMPTED_SECRET)
+        lines[i + 1, 2] = lines[i + 1, 2].map { |line| line.end_with?("\n") ? "<secret hidden>\n" : '<secret hidden>' }
+        i += 3
+      else
+        i += 1
+      end
     end
+    cfg = lines.join
     # All three communities can share one line, quoted: rocommunity 'public' rwcommunity ...
     cfg.gsub!(/\b((?:ro|rw|trap)community) (?:'[^'\n]*'|"[^"\n]*"|\S+)/, "\\1 '<secret hidden>'")
     # Event actions that send traps carry their own community.
@@ -42,11 +56,10 @@ class ITMGOS < Oxidized::Model
   end
 
   cmd 'admin config commands copypaste' do |cfg|
-    cfg.reject_lines [
-      /^The configuration will be output/,
-      /^yes$/,
-      /^One moment while the file is generated/
-    ]
+    # Only the preamble is dropped, so a secret whose value is "yes" stays in the export.
+    lines = cfg.lines
+    lines.shift while lines.any? && lines.first.match?(EXPORT_PREAMBLE)
+    lines.join
   end
 
   cfg :ssh, :telnet do
