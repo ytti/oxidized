@@ -64,8 +64,9 @@ module Oxidized
             target.reject! { |k, _| k == block[0] }
             target.push(block)
           elsif block.instance_of?(Hash)
-            target.reject! { |item| item[:cmd] == block[:cmd] }
-            target.push(block)
+            index = target.index { |item| item[:cmd] == block[:cmd] }
+            target.delete_if { |item| item[:cmd] == block[:cmd] }
+            target.insert(index || target.length, block)
           else
             target.replace([block])
           end

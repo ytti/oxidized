@@ -4,6 +4,14 @@ All notable changes to this project will be documented in this file.
 
 The format is based on [Keep a Changelog](https://keepachangelog.com/en/1.1.0/).
 
+## [0.37.4] - 2026-10-31
+
+### Fixed
+- Preserve command order when replacing a model command with `clear: true`.
+- Normalize XOS license-expiration countdowns to avoid daily configuration diffs.
+- Accept the reported OneOS, Comware, FastIron, and H3C SecPath prompt variants.
+- Remove stray BEL characters from AWPlus pager output.
+
 ## [0.37.3] - 2026-10-29
 
 ### Added
