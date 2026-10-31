@@ -28,6 +28,7 @@ class XOS < Oxidized::Model
   end
 
   cmd 'show licenses' do |cfg|
+    cfg.gsub!(/expires in \d+ days?/i, 'expires in <remaining days>')
     comment cfg
   end
 

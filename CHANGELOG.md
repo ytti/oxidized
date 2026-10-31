@@ -4,7 +4,42 @@ All notable changes to this project will be documented in this file.
 
 The format is based on [Keep a Changelog](https://keepachangelog.com/en/1.1.0/).
 
+## [0.37.4] - 2026-10-31
+
+### Fixed
+- Preserve command order when replacing a model command with `clear: true`.
+- Normalize XOS license-expiration countdowns to avoid daily configuration diffs.
+- Accept the reported OneOS, Comware, FastIron, and H3C SecPath prompt variants.
+- Remove stray BEL characters from AWPlus pager output.
+
+## [0.37.3] - 2026-10-29
+
+### Added
+- Add atomic manual queue and status APIs for all or selected devices, reusing the configured worker concurrency budget.
+- Track queued, running, succeeded and failed collections through retries and completed output storage; suppress duplicate active requests.
+- Ignore stale completion from inventory instances replaced during reload, and expose unavailable state after restart instead of false success.
+- Verify unchanged RouterOS output through the production Git output plugin, while retaining one revision for actual changes.
+
+### Compatibility
+- Pair with Oxidized Web 0.25.0. No parallel SSH engine or historical Git migration is introduced.
+
+## [0.37.1] - 2026-10-29
+
+### Added
+- Add a history-preserving node inventory reload option for Oxidized Web device management.
+- Log only device identity when model loading or DNS resolution fails, avoiding credential exposure from source rows.
+
 ## [Unreleased]
+
+## [0.37.2] - 2026-10-29
+
+### Fixed
+- Normalize generated RouterOS 6 and 7 export timestamp comments before Git storage, including leading whitespace and CRLF exports, while retaining real config and firmware-version changes.
+- Add regression coverage for identical backups, timestamp-only changes, real configuration edits, and RouterOS version changes without rewriting existing history.
+
+### Compatibility
+- Works with Oxidized Web 0.21.0 for the enterprise integration release.
+
 ### Release Notes
 The git and gitcrypt outputs no longer provide the `:date` field in the node versions, as it was only used by oxidized-web <= 0.16.0. You need oxidized-web >= 0.17.0, older versions will fail to display node versions and diffs.
 

@@ -3,7 +3,7 @@ class Comware < Oxidized::Model
   using Refinements
 
   # sometimes the prompt might have a leading nul or trailing ASCII Bell (^G)
-  prompt /^\0*(<[\w.-]+>).?$/
+  prompt /^\0*(<[\w.&-]+>).?$/
   comment '# '
 
   # example how to handle pager
