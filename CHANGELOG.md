@@ -71,6 +71,7 @@ When loading a single node (`oxs <host>` in oxidized-script, `/reload?node=<host
 - nodes: match the node name exactly when loading a single node, instead of matching the node name as a regexp against the requested name, which could select the wrong node (e.g. `router1` for `router10`) (@robertcheramy)
 - core: expand `~` in `crash.directory` before writing crash dumps. Fixes #3945. (@wleeaf, @robertcheramy)
 - junos: remove syntax error when there is no virtual chassis. Fixes #3922. (@dalejos, @robertcheramy)
+- ssh: reject an `ssh_proxy` that is not `[user@]host` (RFC 1123 hostname, IPv4 or IPv6 address) and an `ssh_proxy_port` that is not an integer, so values from the source cannot inject shell commands or ssh options (@robertcheramy)
 
 ## [0.37.0 - 2026-05-20]
 ### Added

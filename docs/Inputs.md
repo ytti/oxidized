@@ -96,6 +96,10 @@ Oxidized can `ssh` through a proxy as well. To do so we just need to set
 `ssh_proxy` variable with the proxy host information and optionally set the
 `ssh_proxy_port` with the SSH port if it is not listening on port 22.
 
+`ssh_proxy` must be `[user@]host`, where `host` is a hostname (RFC 1123), an
+IPv4 or an IPv6 address, and `ssh_proxy_port` must be an integer. Other values
+are rejected and the node fails.
+
 This can be provided on a per-node basis by mapping the proper fields from your
 source.
 

@@ -90,6 +90,55 @@ describe Oxidized::SSH do
     end
   end
 
+  describe "#make_ssh_proxy_command" do
+    it "keeps user@host and the port unchanged" do
+      ssh = Oxidized::SSH.new
+      Net::SSH::Proxy::Command.expects(:new).with("ssh -p 2222 user@test.com -W [%h]:%p")
+      ssh.make_ssh_proxy_command('user@test.com', 2222, true)
+    end
+
+    it "accepts the proxy port as a string" do
+      ssh = Oxidized::SSH.new
+      Net::SSH::Proxy::Command.expects(:new).with("ssh -p 2222 test.com -W [%h]:%p")
+      ssh.make_ssh_proxy_command('test.com', '2222', true)
+    end
+
+    it "accepts IPv4 and IPv6 addresses as proxy host" do
+      ssh = Oxidized::SSH.new
+      Net::SSH::Proxy::Command.expects(:new).with("ssh user@192.0.2.1 -W [%h]:%p")
+      Net::SSH::Proxy::Command.expects(:new).with("ssh 2001:db8::1 -W [%h]:%p")
+      ssh.make_ssh_proxy_command('user@192.0.2.1', nil, true)
+      ssh.make_ssh_proxy_command('2001:db8::1', nil, true)
+    end
+
+    it "escapes % in an IPv6 zone ID for net-ssh" do
+      ssh = Oxidized::SSH.new
+      Net::SSH::Proxy::Command.expects(:new).with("ssh fe80::1%%eth0 -W [%h]:%p")
+      ssh.make_ssh_proxy_command('fe80::1%eth0', nil, true)
+    end
+
+    it "rejects a proxy host that is not [user@]hostname or IP address" do
+      ssh = Oxidized::SSH.new
+      Net::SSH::Proxy::Command.expects(:new).never
+      ['test.com$(id)', 'test.com;id', 'test.com id', 'u$(id)@test.com', '@test.com',
+       'a@b@test.com', '-test.com', 'test-.com', 'test..com', "test.com\nid"].each do |host|
+        _ { ssh.make_ssh_proxy_command(host, nil, true) }.must_raise ArgumentError
+      end
+    end
+
+    it "rejects a proxy port that is not an integer" do
+      ssh = Oxidized::SSH.new
+      Net::SSH::Proxy::Command.expects(:new).never
+      _ { ssh.make_ssh_proxy_command('test.com', '22;id', true) }.must_raise ArgumentError
+    end
+
+    it "rejects a proxy host starting with '-'" do
+      ssh = Oxidized::SSH.new
+      Net::SSH::Proxy::Command.expects(:new).never
+      _ { ssh.make_ssh_proxy_command('-oProxyCommand=id', nil, true) }.must_raise ArgumentError
+    end
+  end
+
   describe ".rescue_fail" do
     it "returns RESCUE_FAIL from Oxidized::Input" do
       result = Oxidized::SSH.rescue_fail

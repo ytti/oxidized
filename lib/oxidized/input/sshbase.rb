@@ -1,6 +1,7 @@
 module Oxidized
   require 'net/ssh'
   require 'net/ssh/proxy/command'
+  require 'resolv'
   require 'timeout'
 
   class SSHBase < Input
@@ -10,6 +11,12 @@ module Oxidized
       Net::SSH::AuthenticationFailed => :warn,
       Net::SSH::HostKeyUnknown       => :warn
     }.freeze
+
+    PROXY_USER = /\A[A-Za-z0-9._][A-Za-z0-9._-]*\z/
+    # RFC 1123
+    HOST_LABEL = /[A-Za-z0-9](?:[A-Za-z0-9-]{0,61}[A-Za-z0-9])?/
+    # Short hostname or FQDN, without trailing dot
+    HOSTNAME   = /\A(?=.{1,253}\z)#{HOST_LABEL}(?:\.#{HOST_LABEL})*\z/
 
     def self.rescue_fail
       super.merge(RESCUE_FAIL)
@@ -76,12 +83,24 @@ module Oxidized
 
     def make_ssh_proxy_command(proxy_host, proxy_port, secure)
       return nil unless !proxy_host.nil? && !proxy_host.empty?
+      raise ArgumentError, "invalid ssh_proxy: #{proxy_host.inspect}" unless valid_proxy_host?(proxy_host)
 
       proxy_command =  "ssh "
       proxy_command += "-o StrictHostKeyChecking=no " unless secure
-      proxy_command += "-p #{proxy_port} "            if proxy_port
-      proxy_command += "#{proxy_host} -W [%h]:%p"
+      proxy_command += "-p #{Integer(proxy_port.to_s, 10)} " if proxy_port
+      # net-ssh substitutes %h, %p... in the command, % may be in an IPv6 zone ID
+      proxy_command += "#{proxy_host.gsub('%', '%%')} -W [%h]:%p"
       Net::SSH::Proxy::Command.new(proxy_command)
+    end
+
+    # [user@]host, where host is a hostname, an IPv4 or an IPv6 address
+    def valid_proxy_host?(proxy_host)
+      user, separator, host = proxy_host.rpartition('@')
+      return false unless separator.empty? || user.match?(PROXY_USER)
+
+      host.match?(HOSTNAME) ||
+        host.match?(Resolv::IPv4::Regex) ||
+        host.match?(Resolv::IPv6::Regex)
     end
 
     def disconnect
