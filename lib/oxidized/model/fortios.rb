@@ -51,7 +51,8 @@ class FortiOS < Oxidized::Model
       "Time Zone",
       "x86-64 Applications",
       "File System",
-      "Image Signature"
+      "Image Signature",
+      "System time"
     ]
     comment cfg + "\n"
   end
