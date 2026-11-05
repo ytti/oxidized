@@ -32,13 +32,16 @@ Gem::Specification.new do |s|
   # so that native packages can be used.
   # We limit the maximal minor version so that dependabot can warn about new
   # major versions and we can test them before activating them in Oxidized.
+  #
+  # Exception: net-ssh and net-scp require newer versions than packaged in
+  # Debian 13, as net-ssh 8 brings SSH hardening and fixes we want to rely on.
+  # They must be installed as gems (net-ssh 8 requires openssl gem >= 3.2).
 
   s.add_dependency 'asetus',               '~> 0.4'
   s.add_dependency 'bcrypt_pbkdf',         '~> 1.0'
-  s.add_dependency 'ed25519',              '~> 1.2'
   s.add_dependency 'net-ftp',              '~> 0.2'
   s.add_dependency 'net-http-digest_auth', '~> 1.4'
-  s.add_dependency 'net-ssh',              '~> 7.3'
+  s.add_dependency 'net-ssh',              '~> 8.1'
   s.add_dependency 'net-telnet',           '~> 0.2'
   s.add_dependency 'psych',                '~> 5.0'
   s.add_dependency 'rubyzip',              '>= 2.3.2', '< 4'
@@ -62,7 +65,7 @@ Gem::Specification.new do |s|
 
   # Dependencies on optional libraries, used for unit tests & development
   s.add_development_dependency 'git',              '>= 2.0', '< 5'
-  s.add_development_dependency 'net-scp',          '~> 4.1'
+  s.add_development_dependency 'net-scp',          '~> 4.2'
   s.add_development_dependency 'net-tftp',         '~> 0.1.0'
   s.add_development_dependency 'nokogiri',         '>= 1.16', '< 2'
   s.add_development_dependency 'oxidized-web',     '>= 0.17.1'

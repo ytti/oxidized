@@ -57,7 +57,7 @@ RUN set -eux; \
       # ruby and core gems needed by oxidized
       ruby ruby-rugged ruby-slop \
       # Gem dependencies for inputs
-      ruby-net-telnet ruby-net-ssh ruby-net-ftp ruby-ed25519 ruby-net-scp \
+      ruby-net-telnet ruby-net-ftp \
       ruby-net-http-persistent ruby-mechanize \
       # Gem dependencies for sources
       ruby-sqlite3 ruby-mysql2 ruby-pg ruby-sequel ruby-gpgme\
@@ -83,9 +83,9 @@ RUN set -eux; \
       # dependencies for hooks
       slack-ruby-client cisco_spark \
       # dependencies for specific inputs
-      net-tftp \
-      ##### X25519 (a.k.a. Curve25519) Elliptic Curve Diffie-Hellman
-      x25519 \
+      # net-ssh >= 8 (installed by rake install) is not packaged in trixie,
+      # and the packaged ruby-net-scp requires net-ssh < 8
+      net-tftp net-scp \
     ; \
     # remove the packages we do not need.
     apt-get remove -y build-essential ruby-dev; \

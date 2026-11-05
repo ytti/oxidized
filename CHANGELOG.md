@@ -38,6 +38,8 @@ net-ssh >= 8.0 requires Diffie-Hellman group exchange groups of at least 2048 bi
 - CI: run Ruby 3.0 and 3.1 on ubuntu-24.04, as ubuntu-26.04 (ubuntu-latest) only provides Ruby >= 3.2; install libjitterentropy3-dev needed to build rugged on ubuntu-26.04 (@robertcheramy)
 - README: document libgpg-error-dev as a dependency on Debian and Ubuntu, and libjitterentropy3-dev as a dependency on Ubuntu 26.04 (Ubuntu bug #2158026) (@robertcheramy)
 - core: log a warning at startup when the loaded oxidized-web is older than 0.17.0 (@robertcheramy)
+- ssh: require net-ssh ~> 8.1 and net-scp ~> 4.2, newer than the Debian 13 packages; the Docker image installs them as gems (@robertcheramy)
+- ssh: drop the ed25519 gem dependency and the x25519 gem in the Docker image, as net-ssh 8 uses OpenSSL for Ed25519 and Curve25519 (@robertcheramy)
 - ingate: redact secrets (private keys, passwords, secrets, passphrases, pre-shared keys, tokens and the SNMP community) when remove_secret is set (@thanegill)
 - http: support overriding port (@mgrocock-cwcs)
 - http: support DELETE method (@mgrocock-cwcs)
