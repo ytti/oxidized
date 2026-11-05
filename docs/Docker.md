@@ -196,6 +196,55 @@ If you don't want to authenticate with user & password but with a ssh-key, you
 can set the ssh passphrase with the environment variable
 `OXIDIZED_SSH_PASSPHRASE`
 
+### Extend the image with additional gems or packages
+Since release 0.35.0, the official image is based on `debian:trixie-slim`
+instead of `phusion/baseimage`. `dumb-init` runs as PID 1 and starts runit
+(`runsvdir -P /etc/service`), which supervises oxidized and the other services
+in `/etc/service/`. `/sbin/my_init` and the other phusion/baseimage paths
+(e.g. `/etc/my_init.d/`) do not exist anymore.
+
+The build tools (`build-essential` and `ruby-dev`) are removed from the final
+image. Running `gem install` in the container for a gem with a native extension
+fails with `mkmf.rb can't find header files for ruby`, see Issue #3897.
+
+If you need additional gems or packages, build your own image on top of the
+official one. This example installs the gem `slack-api`, which depends on a
+native extension:
+
+```dockerfile
+FROM docker.io/oxidized/oxidized:0
+
+RUN set -eux; \
+    apt-get update; \
+    apt-get install -y --no-install-recommends build-essential ruby-dev; \
+    gem install --no-document slack-api; \
+    apt-get remove -y build-essential ruby-dev; \
+    apt-get autoremove -y; \
+    apt-get clean; \
+    rm -rf /var/lib/apt/lists/*
+```
+
+Save this as `Dockerfile` in an empty directory, build the image and run it the
+same way as the official one:
+
+```shell
+sudo docker build -t oxidized-custom .
+sudo docker run --rm -v ~/oxidized-config:/home/oxidized/.config/oxidized -p 8888:8888/tcp oxidized-custom
+```
+
+Do not override the entrypoint to run your own commands at startup. Use the
+oxidized configuration where possible (for example [hooks](/docs/Hooks.md)).
+If you need an additional process, add it as a runit service in your
+Dockerfile:
+
+```dockerfile
+COPY my-service.runit /etc/service/my-service/run
+```
+
+The file must be an executable script. runit restarts it when it exits, so a
+script that only has to run once must end with `sleep infinity`, like
+[extra/update-ca-certificates.runit](/extra/update-ca-certificates.runit).
+
 ## Tipps & tricks
 ### podman & Debian Bookworm
 To install podman in Debian Bookwork, you need following packages:
