@@ -51,11 +51,9 @@ module Oxidized
       ssh_opts[:auth_methods] = auth_methods
       logger.debug "AUTH METHODS::#{auth_methods}"
 
-      if vars(:ssh_proxy)
-        ssh_opts[:proxy] = make_ssh_proxy_command(
-          vars(:ssh_proxy), vars(:ssh_proxy_port), must_secure?
-        )
-      end
+      proxy = make_ssh_proxy_command(vars(:ssh_proxy), vars(:ssh_proxy_port), must_secure?)
+      # net-ssh 8 raises ArgumentError on nil option values
+      ssh_opts[:proxy]             = proxy                                      if proxy
       ssh_opts[:keys]              = [vars(:ssh_keys)].flatten                  if vars(:ssh_keys)
       ssh_opts[:kex]               = vars(:ssh_kex).split(/,\s*/)               if vars(:ssh_kex)
       ssh_opts[:encryption]        = vars(:ssh_encryption).split(/,\s*/)        if vars(:ssh_encryption)

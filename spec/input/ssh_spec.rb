@@ -112,6 +112,15 @@ describe Oxidized::SSH do
       @node.vars["ssh_minimum_dh_bits"] = '1024bits'
       _ { @ssh.make_ssh_opts }.must_raise ArgumentError
     end
+
+    it "does not set proxy with an empty ssh_proxy" do
+      @node.vars["ssh_proxy"] = ''
+      _(@ssh.make_ssh_opts).wont_include :proxy
+    end
+
+    it "does not set proxy without ssh_proxy" do
+      _(@ssh.make_ssh_opts).wont_include :proxy
+    end
   end
 
   describe "#make_ssh_proxy_command" do
