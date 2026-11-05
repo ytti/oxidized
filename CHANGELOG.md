@@ -12,6 +12,8 @@ Oxidized no longer patches Puma's signal handling (needed for Puma 8). With oxid
 
 When loading a single node (`oxs <host>` in oxidized-script, `/reload?node=<host>` in oxidized-web), the node name must now match exactly. Previously, a node also matched when its name was contained in the requested name, so `oxs router10` could run on `router1`.
 
+net-ssh >= 8.0 requires Diffie-Hellman group exchange groups of at least 2048 bits (previously 1024). Old devices offering only 1024-bit groups fail to connect; set the variable `ssh_minimum_dh_bits: 1024` for them.
+
 ### Added
 - IOSXR: Add show vesion (@Mascherus, @systeembeheerder)
 - cnos: remove transceiver DDM data (@freddy36)
@@ -25,6 +27,7 @@ When loading a single node (`oxs <host>` in oxidized-script, `/reload?node=<host
 - ftd: new model for Cisco FTD via HTTP (@mgrocock-cwcs, @robertcheramy)
 - AGENTS.md: add guidance for AI coding agents, and document the AI contribution policy in CONTRIBUTING.md (@robertcheramy)
 - ssh: add the `ssh_pubkey_algorithms` variable to choose the public key signature algorithms, for devices that disconnect on `rsa-sha2-*` such as Huawei SmartAX. Closes #2875 (@fmcglinn)
+- ssh: add the `ssh_minimum_dh_bits` variable to accept Diffie-Hellman groups smaller than 2048 bits on old devices (@robertcheramy)
 
 ### Changed
 - vyos: add commit info (@systeembeheerder)

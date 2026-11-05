@@ -62,6 +62,7 @@ module Oxidized
       ssh_opts[:host_key]          = vars(:ssh_host_key).split(/,\s*/)          if vars(:ssh_host_key)
       ssh_opts[:hmac]              = vars(:ssh_hmac).split(/,\s*/)              if vars(:ssh_hmac)
       ssh_opts[:pubkey_algorithms] = vars(:ssh_pubkey_algorithms).split(/,\s*/) if vars(:ssh_pubkey_algorithms)
+      ssh_opts[:minimum_dh_bits]   = Integer(vars(:ssh_minimum_dh_bits).to_s, 10) if vars(:ssh_minimum_dh_bits)
 
       # Use our logger for Net::SSH
       ssh_logger = SemanticLogger[Net::SSH]

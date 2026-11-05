@@ -90,6 +90,30 @@ describe Oxidized::SSH do
     end
   end
 
+  describe "#make_ssh_opts" do
+    before(:each) do
+      @node = Oxidized::Node.new(name:  'example.com',
+                                 input: 'ssh',
+                                 model: 'junos')
+      @ssh = Oxidized::SSH.new
+      @ssh.instance_variable_set("@node", @node)
+    end
+
+    it "uses ssh_minimum_dh_bits for minimum_dh_bits" do
+      @node.vars["ssh_minimum_dh_bits"] = '1024'
+      _(@ssh.make_ssh_opts[:minimum_dh_bits]).must_equal 1024
+    end
+
+    it "does not set minimum_dh_bits without ssh_minimum_dh_bits" do
+      _(@ssh.make_ssh_opts).wont_include :minimum_dh_bits
+    end
+
+    it "rejects a ssh_minimum_dh_bits that is not an integer" do
+      @node.vars["ssh_minimum_dh_bits"] = '1024bits'
+      _ { @ssh.make_ssh_opts }.must_raise ArgumentError
+    end
+  end
+
   describe "#make_ssh_proxy_command" do
     it "keeps user@host and the port unchanged" do
       ssh = Oxidized::SSH.new

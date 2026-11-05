@@ -141,6 +141,26 @@ vars_map:
 # ...
 ```
 
+### SSH Diffie-Hellman group size
+net-ssh >= 8.0 requires Diffie-Hellman group exchange groups of at least 2048
+bits. Some old devices only offer 1024-bit groups and fail to connect. Set the
+variable `ssh_minimum_dh_bits` to accept smaller groups for these devices:
+
+```yaml
+vars:
+  ssh_minimum_dh_bits: 1024
+```
+
+Or only for one model:
+
+```yaml
+models:
+  ios:
+    vars:
+      ssh_minimum_dh_bits: 1024
+```
+
+
 ### SSH public key algorithms
 Net::SSH signs RSA keys with `rsa-sha2-512` or `rsa-sha2-256` first and falls
 back to `ssh-rsa` only when the device rejects them. Some devices instead drop
