@@ -23,6 +23,69 @@ describe Oxidized::Nodes do
   end
 
   describe '#node_want?' do
+    it 'allows a full inventory reload without cleaning output history' do
+      previous_manager = Oxidized.mgr
+      source_config = mock('source config')
+      source_config.stubs(:default).returns(:csv)
+      output_config = mock('output config')
+      config = mock('config')
+      config.stubs(:source).returns(source_config)
+      config.stubs(:output).returns(output_config)
+      Oxidized.stubs(:config).returns(config)
+
+      loader = mock('source loader')
+      loader.expects(:load).with(nil).returns([])
+      source_class = mock('source class')
+      source_class.expects(:new).returns(loader)
+      manager = mock('manager')
+      manager.expects(:add_source).with(:csv).returns(true)
+      manager.stubs(:source).returns(csv: source_class)
+      Oxidized.mgr = manager
+      Oxidized::Output.expects(:clean_obsolete_nodes).never
+
+      nodes = Oxidized::Nodes.new(nodes: [])
+      nodes.load(nil, clean_obsolete: false)
+
+      _(nodes).must_be_empty
+    ensure
+      Oxidized.mgr = previous_manager
+    end
+    it 'does not log credential columns when a model cannot load' do
+      previous_manager = Oxidized.mgr
+      source_config = mock('source config')
+      source_config.stubs(:default).returns(:csv)
+      output_config = mock('output config')
+      output_config.stubs(:clean_obsolete_nodes?).returns(false)
+      config = mock('config')
+      config.stubs(:source).returns(source_config)
+      config.stubs(:output).returns(output_config)
+      config.stubs(:resolve_dns?).returns(false)
+      config.stubs(:groups).returns({})
+      config.stubs(:models).returns({})
+      Oxidized.stubs(:config).returns(config)
+
+      source_row = {
+        name: 'edge-1', ip: '192.0.2.1', model: 'missing-model',
+        username: 'collector', password: 'private-password'
+      }
+      loader = mock('source loader')
+      loader.expects(:load).with(nil).returns([source_row])
+      source_class = mock('source class')
+      source_class.expects(:new).returns(loader)
+      manager = mock('manager')
+      manager.expects(:add_source).with(:csv).returns(true)
+      manager.stubs(:source).returns(csv: source_class)
+      manager.stubs(:model).returns({})
+      manager.expects(:add_model).with('missing-model').returns(false)
+      Oxidized.mgr = manager
+
+      Oxidized::Nodes.logger.expects(:error).with(
+        "node edge-1 raised Oxidized::ModelNotFound with message 'missing-model not found for node 192.0.2.1'"
+      )
+      @nodes.load
+    ensure
+      Oxidized.mgr = previous_manager
+    end
     it 'wants every node when node_want is nil' do
       _(@nodes.node_want?(nil, { name: 'router1' })).must_equal true
     end

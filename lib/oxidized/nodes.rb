@@ -1,15 +1,17 @@
 module Oxidized
   require 'ipaddr'
   require 'oxidized/node'
+  require 'oxidized/nodes/manual_backup_queue'
   class NotSupported < OxidizedError; end
   class NodeNotFound < OxidizedError; end
 
   class Nodes < Array
     include SemanticLogger::Loggable
+    include ManualBackupQueue
 
     attr_accessor :source, :jobs
     alias put unshift
-    def load(node_want = nil)
+    def load(node_want = nil, clean_obsolete: true)
       with_lock do
         new = []
         @source = Oxidized.config.source.default
@@ -24,13 +26,16 @@ module Oxidized
             node_obj = Node.new node
             new.push node_obj
           rescue ModelNotFound => e
-            logger.error "node %s raised %s with message '%s'" % [node, e.class, e.message]
+            logger.error "node %s raised %s with message '%s'" % [node[:name] || node[:ip], e.class, e.message]
           rescue Resolv::ResolvError => e
-            logger.error "node %s is not resolvable, raised %s with message '%s'" % [node, e.class, e.message]
+            logger.error(
+              "node %s is not resolvable, raised %s with message '%s'" %
+                [node[:name] || node[:ip], e.class, e.message]
+            )
           end
         end
         size.zero? ? replace(new) : update_nodes(new)
-        Output.clean_obsolete_nodes(self) if node_want.nil?
+        Output.clean_obsolete_nodes(self) if node_want.nil? && clean_obsolete
         logger.info "Loaded #{size} nodes"
       end
     end
@@ -87,6 +92,27 @@ module Oxidized
       end
     end
     alias top next
+
+    # Dispatch and manual enqueue share the inventory mutex.
+    def next_job
+      with_lock do
+        size.times do
+          node = first
+          if node.running?
+            self << shift
+            next
+          end
+          return nil if Oxidized.config.interval.zero? && !node.nexted?
+          return nil if node.last && node.last.end + Oxidized.config.interval > Time.now.utc
+
+          node.nexted = false
+          node.running = true
+          self << shift
+          return node
+        end
+        nil
+      end
+    end
 
     # @return [String] node from the head of the array
     def get

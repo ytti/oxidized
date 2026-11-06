@@ -21,16 +21,8 @@ module Oxidized
       while @jobs.size < @jobs.want
         logger.debug "Jobs running: #{@jobs.size} of #{@jobs.want} - ended: " \
                      "#{@jobs_done} of #{@nodes.size}"
-        # ask for next node in queue non destructive way
-        nextnode = @nodes.first
-        break if Oxidized.config.interval.zero? && !nextnode.nexted?
-
-        nextnode.nexted = false
-        break if !nextnode.last.nil? && (nextnode.last.end + Oxidized.config.interval > Time.now.utc)
-
-        # shift nodes and get the next node
-        node = @nodes.get
-        node.running? ? next : node.running = true
+        node = @nodes.next_job
+        break unless node
 
         @jobs.push Job.new node
         logger.debug "Added #{node.group}/#{node.name} to the job queue"
@@ -54,6 +46,7 @@ module Oxidized
       else
         process_failure node, job
       end
+      @nodes.finish_manual_backup(node)
     rescue NodeNotFound
       logger.warn "#{node.group}/#{node.name} not found, removed while collecting?"
     end

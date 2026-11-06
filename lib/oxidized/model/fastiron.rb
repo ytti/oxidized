@@ -1,7 +1,7 @@
 class FastIron < Oxidized::Model
   using Refinements
 
-  prompt /^([\w.@\/()-]+[#>]\s?)$/
+  prompt /^([\w.@\/() -]+[#>]\s?)$/
   comment '! '
 
   # The pager cannot always be disabled with 'skip-page-display', for example

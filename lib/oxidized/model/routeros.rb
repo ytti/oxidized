@@ -1,6 +1,8 @@
 class RouterOS < Oxidized::Model
   using Refinements
 
+  ROUTEROS_EXPORT_TIMESTAMP = /^[ \t]*#[ \t]*(?:[a-z]{3}\/\d{1,2}\/\d{4}|\d{4}-\d{2}-\d{2})[ \t]+\d{2}:\d{2}:\d{2}[ \t]+by[ \t]+RouterOS(?:[ \t]+[^\r\n]+)?[ \t]*\r?$/i
+
   prompt /\[\w+@\S+(\s+\S+)*\]\s?>\s?$/
   comment "# "
 
@@ -52,8 +54,11 @@ class RouterOS < Oxidized::Model
       cfg.gsub! /# \S+ not ready\r\n/, '' # Remove intermittent $interface not ready comment
       cfg.gsub! /# .+ please restart the device in order to apply the new setting\r\n/, '' # Remove intermittent restart needed comment. (e.g. for ipv6 settings)
       cfg = cfg.split("\n")
-      cfg.reject! { |line| line[/^#\s\w{3}\/\d{2}\/\d{4}.*$/] } # Remove date time and 'by RouterOS' comment (v6)
-      cfg.reject! { |line| line[/^#\s\d{4}-\d{2}-\d{2}.*$/] }   # Remove date time and 'by RouterOS' comment (v7)
+      # RouterOS 6 uses month/day/year while RouterOS 7 uses ISO dates. The
+      # export can include indentation and CRLF; only remove its generated
+      # timestamp comment, leaving other date-shaped configuration comments
+      # and the model's separate software-version records intact.
+      cfg.reject! { |line| ROUTEROS_EXPORT_TIMESTAMP.match?(line) }
       cfg.join("\n") + "\n"
     end
   end

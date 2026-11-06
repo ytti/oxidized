@@ -1,7 +1,7 @@
 class OneOS < Oxidized::Model
   using Refinements
 
-  prompt /^([\w.@()-]+#\s?)$/
+  prompt /^([\w.@()-]+[>#]\s?)$/
   comment  '! '
 
   # example how to handle pager
@@ -50,6 +50,10 @@ class OneOS < Oxidized::Model
   cfg :telnet do
     username /^Username:/
     password /^Password:/
+  end
+
+  cfg :ssh do
+    newline "\r\n"
   end
 
   cfg :telnet, :ssh do

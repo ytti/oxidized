@@ -3,7 +3,7 @@ class H3C < Oxidized::Model
 
   # H3C
 
-  prompt /^[<\[][\w.-]+[>\]]$/
+  prompt /^\0*(?:RBM_[PS])?[<\[][\w.-]+[>\]]$/
   comment '# '
 
   cmd :secret do |cfg|

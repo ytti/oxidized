@@ -18,6 +18,7 @@ class AWPlus < Oxidized::Model
     cfg.gsub! "\e[K", '' # example how to handle pager - cleareol EL0
     cfg.gsub! "\e[7m\e[m", '' # example how to handle pager - Reverse SGR7
     cfg.delete! "\r" # Filters rogue ^M - see issue #415
+    cfg.delete! "\a" # Filters stray BEL left after --More-- pager redraw
     cfg.cut_both
   end
 
