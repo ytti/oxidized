@@ -38,7 +38,7 @@ Gem::Specification.new do |s|
   s.add_dependency 'ed25519',              '~> 1.2'
   s.add_dependency 'net-ftp',              '~> 0.2'
   s.add_dependency 'net-http-digest_auth', '~> 1.4'
-  s.add_dependency 'net-ssh',              '~> 7.3'
+  s.add_dependency 'net-ssh',              '>= 7.3', '< 9.0'
   s.add_dependency 'net-telnet',           '~> 0.2'
   s.add_dependency 'psych',                '~> 5.0'
   s.add_dependency 'rubyzip',              '>= 2.3.2', '< 4'
