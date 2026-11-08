@@ -72,6 +72,7 @@ When loading a single node (`oxs <host>` in oxidized-script, `/reload?node=<host
 - core: expand `~` in `crash.directory` before writing crash dumps. Fixes #3945. (@wleeaf, @robertcheramy)
 - junos: remove syntax error when there is no virtual chassis. Fixes #3922. (@dalejos, @robertcheramy)
 - docs: Supported-OS-Types lists the F5OS, Grandstream HT8xx and Uplink EP4440 models under their model names (`f5os`, `grandstreamht8xx`, `uplinkolt`) instead of `tmos`, `grandstream` and `EP4440` (@rawsun007)
+- vrp: remove the `!Last configuration was updated/saved at` lines, which change on every save. Fixes #3958 (@saimskywalker)
 
 ## [0.37.0 - 2026-05-20]
 ### Added

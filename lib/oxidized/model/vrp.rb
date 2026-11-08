@@ -39,7 +39,9 @@ class VRP < Oxidized::Model
   end
 
   cmd 'display current-configuration all' do |cfg|
-    cfg = cfg.each_line.reject { |l| l.match /^\d\d\d\d-\d\d-\d\d \d\d:\d\d:\d\d(\.\d\d\d)? ?(\+\d\d:\d\d)?$/ }.join
-    cfg
+    cfg.reject_lines [
+      /^\d\d\d\d-\d\d-\d\d \d\d:\d\d:\d\d(\.\d\d\d)? ?(\+\d\d:\d\d)?$/,
+      /^!Last configuration was (updated|saved) at /
+    ]
   end
 end
