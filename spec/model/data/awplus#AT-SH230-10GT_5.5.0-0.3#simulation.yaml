@@ -1,0 +1,139 @@
+---
+init_prompt: |-
+      Last login: Sat Oct 31 04:43:42 JST 2026 from 192.0.2.55\r
+      
+      AlliedWare Plus (TM) 5.5.0 06/04/20 06:57:51\r
+      
+      \r
+      
+      sh230>
+commands:
+  # enable\r\n removed as our test workflow doesn't send the enable command
+  - "Show System\r\n": |-
+      Show System\r\r
+      
+      System Status                                           Sat Oct 31 04:46:57 2026\r
+      
+      \r
+      
+      Board      ID   Bay     Board Name                        Rev   Serial number\r
+      
+      --------------------------------------------------------------------------------\r
+      
+      Base       472  Base    AT-SH230-10GT                     A-0   0000000000000000\r
+      
+      --------------------------------------------------------------------------------\r
+      
+      RAM: Total: 510932 kB Free: 389684 kB\r
+      
+      Flash: 61.9MB Used: 25.4MB Available: 36.5MB\r
+      
+      --------------------------------------------------------------------------------\r
+      
+      Environment Status : Normal\r
+      
+      Uptime             : 0 days 02:55:44\r
+      
+      Bootloader version : 3.2.8\r
+      
+      \r
+      
+      Current software   : SH230-5.5.0-0.3.rel\r
+      
+      Software version   : 5.5.0-0.3\r
+      
+      Build date         : Thu Jun 4 06:57:51 UTC 2020\r
+      
+      \r
+      
+      Current boot config: flash:/default.cfg (file exists)\r
+      
+      \r
+      
+      System Name\r
+      
+       sh230\r
+      
+      System Contact\r
+      
+      \r
+      
+      \e[7m--More--\e[m
+  - " ": |-
+      \a\rSystem Location\r
+      \r
+      
+      sh230#
+  - "show running-config\r\n": |-
+      show running-config\r\r
+      
+      !\r
+      service password-encryption\r
+      !\r
+      hostname sh230\r
+      !\r
+      no banner motd\r
+      !\r
+      username manager privilege 15 password 8 $1$XXXXXXXX$XXXXXXXXXXXXXXXXXXXXXX.\r
+      !\r
+      !\r
+      ssh server allow-users manager\r
+      service ssh\r
+      !\r
+      no service telnet\r
+      !\r
+      service http\r
+      !\r
+      clock timezone JST plus 9:00\r
+      !\r
+      snmp-server\r
+      !\r
+      !\r
+      !\r
+      \e[7m--More--\e[m\a
+  - " ": |-
+      \raaa authentication enable default local\r
+      aaa authentication login default local\r
+      !\r
+      !\r
+      !\r
+      !\r
+      !\r
+      !\r
+      loop-protection loop-detect ldf-interval 1 fast-block\r
+      ip domain-lookup\r
+      !\r
+      !\r
+      !\r
+      no service dhcp-server\r
+      !\r
+      spanning-tree mode rstp\r
+      !\r
+      
+      lacp global-passive-mode enable\r
+      !\r
+      interface port1.0.1-1.0.10\r
+       switchport\r
+       switchport mode access\r
+      !\r
+      \e[7m--More--\e[m
+  - " ": |-
+      \rinterface vlan1\r
+       ip address 192.0.2.1/24\r
+       ipv6 enable\r
+       ipv6 address dhcp\r
+       ip dhcp-client vendor-identifying-class\r
+       ip dhcp-client request vendor-identifying-specific\r
+      !\r
+      ip route 0.0.0.0/0 192.0.2.254\r
+      !\r
+      line con 0\r
+      line vty 0 4\r
+      !\r
+      end\r
+      \r
+      
+      sh230#
+  - "exit\r\n": |-
+      exit\r\r
+      
