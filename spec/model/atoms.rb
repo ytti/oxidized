@@ -38,17 +38,17 @@ class ATOMS
   # Abstract Class for loading test data
   class Test
     class TestError < ATOMSError; end
-    attr_reader :model, :desc, :type
+    attr_reader :model, :desc, :type, :errors
 
     def initialize(model, desc, type)
       @model = model
       @desc = desc
       @type = type
-      @skip = false
+      @errors = []
     end
 
-    def skip?
-      @skip
+    def invalid?
+      !@errors.empty?
     end
 
     def to_s(type = @type)
@@ -67,7 +67,8 @@ class ATOMS
       else
         File.read(file_name)
       end
-    rescue StandardError
+    rescue StandardError => e
+      @errors << "#{File.basename(file_name)}: #{e.message}"
       nil
     end
   end
@@ -83,7 +84,7 @@ class ATOMS
   # "description" is the name of the test case and is generally formatted as
   # hardware_software or model_hardware_information.
   #
-  # The test is skipped if one of the files is missing.
+  # The test fails if one of the files is missing or cannot be loaded.
   class TestOutput < Test
     GLOB = '*#output.txt'.freeze
     class TestOutputError < TestError; end
@@ -95,7 +96,6 @@ class ATOMS
 
       @simulation = load_file('simulation')
       @output = load_file('output')
-      @skip = true unless @simulation && @output
     end
 
     def generate(result_engine)
@@ -122,7 +122,6 @@ class ATOMS
       super
 
       @data = load_file(type)
-      @skip = true unless @data
     end
 
     def pass
@@ -143,7 +142,7 @@ class ATOMS
   # "description" is generally named 'generic', as all prompts for a model
   # can be stored in a single YAML file.
   #
-  # The test is skipped if the YAML file cannot be loaded.
+  # The test fails if the YAML file cannot be loaded.
   #
   # The tests are read from a YAML file, which contains three attributes:
   # - pass: regexps that should pass
@@ -178,7 +177,8 @@ class ATOMS
   # hardware_software or model_hardware_information. It must match the
   # name of the corresponding YAML simulation file.
   #
-  # The test is skipped if the YAML file cannot be loaded.
+  # The test fails if the YAML file or the matching simulation/output files
+  # cannot be loaded.
   #
   # The YAML file contains two attributes, each with a list of strings that
   # should be present or absent in the output of the model when the secret
@@ -196,7 +196,7 @@ class ATOMS
       super
 
       @output_test = TestOutput.new(@model, @desc, 'output')
-      @skip = true if @output_test.skip?
+      @errors.concat(@output_test.errors)
     end
   end
 
@@ -208,7 +208,7 @@ class ATOMS
       super
 
       @output_test = TestOutput.new(@model, @desc, 'output')
-      @skip = true if @output_test.skip?
+      @errors.concat(@output_test.errors)
     end
   end
 end
