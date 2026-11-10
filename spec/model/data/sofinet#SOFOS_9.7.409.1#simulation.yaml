@@ -11,7 +11,7 @@ commands:
       Copyright (C) Sofinet, LLC. All Rights Reserved\r\r
       \r
       Sofinet SFN2200 Version Information\r\r
-      \tSystem ID           : 0000000000\r\r
+      \tSystem ID           : 0000000000000\r\r
       \tHardware Model\t    : SFN2200-24T4X(V1)\r\r
       \tHardware Version    : 002(Hotswap Unsupported)\r\r
       \tBootloader Version  : 9.7.400.1\r\r
@@ -19,7 +19,7 @@ commands:
       \tSoftware Image File : flash0: /flash/sfn-access-9.7.409.1(R).pck\r\r
       \tCompiled      \t    : Sep 26 2025, 14:35:54 \r\r
       \r
-      System Uptime is 5 days 22 hours\r\r
+      System Uptime is 5 days 23 hours\r\r
       \r\r
       switch#
   - "show running-config\n": |-
@@ -41,7 +41,7 @@ commands:
       hostname switch\r\r
                   \r\r
       \r
-      enable password 0000000000 encrypt\r\r
+      enable password 000000000000000 encrypt\r\r
       \r\r
       \r
       \r\r
@@ -64,7 +64,7 @@ commands:
       local-user admin class manager\r\r
        service-type telnet console ssh ftp web netconf\r\r
        privilege 15\r\r
-       password 7 0000000000\r\r
+       password 7 0000000000000000\r\r
        exit\r\r
       \r\r
       \r
@@ -122,8 +122,8 @@ commands:
        exit\r\r
       \r
                                            \r\r
-      ip route 0.0.0.0 0.0.0.0 192.168.0.1\r\r
-      ip route 0.0.0.0 0.0.0.0 192.168.0.1\r\r
+      ip route 0.0.0.0 0.0.0.0 192.168.0.0\r\r
+      ip route 0.0.0.0 0.0.0.0 192.168.0.0\r\r
       \r\r
       \r
       ip ssh server\r\r

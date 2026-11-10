@@ -1,5 +1,5 @@
 class Sofinet < Oxidized::Model
-  # Sofinet switches (SFN2200 series)
+  # Sofinet SOFOS switches
 
   prompt /[#>]\s*$/
   comment '# '
@@ -10,7 +10,7 @@ class Sofinet < Oxidized::Model
   end
 
   cmd :all do |cfg|
-    cfg.gsub!(/\r/, '')
+    cfg.gsub!("\r", '')
     cfg.gsub!(/\e\[[0-9;]*m/, '')
     cfg.gsub!('---MORE---', '')
     cfg.gsub!('--More--', '')
@@ -18,8 +18,7 @@ class Sofinet < Oxidized::Model
     cfg.gsub!(/^\s+\n/, '')
     cfg
   end
-  
-  
+
   cmd :secret do |cfg|
     cfg.gsub!(/(password\s+\d+\s+)\S+/, '\1<hidden>')
     cfg.gsub!(/(enable password\s+)\S+(\s+encrypt)/, '\1<hidden>\2')
@@ -34,7 +33,7 @@ class Sofinet < Oxidized::Model
   cmd 'show version' do |cfg|
     cfg.gsub!(/^System Uptime is .*\n/, '')
     comment cfg
-  end  
+  end
 
   cmd 'show running-config' do |cfg|
     cfg.gsub!(/^Building Configuration\.\.\.\s*\n(?:done\s*\n)?/i, '')
@@ -43,7 +42,7 @@ class Sofinet < Oxidized::Model
     cfg.gsub!(/^! Flash config last updated at .*\n/, '')
     cfg
   end
-  
+
   cfg :ssh do
     post_login do
       enable_val = vars(:enable).to_s
