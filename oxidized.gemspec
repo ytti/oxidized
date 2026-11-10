@@ -7,15 +7,19 @@ Gem::Specification.new do |s|
   s.version           = Oxidized::VERSION
   s.licenses          = %w[Apache-2.0]
   s.platform          = Gem::Platform::RUBY
-  s.authors           = ['Saku Ytti', 'Samer Abdel-Hafez', 'Anton Aksola']
-  s.email             = %w[saku@ytti.fi sam@arahant.net aakso@iki.fi]
-  s.homepage          = 'http://github.com/ytti/oxidized'
-  s.summary           = 'feeble attempt at rancid'
+  s.authors           = ['Oxidized Developers']
+  s.homepage          = 'https://github.com/ytti/oxidized'
+  s.summary           = 'Network device configuration backup tool'
   s.description       = 'software to fetch configuration from network devices and store them'
-  s.files             = %x(git ls-files -z).split("\x0").reject { |f| f.match(/^(test|spec|features)\//) }
-  s.executables       = %w[oxidized]
+  s.executables       = %w[oxidized oxidized-device2yaml]
+  s.files             = Dir['lib/**/*.rb', 'extra/**/*', 'docs/**/*.md'].select { |f| File.file?(f) } +
+                        s.executables.map { |e| "bin/#{e}" } +
+                        %w[CHANGELOG.md CONTRIBUTING.md LICENSE README.md]
   s.require_path      = 'lib'
 
+  s.metadata['source_code_uri']       = 'https://github.com/ytti/oxidized'
+  s.metadata['changelog_uri']         = 'https://github.com/ytti/oxidized/blob/master/CHANGELOG.md'
+  s.metadata['bug_tracker_uri']       = 'https://github.com/ytti/oxidized/issues'
   s.metadata['rubygems_mfa_required'] = 'true'
 
   # Ruby version strategy

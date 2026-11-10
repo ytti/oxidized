@@ -125,6 +125,8 @@ Instead, **guide the user** to record one themselves, using one of:
 
 1. **`extra/device2yaml.rb`** – connects over SSH and records the session. See
    [docs/DeviceSimulation.md](docs/DeviceSimulation.md#creating-a-yaml-simulation-file-with-device2yamlrb).
+   Users who installed the oxidized gem (`>= 0.38.0`) can run
+   `oxidized-device2yaml` instead, without a copy of the repository.
    Example:
 
    ```bash

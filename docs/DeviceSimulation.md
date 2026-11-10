@@ -67,7 +67,12 @@ the Ruby script [extra/device2yaml.rb](/extra/device2yaml.rb).
 [net-ssh](https://rubygems.org/gems/net-ssh/) to run. On Debian, you can install
 them with `sudo apt install ruby-net-ssh`.
 
-Run `extra/device2yaml.rb`, the online help tells you the options.
+Starting with Oxidized 0.38.0, `device2yaml.rb` is also installed with the
+oxidized gem as the command `oxidized-device2yaml`, so you do not need a copy of
+the repository.
+
+Run `extra/device2yaml.rb` (or `oxidized-device2yaml` if you installed the
+gem); the online help tells you the options.
 ```
 oxidized$ extra/device2yaml.rb
 Missing a host to connect to...
@@ -141,6 +146,9 @@ show inventory
 show running-config
 exit" -o spec/model/data/ios#C8200L_16.12.1#simulation.yaml
 ```
+
+If you installed the oxidized gem, use `oxidized-device2yaml` instead of
+`extra/device2yaml.rb`.
 
 #### Interactive Mode
 The `device2yaml.rb` script is basic and sometimes needs some help, especially
