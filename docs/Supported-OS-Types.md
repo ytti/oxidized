@@ -121,6 +121,7 @@
 |                    |MSM (Wireless Controller)     |[hpmsm](/lib/oxidized/model/hpmsm.rb)
 |H3C                 |S6520X                        |[h3c](/lib/oxidized/model/h3c.rb)
 |Huawei              |VRP                           |[vrp](/lib/oxidized/model/vrp.rb)                |                 |[VRP-Huawei](Model-Notes/VRP-Huawei.md)
+|                    |YunShan OS                    |[vrp](/lib/oxidized/model/vrp.rb)                |                 |[VRP-Huawei](Model-Notes/VRP-Huawei.md)
 |                    |SmartAX series                |[smartax](/lib/oxidized/model/smartax.rb)        |                 |[SmartAX-Huawei](Model-Notes/SmartAX-Huawei.md)
 |Icotera             |6400 series                   |[icotera](/lib/oxidized/model/icotera.rb)
 |Ingate              |SIParator/Firewalls           |[ingate](/lib/oxidized/model/ingate.rb)          |@thanegill
