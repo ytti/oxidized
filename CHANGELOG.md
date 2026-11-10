@@ -16,6 +16,8 @@ net-ssh >= 8.0 requires Diffie-Hellman group exchange groups of at least 2048 bi
 
 net-ssh >= 8.0 parses the OpenSSH configuration files (`~/.ssh/config`, `/etc/ssh/ssh_config`) more strictly, including `KexAlgorithms`, `PubkeyAcceptedAlgorithms` and `-` algorithm lists. This may change the algorithm negotiation; see [OpenSSH configuration files](docs/Inputs.md#openssh-configuration-files).
 
+net-ssh >= 8.1 changed how RSA keys are offered, which may break public key authentication on some devices; see [SSH public key algorithms](docs/Inputs.md#ssh-public-key-algorithms).
+
 ### Added
 - device2yaml: add port option (@systeembeheerder)
 - itmgos: new model for Lantronix IT Management Gateway OS (SLC 8000, SLC 9000, EMG, SLB console servers), with simulation data and unit tests (@ryanhoggpm)

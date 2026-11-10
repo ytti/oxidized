@@ -162,14 +162,20 @@ models:
 
 
 ### SSH public key algorithms
-Net::SSH signs RSA keys with `rsa-sha2-512` or `rsa-sha2-256` first and falls
-back to `ssh-rsa` only when the device rejects them. Some devices instead drop
-the connection, e.g. Huawei SmartAX MA5683T, which accepts the key and then
-disconnects on the `rsa-sha2-256` signature. Others log a failed login before
-the fallback succeeds (#2875).
+Since net-ssh 8.1, each RSA key is offered only once, with a single signature
+algorithm, as OpenSSH does:
+- If the device announces the algorithms it accepts (RFC 8308
+  `server-sig-algs`), Net::SSH uses the first one of `rsa-sha2-512`,
+  `rsa-sha2-256` and `ssh-rsa` that the device lists.
+- Otherwise, the key is offered as `ssh-rsa`.
 
-Set the variable `ssh_pubkey_algorithms` to choose the algorithms, in order,
-for these devices:
+There is no fallback to another algorithm when the device rejects the
+signature. Some devices announce `rsa-sha2-*` but only accept `ssh-rsa`, or
+drop the connection on a `rsa-sha2-*` signature, e.g. Huawei SmartAX MA5683T
+(#2875). Public key authentication with RSA keys then fails.
+
+Set the variable `ssh_pubkey_algorithms` to choose the preferred algorithms,
+in order, for these devices:
 
 ```yaml
 models:
@@ -178,8 +184,10 @@ models:
       ssh_pubkey_algorithms: ssh-rsa
 ```
 
-This only applies to RSA keys. Valid values are `rsa-sha2-512`,
-`rsa-sha2-256` and `ssh-rsa`; other values are ignored.
+The listed algorithms are tried first, the other supported algorithms are
+appended, so in practice this only changes the choice for RSA keys. The
+OpenSSH prefixes `+`, `-` and `^` are supported, e.g. `-ssh-rsa` removes
+`ssh-rsa`. Unsupported values are ignored.
 
 ### Custom SSH port
 Set the variable `ssh_port` to the desired value (default is 22).
