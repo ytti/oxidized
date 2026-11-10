@@ -67,6 +67,10 @@ the Ruby script [extra/device2yaml.rb](/extra/device2yaml.rb).
 [net-ssh](https://rubygems.org/gems/net-ssh/) to run. On Debian, you can install
 them with `sudo apt install ruby-net-ssh`.
 
+Starting with Oxidized 0.38.0, `device2yaml.rb` is also installed with the
+oxidized gem as the command `oxidized-device2yaml`, so you do not need a copy of
+the repository.
+
 Run `extra/device2yaml.rb`, the online help tells you the options.
 ```
 oxidized$ extra/device2yaml.rb

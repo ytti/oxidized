@@ -13,7 +13,7 @@ Gem::Specification.new do |s|
   s.summary           = 'feeble attempt at rancid'
   s.description       = 'software to fetch configuration from network devices and store them'
   s.files             = %x(git ls-files -z).split("\x0").reject { |f| f.match(/^(test|spec|features)\//) }
-  s.executables       = %w[oxidized]
+  s.executables       = %w[oxidized oxidized-device2yaml]
   s.require_path      = 'lib'
 
   s.metadata['rubygems_mfa_required'] = 'true'

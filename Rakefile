@@ -62,6 +62,7 @@ task :chmod do
   xbit = %w[
     bin/oxidized
     bin/console
+    bin/oxidized-device2yaml
     extra/auto-reload-config.runit
     extra/nagios_check_failing_nodes.rb
     extra/oxidized-report-git-commits
