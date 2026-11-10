@@ -1,0 +1,81 @@
+! Starting: Show system cmd 
+! --------------------------------------------------------------------------------! 
+! Board      ID   Bay     Board Name                        Rev   Serial number
+! --------------------------------------------------------------------------------
+! Base       472  Base    AT-SH230-10GT                     A-0   0000000000000000
+! --------------------------------------------------------------------------------
+! --------------------------------------------------------------------------------
+! Environment Status : Normal
+! Bootloader version : 3.2.8
+! Current boot config: flash:/default.cfg (file exists)
+! System Name
+!  sh230
+! System Contact
+! System Location
+!  
+! Ending: show system cmd
+! --------------------------------------------------------------------------------! 
+!  
+
+!
+service password-encryption
+!
+hostname sh230
+!
+no banner motd
+!
+username manager privilege 15 password 8 $1$XXXXXXXX$XXXXXXXXXXXXXXXXXXXXXX.
+!
+!
+ssh server allow-users manager
+service ssh
+!
+no service telnet
+!
+service http
+!
+clock timezone JST plus 9:00
+!
+snmp-server
+!
+!
+!
+aaa authentication enable default local
+aaa authentication login default local
+!
+!
+!
+!
+!
+!
+loop-protection loop-detect ldf-interval 1 fast-block
+ip domain-lookup
+!
+!
+!
+no service dhcp-server
+!
+spanning-tree mode rstp
+!
+
+lacp global-passive-mode enable
+!
+interface port1.0.1-1.0.10
+ switchport
+ switchport mode access
+!
+interface vlan1
+ ip address 192.0.2.1/24
+ ipv6 enable
+ ipv6 address dhcp
+ ip dhcp-client vendor-identifying-class
+ ip dhcp-client request vendor-identifying-specific
+!
+ip route 0.0.0.0/0 192.0.2.254
+!
+line con 0
+line vty 0 4
+!
+end
+
+

@@ -14,6 +14,7 @@ When loading a single node (`oxs <host>` in oxidized-script, `/reload?node=<host
 
 ### Added
 - itmgos: new model for Lantronix IT Management Gateway OS (SLC 8000, SLC 9000, EMG, SLB console servers), with simulation data and unit tests (@ryanhoggpm)
+- VPR: Add simulation data for Huawei YunShan OS with VRP model (@systeembeheerder)
 - IOSXR: Add show vesion (@Mascherus, @systeembeheerder)
 - cnos: remove transceiver DDM data (@freddy36)
 - cnos: add show license output (@freddy36)
@@ -72,6 +73,8 @@ When loading a single node (`oxs <host>` in oxidized-script, `/reload?node=<host
 - nodes: match the node name exactly when loading a single node, instead of matching the node name as a regexp against the requested name, which could select the wrong node (e.g. `router1` for `router10`) (@robertcheramy)
 - core: expand `~` in `crash.directory` before writing crash dumps. Fixes #3945. (@wleeaf, @robertcheramy)
 - junos: remove syntax error when there is no virtual chassis. Fixes #3922. (@dalejos, @robertcheramy)
+- docs: Supported-OS-Types lists the F5OS, Grandstream HT8xx and Uplink EP4440 models under their model names (`f5os`, `grandstreamht8xx`, `uplinkolt`) instead of `tmos`, `grandstream` and `EP4440` (@rawsun007)
+- awplus: remove stray BEL (0x07) character left from pager. Fixes #3919. (@cojumbo, @robertcheramy)
 
 ## [0.37.0 - 2026-05-20]
 ### Added
