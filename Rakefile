@@ -34,7 +34,22 @@ task :test do
   end
 end
 
-task build: %i[chmod version_set]
+task build: %i[untracked chmod version_set]
+
+desc 'Abort if the gem would package files not tracked by git'
+task :untracked do
+  unless system('git rev-parse --is-inside-work-tree > /dev/null 2>&1')
+    warn 'Not a git repository, skipping the check for untracked files'
+    next
+  end
+
+  tracked = %x(git ls-files -z).split("\x0")
+  untracked = gemspec.files - tracked
+  next if untracked.empty?
+
+  abort "The following files would be packaged but are not tracked by git:\n  " \
+        "#{untracked.join("\n  ")}\nRemove them or add them to git."
+end
 
 desc 'Set Gem Version'
 task :version_set do
