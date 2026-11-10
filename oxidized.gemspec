@@ -12,8 +12,10 @@ Gem::Specification.new do |s|
   s.homepage          = 'http://github.com/ytti/oxidized'
   s.summary           = 'feeble attempt at rancid'
   s.description       = 'software to fetch configuration from network devices and store them'
-  s.files             = %x(git ls-files -z).split("\x0").reject { |f| f.match(/^(test|spec|features)\//) }
   s.executables       = %w[oxidized oxidized-device2yaml]
+  s.files             = Dir['lib/**/*.rb', 'extra/**/*', 'docs/**/*.md'].select { |f| File.file?(f) } +
+                        s.executables.map { |e| "bin/#{e}" } +
+                        %w[CHANGELOG.md CONTRIBUTING.md LICENSE README.md]
   s.require_path      = 'lib'
 
   s.metadata['rubygems_mfa_required'] = 'true'

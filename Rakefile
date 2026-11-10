@@ -74,7 +74,7 @@ task :chmod do
     extra/device2yaml.rb
   ]
   dirs = []
-  %x(git ls-files -z).split("\x0").reject { |f| f.match(/^(test|spec|features)\//) }.each do |file|
+  (gemspec.files | xbit).each do |file|
     dirs.push(File.dirname(file))
     xbit.include?(file) ? File.chmod(0o0755, file) : File.chmod(0o0644, file)
   end
