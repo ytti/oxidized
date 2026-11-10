@@ -47,6 +47,7 @@ net-ssh >= 8.1 changed how RSA keys are offered, which may break public key auth
 - core: log a warning at startup when the loaded oxidized-web is older than 0.17.0 (@robertcheramy)
 - ssh: require net-ssh ~> 8.1 and net-scp ~> 4.2, newer than the Debian 13 packages; the Docker image installs them as gems (@robertcheramy)
 - ssh: drop the ed25519 gem dependency and the x25519 gem in the Docker image, as net-ssh 8 uses OpenSSL for Ed25519 and Curve25519 (@robertcheramy)
+- ssh, scp: log a warning instead of creating a crashfile on a host key mismatch (`secure: true`) and on an unsupported key type (@robertcheramy)
 - ingate: redact secrets (private keys, passwords, secrets, passphrases, pre-shared keys, tokens and the SNMP community) when remove_secret is set (@thanegill)
 - http: support overriding port (@mgrocock-cwcs)
 - http: support DELETE method (@mgrocock-cwcs)

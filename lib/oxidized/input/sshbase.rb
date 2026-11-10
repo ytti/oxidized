@@ -11,7 +11,8 @@ module Oxidized
       Net::SSH::Disconnect           => :debug,
       Net::SSH::ConnectionTimeout    => :debug,
       Net::SSH::AuthenticationFailed => :warn,
-      Net::SSH::HostKeyUnknown       => :warn,
+      Net::SSH::HostKeyError         => :warn,
+      Net::SSH::UnsupportedKeyType   => :warn,
       InvalidVariable                => :warn
     }.freeze
 
