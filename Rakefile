@@ -64,12 +64,19 @@ end
 
 desc 'Tag the release'
 task :tag do
-  system "git tag #{gemspec.version} -m 'Release #{gemspec.version}'"
+  sh "git tag -a #{gemspec.version} -m 'Release #{gemspec.version}'"
 end
 
-desc 'Push to rubygems'
-task push: :tag do
-  system "gem push pkg/#{gemfile}"
+desc 'Push the built gem to rubygems'
+task :push do
+  sh "gem push pkg/#{gemfile}"
+end
+
+# bundler/gem_tasks would tag "v<version>", Oxidized tags without the "v"
+Rake::Task['release'].clear
+desc 'Disabled, see docs/Release.md'
+task :release do
+  abort 'Use `rake tag` and `rake push` as described in docs/Release.md'
 end
 
 desc 'Normalise file permissions'
