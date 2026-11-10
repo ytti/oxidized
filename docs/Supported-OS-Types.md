@@ -168,6 +168,7 @@
 |                    |Multihaul TG                  |[siklumhtg](/lib/oxidized/model/siklumhtg.rb)    |@bdg-robert      |[Siklu Multihaul TG](Model-Notes/SikluMHTG.md)
 |Seiko Solutions     |SmartCS, SmartCS mini         |[smartcs](/lib/oxidized/model/smartcs.rb)
 |SmartByte           |LT-S8228G series              |[smartbyte](/lib/oxidized/model/smartbyte.rb)    |@freddy36
+|Sofinet             |SOFOS			    |[sofinet](/lib/oxidized/model/sofinet.rb)        |@torshhh
 |SonicWALL           |SonicOS                       |[sonicos](/lib/oxidized/model/sonicos.rb)
 |[SONiC](https://sonicfoundation.dev/) |Enterprise SONiC |[enterprise_sonic](/lib/oxidized/model/enterprise_sonic.rb) | |
 |SNR                 |SNR-S300G, S2xxx, S3xxx, S4xxx|[dcnos](/lib/oxidized/model/dcnos.rb)

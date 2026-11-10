@@ -13,6 +13,8 @@ Oxidized no longer patches Puma's signal handling (needed for Puma 8). With oxid
 When loading a single node (`oxs <host>` in oxidized-script, `/reload?node=<host>` in oxidized-web), the node name must now match exactly. Previously, a node also matched when its name was contained in the requested name, so `oxs router10` could run on `router1`.
 
 ### Added
+
+- sofinet: new model for Sofinet SOFOS switches (@torshhh)
 - IOSXR: Add show vesion (@Mascherus, @systeembeheerder)
 - cnos: remove transceiver DDM data (@freddy36)
 - cnos: add show license output (@freddy36)
