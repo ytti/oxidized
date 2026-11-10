@@ -9,7 +9,7 @@ Gem::Specification.new do |s|
   s.platform          = Gem::Platform::RUBY
   s.authors           = ['Oxidized Developers']
   s.homepage          = 'https://github.com/ytti/oxidized'
-  s.summary           = 'feeble attempt at rancid'
+  s.summary           = 'Network device configuration backup tool'
   s.description       = 'software to fetch configuration from network devices and store them'
   s.executables       = %w[oxidized oxidized-device2yaml]
   s.files             = Dir['lib/**/*.rb', 'extra/**/*', 'docs/**/*.md'].select { |f| File.file?(f) } +
