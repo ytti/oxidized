@@ -1,0 +1,277 @@
+   
+					 
+			   
+	  
+																																		  
+																
+		  
+		 
+									 
+								 
+																						 
+			
+						   
+					   
+# Huawei YunShan OS
+# Version 1.24.0.1 (S5700 V600R024C00SPC500)
+# Copyright (C) 2021-2024 Huawei Technologies Co., Ltd.
+																		  
+# Patch Version: V600R024HP0021
+#
+																			 
+#         StartupTime 2026/06/08   14:12:29
+# Memory      Size    : 2048 M bytes
+# Flash       Size    : 1024 M bytes
+# S5735-L48LP4XE-A-V2 version information:
+# 1.PCB       Version : ES5D2V54S036 VER B
+# 2.MAB       Version : 2
+# 3.Board     Type    : S5735-L48LP4XE-A-V2
+# 4.BIOS      Version : 1390
+# 5.CPLD      Version : 262
+			
+						  
+					  
+# CloudEngine S5735-L-V2's Device status:
+# --------------------------------------------------------------------------------
+# Slot  Card   Type                           Online   Power Register     Alarm     Primary
+# --------------------------------------------------------------------------------
+# 1     -      S5735-L48LP4XE-A-V2            Present  On    Registered   Normal    Master
+#       FAN1   FAN                            Present  On    Registered   Normal    NA
+#       FAN2   FAN                            Present  On    Registered   Normal    NA
+# --------------------------------------------------------------------------------
+			
+											 
+										 
+!Software Version V600R024C00SPC500
+!Last configuration was updated at 2026-11-06 22:29:30+01:00 by contoso-adm
+!Last configuration was saved at 2026-11-06 22:29:45+01:00 by contoso-adm
+#
+pki realm default
+#
+clock timezone CET add 01:00:00
+clock daylight-saving-time CEST repeating 02:00 last Sun Mar 03:00 last Sun Oct 01:00
+#
+sysname sw04
+#
+dhcp enable
+#
+undo ftp server source all-interface
+undo ftp ipv6 server source all-interface
+#
+ssl policy default
+ pki-domain default
+ ssl minimum version tls1.2
+ cipher-suite exclude key-exchange rsa
+ cipher-suite exclude cipher mode cbc
+ cipher-suite exclude hmac sha1
+ diffie-hellman modulus 3072
+ ecdh group nist curve brainpool
+ signature algorithm-list ed25519 ed448 rsa-pss-pss-sha256 rsa-pss-pss-sha384 rsa-pss-pss-sha512 rsa-pss-rsae-sha256 rsa-pss-rsae-sha384 rsa-pss-rsae-sha512
+#
+info-center loghost 192.0.2.11
+info-center logfile compression lzma
+#
+device board 1 board-type S5735-L48LP4XE-A-V2
+#
+authentication-profile name default_authen_profile
+authentication-profile name dot1x_authen_profile
+authentication-profile name dot1xmac_authen_profile
+authentication-profile name mac_authen_profile
+authentication-profile name multi_authen_profile
+authentication-profile name portal_authen_profile
+#
+dhcp snooping enable
+#
+drop-profile default
+#
+ntp server disable
+ntp ipv6 server disable
+ntp server source-interface all disable
+ntp ipv6 server source-interface all disable
+ntp unicast-server 192.0.2.21
+ntp unicast-server 192.0.2.22
+#
+vlan batch 50 to 51 53 to 55
+#
+stp mode rstp
+stp instance 0 priority 61440
+stp bpdu-protection
+stp tc-protection
+#
+igmp snooping enable
+#
+error-down auto-recovery cause bpdu-protection interval 300
+error-down auto-recovery cause loopback-detect interval 300
+error-down auto-recovery cause link-flap interval 60
+#
+undo telnet server-source all-interface
+undo telnet ipv6 server-source all-interface
+#
+qos schedule-profile default
+#
+qos burst-mode enhanced slot 1
+#
+diffserv domain default
+#
+ip vpn-instance _management_vpn_
+ ipv4-family
+#
+vlan 50
+ description Servers
+#
+vlan 51
+ dhcp snooping enable
+ description Clients
+ igmp snooping enable
+#
+vlan 53
+ description BYOD
+ igmp snooping enable
+#
+vlan 54
+ dhcp snooping enable
+ description IOT
+ igmp snooping enable
+#
+vlan 55
+ description Management
+#
+aaa
+ authentication-scheme default
+  authentication-mode local
+ authentication-scheme radius
+  authentication-mode radius
+ authorization-scheme default
+  authorization-mode local
+ accounting-scheme default
+  accounting-mode none
+ local-aaa-user password policy administrator
+  password history record number 0
+  undo password alert original
+  password expire 0
+ domain default
+  authentication-scheme default
+  accounting-scheme default
+ domain default_admin
+  authentication-scheme default
+  accounting-scheme default
+ local-user oxidized privilege level 1
+ local-user oxidized service-type terminal ssh
+ local-user contoso-adm password irreversible-cipher REMOVED
+ local-user contoso-adm privilege level 3
+ local-user contoso-adm service-type terminal ssh
+#
+free-rule-template name default_free_rule
+#
+portal-access-profile name portal_access_profile
+#
+dot1x-access-profile name dot1x_access_profile
+#
+mac-access-profile name mac_access_profile
+#
+remote-unit
+#
+stack
+#
+license
+#
+warranty
+#
+interface Vlanif55
+ ip address 192.0.2.250 255.255.255.0
+#
+interface Stack-Port1/1
+#
+interface Stack-Port1/2
+#
+interface GE1/0/1
+ description core: sw02.hq.contoso.net (13)
+ port link-type trunk
+ port trunk allow-pass vlan 50 to 51 53 to 55
+ dhcp snooping trusted
+#
+interface GE1/0/2
+ description Cust: user
+ port link-type access
+ port default vlan 51
+ stp edged-port enable
+ mac-address limit maximum 8
+#
+interface GE1/0/3
+ description BYOD
+ port link-type access
+ port default vlan 53
+ stp edged-port enable
+ mac-address limit maximum 8
+#
+interface 10GE1/0/1
+ shutdown
+#
+interface NULL0
+#
+ip route-static 0.0.0.0 0.0.0.0 192.0.2.254
+#
+snmp-agent
+snmp-agent local-engineid REMOVED
+#
+snmp-agent sys-info contact Systeembeheerder
+snmp-agent sys-info location Somehere in the cloud
+snmp-agent sys-info version v3
+snmp-agent group v3 contoso-nms privacy read-view SNMP_READ
+#
+snmp-agent mib-view included SNMP_READ iso
+snmp-agent usm-user v3 contoso-nms
+snmp-agent usm-user v3 contoso-nms group contoso-nms
+snmp-agent usm-user v3 contoso-nms authentication-mode sha2-256 cipher REMOVED
+snmp-agent usm-user v3 contoso-nms privacy-mode aes128 cipher REMOVED
+#
+snmp-agent protocol source-interface Vlanif55
+undo snmp-agent protocol source-status all-interface
+undo snmp-agent protocol source-status ipv6 all-interface
+#
+undo snmp-agent proxy protocol source-status all-interface
+undo snmp-agent proxy protocol source-status ipv6 all-interface
+#
+#
+stelnet server enable
+ssh server rsa-key min-length 3072
+ssh user oxidized
+ssh user oxidized authentication-type ecc
+ssh user oxidized assign ecc-key oxidized
+ssh user oxidized service-type stelnet
+ssh user contoso-adm
+ssh user contoso-adm authentication-type password
+ssh user contoso-adm service-type stelnet
+ssh server-source -i Vlanif55
+undo ssh server-source all-interface
+undo ssh ipv6 server-source all-interface
+ssh authorization-type default aaa
+#
+ssh server cipher aes256_gcm aes128_gcm aes256_ctr aes192_ctr aes128_ctr
+ssh server hmac sha2_512 sha2_256
+ssh server key-exchange dh_group_exchange_sha256 dh_group16_sha512 curve25519_sha256
+#
+ssh server publickey ecc rsa_sha2_256 rsa_sha2_512
+#
+ssh server dh-exchange min-len 3072
+#
+ssh client publickey rsa_sha2_256 rsa_sha2_512
+#
+ssh client cipher aes256_gcm aes128_gcm aes256_ctr aes192_ctr aes128_ctr
+ssh client hmac sha2_512 sha2_256
+ssh client key-exchange dh_group_exchange_sha256 dh_group16_sha512 curve25519_sha256
+#
+user-interface maximum-vty 5
+#
+user-interface con 0
+ authentication-mode aaa
+#
+user-interface vty 0 4
+ authentication-mode aaa
+ protocol inbound ssh
+#
+ztp domain-type registration-center domain register.naas.huawei.com port 10020
+#
+return
+			
+				

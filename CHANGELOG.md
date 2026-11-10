@@ -13,8 +13,10 @@ Oxidized no longer patches Puma's signal handling (needed for Puma 8). With oxid
 When loading a single node (`oxs <host>` in oxidized-script, `/reload?node=<host>` in oxidized-web), the node name must now match exactly. Previously, a node also matched when its name was contained in the requested name, so `oxs router10` could run on `router1`.
 
 ### Added
-
 - sofinet: new model for Sofinet SOFOS switches (@torshhh)
+- device2yaml: add port option (@systeembeheerder)
+- itmgos: new model for Lantronix IT Management Gateway OS (SLC 8000, SLC 9000, EMG, SLB console servers), with simulation data and unit tests (@ryanhoggpm)
+- VPR: Add simulation data for Huawei YunShan OS with VRP model (@systeembeheerder)
 - IOSXR: Add show vesion (@Mascherus, @systeembeheerder)
 - cnos: remove transceiver DDM data (@freddy36)
 - cnos: add show license output (@freddy36)
@@ -47,6 +49,7 @@ When loading a single node (`oxs <host>` in oxidized-script, `/reload?node=<host
 - output/git: reduce the memory footprint of the version cache by deduplicating author and message strings (@robertcheramy)
 - output/git, output/gitcrypt: remove the `:date` field from node versions, use `:time` instead. Requires oxidized-web >= 0.17.0 (@robertcheramy)
 - garderos: replace `show system version` & `show system serial` with `show system information` and `show hardware all` to get more hardware details (@robertcheramy)
+- docs: document in Docker.md how to extend the official image with additional gems or packages, as the image no longer ships build tools or `/sbin/my_init` since the move to debian:trixie-slim. Closes #3897 (@joewaltman)
 
 ### Fixed
 - extra/oxidized.service: remove `KillSignal=SIGKILL`, Oxidized exits on SIGTERM since #3059 (@robertcheramy)

@@ -84,6 +84,7 @@ Usages:
     -c, --commands "command list"    specify the commands to be run
     -i, --input file                 Specify an input file for commands to be run
     -o, --output file                Specify an output YAML-file
+    -p, --port port                  Specify SSH port (default: 22)
     -t, --timeout value              Specify the idle timeout between commands (default: 5 seconds)
     -n, --newline value              Line terminator appended to each command (default: \n)
     -e, --exec-mode                  Run ssh in exec mode (without tty)
