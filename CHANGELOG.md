@@ -17,6 +17,9 @@ net-ssh >= 8.0 requires Diffie-Hellman group exchange groups of at least 2048 bi
 net-ssh >= 8.0 parses the OpenSSH configuration files (`~/.ssh/config`, `/etc/ssh/ssh_config`) more strictly, including `KexAlgorithms`, `PubkeyAcceptedAlgorithms` and `-` algorithm lists. This may change the algorithm negotiation; see [OpenSSH configuration files](docs/Inputs.md#openssh-configuration-files).
 
 ### Added
+- device2yaml: add port option (@systeembeheerder)
+- itmgos: new model for Lantronix IT Management Gateway OS (SLC 8000, SLC 9000, EMG, SLB console servers), with simulation data and unit tests (@ryanhoggpm)
+- VPR: Add simulation data for Huawei YunShan OS with VRP model (@systeembeheerder)
 - IOSXR: Add show vesion (@Mascherus, @systeembeheerder)
 - cnos: remove transceiver DDM data (@freddy36)
 - cnos: add show license output (@freddy36)
@@ -52,6 +55,7 @@ net-ssh >= 8.0 parses the OpenSSH configuration files (`~/.ssh/config`, `/etc/ss
 - output/git: reduce the memory footprint of the version cache by deduplicating author and message strings (@robertcheramy)
 - output/git, output/gitcrypt: remove the `:date` field from node versions, use `:time` instead. Requires oxidized-web >= 0.17.0 (@robertcheramy)
 - garderos: replace `show system version` & `show system serial` with `show system information` and `show hardware all` to get more hardware details (@robertcheramy)
+- docs: document in Docker.md how to extend the official image with additional gems or packages, as the image no longer ships build tools or `/sbin/my_init` since the move to debian:trixie-slim. Closes #3897 (@joewaltman)
 
 ### Fixed
 - extra/oxidized.service: remove `KillSignal=SIGKILL`, Oxidized exits on SIGTERM since #3059 (@robertcheramy)
@@ -79,6 +83,8 @@ net-ssh >= 8.0 parses the OpenSSH configuration files (`~/.ssh/config`, `/etc/ss
 - core: expand `~` in `crash.directory` before writing crash dumps. Fixes #3945. (@wleeaf, @robertcheramy)
 - junos: remove syntax error when there is no virtual chassis. Fixes #3922. (@dalejos, @robertcheramy)
 - ssh: reject an `ssh_proxy` that is not `[user@]host` (RFC 1123 hostname, IPv4 or IPv6 address) and an `ssh_proxy_port` that is not an integer, so values from the source cannot inject shell commands or ssh options (@robertcheramy)
+- docs: Supported-OS-Types lists the F5OS, Grandstream HT8xx and Uplink EP4440 models under their model names (`f5os`, `grandstreamht8xx`, `uplinkolt`) instead of `tmos`, `grandstream` and `EP4440` (@rawsun007)
+- awplus: remove stray BEL (0x07) character left from pager. Fixes #3919. (@cojumbo, @robertcheramy)
 
 ## [0.37.0 - 2026-05-20]
 ### Added

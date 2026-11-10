@@ -1,0 +1,7 @@
+pass:
+  - "[SLC9016-LAB]> "
+  - "[EMG8500.example]>"
+fail:
+  - "SLC9016-LAB> "
+  - "[SLC9016-LAB]# "
+  - "Do you want to continue? [no] "

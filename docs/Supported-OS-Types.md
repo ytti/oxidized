@@ -91,7 +91,7 @@
 |                    |Enterasys 800-Series          |[enterasys800](/lib/oxidized/model/enterasys800.rb)
 |                    |WM                            |[mtrlrfs](/lib/oxidized/model/mtrlrfs.rb)
 |                    |XOS, ExtremeWare              |[xos](/lib/oxidized/model/xos.rb)
-|F5                  |F5OS                          |[tmos](/lib/oxidized/model/f5os.rb)
+|F5                  |F5OS                          |[f5os](/lib/oxidized/model/f5os.rb)
 |                    |TMOS                          |[tmos](/lib/oxidized/model/tmos.rb)
 |Fiberstore (fs.com) |S3400                         |[fsos](/lib/oxidized/model/fsos.rb)              |                 |[FSOS](Model-Notes/FSOS.md)
 |                    |S3800                         |[gcombnps](/lib/oxidized/model/gcombnps.rb)
@@ -109,7 +109,7 @@
 |[Garderos](https://garderos.com/) |GRS (Garderos Router Software) |[garderos](/lib/oxidized/model/garderos.rb) | @robertcheramy  |Routers for harsh environments
 |GCOM Technologies   |Broadband Network Platform Software|[gcombnps](/lib/oxidized/model/gcombnps.rb)
 |Grandstream Networks|GSX                           |[grandstream](/lib/oxidized/model/grandstream.rb)
-|                    |HT8xx                         |[grandstream](/lib/oxidized/model/grandstreamht8xx.rb) | @mklopocki | [Grandstream](Model-Notes/GrandstreamHT8xx.md)
+|                    |HT8xx                         |[grandstreamht8xx](/lib/oxidized/model/grandstreamht8xx.rb) | @mklopocki | [Grandstream](Model-Notes/GrandstreamHT8xx.md)
 |Hatteras            |Hatteras                      |[hatteras](/lib/oxidized/model/hatteras.rb)
 |Hillstone Networks  |StoneOS                       |[stoneos](/lib/oxidized/model/stoneos.rb)
 |Hirschmann          |Classic                       |[hirschmann](/lib/oxidized/model/hirschmann.rb)
@@ -121,6 +121,7 @@
 |                    |MSM (Wireless Controller)     |[hpmsm](/lib/oxidized/model/hpmsm.rb)
 |H3C                 |S6520X                        |[h3c](/lib/oxidized/model/h3c.rb)
 |Huawei              |VRP                           |[vrp](/lib/oxidized/model/vrp.rb)                |                 |[VRP-Huawei](Model-Notes/VRP-Huawei.md)
+|                    |YunShan OS                    |[vrp](/lib/oxidized/model/vrp.rb)                |                 |[VRP-Huawei](Model-Notes/VRP-Huawei.md)
 |                    |SmartAX series                |[smartax](/lib/oxidized/model/smartax.rb)        |                 |[SmartAX-Huawei](Model-Notes/SmartAX-Huawei.md)
 |Icotera             |6400 series                   |[icotera](/lib/oxidized/model/icotera.rb)
 |Ingate              |SIParator/Firewalls           |[ingate](/lib/oxidized/model/ingate.rb)          |@thanegill
@@ -129,6 +130,7 @@
 |Juniper             |JunOS                         |[junos](/lib/oxidized/model/junos.rb)            |                 |[MX/QFX/EX/SRX/J Series](Model-Notes/JunOS.md)
 |                    |ScreenOS (Netscreen)          |[screenos](/lib/oxidized/model/screenos.rb)
 |LANCOM Systems GmbH |LCOS                          |[lancom](/lib/oxidized/model/lancom.rb)
+|[Lantronix](https://www.lantronix.com)|IT Management Gateway OS (SLC 8000, SLC 9000, EMG, SLB)|[itmgos](/lib/oxidized/model/itmgos.rb)|                 |[ITMGOS](Model-Notes/ITMGOS.md)
 |Lenovo              |Lenovo Network OS             |[lenovonos](/lib/oxidized/model/lenovonos.rb)    |                 |[Lenovo Network OS](Model-Notes/LenovoNOS.md)
 |Linkys              |SRW                           |[linksyssrw](/lib/oxidized/model/linksyssrw.rb)  |                 |[LinksysSRW](Model-Notes/LinksysSRW.md)
 |Linuxgeneric        |CentOS                        |[linuxgeneric](/lib/oxidized/model/linuxgeneric.rb)|               |[LinuxGeneric](Model-Notes/LinuxGeneric.md)
@@ -189,7 +191,7 @@
 |                    |EdgeSwitch                    |[edgeswitch](/lib/oxidized/model/edgeswitch.rb)
 |                    |AirFiber                      |[airfiber](/lib/oxidized/model/airfiber.rb)
 |                    |UnifiAP                       |[unifiap](/lib/oxidized/model/unifiap.rb)        |@clifcox         |Also suports AirOS, and some Unifi switches
-|Uplink              |EP4440-DP                     |[EP4440](/lib/oxidized/model/uplinkolt.rb)       |                 |Might support all EP4440 series
+|Uplink              |EP4440-DP                     |[uplinkolt](/lib/oxidized/model/uplinkolt.rb)       |                 |Might support all EP4440 series
 |VMWare              |NSX Edge (configuration)      |[nsxconfig](/lib/oxidized/model/nsxconfig.rb)
 |                    |NSX Edge (firewall rules)     |[nsxfirewall](/lib/oxidized/model/nsxfirewall.rb)
 |                    |NSX Distributed Firewall      |[nsxdfw](/lib/oxidized/model/nsxdfw.rb)
