@@ -5,11 +5,14 @@ module Oxidized
   require 'timeout'
 
   class SSHBase < Input
+    class InvalidVariable < OxidizedError; end
+
     RESCUE_FAIL = {
       Net::SSH::Disconnect           => :debug,
       Net::SSH::ConnectionTimeout    => :debug,
       Net::SSH::AuthenticationFailed => :warn,
-      Net::SSH::HostKeyUnknown       => :warn
+      Net::SSH::HostKeyUnknown       => :warn,
+      InvalidVariable                => :warn
     }.freeze
 
     PROXY_USER = /\A[A-Za-z0-9._][A-Za-z0-9._-]*\z/
@@ -59,7 +62,9 @@ module Oxidized
       ssh_opts[:host_key]          = vars(:ssh_host_key).split(/,\s*/)          if vars(:ssh_host_key)
       ssh_opts[:hmac]              = vars(:ssh_hmac).split(/,\s*/)              if vars(:ssh_hmac)
       ssh_opts[:pubkey_algorithms] = vars(:ssh_pubkey_algorithms).split(/,\s*/) if vars(:ssh_pubkey_algorithms)
-      ssh_opts[:minimum_dh_bits]   = Integer(vars(:ssh_minimum_dh_bits).to_s, 10) if vars(:ssh_minimum_dh_bits)
+      if vars(:ssh_minimum_dh_bits)
+        ssh_opts[:minimum_dh_bits] = integer_var(:ssh_minimum_dh_bits, vars(:ssh_minimum_dh_bits))
+      end
 
       # Use our logger for Net::SSH
       ssh_logger = SemanticLogger[Net::SSH]
@@ -81,11 +86,11 @@ module Oxidized
 
     def make_ssh_proxy_command(proxy_host, proxy_port, secure)
       return nil unless !proxy_host.nil? && !proxy_host.empty?
-      raise ArgumentError, "invalid ssh_proxy: #{proxy_host.inspect}" unless valid_proxy_host?(proxy_host)
+      raise InvalidVariable, "invalid ssh_proxy: #{proxy_host.inspect}" unless valid_proxy_host?(proxy_host)
 
       proxy_command =  "ssh "
       proxy_command += "-o StrictHostKeyChecking=no " unless secure
-      proxy_command += "-p #{Integer(proxy_port.to_s, 10)} " if proxy_port
+      proxy_command += "-p #{integer_var(:ssh_proxy_port, proxy_port)} " if proxy_port
       # net-ssh substitutes %h, %p... in the command, % may be in an IPv6 zone ID
       proxy_command += "#{proxy_host.gsub('%', '%%')} -W [%h]:%p"
       Net::SSH::Proxy::Command.new(proxy_command)
@@ -99,6 +104,12 @@ module Oxidized
       host.match?(HOSTNAME) ||
         host.match?(Resolv::IPv4::Regex) ||
         host.match?(Resolv::IPv6::Regex)
+    end
+
+    def integer_var(name, value)
+      Integer(value.to_s, 10)
+    rescue ArgumentError
+      raise InvalidVariable, "invalid #{name}: #{value.inspect}"
     end
 
     def disconnect

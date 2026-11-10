@@ -108,7 +108,8 @@ describe Oxidized::SSH do
 
     it "rejects a ssh_minimum_dh_bits that is not an integer" do
       @node.vars["ssh_minimum_dh_bits"] = '1024bits'
-      _ { @ssh.make_ssh_opts }.must_raise ArgumentError
+      err = _ { @ssh.make_ssh_opts }.must_raise Oxidized::SSHBase::InvalidVariable
+      _(err.message).must_equal 'invalid ssh_minimum_dh_bits: "1024bits"'
     end
 
     it "does not set proxy with an empty ssh_proxy" do
@@ -153,20 +154,21 @@ describe Oxidized::SSH do
       Net::SSH::Proxy::Command.expects(:new).never
       ['test.com$(id)', 'test.com;id', 'test.com id', 'u$(id)@test.com', '@test.com',
        'a@b@test.com', '-test.com', 'test-.com', 'test..com', "test.com\nid"].each do |host|
-        _ { ssh.make_ssh_proxy_command(host, nil, true) }.must_raise ArgumentError
+        _ { ssh.make_ssh_proxy_command(host, nil, true) }.must_raise Oxidized::SSHBase::InvalidVariable
       end
     end
 
     it "rejects a proxy port that is not an integer" do
       ssh = Oxidized::SSH.new
       Net::SSH::Proxy::Command.expects(:new).never
-      _ { ssh.make_ssh_proxy_command('test.com', '22;id', true) }.must_raise ArgumentError
+      err = _ { ssh.make_ssh_proxy_command('test.com', '22;id', true) }.must_raise Oxidized::SSHBase::InvalidVariable
+      _(err.message).must_equal 'invalid ssh_proxy_port: "22;id"'
     end
 
     it "rejects a proxy host starting with '-'" do
       ssh = Oxidized::SSH.new
       Net::SSH::Proxy::Command.expects(:new).never
-      _ { ssh.make_ssh_proxy_command('-oProxyCommand=id', nil, true) }.must_raise ArgumentError
+      _ { ssh.make_ssh_proxy_command('-oProxyCommand=id', nil, true) }.must_raise Oxidized::SSHBase::InvalidVariable
     end
   end
 
@@ -186,6 +188,7 @@ describe Oxidized::SSH do
       _(result[Net::SSH::Disconnect]).must_equal :debug
       _(result[RuntimeError]).must_equal :warn
       _(result[Net::SSH::AuthenticationFailed]).must_equal :warn
+      _(result[Oxidized::SSHBase::InvalidVariable]).must_equal :warn
     end
   end
   describe '#config_name' do
