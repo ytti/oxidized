@@ -184,6 +184,28 @@ This only applies to RSA keys. Valid values are `rsa-sha2-512`,
 ### Custom SSH port
 Set the variable `ssh_port` to the desired value (default is 22).
 
+### OpenSSH configuration files
+Net::SSH reads the OpenSSH configuration of the user running Oxidized:
+`~/.ssh/config`, `/etc/ssh_config` and `/etc/ssh/ssh_config`, including their
+`Include` files. `Host` blocks are matched against the IP address of the node.
+
+Options set by Oxidized take precedence over the configuration files: the
+`ssh_*` variables, `auth_methods`, the port, the timeout, keepalives and host
+key verification.
+
+Since net-ssh 8.0, the files are parsed more like OpenSSH:
+- `KexAlgorithms` and `PubkeyAcceptedAlgorithms` are read, in addition to
+  `Ciphers`, `MACs` and `HostKeyAlgorithms`.
+- Algorithm lists support the `+`, `-` and `^` prefixes. As Oxidized appends all
+  supported algorithms, a plain list only changes the preference order, but
+  `-` removes algorithms, which may break old devices.
+- `Match` supports `all`, `Host`, `OriginalHost`, `User` (the username of the
+  node) and `LocalUser`. Blocks with other conditions (`exec`, `canonical`, ...)
+  are skipped and a warning is printed to stderr.
+
+If a device fails to connect after a system or net-ssh upgrade, check these
+files, including system-wide crypto policies (e.g. on RHEL or Fedora).
+
 ### SSH Host key verification
 With the configuration `secure', you can set the ssh key verification:
 - `true`: strict host verification, looking up the known host files

@@ -14,6 +14,8 @@ When loading a single node (`oxs <host>` in oxidized-script, `/reload?node=<host
 
 net-ssh >= 8.0 requires Diffie-Hellman group exchange groups of at least 2048 bits (previously 1024). Old devices offering only 1024-bit groups fail to connect; set the variable `ssh_minimum_dh_bits: 1024` for them.
 
+net-ssh >= 8.0 parses the OpenSSH configuration files (`~/.ssh/config`, `/etc/ssh/ssh_config`) more strictly, including `KexAlgorithms`, `PubkeyAcceptedAlgorithms` and `-` algorithm lists. This may change the algorithm negotiation; see [OpenSSH configuration files](docs/Inputs.md#openssh-configuration-files).
+
 ### Added
 - IOSXR: Add show vesion (@Mascherus, @systeembeheerder)
 - cnos: remove transceiver DDM data (@freddy36)
