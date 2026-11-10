@@ -1,0 +1,277 @@
+---
+command_newline: "\n"
+init_prompt: |-
+    \r
+    Info: The max number of VTY users is 5, the number of current VTY users online is 1, and total number of terminal users online is 1.\r
+          The current login time is 2026-11-09 14:41:22+01:00.\r
+    <sw04>
+commands:
+  - "screen-length 0 temporary\n": |-
+      screen-length 0 temporary\r
+      Info: The configuration takes effect on the current user terminal interface only.\r
+      <sw04>
+  - "display version\n": |-
+      display version\r
+      Huawei YunShan OS\r
+      Version 1.24.0.1 (S5700 V600R024C00SPC500)\r
+      Copyright (C) 2021-2024 Huawei Technologies Co., Ltd.\r
+      HUAWEI CloudEngine S5735-L-V2 uptime is 2 days, 22 hours, 1 minute\r
+      Patch Version: V600R024HP0021\r
+      \r
+      S5735-L48LP4XE-A-V2(Master) 1 : uptime is  2 days, 22 hours, 0 minute\r
+              StartupTime 2026/06/08   14:12:29\r
+      Memory      Size    : 2048 M bytes\r
+      Flash       Size    : 1024 M bytes\r
+      S5735-L48LP4XE-A-V2 version information:\r
+      1.PCB       Version : ES5D2V54S036 VER B\r
+      2.MAB       Version : 2\r
+      3.Board     Type    : S5735-L48LP4XE-A-V2\r
+      4.BIOS      Version : 1390\r
+      5.CPLD      Version : 262\r
+      <sw04>
+  - "display device\n": |-
+      display device\r
+      CloudEngine S5735-L-V2's Device status:\r
+      --------------------------------------------------------------------------------\r
+      Slot  Card   Type                           Online   Power Register     Alarm     Primary        \r
+      --------------------------------------------------------------------------------\r
+      1     -      S5735-L48LP4XE-A-V2            Present  On    Registered   Normal    Master         \r
+            FAN1   FAN                            Present  On    Registered   Normal    NA             \r
+            FAN2   FAN                            Present  On    Registered   Normal    NA             \r
+      --------------------------------------------------------------------------------\r
+      <sw04>
+  - "display current-configuration all\n": |-
+      display current-configuration all\r
+      !Software Version V600R024C00SPC500\r
+      !Last configuration was updated at 2026-11-06 22:29:30+01:00 by contoso-adm\r
+      !Last configuration was saved at 2026-11-06 22:29:45+01:00 by contoso-adm\r
+      #\r
+      pki realm default\r
+      #\r
+      clock timezone CET add 01:00:00\r
+      clock daylight-saving-time CEST repeating 02:00 last Sun Mar 03:00 last Sun Oct 01:00\r
+      #\r
+      sysname sw04\r
+      #\r
+      dhcp enable\r
+      #\r
+      undo ftp server source all-interface\r
+      undo ftp ipv6 server source all-interface\r
+      #\r
+      ssl policy default\r
+       pki-domain default\r
+       ssl minimum version tls1.2\r
+       cipher-suite exclude key-exchange rsa\r
+       cipher-suite exclude cipher mode cbc\r
+       cipher-suite exclude hmac sha1\r
+       diffie-hellman modulus 3072\r
+       ecdh group nist curve brainpool\r
+       signature algorithm-list ed25519 ed448 rsa-pss-pss-sha256 rsa-pss-pss-sha384 rsa-pss-pss-sha512 rsa-pss-rsae-sha256 rsa-pss-rsae-sha384 rsa-pss-rsae-sha512\r
+      #\r
+      info-center loghost 192.0.2.11\r
+      info-center logfile compression lzma\r
+      #\r
+      device board 1 board-type S5735-L48LP4XE-A-V2\r
+      #\r
+      authentication-profile name default_authen_profile\r
+      authentication-profile name dot1x_authen_profile\r
+      authentication-profile name dot1xmac_authen_profile\r
+      authentication-profile name mac_authen_profile\r
+      authentication-profile name multi_authen_profile\r
+      authentication-profile name portal_authen_profile\r
+      #\r
+      dhcp snooping enable\r
+      #\r
+      drop-profile default\r
+      #\r
+      ntp server disable\r
+      ntp ipv6 server disable\r
+      ntp server source-interface all disable\r
+      ntp ipv6 server source-interface all disable\r
+      ntp unicast-server 192.0.2.21\r
+      ntp unicast-server 192.0.2.22\r
+      #\r
+      vlan batch 50 to 51 53 to 55\r
+      #\r
+      stp mode rstp\r
+      stp instance 0 priority 61440\r
+      stp bpdu-protection\r
+      stp tc-protection\r
+      #\r
+      igmp snooping enable\r
+      #\r
+      error-down auto-recovery cause bpdu-protection interval 300\r
+      error-down auto-recovery cause loopback-detect interval 300\r
+      error-down auto-recovery cause link-flap interval 60\r
+      #\r
+      undo telnet server-source all-interface\r
+      undo telnet ipv6 server-source all-interface\r
+      #\r
+      qos schedule-profile default\r
+      #\r
+      qos burst-mode enhanced slot 1\r
+      #\r
+      diffserv domain default\r
+      #\r
+      ip vpn-instance _management_vpn_\r
+       ipv4-family\r
+      #\r
+      vlan 50\r
+       description Servers\r
+      #\r
+      vlan 51\r
+       dhcp snooping enable\r
+       description Clients\r
+       igmp snooping enable\r
+      #\r
+      vlan 53\r
+       description BYOD\r
+       igmp snooping enable\r
+      #\r
+      vlan 54\r
+       dhcp snooping enable\r
+       description IOT\r
+       igmp snooping enable\r
+      #\r
+      vlan 55\r
+       description Management\r
+      #\r
+      aaa\r
+       authentication-scheme default\r
+        authentication-mode local\r
+       authentication-scheme radius\r
+        authentication-mode radius\r
+       authorization-scheme default\r
+        authorization-mode local\r
+       accounting-scheme default\r
+        accounting-mode none\r
+       local-aaa-user password policy administrator\r
+        password history record number 0\r
+        undo password alert original\r
+        password expire 0\r
+       domain default\r
+        authentication-scheme default\r
+        accounting-scheme default\r
+       domain default_admin\r
+        authentication-scheme default\r
+        accounting-scheme default\r
+       local-user oxidized privilege level 1\r
+       local-user oxidized service-type terminal ssh\r
+       local-user contoso-adm password irreversible-cipher REMOVED\r
+       local-user contoso-adm privilege level 3\r
+       local-user contoso-adm service-type terminal ssh\r
+      #\r
+      free-rule-template name default_free_rule\r
+      #\r
+      portal-access-profile name portal_access_profile\r
+      #\r
+      dot1x-access-profile name dot1x_access_profile\r
+      #\r
+      mac-access-profile name mac_access_profile\r
+      #\r
+      remote-unit\r
+      #\r
+      stack\r
+      #\r
+      license\r
+      #\r
+      warranty\r
+      #\r
+      interface Vlanif55\r
+       ip address 192.0.2.250 255.255.255.0\r
+      #\r
+      interface Stack-Port1/1\r
+      #\r
+      interface Stack-Port1/2\r
+      #\r
+      interface GE1/0/1\r
+       description core: sw02.hq.contoso.net (13)\r
+       port link-type trunk\r
+       port trunk allow-pass vlan 50 to 51 53 to 55\r
+       dhcp snooping trusted\r
+      #\r
+      interface GE1/0/2\r
+       description Cust: user\r
+       port link-type access\r
+       port default vlan 51\r
+       stp edged-port enable\r
+       mac-address limit maximum 8\r
+      #\r
+      interface GE1/0/3\r
+       description BYOD\r
+       port link-type access\r
+       port default vlan 53\r
+       stp edged-port enable\r
+       mac-address limit maximum 8\r
+      #\r
+      interface 10GE1/0/1\r
+       shutdown\r
+      #\r
+      interface NULL0\r
+      #\r
+      ip route-static 0.0.0.0 0.0.0.0 192.0.2.254\r
+      #\r
+      snmp-agent\r
+      snmp-agent local-engineid REMOVED\r
+      #\r
+      snmp-agent sys-info contact Systeembeheerder\r
+      snmp-agent sys-info location Somehere in the cloud\r
+      snmp-agent sys-info version v3\r
+      snmp-agent group v3 contoso-nms privacy read-view SNMP_READ\r
+      #\r
+      snmp-agent mib-view included SNMP_READ iso\r
+      snmp-agent usm-user v3 contoso-nms\r
+      snmp-agent usm-user v3 contoso-nms group contoso-nms\r
+      snmp-agent usm-user v3 contoso-nms authentication-mode sha2-256 cipher REMOVED\r
+      snmp-agent usm-user v3 contoso-nms privacy-mode aes128 cipher REMOVED\r
+      #\r
+      snmp-agent protocol source-interface Vlanif55\r
+      undo snmp-agent protocol source-status all-interface\r
+      undo snmp-agent protocol source-status ipv6 all-interface\r
+      #\r
+      undo snmp-agent proxy protocol source-status all-interface\r
+      undo snmp-agent proxy protocol source-status ipv6 all-interface\r
+      #\r
+      #\r
+      stelnet server enable\r
+      ssh server rsa-key min-length 3072\r
+      ssh user oxidized\r
+      ssh user oxidized authentication-type ecc\r
+      ssh user oxidized assign ecc-key oxidized\r
+	  ssh user oxidized service-type stelnet\r
+      ssh user contoso-adm\r
+      ssh user contoso-adm authentication-type password\r
+      ssh user contoso-adm service-type stelnet\r
+      ssh server-source -i Vlanif55\r
+      undo ssh server-source all-interface\r
+      undo ssh ipv6 server-source all-interface\r
+      ssh authorization-type default aaa\r
+      #\r
+      ssh server cipher aes256_gcm aes128_gcm aes256_ctr aes192_ctr aes128_ctr\r
+      ssh server hmac sha2_512 sha2_256\r
+      ssh server key-exchange dh_group_exchange_sha256 dh_group16_sha512 curve25519_sha256\r
+      #\r
+      ssh server publickey rsa_sha2_256 rsa_sha2_512\r
+      #\r
+      ssh server dh-exchange min-len 3072\r
+      #\r
+      ssh client publickey rsa_sha2_256 rsa_sha2_512\r
+      #\r
+      ssh client cipher aes256_gcm aes128_gcm aes256_ctr aes192_ctr aes128_ctr\r
+      ssh client hmac sha2_512 sha2_256\r
+      ssh client key-exchange dh_group_exchange_sha256 dh_group16_sha512 curve25519_sha256\r
+      #\r
+      user-interface maximum-vty 5\r
+      #\r
+      user-interface con 0\r
+       authentication-mode aaa\r
+      #\r
+      user-interface vty 0 4\r
+       authentication-mode aaa\r
+       protocol inbound ssh\r
+      #\r
+      ztp domain-type registration-center domain register.naas.huawei.com port 10020\r
+      #\r
+      return\r
+      <sw04>
+  - "quit\n": |-

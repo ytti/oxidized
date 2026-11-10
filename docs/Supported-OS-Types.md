@@ -121,6 +121,7 @@
 |                    |MSM (Wireless Controller)     |[hpmsm](/lib/oxidized/model/hpmsm.rb)
 |H3C                 |S6520X                        |[h3c](/lib/oxidized/model/h3c.rb)
 |Huawei              |VRP                           |[vrp](/lib/oxidized/model/vrp.rb)                |                 |[VRP-Huawei](Model-Notes/VRP-Huawei.md)
+|                    |YunShan OS                    |[vrp](/lib/oxidized/model/vrp.rb)                |                 |[VRP-Huawei](Model-Notes/VRP-Huawei.md)
 |                    |SmartAX series                |[smartax](/lib/oxidized/model/smartax.rb)        |                 |[SmartAX-Huawei](Model-Notes/SmartAX-Huawei.md)
 |Icotera             |6400 series                   |[icotera](/lib/oxidized/model/icotera.rb)
 |Ingate              |SIParator/Firewalls           |[ingate](/lib/oxidized/model/ingate.rb)          |@thanegill
@@ -129,6 +130,7 @@
 |Juniper             |JunOS                         |[junos](/lib/oxidized/model/junos.rb)            |                 |[MX/QFX/EX/SRX/J Series](Model-Notes/JunOS.md)
 |                    |ScreenOS (Netscreen)          |[screenos](/lib/oxidized/model/screenos.rb)
 |LANCOM Systems GmbH |LCOS                          |[lancom](/lib/oxidized/model/lancom.rb)
+|[Lantronix](https://www.lantronix.com)|IT Management Gateway OS (SLC 8000, SLC 9000, EMG, SLB)|[itmgos](/lib/oxidized/model/itmgos.rb)|                 |[ITMGOS](Model-Notes/ITMGOS.md)
 |Lenovo              |Lenovo Network OS             |[lenovonos](/lib/oxidized/model/lenovonos.rb)    |                 |[Lenovo Network OS](Model-Notes/LenovoNOS.md)
 |Linkys              |SRW                           |[linksyssrw](/lib/oxidized/model/linksyssrw.rb)  |                 |[LinksysSRW](Model-Notes/LinksysSRW.md)
 |Linuxgeneric        |CentOS                        |[linuxgeneric](/lib/oxidized/model/linuxgeneric.rb)|               |[LinuxGeneric](Model-Notes/LinuxGeneric.md)
