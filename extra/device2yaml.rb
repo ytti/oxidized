@@ -143,6 +143,9 @@ optparse = OptionParser.new do |opts|
   opts.on('-o', '--output file', 'Specify an output YAML-file') do |file|
     options[:output] = file
   end
+  opts.on('-p', '--port port', Integer, 'Specify SSH port (default: 22)') do |port|
+    options[:port] = port
+  end
   opts.on('-t', '--timeout value', Integer,
           'Specify the idle timeout between commands (default: 5 seconds)') do |timeout|
     options[:timeout] = timeout
@@ -214,7 +217,8 @@ ssh_commands.map! { |s| s + command_newline }
 
 @ssh = Net::SSH.start(ssh_host,
                       ssh_user,
-                      { timeout:                         10,
+                      { port:                            options[:port] || 22,
+                        timeout:                         10,
                         append_all_supported_algorithms: true })
 
 @ssh_output = ''
