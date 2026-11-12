@@ -35,10 +35,10 @@ Gem::Specification.new do |s|
 
   s.add_dependency 'asetus',               '~> 0.4'
   s.add_dependency 'bcrypt_pbkdf',         '~> 1.0'
-  s.add_dependency 'ed25519',              '~> 1.2'
   s.add_dependency 'net-ftp',              '~> 0.2'
   s.add_dependency 'net-http-digest_auth', '~> 1.4'
-  s.add_dependency 'net-ssh',              '~> 7.3'
+  # Net-SSH require a newer version than Debian 13 provides.
+  s.add_dependency 'net-ssh',              '~> 8.1'
   s.add_dependency 'net-telnet',           '~> 0.2'
   s.add_dependency 'psych',                '~> 5.0'
   s.add_dependency 'rubyzip',              '>= 2.3.2', '< 4'
@@ -52,8 +52,7 @@ Gem::Specification.new do |s|
   s.add_development_dependency 'mocha',            '>= 2.1', '<4'
   s.add_development_dependency 'pry',              '~> 0.15'
   s.add_development_dependency 'rake',             '~> 13.0'
-  # Rubocop introduces new rules in minor versions, so we limit automatic
-  # updates to patches
+  # Rubocop introduces new rules in minor versions, so we limit automatic updates to patches
   s.add_development_dependency 'rubocop',          '~> 1.92.0'
   s.add_development_dependency 'rubocop-minitest', '~> 0.41.0'
   s.add_development_dependency 'rubocop-rake',     '~> 0.7.0'
@@ -62,7 +61,8 @@ Gem::Specification.new do |s|
 
   # Dependencies on optional libraries, used for unit tests & development
   s.add_development_dependency 'git',              '>= 2.0', '< 5'
-  s.add_development_dependency 'net-scp',          '~> 4.1'
+  # Net-SCP require a newer version than Debian 13 provides.
+  s.add_development_dependency 'net-scp',          '~> 4.2'
   s.add_development_dependency 'net-tftp',         '~> 0.1.0'
   s.add_development_dependency 'nokogiri',         '>= 1.16', '< 2'
   s.add_development_dependency 'oxidized-web',     '>= 0.17.1'

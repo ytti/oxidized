@@ -20,7 +20,8 @@ describe Oxidized::SCP do
       _(result[Net::SSH::ConnectionTimeout]).must_equal :debug
       _(result[Net::SCP::Error]).must_equal :warn
       _(result[ArgumentError]).must_equal :warn
-      _(result[Net::SSH::HostKeyUnknown]).must_equal :warn
+      _(result[Net::SSH::HostKeyError]).must_equal :warn
+      _(result[Net::SSH::UnsupportedKeyType]).must_equal :warn
       _(result[Net::SSH::AuthenticationFailed]).must_equal :warn
     end
   end

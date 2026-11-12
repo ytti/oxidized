@@ -35,6 +35,7 @@ The following objects exist in Oxidized.
   - [cut_both](#cut_both)
   - [keep_lines](#keep_lines)
   - [reject_lines](#reject_lines)
+  - [rstrip_lines](#rstrip_lines)
 
 ## Input
 
@@ -334,3 +335,7 @@ Returns a multi-line string with only the lines matching any pattern (String or 
 
 #### `reject_lines`
 Returns a multi-line string without the lines matching any pattern (String or Regexp) given in an array.
+
+#### `rstrip_lines`
+Returns a multi-line string with trailing whitespace (including `\r`) removed
+from each line. The result always ends with a single newline.

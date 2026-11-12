@@ -96,6 +96,10 @@ Oxidized can `ssh` through a proxy as well. To do so we just need to set
 `ssh_proxy` variable with the proxy host information and optionally set the
 `ssh_proxy_port` with the SSH port if it is not listening on port 22.
 
+`ssh_proxy` must be `[user@]host`, where `host` is a hostname (RFC 1123), an
+IPv4 or an IPv6 address, and `ssh_proxy_port` must be an integer. Other values
+are rejected and the node fails.
+
 This can be provided on a per-node basis by mapping the proper fields from your
 source.
 
@@ -137,15 +141,41 @@ vars_map:
 # ...
 ```
 
-### SSH public key algorithms
-Net::SSH signs RSA keys with `rsa-sha2-512` or `rsa-sha2-256` first and falls
-back to `ssh-rsa` only when the device rejects them. Some devices instead drop
-the connection, e.g. Huawei SmartAX MA5683T, which accepts the key and then
-disconnects on the `rsa-sha2-256` signature. Others log a failed login before
-the fallback succeeds (#2875).
+### SSH Diffie-Hellman group size
+net-ssh >= 8.0 requires Diffie-Hellman group exchange groups of at least 2048
+bits. Some old devices only offer 1024-bit groups and fail to connect. Set the
+variable `ssh_minimum_dh_bits` to accept smaller groups for these devices:
 
-Set the variable `ssh_pubkey_algorithms` to choose the algorithms, in order,
-for these devices:
+```yaml
+vars:
+  ssh_minimum_dh_bits: 1024
+```
+
+Or only for one model:
+
+```yaml
+models:
+  ios:
+    vars:
+      ssh_minimum_dh_bits: 1024
+```
+
+
+### SSH public key algorithms
+Since net-ssh 8.1, each RSA key is offered only once, with a single signature
+algorithm, as OpenSSH does:
+- If the device announces the algorithms it accepts (RFC 8308
+  `server-sig-algs`), Net::SSH uses the first one of `rsa-sha2-512`,
+  `rsa-sha2-256` and `ssh-rsa` that the device lists.
+- Otherwise, the key is offered as `ssh-rsa`.
+
+There is no fallback to another algorithm when the device rejects the
+signature. Some devices announce `rsa-sha2-*` but only accept `ssh-rsa`, or
+drop the connection on a `rsa-sha2-*` signature, e.g. Huawei SmartAX MA5683T
+(#2875). Public key authentication with RSA keys then fails.
+
+Set the variable `ssh_pubkey_algorithms` to choose the preferred algorithms,
+in order, for these devices:
 
 ```yaml
 models:
@@ -154,11 +184,35 @@ models:
       ssh_pubkey_algorithms: ssh-rsa
 ```
 
-This only applies to RSA keys. Valid values are `rsa-sha2-512`,
-`rsa-sha2-256` and `ssh-rsa`; other values are ignored.
+The listed algorithms are tried first, the other supported algorithms are
+appended, so in practice this only changes the choice for RSA keys. The
+OpenSSH prefixes `+`, `-` and `^` are supported, e.g. `-ssh-rsa` removes
+`ssh-rsa`. Unsupported values are ignored.
 
 ### Custom SSH port
 Set the variable `ssh_port` to the desired value (default is 22).
+
+### OpenSSH configuration files
+Net::SSH reads the OpenSSH configuration of the user running Oxidized:
+`~/.ssh/config`, `/etc/ssh_config` and `/etc/ssh/ssh_config`, including their
+`Include` files. `Host` blocks are matched against the IP address of the node.
+
+Options set by Oxidized take precedence over the configuration files: the
+`ssh_*` variables, `auth_methods`, the port, the timeout, keepalives and host
+key verification.
+
+Since net-ssh 8.0, the files are parsed more like OpenSSH:
+- `KexAlgorithms` and `PubkeyAcceptedAlgorithms` are read, in addition to
+  `Ciphers`, `MACs` and `HostKeyAlgorithms`.
+- Algorithm lists support the `+`, `-` and `^` prefixes. As Oxidized appends all
+  supported algorithms, a plain list only changes the preference order, but
+  `-` removes algorithms, which may break old devices.
+- `Match` supports `all`, `Host`, `OriginalHost`, `User` (the username of the
+  node) and `LocalUser`. Blocks with other conditions (`exec`, `canonical`, ...)
+  are skipped and a warning is printed to stderr.
+
+If a device fails to connect after a system or net-ssh upgrade, check these
+files, including system-wide crypto policies (e.g. on RHEL or Fedora).
 
 ### SSH Host key verification
 With the configuration `secure', you can set the ssh key verification:
