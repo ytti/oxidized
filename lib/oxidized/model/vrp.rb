@@ -16,6 +16,10 @@ class VRP < Oxidized::Model
     cfg.cut_both
   end
 
+  cmd :significant_changes do |cfg|
+    cfg.reject_lines [/^!Last configuration was (updated|saved) at /]
+  end
+
   cfg :telnet do
     username /^Username:$/
     password /^Password:$/
@@ -27,19 +31,21 @@ class VRP < Oxidized::Model
   end
 
   cmd 'display version' do |cfg|
-    cfg = cfg.each_line.reject do |l|
-      l.match /uptime|^\d\d\d\d-\d\d-\d\d \d\d:\d\d:\d\d(\.\d\d\d)? ?(\+\d\d:\d\d)?$/
-    end.join
-    comment cfg
+    comment cfg.reject_lines [
+      /uptime/,
+      /^\d\d\d\d-\d\d-\d\d \d\d:\d\d:\d\d(\.\d\d\d)? ?(\+\d\d:\d\d)?$/
+    ]
   end
 
   cmd 'display device' do |cfg|
-    cfg = cfg.each_line.reject { |l| l.match /^\d\d\d\d-\d\d-\d\d \d\d:\d\d:\d\d(\.\d\d\d)? ?(\+\d\d:\d\d)?$/ }.join
-    comment cfg
+    comment cfg.reject_lines [
+      /^\d\d\d\d-\d\d-\d\d \d\d:\d\d:\d\d(\.\d\d\d)? ?(\+\d\d:\d\d)?$/
+    ]
   end
 
   cmd 'display current-configuration all' do |cfg|
-    cfg = cfg.each_line.reject { |l| l.match /^\d\d\d\d-\d\d-\d\d \d\d:\d\d:\d\d(\.\d\d\d)? ?(\+\d\d:\d\d)?$/ }.join
-    cfg
+    cfg.reject_lines [
+      /^\d\d\d\d-\d\d-\d\d \d\d:\d\d:\d\d(\.\d\d\d)? ?(\+\d\d:\d\d)?$/
+    ]
   end
 end

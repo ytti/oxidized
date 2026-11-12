@@ -39,6 +39,7 @@ net-ssh >= 8.1 changed how RSA keys are offered, which may break public key auth
 
 ### Changed
 - vyos: add commit info (@systeembeheerder)
+- vrp: ignore `!Last configuration was updated/saved at` lines when `output_store_mode` is `on_significant`. Closes #3958 (@robertcheramy)
 - docker: set LANG=C.UTF-8. Fixes #3690 (@ytti)
 - routeros: remove intermittent POE `voltage_on_poe-in` comment (@hendrikbl)
 - tplink: use `\r\n` as the line terminator in pre_logout, required for the model unit tests to work (@Vantomas)
