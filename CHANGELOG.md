@@ -12,6 +12,12 @@ Oxidized no longer patches Puma's signal handling (needed for Puma 8). With oxid
 
 When loading a single node (`oxs <host>` in oxidized-script, `/reload?node=<host>` in oxidized-web), the node name must now match exactly. Previously, a node also matched when its name was contained in the requested name, so `oxs router10` could run on `router1`.
 
+net-ssh >= 8.0 requires Diffie-Hellman group exchange groups of at least 2048 bits (previously 1024). Old devices offering only 1024-bit groups fail to connect; set the variable `ssh_minimum_dh_bits: 1024` for them.
+
+net-ssh >= 8.0 parses the OpenSSH configuration files (`~/.ssh/config`, `/etc/ssh/ssh_config`) more strictly, including `KexAlgorithms`, `PubkeyAcceptedAlgorithms` and `-` algorithm lists. This may change the algorithm negotiation; see [OpenSSH configuration files](docs/Inputs.md#openssh-configuration-files).
+
+net-ssh >= 8.1 changed how RSA keys are offered, which may break public key authentication on some devices; see [SSH public key algorithms](docs/Inputs.md#ssh-public-key-algorithms).
+
 ### Added
 - device2yaml: add port option (@systeembeheerder)
 - itmgos: new model for Lantronix IT Management Gateway OS (SLC 8000, SLC 9000, EMG, SLB console servers), with simulation data and unit tests (@ryanhoggpm)
@@ -29,6 +35,7 @@ When loading a single node (`oxs <host>` in oxidized-script, `/reload?node=<host
 - AGENTS.md: add guidance for AI coding agents, and document the AI contribution policy in CONTRIBUTING.md (@robertcheramy)
 - refinements: add `String#rstrip_lines` to strip trailing whitespace from each line (@thanegill)
 - ssh: add the `ssh_pubkey_algorithms` variable to choose the public key signature algorithms, for devices that disconnect on `rsa-sha2-*` such as Huawei SmartAX. Closes #2875 (@fmcglinn)
+- ssh: add the `ssh_minimum_dh_bits` variable to accept Diffie-Hellman groups smaller than 2048 bits on old devices (@robertcheramy)
 
 ### Changed
 - vyos: add commit info (@systeembeheerder)
@@ -39,6 +46,9 @@ When loading a single node (`oxs <host>` in oxidized-script, `/reload?node=<host
 - CI: run Ruby 3.0 and 3.1 on ubuntu-24.04, as ubuntu-26.04 (ubuntu-latest) only provides Ruby >= 3.2; install libjitterentropy3-dev needed to build rugged on ubuntu-26.04 (@robertcheramy)
 - README: document libgpg-error-dev as a dependency on Debian and Ubuntu, and libjitterentropy3-dev as a dependency on Ubuntu 26.04 (Ubuntu bug #2158026) (@robertcheramy)
 - core: log a warning at startup when the loaded oxidized-web is older than 0.17.0 (@robertcheramy)
+- ssh: require net-ssh ~> 8.1 and net-scp ~> 4.2, newer than the Debian 13 packages; the Docker image installs them as gems (@robertcheramy)
+- ssh: drop the ed25519 gem dependency and the x25519 gem in the Docker image, as net-ssh 8 uses OpenSSL for Ed25519 and Curve25519 (@robertcheramy)
+- ssh, scp: log a warning instead of creating a crashfile on a host key mismatch (`secure: true`) and on an unsupported key type (@robertcheramy)
 - ingate: redact secrets (private keys, passwords, secrets, passphrases, pre-shared keys, tokens and the SNMP community) when remove_secret is set (@thanegill)
 - http: support overriding port (@mgrocock-cwcs)
 - http: support DELETE method (@mgrocock-cwcs)
@@ -80,6 +90,7 @@ When loading a single node (`oxs <host>` in oxidized-script, `/reload?node=<host
 - nodes: match the node name exactly when loading a single node, instead of matching the node name as a regexp against the requested name, which could select the wrong node (e.g. `router1` for `router10`) (@robertcheramy)
 - core: expand `~` in `crash.directory` before writing crash dumps. Fixes #3945. (@wleeaf, @robertcheramy)
 - junos: remove syntax error when there is no virtual chassis. Fixes #3922. (@dalejos, @robertcheramy)
+- ssh: reject an `ssh_proxy` that is not `[user@]host` (RFC 1123 hostname, IPv4 or IPv6 address) and an `ssh_proxy_port` that is not an integer, so values from the source cannot inject shell commands or ssh options. Invalid ssh variables make the node fail with a warning (@robertcheramy)
 - docs: Supported-OS-Types lists the F5OS, Grandstream HT8xx and Uplink EP4440 models under their model names (`f5os`, `grandstreamht8xx`, `uplinkolt`) instead of `tmos`, `grandstream` and `EP4440` (@rawsun007)
 - awplus: remove stray BEL (0x07) character left from pager. Fixes #3919. (@cojumbo, @robertcheramy)
 - procurve: hide the SNMP community on `snmp-server host <ip> community "<name>"` lines (@thanegill)
