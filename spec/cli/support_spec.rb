@@ -76,10 +76,9 @@ describe Oxidized::CLI::Support do
         'OXIDIZED_SSH_PASSPHRASE' => 'topsecret',
         'OXIDIZED_HOME'           => '/srv/oxidized'
       }
-      ENV.stubs(:keys).returns(fake_env.keys)
-      ENV.stubs(:has_key?).returns(false)
-      fake_env.each_key { |k| ENV.stubs(:has_key?).with(k).returns(true) }
-      fake_env.each { |k, v| ENV.stubs(:fetch).with(k).returns(v) }
+      # ENV is Ractor-shareable in Ruby >= 4.1 and cannot be stubbed by mocha
+      saved_env = fake_env.keys.to_h { |k| [k, ENV.fetch(k, nil)] }
+      ENV.update(fake_env)
 
       out, _err = capture_io { @helper.send(:print_environment) }
 
@@ -87,6 +86,8 @@ describe Oxidized::CLI::Support do
       _(out).must_include 'OXIDIZED_PASSWORD=[REDACTED]'
       _(out).must_include 'OXIDIZED_SSH_PASSPHRASE=[REDACTED]'
       _(out).wont_include 'topsecret'
+    ensure
+      saved_env.each { |k, v| ENV[k] = v }
     end
   end
 end

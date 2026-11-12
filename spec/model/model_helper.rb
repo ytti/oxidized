@@ -48,7 +48,7 @@ class MockSsh
                        model: model)
   end
 
-  def self.get_result(test_context = nil, test_or_desc)
+  def self.get_result(test_context, test_or_desc)
     test = test_or_desc
     test = ATOMS::TestOutput.new(caller_model, test_or_desc) if test_or_desc.is_a?(String)
     @node = get_node(test.model)

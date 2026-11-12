@@ -63,6 +63,8 @@ RUN set -eux; \
       ruby-sqlite3 ruby-mysql2 ruby-pg ruby-sequel ruby-gpgme\
       # Gem dependencies for hooks
       ruby-aws-sdk ruby-xmpp4r \
+      # Gem dependencies for models
+      ruby-zip \
       # Gems needed by oxidized-web
       ruby-charlock-holmes ruby-haml ruby-htmlentities ruby-json \
       puma ruby-sinatra ruby-sinatra-contrib \

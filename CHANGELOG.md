@@ -5,26 +5,83 @@ All notable changes to this project will be documented in this file.
 The format is based on [Keep a Changelog](https://keepachangelog.com/en/1.1.0/).
 
 ## [Unreleased]
+### Release Notes
+The git and gitcrypt outputs no longer provide the `:date` field in the node versions, as it was only used by oxidized-web <= 0.16.0. You need oxidized-web >= 0.17.0, older versions will fail to display node versions and diffs.
+
+Oxidized no longer patches Puma's signal handling (needed for Puma 8). With oxidized-web < 0.17.0, Puma takes over the INT, TERM and HUP signals again. Oxidized logs a warning at startup if it finds such a version.
+
+When loading a single node (`oxs <host>` in oxidized-script, `/reload?node=<host>` in oxidized-web), the node name must now match exactly. Previously, a node also matched when its name was contained in the requested name, so `oxs router10` could run on `router1`.
+
 ### Added
-- procurve: model unit test (@thanegill)
+- device2yaml: add port option (@systeembeheerder)
+- itmgos: new model for Lantronix IT Management Gateway OS (SLC 8000, SLC 9000, EMG, SLB console servers), with simulation data and unit tests (@ryanhoggpm)
+- VPR: Add simulation data for Huawei YunShan OS with VRP model (@systeembeheerder)
+- IOSXR: Add show vesion (@Mascherus, @systeembeheerder)
+- cnos: remove transceiver DDM data (@freddy36)
+- cnos: add show license output (@freddy36)
+- cnos: add FS-S58580 simulation data (@freddy36)
+- eatonnetwork: model unit test (@thanegill)
+- source/sql: support defining port in configuration. Closes #3853 (@ytti)
+- vsololt: new model for VSOL GPON OLT (@Vantomas)
+- tplink: add simulation data and unit tests for the TP-Link DeltaStream DS-P7001-08 GPON OLT (@Vantomas)
+- device2yaml: add `-n`/`--newline` option to set the command line terminator (e.g. `-n "\r\n"`) for devices that submit a command only on a carriage return; the terminator is recorded as a `command_newline` key in the generated YAML (@Vantomas)
+- ftd: new model for Cisco FTD via HTTP (@mgrocock-cwcs, @robertcheramy)
+- AGENTS.md: add guidance for AI coding agents, and document the AI contribution policy in CONTRIBUTING.md (@robertcheramy)
+- ssh: add the `ssh_pubkey_algorithms` variable to choose the public key signature algorithms, for devices that disconnect on `rsa-sha2-*` such as Huawei SmartAX. Closes #2875 (@fmcglinn)
 
 ### Changed
+- vyos: add commit info (@systeembeheerder)
+- docker: set LANG=C.UTF-8. Fixes #3690 (@ytti)
+- routeros: remove intermittent POE `voltage_on_poe-in` comment (@hendrikbl)
+- tplink: use `\r\n` as the line terminator in pre_logout, required for the model unit tests to work (@Vantomas)
+- ssh: change max_window_size from 138k to 2MB to avoid triggering Mikrotik bug. Closes #3867 (@ytti)
+- CI: run Ruby 3.0 and 3.1 on ubuntu-24.04, as ubuntu-26.04 (ubuntu-latest) only provides Ruby >= 3.2; install libjitterentropy3-dev needed to build rugged on ubuntu-26.04 (@robertcheramy)
+- README: document libgpg-error-dev as a dependency on Debian and Ubuntu, and libjitterentropy3-dev as a dependency on Ubuntu 26.04 (Ubuntu bug #2158026) (@robertcheramy)
+- core: log a warning at startup when the loaded oxidized-web is older than 0.17.0 (@robertcheramy)
+- ingate: redact secrets (private keys, passwords, secrets, passphrases, pre-shared keys, tokens and the SNMP community) when remove_secret is set (@thanegill)
+- http: support overriding port (@mgrocock-cwcs)
+- http: support DELETE method (@mgrocock-cwcs)
+- tmos: strip volatile object metadata (checksum, revision, size, create/update time and author) from `tmsh -q list` and the partition configs (@dahlmo)
+- panos_api: back up the running configuration with `show config running` instead of the candidate configuration export. A custom admin role now needs the XML API `Operational Requests` permission; set `panos_api_candidate: true` to keep the previous behaviour. Fixes #2759 (@macmandr197)
+- gemspec: add nokogiri as a development dependency for the panos_api unit tests (@macmandr197)
+- output/git: skip walking the git logs in the version cache when HEAD did not change, speeding up node lists in oxidized-web. Closes #3895 (@zaits07)
+- output/git: reduce the memory footprint of the version cache by deduplicating author and message strings (@robertcheramy)
+- output/git, output/gitcrypt: remove the `:date` field from node versions, use `:time` instead. Requires oxidized-web >= 0.17.0 (@robertcheramy)
+- garderos: replace `show system version` & `show system serial` with `show system information` and `show hardware all` to get more hardware details (@robertcheramy)
+- docs: document in Docker.md how to extend the official image with additional gems or packages, as the image no longer ships build tools or `/sbin/my_init` since the move to debian:trixie-slim. Closes #3897 (@joewaltman)
 - procurve: rstrip trailing whitespace from commented command sections; add `String#rstrip_lines` refinement (@thanegill)
 - procurve: remove ANSI escape codes with `clean :escape_codes` and simplify the prompt regexp (@thanegill)
 - procurve: redact the additional credentials exposed by `include-credentials` / `encrypt-credentials`, with unit tests (@thanegill)
 
 ### Fixed
-- procurve: hide the SNMP community on `snmp-server host <ip> community "<name>"` lines (@thanegill)
-- procurve: hide local user password hashes (`password ... sha1 "<hash>"`) when remove_secret is true (@thanegill)
-- source/sql: support defining port in configuration. Closes #3853 (@ytti)
-
-### Changed
-- docker: set LANG=C.UTF-8. Fixes #3690 (@ytti)
-
-### Fixed
+- extra/oxidized.service: remove `KillSignal=SIGKILL`, Oxidized exits on SIGTERM since #3059 (@robertcheramy)
+- signals: remove the `Puma::Signal` monkey patch, which broke Puma 8 (`undefined method 'list' for class Puma::Signal`) when Oxidized was loaded before Puma. The patch is no longer needed since oxidized-web 0.17.0 (ytti/oxidized-web#357) starts `Puma::Server` directly instead of using the Puma launcher. With oxidized-web < 0.17.0, Puma traps INT, TERM and HUP again (@robertcheramy)
+- output/git: `get_diff` only returns the diff of the requested node when a commit contains several nodes (@robertcheramy)
+- output/gitcrypt: `get_diff` only returns the diff of the requested node when a commit contains several nodes, and works with groups in a single repository (@robertcheramy)
+- output/gitcrypt: reference the `git` gem as `::Git`, as `Git` resolved to `Oxidized::Output::Git` when the git output was loaded too (@robertcheramy)
+- input/cli: raise an error when a requested login credential is missing. Fixes #3700 (@robertcheramy)
+- eos: hide the community string / v3 user in snmp-server host lines. Fixes #3882 (@FusionBrah)
+- aoscx: mask the community string in snmp-server host lines instead of the token after the host address. Fixes #3881 (@FusionBrah)
+- fortigate: answer the `Do you want to continue? (y/n)` prompt from `diagnose hardware deviceinfo psu`. Fixes #3940 (@suryakant-source)
+- fastiron: answer the pager prompt with a space and strip ANSI escape sequences, as `skip-page-display` is not available to users without enable rights. Fixes #3819 (@FusionBrah)
+- junos: redact cleartext passwords embedded in archive-site URLs. Fixes #3640 (@KalebFenley)
 - siklu: allow parenthesis in prompt. Fixes #3841 (@ytti)
 - fortios: allow parenthesis in prompt. Fixes #3846 (@ytti)
+- os6: hide snmp-server community strings in the secret filter (@Jurgen1994)
 - fortigate: prompt can contain HA cluster status. Fixes #3846 (@robertcheramy)
+- aoscx: hide power consumption on rows where PSU output is N/A. Fixes #3864 (@FusionBrah)
+- aoscx: hide input voltage readings in "show environment power-supply input-voltage". Fixes #3864 (@FusionBrah)
+- source: return the decrypted contents of a `gpg`-encrypted source as an IO object, so JSONFile (and any source reading via `#read`) loads it instead of crashing with a `NoMethodError`. Fixes #3879 (@youdie006)
+- output/git: fix the version cache losing commits made within the same second or during a cache update. Log an error and rebuild the cache if the git history has been rewritten while Oxidized is running (@robertcheramy)
+- output/git: rebuild the git index from HEAD before each commit, so that changes merged by the githubrepo hook or pushed to the repository are no longer reverted by the next commit, and read configurations from HEAD instead of the index. Fixes #3887 (@robertcheramy)
+- scp: rescue the `ArgumentError` net-scp raises when a device answers with an error message missing the `\2` prefix, so the node fails instead of crashing Oxidized. Fixes #3900 (@SAY-5)
+- nodes: match the node name exactly when loading a single node, instead of matching the node name as a regexp against the requested name, which could select the wrong node (e.g. `router1` for `router10`) (@robertcheramy)
+- core: expand `~` in `crash.directory` before writing crash dumps. Fixes #3945. (@wleeaf, @robertcheramy)
+- junos: remove syntax error when there is no virtual chassis. Fixes #3922. (@dalejos, @robertcheramy)
+- docs: Supported-OS-Types lists the F5OS, Grandstream HT8xx and Uplink EP4440 models under their model names (`f5os`, `grandstreamht8xx`, `uplinkolt`) instead of `tmos`, `grandstream` and `EP4440` (@rawsun007)
+- awplus: remove stray BEL (0x07) character left from pager. Fixes #3919. (@cojumbo, @robertcheramy)
+- procurve: hide the SNMP community on `snmp-server host <ip> community "<name>"` lines (@thanegill)
+- procurve: hide local user password hashes (`password ... sha1 "<hash>"`) when remove_secret is true (@thanegill)
 
 ## [0.37.0 - 2026-05-20]
 ### Added

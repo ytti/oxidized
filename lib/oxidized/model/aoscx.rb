@@ -24,7 +24,7 @@ class Aoscx < Oxidized::Model
   cmd :secret do |cfg|
     cfg.gsub! /^(user .* group .*(?: ciphertext)?) \S+/, '\\1 <secret hidden>'
     cfg.gsub! /^(snmp-server community) \S+(.*)/, '\\1 <secret hidden> \\2'
-    cfg.gsub! /^(snmp-server host \S+) \S+(.*)/, '\\1 <secret hidden> \\2'
+    cfg.gsub! /^(snmp-server host \S+ .*community) \S+(.*)/, '\\1 <secret hidden>\\2'
     cfg.gsub! /^(snmpv3 user).*?(auth (?:md5|sha(?:\d{1,3})?) auth-pass ciphertext).*?(priv (?:des|aes(?:\d{1,3})?) priv-pass ciphertext).*/, '\\1 <user> \\2 <auth-pass> \\3 <priv-pass>'
     cfg.gsub! /^(radius-server host \S+ key(?: ciphertext)?) \S+ (.*)/, '\\1 <secret hidden> \\2'
     cfg.gsub! /^(radius-server key).*/, '\\1 <configuration removed>'
@@ -52,12 +52,16 @@ class Aoscx < Oxidized::Model
     end
 
     with_section(cfg, 'power-consumption') do |content|
-      content.gsub!(/^(.*?) (?:\d+\.\d+ +)+\d+\.\d+$/, '\\1 <power hidden>')
+      content.gsub!(/^(.*?) (?:\d+\.\d+ +)+\d+\.\d+(?: +N\/A)*$/, '\\1 <power hidden>')
       content.gsub!(/^(Total Power Consumption +)\d+\.\d+$/, '\\1<power hidden>')
     end
 
     with_section(cfg, 'power-allocation') do |content|
-      content.gsub!(/^(.*) \d+ W$/, '\\1 <power>')
+      content.gsub!(/^(.*) \d+(?:\.\d+)? W$/, '\\1 <power>')
+    end
+
+    with_section(cfg, 'power-supply input-voltage') do |content|
+      content.gsub!(/^((?:\S+ +){3}\d+-\d+ +)\d+\.\d+ +\d+\.\d+/, '\\1<voltage hidden>')
     end
 
     with_section(cfg, 'temperature') do |content|

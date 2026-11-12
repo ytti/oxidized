@@ -17,10 +17,9 @@ module Oxidized
 
     include Oxidized::Config::Vars
 
-    # rubocop:disable Style/FormatStringToken
+    # rubocop:disable-next Style/FormatStringToken
     METADATA_DEFAULT = "%{comment}Fetched by Oxidized with model %{model} " \
                        "from host %{name} [%{ip}]\n".freeze
-    # rubocop:enable Style/FormatStringToken
 
     class << self
       def inherited(klass)
@@ -212,6 +211,10 @@ module Oxidized
 
     def process_cmd_output(output, name)
       output = String.new('') unless output.instance_of?(String)
+      # Model blocks may return (chilled) string literals, e.g.
+      # cmd 'config global' do ''; end
+      # process_cmd sets instance variables, so the string must be mutable
+      output = +output
       output.process_cmd(name)
       output
     end

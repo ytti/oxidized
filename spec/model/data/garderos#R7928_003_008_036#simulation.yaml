@@ -1,0 +1,91 @@
+---
+command_newline: "\n"
+init_prompt: |-
+    \r
+    This output has been modified to remove sensitive data.\r
+     \r
+     \r
+    \r
+    \r\e[4mLAB-R10095#\e[m\x20
+commands:
+  - "show system information\n": |-
+      show system information\r
+      System Name: LAB-R10095\r
+      Serial     : R79282400000\r
+      Version    : grs-efus-armel/003_008_036 (Garderos; 2026-06-19 13:11:34)\r
+      Description: Oxidized Test\r
+      Contact    : Oxidized Example\r
+      Location   : HQ\r
+      System MAC : 00:05:51:00:00:00\r
+      Uptime     : 35d:19h:05m:31s\r
+      Config Src : remote, https://192.0.2.67:443/configserver/config \r
+      Config Age : 17m:16s\r
+      Startup    : 307cc33fa07600000000000000000000\r
+      Wakeup Int : 20m:00s\r
+      Temperature: 39.2 C\r
+      \r\e[4mLAB-R10095#\e[m\x20
+  - "show hardware all\n": |-
+      show hardware all\r
+      Model:      R-7928 A00\r
+      Board Type: EFUS\r
+      Board Rev:  GAR2H1 1.40\r
+      Board Ser:  000500000000\r
+      Sec. Boot:  yes\r
+      \r
+      2 LAN device(s) found:\r
+        0. eth0\r
+          MAC: 00:05:51:00:00:00\r
+          Supported link-types:   10baseT-HD 10baseT-FD 100baseT-HD 100baseT-FD\r
+      \r
+        1. eth1\r
+          MAC: 00:05:51:00:00:01\r
+          Supported link-types:   100baseT-FD\r
+      \r
+      1 switch found:\r
+        0. switch0 (Marvell 88e6071), connected to 'eth1', 4 ports\r
+          Switch is managed.\r
+      \r
+          VLAN 100     Port(s): 0*, 1*\r
+          Port 0: up, untagged (vid=100)\r
+          Port 1: up, untagged (vid=1)\r
+          Port 2: blocked\r
+          Port 3: blocked\r
+      \r
+      2 serial device(s) found:\r
+        0. ttyS0\r
+          Speed: 115200\r
+          Type:  RS-232\r
+        1. ttyS1\r
+          Speed: 115200\r
+          Type:  RS-485\r
+      \r
+      No WiFi cards found.\r
+      \r
+      \r
+      1 WWAN device(s) found:\r
+        0. wwan0:  EG25-G 4xWWAN, GPS\r
+          Port:    2-1\r
+          Type:    GSM UMTS LTE \r
+          Bands:   GSM: B2/B3/B5/B8, UMTS: B1/B2/B4/B5/B6/B8/B19, LTE: B1/B2/B3/B4/B5/B7/B8/B12/B13/B18/B19/B20/B25/B26/B28/B38/B39/B40/B41\r
+          Max. TX: 35dBm\r
+          FW-Rev.: EG25GGBR07A06M2G_01.001.01.001\r
+          IMEI:    800000000000000\r
+          Since:   003_005_008\r
+      \r\e[4mLAB-R10095#\e[m\x20
+  - "show hardware wwan wwan0 sim\n": |-
+      show hardware wwan wwan0 sim\r
+      IMSI:           999990000000000\r
+      SIM ID:         88888800000000000000\r
+      Phone number:   -\r
+      \r\e[4mLAB-R10095#\e[m\x20
+  - "show configuration running\n": |-
+      show configuration running\r
+      user.account.0.level=15\r
+      user.account.0.name=oxidized\r
+      user.account.0.password={sha256}AAAAAAAAAABBBBBBBBBBCCCCCCCCCCDDDDDDDDDD\r
+      user.enable.0.password={sha256}AAAAAAAAAABBBBBBBBBBCCCCCCCCCCDDDDDDDDDD\r
+      \r\e[4mLAB-R10095#\e[m\x20
+  - "exit\n": |-
+      exit\r
+      \r
+      

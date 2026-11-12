@@ -22,6 +22,13 @@ class FortiGate < Oxidized::Model
     data.sub re, ''
   end
 
+  # Newer FortiOS versions ask for confirmation before low-level firmware
+  # access in `diagnose hardware deviceinfo psu`
+  expect /Do you want to continue\? \(y\/n\)/i do |data, re|
+    send 'y'
+    data.sub re, ''
+  end
+
   cmd :all do |cfg|
     # Remove junk after --More-- pager
     cfg = cfg.gsub(/\r +\r/, '')

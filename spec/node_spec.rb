@@ -81,6 +81,22 @@ describe Oxidized::Node do
       status, = node.run
       _(status).must_equal :fail
     end
+
+    it 'should expand ~ in the crash directory' do
+      Dir.mktmpdir do |dir|
+        home = Dir.home
+        ENV['HOME'] = dir
+        Oxidized.config.crash.directory = '~/crashes'
+        Oxidized::SSH.any_instance.stubs(:connect).raises(StandardError, 'crash')
+        Oxidized::Node.logger.expects(:error).at_least_once
+
+        @node.run
+
+        assert_path_exists File.join(dir, 'crashes', @node.ip)
+      ensure
+        ENV['HOME'] = home
+      end
+    end
   end
 
   describe '#repo' do

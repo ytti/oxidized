@@ -91,7 +91,7 @@ module Oxidized
 
       def fetch(node, group)
         repo, path = yield_repo_and_path(node, group)
-        repo = Git.open repo
+        repo = ::Git.open repo
         unlock repo
         index = repo.index
         # Empty repo ?
@@ -107,16 +107,13 @@ module Oxidized
       def version(node, group)
         repo, path = yield_repo_and_path(node, group)
 
-        repo = Git.open repo
+        repo = ::Git.open repo
         unlock repo
         walker = repo.log.path(path)
         i = -1
         tab = []
         walker.each do |commit|
           hash = {}
-          # We keep :date for reverse compatibility on oxidized-web <= 0.15.1
-          hash[:date] = commit.date.to_s
-          # date as a Time instance for more flexibility in oxidized-web
           hash[:time] = commit.date
           hash[:oid] = commit.objectish
           hash[:author] = commit.author
@@ -132,7 +129,7 @@ module Oxidized
       # give the blob of a specific revision
       def get_version(node, group, oid)
         repo, path = yield_repo_and_path(node, group)
-        repo = Git.open repo
+        repo = ::Git.open repo
         unlock repo
         repo.gtree(oid).files[path].contents
       rescue StandardError
@@ -142,31 +139,15 @@ module Oxidized
       end
 
       # give a hash with the patch of a diff between 2 revision and the stats (added and deleted lines)
+      # The diff is limited to the node, as a commit may contain several nodes
       def get_diff(node, group, oid1, oid2)
-        diff_commits = nil
-        repo, _path = yield_repo_and_path(node, group)
-        repo = Git.open repo
+        repo, path = yield_repo_and_path(node, group)
+        repo = ::Git.open repo
         unlock repo
-        commit = repo.gcommit(oid1)
 
-        if oid2
-          commit_old = repo.gcommit(oid2)
-          diff = repo.diff(commit_old, commit)
-          stats = [diff.stats[:files][node.name][:insertions], diff.stats[:files][node.name][:deletions]]
-          diff.each do |patch|
-            if /#{node.name}\s+/ =~ patch.patch.to_s.lines.first
-              diff_commits = { patch: patch.patch.to_s, stat: stats }
-              break
-            end
-          end
-        else
-          stat = commit.parents[0].diff(commit).stats
-          stat = [stat[:files][node.name][:insertions], stat[:files][node.name][:deletions]]
-          patch = commit.parents[0].diff(commit).patch
-          diff_commits = { patch: patch, stat: stat }
-        end
-        lock repo
-        diff_commits
+        diff = repo.diff(oid2 || "#{oid1}^", oid1).path(path)
+        total = diff.stats[:total]
+        { patch: diff.patch, stat: [total[:insertions], total[:deletions]] }
       rescue StandardError
         'no diffs'
       ensure
@@ -201,10 +182,10 @@ module Oxidized
 
         begin
           update_repo repo, file, data, @msg, @user, @email
-        rescue Git::GitExecuteError, ArgumentError => e
+        rescue ::Git::GitExecuteError, ArgumentError => e
           logger.debug "open_error #{e} #{file}"
           begin
-            grepo = Git.init repo
+            grepo = ::Git.init repo
             crypt_init grepo
           rescue StandardError => create_error
             raise GitCryptError, "first '#{e.message}' was raised while opening git repo, then " \
@@ -215,7 +196,7 @@ module Oxidized
       end
 
       def update_repo(repo, file, data, msg, user, email)
-        grepo = Git.open repo
+        grepo = ::Git.open repo
         grepo.config('user.name', user)
         grepo.config('user.email', email)
         grepo.chdir do

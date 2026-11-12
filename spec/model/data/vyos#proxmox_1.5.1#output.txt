@@ -1,0 +1,53 @@
+# Version:          VyOS 1.5.1
+# Release train:    circinus
+# Release flavor:   proxmox
+# 
+# Built by:         VyOS Inc.
+# Built on:         Mon 13 Jul 2026 18:18 UTC
+# Build UUID:       b0ae922b-2396-42b7-bb82-a1ebf406306d
+# Build commit ID:  c2378372edfa69
+# 
+# Architecture:     x86_64
+# Boot via:         installed image
+# System type:      KVM guest
+# 
+# Hardware vendor:  QEMU
+# Hardware model:   Standard PC (i440FX + PIIX, 1996)
+# Hardware S/N:     
+# Hardware UUID:    bd129d29-b1e0-aaaa-bbbb-379a37568812
+# 
+# Copyright:        VyOS maintainers and contributors
+# # Last commits:
+#  0  2026-10-23 16:34:35                                            by vyos  via cli
+#  1  2026-10-23 16:33:56                                            by vyos  via cli
+#     Set hostname
+#  2  2026-10-23 16:33:32                                            by vyos  via cli
+set interfaces ethernet eth0 address '192.0.2.22/24'
+set interfaces ethernet eth0 hw-id '02:00:00:00:00:01'
+set interfaces loopback lo
+set protocols static route 0.0.0.0/0 next-hop 192.0.2.254
+set service ntp allow-client address '127.0.0.0/8'
+set service ntp allow-client address '169.254.0.0/16'
+set service ntp allow-client address '10.0.0.0/8'
+set service ntp allow-client address '172.16.0.0/12'
+set service ntp allow-client address '192.168.0.0/16'
+set service ntp allow-client address '::1/128'
+set service ntp allow-client address 'fe80::/10'
+set service ntp allow-client address 'fc00::/7'
+set service ntp server time1.vyos.net
+set service ntp server time2.vyos.net
+set service ntp server time3.vyos.net
+set service ssh port '22'
+set system config-management commit-revisions '100'
+set system conntrack modules ftp
+set system conntrack modules h323
+set system conntrack modules nfs
+set system conntrack modules pptp
+set system conntrack modules sip
+set system conntrack modules sqlnet
+set system conntrack modules tftp
+set system console device ttyS0 kernel
+set system console device ttyS0 speed '115200'
+set system host-name 'test-vyos'
+set system syslog local facility all level 'info'
+set system syslog local facility local7 level 'debug'

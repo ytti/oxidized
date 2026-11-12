@@ -13,6 +13,7 @@ class EOS < Oxidized::Model
 
   cmd :secret do |cfg|
     cfg.gsub! /^(snmp-server community).*/, '\\1 <configuration removed>'
+    cfg.gsub! /^(snmp-server host \S+( vrf \S+)?( informs?| traps?)?( version (1|2c|3 (?:noauth|auth|priv)))?) \S+(.*)/, '\\1 <secret hidden>\\6'
     cfg.gsub! /(secret \w+) (\S+).*/, '\\1 <secret hidden>'
     cfg.gsub! /(password \d+) (\S+).*/, '\\1 <secret hidden>'
     cfg.gsub! /^(enable (?:secret|password)).*/, '\\1 <configuration removed>'

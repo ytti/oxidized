@@ -129,7 +129,7 @@ optparse = OptionParser.new do |opts|
       command2
       command3" [options]
 
-    -i and -c are mutualy exclusive, one must be specified
+    -i and -c are mutually exclusive, one must be specified
 
     [options]:
   HEREDOC
@@ -143,9 +143,18 @@ optparse = OptionParser.new do |opts|
   opts.on('-o', '--output file', 'Specify an output YAML-file') do |file|
     options[:output] = file
   end
+  opts.on('-p', '--port port', Integer, 'Specify SSH port (default: 22)') do |port|
+    options[:port] = port
+  end
   opts.on('-t', '--timeout value', Integer,
-          'Specify the idle timeout beween commands (default: 5 seconds)') do |timeout|
+          'Specify the idle timeout between commands (default: 5 seconds)') do |timeout|
     options[:timeout] = timeout
+  end
+  opts.on('-n', '--newline value',
+          'Line terminator appended to each command (default: \n). ' \
+          'Accepts the escapes \n and \r, e.g. -n "\r\n" for ' \
+          'devices that submit a command only on a carriage return.') do |newline|
+    options[:newline] = newline.gsub('\n', "\n").gsub('\r', "\r")
   end
   opts.on('-e', '--exec-mode', 'Run ssh in exec mode (without tty)') { @exec_mode = true }
   opts.on('-u', '--unordered', 'The YAML simulation should not enforce an order of the commands') do
@@ -194,8 +203,10 @@ elsif options[:input]
 end
 
 puts "Running #{ssh_commands} on #{ssh_user}@#{ssh_host}"
-# Add \n to each command
-ssh_commands.map! { |s| s + "\n" }
+# Append the line terminator to each command (default "\n", overridable with -n
+# for devices that submit a command only on a carriage return)
+command_newline = options[:newline] || "\n"
+ssh_commands.map! { |s| s + command_newline }
 
 # Defaut idle timeout: 5 seconds, as tests showed that 2 seconds is too short
 @idle_timeout = options[:timeout] || 5
@@ -206,7 +217,8 @@ ssh_commands.map! { |s| s + "\n" }
 
 @ssh = Net::SSH.start(ssh_host,
                       ssh_user,
-                      { timeout:                         10,
+                      { port:                            options[:port] || 22,
+                        timeout:                         10,
                         append_all_supported_algorithms: true })
 
 @ssh_output = ''
@@ -235,6 +247,10 @@ end
 
 # YAML begin of file
 @output&.puts '---'
+# Record the line terminator appended to each command, so it is clear how the
+# simulation was captured (some CLIs submit a command only on "\r"). Consumers
+# that don't need it (e.g. the model unit tests) simply ignore this key.
+@output&.puts "command_newline: #{command_newline.dump}"
 
 if @exec_mode
   # init prompt does not exist and is empty in exec mode

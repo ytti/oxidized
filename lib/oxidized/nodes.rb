@@ -38,19 +38,11 @@ module Oxidized
     def node_want?(node_want, node)
       return true unless node_want
 
-      # rubocop:disable Style/RedundantParentheses
-      node_want_ip = (IPAddr.new(node_want) rescue false)
-      name_is_ip   = (IPAddr.new(node[:name]) rescue false)
-      # rubocop:enable Style/RedundantParentheses
-      # rubocop:todo Lint/DuplicateBranch
-      if name_is_ip && (node_want_ip == node[:name])
-        true
-      elsif node[:ip] && (node_want_ip == node[:ip])
-        true
-      elsif node_want.match node[:name]
-        true unless name_is_ip
-      end
-      # rubocop:enable Lint/DuplicateBranch
+      node_want_ip = IPAddr.new(node_want) rescue false
+      name_is_ip   = IPAddr.new(node[:name]) rescue false
+      (name_is_ip && node_want_ip == node[:name]) ||
+        (node[:ip] && node_want_ip == node[:ip]) ||
+        node_want == node[:name]
     end
 
     def list

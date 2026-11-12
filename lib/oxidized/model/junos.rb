@@ -19,6 +19,10 @@ class JunOS < Oxidized::Model
     cfg.gsub!(/community (\S+) {/, 'community <hidden> {')
     cfg.gsub!(/(ssh-(rsa|dsa|ecdsa|ecdsa-sk|ed25519|ed25519-sk) )".*; ## SECRET-DATA/, '<secret removed>')
     cfg.gsub!(/ "\$\d\$\S+; ## SECRET-DATA/, ' <secret removed>;')
+    # archive-site URLs may carry a cleartext password (user:pass@host) that
+    # Junos does not tag with "## SECRET-DATA", e.g. under
+    # system archival configuration archive-sites
+    cfg.gsub!(/((?:ftp|pasvftp|sftp|scp|https?):\/\/[^\/@"]+):[^@"]+@/, '\1:<secret removed>@')
     cfg
   end
 
@@ -33,7 +37,9 @@ class JunOS < Oxidized::Model
     when 'mx960'
       out << cmd('show chassis fabric reachability') { |cfg| comment cfg }
     when /^(ex22|ex3[34]|ex4|ex8|qfx)/
-      out << cmd('show virtual-chassis') { |cfg| comment cfg }
+      out << cmd('show virtual-chassis') do |cfg|
+        cfg.include?("error:") ? String.new : comment(cfg)
+      end
     when /^srx/
       out << cmd('show chassis cluster status') do |cfg|
         cfg.lines.count <= 1 && cfg.include?("error:") ? String.new : comment(cfg)

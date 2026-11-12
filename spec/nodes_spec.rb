@@ -22,6 +22,38 @@ describe Oxidized::Nodes do
     @nodes = Oxidized::Nodes.new(nodes: @nodes_org.dup)
   end
 
+  describe '#node_want?' do
+    it 'wants every node when node_want is nil' do
+      _(@nodes.node_want?(nil, { name: 'router1' })).must_equal true
+    end
+
+    it 'matches the node name' do
+      _(@nodes.node_want?('router1', { name: 'router1' })).must_equal true
+      _(@nodes.node_want?('router2', { name: 'router1' })).must_equal false
+    end
+
+    it 'does not match partial node names' do
+      _(@nodes.node_want?('router10', { name: 'router1' })).must_equal false
+      _(@nodes.node_want?('router1', { name: 'router10' })).must_equal false
+      _(@nodes.node_want?('router1.example.com', { name: 'router1' })).must_equal false
+    end
+
+    it 'does not interpret the node name as a regexp' do
+      _(@nodes.node_want?('router1', { name: 'r.uter1' })).must_equal false
+    end
+
+    it 'matches an IP address used as node name' do
+      _(@nodes.node_want?('10.0.0.1', { name: '10.0.0.1' })).must_equal true
+      _(@nodes.node_want?('10.0.0.10', { name: '10.0.0.1' })).must_equal false
+    end
+
+    it 'matches the IP address of the node' do
+      node = { name: 'router1', ip: '10.0.0.1' }
+      _(@nodes.node_want?('10.0.0.1', node)).must_equal true
+      _(@nodes.node_want?('10.0.0.2', node)).must_equal false
+    end
+  end
+
   describe '#put' do
     it 'adds node to top of queue' do
       @nodes.put @node

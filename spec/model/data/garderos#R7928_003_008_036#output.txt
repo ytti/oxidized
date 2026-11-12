@@ -1,0 +1,58 @@
+# System Name: LAB-R10095
+# Serial     : R79282400000
+# Version    : grs-efus-armel/003_008_036 (Garderos; 2026-06-19 13:11:34)
+# Description: Oxidized Test
+# Contact    : Oxidized Example
+# Location   : HQ
+# System MAC : 00:05:51:00:00:00
+# Config Src : remote, https://192.0.2.67:443/configserver/config 
+# 
+# Model:      R-7928 A00
+# Board Type: EFUS
+# Board Rev:  GAR2H1 1.40
+# Board Ser:  000500000000
+# Sec. Boot:  yes
+# 
+# 2 LAN device(s) found:
+#   0. eth0
+#     MAC: 00:05:51:00:00:00
+#     Supported link-types:   10baseT-HD 10baseT-FD 100baseT-HD 100baseT-FD
+# 
+#   1. eth1
+#     MAC: 00:05:51:00:00:01
+#     Supported link-types:   100baseT-FD
+# 
+# 1 switch found:
+#   0. switch0 (Marvell 88e6071), connected to 'eth1', 4 ports
+#     Switch is managed.
+# 
+# 
+# 2 serial device(s) found:
+#   0. ttyS0
+#     Speed: 115200
+#     Type:  RS-232
+#   1. ttyS1
+#     Speed: 115200
+#     Type:  RS-485
+# 
+# No WiFi cards found.
+# 
+# 
+# 1 WWAN device(s) found:
+#   0. wwan0:  EG25-G 4xWWAN, GPS
+#     Port:    2-1
+#     Type:    GSM UMTS LTE 
+#     Bands:   GSM: B2/B3/B5/B8, UMTS: B1/B2/B4/B5/B6/B8/B19, LTE: B1/B2/B3/B4/B5/B7/B8/B12/B13/B18/B19/B20/B25/B26/B28/B38/B39/B40/B41
+#     Max. TX: 35dBm
+#     FW-Rev.: EG25GGBR07A06M2G_01.001.01.001
+#     IMEI:    800000000000000
+#     Since:   003_005_008
+# 
+# IMSI:           999990000000000
+# SIM ID:         88888800000000000000
+# Phone number:   -
+# 
+user.account.0.level=15
+user.account.0.name=oxidized
+user.account.0.password={sha256}AAAAAAAAAABBBBBBBBBBCCCCCCCCCCDDDDDDDDDD
+user.enable.0.password={sha256}AAAAAAAAAABBBBBBBBBBCCCCCCCCCCDDDDDDDDDD

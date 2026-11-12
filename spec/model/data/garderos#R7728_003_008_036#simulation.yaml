@@ -1,0 +1,85 @@
+---
+command_newline: "\n"
+init_prompt: |-
+    \r
+    \r\e[4mLAB-R10091_Garderos#\e[m\x20
+commands:
+  - "show system information\n": |-
+      show system information\r
+      System Name: LAB-R10091_Garderos\r
+      Serial     : R7728910xxxx\r
+      Version    : grs-gwuz-armel/003_008_036 (Garderos; 2026-06-19 12:34:25)\r
+      Description: Oxidized Test\r
+      Contact    : Oxidized Example\r
+      Location   : HQ\r
+      System MAC : 00:e0:33:00:00:00\r
+      Uptime     : 35d:19h:04m:38s\r
+      Config Src : remote, https://192.0.2.67:443/configserver/config \r
+      Config Age : 51m:23s\r
+      Startup    : dd5f43d5fc8e00000000000000000000\r
+      Wakeup Int : 1h:00m:00s\r
+      Temperature: 52.2 C\r
+      \r\e[4mLAB-R10091_Garderos#\e[m\x20
+  - "show hardware all\n": |-
+      show hardware all\r
+      Model:      R-7728 J03\r
+      Board Type: GWUZ\r
+      Board Rev:  G32-\r
+      Board Ser:  6000000\r
+      \r
+      3 LAN device(s) found:\r
+        0. eth0\r
+          MAC: 00:e0:33:00:00:00\r
+          Supported link-types:   10baseT-HD 10baseT-FD 100baseT-HD 100baseT-FD 1000baseT-FD\r
+      \r
+        1. eth1\r
+          MAC: 00:e0:33:00:00:01\r
+          Supported link-types:   10baseT-HD 10baseT-FD 100baseT-HD 100baseT-FD 1000baseT-FD\r
+      \r
+        2. eth2\r
+          MAC: 00:e0:33:00:00:02\r
+          Supported link-types:   10baseT-HD 10baseT-FD 100baseT-HD 100baseT-FD 1000baseT-FD\r
+      \r
+      2 serial device(s) found:\r
+        0. ttyS0\r
+          Speed: 115200\r
+          Type:  RS-232\r
+        1. ttyS2\r
+          Speed: 115200\r
+          Type:  RS-485\r
+      \r
+      No WiFi cards found.\r
+      \r
+      \r
+      1 WWAN device(s) found:\r
+        0. wwan0:  LE910-EU V2 2xWWAN\r
+          Port:    2-1.1\r
+          Type:    GSM UMTS LTE \r
+          Bands:   GSM: B3/B8, UMTS: B1/B8, LTE: B1/B3/B7/B8/B20\r
+          Max. TX: 33dBm\r
+          FW-Rev.: 20.00.405\r
+          IMEI:    300000000000000\r
+          Since:   003_005_057\r
+      \r\e[4mLAB-R10091_Garderos#\e[m\x20
+  - "show hardware wwan wwan0 sim\n": |-
+      show hardware wwan wwan0 sim\r
+      IMSI:           200000000000000\r
+      SIM ID:         8000000000000000000\r
+      Phone number:   +4915100000000\r
+      \r\e[4mLAB-R10091_Garderos#\e[m\x20
+  - "show configuration running\n": |-
+      show configuration running\r
+      acl.ipv4.input.1.action=ACCEPT\r
+      acl.ipv4.input.1.description=allow ssh from management\r
+      acl.ipv4.input.1.dest-ports=22\r
+      acl.ipv4.input.1.protocol=tcp\r
+      acl.ipv4.input.1.source-network=192.0.2.67/24\r
+      user.account.0.level=15\r
+      user.account.0.name=oxidized\r
+      user.account.0.password={sha256}AAAAAAAAAABBBBBBBBBBCCCCCCCCCCDDDDDDDDDD\r
+      user.enable.0.password={sha256}AAAAAAAAAABBBBBBBBBBCCCCCCCCCCDDDDDDDDDD\r
+      \r\e[4mLAB-R10091_Garderos#\e[m\x20
+  - "exit\n": |-
+      exit\r
+      \r
+      

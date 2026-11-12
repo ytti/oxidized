@@ -1,0 +1,89 @@
+---
+command_newline: "\n"
+init_prompt: |-
+    Welcome to VyOS!\r
+    \r
+       \xE2\x94\x8C\xE2\x94\x80\xE2\x94\x80 \xE2\x94\x90\r
+       . VyOS 1.5.1\r
+       \xE2\x94\x94 \xE2\x94\x80\xE2\x94\x80\xE2\x94\x98  circinus\r
+    \r
+     * Documentation:  https://docs.vyos.io/en/latest\r
+     * Project news:   https://blog.vyos.io\r
+     * Bug reports:    https://vyos.dev\r
+    \r
+    You can change this banner using \"set system login banner post-login\" command.\r
+    \r
+    VyOS is a free software distribution that includes multiple components,\r
+    you can check individual component licenses under /usr/share/doc/*/copyright\r
+    \r
+    Last login: Fri Oct 23 16:36:11 2026 from 192.0.2.1\r\r
+    vyos@test-vyos:~$\x20
+commands:
+  - "show version\n": |-
+      show version\r
+      \e[?1h\e=\rVersion:          VyOS 1.5.1\e[m\r
+      Release train:    circinus\e[m\r
+      Release flavor:   proxmox\e[m\r
+      \e[m\r
+      Built by:         VyOS Inc.\e[m\r
+      Built on:         Mon 13 Jul 2026 18:18 UTC\e[m\r
+      Build UUID:       b0ae922b-2396-42b7-bb82-a1ebf406306d\e[m\r
+      Build commit ID:  c2378372edfa69\e[m\r
+      \e[m\r
+      Architecture:     x86_64\e[m\r
+      Boot via:         installed image\e[m\r
+      System type:      KVM guest\e[m\r
+      \e[m\r
+      Hardware vendor:  QEMU\e[m\r
+      Hardware model:   Standard PC (i440FX + PIIX, 1996)\e[m\r
+      Hardware S/N:     \e[m\r
+      Hardware UUID:    bd129d29-b1e0-aaaa-bbbb-379a37568812\e[m\r
+      \e[m\r
+      Copyright:        VyOS maintainers and contributors\e[m\r
+      \r\e[K\e[?1l\e>vyos@test-vyos:~$\x20
+  - "show system commit | no-more\n": |-
+      show system commit | no-more\r
+       0  2026-10-23 16:34:35                                            by vyos  via cli\r
+       1  2026-10-23 16:33:56                                            by vyos  via cli\r
+          Set hostname\r
+       2  2026-10-23 16:33:32                                            by vyos  via cli\r
+          add ip addess to eth0\r
+       3  2026-10-23 16:32:00                                            by root  via vyos-boot-config-loader\r
+       4  2026-10-23 16:28:55                                            by root  via vyos-boot-config-loader\r
+      vyos@test-vyos:~$\x20
+  - "show configuration commands | no-more\n": |-
+      show configuration commands | no-more\r
+      set interfaces ethernet eth0 address '192.0.2.22/24'\r
+      set interfaces ethernet eth0 hw-id '02:00:00:00:00:01'\r
+      set interfaces loopback lo\r
+      set protocols static route 0.0.0.0/0 next-hop 192.0.2.254\r
+      set service ntp allow-client address '127.0.0.0/8'\r
+      set service ntp allow-client address '169.254.0.0/16'\r
+      set service ntp allow-client address '10.0.0.0/8'\r
+      set service ntp allow-client address '172.16.0.0/12'\r
+      set service ntp allow-client address '192.168.0.0/16'\r
+      set service ntp allow-client address '::1/128'\r
+      set service ntp allow-client address 'fe80::/10'\r
+      set service ntp allow-client address 'fc00::/7'\r
+      set service ntp server time1.vyos.net\r
+      set service ntp server time2.vyos.net\r
+      set service ntp server time3.vyos.net\r
+      set service ssh port '22'\r
+      set system config-management commit-revisions '100'\r
+      set system conntrack modules ftp\r
+      set system conntrack modules h323\r
+      set system conntrack modules nfs\r
+      set system conntrack modules pptp\r
+      set system conntrack modules sip\r
+      set system conntrack modules sqlnet\r
+      set system conntrack modules tftp\r
+      set system console device ttyS0 kernel\r
+      set system console device ttyS0 speed '115200'\r
+      set system host-name 'test-vyos'\r
+      set system syslog local facility all level 'info'\r
+      set system syslog local facility local7 level 'debug'\r
+      vyos@test-vyos:~$\x20
+  - "exit\n": |-
+      exit\r
+      logout\r
+      

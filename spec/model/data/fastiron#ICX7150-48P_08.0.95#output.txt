@@ -1,0 +1,60 @@
+!   Copyright (c) 2017 Ruckus Networks, Inc. All rights reserved.
+! 
+! Version: 08.0.95T211
+! Boot-Monitor Version: 10.1.18T215 (mnz10118)
+! Serial: FEK3222N0AB
+! 
+! Modules:      Module                                        Status      Ports  Starting MAC
+! Modules:  M1 (left):                                                                    
+! Modules:  M2 (right):ICX7150-2X10GF 2-port 20G Module   OK           2      609c.9f11.2233
+! Modules:  U1:ICX7150-48P POE 48-port Mgmt Module        OK          48      609c.9f11.2200
+! 
+! Port   1/2/1:  Type  : 10GE SR 300m (SFP +)
+!                 Vendor: RUCKUS            , Version: A
+!                 Part# : 57-0000075-01     , Serial#: AAA111222333
+! Port   1/2/2:  Type  : 10GE SR 300m (SFP +)
+!                 Vendor: RUCKUS            , Version: A
+!                 Part# : 57-0000075-01     , Serial#: AAA111222334
+! DRAM info:
+!     Total: 1048576 KB
+! Flash info:
+!     Code flash: 2097152 KB
+!     Boot flash: 8192 KB
+! alone: standalone, D: dynamic config, S: static config
+! ID    Type          Role     Mac Address     Pri State    Comment
+! 1  S ICX7150-48P   active   609c.9f11.2200  128 local    Ready
+Current configuration:
+!
+ver 08.0.95T211
+!
+stack unit 1
+  module 1 icx7150-48p-poe-port-management-module
+  module 2 icx7150-2-copper-port-2g-module
+!
+global-stp
+!
+vlan 1 name DEFAULT-VLAN by port
+ spanning-tree
+!
+vlan 100 name USERS by port
+ untagged ethe 1/1/1 to 1/1/24
+ spanning-tree
+!
+vlan 200 name SERVERS by port
+ tagged ethe 1/2/1 to 1/2/2
+ spanning-tree
+!
+hostname ICX7150-48P
+ip dns domain-list example.com
+ip dns server-address 192.0.2.53
+!
+aaa authentication login default local
+enable telnet authentication
+!
+interface ethernet 1/1/1
+ port-name uplink-to-core
+!
+interface ve 100
+ ip address 192.0.2.1 255.255.255.0
+!
+end

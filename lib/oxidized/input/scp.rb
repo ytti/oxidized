@@ -10,7 +10,9 @@ module Oxidized
 
   class SCP < SSHBase
     RESCUE_FAIL = {
-      Net::SCP::Error => :warn
+      Net::SCP::Error => :warn,
+      # net-scp raises ArgumentError on error replies missing the \2 prefix, see #3900
+      ArgumentError   => :warn
     }.freeze
 
     def self.rescue_fail

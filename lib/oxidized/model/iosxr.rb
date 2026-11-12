@@ -7,13 +7,19 @@ class IOSXR < Oxidized::Model
   comment  '! '
 
   cmd :all do |cfg|
-    cfg.each_line.to_a[2..-2].join
+    cfg.gsub! /\r\n?/, "\n"
+    cfg.cut_both
   end
 
   cmd :secret do |cfg|
     cfg.gsub! /^(snmp-server community).*/, '\\1 <configuration removed>'
     cfg.gsub! /secret (\d+) (\S+).*/, '<secret hidden>'
     cfg
+  end
+
+  cmd 'show version' do |cfg|
+    cfg.gsub! /^System\suptime.*\n?/, ''
+    comment cfg
   end
 
   cmd 'show inventory all' do |cfg|
@@ -25,8 +31,8 @@ class IOSXR < Oxidized::Model
   end
 
   cmd 'show running-config' do |cfg|
-    cfg = cfg.each_line.to_a[1..-1].join
-    cfg
+    cfg.gsub! /^Building\sconfiguration\.{3}\n?/, ''
+    cfg.cut_head
   end
 
   cfg :telnet do

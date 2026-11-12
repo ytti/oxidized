@@ -3,6 +3,9 @@
 # The API-based model produced an XML configuration file that can actually be
 # restored as a configuration backup. Make sure to use the "http" input for
 # this module.
+#
+# The running configuration is backed up. Set the variable
+# panos_api_candidate to true to back up the candidate configuration instead.
 
 begin
   # Nokogiri is required because the PanOS API, as well as the
@@ -43,24 +46,49 @@ class PanOS_API < Oxidized::Model # rubocop:disable Naming/ClassAndModuleCamelCa
     # out of the keygen XML response.
     apikey = kg_x.xpath('//response/result/key').text.to_s
 
-    # Now that we have the API key, we can request a configuration
-    # export.
+    # The configuration export returns the candidate configuration,
+    # including uncommitted changes (#2759). Keep it as an opt-in.
+    if vars(:panos_api_candidate)
+      url_param = URI.encode_www_form(
+        key:      apikey,
+        category: 'configuration',
+        type:     'export'
+      )
+
+      cfg = get_http "/api?#{url_param}"
+
+      # The configuration export is in XML format. Unfortunately,
+      # it's just one long line of XML that's not especially human
+      # readable or diffable.
+      #
+      # Thus, we will load the XML document and then emit it again
+      # with indentation set up, so that it's still a valid
+      # configuration, and also possible to read.
+      next Nokogiri::XML(cfg).to_xml(indent: 2)
+    end
+
     url_param = URI.encode_www_form(
-      key:      apikey,
-      category: 'configuration',
-      type:     'export'
+      key:  apikey,
+      type: 'op',
+      cmd:  '<show><config><running/></config></show>'
     )
 
-    cfg = get_http "/api?#{url_param}"
+    run_x = Nokogiri::XML(get_http("/api?#{url_param}"), &:noblanks)
 
-    # The configuration export is in XML format. Unfortunately,
-    # it's just one long line of XML that's not especially human
-    # readable or diffable.
-    #
-    # Thus, we will load the XML document and then emit it again
-    # with indentation set up, so that it's still a valid
-    # configuration, and also possible to read.
-    Nokogiri::XML(cfg).to_xml(indent: 2)
+    status = run_x.xpath('//response/@status').first
+    if status.to_s != 'success'
+      msg = run_x.xpath('//response//msg').text
+      raise Oxidized::OxidizedError, "Could not fetch PanOS running configuration: #{msg}"
+    end
+
+    config = run_x.at_xpath('/response/result/config')
+    raise Oxidized::OxidizedError, 'PanOS API response contains no configuration' unless config
+
+    # Emit the configuration without the API response wrapper, in the
+    # same format as the configuration export.
+    doc = Nokogiri::XML::Document.new
+    doc.root = config
+    doc.to_xml(indent: 2)
   end
 
   # Define the command based on the callback above.

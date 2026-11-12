@@ -25,6 +25,16 @@ commands:
       \e[m
       Copyright:        VyOS maintainers and contributors\e[m
       \r\e[K\e[?1l\e>nicolas.berens@fw1:~$\x20
+  - "show system commit | no-more\n": |-
+      show system commit | no-more\r
+       0  2026-10-23 16:34:35                                            by vyos  via cli\r
+       1  2026-10-23 16:33:56                                            by vyos  via cli\r
+          Set hostname\r
+       2  2026-10-23 16:33:32                                            by vyos  via cli\r
+          add ip addess to eth0\r
+       3  2026-10-23 16:32:00                                            by root  via vyos-boot-config-loader\r
+       4  2026-10-23 16:28:55                                            by root  via vyos-boot-config-loader\r
+      nicolas.berens@fw1:~$\x20
   - "show configuration commands | no-more\n": |-
       show configuration commands | no-more
       set firewall global-options all-ping 'enable'

@@ -1,0 +1,244 @@
+---
+init_prompt: |-
+      Last login: 2026-07-08 16:20:50 from 192.0.2.1\r
+      User \"oxidized\" has logged in 1 time in the past 30 days\r
+      sw07#\x20
+commands:
+  - "no page\n": |-
+      no page\r
+      sw07#\x20
+  - "show version\n": |-
+      show version\r
+      -----------------------------------------------------------------------------\r
+      AOS-CX\r
+      (c) Copyright 2017-2025 Hewlett Packard Enterprise Development LP\r
+      -----------------------------------------------------------------------------\r
+      Version      : PL.10.16.1010                                                 \r
+      Build Date   : 2025-11-10 17:16:36 UTC                                       \r
+      Build ID     : AOS-CX:PL.10.16.1010:8e02d0e3b736:202511101706                \r
+      Build SHA    : 8e02d0e3b73610a4383330daa86e9bddc19c3283                      \r
+      Hot Patches  :                                                               \r
+      Active Image : primary                       \r
+      \r
+      Service OS Version : PL.01.17.0003                 \r
+      BIOS Version       : PL.03.0001                    \r
+      sw07#\x20
+  - "show environment\n": |-
+      show environment\r
+      \r
+      \r
+      show environment led\r
+      Mbr/Name       State        Status    \r
+      ----------------------------------\r
+      1/locator      off          ok        \r
+      \r
+      \r
+      show environment power-consumption\r
+      \r
+      Power Consumption Averaging Period : 600 seconds\r
+      \r
+                                            Power Usage (W)      PSU Output (W) \r
+      Name Description                     Instant   Average   Instant   Average\r
+      ----------------------------------------------------------------------------\r
+      1    6000 8G CL4 2F 67W Sw              7.00      6.24       N/A       N/A\r
+      \r
+      \r
+      show environment power-supply\r
+      --------------------------------------------------------------------------------\r
+               Product  Serial            PSU                Input  Voltage    Wattage\r
+      Mbr/PSU  Number   Number            Status             Type   Range      Maximum\r
+      --------------------------------------------------------------------------------\r
+      1/1      N/A      N/A               OK                 AC     100V-240V  90\r
+      \r
+      \r
+      \r
+      show environment temperature\r
+      Temperature information\r
+      ------------------------------------------------------------------------------\r
+                                                           Current\r
+      Mbr/Slot-Sensor                 Module Type        Temperature  Status\r
+      ------------------------------------------------------------------------------\r
+      1/1-PHY-01-08                   line-card-module     52.00 C    normal\r
+      \r
+      1/1-Inlet-Air                   management-module    20.62 C    normal\r
+      1/1-Switch-ASIC-Internal        management-module    59.12 C    normal\r
+      1/1-Switch-CPU-1                management-module    58.75 C    normal\r
+      1/1-Switch-CPU-2                management-module    60.62 C    normal\r
+      \r
+      sw07#\x20
+  - "show module\n": |-
+      show module\r
+      \r
+      Management Modules\r
+      ==================\r
+      \r
+           Product                                        Serial\r
+      Name Number  Description                            Number     Status\r
+      ---- ------- -------------------------------------- ---------- ----------------\r
+      1/1  S4R23A  6000 8G CL4 2F 67W Sw                  <removed>  Ready\r
+      \r
+      \r
+      Line Modules\r
+      ============\r
+      \r
+           Product                                        Serial\r
+      Name Number  Description                            Number     Status\r
+      ---- ------- -------------------------------------- ---------- ----------------\r
+      1/1  S4R23A  6000 8G CL4 2F 67W Sw                  <removed>  Ready\r
+      \r
+      \r
+      sw07#\x20
+  - "show interface transceiver\n": |-
+      show interface transceiver\r
+      No matching interfaces\r
+      sw07#\x20
+  - "show system\n": |-
+      show system\r
+      Hostname               : sw07                          \r
+      System Description     : PL.10.16.1010                 \r
+      System Contact         : <removed>                     \r
+      System Location        : <removed>                          \r
+      \r
+      Vendor                 : HPE ANW                       \r
+      Product Name           : S4R23A 6000 8G CL4 2F 67W Sw         \r
+      Chassis Serial Nbr     : <removed>                     \r
+      Base MAC Address       : 00c84e-000000                 \r
+      AOS-CX Version         : PL.10.16.1010                 \r
+      \r
+      Time Zone              : Europe/Amsterdam              \r
+      \r
+      Up Time                : 4 weeks, 19 hours, 41 minutes                               \r
+      CPU Util (%)           : 71                            \r
+      CPU Util (% avg 1 min) : 18                            \r
+      CPU Util (% avg 5 min) : 9                             \r
+      Memory Usage (%)       : 16                            \r
+      sw07#\x20
+  - "show running-config\n": |-
+      show running-config\r
+      Current configuration:\r
+      !\r
+      !Version AOS-CX PL.10.16.1010\r
+      !export-password: default\r
+      hostname sw07\r
+      user admin group administrators password ciphertext <removed>\r
+      user oxidized group administrators password ciphertext <removed>\r
+      user contose-adm group administrators password ciphertext <removed>\r
+      clock timezone europe/amsterdam\r
+      ntp server ntp.time.nl minpoll 4 maxpoll 4 iburst\r
+      ntp server pool.ntp.org minpoll 4 maxpoll 4 iburst\r
+      ntp enable\r
+      !\r
+      !\r
+      !\r
+      !\r
+      !\r
+      !\r
+      user oxidized authorized-key ssh-ed25519 <removed> oxidized@<removed>\r
+      ssh server vrf default\r
+      vlan 1\r
+      vlan 21\r
+          name Rack/Management\r
+      vlan 51\r
+          name vast\r
+      vlan 52\r
+          name wifi\r
+      vlan 53\r
+          name 'BYOD'\r
+      vlan 55\r
+          name 'MGMT'\r
+      spanning-tree\r
+      spanning-tree bpdu-guard timeout 300\r
+      port-access port-security enable\r
+      interface 1/1/1\r
+          description workstation\r
+          no shutdown\r
+          vlan access 51\r
+          spanning-tree bpdu-guard\r
+          spanning-tree port-type admin-edge\r
+          port-access port-security\r
+              enable\r
+              client-limit 2\r
+      interface 1/1/2\r
+          description workstation\r
+          no shutdown\r
+          vlan access 51\r
+          spanning-tree bpdu-guard\r
+          spanning-tree port-type admin-edge\r
+          port-access port-security\r
+              enable\r
+              client-limit 2\r
+      interface 1/1/3\r
+          description workstation\r
+          no shutdown\r
+          vlan access 51\r
+          spanning-tree bpdu-guard\r
+          spanning-tree port-type admin-edge\r
+          port-access port-security\r
+              enable\r
+              client-limit 2\r
+      interface 1/1/4\r
+          description workstation\r
+          no shutdown\r
+          vlan access 51\r
+          spanning-tree bpdu-guard\r
+          spanning-tree port-type admin-edge\r
+          port-access port-security\r
+              enable\r
+              client-limit 2\r
+      interface 1/1/5\r
+          description byod\r
+          no shutdown\r
+          vlan access 53\r
+          spanning-tree bpdu-guard\r
+          spanning-tree port-type admin-edge\r
+          port-access port-security\r
+              enable\r
+              client-limit 2\r
+      interface 1/1/6\r
+          description byod\r
+          no shutdown\r
+          vlan access 53\r
+          spanning-tree bpdu-guard\r
+          spanning-tree port-type admin-edge\r
+          port-access port-security\r
+              enable\r
+              client-limit 2\r
+      interface 1/1/7\r
+          description byod\r
+          no shutdown\r
+          vlan access 53\r
+          spanning-tree bpdu-guard\r
+          spanning-tree port-type admin-edge\r
+          port-access port-security\r
+              enable\r
+              client-limit 2\r
+      interface 1/1/8\r
+          description uplink\r
+          no shutdown\r
+          vlan trunk native 1\r
+          vlan trunk allowed all\r
+      interface 1/1/9\r
+          shutdown\r
+          vlan access 1\r
+      interface 1/1/10\r
+          shutdown\r
+          vlan access 1\r
+      interface vlan 1\r
+          no ip dhcp\r
+          no ipv6 dhcp\r
+      interface vlan 55\r
+          ip address 192.0.2.10/24\r
+      snmp-server vrf default\r
+      snmp-server system-location <removed>\r
+      snmp-server system-contact <removed>\r
+      snmp-server community <removed>\r
+      ip route 0.0.0.0/0 192.0.2.254 \r
+      !\r
+      !\r
+      !\r
+      !\r
+      !\r
+      https-server vrf default\r
+      sw07#\x20
+  - "exit\n": |-
+      exit\r

@@ -27,8 +27,8 @@ class Edgeos < Oxidized::Model
   cmd 'show configuration commands | no-more'
 
   cfg :telnet do
-    username  /login:\s/
-    password  /^Password:\s/
+    username /login:\s/
+    password /^Password:\s/
   end
 
   cfg :telnet, :ssh do

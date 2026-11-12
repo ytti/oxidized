@@ -157,9 +157,8 @@ class Modelrulesadvanced < Oxidized::Hook
       node[:model] = matched_model
       logger.debug "ModelRulesAdvanced: changed model from #{old_model.inspect} to #{matched_model.inspect}"
     else
-      # rubocop:disable Layout/LineLength
-      logger.debug "ModelRulesAdvanced: no rule matched, keeping existing model: #{node[:model] || node['model'].inspect}"
-      # rubocop:enable Layout/LineLength
+      model = node[:model] || node["model"]
+      logger.debug "ModelRulesAdvanced: no rule matched, keeping existing model: #{model.inspect}"
     end
 
     node

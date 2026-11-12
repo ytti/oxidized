@@ -48,8 +48,8 @@
 ! Mbr/  Product  Input  Normal     Present    Average    Input Voltage Violations:       Recovery  Recovery
 ! PSU   Number   Type   Input (V)  Input (V)  Input (V)  Count  Most Recent Event           Count  Time
 ! -----------------------------------------------------------------------------------------------------------------------------
-! 1/1   R8R51A   AC     90-264         229.2      228.7      0  N/A                             0  N/A                         
-! 1/2   R8R51A   AC     90-264         228.2      228.0      0  N/A                             0  N/A                         
+! 1/1   R8R51A   AC     90-264         <voltage hidden>      0  N/A                             0  N/A                         
+! 1/2   R8R51A   AC     90-264         <voltage hidden>      0  N/A                             0  N/A                         
 ! 
 ! 
 ! show environment power-consumption
