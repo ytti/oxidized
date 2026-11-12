@@ -60,7 +60,8 @@ Gem::Specification.new do |s|
 
   # Optional runtime libraries, needed here for the unit tests
   # Used by output/gitcrypt
-  s.add_development_dependency 'git',              '>= 2.0', '< 5'
+  # git 6.0 removes APIs used by output/gitcrypt.rb (config, status, Log#first)
+  s.add_development_dependency 'git',              '>= 2.0', '< 6'
   # Used by input/scp (e.g. model apc_aos).
   # Requires a newer version than Debian 13 provides.
   s.add_development_dependency 'net-scp',          '~> 4.2'
