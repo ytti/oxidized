@@ -3,7 +3,7 @@ class Procurve < Oxidized::Model
 
   # The prompt is the device name followed by '#' or '>' and a
   # space, optionally preceded by a carriage return on ssh.
-  prompt /(^\r)?([\w\s.-]+[#>] )$/
+  prompt /^\r?([\w\s.-]+[#>] )$/
 
   comment '! '
 
