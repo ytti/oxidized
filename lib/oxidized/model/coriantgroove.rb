@@ -6,7 +6,7 @@ class CoriantGroove < Oxidized::Model
   prompt /^(\w+@.*>\s*)$/
 
   cmd :all do |cfg|
-    cfg.each_line.to_a[1..-3].map { |line| line.delete("\r").rstrip }.join("\n") + "\n"
+    cfg.delete("\r").cut_both(1, 2).rstrip_lines
   end
 
   cmd 'show inventory' do |cfg|

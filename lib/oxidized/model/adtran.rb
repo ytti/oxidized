@@ -6,7 +6,7 @@ class Adtran < Oxidized::Model
   prompt /([\w.@-]+[#>]\s?)$/
 
   cmd :all do |cfg|
-    cfg.each_line.to_a[2..-2].map { |line| line.delete("\r").rstrip }.join("\n") + "\n"
+    cfg.delete("\r").cut_both(2, 1).rstrip_lines
   end
 
   cmd :secret do |cfg|

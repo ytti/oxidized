@@ -27,6 +27,7 @@ When loading a single node (`oxs <host>` in oxidized-script, `/reload?node=<host
 - device2yaml: add `-n`/`--newline` option to set the command line terminator (e.g. `-n "\r\n"`) for devices that submit a command only on a carriage return; the terminator is recorded as a `command_newline` key in the generated YAML (@Vantomas)
 - ftd: new model for Cisco FTD via HTTP (@mgrocock-cwcs, @robertcheramy)
 - AGENTS.md: add guidance for AI coding agents, and document the AI contribution policy in CONTRIBUTING.md (@robertcheramy)
+- refinements: add `String#rstrip_lines` to strip trailing whitespace from each line (@thanegill)
 - ssh: add the `ssh_pubkey_algorithms` variable to choose the public key signature algorithms, for devices that disconnect on `rsa-sha2-*` such as Huawei SmartAX. Closes #2875 (@fmcglinn)
 
 ### Changed
@@ -49,6 +50,10 @@ When loading a single node (`oxs <host>` in oxidized-script, `/reload?node=<host
 - output/git, output/gitcrypt: remove the `:date` field from node versions, use `:time` instead. Requires oxidized-web >= 0.17.0 (@robertcheramy)
 - garderos: replace `show system version` & `show system serial` with `show system information` and `show hardware all` to get more hardware details (@robertcheramy)
 - docs: document in Docker.md how to extend the official image with additional gems or packages, as the image no longer ships build tools or `/sbin/my_init` since the move to debian:trixie-slim. Closes #3897 (@joewaltman)
+- procurve: rstrip trailing whitespace from commented command sections (@thanegill)
+- adtran, aosw, c4cmts, coriantgroove, dlink, dlinknextgen, enterasys, hpebladesystem, junos, mtrlrfs, procurve, routeros, xos, zhoneolt: use the `cut_*` and `rstrip_lines` refinements instead of custom code (@thanegill)
+- procurve: remove ANSI escape codes with `clean :escape_codes` and simplify the prompt regexp (@thanegill)
+- procurve: redact the additional credentials exposed by `include-credentials` / `encrypt-credentials`, with unit tests (@thanegill)
 
 ### Fixed
 - extra/oxidized.service: remove `KillSignal=SIGKILL`, Oxidized exits on SIGTERM since #3059 (@robertcheramy)
@@ -77,6 +82,8 @@ When loading a single node (`oxs <host>` in oxidized-script, `/reload?node=<host
 - junos: remove syntax error when there is no virtual chassis. Fixes #3922. (@dalejos, @robertcheramy)
 - docs: Supported-OS-Types lists the F5OS, Grandstream HT8xx and Uplink EP4440 models under their model names (`f5os`, `grandstreamht8xx`, `uplinkolt`) instead of `tmos`, `grandstream` and `EP4440` (@rawsun007)
 - awplus: remove stray BEL (0x07) character left from pager. Fixes #3919. (@cojumbo, @robertcheramy)
+- procurve: hide the SNMP community on `snmp-server host <ip> community "<name>"` lines (@thanegill)
+- procurve: hide local user password hashes (`password ... sha1 "<hash>"`) when remove_secret is true (@thanegill)
 
 ## [0.37.0 - 2026-05-20]
 ### Added
