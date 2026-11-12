@@ -191,6 +191,16 @@ describe Oxidized::Node do
         _(node.auth[:username]).must_equal "node_username"
       end
     end
+
+    it 'should not log the password' do
+      Oxidized::Node.logger.stubs(:debug)
+      Oxidized::Node.logger.expects(:debug).with(
+        "setting node key 'password' to value '[REDACTED]' from node"
+      )
+      Oxidized::Node.logger.expects(:debug).with(regexp_matches(/node_password/)).never
+      node = Oxidized::Node.new(ip: '127.0.0.1', group: group, model: model, password: "node_password")
+      _(node.auth[:password]).must_equal "node_password"
+    end
   end
 
   describe '#resolve_input' do

@@ -138,6 +138,32 @@ describe Oxidized::HTTP do
                      "Authorization" => expected_auth)
     end
 
+    it "does not log the Authorization header value" do
+      http = build_http
+
+      response = mock("Net::HTTPResponse")
+      response.stubs(:code).returns("200")
+      response.stubs(:[]).returns(nil)
+      response.stubs(:body).returns("OK")
+
+      net_http = mock("Net::HTTP")
+      net_http.expects(:request).with do |req|
+        _(req["authorization"]).must_equal "Bearer secret-token"
+        true
+      end.returns(response)
+
+      Net::HTTP.expects(:start).yields(net_http).returns(response)
+
+      http.logger.stubs(:debug)
+      http.logger.expects(:debug).with(
+        'Sending POST request with headers: authorization: [REDACTED], X-Test: 42'
+      )
+      http.logger.expects(:debug).with(regexp_matches(/secret-token/)).never
+
+      http.post_http("/api/test/path/2", nil, "authorization" => "Bearer secret-token",
+                                              "X-Test"        => "42")
+    end
+
     it "handles nil body without raising and sends an empty POST body" do
       http = build_http
 
