@@ -60,6 +60,7 @@ net-ssh >= 8.1 changed how RSA keys are offered, which may break public key auth
 - output/git, output/gitcrypt: remove the `:date` field from node versions, use `:time` instead. Requires oxidized-web >= 0.17.0 (@robertcheramy)
 - garderos: replace `show system version` & `show system serial` with `show system information` and `show hardware all` to get more hardware details (@robertcheramy)
 - docs: document in Docker.md how to extend the official image with additional gems or packages, as the image no longer ships build tools or `/sbin/my_init` since the move to debian:trixie-slim. Closes #3897 (@joewaltman)
+- ATOMS tests: fail instead of skip when test data cannot be loaded (@robertcheramy)
 - procurve: rstrip trailing whitespace from commented command sections (@thanegill)
 - adtran, aosw, c4cmts, coriantgroove, dlink, dlinknextgen, enterasys, hpebladesystem, junos, mtrlrfs, procurve, routeros, xos, zhoneolt: use the `cut_*` and `rstrip_lines` refinements instead of custom code (@thanegill)
 - procurve: remove ANSI escape codes with `clean :escape_codes` and simplify the prompt regexp (@thanegill)
