@@ -79,6 +79,7 @@ net-ssh >= 8.1 changed how RSA keys are offered, which may break public key auth
 - fortigate: answer the `Do you want to continue? (y/n)` prompt from `diagnose hardware deviceinfo psu`. Fixes #3940 (@suryakant-source)
 - fastiron: answer the pager prompt with a space and strip ANSI escape sequences, as `skip-page-display` is not available to users without enable rights. Fixes #3819 (@FusionBrah)
 - junos: redact cleartext passwords embedded in archive-site URLs. Fixes #3640 (@KalebFenley, @robertcheramy)
+- nxos: hide the auth key of snmp-server users without priv (@robertcheramy)
 - siklu: allow parenthesis in prompt. Fixes #3841 (@ytti)
 - fortios: allow parenthesis in prompt. Fixes #3846 (@ytti)
 - os6: hide snmp-server community strings in the secret filter (@Jurgen1994)

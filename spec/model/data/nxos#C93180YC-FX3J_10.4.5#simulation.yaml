@@ -131,6 +131,8 @@ commands:
       
       (...)
       snmp-server user admin network-admin auth md5 AAAAAAAAAABBBBBBBBBBCCCCCCCCCC priv aes-128 AAAAAAAAAABBBBBBBBBBCCCCCCCCCC localizedV2key
+      snmp-server user monitor network-operator auth sha AAAAAAAAAABBBBBBBBBBCCCCCCCCCC localizedkey
+      snmp-server user backup network-operator auth sha AAAAAAAAAABBBBBBBBBBCCCCCCCCCC priv AAAAAAAAAABBBBBBBBBBCCCCCCCCCC localizedkey
       
       \rTEST-12345#\x20
   - "exit\n": |-
