@@ -43,21 +43,9 @@ class Sofinet < Oxidized::Model
     cfg
   end
 
+  macro :enable, inputs: :ssh, regex: /^[pP]assword:/
+
   cfg :ssh do
-    post_login do
-      enable_val = vars(:enable).to_s
-
-      if enable_val == 'true'
-        send "enable\n"
-        expect /[#>]\s*$/
-      elsif enable_val != 'false' && !enable_val.empty?
-        send "enable\n"
-        expect /^[pP]assword:/
-        send "#{enable_val}\n"
-        expect /[#>]\s*$/
-      end
-    end
-
     pre_logout 'exit'
   end
 end
