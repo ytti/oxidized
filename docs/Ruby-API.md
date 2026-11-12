@@ -92,6 +92,20 @@ it at least once is required for a model to work.
 The block may contain commands to change some behaviour for the given methods
 (e.g. calling `post_login` to disable the pager).
 
+Example from [ios.rb](/lib/oxidized/model/ios.rb):
+```ruby
+  cfg :telnet do
+    username /^Username:/i
+    password /^Password:/i
+  end
+
+  cfg :telnet, :ssh do
+    post_login 'terminal length 0'
+    post_login 'terminal width 0'
+    pre_logout 'exit'
+  end
+```
+
 Supports [monkey patching](#monkey-patching).
 
 #### 'inputs'
@@ -166,10 +180,46 @@ significant changes only and will be used to
 Execution order is `:all`, `:secret`, and lastly the command specific block, if
 given.
 
+Examples, mostly taken from [ios.rb](/lib/oxidized/model/ios.rb):
+```ruby
+  # Emit the output as is
+  cmd 'show running-config'
+
+  # Emit the output as a comment
+  cmd 'show inventory' do |cfg|
+    comment cfg
+  end
+
+  # Remove the command echo and the prompt from every command output
+  cmd :all do |cfg|
+    cfg.cut_both
+  end
+
+  # Hide secrets when remove_secret is enabled
+  cmd :secret do |cfg|
+    cfg.gsub! /^(snmp-server community).*/, '\\1 <configuration removed>'
+    cfg.gsub! /^(username .+ (password|secret) \d) .+/, '\\1 <secret hidden>'
+    cfg
+  end
+
+  # Ignore lines that change without a real configuration change
+  cmd :significant_changes do |cfg|
+    cfg.reject_lines [
+      /^! (Last|No) configuration change (at|since)/,
+      '! NVRAM config last updated at'
+    ]
+  end
+```
+
 The `cmd "string"` method accepts a lambda function via the `:if` argument
 to execute the command only when the lambda evaluates to true.
 The lambda function is evaluated at runtime in the instance context.
 See [Conditional `cmd`](Creating-Models.md#conditional-cmd) for details.
+```ruby
+  cmd 'show vrrp', if: -> { vars(:show_vrrp) } do |cfg|
+    comment cfg
+  end
+```
 
 The `cmd "string"` method accepts a list of supported inputs via the `:input`
 argument to limit this command to specific inputs.
@@ -203,6 +253,10 @@ emitted configuration for this model.
 
 If not specified the default of `'# '` will be used (note the trailing space).
 
+```ruby
+  comment '! '
+```
+
 #### `prompt`
 
 Is called with a regular expression that is used to detect when command output
@@ -210,23 +264,59 @@ ends after a command has been executed.
 
 If not specified, a default of `/^([\w.@-]+[#>]\s?)$/` is used.
 
+Example from [procurve.rb](/lib/oxidized/model/procurve.rb), where the prompt
+may be preceded by a carriage return:
+```ruby
+  prompt /^\r?([\w\s.-]+[#>] )$/
+```
+
 #### `expect`
 
-Called with a regular expression and a block. The block takes two parameters:
-the regular expression, and the data containing the match.
+Called with a regular expression and a block. The block takes up to two
+parameters: the data containing the match, and the regular expression.
 
-The passed data is replaced by the return value of the block.
+The data contains all the output received so far for the current command, and
+is replaced by the return value of the block. Use `data.sub re, ''` to remove
+only the match; returning an empty string discards all the output received so
+far.
 
 `expect` can be used to, for example, strip escape sequences from output before
-it's further processed.
+it's further processed, or to answer interactive questions and pagers.
+
+Example from [fortigate.rb](/lib/oxidized/model/fortigate.rb), handling the
+pager:
+```ruby
+  expect /^--More--\s$/ do |data, re|
+    send ' '
+    data.sub re, ''
+  end
+```
+
+Example from [procurve.rb](/lib/oxidized/model/procurve.rb), answering a
+prompt shown after login. As no command has been run yet, the block can discard
+the data by returning an empty string:
+```ruby
+  expect /Press any key to continue$/ do
+    send "\n"
+    ""
+  end
+```
 
 Supports [monkey patching](#monkey-patching).
 
 #### `macro :enable`
 Implements an [handling of enable](Creating-Models.md#handling-enable-mode) for the model.
+```ruby
+  macro :enable
+  # or, with options:
+  macro :enable, inputs: :ssh, command: "su -", regex: /Passwort: /
+```
 
 #### `clean :escape_codes`
 [Remove ANSI escape codes](Creating-Models.md#remove-ansi-escape-codes) from the output.
+```ruby
+  clean :escape_codes
+```
 
 #### `clean :cut`
 Removes (default) the first and last line of the outputs (most of the time
@@ -253,10 +343,26 @@ The following methods are available:
 Used inside `cmd` invocations. Comments out every line in the passed string and
 returns the result.
 
+```ruby
+  cmd 'show version' do |cfg|
+    comment cfg
+  end
+```
+
 #### `password`
 
 Used inside `cfg` invocations to specify the regular expression used to detect
 the password prompt. If not specified, the default of `/^Password/` is used.
+
+Similarly, `username` specifies the regular expression for the username prompt
+(default: `/^(Username|login)/`).
+
+```ruby
+  cfg :telnet do
+    username /^Username:/i
+    password /^Password:/i
+  end
+```
 
 #### `post_login`
 
@@ -267,6 +373,19 @@ parameters) or a string containing a command to execute.
 This allows `post_login` to be used for any model-specific items prior to
 running the regular commands. This could include disabling the output pager
 or timestamp outputs that would cause constant differences.
+
+Example from [procurve.rb](/lib/oxidized/model/procurve.rb):
+```ruby
+  cfg :telnet, :ssh do
+    if vars :enable
+      post_login do
+        send "enable\n"
+        cmd vars(:enable)
+      end
+    end
+    post_login 'no page'
+  end
+```
 
 Supports [monkey patching](#monkey-patching).
 
@@ -279,16 +398,43 @@ string containing a command to execute.
 This allows `pre_logout` to be used to 'undo' any changes that may have been
 needed via `post_login` (restore pager output, etc.)
 
+Example from [procurve.rb](/lib/oxidized/model/procurve.rb), answering the
+questions asked on logout:
+```ruby
+  cfg :telnet, :ssh do
+    pre_logout 'logout'
+    pre_logout 'y'
+    pre_logout 'n'
+  end
+```
+
 Supports [monkey patching](#monkey-patching).
 
 #### `send`
 
 Usually used inside `expect` or blocks passed to `post_login`/`pre_logout`.
-Takes a single parameter: a string to be sent to the device.
+Takes a single parameter: a string to be sent to the device. Unlike `cmd`, it
+does not wait for the prompt and does not append a newline.
+
+See the examples in [expect](#expect) and [post_login](#post_login).
 
 #### `cmd`
 You can nest a `cmd` block inside first level blocks. It will be executed at
 runtime.
+
+Example from [nxos.rb](/lib/oxidized/model/nxos.rb):
+```ruby
+  cmd 'show inventory all' do |cfg|
+    if cfg.match? /^% Invalid .* at '\^' marker\./
+      # 'show inventory all' isn't supported on older versions
+      cfg = cmd 'show inventory'
+    end
+    comment cfg
+  end
+```
+
+See [Conditional commands](Creating-Models.md#conditional-commands) for more
+examples.
 
 ### Monkey patching
 
@@ -302,10 +448,22 @@ blocks.
 #### `clear: true`
 Resets the existing block, allowing the user to completely override its contents.
 
+```ruby
+  cmd 'show version', clear: true do |cfg|
+    comment cfg
+  end
+```
+
 #### `prepend: true`
 
 Ensures that the contents of the block are prepended, rather than appended (the
 default) to an existing block.
+
+```ruby
+  cfg :ssh, prepend: true do
+    post_login 'terminal no-more'
+  end
+```
 
 ### Refinements
 
@@ -315,27 +473,86 @@ Since configuration processing tasks are occasionally similar across models,
 Oxidized provides an refined [`String`](../lib/refinements.rb) class with the
 intention of providing convenience methods and eliminating code duplication.
 
+A model must activate the refinements with `using Refinements`:
+```ruby
+class IOS < Oxidized::Model
+  using Refinements
+  # ...
+end
+```
+
 #### `cut_tail`
 
 Returns a multi-line string without the last line, or an empty string if only a
-single line was present.
+single line was present. Takes an optional number of lines to remove (default: 1).
+
+Example from [axos.rb](/lib/oxidized/model/axos.rb), removing the prompt:
+```ruby
+  cmd :all do |cfg|
+    cfg.cut_tail
+  end
+```
 
 #### `cut_head`
 
 Returns a multi-line string without the first line, or an empty string if only a
-single line was present.
+single line was present. Takes an optional number of lines to remove (default: 1).
+
+```ruby
+  # Remove the command echo and the "Building configuration..." lines
+  cfg = cfg.cut_head(3)
+```
 
 #### `cut_both`
 
 Returns a multi-line string without the first and last lines, or an empty string
-if fewer than three lines were present.
+if fewer than three lines were present. Takes optional numbers of lines to remove
+at the head and the tail (default: 1 and 1).
+
+This is typically used to remove the command echo (first line) and the prompt
+(last line), which are not needed in the stored configuration:
+```ruby
+  cmd :all do |cfg|
+    cfg.cut_both
+  end
+```
 
 #### `keep_lines`
 Returns a multi-line string with only the lines matching any pattern (String or Regexp) given in an array.
 
+```ruby
+  cmd 'show interfaces transceiver' do |cfg|
+    cfg = cfg.keep_lines [
+      'SFP Information',
+      /Vendor (Name|Serial Number)/
+    ]
+    comment cfg
+  end
+```
+
 #### `reject_lines`
 Returns a multi-line string without the lines matching any pattern (String or Regexp) given in an array.
+
+Example from [arubainstant.rb](/lib/oxidized/model/arubainstant.rb), removing
+lines that change on every run:
+```ruby
+  cmd 'show version' do |cfg|
+    cfg = cfg.reject_lines [
+      /^(Switch|AP) uptime is /,
+      /^Reboot Time and Cause/
+    ]
+    comment cfg
+  end
+```
 
 #### `rstrip_lines`
 Returns a multi-line string with trailing whitespace (including `\r`) removed
 from each line. The result always ends with a single newline.
+
+Example from [procurve.rb](/lib/oxidized/model/procurve.rb), removing the
+trailing spaces that `comment` adds to empty lines (`"! "`):
+```ruby
+  def clean_comment(lines)
+    comment(lines).rstrip_lines
+  end
+```
