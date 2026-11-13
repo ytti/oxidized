@@ -19,6 +19,7 @@ net-ssh >= 8.0 parses the OpenSSH configuration files (`~/.ssh/config`, `/etc/ss
 net-ssh >= 8.1 changed how RSA keys are offered, which may break public key authentication on some devices; see [SSH public key algorithms](docs/Inputs.md#ssh-public-key-algorithms).
 
 ### Added
+- sofinet: new model for Sofinet SOFOS switches (@torshhh)
 - device2yaml: add port option (@systeembeheerder)
 - itmgos: new model for Lantronix IT Management Gateway OS (SLC 8000, SLC 9000, EMG, SLB console servers), with simulation data and unit tests (@ryanhoggpm)
 - vrp: add simulation data for Huawei YunShan OS with VRP model (@systeembeheerder)
