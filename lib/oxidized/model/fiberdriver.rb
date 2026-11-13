@@ -12,7 +12,7 @@ class FiberDriver < Oxidized::Model
   end
 
   cmd "show running-config" do |cfg|
-    cfg.each_line.to_a[3..-1].join
+    cfg = cfg.cut_head(3)
     cfg.gsub! /^Building configuration.*$/, ''
     cfg.gsub! /^Current configuration:.*$$/, ''
     cfg.gsub! /^! Configuration (saved|generated) on .*$/, ''

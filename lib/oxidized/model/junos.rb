@@ -22,7 +22,7 @@ class JunOS < Oxidized::Model
     # archive-site URLs may carry a cleartext password (user:pass@host) that
     # Junos does not tag with "## SECRET-DATA", e.g. under
     # system archival configuration archive-sites
-    cfg.gsub!(/((?:ftp|pasvftp|sftp|scp|https?):\/\/[^\/@"]+):[^@"]+@/, '\1:<secret removed>@')
+    cfg.gsub!(/((?:ftp|pasvftp|sftp|scp|https?):\/\/[^\/@":]+):[^@"]+@/, '\1:<secret removed>@')
     cfg
   end
 

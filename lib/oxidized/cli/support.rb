@@ -1,12 +1,9 @@
 require 'time'
+require_relative '../redact'
 
 module Oxidized
   class CLI
     module Support
-      SENSITIVE_NAME_RE = /(password|passphrase|secret|token|enable|
-                            (private|api|access)_?key|
-                            community|credential|auth
-                          )/ix
       ROOT_GEMS = %w[oxidized oxidized-web].freeze
       EXPLICIT_ENV_KEYS = %w[
         OXIDIZED_HOME
@@ -53,7 +50,7 @@ module Oxidized
           next unless ENV.has_key?(key)
 
           value = ENV.fetch(key)
-          puts key.match?(SENSITIVE_NAME_RE) ? "#{key}=[REDACTED]" : "#{key}=#{value}"
+          puts "#{key}=#{Redact.value(key, value)}"
         end
 
         puts
@@ -126,8 +123,8 @@ module Oxidized
             next
           end
 
-          if key.match?(SENSITIVE_NAME_RE)
-            puts "#{key}: [REDACTED]"
+          if Redact.sensitive?(key)
+            puts "#{key}: #{Redact::REDACTED}"
           else
             puts line
           end

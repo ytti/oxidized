@@ -6,7 +6,7 @@ class FTOS < Oxidized::Model
   comment  '! '
 
   cmd :all do |cfg|
-    cfg.each_line.to_a[2..-2].join
+    cfg.cut_both(2)
   end
 
   cmd :secret do |cfg|
@@ -29,7 +29,7 @@ class FTOS < Oxidized::Model
   end
 
   cmd 'show running-config' do |cfg|
-    cfg = cfg.each_line.to_a[3..-1].join
+    cfg = cfg.cut_head(3)
     cfg
   end
 

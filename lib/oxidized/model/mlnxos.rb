@@ -15,7 +15,7 @@ class MLNXOS < Oxidized::Model
 
   cmd :all do |cfg|
     cfg.gsub! /.\x08/, '' # Remove Backspace char
-    cfg.lines.to_a[2..-3].join
+    cfg.cut_both(2, 2)
   end
 
   cmd :secret do |cfg|

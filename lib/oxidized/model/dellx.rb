@@ -13,7 +13,7 @@ class DellX < Oxidized::Model
   end
 
   cmd :all do |cfg|
-    cfg.each_line.to_a[1..-3].join
+    cfg.cut_both(1, 2)
   end
 
   cmd :secret do |cfg|

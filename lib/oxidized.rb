@@ -9,6 +9,7 @@ module Oxidized
   Directory = File.expand_path(File.join(File.dirname(__FILE__), '../'))
 
   require 'oxidized/version'
+  require 'oxidized/redact'
   require 'oxidized/config'
   require 'oxidized/config/vars'
   require 'oxidized/worker'

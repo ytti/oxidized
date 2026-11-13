@@ -14,21 +14,6 @@ describe Oxidized::CLI::Support do
 
   let(:exhaustive_config) { File.join(__dir__, 'data', 'exhaustive_config.yaml') }
 
-  describe 'SENSITIVE_NAME_RE' do
-    %w[password passphrase secret token community credential
-       private_key api_key access_key enable].each do |word|
-      it "matches #{word}" do
-        _(word).must_match Oxidized::CLI::Support::SENSITIVE_NAME_RE
-      end
-    end
-
-    %w[hostname interval output model].each do |word|
-      it "does not match #{word}" do
-        _(word).wont_match Oxidized::CLI::Support::SENSITIVE_NAME_RE
-      end
-    end
-  end
-
   describe '#print_sanitized_config' do
     it 'produces the expected sanitized output' do
       expected = File.read(File.join(__dir__, 'data', 'exhaustive_config#output.txt'))

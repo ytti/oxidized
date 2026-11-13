@@ -15,9 +15,9 @@ class TDRE < Oxidized::Model
 
   cmd :all do |cfg|
     if ssh
-      cfg.lines.to_a[5..-4].join
+      cfg.cut_both(5, 3)
     else
-      cfg.lines.to_a[1..-4].join
+      cfg.cut_both(1, 3)
     end
   end
 

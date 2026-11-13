@@ -41,9 +41,8 @@ Gem::Specification.new do |s|
   s.add_dependency 'net-ssh',              '~> 8.1'
   s.add_dependency 'net-telnet',           '~> 0.2'
   s.add_dependency 'psych',                '~> 5.0'
-  s.add_dependency 'rubyzip',              '>= 2.3.2', '< 4'
   s.add_dependency 'rugged',               '~> 1.9'
-  s.add_dependency 'semantic_logger',      '>= 4.17', '< 5'
+  s.add_dependency 'semantic_logger',      '>= 4.17', '< 6'
   s.add_dependency 'slop',                 '~> 4.6'
   s.add_dependency 'syslog',               '~> 0.3'
   s.add_dependency 'syslog_protocol',      '~> 0.9'
@@ -59,12 +58,20 @@ Gem::Specification.new do |s|
   s.add_development_dependency 'rubocop-sequel',   '~> 0.4.0'
   s.add_development_dependency 'simplecov',        '~> 0.22'
 
-  # Dependencies on optional libraries, used for unit tests & development
-  s.add_development_dependency 'git',              '>= 2.0', '< 5'
-  # Net-SCP require a newer version than Debian 13 provides.
+  # Optional runtime libraries, needed here for the unit tests
+  # Used by output/gitcrypt
+  # git 6.0 removes APIs used by output/gitcrypt.rb (config, status, Log#first)
+  s.add_development_dependency 'git',              '>= 2.0', '< 6'
+  # Used by input/scp (e.g. model apc_aos).
+  # Requires a newer version than Debian 13 provides.
   s.add_development_dependency 'net-scp',          '~> 4.2'
+  # Used by input/tftp (e.g. model alvarion)
   s.add_development_dependency 'net-tftp',         '~> 0.1.0'
+  # Used by model panos_api
   s.add_development_dependency 'nokogiri',         '>= 1.16', '< 2'
   s.add_development_dependency 'oxidized-web',     '>= 0.17.1'
+  # Used by model ftd
+  s.add_development_dependency 'rubyzip',          '>= 2.3.2', '< 4'
+  # Used by source/sql
   s.add_development_dependency 'sequel',           '>= 5.63.0', '< 6'
 end

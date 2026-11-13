@@ -100,11 +100,11 @@ module Net
           if Integer(c.rindex(/#{IAC}#{SE}/no) || 0) <
              Integer(c.rindex(/#{IAC}#{SB}/no) || 0)
             buf = preprocess(c[0...c.rindex(/#{IAC}#{SB}/no)])
-            rest = c[c.rindex(/#{IAC}#{SB}/no)..-1]
+            rest = c[c.rindex(/#{IAC}#{SB}/no)..]
           elsif (pt = c.rindex(/#{IAC}[^#{IAC}#{AO}#{AYT}#{DM}#{IP}#{NOP}]?\z/no) ||
                      c.rindex(/\r\z/no))
             buf = preprocess(c[0...pt])
-            rest = c[pt..-1]
+            rest = c[pt..]
           else
             buf = preprocess(c)
             rest = ''

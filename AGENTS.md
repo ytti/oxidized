@@ -158,6 +158,13 @@ the first and last line of each command output unchanged: they contain the
 command echo and the following prompt, which Oxidized relies on for prompt
 detection.
 
+To test how a model processes command output (e.g. secret removal), the agent
+may add a few configuration lines to an existing, captured simulation file,
+inside the output of the command concerned. The same rule applies: keep the
+first and last line of the command output unchanged, use fabricated values,
+and add the lines to the matching `#output.txt` (and `#secret.yaml` if
+relevant). Prefer this over a separate Ruby spec.
+
 ## Contribution workflow
 
 - Branch names may be prefixed with the issue number (e.g.

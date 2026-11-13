@@ -8,7 +8,7 @@ class NDMS < Oxidized::Model
   prompt /^([\w.@()-]+[#>]\s?)/m
 
   cmd 'show version' do |cfg|
-    cfg = cfg.each_line.to_a[1..-3].join
+    cfg = cfg.cut_both(1, 2)
     comment cfg
   end
 

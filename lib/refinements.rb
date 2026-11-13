@@ -14,7 +14,7 @@ module Refinements
     def cut_head(lines = 1)
       return "" if length.zero?
 
-      each_line.to_a[lines..-1].join
+      each_line.to_a[lines..].join
     end
 
     # @return [String] copy of self with first and last lines removed
