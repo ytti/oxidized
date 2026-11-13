@@ -13,7 +13,7 @@ class SonicOS < Oxidized::Model
   end
 
   cmd :all do |cfg|
-    cfg.each_line.to_a[1..-2].join
+    cfg.cut_both
   end
 
   cmd :secret do |cfg|
@@ -59,7 +59,7 @@ class SonicOS < Oxidized::Model
       next if line =~ /system-uptime "(?:\s+up\s+\d+\s+|\d+ \w+(?:, \d+ \w+)*)"/
       next if line =~ /checksum \d+/
 
-      line = line[1..-1] if line[0] == "\r"
+      line = line[1..] if line[0] == "\r"
       out << line.strip
     end
     out = out.join "\n"

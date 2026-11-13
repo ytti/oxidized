@@ -67,7 +67,7 @@ class ASA < Oxidized::Model
   def single_context
     # Single context mode
     cmd 'more system:running-config' do |cfg|
-      cfg = cfg.each_line.to_a[3..-1].join
+      cfg = cfg.cut_head(3)
       cfg.gsub! /^: [^\n]*\n/, ''
       # backup any xml referenced in the configuration.
       anyconnect_profiles = cfg.scan(Regexp.new('(\sdisk0:/.+\.xml)')).flatten

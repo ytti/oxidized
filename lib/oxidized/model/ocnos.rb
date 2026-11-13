@@ -13,7 +13,7 @@ class OcNOS < Oxidized::Model
   end
 
   cmd :all do |cfg|
-    cfg.lines.to_a[1..-2].join
+    cfg.cut_both
   end
 
   cmd 'show version' do |cfg|

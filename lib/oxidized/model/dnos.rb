@@ -8,7 +8,7 @@ class DNOS < Oxidized::Model
   cmd :all do |cfg|
     cfg.gsub! /^% Invalid input detected at '\^' marker\.$|^\s+\^$/, ''
     cfg.gsub! /(uptime is)(\s.+)/, '\\1 <removed>' # Omit changing uptime info
-    cfg.each_line.to_a[2..-2].join
+    cfg.cut_both(2)
   end
 
   cmd :secret do |cfg|
@@ -35,7 +35,7 @@ class DNOS < Oxidized::Model
   end
 
   cmd 'show running-config' do |cfg|
-    cfg = cfg.each_line.to_a[3..-1].join
+    cfg = cfg.cut_head(3)
     cfg
   end
 

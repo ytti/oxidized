@@ -8,7 +8,7 @@ class IBOS < Oxidized::Model
   comment  '! '
 
   cmd :all do |cfg|
-    cfg.each_line.to_a[1..-2].join
+    cfg.cut_both
   end
 
   cmd :secret do |cfg|
@@ -31,7 +31,6 @@ class IBOS < Oxidized::Model
   end
 
   cmd 'show running-config' do |cfg|
-    cfg = cfg.each_line.to_a[0..-1].join
     cfg.gsub! /.*!volatile.*/, ''
     cfg
   end

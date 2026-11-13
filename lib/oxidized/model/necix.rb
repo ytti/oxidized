@@ -9,7 +9,7 @@ class NecIX < Oxidized::Model
   end
 
   cmd 'show running-config' do |cfg|
-    cfg = cfg.each_line.to_a[3..-2].join
+    cfg = cfg.cut_both(3)
     cfg.gsub! /^.*Current time.*$/, ''
     cfg
   end

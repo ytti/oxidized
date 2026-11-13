@@ -65,6 +65,10 @@ net-ssh >= 8.1 changed how RSA keys are offered, which may break public key auth
 - ATOMS tests: fail instead of skip when test data cannot be loaded (@robertcheramy)
 - procurve: rstrip trailing whitespace from commented command sections (@thanegill)
 - adtran, aosw, c4cmts, coriantgroove, dlink, dlinknextgen, enterasys, hpebladesystem, junos, mtrlrfs, procurve, routeros, xos, zhoneolt: use the `cut_*` and `rstrip_lines` refinements instead of custom code (@thanegill)
+- arbos, aricentiss, asa, asternos, bdcom, comnetms, dellx, dnos, eciapollo, edgeos, fiberdriver, firelinuxos, ftos, ibos, kornfeldos, masteros, mlnxos, ndms, necix, netgear, netscaler, ocnos, onefinity, openbsd, os10, os6, panos, screenos, sgos, siklu, sonicos, tdre, telco, tplink, viptela, voltaire, vyatta: use the `cut_head`, `cut_tail` and `cut_both` refinements instead of slicing line arrays (@robertcheramy)
+- acsw, aireos, br6910, ironware, slxos, sonicos, tplink: use endless ranges (`[n..]`) instead of `[n..-1]` (@robertcheramy)
+- audiocodesmp, ciscosmb, ibos, kornfeldos, oneos: remove no-op `[0..-1]` slicing that only copied the configuration (@robertcheramy)
+- rubocop: enable `Style/SlicingWithRange` and fix the offenses in hooks, telnet input, refinements and extra/syslog.rb (@robertcheramy)
 - procurve: remove ANSI escape codes with `clean :escape_codes` and simplify the prompt regexp (@thanegill)
 - procurve: redact the additional credentials exposed by `include-credentials` / `encrypt-credentials`, with unit tests (@thanegill)
 
