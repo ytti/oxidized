@@ -28,7 +28,8 @@ the configuration is stored:
 
 - secrets the export writes on the two lines after their command, such as
   `set tacacs+ secret`, `set snmp v3password`, `set ldap bindpassword`, `admin ftp password`,
-  `set site chapsecret <site>` and the per-port and USB modem CHAP and dial-out passwords
+  `set site chapsecret <site>`, NTP authentication keys (`set ntp localserverkey <n> format
+  <hex|ascii>`) and the per-port and USB modem CHAP and dial-out passwords
 - SNMP read, write and trap communities, including the community of trap event actions
 - local user password hashes
 
