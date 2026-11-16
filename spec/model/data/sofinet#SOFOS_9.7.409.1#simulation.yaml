@@ -1,0 +1,160 @@
+---
+command_newline: "\n"
+init_prompt: |-
+    \r\r
+    switch>
+commands:
+  - "show version\n": |-
+      show version\r
+                     Sofinet(R) Operating System Software\r\r
+      Sofinet SFN2200 system image file (flash0: /flash/sfn-access-9.7.409.1(R).pck), version 9.7.409.1, Compiled on Sep 26 2025, 14:35:54\r\r
+      Copyright (C) Sofinet, LLC. All Rights Reserved\r\r
+      \r
+      Sofinet SFN2200 Version Information\r\r
+      \tSystem ID           : 0000000000000\r\r
+      \tHardware Model\t    : SFN2200-24T4X(V1)\r\r
+      \tHardware Version    : 002(Hotswap Unsupported)\r\r
+      \tBootloader Version  : 9.7.400.1\r\r
+      \tSoftware Version    : 9.7.409.1\r\r
+      \tSoftware Image File : flash0: /flash/sfn-access-9.7.409.1(R).pck\r\r
+      \tCompiled      \t    : Sep 26 2025, 14:35:54 \r\r
+      \r
+      System Uptime is 5 days 23 hours\r\r
+      \r\r
+      switch#
+  - "show running-config\n": |-
+      show running-config\r\r
+      Building Configuration...done\r\r
+      \r\r
+      ! Current configuration : 1366 bytes\r
+      \r
+      !\r\r
+      ! Last configuration change at UTC Tue Nov 10 13:52:54 2026\r\r
+      ! Flash config last updated at UTC Tue Nov 10 13:53:07 2026\r\r
+      ! Configuration version 0.7\r\r
+      !\r\r
+      \r
+      !software version 9.7.409.1\r\r
+      !software image file flash0: /flash/sfn-access-9.7.409.1(R).pck\r\r
+      !compiled on Sep 26 2025, 14:35:54\r\r
+      \r
+      hostname switch\r\r
+                  \r\r
+      \r
+      enable password 000000000000000 encrypt\r\r
+      \r\r
+      \r
+      \r\r
+      \r
+      role audit-admin\r\r
+       description audit admin\r\r
+       exit\r\r
+      role network-admin\r\r
+      ---MORE---\r
+  - " ": |-
+      \x20            \r description network admin\r\r
+       exit\r\r
+      role network-operator\r\r
+       description network operator\r\r
+       exit\r\r
+      role security-admin\r\r
+       description security admin\r\r
+       exit\r\r
+      \r
+      local-user admin class manager\r\r
+       service-type telnet console ssh ftp web netconf\r\r
+       privilege 15\r\r
+       password 7 0000000000000000\r\r
+       exit\r\r
+      \r\r
+      \r
+      ip load-sharing per-destination\r\r
+      ipv6 load-sharing per-destination\r\r
+      \r
+      \r\r
+      \r
+      \r
+      domain system\r\r
+       exit\r\r
+      ---MORE---\r
+  - " ": |-
+      \x20            \r\r
+      \r\r
+      \r
+      spanning-tree enable\r\r
+      \r
+      \r
+      vlan 1\r\r
+       exit\r\r
+      \r
+      \r
+      \r
+      \r\r
+      \r
+      \r
+      \r
+      \r\r
+      \r
+      \r
+      \r
+      \r\r
+      \r
+      \r
+      !slot_0_SFN2200-24T4X(V1)\r\r
+      !slot 0\r\r
+      ---MORE---\r
+  - " ": |-
+      \x20            \r!cardtype_0_0x196\r\r
+      !end\r\r
+      \r
+      \r\r
+      \r
+      \r
+                             \r\r
+      \r
+      \r
+      interface vlan1\r\r
+       ip address 192.168.0.0 255.255.255.0\r\r
+       exit\r\r
+      \r
+      \r
+      interface null0\r\r
+       exit\r\r
+      \r
+                                           \r\r
+      ip route 0.0.0.0 0.0.0.0 192.168.0.0\r\r
+      ip route 0.0.0.0 0.0.0.0 192.168.0.0\r\r
+      \r\r
+      \r
+      ip ssh server\r\r
+      \r
+      \r\r
+      ---MORE---\r
+  - " ": |-
+      \x20            \r\r
+      \r
+      \r
+      \r
+      line vty 0 15\r\r
+       login aaa \r\r
+       exit\r\r
+      \r
+      \r
+      !vst_config\r\r
+      \r
+      !mode member information\r\r
+      !mode member end\r\r
+      \r
+      \r
+      !mode vsl information\r\r
+      !mode vsl end\r\r
+      \r
+      !vst_end\r\r
+      \r
+      !end \r\r
+      \r
+      \r\r
+      switch#
+  - "exit\n": |-
+      exit\r\r
+      switch>
