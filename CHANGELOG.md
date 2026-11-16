@@ -4,7 +4,7 @@ All notable changes to this project will be documented in this file.
 
 The format is based on [Keep a Changelog](https://keepachangelog.com/en/1.1.0/).
 
-## [Unreleased]
+## [0.38.0 - 2026-11-16]
 ### Release Notes
 The git and gitcrypt outputs no longer provide the `:date` field in the node versions, as it was only used by oxidized-web <= 0.16.0. You need oxidized-web >= 0.17.0, older versions will fail to display node versions and diffs.
 
