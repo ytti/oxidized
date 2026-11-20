@@ -20,6 +20,18 @@ class Enterprise_SONiC < Oxidized::Model # rubocop:disable Naming/ClassAndModule
     end
   end
 
+  post do
+    if vars(:admin) == true
+      # Return to the Linux shell for this command.
+      cmd "exit"
+      cmd 'show runningconfiguration all' do |cfg|
+        cfg.type = "json"
+        cfg.name = "json"
+        cfg
+      end
+    end
+  end
+
   cmd 'show version' do |cfg|
     cfg = cfg.each_line.reject { |line| line.match /Uptime/ }.join
     add_comment('VERSION') + cfg
