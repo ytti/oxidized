@@ -148,6 +148,7 @@
 |Netonix             |WISP Switch (As Netonix)      |[netonix](/lib/oxidized/model/netonix.rb)
 |Nokia (formerly TiMetra, Alcatel, Alcatel-Lucent)|SR OS (TiMOS)|[sros](/lib/oxidized/model/sros.rb)  |                 |[Nokia ISAM](Model-Notes/Nokia.md)
 |                    |SR OS Model-Driven CLI (7705 SAR, 7210 SAS, 7450 ESS, 7750 SR, 7950 XRS, NSP) |[srosmd](/lib/oxidized/model/srosmd.rb) | |
+|                    |SR Linux                      |[srlinux](/lib/oxidized/model/srlinux.rb)
 |OneAccess           |OneOS                         |[oneos](/lib/oxidized/model/oneos.rb)
 |                    |TDRE                          |[tdre](/lib/oxidized/model/tdre.rb)
 |OpenBSD             |                              |[openbsd](/lib/oxidized/model/openbsd.rb)
