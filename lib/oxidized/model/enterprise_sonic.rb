@@ -22,12 +22,14 @@ class Enterprise_SONiC < Oxidized::Model # rubocop:disable Naming/ClassAndModule
 
   post do
     if vars(:admin) == true
-      # Return to the Linux shell for this command.
+      # Return to the Linux shell before logging out.
       cmd "exit"
-      cmd 'show runningconfiguration all' do |cfg|
-        cfg.type = "json"
-        cfg.name = "json"
-        cfg
+      if vars(:config_db_backup) == true
+        cmd 'show runningconfiguration all' do |cfg|
+          cfg.type = "json"
+          cfg.name = "json"
+          cfg
+        end
       end
     end
   end
