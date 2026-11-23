@@ -1,0 +1,1115 @@
+
+##### VERSION #####
+ 
+Software Version  : 4.6.0-Enterprise_Base
+Product           : Enterprise SONiC Distribution by Dell Technologies
+Distribution      : Debian 12.14
+Kernel            : 6.1.0-48-2-amd64
+Config DB Version : version_4_6_1
+Build Commit      : 147597b536
+Build Date        : Mon Jun 22 20:39:17 UTC 2026
+Built By          : sonicbld@bld-lvn-csg-18
+Platform          : x86_64-kvm_x86_64-r0
+HwSKU             : DellEMC-S5248f-P-25G-DPB
+ASIC              : vs
+Hardware Version  : A01
+Serial Number     : 0000000000000000000
+Mfg               : SONiC
+ 
+REPOSITORY                              TAG                                               IMAGE ID            SIZE
+docker-database                         4.6.0-Enterprise_Base                             f63d031c185e        390MB
+docker-database                         latest                                            f63d031c185e        390MB
+docker-dhcp-relay                       4.6.0-Enterprise_Base                             47d2dfa5a9cf        430MB
+docker-dhcp-relay                       latest                                            47d2dfa5a9cf        430MB
+docker-eventd                           4.6.0-Enterprise_Base                             3088cd0dee1c        391MB
+docker-eventd                           latest                                            3088cd0dee1c        391MB
+docker-fpm-frr                          4.6.0-Enterprise_Base                             878c3212aa1f        470MB
+docker-fpm-frr                          latest                                            878c3212aa1f        470MB
+docker-gbsyncd-vs                       4.6.0-Enterprise_Base                             4b01a11fdae3        399MB
+docker-gbsyncd-vs                       latest                                            4b01a11fdae3        399MB
+docker-iccpd                            4.6.0-Enterprise_Base                             cd399b3d63cb        430MB
+docker-iccpd                            latest                                            cd399b3d63cb        430MB
+docker-iscsi-monitor                    4.6.0-Enterprise_Base                             44003871d721        469MB
+docker-iscsi-monitor                    latest                                            44003871d721        469MB
+docker-l2mcd                            4.6.0-Enterprise_Base                             d57caab54692        429MB
+docker-l2mcd                            latest                                            d57caab54692        429MB
+docker-lldp                             4.6.0-Enterprise_Base                             70e0dd297b16        476MB
+docker-lldp                             latest                                            70e0dd297b16        476MB
+docker-macsec                           4.6.0-Enterprise_Base                             90c304c4a0c5        414MB
+docker-macsec                           latest                                            90c304c4a0c5        414MB
+docker-mfa                              4.6.0-Enterprise_Base                             b02192baa89a        400MB
+docker-mfa                              latest                                            b02192baa89a        400MB
+docker-nat                              4.6.0-Enterprise_Base                             55570a1c0d17        429MB
+docker-nat                              latest                                            55570a1c0d17        429MB
+docker-orchagent                        4.6.0-Enterprise_Base                             fc53a39e8a45        442MB
+docker-orchagent                        latest                                            fc53a39e8a45        442MB
+docker-platform-monitor                 4.6.0-Enterprise_Base                             8a7f863b5ea2        494MB
+docker-platform-monitor                 latest                                            8a7f863b5ea2        494MB
+docker-router-advertiser                4.6.0-Enterprise_Base                             1bffd2c6bc9f        390MB
+docker-router-advertiser                latest                                            1bffd2c6bc9f        390MB
+docker-sflow                            4.6.0-Enterprise_Base                             88c3ac204f1f        429MB
+docker-sflow                            latest                                            88c3ac204f1f        429MB
+docker-snmp                             4.6.0-Enterprise_Base                             a3357994c3a0        432MB
+docker-snmp                             latest                                            a3357994c3a0        432MB
+docker-sonic-dynamic-licensing          4.6.0-Enterprise_Base                             8fd2d3d5d9c1        398MB
+docker-sonic-dynamic-licensing          latest                                            8fd2d3d5d9c1        398MB
+docker-sonic-mgmt-framework             4.6.0-Enterprise_Base                             4447566d41c7        711MB
+docker-sonic-mgmt-framework             latest                                            4447566d41c7        711MB
+docker-sonic-telemetry                  4.6.0-Enterprise_Base                             c5a5d97a17c5        527MB
+docker-sonic-telemetry                  latest                                            c5a5d97a17c5        527MB
+docker-stp                              4.6.0-Enterprise_Base                             cd5c6ed733e8        432MB
+docker-stp                              latest                                            cd5c6ed733e8        432MB
+docker-syncd-vs                         4.6.0-Enterprise_Base                             c32547ea50c8        399MB
+docker-syncd-vs                         latest                                            c32547ea50c8        399MB
+docker-tam                              4.6.0-Enterprise_Base                             107eb612e710        417MB
+docker-tam                              latest                                            107eb612e710        417MB
+docker-teamd                            4.6.0-Enterprise_Base                             1d2e11ff0383        427MB
+docker-teamd                            latest                                            1d2e11ff0383        427MB
+docker-timesync                         4.6.0-Enterprise_Base                             a8541805cf0a        438MB
+docker-timesync                         latest                                            a8541805cf0a        438MB
+docker-udld                             4.6.0-Enterprise_Base                             4c7b48b59132        435MB
+docker-udld                             latest                                            4c7b48b59132        435MB
+docker-vrrp                             4.6.0-Enterprise_Base                             e51cc376991f        436MB
+docker-vrrp                             latest                                            e51cc376991f        436MB
+ 
+
+##### SYSEEPROM #####
+--------------------------------------------------------
+Attribute                Value/State
+--------------------------------------------------------
+Base Mac Address         :00:00:00:00:00:01
+Crc 32                   :0xB01CD15D
+Platform                 :x86_64-kvm_x86_64-r0
+Device Version           :1
+Hardware Version         :A01
+Product Name             :SONiC
+Location                 :Slot 1
+Mac Addresses            :16
+Mfg Date                 :2019-10-19
+Onie Version             :master-201811170418
+Part Number              :000000
+Serial Number            :0000000000000000000
+Service Tag              :000000
+Vendor Name              :SONiC
+
+##### CONFIGURATION #####
+!
+hostname sonic
+ 
+port-group 1 speed 25000
+port-group 2 speed 25000
+port-group 3 speed 25000
+port-group 4 speed 25000
+port-group 5 speed 25000
+port-group 6 speed 25000
+port-group 7 speed 25000
+port-group 8 speed 25000
+port-group 9 speed 25000
+port-group 10 speed 25000
+port-group 11 speed 25000
+port-group 12 speed 25000
+core enable
+ip load-share hash ipv4 ipv4-dst-ip
+ip load-share hash ipv4 ipv4-src-ip
+ip load-share hash ipv4 ipv4-ip-proto
+ip load-share hash ipv4 ipv4-l4-src-port
+ip load-share hash ipv4 ipv4-l4-dst-port
+ip load-share hash ipv6 ipv6-dst-ip
+ip load-share hash ipv6 ipv6-src-ip
+ip load-share hash ipv6 ipv6-next-hdr
+ip load-share hash ipv6 ipv6-l4-src-port
+ip load-share hash ipv6 ipv6-l4-dst-port
+ip arp timeout 1800
+ipv6 nd cache expire 1800
+factory default profile l3 confirm
+mac address-table aging-time 600
+kdump enable
+kdump memory 0M-2G:256M,2G-4G:256M,4G-8G:384M,8G-:448M
+kdump num-dumps 3
+! 
+!
+nat
+ timeout 600
+ tcp-timeout 86400
+ udp-timeout 300
+!
+tam
+!
+qos scheduler-policy copp-scheduler-policy
+ !
+ queue 0
+  type wrr
+  weight 1
+ !
+ queue 1
+  meter-type packets
+  pir 100
+  type wrr
+  weight 1
+ !
+ queue 10
+  meter-type packets
+  pir 3000
+  type wrr
+  weight 2
+ !
+ queue 11
+  meter-type packets
+  pir 3000
+  type wrr
+  weight 2
+ !
+ queue 12
+  meter-type packets
+  pir 2000
+  type wrr
+  weight 2
+ !
+ queue 13
+  meter-type packets
+  pir 5000
+  type wrr
+  weight 2
+ !
+ queue 14
+  meter-type packets
+  pir 10000
+  type wrr
+  weight 6
+ !
+ queue 15
+  meter-type packets
+  pir 5000
+  type wrr
+  weight 4
+ !
+ queue 16
+  meter-type packets
+  pir 5000
+  type wrr
+  weight 4
+ !
+ queue 17
+  meter-type packets
+  pir 500
+  type wrr
+  weight 2
+ !
+ queue 18
+  meter-type packets
+  pir 500
+  type wrr
+  weight 2
+ !
+ queue 19
+  meter-type packets
+  pir 5000
+  type wrr
+  weight 3
+ !
+ queue 2
+  meter-type packets
+  pir 600
+  type wrr
+  weight 2
+ !
+ queue 20
+  meter-type packets
+  pir 2000
+  type wrr
+  weight 10
+ !
+ queue 21
+  meter-type packets
+  pir 16000
+  type wrr
+  weight 30
+ !
+ queue 22
+  meter-type packets
+  pir 500
+  type wrr
+  weight 10
+ !
+ queue 23
+  meter-type packets
+  pir 500
+  type wrr
+  weight 10
+ !
+ queue 24
+  meter-type packets
+  pir 500
+  type wrr
+  weight 1
+ !
+ port
+  meter-type packets
+ !
+ queue 28
+  meter-type packets
+  pir 100
+  type wrr
+  weight 1
+ !
+ queue 29
+  meter-type packets
+  pir 200
+  type wrr
+  weight 1
+ !
+ queue 3
+  meter-type packets
+  pir 8000
+  type wrr
+  weight 1
+ !
+ queue 30
+  meter-type packets
+  pir 5000
+  type wrr
+  weight 3
+ !
+ queue 4
+  meter-type packets
+  pir 500
+  type wrr
+  weight 1
+ !
+ queue 5
+  meter-type packets
+  pir 300
+  type wrr
+  weight 1
+ !
+ queue 6
+  meter-type packets
+  pir 2000
+  type wrr
+  weight 2
+ !
+ queue 7
+  meter-type packets
+  pir 6000
+  type wrr
+  weight 2
+ !
+ queue 8
+  meter-type packets
+  pir 1000
+  type wrr
+  weight 2
+ !
+ queue 9
+  meter-type packets
+  pir 1200
+  type wrr
+  weight 2
+!
+hardware
+ !
+ access-list
+  counters per-entry
+ !
+ access-list-logging
+ !
+ tcam
+!
+line vty
+ service-policy type qos in oob-qos-policy
+!
+interface Management0
+ description Management0
+ mtu 1500
+ autoneg on
+ speed 1000
+!
+interface Ethernet0
+ mtu 9100
+ speed 25000
+ unreliable-los auto
+ shutdown
+!
+interface Ethernet1
+ mtu 9100
+ speed 25000
+ unreliable-los auto
+ shutdown
+!
+interface Ethernet2
+ mtu 9100
+ speed 25000
+ unreliable-los auto
+ shutdown
+!
+interface Ethernet3
+ mtu 9100
+ speed 25000
+ unreliable-los auto
+ shutdown
+!
+interface Ethernet4
+ mtu 9100
+ speed 25000
+ unreliable-los auto
+ shutdown
+!
+interface Ethernet5
+ mtu 9100
+ speed 25000
+ unreliable-los auto
+ shutdown
+!
+interface Ethernet6
+ mtu 9100
+ speed 25000
+ unreliable-los auto
+ shutdown
+!
+interface Ethernet7
+ mtu 9100
+ speed 25000
+ unreliable-los auto
+ shutdown
+!
+interface Ethernet8
+ mtu 9100
+ speed 25000
+ unreliable-los auto
+ shutdown
+!
+interface Ethernet9
+ mtu 9100
+ speed 25000
+ unreliable-los auto
+ shutdown
+!
+interface Ethernet10
+ mtu 9100
+ speed 25000
+ unreliable-los auto
+ shutdown
+!
+interface Ethernet11
+ mtu 9100
+ speed 25000
+ unreliable-los auto
+ shutdown
+!
+interface Ethernet12
+ mtu 9100
+ speed 25000
+ unreliable-los auto
+ shutdown
+!
+interface Ethernet13
+ mtu 9100
+ speed 25000
+ unreliable-los auto
+ shutdown
+!
+interface Ethernet14
+ mtu 9100
+ speed 25000
+ unreliable-los auto
+ shutdown
+!
+interface Ethernet15
+ mtu 9100
+ speed 25000
+ unreliable-los auto
+ shutdown
+!
+interface Ethernet16
+ mtu 9100
+ speed 25000
+ unreliable-los auto
+ shutdown
+!
+interface Ethernet17
+ mtu 9100
+ speed 25000
+ unreliable-los auto
+ shutdown
+!
+interface Ethernet18
+ mtu 9100
+ speed 25000
+ unreliable-los auto
+ shutdown
+!
+interface Ethernet19
+ mtu 9100
+ speed 25000
+ unreliable-los auto
+ shutdown
+!
+interface Ethernet20
+ mtu 9100
+ speed 25000
+ unreliable-los auto
+ shutdown
+!
+interface Ethernet21
+ mtu 9100
+ speed 25000
+ unreliable-los auto
+ shutdown
+!
+interface Ethernet22
+ mtu 9100
+ speed 25000
+ unreliable-los auto
+ shutdown
+!
+interface Ethernet23
+ mtu 9100
+ speed 25000
+ unreliable-los auto
+ shutdown
+!
+interface Ethernet24
+ mtu 9100
+ speed 25000
+ unreliable-los auto
+ shutdown
+!
+interface Ethernet25
+ mtu 9100
+ speed 25000
+ unreliable-los auto
+ shutdown
+!
+interface Ethernet26
+ mtu 9100
+ speed 25000
+ unreliable-los auto
+ shutdown
+!
+interface Ethernet27
+ mtu 9100
+ speed 25000
+ unreliable-los auto
+ shutdown
+!
+interface Ethernet28
+ mtu 9100
+ speed 25000
+ unreliable-los auto
+ shutdown
+!
+interface Ethernet29
+ mtu 9100
+ speed 25000
+ unreliable-los auto
+ shutdown
+!
+interface Ethernet30
+ mtu 9100
+ speed 25000
+ unreliable-los auto
+ shutdown
+!
+interface Ethernet31
+ mtu 9100
+ speed 25000
+ unreliable-los auto
+ shutdown
+!
+interface Ethernet32
+ mtu 9100
+ speed 25000
+ unreliable-los auto
+ shutdown
+!
+interface Ethernet33
+ mtu 9100
+ speed 25000
+ unreliable-los auto
+ shutdown
+!
+interface Ethernet34
+ mtu 9100
+ speed 25000
+ unreliable-los auto
+ shutdown
+!
+interface Ethernet35
+ mtu 9100
+ speed 25000
+ unreliable-los auto
+ shutdown
+!
+interface Ethernet36
+ mtu 9100
+ speed 25000
+ unreliable-los auto
+ shutdown
+!
+interface Ethernet37
+ mtu 9100
+ speed 25000
+ unreliable-los auto
+ shutdown
+!
+interface Ethernet38
+ mtu 9100
+ speed 25000
+ unreliable-los auto
+ shutdown
+!
+interface Ethernet39
+ mtu 9100
+ speed 25000
+ unreliable-los auto
+ shutdown
+!
+interface Ethernet40
+ mtu 9100
+ speed 25000
+ unreliable-los auto
+ shutdown
+!
+interface Ethernet41
+ mtu 9100
+ speed 25000
+ unreliable-los auto
+ shutdown
+!
+interface Ethernet42
+ mtu 9100
+ speed 25000
+ unreliable-los auto
+ shutdown
+!
+interface Ethernet43
+ mtu 9100
+ speed 25000
+ unreliable-los auto
+ shutdown
+!
+interface Ethernet44
+ mtu 9100
+ speed 25000
+ unreliable-los auto
+ shutdown
+!
+interface Ethernet45
+ mtu 9100
+ speed 25000
+ unreliable-los auto
+ shutdown
+!
+interface Ethernet46
+ mtu 9100
+ speed 25000
+ unreliable-los auto
+ shutdown
+!
+interface Ethernet47
+ mtu 9100
+ speed 25000
+ unreliable-los auto
+ shutdown
+!
+interface Ethernet48
+ mtu 9100
+ speed 100000
+ unreliable-los auto
+ shutdown
+!
+interface Ethernet52
+ mtu 9100
+ speed 100000
+ unreliable-los auto
+ shutdown
+!
+interface Ethernet56
+ mtu 9100
+ speed 100000
+ unreliable-los auto
+ shutdown
+!
+interface Ethernet60
+ mtu 9100
+ speed 100000
+ unreliable-los auto
+ shutdown
+!
+interface Ethernet64
+ mtu 9100
+ speed 100000
+ unreliable-los auto
+ shutdown
+!
+interface Ethernet68
+ mtu 9100
+ speed 100000
+ unreliable-los auto
+ shutdown
+!
+interface Ethernet72
+ mtu 9100
+ speed 100000
+ unreliable-los auto
+ shutdown
+!
+interface Ethernet76
+ mtu 9100
+ speed 100000
+ unreliable-los auto
+ shutdown
+!
+class-map class-oob-arp match-type fields match-all
+ match ethertype arp
+!
+class-map class-oob-dhcp-client match-type fields match-all
+ match ethertype ip
+ match ip protocol udp
+ match destination-port eq 68
+!
+class-map class-oob-dhcp-server match-type fields match-all
+ match ethertype ip
+ match ip protocol udp
+ match destination-port eq 67
+!
+class-map class-oob-ip-multicast match-type fields match-all
+ match ethertype ip
+ match destination-address ip 224.0.0.0/4
+!
+class-map class-oob-ipv6-multicast match-type fields match-all
+ match ethertype 0x86DD
+ match destination-address ipv6 ff00::/8
+!
+class-map copp-system-arp match-type copp 
+ match protocol arp_req
+ match protocol arp_resp
+ match protocol neigh_discovery
+!
+class-map copp-system-bfd match-type copp 
+ match protocol bfd
+ match protocol bfdv6
+!
+class-map copp-system-bgp match-type copp 
+ match protocol bgp
+ match protocol bgpv6
+!
+class-map copp-system-dhcp match-type copp 
+ match protocol dhcp
+!
+class-map copp-system-dhcpl2 match-type copp 
+ match protocol dhcp_l2
+!
+class-map copp-system-dhcpv6 match-type copp 
+ match protocol dhcpv6
+!
+class-map copp-system-dhcpv6l2 match-type copp 
+ match protocol dhcpv6_l2
+!
+class-map copp-system-eapol match-type copp 
+ match protocol eapol
+!
+class-map copp-system-iccp match-type copp 
+ match protocol iccp
+!
+class-map copp-system-icmp match-type copp 
+ match protocol icmp
+ match protocol icmpv6
+!
+class-map copp-system-igmp match-type copp 
+ match protocol igmp_query
+!
+class-map copp-system-ip2me match-type copp 
+ match protocol ip2me
+!
+class-map copp-system-ipmc match-type copp 
+ match protocol known_l3_mc
+!
+class-map copp-system-ipmc-unknown match-type copp 
+ match protocol unknown_l3_mc
+!
+class-map copp-system-lacp match-type copp 
+ match protocol lacp
+!
+class-map copp-system-lldp match-type copp 
+ match protocol lldp
+!
+class-map copp-system-mtu match-type copp 
+ match protocol l3_mtu_error
+!
+class-map copp-system-nat match-type copp 
+ match protocol src_nat_miss
+ match protocol dest_nat_miss
+!
+class-map copp-system-ospf match-type copp 
+ match protocol ospf
+ match protocol ospfv6
+!
+class-map copp-system-pim match-type copp 
+ match protocol pim
+!
+class-map copp-system-ptp match-type copp 
+ match protocol ptp
+!
+class-map copp-system-sflow match-type copp 
+ match protocol sample_packet
+!
+class-map copp-system-stp match-type copp 
+ match protocol stp
+ match protocol pvrst
+!
+class-map copp-system-subnet match-type copp 
+ match protocol subnet
+!
+class-map copp-system-suppress match-type copp 
+ match protocol arp_suppress
+ match protocol nd_suppress
+!
+class-map copp-system-ttl match-type copp 
+ match protocol ttl_error
+!
+class-map copp-system-udld match-type copp 
+ match protocol udld
+!
+class-map copp-system-vrrp match-type copp 
+ match protocol vrrp
+ match protocol vrrpv6
+!
+class-map default match-type any 
+!
+copp-action copp-system-arp
+ set trap-action copy
+ set trap-queue 10
+ set trap-priority 10
+ police cir 3000 cbs 3000
+ police meter-type pps
+ police mode sr_tcm red drop
+!
+copp-action copp-system-bfd
+ set trap-action trap
+ set trap-queue 20
+ set trap-priority 20
+ police cir 2000 cbs 2000
+ police meter-type pps
+ police mode sr_tcm red drop
+!
+copp-action copp-system-bgp
+ set trap-action trap
+ set trap-queue 14
+ set trap-priority 14
+ police cir 10000 cbs 10000
+ police meter-type pps
+ police mode sr_tcm red drop
+!
+copp-action copp-system-dhcp
+ set trap-action trap
+ set trap-queue 9
+ set trap-priority 9
+ police cir 300 cbs 300
+ police meter-type pps
+ police mode sr_tcm red drop
+!
+copp-action copp-system-dhcpl2
+ set trap-action trap
+ set trap-queue 9
+ set trap-priority 9
+ police cir 300 cbs 300
+ police meter-type pps
+ police mode sr_tcm red drop
+!
+copp-action copp-system-dhcpv6
+ set trap-action trap
+ set trap-queue 9
+ set trap-priority 9
+ police cir 300 cbs 300
+ police meter-type pps
+ police mode sr_tcm red drop
+!
+copp-action copp-system-dhcpv6l2
+ set trap-action trap
+ set trap-queue 9
+ set trap-priority 9
+ police cir 300 cbs 300
+ police meter-type pps
+ police mode sr_tcm red drop
+!
+copp-action copp-system-eapol
+ set trap-action trap
+ set trap-queue 24
+ set trap-priority 24
+ police cir 500 cbs 500
+ police meter-type pps
+ police mode sr_tcm red drop
+!
+copp-action copp-system-iccp
+ set trap-action trap
+ set trap-queue 16
+ set trap-priority 16
+ police cir 5000 cbs 5000
+ police meter-type pps
+ police mode sr_tcm red drop
+!
+copp-action copp-system-icmp
+ set trap-action trap
+ set trap-queue 8
+ set trap-priority 8
+ police cir 1000 cbs 1000
+ police meter-type pps
+ police mode sr_tcm red drop
+!
+copp-action copp-system-igmp
+ set trap-action trap
+ set trap-queue 12
+ set trap-priority 12
+ police cir 2000 cbs 2000
+ police meter-type pps
+ police mode sr_tcm red drop
+!
+copp-action copp-system-ip2me
+ set trap-action trap
+ set trap-queue 7
+ set trap-priority 7
+ police cir 6000 cbs 6000
+ police meter-type pps
+ police mode sr_tcm red drop
+!
+copp-action copp-system-ipmc
+ set trap-action copy
+ set trap-queue 2
+ set trap-priority 2
+ police cir 600 cbs 600
+ police meter-type pps
+ police mode sr_tcm red drop
+!
+copp-action copp-system-ipmc-unknown
+ set trap-action copy
+ set trap-queue 1
+ set trap-priority 1
+ police cir 100 cbs 100
+ police meter-type pps
+ police mode sr_tcm red drop
+!
+copp-action copp-system-lacp
+ set trap-action trap
+ set trap-queue 23
+ set trap-priority 23
+ police cir 500 cbs 500
+ police meter-type pps
+ police mode sr_tcm red drop
+!
+copp-action copp-system-lldp
+ set trap-action trap
+ set trap-queue 18
+ set trap-priority 18
+ police cir 500 cbs 500
+ police meter-type pps
+ police mode sr_tcm red drop
+!
+copp-action copp-system-mtu
+ set trap-action trap
+ set trap-queue 4
+ set trap-priority 4
+ police cir 500 cbs 500
+ police meter-type pps
+ police mode sr_tcm red drop
+!
+copp-action copp-system-nat
+ set trap-action trap
+ set trap-queue 5
+ set trap-priority 5
+ police cir 300 cbs 300
+ police meter-type pps
+ police mode sr_tcm red drop
+!
+copp-action copp-system-ospf
+ set trap-action copy
+ set trap-queue 15
+ set trap-priority 15
+ police cir 5000 cbs 5000
+ police meter-type pps
+ police mode sr_tcm red drop
+!
+copp-action copp-system-pim
+ set trap-action trap
+ set trap-queue 13
+ set trap-priority 13
+ police cir 5000 cbs 5000
+ police meter-type pps
+ police mode sr_tcm red drop
+!
+copp-action copp-system-ptp
+ set trap-action trap
+ set trap-queue 30
+ set trap-priority 30
+ police cir 5000 cbs 5000
+ police meter-type pps
+ police mode sr_tcm red drop
+!
+copp-action copp-system-sflow
+ set trap-action trap
+ set trap-queue 3
+ set trap-priority 3
+ police cir 8000 cbs 8000
+ police meter-type pps
+ police mode sr_tcm red drop
+!
+copp-action copp-system-stp
+ set trap-action trap
+ set trap-queue 21
+ set trap-priority 21
+ police cir 16000 cbs 16000
+ police meter-type pps
+ police mode sr_tcm red drop
+!
+copp-action copp-system-subnet
+ set trap-action trap
+ set trap-queue 6
+ set trap-priority 6
+ police cir 2000 cbs 2000
+ police meter-type pps
+ police mode sr_tcm red forward
+!
+copp-action copp-system-suppress
+ set trap-action trap
+ set trap-queue 11
+ set trap-priority 11
+ police cir 3000 cbs 3000
+ police meter-type pps
+ police mode sr_tcm red drop
+!
+copp-action copp-system-ttl
+ set trap-action trap
+ set trap-queue 0
+ set trap-priority 0
+ police cir 100 cbs 100
+ police meter-type pps
+ police mode sr_tcm red drop
+!
+copp-action copp-system-udld
+ set trap-action trap
+ set trap-queue 22
+ set trap-priority 22
+ police cir 500 cbs 500
+ police meter-type pps
+ police mode sr_tcm red drop
+!
+copp-action copp-system-vrrp
+ set trap-action trap
+ set trap-queue 17
+ set trap-priority 17
+ police cir 500 cbs 500
+ police meter-type pps
+ police mode sr_tcm red drop
+!
+copp-action default
+ set trap-queue 0
+ police cir 100 cbs 100
+ police meter-type pps
+ police mode sr_tcm red drop
+!
+policy-map copp-system-policy type copp
+ class default priority 0
+  set copp-action default
+ !
+ class copp-system-vrrp priority 0
+  set copp-action copp-system-vrrp
+ !
+ class copp-system-udld priority 0
+  set copp-action copp-system-udld
+ !
+ class copp-system-ttl priority 0
+  set copp-action copp-system-ttl
+ !
+ class copp-system-suppress priority 0
+  set copp-action copp-system-suppress
+ !
+ class copp-system-subnet priority 0
+  set copp-action copp-system-subnet
+ !
+ class copp-system-stp priority 0
+  set copp-action copp-system-stp
+ !
+ class copp-system-sflow priority 0
+  set copp-action copp-system-sflow
+ !
+ class copp-system-ptp priority 0
+  set copp-action copp-system-ptp
+ !
+ class copp-system-pim priority 0
+  set copp-action copp-system-pim
+ !
+ class copp-system-ospf priority 0
+  set copp-action copp-system-ospf
+ !
+ class copp-system-nat priority 0
+  set copp-action copp-system-nat
+ !
+ class copp-system-mtu priority 0
+  set copp-action copp-system-mtu
+ !
+ class copp-system-lldp priority 0
+  set copp-action copp-system-lldp
+ !
+ class copp-system-lacp priority 0
+  set copp-action copp-system-lacp
+ !
+ class copp-system-ipmc-unknown priority 0
+  set copp-action copp-system-ipmc-unknown
+ !
+ class copp-system-ipmc priority 0
+  set copp-action copp-system-ipmc
+ !
+ class copp-system-ip2me priority 0
+  set copp-action copp-system-ip2me
+ !
+ class copp-system-igmp priority 0
+  set copp-action copp-system-igmp
+ !
+ class copp-system-icmp priority 0
+  set copp-action copp-system-icmp
+ !
+ class copp-system-iccp priority 0
+  set copp-action copp-system-iccp
+ !
+ class copp-system-eapol priority 0
+  set copp-action copp-system-eapol
+ !
+ class copp-system-dhcpv6l2 priority 0
+  set copp-action copp-system-dhcpv6l2
+ !
+ class copp-system-dhcpv6 priority 0
+  set copp-action copp-system-dhcpv6
+ !
+ class copp-system-dhcpl2 priority 0
+  set copp-action copp-system-dhcpl2
+ !
+ class copp-system-dhcp priority 0
+  set copp-action copp-system-dhcp
+ !
+ class copp-system-bgp priority 0
+  set copp-action copp-system-bgp
+ !
+ class copp-system-bfd priority 0
+  set copp-action copp-system-bfd
+ !
+ class copp-system-arp priority 0
+  set copp-action copp-system-arp
+ !
+!
+policy-map oob-qos-policy type qos
+ description "QoS Ratelimiting policy for OOB port"
+ class class-oob-dhcp-client priority 1020
+  police cir 512000
+ !
+ class class-oob-dhcp-server priority 1015
+  police cir 512000
+ !
+ class class-oob-arp priority 1010
+  police cir 256000
+ !
+ class class-oob-ipv6-multicast priority 1005
+  police cir 256000
+ !
+ class class-oob-ip-multicast priority 1000
+  police cir 256000
+ !
