@@ -8,9 +8,13 @@ The format is based on [Keep a Changelog](https://keepachangelog.com/en/1.1.0/).
 
 ### Added
 
+- enterprise_sonic: add opt-in CONFIG_DB JSON collection with `config_db_backup: true` for Linux-shell logins.
+
 ### Changed
 
 ### Fixed
+
+- enterprise_sonic: exit both sonic-cli and the Linux shell when `admin: true`.
 
 
 ## [0.38.0 - 2026-11-16]
