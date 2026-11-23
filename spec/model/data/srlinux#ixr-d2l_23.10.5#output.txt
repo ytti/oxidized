@@ -1,0 +1,975 @@
+set / acl
+set / acl cpm-filter
+set / acl cpm-filter ipv4-filter
+set / acl cpm-filter ipv4-filter statistics-per-entry true
+set / acl cpm-filter ipv4-filter entry 10
+set / acl cpm-filter ipv4-filter entry 10 description "Accept incoming ICMP unreachable messages"
+set / acl cpm-filter ipv4-filter entry 10 action
+set / acl cpm-filter ipv4-filter entry 10 action accept
+set / acl cpm-filter ipv4-filter entry 10 action accept rate-limit
+set / acl cpm-filter ipv4-filter entry 10 action accept rate-limit system-cpu-policer icmp
+set / acl cpm-filter ipv4-filter entry 10 match
+set / acl cpm-filter ipv4-filter entry 10 match protocol icmp
+set / acl cpm-filter ipv4-filter entry 10 match icmp
+set / acl cpm-filter ipv4-filter entry 10 match icmp type dest-unreachable
+set / acl cpm-filter ipv4-filter entry 10 match icmp code [ 0 1 2 3 4 13 ]
+set / acl cpm-filter ipv4-filter entry 20
+set / acl cpm-filter ipv4-filter entry 20 description "Accept incoming ICMP time-exceeded messages"
+set / acl cpm-filter ipv4-filter entry 20 action
+set / acl cpm-filter ipv4-filter entry 20 action accept
+set / acl cpm-filter ipv4-filter entry 20 action accept rate-limit
+set / acl cpm-filter ipv4-filter entry 20 action accept rate-limit system-cpu-policer icmp
+set / acl cpm-filter ipv4-filter entry 20 match
+set / acl cpm-filter ipv4-filter entry 20 match protocol icmp
+set / acl cpm-filter ipv4-filter entry 20 match icmp
+set / acl cpm-filter ipv4-filter entry 20 match icmp type time-exceeded
+set / acl cpm-filter ipv4-filter entry 30
+set / acl cpm-filter ipv4-filter entry 30 description "Accept incoming ICMP parameter problem messages"
+set / acl cpm-filter ipv4-filter entry 30 action
+set / acl cpm-filter ipv4-filter entry 30 action accept
+set / acl cpm-filter ipv4-filter entry 30 action accept rate-limit
+set / acl cpm-filter ipv4-filter entry 30 action accept rate-limit system-cpu-policer icmp
+set / acl cpm-filter ipv4-filter entry 30 match
+set / acl cpm-filter ipv4-filter entry 30 match protocol icmp
+set / acl cpm-filter ipv4-filter entry 30 match icmp
+set / acl cpm-filter ipv4-filter entry 30 match icmp type param-problem
+set / acl cpm-filter ipv4-filter entry 40
+set / acl cpm-filter ipv4-filter entry 40 description "Accept incoming ICMP echo messages"
+set / acl cpm-filter ipv4-filter entry 40 action
+set / acl cpm-filter ipv4-filter entry 40 action accept
+set / acl cpm-filter ipv4-filter entry 40 action accept rate-limit
+set / acl cpm-filter ipv4-filter entry 40 action accept rate-limit system-cpu-policer icmp
+set / acl cpm-filter ipv4-filter entry 40 match
+set / acl cpm-filter ipv4-filter entry 40 match protocol icmp
+set / acl cpm-filter ipv4-filter entry 40 match icmp
+set / acl cpm-filter ipv4-filter entry 40 match icmp type echo
+set / acl cpm-filter ipv4-filter entry 50
+set / acl cpm-filter ipv4-filter entry 50 description "Accept incoming ICMP echo-reply messages"
+set / acl cpm-filter ipv4-filter entry 50 action
+set / acl cpm-filter ipv4-filter entry 50 action accept
+set / acl cpm-filter ipv4-filter entry 50 action accept rate-limit
+set / acl cpm-filter ipv4-filter entry 50 action accept rate-limit system-cpu-policer icmp
+set / acl cpm-filter ipv4-filter entry 50 match
+set / acl cpm-filter ipv4-filter entry 50 match protocol icmp
+set / acl cpm-filter ipv4-filter entry 50 match icmp
+set / acl cpm-filter ipv4-filter entry 50 match icmp type echo-reply
+set / acl cpm-filter ipv4-filter entry 60
+set / acl cpm-filter ipv4-filter entry 60 description "Accept incoming SSH when the other host initiates the TCP connection"
+set / acl cpm-filter ipv4-filter entry 60 action
+set / acl cpm-filter ipv4-filter entry 60 action accept
+set / acl cpm-filter ipv4-filter entry 60 match
+set / acl cpm-filter ipv4-filter entry 60 match protocol tcp
+set / acl cpm-filter ipv4-filter entry 60 match destination-port
+set / acl cpm-filter ipv4-filter entry 60 match destination-port operator eq
+set / acl cpm-filter ipv4-filter entry 60 match destination-port value 22
+set / acl cpm-filter ipv4-filter entry 70
+set / acl cpm-filter ipv4-filter entry 70 description "Accept incoming SSH when this router initiates the TCP connection"
+set / acl cpm-filter ipv4-filter entry 70 action
+set / acl cpm-filter ipv4-filter entry 70 action accept
+set / acl cpm-filter ipv4-filter entry 70 match
+set / acl cpm-filter ipv4-filter entry 70 match protocol tcp
+set / acl cpm-filter ipv4-filter entry 70 match source-port
+set / acl cpm-filter ipv4-filter entry 70 match source-port operator eq
+set / acl cpm-filter ipv4-filter entry 70 match source-port value 22
+set / acl cpm-filter ipv4-filter entry 80
+set / acl cpm-filter ipv4-filter entry 80 description "Accept incoming Telnet when the other host initiates the TCP connection"
+set / acl cpm-filter ipv4-filter entry 80 action
+set / acl cpm-filter ipv4-filter entry 80 action accept
+set / acl cpm-filter ipv4-filter entry 80 match
+set / acl cpm-filter ipv4-filter entry 80 match protocol tcp
+set / acl cpm-filter ipv4-filter entry 80 match destination-port
+set / acl cpm-filter ipv4-filter entry 80 match destination-port operator eq
+set / acl cpm-filter ipv4-filter entry 80 match destination-port value 23
+set / acl cpm-filter ipv4-filter entry 90
+set / acl cpm-filter ipv4-filter entry 90 description "Accept incoming Telnet when this router initiates the TCP connection"
+set / acl cpm-filter ipv4-filter entry 90 action
+set / acl cpm-filter ipv4-filter entry 90 action accept
+set / acl cpm-filter ipv4-filter entry 90 match
+set / acl cpm-filter ipv4-filter entry 90 match protocol tcp
+set / acl cpm-filter ipv4-filter entry 90 match source-port
+set / acl cpm-filter ipv4-filter entry 90 match source-port operator eq
+set / acl cpm-filter ipv4-filter entry 90 match source-port value 23
+set / acl cpm-filter ipv4-filter entry 100
+set / acl cpm-filter ipv4-filter entry 100 description "Accept incoming TACACS+ when the other host initiates the TCP connection"
+set / acl cpm-filter ipv4-filter entry 100 action
+set / acl cpm-filter ipv4-filter entry 100 action accept
+set / acl cpm-filter ipv4-filter entry 100 match
+set / acl cpm-filter ipv4-filter entry 100 match protocol tcp
+set / acl cpm-filter ipv4-filter entry 100 match destination-port
+set / acl cpm-filter ipv4-filter entry 100 match destination-port operator eq
+set / acl cpm-filter ipv4-filter entry 100 match destination-port value 49
+set / acl cpm-filter ipv4-filter entry 110
+set / acl cpm-filter ipv4-filter entry 110 description "Accept incoming TACACS+ when this router initiates the TCP connection"
+set / acl cpm-filter ipv4-filter entry 110 action
+set / acl cpm-filter ipv4-filter entry 110 action accept
+set / acl cpm-filter ipv4-filter entry 110 match
+set / acl cpm-filter ipv4-filter entry 110 match protocol tcp
+set / acl cpm-filter ipv4-filter entry 110 match source-port
+set / acl cpm-filter ipv4-filter entry 110 match source-port operator eq
+set / acl cpm-filter ipv4-filter entry 110 match source-port value 49
+set / acl cpm-filter ipv4-filter entry 120
+set / acl cpm-filter ipv4-filter entry 120 description "Accept incoming DNS response messages"
+set / acl cpm-filter ipv4-filter entry 120 action
+set / acl cpm-filter ipv4-filter entry 120 action accept
+set / acl cpm-filter ipv4-filter entry 120 match
+set / acl cpm-filter ipv4-filter entry 120 match protocol udp
+set / acl cpm-filter ipv4-filter entry 120 match source-port
+set / acl cpm-filter ipv4-filter entry 120 match source-port operator eq
+set / acl cpm-filter ipv4-filter entry 120 match source-port value 53
+set / acl cpm-filter ipv4-filter entry 130
+set / acl cpm-filter ipv4-filter entry 130 description "Accept incoming DHCP messages targeted for BOOTP/DHCP client"
+set / acl cpm-filter ipv4-filter entry 130 action
+set / acl cpm-filter ipv4-filter entry 130 action accept
+set / acl cpm-filter ipv4-filter entry 130 match
+set / acl cpm-filter ipv4-filter entry 130 match protocol udp
+set / acl cpm-filter ipv4-filter entry 130 match destination-port
+set / acl cpm-filter ipv4-filter entry 130 match destination-port operator eq
+set / acl cpm-filter ipv4-filter entry 130 match destination-port value 68
+set / acl cpm-filter ipv4-filter entry 140
+set / acl cpm-filter ipv4-filter entry 140 description "Accept incoming TFTP read-request and write-request messages"
+set / acl cpm-filter ipv4-filter entry 140 action
+set / acl cpm-filter ipv4-filter entry 140 action accept
+set / acl cpm-filter ipv4-filter entry 140 match
+set / acl cpm-filter ipv4-filter entry 140 match protocol udp
+set / acl cpm-filter ipv4-filter entry 140 match destination-port
+set / acl cpm-filter ipv4-filter entry 140 match destination-port operator eq
+set / acl cpm-filter ipv4-filter entry 140 match destination-port value 69
+set / acl cpm-filter ipv4-filter entry 150
+set / acl cpm-filter ipv4-filter entry 150 description "Accept incoming HTTP(JSON-RPC) when the other host initiates the TCP connection"
+set / acl cpm-filter ipv4-filter entry 150 action
+set / acl cpm-filter ipv4-filter entry 150 action accept
+set / acl cpm-filter ipv4-filter entry 150 match
+set / acl cpm-filter ipv4-filter entry 150 match protocol tcp
+set / acl cpm-filter ipv4-filter entry 150 match destination-port
+set / acl cpm-filter ipv4-filter entry 150 match destination-port operator eq
+set / acl cpm-filter ipv4-filter entry 150 match destination-port value 80
+set / acl cpm-filter ipv4-filter entry 160
+set / acl cpm-filter ipv4-filter entry 160 description "Accept incoming HTTP(JSON-RPC) when this router initiates the TCP connection"
+set / acl cpm-filter ipv4-filter entry 160 action
+set / acl cpm-filter ipv4-filter entry 160 action accept
+set / acl cpm-filter ipv4-filter entry 160 match
+set / acl cpm-filter ipv4-filter entry 160 match protocol tcp
+set / acl cpm-filter ipv4-filter entry 160 match source-port
+set / acl cpm-filter ipv4-filter entry 160 match source-port operator eq
+set / acl cpm-filter ipv4-filter entry 160 match source-port value 80
+set / acl cpm-filter ipv4-filter entry 170
+set / acl cpm-filter ipv4-filter entry 170 description "Accept incoming NTP messages from servers"
+set / acl cpm-filter ipv4-filter entry 170 action
+set / acl cpm-filter ipv4-filter entry 170 action accept
+set / acl cpm-filter ipv4-filter entry 170 match
+set / acl cpm-filter ipv4-filter entry 170 match protocol udp
+set / acl cpm-filter ipv4-filter entry 170 match source-port
+set / acl cpm-filter ipv4-filter entry 170 match source-port operator eq
+set / acl cpm-filter ipv4-filter entry 170 match source-port value 123
+set / acl cpm-filter ipv4-filter entry 180
+set / acl cpm-filter ipv4-filter entry 180 description "Accept incoming SNMP GET/GETNEXT messages from servers"
+set / acl cpm-filter ipv4-filter entry 180 action
+set / acl cpm-filter ipv4-filter entry 180 action accept
+set / acl cpm-filter ipv4-filter entry 180 match
+set / acl cpm-filter ipv4-filter entry 180 match protocol udp
+set / acl cpm-filter ipv4-filter entry 180 match destination-port
+set / acl cpm-filter ipv4-filter entry 180 match destination-port operator eq
+set / acl cpm-filter ipv4-filter entry 180 match destination-port value 161
+set / acl cpm-filter ipv4-filter entry 190
+set / acl cpm-filter ipv4-filter entry 190 description "Accept incoming BGP when the other router initiates the TCP connection"
+set / acl cpm-filter ipv4-filter entry 190 action
+set / acl cpm-filter ipv4-filter entry 190 action accept
+set / acl cpm-filter ipv4-filter entry 190 match
+set / acl cpm-filter ipv4-filter entry 190 match protocol tcp
+set / acl cpm-filter ipv4-filter entry 190 match destination-port
+set / acl cpm-filter ipv4-filter entry 190 match destination-port operator eq
+set / acl cpm-filter ipv4-filter entry 190 match destination-port value 179
+set / acl cpm-filter ipv4-filter entry 200
+set / acl cpm-filter ipv4-filter entry 200 description "Accept incoming BGP when this router initiates the TCP connection"
+set / acl cpm-filter ipv4-filter entry 200 action
+set / acl cpm-filter ipv4-filter entry 200 action accept
+set / acl cpm-filter ipv4-filter entry 200 match
+set / acl cpm-filter ipv4-filter entry 200 match protocol tcp
+set / acl cpm-filter ipv4-filter entry 200 match source-port
+set / acl cpm-filter ipv4-filter entry 200 match source-port operator eq
+set / acl cpm-filter ipv4-filter entry 200 match source-port value 179
+set / acl cpm-filter ipv4-filter entry 210
+set / acl cpm-filter ipv4-filter entry 210 description "Accept incoming HTTPS(JSON-RPC) when the other host initiates the TCP connection"
+set / acl cpm-filter ipv4-filter entry 210 action
+set / acl cpm-filter ipv4-filter entry 210 action accept
+set / acl cpm-filter ipv4-filter entry 210 match
+set / acl cpm-filter ipv4-filter entry 210 match protocol tcp
+set / acl cpm-filter ipv4-filter entry 210 match destination-port
+set / acl cpm-filter ipv4-filter entry 210 match destination-port operator eq
+set / acl cpm-filter ipv4-filter entry 210 match destination-port value 443
+set / acl cpm-filter ipv4-filter entry 220
+set / acl cpm-filter ipv4-filter entry 220 description "Accept incoming HTTPS(JSON-RPC) when this router initiates the TCP connection"
+set / acl cpm-filter ipv4-filter entry 220 action
+set / acl cpm-filter ipv4-filter entry 220 action accept
+set / acl cpm-filter ipv4-filter entry 220 match
+set / acl cpm-filter ipv4-filter entry 220 match protocol tcp
+set / acl cpm-filter ipv4-filter entry 220 match source-port
+set / acl cpm-filter ipv4-filter entry 220 match source-port operator eq
+set / acl cpm-filter ipv4-filter entry 220 match source-port value 443
+set / acl cpm-filter ipv4-filter entry 230
+set / acl cpm-filter ipv4-filter entry 230 description "Accept incoming single-hop BFD session messages"
+set / acl cpm-filter ipv4-filter entry 230 action
+set / acl cpm-filter ipv4-filter entry 230 action accept
+set / acl cpm-filter ipv4-filter entry 230 match
+set / acl cpm-filter ipv4-filter entry 230 match protocol udp
+set / acl cpm-filter ipv4-filter entry 230 match destination-port
+set / acl cpm-filter ipv4-filter entry 230 match destination-port operator eq
+set / acl cpm-filter ipv4-filter entry 230 match destination-port value 3784
+set / acl cpm-filter ipv4-filter entry 240
+set / acl cpm-filter ipv4-filter entry 240 description "Accept incoming multi-hop BFD session messages"
+set / acl cpm-filter ipv4-filter entry 240 action
+set / acl cpm-filter ipv4-filter entry 240 action accept
+set / acl cpm-filter ipv4-filter entry 240 match
+set / acl cpm-filter ipv4-filter entry 240 match protocol udp
+set / acl cpm-filter ipv4-filter entry 240 match destination-port
+set / acl cpm-filter ipv4-filter entry 240 match destination-port operator eq
+set / acl cpm-filter ipv4-filter entry 240 match destination-port value 4784
+set / acl cpm-filter ipv4-filter entry 250
+set / acl cpm-filter ipv4-filter entry 250 description "Accept incoming uBFD session messages"
+set / acl cpm-filter ipv4-filter entry 250 action
+set / acl cpm-filter ipv4-filter entry 250 action accept
+set / acl cpm-filter ipv4-filter entry 250 match
+set / acl cpm-filter ipv4-filter entry 250 match protocol udp
+set / acl cpm-filter ipv4-filter entry 250 match destination-port
+set / acl cpm-filter ipv4-filter entry 250 match destination-port operator eq
+set / acl cpm-filter ipv4-filter entry 250 match destination-port value 6784
+set / acl cpm-filter ipv4-filter entry 260
+set / acl cpm-filter ipv4-filter entry 260 description "Accept incoming gNMI messages when the other host initiates the TCP connection"
+set / acl cpm-filter ipv4-filter entry 260 action
+set / acl cpm-filter ipv4-filter entry 260 action accept
+set / acl cpm-filter ipv4-filter entry 260 match
+set / acl cpm-filter ipv4-filter entry 260 match protocol tcp
+set / acl cpm-filter ipv4-filter entry 260 match destination-port
+set / acl cpm-filter ipv4-filter entry 260 match destination-port operator eq
+set / acl cpm-filter ipv4-filter entry 260 match destination-port value 57400
+set / acl cpm-filter ipv4-filter entry 270
+set / acl cpm-filter ipv4-filter entry 270 description "Accept incoming UDP traceroute messages"
+set / acl cpm-filter ipv4-filter entry 270 action
+set / acl cpm-filter ipv4-filter entry 270 action accept
+set / acl cpm-filter ipv4-filter entry 270 match
+set / acl cpm-filter ipv4-filter entry 270 match protocol udp
+set / acl cpm-filter ipv4-filter entry 270 match destination-port
+set / acl cpm-filter ipv4-filter entry 270 match destination-port range
+set / acl cpm-filter ipv4-filter entry 270 match destination-port range start 33434
+set / acl cpm-filter ipv4-filter entry 270 match destination-port range end 33464
+set / acl cpm-filter ipv4-filter entry 280
+set / acl cpm-filter ipv4-filter entry 280 description "Accept incoming ICMP timestamp messages"
+set / acl cpm-filter ipv4-filter entry 280 action
+set / acl cpm-filter ipv4-filter entry 280 action accept
+set / acl cpm-filter ipv4-filter entry 280 action accept rate-limit
+set / acl cpm-filter ipv4-filter entry 280 action accept rate-limit system-cpu-policer icmp
+set / acl cpm-filter ipv4-filter entry 280 match
+set / acl cpm-filter ipv4-filter entry 280 match protocol icmp
+set / acl cpm-filter ipv4-filter entry 280 match icmp
+set / acl cpm-filter ipv4-filter entry 280 match icmp type timestamp
+set / acl cpm-filter ipv4-filter entry 290
+set / acl cpm-filter ipv4-filter entry 290 description "Accept incoming OSPF messages"
+set / acl cpm-filter ipv4-filter entry 290 action
+set / acl cpm-filter ipv4-filter entry 290 action accept
+set / acl cpm-filter ipv4-filter entry 290 match
+set / acl cpm-filter ipv4-filter entry 290 match protocol 89
+set / acl cpm-filter ipv4-filter entry 300
+set / acl cpm-filter ipv4-filter entry 300 description "Accept incoming DHCP relay messages targeted for BOOTP/DHCP server"
+set / acl cpm-filter ipv4-filter entry 300 action
+set / acl cpm-filter ipv4-filter entry 300 action accept
+set / acl cpm-filter ipv4-filter entry 300 match
+set / acl cpm-filter ipv4-filter entry 300 match protocol udp
+set / acl cpm-filter ipv4-filter entry 300 match destination-port
+set / acl cpm-filter ipv4-filter entry 300 match destination-port operator eq
+set / acl cpm-filter ipv4-filter entry 300 match destination-port value 67
+set / acl cpm-filter ipv4-filter entry 310
+set / acl cpm-filter ipv4-filter entry 310 description "Accept ICMP fragment packets"
+set / acl cpm-filter ipv4-filter entry 310 action
+set / acl cpm-filter ipv4-filter entry 310 action accept
+set / acl cpm-filter ipv4-filter entry 310 action accept rate-limit
+set / acl cpm-filter ipv4-filter entry 310 action accept rate-limit system-cpu-policer icmp
+set / acl cpm-filter ipv4-filter entry 310 match
+set / acl cpm-filter ipv4-filter entry 310 match fragment true
+set / acl cpm-filter ipv4-filter entry 310 match protocol icmp
+set / acl cpm-filter ipv4-filter entry 320
+set / acl cpm-filter ipv4-filter entry 320 description "Accept incoming LDP packets"
+set / acl cpm-filter ipv4-filter entry 320 action
+set / acl cpm-filter ipv4-filter entry 320 action accept
+set / acl cpm-filter ipv4-filter entry 320 match
+set / acl cpm-filter ipv4-filter entry 320 match protocol udp
+set / acl cpm-filter ipv4-filter entry 320 match source-port
+set / acl cpm-filter ipv4-filter entry 320 match source-port operator eq
+set / acl cpm-filter ipv4-filter entry 320 match source-port value 646
+set / acl cpm-filter ipv4-filter entry 330
+set / acl cpm-filter ipv4-filter entry 330 description "Accept incoming LDP packets with source-port 646"
+set / acl cpm-filter ipv4-filter entry 330 action
+set / acl cpm-filter ipv4-filter entry 330 action accept
+set / acl cpm-filter ipv4-filter entry 330 match
+set / acl cpm-filter ipv4-filter entry 330 match protocol tcp
+set / acl cpm-filter ipv4-filter entry 330 match source-port
+set / acl cpm-filter ipv4-filter entry 330 match source-port operator eq
+set / acl cpm-filter ipv4-filter entry 330 match source-port value 646
+set / acl cpm-filter ipv4-filter entry 340
+set / acl cpm-filter ipv4-filter entry 340 description "Accept incoming LDP packets with destination-port 646"
+set / acl cpm-filter ipv4-filter entry 340 action
+set / acl cpm-filter ipv4-filter entry 340 action accept
+set / acl cpm-filter ipv4-filter entry 340 match
+set / acl cpm-filter ipv4-filter entry 340 match protocol tcp
+set / acl cpm-filter ipv4-filter entry 340 match destination-port
+set / acl cpm-filter ipv4-filter entry 340 match destination-port operator eq
+set / acl cpm-filter ipv4-filter entry 340 match destination-port value 646
+set / acl cpm-filter ipv4-filter entry 350
+set / acl cpm-filter ipv4-filter entry 350 description "Accept incoming gRIBI packets with destination-port 57401"
+set / acl cpm-filter ipv4-filter entry 350 action
+set / acl cpm-filter ipv4-filter entry 350 action accept
+set / acl cpm-filter ipv4-filter entry 350 match
+set / acl cpm-filter ipv4-filter entry 350 match protocol tcp
+set / acl cpm-filter ipv4-filter entry 350 match destination-port
+set / acl cpm-filter ipv4-filter entry 350 match destination-port operator eq
+set / acl cpm-filter ipv4-filter entry 350 match destination-port value 57401
+set / acl cpm-filter ipv4-filter entry 360
+set / acl cpm-filter ipv4-filter entry 360 description "Accept incoming p4rt packets with destination-port 9559"
+set / acl cpm-filter ipv4-filter entry 360 action
+set / acl cpm-filter ipv4-filter entry 360 action accept
+set / acl cpm-filter ipv4-filter entry 360 match
+set / acl cpm-filter ipv4-filter entry 360 match protocol tcp
+set / acl cpm-filter ipv4-filter entry 360 match destination-port
+set / acl cpm-filter ipv4-filter entry 360 match destination-port operator eq
+set / acl cpm-filter ipv4-filter entry 360 match destination-port value 9559
+set / acl cpm-filter ipv4-filter entry 370
+set / acl cpm-filter ipv4-filter entry 370 description "Accept incoming IGMP packets"
+set / acl cpm-filter ipv4-filter entry 370 action
+set / acl cpm-filter ipv4-filter entry 370 action accept
+set / acl cpm-filter ipv4-filter entry 370 match
+set / acl cpm-filter ipv4-filter entry 370 match protocol igmp
+set / acl cpm-filter ipv4-filter entry 380
+set / acl cpm-filter ipv4-filter entry 380 description "Accept incoming PIM packets"
+set / acl cpm-filter ipv4-filter entry 380 action
+set / acl cpm-filter ipv4-filter entry 380 action accept
+set / acl cpm-filter ipv4-filter entry 380 match
+set / acl cpm-filter ipv4-filter entry 380 match protocol pim
+set / acl cpm-filter ipv4-filter entry 390
+set / acl cpm-filter ipv4-filter entry 390 description "Accept incoming RADIUS AAA packets"
+set / acl cpm-filter ipv4-filter entry 390 action
+set / acl cpm-filter ipv4-filter entry 390 action accept
+set / acl cpm-filter ipv4-filter entry 390 match
+set / acl cpm-filter ipv4-filter entry 390 match protocol udp
+set / acl cpm-filter ipv4-filter entry 390 match source-port
+set / acl cpm-filter ipv4-filter entry 390 match source-port range
+set / acl cpm-filter ipv4-filter entry 390 match source-port range start 1812
+set / acl cpm-filter ipv4-filter entry 390 match source-port range end 1813
+set / acl cpm-filter ipv4-filter entry 410
+set / acl cpm-filter ipv4-filter entry 410 description "Accept incoming PTP messages with destination-ports 319 and 320"
+set / acl cpm-filter ipv4-filter entry 410 action
+set / acl cpm-filter ipv4-filter entry 410 action accept
+set / acl cpm-filter ipv4-filter entry 410 match
+set / acl cpm-filter ipv4-filter entry 410 match protocol udp
+set / acl cpm-filter ipv4-filter entry 410 match destination-port
+set / acl cpm-filter ipv4-filter entry 410 match destination-port range
+set / acl cpm-filter ipv4-filter entry 410 match destination-port range start 319
+set / acl cpm-filter ipv4-filter entry 410 match destination-port range end 320
+set / acl cpm-filter ipv4-filter entry 420
+set / acl cpm-filter ipv4-filter entry 420 description "Drop all else"
+set / acl cpm-filter ipv4-filter entry 420 action
+set / acl cpm-filter ipv4-filter entry 420 action drop
+set / acl cpm-filter ipv4-filter entry 420 action drop log true
+set / acl cpm-filter ipv6-filter
+set / acl cpm-filter ipv6-filter statistics-per-entry true
+set / acl cpm-filter ipv6-filter entry 10
+set / acl cpm-filter ipv6-filter entry 10 description "Accept incoming ICMPv6 unreachable messages"
+set / acl cpm-filter ipv6-filter entry 10 action
+set / acl cpm-filter ipv6-filter entry 10 action accept
+set / acl cpm-filter ipv6-filter entry 10 action accept rate-limit
+set / acl cpm-filter ipv6-filter entry 10 action accept rate-limit system-cpu-policer icmp
+set / acl cpm-filter ipv6-filter entry 10 match
+set / acl cpm-filter ipv6-filter entry 10 match next-header icmp6
+set / acl cpm-filter ipv6-filter entry 10 match icmp6
+set / acl cpm-filter ipv6-filter entry 10 match icmp6 type dest-unreachable
+set / acl cpm-filter ipv6-filter entry 10 match icmp6 code [ 0 1 2 3 4 5 6 ]
+set / acl cpm-filter ipv6-filter entry 20
+set / acl cpm-filter ipv6-filter entry 20 description "Accept incoming ICMPv6 packet-too-big messages"
+set / acl cpm-filter ipv6-filter entry 20 action
+set / acl cpm-filter ipv6-filter entry 20 action accept
+set / acl cpm-filter ipv6-filter entry 20 action accept rate-limit
+set / acl cpm-filter ipv6-filter entry 20 action accept rate-limit system-cpu-policer icmp
+set / acl cpm-filter ipv6-filter entry 20 match
+set / acl cpm-filter ipv6-filter entry 20 match next-header icmp6
+set / acl cpm-filter ipv6-filter entry 20 match icmp6
+set / acl cpm-filter ipv6-filter entry 20 match icmp6 type packet-too-big
+set / acl cpm-filter ipv6-filter entry 30
+set / acl cpm-filter ipv6-filter entry 30 description "Accept incoming ICMPv6 time-exceeded messages"
+set / acl cpm-filter ipv6-filter entry 30 action
+set / acl cpm-filter ipv6-filter entry 30 action accept
+set / acl cpm-filter ipv6-filter entry 30 action accept rate-limit
+set / acl cpm-filter ipv6-filter entry 30 action accept rate-limit system-cpu-policer icmp
+set / acl cpm-filter ipv6-filter entry 30 match
+set / acl cpm-filter ipv6-filter entry 30 match next-header icmp6
+set / acl cpm-filter ipv6-filter entry 30 match icmp6
+set / acl cpm-filter ipv6-filter entry 30 match icmp6 type time-exceeded
+set / acl cpm-filter ipv6-filter entry 40
+set / acl cpm-filter ipv6-filter entry 40 description "Accept incoming ICMPv6 parameter problem messages"
+set / acl cpm-filter ipv6-filter entry 40 action
+set / acl cpm-filter ipv6-filter entry 40 action accept
+set / acl cpm-filter ipv6-filter entry 40 action accept rate-limit
+set / acl cpm-filter ipv6-filter entry 40 action accept rate-limit system-cpu-policer icmp
+set / acl cpm-filter ipv6-filter entry 40 match
+set / acl cpm-filter ipv6-filter entry 40 match next-header icmp6
+set / acl cpm-filter ipv6-filter entry 40 match icmp6
+set / acl cpm-filter ipv6-filter entry 40 match icmp6 type param-problem
+set / acl cpm-filter ipv6-filter entry 50
+set / acl cpm-filter ipv6-filter entry 50 description "Accept incoming ICMPv6 echo-request messages"
+set / acl cpm-filter ipv6-filter entry 50 action
+set / acl cpm-filter ipv6-filter entry 50 action accept
+set / acl cpm-filter ipv6-filter entry 50 action accept rate-limit
+set / acl cpm-filter ipv6-filter entry 50 action accept rate-limit system-cpu-policer icmp
+set / acl cpm-filter ipv6-filter entry 50 match
+set / acl cpm-filter ipv6-filter entry 50 match next-header icmp6
+set / acl cpm-filter ipv6-filter entry 50 match icmp6
+set / acl cpm-filter ipv6-filter entry 50 match icmp6 type echo-request
+set / acl cpm-filter ipv6-filter entry 60
+set / acl cpm-filter ipv6-filter entry 60 description "Accept incoming ICMPv6 echo-reply messages"
+set / acl cpm-filter ipv6-filter entry 60 action
+set / acl cpm-filter ipv6-filter entry 60 action accept
+set / acl cpm-filter ipv6-filter entry 60 action accept rate-limit
+set / acl cpm-filter ipv6-filter entry 60 action accept rate-limit system-cpu-policer icmp
+set / acl cpm-filter ipv6-filter entry 60 match
+set / acl cpm-filter ipv6-filter entry 60 match next-header icmp6
+set / acl cpm-filter ipv6-filter entry 60 match icmp6
+set / acl cpm-filter ipv6-filter entry 60 match icmp6 type echo-reply
+set / acl cpm-filter ipv6-filter entry 70
+set / acl cpm-filter ipv6-filter entry 70 description "Accept incoming ICMPv6 router-advertisement messages"
+set / acl cpm-filter ipv6-filter entry 70 action
+set / acl cpm-filter ipv6-filter entry 70 action accept
+set / acl cpm-filter ipv6-filter entry 70 action accept rate-limit
+set / acl cpm-filter ipv6-filter entry 70 action accept rate-limit system-cpu-policer icmp
+set / acl cpm-filter ipv6-filter entry 70 match
+set / acl cpm-filter ipv6-filter entry 70 match next-header icmp6
+set / acl cpm-filter ipv6-filter entry 70 match icmp6
+set / acl cpm-filter ipv6-filter entry 70 match icmp6 type router-advertise
+set / acl cpm-filter ipv6-filter entry 80
+set / acl cpm-filter ipv6-filter entry 80 description "Accept incoming ICMPv6 neighbor-solicitation messages"
+set / acl cpm-filter ipv6-filter entry 80 action
+set / acl cpm-filter ipv6-filter entry 80 action accept
+set / acl cpm-filter ipv6-filter entry 80 action accept rate-limit
+set / acl cpm-filter ipv6-filter entry 80 action accept rate-limit system-cpu-policer icmp
+set / acl cpm-filter ipv6-filter entry 80 match
+set / acl cpm-filter ipv6-filter entry 80 match next-header icmp6
+set / acl cpm-filter ipv6-filter entry 80 match icmp6
+set / acl cpm-filter ipv6-filter entry 80 match icmp6 type neighbor-solicit
+set / acl cpm-filter ipv6-filter entry 90
+set / acl cpm-filter ipv6-filter entry 90 description "Accept incoming ICMPv6 neighbor-advertisement messages"
+set / acl cpm-filter ipv6-filter entry 90 action
+set / acl cpm-filter ipv6-filter entry 90 action accept
+set / acl cpm-filter ipv6-filter entry 90 action accept rate-limit
+set / acl cpm-filter ipv6-filter entry 90 action accept rate-limit system-cpu-policer icmp
+set / acl cpm-filter ipv6-filter entry 90 match
+set / acl cpm-filter ipv6-filter entry 90 match next-header icmp6
+set / acl cpm-filter ipv6-filter entry 90 match icmp6
+set / acl cpm-filter ipv6-filter entry 90 match icmp6 type neighbor-advertise
+set / acl cpm-filter ipv6-filter entry 100
+set / acl cpm-filter ipv6-filter entry 100 description "Accept incoming SSH when the other host initiates the TCP connection"
+set / acl cpm-filter ipv6-filter entry 100 action
+set / acl cpm-filter ipv6-filter entry 100 action accept
+set / acl cpm-filter ipv6-filter entry 100 match
+set / acl cpm-filter ipv6-filter entry 100 match next-header tcp
+set / acl cpm-filter ipv6-filter entry 100 match destination-port
+set / acl cpm-filter ipv6-filter entry 100 match destination-port operator eq
+set / acl cpm-filter ipv6-filter entry 100 match destination-port value 22
+set / acl cpm-filter ipv6-filter entry 110
+set / acl cpm-filter ipv6-filter entry 110 description "Accept incoming SSH when this router initiates the TCP connection"
+set / acl cpm-filter ipv6-filter entry 110 action
+set / acl cpm-filter ipv6-filter entry 110 action accept
+set / acl cpm-filter ipv6-filter entry 110 match
+set / acl cpm-filter ipv6-filter entry 110 match next-header tcp
+set / acl cpm-filter ipv6-filter entry 110 match source-port
+set / acl cpm-filter ipv6-filter entry 110 match source-port operator eq
+set / acl cpm-filter ipv6-filter entry 110 match source-port value 22
+set / acl cpm-filter ipv6-filter entry 120
+set / acl cpm-filter ipv6-filter entry 120 description "Accept incoming Telnet when the other host initiates the TCP connection"
+set / acl cpm-filter ipv6-filter entry 120 action
+set / acl cpm-filter ipv6-filter entry 120 action accept
+set / acl cpm-filter ipv6-filter entry 120 match
+set / acl cpm-filter ipv6-filter entry 120 match next-header tcp
+set / acl cpm-filter ipv6-filter entry 120 match destination-port
+set / acl cpm-filter ipv6-filter entry 120 match destination-port operator eq
+set / acl cpm-filter ipv6-filter entry 120 match destination-port value 23
+set / acl cpm-filter ipv6-filter entry 130
+set / acl cpm-filter ipv6-filter entry 130 description "Accept incoming Telnet when this router initiates the TCP connection"
+set / acl cpm-filter ipv6-filter entry 130 action
+set / acl cpm-filter ipv6-filter entry 130 action accept
+set / acl cpm-filter ipv6-filter entry 130 match
+set / acl cpm-filter ipv6-filter entry 130 match next-header tcp
+set / acl cpm-filter ipv6-filter entry 130 match source-port
+set / acl cpm-filter ipv6-filter entry 130 match source-port operator eq
+set / acl cpm-filter ipv6-filter entry 130 match source-port value 23
+set / acl cpm-filter ipv6-filter entry 140
+set / acl cpm-filter ipv6-filter entry 140 description "Accept incoming TACACS+ when the other host initiates the TCP connection"
+set / acl cpm-filter ipv6-filter entry 140 action
+set / acl cpm-filter ipv6-filter entry 140 action accept
+set / acl cpm-filter ipv6-filter entry 140 match
+set / acl cpm-filter ipv6-filter entry 140 match next-header tcp
+set / acl cpm-filter ipv6-filter entry 140 match destination-port
+set / acl cpm-filter ipv6-filter entry 140 match destination-port operator eq
+set / acl cpm-filter ipv6-filter entry 140 match destination-port value 49
+set / acl cpm-filter ipv6-filter entry 150
+set / acl cpm-filter ipv6-filter entry 150 description "Accept incoming TACACS+ when this router initiates the TCP connection"
+set / acl cpm-filter ipv6-filter entry 150 action
+set / acl cpm-filter ipv6-filter entry 150 action accept
+set / acl cpm-filter ipv6-filter entry 150 match
+set / acl cpm-filter ipv6-filter entry 150 match next-header tcp
+set / acl cpm-filter ipv6-filter entry 150 match source-port
+set / acl cpm-filter ipv6-filter entry 150 match source-port operator eq
+set / acl cpm-filter ipv6-filter entry 150 match source-port value 49
+set / acl cpm-filter ipv6-filter entry 160
+set / acl cpm-filter ipv6-filter entry 160 description "Accept incoming DNS response messages"
+set / acl cpm-filter ipv6-filter entry 160 action
+set / acl cpm-filter ipv6-filter entry 160 action accept
+set / acl cpm-filter ipv6-filter entry 160 match
+set / acl cpm-filter ipv6-filter entry 160 match next-header udp
+set / acl cpm-filter ipv6-filter entry 160 match source-port
+set / acl cpm-filter ipv6-filter entry 160 match source-port operator eq
+set / acl cpm-filter ipv6-filter entry 160 match source-port value 53
+set / acl cpm-filter ipv6-filter entry 170
+set / acl cpm-filter ipv6-filter entry 170 description "Accept incoming TFTP read-request and write-request messages"
+set / acl cpm-filter ipv6-filter entry 170 action
+set / acl cpm-filter ipv6-filter entry 170 action accept
+set / acl cpm-filter ipv6-filter entry 170 match
+set / acl cpm-filter ipv6-filter entry 170 match next-header udp
+set / acl cpm-filter ipv6-filter entry 170 match destination-port
+set / acl cpm-filter ipv6-filter entry 170 match destination-port operator eq
+set / acl cpm-filter ipv6-filter entry 170 match destination-port value 69
+set / acl cpm-filter ipv6-filter entry 180
+set / acl cpm-filter ipv6-filter entry 180 description "Accept incoming HTTP(JSON-RPC) when the other host initiates the TCP connection"
+set / acl cpm-filter ipv6-filter entry 180 action
+set / acl cpm-filter ipv6-filter entry 180 action accept
+set / acl cpm-filter ipv6-filter entry 180 match
+set / acl cpm-filter ipv6-filter entry 180 match next-header tcp
+set / acl cpm-filter ipv6-filter entry 180 match destination-port
+set / acl cpm-filter ipv6-filter entry 180 match destination-port operator eq
+set / acl cpm-filter ipv6-filter entry 180 match destination-port value 80
+set / acl cpm-filter ipv6-filter entry 190
+set / acl cpm-filter ipv6-filter entry 190 description "Accept incoming HTTP(JSON-RPC) when this router initiates the TCP connection"
+set / acl cpm-filter ipv6-filter entry 190 action
+set / acl cpm-filter ipv6-filter entry 190 action accept
+set / acl cpm-filter ipv6-filter entry 190 match
+set / acl cpm-filter ipv6-filter entry 190 match next-header tcp
+set / acl cpm-filter ipv6-filter entry 190 match source-port
+set / acl cpm-filter ipv6-filter entry 190 match source-port operator eq
+set / acl cpm-filter ipv6-filter entry 190 match source-port value 80
+set / acl cpm-filter ipv6-filter entry 200
+set / acl cpm-filter ipv6-filter entry 200 description "Accept incoming NTP messages from servers"
+set / acl cpm-filter ipv6-filter entry 200 action
+set / acl cpm-filter ipv6-filter entry 200 action accept
+set / acl cpm-filter ipv6-filter entry 200 match
+set / acl cpm-filter ipv6-filter entry 200 match next-header udp
+set / acl cpm-filter ipv6-filter entry 200 match source-port
+set / acl cpm-filter ipv6-filter entry 200 match source-port operator eq
+set / acl cpm-filter ipv6-filter entry 200 match source-port value 123
+set / acl cpm-filter ipv6-filter entry 210
+set / acl cpm-filter ipv6-filter entry 210 description "Accept incoming SNMP GET/GETNEXT messages from servers"
+set / acl cpm-filter ipv6-filter entry 210 action
+set / acl cpm-filter ipv6-filter entry 210 action accept
+set / acl cpm-filter ipv6-filter entry 210 match
+set / acl cpm-filter ipv6-filter entry 210 match next-header udp
+set / acl cpm-filter ipv6-filter entry 210 match destination-port
+set / acl cpm-filter ipv6-filter entry 210 match destination-port operator eq
+set / acl cpm-filter ipv6-filter entry 210 match destination-port value 161
+set / acl cpm-filter ipv6-filter entry 220
+set / acl cpm-filter ipv6-filter entry 220 description "Accept incoming BGP when the other router initiates the TCP connection"
+set / acl cpm-filter ipv6-filter entry 220 action
+set / acl cpm-filter ipv6-filter entry 220 action accept
+set / acl cpm-filter ipv6-filter entry 220 match
+set / acl cpm-filter ipv6-filter entry 220 match next-header tcp
+set / acl cpm-filter ipv6-filter entry 220 match destination-port
+set / acl cpm-filter ipv6-filter entry 220 match destination-port operator eq
+set / acl cpm-filter ipv6-filter entry 220 match destination-port value 179
+set / acl cpm-filter ipv6-filter entry 230
+set / acl cpm-filter ipv6-filter entry 230 description "Accept incoming BGP when this router initiates the TCP connection"
+set / acl cpm-filter ipv6-filter entry 230 action
+set / acl cpm-filter ipv6-filter entry 230 action accept
+set / acl cpm-filter ipv6-filter entry 230 match
+set / acl cpm-filter ipv6-filter entry 230 match next-header tcp
+set / acl cpm-filter ipv6-filter entry 230 match source-port
+set / acl cpm-filter ipv6-filter entry 230 match source-port operator eq
+set / acl cpm-filter ipv6-filter entry 230 match source-port value 179
+set / acl cpm-filter ipv6-filter entry 240
+set / acl cpm-filter ipv6-filter entry 240 description "Accept incoming HTTPS(JSON-RPC) when the other host initiates the TCP connection"
+set / acl cpm-filter ipv6-filter entry 240 action
+set / acl cpm-filter ipv6-filter entry 240 action accept
+set / acl cpm-filter ipv6-filter entry 240 match
+set / acl cpm-filter ipv6-filter entry 240 match next-header tcp
+set / acl cpm-filter ipv6-filter entry 240 match destination-port
+set / acl cpm-filter ipv6-filter entry 240 match destination-port operator eq
+set / acl cpm-filter ipv6-filter entry 240 match destination-port value 443
+set / acl cpm-filter ipv6-filter entry 250
+set / acl cpm-filter ipv6-filter entry 250 description "Accept incoming HTTPS(JSON-RPC) when this router initiates the TCP connection"
+set / acl cpm-filter ipv6-filter entry 250 action
+set / acl cpm-filter ipv6-filter entry 250 action accept
+set / acl cpm-filter ipv6-filter entry 250 match
+set / acl cpm-filter ipv6-filter entry 250 match next-header tcp
+set / acl cpm-filter ipv6-filter entry 250 match source-port
+set / acl cpm-filter ipv6-filter entry 250 match source-port operator eq
+set / acl cpm-filter ipv6-filter entry 250 match source-port value 443
+set / acl cpm-filter ipv6-filter entry 260
+set / acl cpm-filter ipv6-filter entry 260 description "Accept incoming DHCPv6 client messages"
+set / acl cpm-filter ipv6-filter entry 260 action
+set / acl cpm-filter ipv6-filter entry 260 action accept
+set / acl cpm-filter ipv6-filter entry 260 match
+set / acl cpm-filter ipv6-filter entry 260 match next-header udp
+set / acl cpm-filter ipv6-filter entry 260 match destination-port
+set / acl cpm-filter ipv6-filter entry 260 match destination-port operator eq
+set / acl cpm-filter ipv6-filter entry 260 match destination-port value 546
+set / acl cpm-filter ipv6-filter entry 270
+set / acl cpm-filter ipv6-filter entry 270 description "Accept incoming single-hop BFD session messages"
+set / acl cpm-filter ipv6-filter entry 270 action
+set / acl cpm-filter ipv6-filter entry 270 action accept
+set / acl cpm-filter ipv6-filter entry 270 match
+set / acl cpm-filter ipv6-filter entry 270 match next-header udp
+set / acl cpm-filter ipv6-filter entry 270 match destination-port
+set / acl cpm-filter ipv6-filter entry 270 match destination-port operator eq
+set / acl cpm-filter ipv6-filter entry 270 match destination-port value 3784
+set / acl cpm-filter ipv6-filter entry 280
+set / acl cpm-filter ipv6-filter entry 280 description "Accept incoming multi-hop BFD session messages"
+set / acl cpm-filter ipv6-filter entry 280 action
+set / acl cpm-filter ipv6-filter entry 280 action accept
+set / acl cpm-filter ipv6-filter entry 280 match
+set / acl cpm-filter ipv6-filter entry 280 match next-header udp
+set / acl cpm-filter ipv6-filter entry 280 match destination-port
+set / acl cpm-filter ipv6-filter entry 280 match destination-port operator eq
+set / acl cpm-filter ipv6-filter entry 280 match destination-port value 4784
+set / acl cpm-filter ipv6-filter entry 290
+set / acl cpm-filter ipv6-filter entry 290 description "Accept incoming uBFD session messages"
+set / acl cpm-filter ipv6-filter entry 290 action
+set / acl cpm-filter ipv6-filter entry 290 action accept
+set / acl cpm-filter ipv6-filter entry 290 match
+set / acl cpm-filter ipv6-filter entry 290 match next-header udp
+set / acl cpm-filter ipv6-filter entry 290 match destination-port
+set / acl cpm-filter ipv6-filter entry 290 match destination-port operator eq
+set / acl cpm-filter ipv6-filter entry 290 match destination-port value 6784
+set / acl cpm-filter ipv6-filter entry 300
+set / acl cpm-filter ipv6-filter entry 300 description "Accept incoming gNMI messages when the other host initiates the TCP connection"
+set / acl cpm-filter ipv6-filter entry 300 action
+set / acl cpm-filter ipv6-filter entry 300 action accept
+set / acl cpm-filter ipv6-filter entry 300 match
+set / acl cpm-filter ipv6-filter entry 300 match next-header tcp
+set / acl cpm-filter ipv6-filter entry 300 match destination-port
+set / acl cpm-filter ipv6-filter entry 300 match destination-port operator eq
+set / acl cpm-filter ipv6-filter entry 300 match destination-port value 57400
+set / acl cpm-filter ipv6-filter entry 310
+set / acl cpm-filter ipv6-filter entry 310 description "Accept incoming UDP traceroute messages"
+set / acl cpm-filter ipv6-filter entry 310 action
+set / acl cpm-filter ipv6-filter entry 310 action accept
+set / acl cpm-filter ipv6-filter entry 310 match
+set / acl cpm-filter ipv6-filter entry 310 match next-header udp
+set / acl cpm-filter ipv6-filter entry 310 match destination-port
+set / acl cpm-filter ipv6-filter entry 310 match destination-port range
+set / acl cpm-filter ipv6-filter entry 310 match destination-port range start 33434
+set / acl cpm-filter ipv6-filter entry 310 match destination-port range end 33464
+set / acl cpm-filter ipv6-filter entry 320
+set / acl cpm-filter ipv6-filter entry 320 description "Accept incoming IPV6 hop-in-hop messages"
+set / acl cpm-filter ipv6-filter entry 320 action
+set / acl cpm-filter ipv6-filter entry 320 action accept
+set / acl cpm-filter ipv6-filter entry 320 match
+set / acl cpm-filter ipv6-filter entry 320 match next-header 0
+set / acl cpm-filter ipv6-filter entry 330
+set / acl cpm-filter ipv6-filter entry 330 description "Accept incoming IPV6 fragment header messages"
+set / acl cpm-filter ipv6-filter entry 330 action
+set / acl cpm-filter ipv6-filter entry 330 action accept
+set / acl cpm-filter ipv6-filter entry 330 match
+set / acl cpm-filter ipv6-filter entry 330 match next-header 44
+set / acl cpm-filter ipv6-filter entry 340
+set / acl cpm-filter ipv6-filter entry 340 description "Accept incoming OSPF messages"
+set / acl cpm-filter ipv6-filter entry 340 action
+set / acl cpm-filter ipv6-filter entry 340 action accept
+set / acl cpm-filter ipv6-filter entry 340 match
+set / acl cpm-filter ipv6-filter entry 340 match next-header 89
+set / acl cpm-filter ipv6-filter entry 350
+set / acl cpm-filter ipv6-filter entry 350 description "Accept incoming DHCPv6 relay messages"
+set / acl cpm-filter ipv6-filter entry 350 action
+set / acl cpm-filter ipv6-filter entry 350 action accept
+set / acl cpm-filter ipv6-filter entry 350 match
+set / acl cpm-filter ipv6-filter entry 350 match next-header udp
+set / acl cpm-filter ipv6-filter entry 350 match destination-port
+set / acl cpm-filter ipv6-filter entry 350 match destination-port operator eq
+set / acl cpm-filter ipv6-filter entry 350 match destination-port value 547
+set / acl cpm-filter ipv6-filter entry 360
+set / acl cpm-filter ipv6-filter entry 360 description "Accept incoming gRIBI packets with destination-port 57401"
+set / acl cpm-filter ipv6-filter entry 360 action
+set / acl cpm-filter ipv6-filter entry 360 action accept
+set / acl cpm-filter ipv6-filter entry 360 match
+set / acl cpm-filter ipv6-filter entry 360 match next-header tcp
+set / acl cpm-filter ipv6-filter entry 360 match destination-port
+set / acl cpm-filter ipv6-filter entry 360 match destination-port operator eq
+set / acl cpm-filter ipv6-filter entry 360 match destination-port value 57401
+set / acl cpm-filter ipv6-filter entry 370
+set / acl cpm-filter ipv6-filter entry 370 description "Accept incoming p4rt packets with destination-port 9559"
+set / acl cpm-filter ipv6-filter entry 370 action
+set / acl cpm-filter ipv6-filter entry 370 action accept
+set / acl cpm-filter ipv6-filter entry 370 match
+set / acl cpm-filter ipv6-filter entry 370 match next-header tcp
+set / acl cpm-filter ipv6-filter entry 370 match destination-port
+set / acl cpm-filter ipv6-filter entry 370 match destination-port operator eq
+set / acl cpm-filter ipv6-filter entry 370 match destination-port value 9559
+set / acl cpm-filter ipv6-filter entry 380
+set / acl cpm-filter ipv6-filter entry 380 description "Accept incoming MLDv1 report messages"
+set / acl cpm-filter ipv6-filter entry 380 action
+set / acl cpm-filter ipv6-filter entry 380 action accept
+set / acl cpm-filter ipv6-filter entry 380 match
+set / acl cpm-filter ipv6-filter entry 380 match next-header icmp6
+set / acl cpm-filter ipv6-filter entry 380 match icmp6
+set / acl cpm-filter ipv6-filter entry 380 match icmp6 type mld-report
+set / acl cpm-filter ipv6-filter entry 390
+set / acl cpm-filter ipv6-filter entry 390 description "Accept incoming MLDv2 report messages"
+set / acl cpm-filter ipv6-filter entry 390 action
+set / acl cpm-filter ipv6-filter entry 390 action accept
+set / acl cpm-filter ipv6-filter entry 390 match
+set / acl cpm-filter ipv6-filter entry 390 match next-header icmp6
+set / acl cpm-filter ipv6-filter entry 390 match icmp6
+set / acl cpm-filter ipv6-filter entry 390 match icmp6 type mld-v2
+set / acl cpm-filter ipv6-filter entry 400
+set / acl cpm-filter ipv6-filter entry 400 description "Accept incoming MLDv1 done messages"
+set / acl cpm-filter ipv6-filter entry 400 action
+set / acl cpm-filter ipv6-filter entry 400 action accept
+set / acl cpm-filter ipv6-filter entry 400 match
+set / acl cpm-filter ipv6-filter entry 400 match next-header icmp6
+set / acl cpm-filter ipv6-filter entry 400 match icmp6
+set / acl cpm-filter ipv6-filter entry 400 match icmp6 type mld-done
+set / acl cpm-filter ipv6-filter entry 410
+set / acl cpm-filter ipv6-filter entry 410 description "Accept incoming MLD query messages"
+set / acl cpm-filter ipv6-filter entry 410 action
+set / acl cpm-filter ipv6-filter entry 410 action accept
+set / acl cpm-filter ipv6-filter entry 410 match
+set / acl cpm-filter ipv6-filter entry 410 match next-header icmp6
+set / acl cpm-filter ipv6-filter entry 410 match icmp6
+set / acl cpm-filter ipv6-filter entry 410 match icmp6 type mld-query
+set / acl cpm-filter ipv6-filter entry 420
+set / acl cpm-filter ipv6-filter entry 420 description "Accept incoming PIM messages"
+set / acl cpm-filter ipv6-filter entry 420 action
+set / acl cpm-filter ipv6-filter entry 420 action accept
+set / acl cpm-filter ipv6-filter entry 420 match
+set / acl cpm-filter ipv6-filter entry 420 match next-header pim
+set / acl cpm-filter ipv6-filter entry 430
+set / acl cpm-filter ipv6-filter entry 430 description "Accept incoming RADIUS AAA messages"
+set / acl cpm-filter ipv6-filter entry 430 action
+set / acl cpm-filter ipv6-filter entry 430 action accept
+set / acl cpm-filter ipv6-filter entry 430 match
+set / acl cpm-filter ipv6-filter entry 430 match next-header udp
+set / acl cpm-filter ipv6-filter entry 430 match source-port
+set / acl cpm-filter ipv6-filter entry 430 match source-port range
+set / acl cpm-filter ipv6-filter entry 430 match source-port range start 1812
+set / acl cpm-filter ipv6-filter entry 430 match source-port range end 1813
+set / acl cpm-filter ipv6-filter entry 450
+set / acl cpm-filter ipv6-filter entry 450 description "Accept incoming PTP messages with destination-ports 319 and 320"
+set / acl cpm-filter ipv6-filter entry 450 action
+set / acl cpm-filter ipv6-filter entry 450 action accept
+set / acl cpm-filter ipv6-filter entry 450 match
+set / acl cpm-filter ipv6-filter entry 450 match next-header udp
+set / acl cpm-filter ipv6-filter entry 450 match destination-port
+set / acl cpm-filter ipv6-filter entry 450 match destination-port range
+set / acl cpm-filter ipv6-filter entry 450 match destination-port range start 319
+set / acl cpm-filter ipv6-filter entry 450 match destination-port range end 320
+set / acl cpm-filter ipv6-filter entry 460
+set / acl cpm-filter ipv6-filter entry 460 description "Drop all else"
+set / acl cpm-filter ipv6-filter entry 460 action
+set / acl cpm-filter ipv6-filter entry 460 action drop
+set / acl cpm-filter ipv6-filter entry 460 action drop log true
+set / acl policers
+set / acl policers system-cpu-policer icmp
+set / acl policers system-cpu-policer icmp entry-specific false
+set / acl policers system-cpu-policer icmp peak-packet-rate 1000
+set / acl policers system-cpu-policer icmp max-packet-burst 1000
+set / interface mgmt0
+set / interface mgmt0 admin-state enable
+set / interface mgmt0 subinterface 0
+set / interface mgmt0 subinterface 0 admin-state enable
+set / interface mgmt0 subinterface 0 ipv4
+set / interface mgmt0 subinterface 0 ipv4 admin-state enable
+set / interface mgmt0 subinterface 0 ipv4 dhcp-client
+set / interface mgmt0 subinterface 0 ipv6
+set / interface mgmt0 subinterface 0 ipv6 admin-state enable
+set / interface mgmt0 subinterface 0 ipv6 dhcp-client
+set / system
+set / system aaa
+set / system aaa authentication
+set / system aaa authentication idle-timeout 7200
+set / system aaa authentication authentication-method [ local ]
+set / system aaa authentication admin-user
+set / system aaa authentication admin-user ssh-key [ "ssh-ed25519-cert-v01@openssh.com REDACTED-PUBLIC-KEY" "ssh-ed25519 REDACTED-PUBLIC-KEY" "ssh-ed25519 REDACTED-PUBLIC-KEY" "ssh-ed25519 REDACTED-PUBLIC-KEY" "ssh-ed25519 REDACTED-PUBLIC-KEY" "ssh-rsa REDACTED-PUBLIC-KEY" ]
+set / system aaa authentication linuxadmin-user
+set / system aaa authentication linuxadmin-user password REDACTED-PASSWORD
+set / system aaa authentication linuxadmin-user ssh-key [ "ssh-ed25519-cert-v01@openssh.com REDACTED-PUBLIC-KEY" "ssh-ed25519 REDACTED-PUBLIC-KEY" "ssh-ed25519 REDACTED-PUBLIC-KEY" "ssh-ed25519 REDACTED-PUBLIC-KEY" "ssh-ed25519 REDACTED-PUBLIC-KEY" "ssh-rsa REDACTED-PUBLIC-KEY" ]
+set / system aaa server-group local
+set / system aaa server-group local type local
+set / system lldp
+set / system lldp admin-state enable
+set / system gnmi-server
+set / system gnmi-server admin-state enable
+set / system gnmi-server rate-limit 65000
+set / system gnmi-server trace-options [ request response common ]
+set / system gnmi-server network-instance mgmt
+set / system gnmi-server network-instance mgmt admin-state enable
+set / system gnmi-server network-instance mgmt use-authentication true
+set / system gnmi-server network-instance mgmt tls-profile clab-profile
+set / system gnmi-server network-instance mgmt port 57400
+set / system gnmi-server network-instance mgmt services [ gnmi ]
+set / system gnmi-server unix-socket
+set / system gnmi-server unix-socket admin-state enable
+set / system gnmi-server unix-socket services [ gnmi gnoi ]
+set / system tls
+set / system tls server-profile clab-profile
+set / system tls server-profile clab-profile key REDACTED-ENCRYPTED-VALUE
+set / system tls server-profile clab-profile certificate "-----BEGIN CERTIFICATE-----
+MIID8jCCAtqgAwIBAgICBnowDQYJKoZIhvcNAQELBQAwXDELMAkGA1UEBhMCVVMx
+CTAHBgNVBAcTADEVMBMGA1UEChMMY29udGFpbmVybGFiMQkwBwYDVQQLEwAxIDAe
+BgNVBAMTF294aWRpemVkLXNybGludXggbGFiIENBMB4XDTI2MTEyMzA3NTYyMFoX
+DTI3MTEyMzA3NTYyMFowYDELMAkGA1UEBhMCVVMxCTAHBgNVBAcTADEVMBMGA1UE
+ChMMY29udGFpbmVybGFiMQkwBwYDVQQLEwAxJDAiBgNVBAMTG3NybC1vbGQub3hp
+ZGl6ZWQtc3JsaW51eC5pbzCCASIwDQYJKoZIhvcNAQEBBQADggEPADCCAQoCggEB
+AMq3hN3PZdE1XlMeJqOPLl2EqX92bl7yPY34AgSOxrYvHRCX9lLSLxNftCQaa7ZJ
+Ow5LhbVM7yTu8+UYO+g6qJnSzD1m/2+JmzWjiRSbZtVY10tgAwO+7PrJq3YpfFni
+INvsN/zgGcEe2nrEx1f8Ed91XVe28UO+S2SG2/EWaAEHbAgQ3GletFJmHtv0iE7U
+Zs1mW7VeAL/EiXLbHt/BndDFMW3bqZZteUKHXt3LkcRtC52qqxgEBBcBWkT9fuvc
+xBRLBiM7aNZIJsfVvTV1Hg3LKAqUbWzYbgvdfoZO+kLQzQmLzucOrK9UzG1RMElv
+USE+UohY/BSOGPSNOhkM68kCAwEAAaOBuTCBtjAOBgNVHQ8BAf8EBAMCBaAwHQYD
+VR0lBBYwFAYIKwYBBQUHAwIGCCsGAQUFBwMBMA4GA1UdDgQHBAUBAgMEBjAfBgNV
+HSMEGDAWgBRM/ZRyMkMTpxduLbjlDl+B2uqYeTBUBgNVHREETTBLggdzcmwtb2xk
+gh1jbGFiLW94aWRpemVkLXNybGludXgtc3JsLW9sZIIbc3JsLW9sZC5veGlkaXpl
+ZC1zcmxpbnV4LmlvhwSsFC8CMA0GCSqGSIb3DQEBCwUAA4IBAQBl67hKPKC9K1mz
+gfRQ6yF6KpDkvKnBshv3g90b2tP+Lne5GzPMiz5cJOINf3exZ28NRwtJppqq+C7q
+N9Xhm1/pSk6T0Jk0urGe+ub75kWva8vqhZW0QKdU8/DHxZDEYytKiStWmz/bEro1
+5EzIl7QXAEoalWKzyz7RBzH1ZT9L5Wsfb2ZlUohgjHVIeAQmqBvNjytQNTtNQKBd
+6Nf1w3VyBXnA6sQo/l28Ei2A71wa+rGhRNIJMjgBJWYFA8AQak+F1ILzQ0pCUNvE
+zApn/fIxJtIwpmfhxIoqxd/jL7NqIokTN886s3lATDGuKuKrvLdVtZvu+zGJjYA8
+qBkCTyPf
+-----END CERTIFICATE-----
+"
+set / system tls server-profile clab-profile authenticate-client false
+set / system json-rpc-server
+set / system json-rpc-server admin-state enable
+set / system json-rpc-server network-instance mgmt
+set / system json-rpc-server network-instance mgmt http
+set / system json-rpc-server network-instance mgmt http admin-state enable
+set / system json-rpc-server network-instance mgmt https
+set / system json-rpc-server network-instance mgmt https admin-state enable
+set / system json-rpc-server network-instance mgmt https tls-profile clab-profile
+set / system dns
+set / system dns network-instance mgmt
+set / system dns server-list [ 172.16.100.240 ]
+set / system snmp
+set / system snmp community REDACTED-COMMUNITY
+set / system snmp network-instance mgmt
+set / system snmp network-instance mgmt admin-state enable
+set / system ssh-server
+set / system ssh-server network-instance mgmt
+set / system ssh-server network-instance mgmt admin-state enable
+set / system banner
+set / system banner login-banner "................................................................
+:                  Welcome to Nokia SR Linux!                  :
+:              Open Network OS for the NetOps era.             :
+:                                                              :
+:    This is a freely distributed official container image.    :
+:                      Use it - Share it                       :
+:                                                              :
+: Get started: https://learn.srlinux.dev                       :
+: Container:   https://go.srlinux.dev/container-image          :
+: Docs:        https://doc.srlinux.dev/23-10                   :
+: Rel. notes:  https://doc.srlinux.dev/rnn                     :
+: YANG:        https://yang.srlinux.dev/23.10.5                :
+: Discord:     https://go.srlinux.dev/discord                  :
+: Contact:     https://go.srlinux.dev/contact-sales            :
+................................................................
+"
+set / system logging
+set / system logging buffer messages
+set / system logging buffer messages rotate 3
+set / system logging buffer messages size 10000000
+set / system logging buffer messages facility local6
+set / system logging buffer messages facility local6 priority
+set / system logging buffer messages facility local6 priority match-above informational
+set / system logging buffer system
+set / system logging buffer system facility auth
+set / system logging buffer system facility auth priority
+set / system logging buffer system facility auth priority match-above warning
+set / system logging buffer system facility cron
+set / system logging buffer system facility cron priority
+set / system logging buffer system facility cron priority match-above warning
+set / system logging buffer system facility daemon
+set / system logging buffer system facility daemon priority
+set / system logging buffer system facility daemon priority match-above warning
+set / system logging buffer system facility ftp
+set / system logging buffer system facility ftp priority
+set / system logging buffer system facility ftp priority match-above warning
+set / system logging buffer system facility kern
+set / system logging buffer system facility kern priority
+set / system logging buffer system facility kern priority match-above warning
+set / system logging buffer system facility lpr
+set / system logging buffer system facility lpr priority
+set / system logging buffer system facility lpr priority match-above warning
+set / system logging buffer system facility mail
+set / system logging buffer system facility mail priority
+set / system logging buffer system facility mail priority match-above warning
+set / system logging buffer system facility news
+set / system logging buffer system facility news priority
+set / system logging buffer system facility news priority match-above warning
+set / system logging buffer system facility syslog
+set / system logging buffer system facility syslog priority
+set / system logging buffer system facility syslog priority match-above warning
+set / system logging buffer system facility user
+set / system logging buffer system facility user priority
+set / system logging buffer system facility user priority match-above warning
+set / system logging buffer system facility uucp
+set / system logging buffer system facility uucp priority
+set / system logging buffer system facility uucp priority match-above warning
+set / system logging buffer system facility local0
+set / system logging buffer system facility local0 priority
+set / system logging buffer system facility local0 priority match-above warning
+set / system logging buffer system facility local1
+set / system logging buffer system facility local1 priority
+set / system logging buffer system facility local1 priority match-above warning
+set / system logging buffer system facility local2
+set / system logging buffer system facility local2 priority
+set / system logging buffer system facility local2 priority match-above warning
+set / system logging buffer system facility local3
+set / system logging buffer system facility local3 priority
+set / system logging buffer system facility local3 priority match-above warning
+set / system logging buffer system facility local4
+set / system logging buffer system facility local4 priority
+set / system logging buffer system facility local4 priority match-above warning
+set / system logging buffer system facility local5
+set / system logging buffer system facility local5 priority
+set / system logging buffer system facility local5 priority match-above warning
+set / system logging buffer system facility local7
+set / system logging buffer system facility local7 priority
+set / system logging buffer system facility local7 priority match-above warning
+set / system logging file messages
+set / system logging file messages rotate 3
+set / system logging file messages size 10000000
+set / system logging file messages facility local6
+set / system logging file messages facility local6 priority
+set / system logging file messages facility local6 priority match-above warning
+set / network-instance mgmt
+set / network-instance mgmt type ip-vrf
+set / network-instance mgmt admin-state enable
+set / network-instance mgmt description "Management network instance"
+set / network-instance mgmt interface mgmt0.0
+set / network-instance mgmt protocols
+set / network-instance mgmt protocols linux
+set / network-instance mgmt protocols linux import-routes true
+set / network-instance mgmt protocols linux export-routes true
+set / network-instance mgmt protocols linux export-neighbors true# --------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------
+# Hostname             : srl-old
+# Chassis Type         : 7220 IXR-D2L
+# Part Number          : Sim Part No.
+# Serial Number        : Sim Serial No.
+# System HW MAC Address: 1A:B0:01:FF:00:00
+# Software Version     : v23.10.5
+# Build Number         : 55-g1d3e6cb311
+# Architecture         : x86_64
+# Last Booted          : 2026-11-23T07:56:22.966Z
+# Total Memory         : 31562136 kB
+# --------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------# --------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------
+# Type             : 7220 IXR-D2L
+# Last Boot type   : normal
+# HW MAC address   : 1A:B0:01:FF:00:00
+# Slots            : 1
+# Oper Status      : up
+# Last booted      : 2026-11-23T07:56:22.966Z
+# Last change      : 2026-11-23T07:56:22.966Z
+# Part number      : Sim Part No.
+# CLEI code        : Sim CLEI
+# --------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------
