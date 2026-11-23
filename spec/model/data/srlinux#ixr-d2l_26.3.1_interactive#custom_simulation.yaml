@@ -1,0 +1,3106 @@
+---
+command_newline: "\n"
+init_prompt: |-
+  Loading environment configuration file(s): ['/etc/opt/srlinux/srlinux.rc', '/home/admin/.srlinuxrc']\r
+  Welcome to the Nokia SR Linux CLI.\r
+  \e[?12l\e[?25h\e[6n\e[?2004h\e[?1l\e[?25l\e[0m\e[?7l\e[0m\e[J\e[0m\r\r
+  \r\r
+  \e[0m--{ running }--[  ]--\e[0m\r\r
+  \e[0mA:admin@srl-new#\e[16D\e[17C\e[?7h\e[0m\e[?12l\e[?25h\e[?25l\e[?7l\e[?7h\e[0m\e[?12l\e[?25h
+commands:
+  "environment cli-engine type basic\n": |-
+    \e[?25l\e[?7l\e[A\e[17D\e[0m--{ running }--[  ]--\e[0m\r\r
+    \e[0mA:admin@srl-new# environment cli-engine type basic\e[?7h\e[0m\e[?12l\e[?25h\e[?25l\e[?7l\e[3A\e[50D\e[0m\e[J\e[0m\r\r
+    \r\r
+    \e[0m--{ running }--[  ]--\e[0m\r\r
+    \e[0mA:admin@srl-new# environment cli-engine type basic\e[50D\e[0m\r\r
+    \e[J\e[?7h\e[0m\e[?12l\e[?25h\e[?2004l\r
+    --{ running }--[  ]--\r
+    A:admin@srl-new#\x20
+  "info flat\n": |-
+    info flat\r
+    set /  !!! ACL rules allowing incoming tcp/57411 for the eda-discovery grpc server\r
+    set / acl acl-filter cpm type ipv4 statistics-per-entry true\r
+    set / acl acl-filter cpm type ipv4 entry 10 description \"Accept incoming ICMP unreachable messages\"\r
+    set / acl acl-filter cpm type ipv4 entry 10 match ipv4 protocol icmp\r
+    set / acl acl-filter cpm type ipv4 entry 10 match ipv4 icmp type dest-unreachable\r
+    set / acl acl-filter cpm type ipv4 entry 10 action accept rate-limit system-cpu-policer icmp\r
+    set / acl acl-filter cpm type ipv4 entry 20 description \"Accept incoming ICMP time-exceeded messages\"\r
+    set / acl acl-filter cpm type ipv4 entry 20 match ipv4 protocol icmp\r
+    set / acl acl-filter cpm type ipv4 entry 20 match ipv4 icmp type time-exceeded\r
+    set / acl acl-filter cpm type ipv4 entry 20 action accept rate-limit system-cpu-policer icmp\r
+    set / acl acl-filter cpm type ipv4 entry 40 description \"Accept incoming ICMP echo messages\"\r
+    set / acl acl-filter cpm type ipv4 entry 40 match ipv4 protocol icmp\r
+    set / acl acl-filter cpm type ipv4 entry 40 match ipv4 icmp type echo\r
+    set / acl acl-filter cpm type ipv4 entry 40 action accept rate-limit system-cpu-policer icmp\r
+    set / acl acl-filter cpm type ipv4 entry 50 description \"Accept incoming ICMP echo-reply messages\"\r
+    set / acl acl-filter cpm type ipv4 entry 50 match ipv4 protocol icmp\r
+    set / acl acl-filter cpm type ipv4 entry 50 match ipv4 icmp type echo-reply\r
+    set / acl acl-filter cpm type ipv4 entry 50 action accept rate-limit system-cpu-policer icmp\r
+    set / acl acl-filter cpm type ipv4 entry 60 description \"Accept incoming SSH when the other host initiates the TCP connection\"\r
+    set / acl acl-filter cpm type ipv4 entry 60 match ipv4 protocol tcp\r
+    set / acl acl-filter cpm type ipv4 entry 60 match transport destination-port operator eq\r
+    set / acl acl-filter cpm type ipv4 entry 60 match transport destination-port value 22\r
+    set / acl acl-filter cpm type ipv4 entry 60 action accept\r
+    set / acl acl-filter cpm type ipv4 entry 70 description \"Accept incoming SSH when this router initiates the TCP connection\"\r
+    set / acl acl-filter cpm type ipv4 entry 70 match ipv4 protocol tcp\r
+    set / acl acl-filter cpm type ipv4 entry 70 match transport source-port operator eq\r
+    set / acl acl-filter cpm type ipv4 entry 70 match transport source-port value 22\r
+    set / acl acl-filter cpm type ipv4 entry 70 action accept\r
+    set / acl acl-filter cpm type ipv4 entry 88 description \"Containerlab-added rule: Accept incoming Telnet when the other host initiates the TCP connection\"\r
+    set / acl acl-filter cpm type ipv4 entry 88 match ipv4 protocol tcp\r
+    set / acl acl-filter cpm type ipv4 entry 88 match transport source-port operator eq\r
+    set / acl acl-filter cpm type ipv4 entry 88 match transport source-port value 23\r
+    set / acl acl-filter cpm type ipv4 entry 88 action accept\r
+    set / acl acl-filter cpm type ipv4 entry 98 description \"Containerlab-added rule: Accept incoming Telnet when this router initiates the TCP connection\"\r
+    set / acl acl-filter cpm type ipv4 entry 98 match ipv4 protocol tcp\r
+    set / acl acl-filter cpm type ipv4 entry 98 match transport destination-port operator eq\r
+    set / acl acl-filter cpm type ipv4 entry 98 match transport destination-port value 23\r
+    set / acl acl-filter cpm type ipv4 entry 98 action accept\r
+    set / acl acl-filter cpm type ipv4 entry 100 description \"Accept incoming TACACS+ when the other host initiates the TCP connection\"\r
+    set / acl acl-filter cpm type ipv4 entry 100 match ipv4 protocol tcp\r
+    set / acl acl-filter cpm type ipv4 entry 100 match transport destination-port operator eq\r
+    set / acl acl-filter cpm type ipv4 entry 100 match transport destination-port value 49\r
+    set / acl acl-filter cpm type ipv4 entry 100 action accept\r
+    set / acl acl-filter cpm type ipv4 entry 110 description \"Accept incoming TACACS+ when this router initiates the TCP connection\"\r
+    set / acl acl-filter cpm type ipv4 entry 110 match ipv4 protocol tcp\r
+    set / acl acl-filter cpm type ipv4 entry 110 match transport source-port operator eq\r
+    set / acl acl-filter cpm type ipv4 entry 110 match transport source-port value 49\r
+    set / acl acl-filter cpm type ipv4 entry 110 action accept\r
+    set / acl acl-filter cpm type ipv4 entry 120 description \"Accept incoming DNS response messages\"\r
+    set / acl acl-filter cpm type ipv4 entry 120 match ipv4 protocol udp\r
+    set / acl acl-filter cpm type ipv4 entry 120 match transport source-port operator eq\r
+    set / acl acl-filter cpm type ipv4 entry 120 match transport source-port value 53\r
+    set / acl acl-filter cpm type ipv4 entry 120 action accept\r
+    set / acl acl-filter cpm type ipv4 entry 130 description \"Accept incoming DHCP messages targeted for BOOTP/DHCP client\"\r
+    set / acl acl-filter cpm type ipv4 entry 130 match ipv4 protocol udp\r
+    set / acl acl-filter cpm type ipv4 entry 130 match transport destination-port operator eq\r
+    set / acl acl-filter cpm type ipv4 entry 130 match transport destination-port value 68\r
+    set / acl acl-filter cpm type ipv4 entry 130 action accept\r
+    set / acl acl-filter cpm type ipv4 entry 158 description \"Containerlab-added rule: Accept incoming HTTP(JSON-RPC) when the other host initiates the TCP connection\"\r
+    set / acl acl-filter cpm type ipv4 entry 158 match ipv4 protocol tcp\r
+    set / acl acl-filter cpm type ipv4 entry 158 match transport destination-port operator eq\r
+    set / acl acl-filter cpm type ipv4 entry 158 match transport destination-port value 80\r
+    set / acl acl-filter cpm type ipv4 entry 158 action accept\r
+    set / acl acl-filter cpm type ipv4 entry 160 description \"Accept incoming HTTP(JSON-RPC) when this router initiates the TCP connection\"\r
+    set / acl acl-filter cpm type ipv4 entry 160 match ipv4 protocol tcp\r
+    set / acl acl-filter cpm type ipv4 entry 160 match transport source-port operator eq\r
+    set / acl acl-filter cpm type ipv4 entry 160 match transport source-port value 80\r
+    set / acl acl-filter cpm type ipv4 entry 160 action accept\r
+    set / acl acl-filter cpm type ipv4 entry 170 description \"Accept incoming NTP messages from servers\"\r
+    set / acl acl-filter cpm type ipv4 entry 170 match ipv4 protocol udp\r
+    set / acl acl-filter cpm type ipv4 entry 170 match transport source-port operator eq\r
+    set / acl acl-filter cpm type ipv4 entry 170 match transport source-port value 123\r
+    set / acl acl-filter cpm type ipv4 entry 170 action accept\r
+    set / acl acl-filter cpm type ipv4 entry 180 description \"Accept incoming SNMP GET/GETNEXT messages from servers\"\r
+    set / acl acl-filter cpm type ipv4 entry 180 match ipv4 protocol udp\r
+    set / acl acl-filter cpm type ipv4 entry 180 match transport destination-port operator eq\r
+    set / acl acl-filter cpm type ipv4 entry 180 match transport destination-port value 161\r
+    set / acl acl-filter cpm type ipv4 entry 180 action accept\r
+    set / acl acl-filter cpm type ipv4 entry 190 description \"Accept incoming BGP when the other router initiates the TCP connection\"\r
+    set / acl acl-filter cpm type ipv4 entry 190 match ipv4 protocol tcp\r
+    set / acl acl-filter cpm type ipv4 entry 190 match transport destination-port operator eq\r
+    set / acl acl-filter cpm type ipv4 entry 190 match transport destination-port value 179\r
+    set / acl acl-filter cpm type ipv4 entry 190 action accept\r
+    set / acl acl-filter cpm type ipv4 entry 200 description \"Accept incoming BGP when this router initiates the TCP connection\"\r
+    set / acl acl-filter cpm type ipv4 entry 200 match ipv4 protocol tcp\r
+    set / acl acl-filter cpm type ipv4 entry 200 match transport source-port operator eq\r
+    set / acl acl-filter cpm type ipv4 entry 200 match transport source-port value 179\r
+    set / acl acl-filter cpm type ipv4 entry 200 action accept\r
+    set / acl acl-filter cpm type ipv4 entry 210 description \"Accept incoming HTTPS(JSON-RPC) when the other host initiates the TCP connection\"\r
+    set / acl acl-filter cpm type ipv4 entry 210 match ipv4 protocol tcp\r
+    set / acl acl-filter cpm type ipv4 entry 210 match transport destination-port operator eq\r
+    set / acl acl-filter cpm type ipv4 entry 210 match transport destination-port value 443\r
+    set / acl acl-filter cpm type ipv4 entry 210 action accept\r
+    set / acl acl-filter cpm type ipv4 entry 220 description \"Accept incoming HTTPS(JSON-RPC) when this router initiates the TCP connection\"\r
+    set / acl acl-filter cpm type ipv4 entry 220 match ipv4 protocol tcp\r
+    set / acl acl-filter cpm type ipv4 entry 220 match transport source-port operator eq\r
+    set / acl acl-filter cpm type ipv4 entry 220 match transport source-port value 443\r
+    set / acl acl-filter cpm type ipv4 entry 220 action accept\r
+    set / acl acl-filter cpm type ipv4 entry 230 description \"Accept incoming single-hop BFD session messages\"\r
+    set / acl acl-filter cpm type ipv4 entry 230 match ipv4 protocol udp\r
+    set / acl acl-filter cpm type ipv4 entry 230 match transport destination-port operator eq\r
+    set / acl acl-filter cpm type ipv4 entry 230 match transport destination-port value 3784\r
+    set / acl acl-filter cpm type ipv4 entry 230 action accept\r
+    set / acl acl-filter cpm type ipv4 entry 240 description \"Accept incoming multi-hop BFD session messages\"\r
+    set / acl acl-filter cpm type ipv4 entry 240 match ipv4 protocol udp\r
+    set / acl acl-filter cpm type ipv4 entry 240 match transport destination-port operator eq\r
+    set / acl acl-filter cpm type ipv4 entry 240 match transport destination-port value 4784\r
+    set / acl acl-filter cpm type ipv4 entry 240 action accept\r
+    set / acl acl-filter cpm type ipv4 entry 250 description \"Accept incoming uBFD session messages\"\r
+    set / acl acl-filter cpm type ipv4 entry 250 match ipv4 protocol udp\r
+    set / acl acl-filter cpm type ipv4 entry 250 match transport destination-port operator eq\r
+    set / acl acl-filter cpm type ipv4 entry 250 match transport destination-port value 6784\r
+    set / acl acl-filter cpm type ipv4 entry 250 action accept\r
+    set / acl acl-filter cpm type ipv4 entry 260 description \"Accept incoming gRPC messages when the other host initiates the TCP connection\"\r
+    set / acl acl-filter cpm type ipv4 entry 260 match ipv4 protocol tcp\r
+    set / acl acl-filter cpm type ipv4 entry 260 match transport destination-port operator eq\r
+    set / acl acl-filter cpm type ipv4 entry 260 match transport destination-port value 57400\r
+    set / acl acl-filter cpm type ipv4 entry 260 action accept\r
+    set / acl acl-filter cpm type ipv4 entry 270 description \"Accept incoming UDP traceroute messages\"\r
+    set / acl acl-filter cpm type ipv4 entry 270 match ipv4 protocol udp\r
+    set / acl acl-filter cpm type ipv4 entry 270 match transport destination-port range start 33434\r
+    set / acl acl-filter cpm type ipv4 entry 270 match transport destination-port range end 33464\r
+    set / acl acl-filter cpm type ipv4 entry 270 action accept\r
+    set / acl acl-filter cpm type ipv4 entry 290 description \"Accept incoming OSPF messages\"\r
+    set / acl acl-filter cpm type ipv4 entry 290 match ipv4 protocol 89\r
+    set / acl acl-filter cpm type ipv4 entry 290 action accept\r
+    set / acl acl-filter cpm type ipv4 entry 300 description \"Accept incoming DHCP relay messages targeted for BOOTP/DHCP server\"\r
+    set / acl acl-filter cpm type ipv4 entry 300 match ipv4 protocol udp\r
+    set / acl acl-filter cpm type ipv4 entry 300 match transport destination-port operator eq\r
+    set / acl acl-filter cpm type ipv4 entry 300 match transport destination-port value 67\r
+    set / acl acl-filter cpm type ipv4 entry 300 action accept\r
+    set / acl acl-filter cpm type ipv4 entry 310 description \"Accept ICMP fragment packets\"\r
+    set / acl acl-filter cpm type ipv4 entry 310 match ipv4 fragment true\r
+    set / acl acl-filter cpm type ipv4 entry 310 match ipv4 protocol icmp\r
+    set / acl acl-filter cpm type ipv4 entry 310 action accept rate-limit system-cpu-policer icmp\r
+    set / acl acl-filter cpm type ipv4 entry 320 description \"Accept incoming LDP packets\"\r
+    set / acl acl-filter cpm type ipv4 entry 320 match ipv4 protocol udp\r
+    set / acl acl-filter cpm type ipv4 entry 320 match transport source-port operator eq\r
+    set / acl acl-filter cpm type ipv4 entry 320 match transport source-port value 646\r
+    set / acl acl-filter cpm type ipv4 entry 320 action accept\r
+    set / acl acl-filter cpm type ipv4 entry 330 description \"Accept incoming LDP packets with source-port 646\"\r
+    set / acl acl-filter cpm type ipv4 entry 330 match ipv4 protocol tcp\r
+    set / acl acl-filter cpm type ipv4 entry 330 match transport source-port operator eq\r
+    set / acl acl-filter cpm type ipv4 entry 330 match transport source-port value 646\r
+    set / acl acl-filter cpm type ipv4 entry 330 action accept\r
+    set / acl acl-filter cpm type ipv4 entry 340 description \"Accept incoming LDP packets with destination-port 646\"\r
+    set / acl acl-filter cpm type ipv4 entry 340 match ipv4 protocol tcp\r
+    set / acl acl-filter cpm type ipv4 entry 340 match transport destination-port operator eq\r
+    set / acl acl-filter cpm type ipv4 entry 340 match transport destination-port value 646\r
+    set / acl acl-filter cpm type ipv4 entry 340 action accept\r
+    set / acl acl-filter cpm type ipv4 entry 355 description \"Containerlab-added rule: Accept incoming gRPC over port 50052 for the eda-discovery gRPC server\"\r
+    set / acl acl-filter cpm type ipv4 entry 355 match ipv4 protocol tcp\r
+    set / acl acl-filter cpm type ipv4 entry 355 match transport destination-port operator eq\r
+    set / acl acl-filter cpm type ipv4 entry 355 match transport destination-port value 50052\r
+    set / acl acl-filter cpm type ipv4 entry 355 action accept\r
+    set / acl acl-filter cpm type ipv4 entry 356 description \"Containerlab-added rule: Accept incoming gRPC over port 57410 for the eda-mgmt gRPC server\"\r
+    set / acl acl-filter cpm type ipv4 entry 356 match ipv4 protocol tcp\r
+    set / acl acl-filter cpm type ipv4 entry 356 match transport destination-port operator eq\r
+    set / acl acl-filter cpm type ipv4 entry 356 match transport destination-port value 57410\r
+    set / acl acl-filter cpm type ipv4 entry 356 action accept\r
+    set / acl acl-filter cpm type ipv4 entry 357 description \"Containerlab-added rule: Accept incoming gRPC over port 57411 for the eda-mgmt gRPC server\"\r
+    set / acl acl-filter cpm type ipv4 entry 357 match ipv4 protocol tcp\r
+    set / acl acl-filter cpm type ipv4 entry 357 match transport destination-port operator eq\r
+    set / acl acl-filter cpm type ipv4 entry 357 match transport destination-port value 57411\r
+    set / acl acl-filter cpm type ipv4 entry 357 action accept\r
+    set / acl acl-filter cpm type ipv4 entry 358 description \"Containerlab-added rule: Accept incoming gRPC over port 57401 for the insecure-mgmt gRPC server\"\r
+    set / acl acl-filter cpm type ipv4 entry 358 match ipv4 protocol tcp\r
+    set / acl acl-filter cpm type ipv4 entry 358 match transport destination-port operator eq\r
+    set / acl acl-filter cpm type ipv4 entry 358 match transport destination-port value 57401\r
+    set / acl acl-filter cpm type ipv4 entry 358 action accept\r
+    set / acl acl-filter cpm type ipv4 entry 370 description \"Accept incoming IGMP packets\"\r
+    set / acl acl-filter cpm type ipv4 entry 370 match ipv4 protocol igmp\r
+    set / acl acl-filter cpm type ipv4 entry 370 action accept\r
+    set / acl acl-filter cpm type ipv4 entry 380 description \"Accept incoming PIM packets\"\r
+    set / acl acl-filter cpm type ipv4 entry 380 match ipv4 protocol pim\r
+    set / acl acl-filter cpm type ipv4 entry 380 action accept\r
+    set / acl acl-filter cpm type ipv4 entry 390 description \"Accept incoming RADIUS AAA packets\"\r
+    set / acl acl-filter cpm type ipv4 entry 390 match ipv4 protocol udp\r
+    set / acl acl-filter cpm type ipv4 entry 390 match transport source-port range start 1812\r
+    set / acl acl-filter cpm type ipv4 entry 390 match transport source-port range end 1813\r
+    set / acl acl-filter cpm type ipv4 entry 390 action accept\r
+    set / acl acl-filter cpm type ipv4 entry 400 description \"Accept incoming SSH connections on the default NETCONF port 830\"\r
+    set / acl acl-filter cpm type ipv4 entry 400 match ipv4 protocol tcp\r
+    set / acl acl-filter cpm type ipv4 entry 400 match transport destination-port operator eq\r
+    set / acl acl-filter cpm type ipv4 entry 400 match transport destination-port value 830\r
+    set / acl acl-filter cpm type ipv4 entry 400 action accept\r
+    set / acl acl-filter cpm type ipv4 entry 410 description \"Accept incoming PTP messages with destination-ports 319 and 320\"\r
+    set / acl acl-filter cpm type ipv4 entry 410 match ipv4 protocol udp\r
+    set / acl acl-filter cpm type ipv4 entry 410 match transport destination-port range start 319\r
+    set / acl acl-filter cpm type ipv4 entry 410 match transport destination-port range end 320\r
+    set / acl acl-filter cpm type ipv4 entry 410 action accept\r
+    set / acl acl-filter cpm type ipv4 entry 420 description \"Accept incoming PCEP packets with destination-port 4189\"\r
+    set / acl acl-filter cpm type ipv4 entry 420 match ipv4 protocol tcp\r
+    set / acl acl-filter cpm type ipv4 entry 420 match transport destination-port operator eq\r
+    set / acl acl-filter cpm type ipv4 entry 420 match transport destination-port value 4189\r
+    set / acl acl-filter cpm type ipv4 entry 420 action accept\r
+    set / acl acl-filter cpm type ipv4 entry 430 description \"Accept incoming SBFD session messages\"\r
+    set / acl acl-filter cpm type ipv4 entry 430 match ipv4 protocol udp\r
+    set / acl acl-filter cpm type ipv4 entry 430 match transport source-port operator eq\r
+    set / acl acl-filter cpm type ipv4 entry 430 match transport source-port value 7784\r
+    set / acl acl-filter cpm type ipv4 entry 430 action accept\r
+    set / acl acl-filter cpm type ipv4 entry 440 description \"Accept incoming SBFD session messages\"\r
+    set / acl acl-filter cpm type ipv4 entry 440 match ipv4 protocol udp\r
+    set / acl acl-filter cpm type ipv4 entry 440 match transport destination-port operator eq\r
+    set / acl acl-filter cpm type ipv4 entry 440 match transport destination-port value 7784\r
+    set / acl acl-filter cpm type ipv4 entry 440 action accept\r
+    set / acl acl-filter cpm type ipv4 entry 450 description \"Accept incoming LSP MPLS Echo requests and replies\"\r
+    set / acl acl-filter cpm type ipv4 entry 450 match ipv4 protocol udp\r
+    set / acl acl-filter cpm type ipv4 entry 450 match transport source-port operator eq\r
+    set / acl acl-filter cpm type ipv4 entry 450 match transport source-port value 3503\r
+    set / acl acl-filter cpm type ipv4 entry 450 action accept\r
+    set / acl acl-filter cpm type ipv4 entry 460 description \"Accept incoming LSP MPLS Echo requests and replies\"\r
+    set / acl acl-filter cpm type ipv4 entry 460 match ipv4 protocol udp\r
+    set / acl acl-filter cpm type ipv4 entry 460 match transport destination-port operator eq\r
+    set / acl acl-filter cpm type ipv4 entry 460 match transport destination-port value 3503\r
+    set / acl acl-filter cpm type ipv4 entry 460 action accept\r
+    set / acl acl-filter cpm type ipv4 entry 470 description \"Accept incoming TWAMP Control connection\"\r
+    set / acl acl-filter cpm type ipv4 entry 470 match ipv4 protocol tcp\r
+    set / acl acl-filter cpm type ipv4 entry 470 match transport destination-port operator eq\r
+    set / acl acl-filter cpm type ipv4 entry 470 match transport destination-port value 862\r
+    set / acl acl-filter cpm type ipv4 entry 470 action accept\r
+    set / acl acl-filter cpm type ipv4 entry 550 description \"Accept incoming VRRP Control packets\"\r
+    set / acl acl-filter cpm type ipv4 entry 550 match ipv4 protocol vrrp\r
+    set / acl acl-filter cpm type ipv4 entry 550 action accept\r
+    set / acl acl-filter cpm type ipv4 entry 560 description \"Accept incoming MSDP messages\"\r
+    set / acl acl-filter cpm type ipv4 entry 560 match ipv4 protocol tcp\r
+    set / acl acl-filter cpm type ipv4 entry 560 match transport destination-port operator eq\r
+    set / acl acl-filter cpm type ipv4 entry 560 match transport destination-port value 639\r
+    set / acl acl-filter cpm type ipv4 entry 560 action accept\r
+    set / acl acl-filter cpm type ipv4 entry 570 description \"Accept incoming MSDP messages\"\r
+    set / acl acl-filter cpm type ipv4 entry 570 match ipv4 protocol tcp\r
+    set / acl acl-filter cpm type ipv4 entry 570 match transport source-port operator eq\r
+    set / acl acl-filter cpm type ipv4 entry 570 match transport source-port value 639\r
+    set / acl acl-filter cpm type ipv4 entry 570 action accept\r
+    set / acl acl-filter cpm type ipv4 entry 1000 description \"Drop all else\"\r
+    set / acl acl-filter cpm type ipv4 entry 1000 action log true\r
+    set / acl acl-filter cpm type ipv4 entry 1000 action drop\r
+    set / acl acl-filter cpm type ipv6 statistics-per-entry true\r
+    set / acl acl-filter cpm type ipv6 entry 10 description \"Accept incoming ICMPv6 unreachable messages\"\r
+    set / acl acl-filter cpm type ipv6 entry 10 match ipv6 next-header icmp6\r
+    set / acl acl-filter cpm type ipv6 entry 10 match ipv6 icmp6 type dest-unreachable\r
+    set / acl acl-filter cpm type ipv6 entry 10 action accept rate-limit system-cpu-policer icmp\r
+    set / acl acl-filter cpm type ipv6 entry 20 description \"Accept incoming ICMPv6 packet-too-big messages\"\r
+    set / acl acl-filter cpm type ipv6 entry 20 match ipv6 next-header icmp6\r
+    set / acl acl-filter cpm type ipv6 entry 20 match ipv6 icmp6 type packet-too-big\r
+    set / acl acl-filter cpm type ipv6 entry 20 action accept rate-limit system-cpu-policer icmp\r
+    set / acl acl-filter cpm type ipv6 entry 30 description \"Accept incoming ICMPv6 time-exceeded messages\"\r
+    set / acl acl-filter cpm type ipv6 entry 30 match ipv6 next-header icmp6\r
+    set / acl acl-filter cpm type ipv6 entry 30 match ipv6 icmp6 type time-exceeded\r
+    set / acl acl-filter cpm type ipv6 entry 30 action accept rate-limit system-cpu-policer icmp\r
+    set / acl acl-filter cpm type ipv6 entry 50 description \"Accept incoming ICMPv6 echo-request messages\"\r
+    set / acl acl-filter cpm type ipv6 entry 50 match ipv6 next-header icmp6\r
+    set / acl acl-filter cpm type ipv6 entry 50 match ipv6 icmp6 type echo-request\r
+    set / acl acl-filter cpm type ipv6 entry 50 action accept rate-limit system-cpu-policer icmp\r
+    set / acl acl-filter cpm type ipv6 entry 60 description \"Accept incoming ICMPv6 echo-reply messages\"\r
+    set / acl acl-filter cpm type ipv6 entry 60 match ipv6 next-header icmp6\r
+    set / acl acl-filter cpm type ipv6 entry 60 match ipv6 icmp6 type echo-reply\r
+    set / acl acl-filter cpm type ipv6 entry 60 action accept rate-limit system-cpu-policer icmp\r
+    set / acl acl-filter cpm type ipv6 entry 70 description \"Accept incoming ICMPv6 router-advertisement messages\"\r
+    set / acl acl-filter cpm type ipv6 entry 70 match ipv6 next-header icmp6\r
+    set / acl acl-filter cpm type ipv6 entry 70 match ipv6 icmp6 type router-advertise\r
+    set / acl acl-filter cpm type ipv6 entry 70 action accept rate-limit system-cpu-policer icmp\r
+    set / acl acl-filter cpm type ipv6 entry 75 description \"Accept incoming ICMPv6 router-solicit messages\"\r
+    set / acl acl-filter cpm type ipv6 entry 75 match ipv6 next-header icmp6\r
+    set / acl acl-filter cpm type ipv6 entry 75 match ipv6 icmp6 type router-solicit\r
+    set / acl acl-filter cpm type ipv6 entry 75 action accept rate-limit system-cpu-policer icmp\r
+    set / acl acl-filter cpm type ipv6 entry 80 description \"Accept incoming ICMPv6 neighbor-solicitation messages\"\r
+    set / acl acl-filter cpm type ipv6 entry 80 match ipv6 next-header icmp6\r
+    set / acl acl-filter cpm type ipv6 entry 80 match ipv6 icmp6 type neighbor-solicit\r
+    set / acl acl-filter cpm type ipv6 entry 80 action accept rate-limit system-cpu-policer icmp\r
+    set / acl acl-filter cpm type ipv6 entry 90 description \"Accept incoming ICMPv6 neighbor-advertisement messages\"\r
+    set / acl acl-filter cpm type ipv6 entry 90 match ipv6 next-header icmp6\r
+    set / acl acl-filter cpm type ipv6 entry 90 match ipv6 icmp6 type neighbor-advertise\r
+    set / acl acl-filter cpm type ipv6 entry 90 action accept rate-limit system-cpu-policer icmp\r
+    set / acl acl-filter cpm type ipv6 entry 100 description \"Accept incoming SSH when the other host initiates the TCP connection\"\r
+    set / acl acl-filter cpm type ipv6 entry 100 match ipv6 next-header tcp\r
+    set / acl acl-filter cpm type ipv6 entry 100 match transport destination-port operator eq\r
+    set / acl acl-filter cpm type ipv6 entry 100 match transport destination-port value 22\r
+    set / acl acl-filter cpm type ipv6 entry 100 action accept\r
+    set / acl acl-filter cpm type ipv6 entry 110 description \"Accept incoming SSH when this router initiates the TCP connection\"\r
+    set / acl acl-filter cpm type ipv6 entry 110 match ipv6 next-header tcp\r
+    set / acl acl-filter cpm type ipv6 entry 110 match transport source-port operator eq\r
+    set / acl acl-filter cpm type ipv6 entry 110 match transport source-port value 22\r
+    set / acl acl-filter cpm type ipv6 entry 110 action accept\r
+    set / acl acl-filter cpm type ipv6 entry 128 description \"Containerlab-added rule: Accept incoming Telnet when the other host initiates the TCP connection\"\r
+    set / acl acl-filter cpm type ipv6 entry 128 match ipv6 next-header tcp\r
+    set / acl acl-filter cpm type ipv6 entry 128 match transport source-port operator eq\r
+    set / acl acl-filter cpm type ipv6 entry 128 match transport source-port value 23\r
+    set / acl acl-filter cpm type ipv6 entry 128 action accept\r
+    set / acl acl-filter cpm type ipv6 entry 138 description \"Containerlab-added rule: Accept incoming Telnet when this router initiates the TCP connection\"\r
+    set / acl acl-filter cpm type ipv6 entry 138 match ipv6 next-header tcp\r
+    set / acl acl-filter cpm type ipv6 entry 138 match transport destination-port operator eq\r
+    set / acl acl-filter cpm type ipv6 entry 138 match transport destination-port value 23\r
+    set / acl acl-filter cpm type ipv6 entry 138 action accept\r
+    set / acl acl-filter cpm type ipv6 entry 140 description \"Accept incoming TACACS+ when the other host initiates the TCP connection\"\r
+    set / acl acl-filter cpm type ipv6 entry 140 match ipv6 next-header tcp\r
+    set / acl acl-filter cpm type ipv6 entry 140 match transport destination-port operator eq\r
+    set / acl acl-filter cpm type ipv6 entry 140 match transport destination-port value 49\r
+    set / acl acl-filter cpm type ipv6 entry 140 action accept\r
+    set / acl acl-filter cpm type ipv6 entry 150 description \"Accept incoming TACACS+ when this router initiates the TCP connection\"\r
+    set / acl acl-filter cpm type ipv6 entry 150 match ipv6 next-header tcp\r
+    set / acl acl-filter cpm type ipv6 entry 150 match transport source-port operator eq\r
+    set / acl acl-filter cpm type ipv6 entry 150 match transport source-port value 49\r
+    set / acl acl-filter cpm type ipv6 entry 150 action accept\r
+    set / acl acl-filter cpm type ipv6 entry 160 description \"Accept incoming DNS response messages\"\r
+    set / acl acl-filter cpm type ipv6 entry 160 match ipv6 next-header udp\r
+    set / acl acl-filter cpm type ipv6 entry 160 match transport source-port operator eq\r
+    set / acl acl-filter cpm type ipv6 entry 160 match transport source-port value 53\r
+    set / acl acl-filter cpm type ipv6 entry 160 action accept\r
+    set / acl acl-filter cpm type ipv6 entry 188 description \"Containerlab-added rule: Accept incoming HTTP(JSON-RPC) when the other host initiates the TCP connection\"\r
+    set / acl acl-filter cpm type ipv6 entry 188 match ipv6 next-header tcp\r
+    set / acl acl-filter cpm type ipv6 entry 188 match transport destination-port operator eq\r
+    set / acl acl-filter cpm type ipv6 entry 188 match transport destination-port value 80\r
+    set / acl acl-filter cpm type ipv6 entry 188 action accept\r
+    set / acl acl-filter cpm type ipv6 entry 190 description \"Accept incoming HTTP(JSON-RPC) when this router initiates the TCP connection\"\r
+    set / acl acl-filter cpm type ipv6 entry 190 match ipv6 next-header tcp\r
+    set / acl acl-filter cpm type ipv6 entry 190 match transport source-port operator eq\r
+    set / acl acl-filter cpm type ipv6 entry 190 match transport source-port value 80\r
+    set / acl acl-filter cpm type ipv6 entry 190 action accept\r
+    set / acl acl-filter cpm type ipv6 entry 200 description \"Accept incoming NTP messages from servers\"\r
+    set / acl acl-filter cpm type ipv6 entry 200 match ipv6 next-header udp\r
+    set / acl acl-filter cpm type ipv6 entry 200 match transport source-port operator eq\r
+    set / acl acl-filter cpm type ipv6 entry 200 match transport source-port value 123\r
+    set / acl acl-filter cpm type ipv6 entry 200 action accept\r
+    set / acl acl-filter cpm type ipv6 entry 210 description \"Accept incoming SNMP GET/GETNEXT messages from servers\"\r
+    set / acl acl-filter cpm type ipv6 entry 210 match ipv6 next-header udp\r
+    set / acl acl-filter cpm type ipv6 entry 210 match transport destination-port operator eq\r
+    set / acl acl-filter cpm type ipv6 entry 210 match transport destination-port value 161\r
+    set / acl acl-filter cpm type ipv6 entry 210 action accept\r
+    set / acl acl-filter cpm type ipv6 entry 220 description \"Accept incoming BGP when the other router initiates the TCP connection\"\r
+    set / acl acl-filter cpm type ipv6 entry 220 match ipv6 next-header tcp\r
+    set / acl acl-filter cpm type ipv6 entry 220 match transport destination-port operator eq\r
+    set / acl acl-filter cpm type ipv6 entry 220 match transport destination-port value 179\r
+    set / acl acl-filter cpm type ipv6 entry 220 action accept\r
+    set / acl acl-filter cpm type ipv6 entry 230 description \"Accept incoming BGP when this router initiates the TCP connection\"\r
+    set / acl acl-filter cpm type ipv6 entry 230 match ipv6 next-header tcp\r
+    set / acl acl-filter cpm type ipv6 entry 230 match transport source-port operator eq\r
+    set / acl acl-filter cpm type ipv6 entry 230 match transport source-port value 179\r
+    set / acl acl-filter cpm type ipv6 entry 230 action accept\r
+    set / acl acl-filter cpm type ipv6 entry 240 description \"Accept incoming HTTPS(JSON-RPC) when the other host initiates the TCP connection\"\r
+    set / acl acl-filter cpm type ipv6 entry 240 match ipv6 next-header tcp\r
+    set / acl acl-filter cpm type ipv6 entry 240 match transport destination-port operator eq\r
+    set / acl acl-filter cpm type ipv6 entry 240 match transport destination-port value 443\r
+    set / acl acl-filter cpm type ipv6 entry 240 action accept\r
+    set / acl acl-filter cpm type ipv6 entry 250 description \"Accept incoming HTTPS(JSON-RPC) when this router initiates the TCP connection\"\r
+    set / acl acl-filter cpm type ipv6 entry 250 match ipv6 next-header tcp\r
+    set / acl acl-filter cpm type ipv6 entry 250 match transport source-port operator eq\r
+    set / acl acl-filter cpm type ipv6 entry 250 match transport source-port value 443\r
+    set / acl acl-filter cpm type ipv6 entry 250 action accept\r
+    set / acl acl-filter cpm type ipv6 entry 260 description \"Accept incoming DHCPv6 client messages\"\r
+    set / acl acl-filter cpm type ipv6 entry 260 match ipv6 next-header udp\r
+    set / acl acl-filter cpm type ipv6 entry 260 match transport destination-port operator eq\r
+    set / acl acl-filter cpm type ipv6 entry 260 match transport destination-port value 546\r
+    set / acl acl-filter cpm type ipv6 entry 260 action accept\r
+    set / acl acl-filter cpm type ipv6 entry 270 description \"Accept incoming single-hop BFD session messages\"\r
+    set / acl acl-filter cpm type ipv6 entry 270 match ipv6 next-header udp\r
+    set / acl acl-filter cpm type ipv6 entry 270 match transport destination-port operator eq\r
+    set / acl acl-filter cpm type ipv6 entry 270 match transport destination-port value 3784\r
+    set / acl acl-filter cpm type ipv6 entry 270 action accept\r
+    set / acl acl-filter cpm type ipv6 entry 280 description \"Accept incoming multi-hop BFD session messages\"\r
+    set / acl acl-filter cpm type ipv6 entry 280 match ipv6 next-header udp\r
+    set / acl acl-filter cpm type ipv6 entry 280 match transport destination-port operator eq\r
+    set / acl acl-filter cpm type ipv6 entry 280 match transport destination-port value 4784\r
+    set / acl acl-filter cpm type ipv6 entry 280 action accept\r
+    set / acl acl-filter cpm type ipv6 entry 290 description \"Accept incoming uBFD session messages\"\r
+    set / acl acl-filter cpm type ipv6 entry 290 match ipv6 next-header udp\r
+    set / acl acl-filter cpm type ipv6 entry 290 match transport destination-port operator eq\r
+    set / acl acl-filter cpm type ipv6 entry 290 match transport destination-port value 6784\r
+    set / acl acl-filter cpm type ipv6 entry 290 action accept\r
+    set / acl acl-filter cpm type ipv6 entry 300 description \"Accept incoming gRPC messages when the other host initiates the TCP connection\"\r
+    set / acl acl-filter cpm type ipv6 entry 300 match ipv6 next-header tcp\r
+    set / acl acl-filter cpm type ipv6 entry 300 match transport destination-port operator eq\r
+    set / acl acl-filter cpm type ipv6 entry 300 match transport destination-port value 57400\r
+    set / acl acl-filter cpm type ipv6 entry 300 action accept\r
+    set / acl acl-filter cpm type ipv6 entry 310 description \"Accept incoming UDP traceroute messages\"\r
+    set / acl acl-filter cpm type ipv6 entry 310 match ipv6 next-header udp\r
+    set / acl acl-filter cpm type ipv6 entry 310 match transport destination-port range start 33434\r
+    set / acl acl-filter cpm type ipv6 entry 310 match transport destination-port range end 33464\r
+    set / acl acl-filter cpm type ipv6 entry 310 action accept\r
+    set / acl acl-filter cpm type ipv6 entry 320 description \"Accept incoming IPV6 hop-in-hop messages\"\r
+    set / acl acl-filter cpm type ipv6 entry 320 match ipv6 next-header 0\r
+    set / acl acl-filter cpm type ipv6 entry 320 action accept\r
+    set / acl acl-filter cpm type ipv6 entry 340 description \"Accept incoming OSPF messages\"\r
+    set / acl acl-filter cpm type ipv6 entry 340 match ipv6 next-header 89\r
+    set / acl acl-filter cpm type ipv6 entry 340 action accept\r
+    set / acl acl-filter cpm type ipv6 entry 350 description \"Accept incoming DHCPv6 relay messages\"\r
+    set / acl acl-filter cpm type ipv6 entry 350 match ipv6 next-header udp\r
+    set / acl acl-filter cpm type ipv6 entry 350 match transport destination-port operator eq\r
+    set / acl acl-filter cpm type ipv6 entry 350 match transport destination-port value 547\r
+    set / acl acl-filter cpm type ipv6 entry 350 action accept\r
+    set / acl acl-filter cpm type ipv6 entry 365 description \"Containerlab-added rule: Accept incoming gRPC over port 50052 for the eda-discovery gRPC server\"\r
+    set / acl acl-filter cpm type ipv6 entry 365 match ipv6 next-header tcp\r
+    set / acl acl-filter cpm type ipv6 entry 365 match transport destination-port operator eq\r
+    set / acl acl-filter cpm type ipv6 entry 365 match transport destination-port value 50052\r
+    set / acl acl-filter cpm type ipv6 entry 365 action accept\r
+    set / acl acl-filter cpm type ipv6 entry 366 description \"Containerlab-added rule: Accept incoming gRPC over port 57410 for the eda-mgmt gRPC server\"\r
+    set / acl acl-filter cpm type ipv6 entry 366 match ipv6 next-header tcp\r
+    set / acl acl-filter cpm type ipv6 entry 366 match transport destination-port operator eq\r
+    set / acl acl-filter cpm type ipv6 entry 366 match transport destination-port value 57410\r
+    set / acl acl-filter cpm type ipv6 entry 366 action accept\r
+    set / acl acl-filter cpm type ipv6 entry 367 description \"Containerlab-added rule: Accept incoming gRPC over port 57411 for the eda-mgmt gRPC server\"\r
+    set / acl acl-filter cpm type ipv6 entry 367 match ipv6 next-header tcp\r
+    set / acl acl-filter cpm type ipv6 entry 367 match transport destination-port operator eq\r
+    set / acl acl-filter cpm type ipv6 entry 367 match transport destination-port value 57411\r
+    set / acl acl-filter cpm type ipv6 entry 367 action accept\r
+    set / acl acl-filter cpm type ipv6 entry 368 description \"Containerlab-added rule: Accept incoming gRPC over port 57401 for the insecure-mgmt gRPC server\"\r
+    set / acl acl-filter cpm type ipv6 entry 368 match ipv6 next-header tcp\r
+    set / acl acl-filter cpm type ipv6 entry 368 match transport destination-port operator eq\r
+    set / acl acl-filter cpm type ipv6 entry 368 match transport destination-port value 57401\r
+    set / acl acl-filter cpm type ipv6 entry 368 action accept\r
+    set / acl acl-filter cpm type ipv6 entry 380 description \"Accept incoming MLDv1 report messages\"\r
+    set / acl acl-filter cpm type ipv6 entry 380 match ipv6 next-header icmp6\r
+    set / acl acl-filter cpm type ipv6 entry 380 match ipv6 icmp6 type mld-report\r
+    set / acl acl-filter cpm type ipv6 entry 380 action accept\r
+    set / acl acl-filter cpm type ipv6 entry 390 description \"Accept incoming MLDv2 report messages\"\r
+    set / acl acl-filter cpm type ipv6 entry 390 match ipv6 next-header icmp6\r
+    set / acl acl-filter cpm type ipv6 entry 390 match ipv6 icmp6 type mld-v2\r
+    set / acl acl-filter cpm type ipv6 entry 390 action accept\r
+    set / acl acl-filter cpm type ipv6 entry 400 description \"Accept incoming MLDv1 done messages\"\r
+    set / acl acl-filter cpm type ipv6 entry 400 match ipv6 next-header icmp6\r
+    set / acl acl-filter cpm type ipv6 entry 400 match ipv6 icmp6 type mld-done\r
+    set / acl acl-filter cpm type ipv6 entry 400 action accept\r
+    set / acl acl-filter cpm type ipv6 entry 410 description \"Accept incoming MLD query messages\"\r
+    set / acl acl-filter cpm type ipv6 entry 410 match ipv6 next-header icmp6\r
+    set / acl acl-filter cpm type ipv6 entry 410 match ipv6 icmp6 type mld-query\r
+    set / acl acl-filter cpm type ipv6 entry 410 action accept\r
+    set / acl acl-filter cpm type ipv6 entry 420 description \"Accept incoming PIM messages\"\r
+    set / acl acl-filter cpm type ipv6 entry 420 match ipv6 next-header pim\r
+    set / acl acl-filter cpm type ipv6 entry 420 action accept\r
+    set / acl acl-filter cpm type ipv6 entry 430 description \"Accept incoming RADIUS AAA messages\"\r
+    set / acl acl-filter cpm type ipv6 entry 430 match ipv6 next-header udp\r
+    set / acl acl-filter cpm type ipv6 entry 430 match transport source-port range start 1812\r
+    set / acl acl-filter cpm type ipv6 entry 430 match transport source-port range end 1813\r
+    set / acl acl-filter cpm type ipv6 entry 430 action accept\r
+    set / acl acl-filter cpm type ipv6 entry 440 description \"Accept incoming SSH connections on the default NETCONF port 830\"\r
+    set / acl acl-filter cpm type ipv6 entry 440 match ipv6 next-header tcp\r
+    set / acl acl-filter cpm type ipv6 entry 440 match transport destination-port operator eq\r
+    set / acl acl-filter cpm type ipv6 entry 440 match transport destination-port value 830\r
+    set / acl acl-filter cpm type ipv6 entry 440 action accept\r
+    set / acl acl-filter cpm type ipv6 entry 450 description \"Accept incoming PTP messages with destination-ports 319 and 320\"\r
+    set / acl acl-filter cpm type ipv6 entry 450 match ipv6 next-header udp\r
+    set / acl acl-filter cpm type ipv6 entry 450 match transport destination-port range start 319\r
+    set / acl acl-filter cpm type ipv6 entry 450 match transport destination-port range end 320\r
+    set / acl acl-filter cpm type ipv6 entry 450 action accept\r
+    set / acl acl-filter cpm type ipv6 entry 460 description \"Accept incoming PCEP packets with destination-port 4189\"\r
+    set / acl acl-filter cpm type ipv6 entry 460 match ipv6 next-header tcp\r
+    set / acl acl-filter cpm type ipv6 entry 460 match transport destination-port operator eq\r
+    set / acl acl-filter cpm type ipv6 entry 460 match transport destination-port value 4189\r
+    set / acl acl-filter cpm type ipv6 entry 460 action accept\r
+    set / acl acl-filter cpm type ipv6 entry 470 description \"Accept incoming SBFD session messages\"\r
+    set / acl acl-filter cpm type ipv6 entry 470 match ipv6 next-header udp\r
+    set / acl acl-filter cpm type ipv6 entry 470 match transport source-port operator eq\r
+    set / acl acl-filter cpm type ipv6 entry 470 match transport source-port value 7784\r
+    set / acl acl-filter cpm type ipv6 entry 470 action accept\r
+    set / acl acl-filter cpm type ipv6 entry 480 description \"Accept incoming SBFD session messages\"\r
+    set / acl acl-filter cpm type ipv6 entry 480 match ipv6 next-header udp\r
+    set / acl acl-filter cpm type ipv6 entry 480 match transport destination-port operator eq\r
+    set / acl acl-filter cpm type ipv6 entry 480 match transport destination-port value 7784\r
+    set / acl acl-filter cpm type ipv6 entry 480 action accept\r
+    set / acl acl-filter cpm type ipv6 entry 490 description \"Accept incoming LDP packets\"\r
+    set / acl acl-filter cpm type ipv6 entry 490 match ipv6 next-header udp\r
+    set / acl acl-filter cpm type ipv6 entry 490 match transport source-port operator eq\r
+    set / acl acl-filter cpm type ipv6 entry 490 match transport source-port value 646\r
+    set / acl acl-filter cpm type ipv6 entry 490 action accept\r
+    set / acl acl-filter cpm type ipv6 entry 500 description \"Accept incoming LDP packets with source-port 646\"\r
+    set / acl acl-filter cpm type ipv6 entry 500 match ipv6 next-header tcp\r
+    set / acl acl-filter cpm type ipv6 entry 500 match transport source-port operator eq\r
+    set / acl acl-filter cpm type ipv6 entry 500 match transport source-port value 646\r
+    set / acl acl-filter cpm type ipv6 entry 500 action accept\r
+    set / acl acl-filter cpm type ipv6 entry 510 description \"Accept incoming LDP packets with destination-port 646\"\r
+    set / acl acl-filter cpm type ipv6 entry 510 match ipv6 next-header tcp\r
+    set / acl acl-filter cpm type ipv6 entry 510 match transport destination-port operator eq\r
+    set / acl acl-filter cpm type ipv6 entry 510 match transport destination-port value 646\r
+    set / acl acl-filter cpm type ipv6 entry 510 action accept\r
+    set / acl acl-filter cpm type ipv6 entry 520 description \"Accept incoming TWAMP Control connection\"\r
+    set / acl acl-filter cpm type ipv6 entry 520 match ipv6 next-header tcp\r
+    set / acl acl-filter cpm type ipv6 entry 520 match transport destination-port operator eq\r
+    set / acl acl-filter cpm type ipv6 entry 520 match transport destination-port value 862\r
+    set / acl acl-filter cpm type ipv6 entry 520 action accept\r
+    set / acl acl-filter cpm type ipv6 entry 530 description \"Accept incoming LSP MPLS Echo requests and replies\"\r
+    set / acl acl-filter cpm type ipv6 entry 530 match ipv6 next-header udp\r
+    set / acl acl-filter cpm type ipv6 entry 530 match transport destination-port operator eq\r
+    set / acl acl-filter cpm type ipv6 entry 530 match transport destination-port value 3503\r
+    set / acl acl-filter cpm type ipv6 entry 530 action accept\r
+    set / acl acl-filter cpm type ipv6 entry 540 description \"Accept incoming LSP MPLS Echo requests and replies\"\r
+    set / acl acl-filter cpm type ipv6 entry 540 match ipv6 next-header udp\r
+    set / acl acl-filter cpm type ipv6 entry 540 match transport source-port operator eq\r
+    set / acl acl-filter cpm type ipv6 entry 540 match transport source-port value 3503\r
+    set / acl acl-filter cpm type ipv6 entry 540 action accept\r
+    set / acl acl-filter cpm type ipv6 entry 550 description \"Accept incoming VRRP Control packets\"\r
+    set / acl acl-filter cpm type ipv6 entry 550 match ipv6 next-header vrrp\r
+    set / acl acl-filter cpm type ipv6 entry 550 action accept\r
+    set / acl acl-filter cpm type ipv6 entry 1000 description \"Drop all else\"\r
+    set / acl acl-filter cpm type ipv6 entry 1000 action log true\r
+    set / acl acl-filter cpm type ipv6 entry 1000 action drop\r
+    set / acl policers system-cpu-policer icmp entry-specific false\r
+    set / acl policers system-cpu-policer icmp peak-rate-pps 1000\r
+    set / acl policers system-cpu-policer icmp maximum-burst-packet 1000\r
+    set / system management openconfig admin-state enable\r
+    set / system control-plane-traffic input acl acl-filter cpm type ipv4\r
+    set / system control-plane-traffic input acl acl-filter cpm type ipv6\r
+    set / system lldp admin-state enable\r
+    set / system json-rpc-server admin-state enable\r
+    set / system json-rpc-server network-instance mgmt http admin-state enable\r
+    set / system json-rpc-server network-instance mgmt https admin-state enable\r
+    set / system json-rpc-server network-instance mgmt https tls-profile clab-profile\r
+    set / system grpc-server eda-discovery admin-state enable\r
+    set / system grpc-server eda-discovery rate-limit 65535\r
+    set / system grpc-server eda-discovery session-limit 1024\r
+    set / system grpc-server eda-discovery metadata-authentication true\r
+    set / system grpc-server eda-discovery default-tls-profile true\r
+    set / system grpc-server eda-discovery network-instance mgmt\r
+    set / system grpc-server eda-discovery port 50052\r
+    set / system grpc-server eda-discovery services [ gnmi gnsi ]\r
+    set / system grpc-server eda-insecure-mgmt admin-state enable\r
+    set / system grpc-server eda-insecure-mgmt rate-limit 65535\r
+    set / system grpc-server eda-insecure-mgmt session-limit 1024\r
+    set / system grpc-server eda-insecure-mgmt metadata-authentication true\r
+    set / system grpc-server eda-insecure-mgmt port 57411\r
+    set / system grpc-server eda-insecure-mgmt services [ gnmi gnoi gnsi ]\r
+    set / system grpc-server eda-mgmt ### Unable to retrieve TLS profile 'EDA'\r
+    set / system grpc-server eda-mgmt admin-state enable\r
+    set / system grpc-server eda-mgmt rate-limit 65535\r
+    set / system grpc-server eda-mgmt session-limit 1024\r
+    set / system grpc-server eda-mgmt metadata-authentication true\r
+    set / system grpc-server eda-mgmt tls-profile EDA\r
+    set / system grpc-server eda-mgmt network-instance mgmt\r
+    set / system grpc-server eda-mgmt port 57410\r
+    set / system grpc-server eda-mgmt services [ gnmi gnoi gnsi ]\r
+    set / system grpc-server insecure-mgmt admin-state enable\r
+    set / system grpc-server insecure-mgmt rate-limit 65000\r
+    set / system grpc-server insecure-mgmt network-instance mgmt\r
+    set / system grpc-server insecure-mgmt port 57401\r
+    set / system grpc-server insecure-mgmt trace-options [ request response common ]\r
+    set / system grpc-server insecure-mgmt services [ gnmi gnoi gnsi gribi p4rt ]\r
+    set / system grpc-server insecure-mgmt unix-socket admin-state enable\r
+    set / system grpc-server mgmt admin-state enable\r
+    set / system grpc-server mgmt rate-limit 65000\r
+    set / system grpc-server mgmt tls-profile clab-profile\r
+    set / system grpc-server mgmt network-instance mgmt\r
+    set / system grpc-server mgmt trace-options [ request response common ]\r
+    set / system grpc-server mgmt services [ gnmi gnoi gnsi gribi p4rt ]\r
+    set / system grpc-server mgmt unix-socket admin-state enable\r
+    set / system dns-instance clab-default network-instance mgmt\r
+    set / system dns-instance clab-default server-list [ 172.16.100.240 ]\r
+    set / system snmp access-group SNMPv2-RO-Community security-level no-auth-no-priv\r
+    set / system snmp access-group SNMPv2-RO-Community community-entry RO-Community community REDACTED-ENCRYPTED-VALUE\r
+    set / system snmp network-instance mgmt admin-state enable\r
+    set / system ssh-server mgmt admin-state enable\r
+    set / system ssh-server mgmt network-instance mgmt\r
+    set / system ssh-server mgmt use-credentialz true\r
+    set / system ssh-server mgmt-netconf admin-state enable\r
+    set / system ssh-server mgmt-netconf network-instance mgmt\r
+    set / system ssh-server mgmt-netconf port 830\r
+    set / system ssh-server mgmt-netconf disable-shell true\r
+    set / system banner login-banner \"................................................................\r
+    :                  Welcome to Nokia SR Linux!                  :\r
+    :              Open Network OS for the NetOps era.             :\r
+    :                                                              :\r
+    :    This is a freely distributed official container image.    :\r
+    :                      Use it - Share it                       :\r
+    :                                                              :\r
+    : Get started: https://learn.srlinux.dev                       :\r
+    : Container:   https://go.srlinux.dev/container-image          :\r
+    : Docs:        https://doc.srlinux.dev/26-3                    :\r
+    : Rel. notes:  https://doc.srlinux.dev/rnn                     :\r
+    : YANG:        https://yang.srlinux.dev/26.3.1                 :\r
+    : Discord:     https://go.srlinux.dev/discord                  :\r
+    : Contact:     https://go.srlinux.dev/contact-sales            :\r
+    ................................................................\r
+    \"\r
+    set / system tls profile clab-profile key REDACTED-ENCRYPTED-VALUE\r
+    set / system tls profile clab-profile certificate \"-----BEGIN CERTIFICATE-----\r
+    MIID8jCCAtqgAwIBAgICBnowDQYJKoZIhvcNAQELBQAwXDELMAkGA1UEBhMCVVMx\r
+    CTAHBgNVBAcTADEVMBMGA1UEChMMY29udGFpbmVybGFiMQkwBwYDVQQLEwAxIDAe\r
+    BgNVBAMTF294aWRpemVkLXNybGludXggbGFiIENBMB4XDTI2MTEyMzA3NTYyMFoX\r
+    DTI3MTEyMzA3NTYyMFowYDELMAkGA1UEBhMCVVMxCTAHBgNVBAcTADEVMBMGA1UE\r
+    ChMMY29udGFpbmVybGFiMQkwBwYDVQQLEwAxJDAiBgNVBAMTG3NybC1uZXcub3hp\r
+    ZGl6ZWQtc3JsaW51eC5pbzCCASIwDQYJKoZIhvcNAQEBBQADggEPADCCAQoCggEB\r
+    APa0ZfaTli3dda6xaZjYF3UUwcZ4RJvUMNN+LFSxjZgj4d4nmn5bc9fNH7JWPwDa\r
+    pdNPHHOccy1ufQHL9irdeVe1FYO9ZkduU6AWwBzGPhtNUKvaBBLF3Pc69GPJExmJ\r
+    hfJhbVHEbGxmVCj+kdrx+j4nF1L+ouW1l+tOClfFKu7qBOc82vhgSP6kiuiBsP5O\r
+    qLfPLz+ZGkYaSp395JKhYBtFUE0Ggv/iEJx8hUtFVr63vqrEpY3bCppJLhjWyi5n\r
+    +opXF805wAeHuL3B0/KP8JbiScYraVB3q6Bj5Pgdc2a5TGJzESSgwfTf63p7csXd\r
+    6zwTUvCXRQLn4OtkSfxDd4kCAwEAAaOBuTCBtjAOBgNVHQ8BAf8EBAMCBaAwHQYD\r
+    VR0lBBYwFAYIKwYBBQUHAwIGCCsGAQUFBwMBMA4GA1UdDgQHBAUBAgMEBjAfBgNV\r
+    HSMEGDAWgBRM/ZRyMkMTpxduLbjlDl+B2uqYeTBUBgNVHREETTBLggdzcmwtbmV3\r
+    gh1jbGFiLW94aWRpemVkLXNybGludXgtc3JsLW5ld4Ibc3JsLW5ldy5veGlkaXpl\r
+    ZC1zcmxpbnV4LmlvhwSsFC8DMA0GCSqGSIb3DQEBCwUAA4IBAQCnIfqtoAmW52q0\r
+    y9qarh+53aydB0bkLiRun96L7eBCe47iYcIAaegZZfGzufDFnDMFUWY/zqrVo4jq\r
+    o8fRyd86wfkFujXHW31WMY/OWTlIEDkawcat3TK3iR0hJQEaZ8v2Y1tL8PBUNoKz\r
+    oKRMLOQu0QozRLE+m6BCGtw46n72S/h53KcYa2ak1o5dZQN89q7WgLxkBln0e9YE\r
+    qsyS4N26onmGhbLmo1RtbrPoAZ4Pu+uHq05K3OT+6JB9SLGjMNoXw3D7R8jIQe4c\r
+    SIxWsomKtNH22rN0TWokSeXcU5A7RAme8BA9YzIZOIavNoC6N+/x7PPv85UJ4GoZ\r
+    euUic8AL\r
+    -----END CERTIFICATE-----\r
+    \"\r
+    set / system tls profile clab-profile authenticate-client false\r
+    set / system aaa authentication idle-timeout 7200\r
+    set / system aaa authentication authentication-method [ local ]\r
+    set / system aaa authentication admin-user ssh-key [ \"ssh-ed25519-cert-v01@openssh.com REDACTED-PUBLIC-KEY\" \"ssh-ed25519 REDACTED-PUBLIC-KEY\" \"ssh-ed25519 REDACTED-PUBLIC-KEY\" \"ssh-ed25519 REDACTED-PUBLIC-KEY\" \"ssh-ed25519 REDACTED-PUBLIC-KEY\" \"ssh-rsa REDACTED-PUBLIC-KEY\" ]\r
+    set / system aaa authentication linuxadmin-user password REDACTED-PASSWORD\r
+    set / system aaa authentication linuxadmin-user ssh-key [ \"ssh-ed25519-cert-v01@openssh.com REDACTED-PUBLIC-KEY\" \"ssh-ed25519 REDACTED-PUBLIC-KEY\" \"ssh-ed25519 REDACTED-PUBLIC-KEY\" \"ssh-ed25519 REDACTED-PUBLIC-KEY\" \"ssh-ed25519 REDACTED-PUBLIC-KEY\" \"ssh-rsa REDACTED-PUBLIC-KEY\" ]\r
+    set / system aaa server-group local type local\r
+    set / system ndk-server admin-state enable\r
+    set / system logging buffer messages rotate 3\r
+    set / system logging buffer messages size 10000000\r
+    set / system logging buffer messages facility local6 priority match-above informational\r
+    set / system logging buffer system facility auth priority match-above warning\r
+    set / system logging buffer system facility cron priority match-above warning\r
+    set / system logging buffer system facility daemon priority match-above warning\r
+    set / system logging buffer system facility ftp priority match-above warning\r
+    set / system logging buffer system facility kern priority match-above warning\r
+    set / system logging buffer system facility lpr priority match-above warning\r
+    set / system logging buffer system facility mail priority match-above warning\r
+    set / system logging buffer system facility news priority match-above warning\r
+    set / system logging buffer system facility syslog priority match-above warning\r
+    set / system logging buffer system facility user priority match-above warning\r
+    set / system logging buffer system facility uucp priority match-above warning\r
+    set / system logging buffer system facility local0 priority match-above warning\r
+    set / system logging buffer system facility local1 priority match-above warning\r
+    set / system logging buffer system facility local2 priority match-above warning\r
+    set / system logging buffer system facility local3 priority match-above warning\r
+    set / system logging buffer system facility local4 priority match-above warning\r
+    set / system logging buffer system facility local5 priority match-above warning\r
+    set / system logging buffer system facility local7 priority match-above warning\r
+    set / system logging file messages rotate 3\r
+    set / system logging file messages size 10000000\r
+    set / system logging file messages facility local6 priority match-above warning\r
+    set / system netconf-server mgmt admin-state enable\r
+    set / system netconf-server mgmt ssh-server mgmt-netconf\r
+    set / network-instance mgmt type ip-vrf\r
+    set / network-instance mgmt admin-state enable\r
+    set / network-instance mgmt description \"Management network instance\"\r
+    set / network-instance mgmt interface mgmt0.0\r
+    set / network-instance mgmt protocols linux import-routes true\r
+    set / network-instance mgmt protocols linux export-routes true\r
+    set / network-instance mgmt protocols linux export-neighbors true\r
+    set / interface mgmt0 admin-state enable\r
+    set / interface mgmt0 subinterface 0 admin-state enable\r
+    set / interface mgmt0 subinterface 0 ipv4 admin-state enable\r
+    set / interface mgmt0 subinterface 0 ipv4 dhcp-client\r
+    set / interface mgmt0 subinterface 0 ipv6 admin-state enable\r
+    set / interface mgmt0 subinterface 0 ipv6 dhcp-client\r
+    \r
+    --{ running }--[  ]--\r
+    A:admin@srl-new#\x20
+  "info | as json\n": |-
+    info | as json\r
+    {\r
+      \"_annotate\": \"ACL rules allowing incoming tcp/57411 for the eda-discovery grpc server\",\r
+      \"acl\": {\r
+        \"acl-filter\": [\r
+          {\r
+            \"name\": \"cpm\",\r
+            \"type\": \"ipv4\",\r
+            \"statistics-per-entry\": true,\r
+            \"entry\": [\r
+              {\r
+                \"sequence-id\": 10,\r
+                \"description\": \"Accept incoming ICMP unreachable messages\",\r
+                \"match\": {\r
+                  \"ipv4\": {\r
+                    \"protocol\": \"icmp\",\r
+                    \"icmp\": {\r
+                      \"type\": \"dest-unreachable\"\r
+                    }\r
+                  }\r
+                },\r
+                \"action\": {\r
+                  \"accept\": {\r
+                    \"rate-limit\": {\r
+                      \"system-cpu-policer\": \"icmp\"\r
+                    }\r
+                  }\r
+                }\r
+              },\r
+              {\r
+                \"sequence-id\": 20,\r
+                \"description\": \"Accept incoming ICMP time-exceeded messages\",\r
+                \"match\": {\r
+                  \"ipv4\": {\r
+                    \"protocol\": \"icmp\",\r
+                    \"icmp\": {\r
+                      \"type\": \"time-exceeded\"\r
+                    }\r
+                  }\r
+                },\r
+                \"action\": {\r
+                  \"accept\": {\r
+                    \"rate-limit\": {\r
+                      \"system-cpu-policer\": \"icmp\"\r
+                    }\r
+                  }\r
+                }\r
+              },\r
+              {\r
+                \"sequence-id\": 40,\r
+                \"description\": \"Accept incoming ICMP echo messages\",\r
+                \"match\": {\r
+                  \"ipv4\": {\r
+                    \"protocol\": \"icmp\",\r
+                    \"icmp\": {\r
+                      \"type\": \"echo\"\r
+                    }\r
+                  }\r
+                },\r
+                \"action\": {\r
+                  \"accept\": {\r
+                    \"rate-limit\": {\r
+                      \"system-cpu-policer\": \"icmp\"\r
+                    }\r
+                  }\r
+                }\r
+              },\r
+              {\r
+                \"sequence-id\": 50,\r
+                \"description\": \"Accept incoming ICMP echo-reply messages\",\r
+                \"match\": {\r
+                  \"ipv4\": {\r
+                    \"protocol\": \"icmp\",\r
+                    \"icmp\": {\r
+                      \"type\": \"echo-reply\"\r
+                    }\r
+                  }\r
+                },\r
+                \"action\": {\r
+                  \"accept\": {\r
+                    \"rate-limit\": {\r
+                      \"system-cpu-policer\": \"icmp\"\r
+                    }\r
+                  }\r
+                }\r
+              },\r
+              {\r
+                \"sequence-id\": 60,\r
+                \"description\": \"Accept incoming SSH when the other host initiates the TCP connection\",\r
+                \"match\": {\r
+                  \"ipv4\": {\r
+                    \"protocol\": \"tcp\"\r
+                  },\r
+                  \"transport\": {\r
+                    \"destination-port\": {\r
+                      \"operator\": \"eq\",\r
+                      \"value\": 22\r
+                    }\r
+                  }\r
+                },\r
+                \"action\": {\r
+                  \"accept\": {\r
+                  }\r
+                }\r
+              },\r
+              {\r
+                \"sequence-id\": 70,\r
+                \"description\": \"Accept incoming SSH when this router initiates the TCP connection\",\r
+                \"match\": {\r
+                  \"ipv4\": {\r
+                    \"protocol\": \"tcp\"\r
+                  },\r
+                  \"transport\": {\r
+                    \"source-port\": {\r
+                      \"operator\": \"eq\",\r
+                      \"value\": 22\r
+                    }\r
+                  }\r
+                },\r
+                \"action\": {\r
+                  \"accept\": {\r
+                  }\r
+                }\r
+              },\r
+              {\r
+                \"sequence-id\": 88,\r
+                \"description\": \"Containerlab-added rule: Accept incoming Telnet when the other host initiates the TCP connection\",\r
+                \"match\": {\r
+                  \"ipv4\": {\r
+                    \"protocol\": \"tcp\"\r
+                  },\r
+                  \"transport\": {\r
+                    \"source-port\": {\r
+                      \"operator\": \"eq\",\r
+                      \"value\": 23\r
+                    }\r
+                  }\r
+                },\r
+                \"action\": {\r
+                  \"accept\": {\r
+                  }\r
+                }\r
+              },\r
+              {\r
+                \"sequence-id\": 98,\r
+                \"description\": \"Containerlab-added rule: Accept incoming Telnet when this router initiates the TCP connection\",\r
+                \"match\": {\r
+                  \"ipv4\": {\r
+                    \"protocol\": \"tcp\"\r
+                  },\r
+                  \"transport\": {\r
+                    \"destination-port\": {\r
+                      \"operator\": \"eq\",\r
+                      \"value\": 23\r
+                    }\r
+                  }\r
+                },\r
+                \"action\": {\r
+                  \"accept\": {\r
+                  }\r
+                }\r
+              },\r
+              {\r
+                \"sequence-id\": 100,\r
+                \"description\": \"Accept incoming TACACS+ when the other host initiates the TCP connection\",\r
+                \"match\": {\r
+                  \"ipv4\": {\r
+                    \"protocol\": \"tcp\"\r
+                  },\r
+                  \"transport\": {\r
+                    \"destination-port\": {\r
+                      \"operator\": \"eq\",\r
+                      \"value\": 49\r
+                    }\r
+                  }\r
+                },\r
+                \"action\": {\r
+                  \"accept\": {\r
+                  }\r
+                }\r
+              },\r
+              {\r
+                \"sequence-id\": 110,\r
+                \"description\": \"Accept incoming TACACS+ when this router initiates the TCP connection\",\r
+                \"match\": {\r
+                  \"ipv4\": {\r
+                    \"protocol\": \"tcp\"\r
+                  },\r
+                  \"transport\": {\r
+                    \"source-port\": {\r
+                      \"operator\": \"eq\",\r
+                      \"value\": 49\r
+                    }\r
+                  }\r
+                },\r
+                \"action\": {\r
+                  \"accept\": {\r
+                  }\r
+                }\r
+              },\r
+              {\r
+                \"sequence-id\": 120,\r
+                \"description\": \"Accept incoming DNS response messages\",\r
+                \"match\": {\r
+                  \"ipv4\": {\r
+                    \"protocol\": \"udp\"\r
+                  },\r
+                  \"transport\": {\r
+                    \"source-port\": {\r
+                      \"operator\": \"eq\",\r
+                      \"value\": 53\r
+                    }\r
+                  }\r
+                },\r
+                \"action\": {\r
+                  \"accept\": {\r
+                  }\r
+                }\r
+              },\r
+              {\r
+                \"sequence-id\": 130,\r
+                \"description\": \"Accept incoming DHCP messages targeted for BOOTP/DHCP client\",\r
+                \"match\": {\r
+                  \"ipv4\": {\r
+                    \"protocol\": \"udp\"\r
+                  },\r
+                  \"transport\": {\r
+                    \"destination-port\": {\r
+                      \"operator\": \"eq\",\r
+                      \"value\": 68\r
+                    }\r
+                  }\r
+                },\r
+                \"action\": {\r
+                  \"accept\": {\r
+                  }\r
+                }\r
+              },\r
+              {\r
+                \"sequence-id\": 158,\r
+                \"description\": \"Containerlab-added rule: Accept incoming HTTP(JSON-RPC) when the other host initiates the TCP connection\",\r
+                \"match\": {\r
+                  \"ipv4\": {\r
+                    \"protocol\": \"tcp\"\r
+                  },\r
+                  \"transport\": {\r
+                    \"destination-port\": {\r
+                      \"operator\": \"eq\",\r
+                      \"value\": 80\r
+                    }\r
+                  }\r
+                },\r
+                \"action\": {\r
+                  \"accept\": {\r
+                  }\r
+                }\r
+              },\r
+              {\r
+                \"sequence-id\": 160,\r
+                \"description\": \"Accept incoming HTTP(JSON-RPC) when this router initiates the TCP connection\",\r
+                \"match\": {\r
+                  \"ipv4\": {\r
+                    \"protocol\": \"tcp\"\r
+                  },\r
+                  \"transport\": {\r
+                    \"source-port\": {\r
+                      \"operator\": \"eq\",\r
+                      \"value\": 80\r
+                    }\r
+                  }\r
+                },\r
+                \"action\": {\r
+                  \"accept\": {\r
+                  }\r
+                }\r
+              },\r
+              {\r
+                \"sequence-id\": 170,\r
+                \"description\": \"Accept incoming NTP messages from servers\",\r
+                \"match\": {\r
+                  \"ipv4\": {\r
+                    \"protocol\": \"udp\"\r
+                  },\r
+                  \"transport\": {\r
+                    \"source-port\": {\r
+                      \"operator\": \"eq\",\r
+                      \"value\": 123\r
+                    }\r
+                  }\r
+                },\r
+                \"action\": {\r
+                  \"accept\": {\r
+                  }\r
+                }\r
+              },\r
+              {\r
+                \"sequence-id\": 180,\r
+                \"description\": \"Accept incoming SNMP GET/GETNEXT messages from servers\",\r
+                \"match\": {\r
+                  \"ipv4\": {\r
+                    \"protocol\": \"udp\"\r
+                  },\r
+                  \"transport\": {\r
+                    \"destination-port\": {\r
+                      \"operator\": \"eq\",\r
+                      \"value\": 161\r
+                    }\r
+                  }\r
+                },\r
+                \"action\": {\r
+                  \"accept\": {\r
+                  }\r
+                }\r
+              },\r
+              {\r
+                \"sequence-id\": 190,\r
+                \"description\": \"Accept incoming BGP when the other router initiates the TCP connection\",\r
+                \"match\": {\r
+                  \"ipv4\": {\r
+                    \"protocol\": \"tcp\"\r
+                  },\r
+                  \"transport\": {\r
+                    \"destination-port\": {\r
+                      \"operator\": \"eq\",\r
+                      \"value\": 179\r
+                    }\r
+                  }\r
+                },\r
+                \"action\": {\r
+                  \"accept\": {\r
+                  }\r
+                }\r
+              },\r
+              {\r
+                \"sequence-id\": 200,\r
+                \"description\": \"Accept incoming BGP when this router initiates the TCP connection\",\r
+                \"match\": {\r
+                  \"ipv4\": {\r
+                    \"protocol\": \"tcp\"\r
+                  },\r
+                  \"transport\": {\r
+                    \"source-port\": {\r
+                      \"operator\": \"eq\",\r
+                      \"value\": 179\r
+                    }\r
+                  }\r
+                },\r
+                \"action\": {\r
+                  \"accept\": {\r
+                  }\r
+                }\r
+              },\r
+              {\r
+                \"sequence-id\": 210,\r
+                \"description\": \"Accept incoming HTTPS(JSON-RPC) when the other host initiates the TCP connection\",\r
+                \"match\": {\r
+                  \"ipv4\": {\r
+                    \"protocol\": \"tcp\"\r
+                  },\r
+                  \"transport\": {\r
+                    \"destination-port\": {\r
+                      \"operator\": \"eq\",\r
+                      \"value\": 443\r
+                    }\r
+                  }\r
+                },\r
+                \"action\": {\r
+                  \"accept\": {\r
+                  }\r
+                }\r
+              },\r
+              {\r
+                \"sequence-id\": 220,\r
+                \"description\": \"Accept incoming HTTPS(JSON-RPC) when this router initiates the TCP connection\",\r
+                \"match\": {\r
+                  \"ipv4\": {\r
+                    \"protocol\": \"tcp\"\r
+                  },\r
+                  \"transport\": {\r
+                    \"source-port\": {\r
+                      \"operator\": \"eq\",\r
+                      \"value\": 443\r
+                    }\r
+                  }\r
+                },\r
+                \"action\": {\r
+                  \"accept\": {\r
+                  }\r
+                }\r
+              },\r
+              {\r
+                \"sequence-id\": 230,\r
+                \"description\": \"Accept incoming single-hop BFD session messages\",\r
+                \"match\": {\r
+                  \"ipv4\": {\r
+                    \"protocol\": \"udp\"\r
+                  },\r
+                  \"transport\": {\r
+                    \"destination-port\": {\r
+                      \"operator\": \"eq\",\r
+                      \"value\": 3784\r
+                    }\r
+                  }\r
+                },\r
+                \"action\": {\r
+                  \"accept\": {\r
+                  }\r
+                }\r
+              },\r
+              {\r
+                \"sequence-id\": 240,\r
+                \"description\": \"Accept incoming multi-hop BFD session messages\",\r
+                \"match\": {\r
+                  \"ipv4\": {\r
+                    \"protocol\": \"udp\"\r
+                  },\r
+                  \"transport\": {\r
+                    \"destination-port\": {\r
+                      \"operator\": \"eq\",\r
+                      \"value\": 4784\r
+                    }\r
+                  }\r
+                },\r
+                \"action\": {\r
+                  \"accept\": {\r
+                  }\r
+                }\r
+              },\r
+              {\r
+                \"sequence-id\": 250,\r
+                \"description\": \"Accept incoming uBFD session messages\",\r
+                \"match\": {\r
+                  \"ipv4\": {\r
+                    \"protocol\": \"udp\"\r
+                  },\r
+                  \"transport\": {\r
+                    \"destination-port\": {\r
+                      \"operator\": \"eq\",\r
+                      \"value\": 6784\r
+                    }\r
+                  }\r
+                },\r
+                \"action\": {\r
+                  \"accept\": {\r
+                  }\r
+                }\r
+              },\r
+              {\r
+                \"sequence-id\": 260,\r
+                \"description\": \"Accept incoming gRPC messages when the other host initiates the TCP connection\",\r
+                \"match\": {\r
+                  \"ipv4\": {\r
+                    \"protocol\": \"tcp\"\r
+                  },\r
+                  \"transport\": {\r
+                    \"destination-port\": {\r
+                      \"operator\": \"eq\",\r
+                      \"value\": 57400\r
+                    }\r
+                  }\r
+                },\r
+                \"action\": {\r
+                  \"accept\": {\r
+                  }\r
+                }\r
+              },\r
+              {\r
+                \"sequence-id\": 270,\r
+                \"description\": \"Accept incoming UDP traceroute messages\",\r
+                \"match\": {\r
+                  \"ipv4\": {\r
+                    \"protocol\": \"udp\"\r
+                  },\r
+                  \"transport\": {\r
+                    \"destination-port\": {\r
+                      \"range\": {\r
+                        \"start\": 33434,\r
+                        \"end\": 33464\r
+                      }\r
+                    }\r
+                  }\r
+                },\r
+                \"action\": {\r
+                  \"accept\": {\r
+                  }\r
+                }\r
+              },\r
+              {\r
+                \"sequence-id\": 290,\r
+                \"description\": \"Accept incoming OSPF messages\",\r
+                \"match\": {\r
+                  \"ipv4\": {\r
+                    \"protocol\": 89\r
+                  }\r
+                },\r
+                \"action\": {\r
+                  \"accept\": {\r
+                  }\r
+                }\r
+              },\r
+              {\r
+                \"sequence-id\": 300,\r
+                \"description\": \"Accept incoming DHCP relay messages targeted for BOOTP/DHCP server\",\r
+                \"match\": {\r
+                  \"ipv4\": {\r
+                    \"protocol\": \"udp\"\r
+                  },\r
+                  \"transport\": {\r
+                    \"destination-port\": {\r
+                      \"operator\": \"eq\",\r
+                      \"value\": 67\r
+                    }\r
+                  }\r
+                },\r
+                \"action\": {\r
+                  \"accept\": {\r
+                  }\r
+                }\r
+              },\r
+              {\r
+                \"sequence-id\": 310,\r
+                \"description\": \"Accept ICMP fragment packets\",\r
+                \"match\": {\r
+                  \"ipv4\": {\r
+                    \"fragment\": true,\r
+                    \"protocol\": \"icmp\"\r
+                  }\r
+                },\r
+                \"action\": {\r
+                  \"accept\": {\r
+                    \"rate-limit\": {\r
+                      \"system-cpu-policer\": \"icmp\"\r
+                    }\r
+                  }\r
+                }\r
+              },\r
+              {\r
+                \"sequence-id\": 320,\r
+                \"description\": \"Accept incoming LDP packets\",\r
+                \"match\": {\r
+                  \"ipv4\": {\r
+                    \"protocol\": \"udp\"\r
+                  },\r
+                  \"transport\": {\r
+                    \"source-port\": {\r
+                      \"operator\": \"eq\",\r
+                      \"value\": 646\r
+                    }\r
+                  }\r
+                },\r
+                \"action\": {\r
+                  \"accept\": {\r
+                  }\r
+                }\r
+              },\r
+              {\r
+                \"sequence-id\": 330,\r
+                \"description\": \"Accept incoming LDP packets with source-port 646\",\r
+                \"match\": {\r
+                  \"ipv4\": {\r
+                    \"protocol\": \"tcp\"\r
+                  },\r
+                  \"transport\": {\r
+                    \"source-port\": {\r
+                      \"operator\": \"eq\",\r
+                      \"value\": 646\r
+                    }\r
+                  }\r
+                },\r
+                \"action\": {\r
+                  \"accept\": {\r
+                  }\r
+                }\r
+              },\r
+              {\r
+                \"sequence-id\": 340,\r
+                \"description\": \"Accept incoming LDP packets with destination-port 646\",\r
+                \"match\": {\r
+                  \"ipv4\": {\r
+                    \"protocol\": \"tcp\"\r
+                  },\r
+                  \"transport\": {\r
+                    \"destination-port\": {\r
+                      \"operator\": \"eq\",\r
+                      \"value\": 646\r
+                    }\r
+                  }\r
+                },\r
+                \"action\": {\r
+                  \"accept\": {\r
+                  }\r
+                }\r
+              },\r
+              {\r
+                \"sequence-id\": 355,\r
+                \"description\": \"Containerlab-added rule: Accept incoming gRPC over port 50052 for the eda-discovery gRPC server\",\r
+                \"match\": {\r
+                  \"ipv4\": {\r
+                    \"protocol\": \"tcp\"\r
+                  },\r
+                  \"transport\": {\r
+                    \"destination-port\": {\r
+                      \"operator\": \"eq\",\r
+                      \"value\": 50052\r
+                    }\r
+                  }\r
+                },\r
+                \"action\": {\r
+                  \"accept\": {\r
+                  }\r
+                }\r
+              },\r
+              {\r
+                \"sequence-id\": 356,\r
+                \"description\": \"Containerlab-added rule: Accept incoming gRPC over port 57410 for the eda-mgmt gRPC server\",\r
+                \"match\": {\r
+                  \"ipv4\": {\r
+                    \"protocol\": \"tcp\"\r
+                  },\r
+                  \"transport\": {\r
+                    \"destination-port\": {\r
+                      \"operator\": \"eq\",\r
+                      \"value\": 57410\r
+                    }\r
+                  }\r
+                },\r
+                \"action\": {\r
+                  \"accept\": {\r
+                  }\r
+                }\r
+              },\r
+              {\r
+                \"sequence-id\": 357,\r
+                \"description\": \"Containerlab-added rule: Accept incoming gRPC over port 57411 for the eda-mgmt gRPC server\",\r
+                \"match\": {\r
+                  \"ipv4\": {\r
+                    \"protocol\": \"tcp\"\r
+                  },\r
+                  \"transport\": {\r
+                    \"destination-port\": {\r
+                      \"operator\": \"eq\",\r
+                      \"value\": 57411\r
+                    }\r
+                  }\r
+                },\r
+                \"action\": {\r
+                  \"accept\": {\r
+                  }\r
+                }\r
+              },\r
+              {\r
+                \"sequence-id\": 358,\r
+                \"description\": \"Containerlab-added rule: Accept incoming gRPC over port 57401 for the insecure-mgmt gRPC server\",\r
+                \"match\": {\r
+                  \"ipv4\": {\r
+                    \"protocol\": \"tcp\"\r
+                  },\r
+                  \"transport\": {\r
+                    \"destination-port\": {\r
+                      \"operator\": \"eq\",\r
+                      \"value\": 57401\r
+                    }\r
+                  }\r
+                },\r
+                \"action\": {\r
+                  \"accept\": {\r
+                  }\r
+                }\r
+              },\r
+              {\r
+                \"sequence-id\": 370,\r
+                \"description\": \"Accept incoming IGMP packets\",\r
+                \"match\": {\r
+                  \"ipv4\": {\r
+                    \"protocol\": \"igmp\"\r
+                  }\r
+                },\r
+                \"action\": {\r
+                  \"accept\": {\r
+                  }\r
+                }\r
+              },\r
+              {\r
+                \"sequence-id\": 380,\r
+                \"description\": \"Accept incoming PIM packets\",\r
+                \"match\": {\r
+                  \"ipv4\": {\r
+                    \"protocol\": \"pim\"\r
+                  }\r
+                },\r
+                \"action\": {\r
+                  \"accept\": {\r
+                  }\r
+                }\r
+              },\r
+              {\r
+                \"sequence-id\": 390,\r
+                \"description\": \"Accept incoming RADIUS AAA packets\",\r
+                \"match\": {\r
+                  \"ipv4\": {\r
+                    \"protocol\": \"udp\"\r
+                  },\r
+                  \"transport\": {\r
+                    \"source-port\": {\r
+                      \"range\": {\r
+                        \"start\": 1812,\r
+                        \"end\": 1813\r
+                      }\r
+                    }\r
+                  }\r
+                },\r
+                \"action\": {\r
+                  \"accept\": {\r
+                  }\r
+                }\r
+              },\r
+              {\r
+                \"sequence-id\": 400,\r
+                \"description\": \"Accept incoming SSH connections on the default NETCONF port 830\",\r
+                \"match\": {\r
+                  \"ipv4\": {\r
+                    \"protocol\": \"tcp\"\r
+                  },\r
+                  \"transport\": {\r
+                    \"destination-port\": {\r
+                      \"operator\": \"eq\",\r
+                      \"value\": 830\r
+                    }\r
+                  }\r
+                },\r
+                \"action\": {\r
+                  \"accept\": {\r
+                  }\r
+                }\r
+              },\r
+              {\r
+                \"sequence-id\": 410,\r
+                \"description\": \"Accept incoming PTP messages with destination-ports 319 and 320\",\r
+                \"match\": {\r
+                  \"ipv4\": {\r
+                    \"protocol\": \"udp\"\r
+                  },\r
+                  \"transport\": {\r
+                    \"destination-port\": {\r
+                      \"range\": {\r
+                        \"start\": 319,\r
+                        \"end\": 320\r
+                      }\r
+                    }\r
+                  }\r
+                },\r
+                \"action\": {\r
+                  \"accept\": {\r
+                  }\r
+                }\r
+              },\r
+              {\r
+                \"sequence-id\": 420,\r
+                \"description\": \"Accept incoming PCEP packets with destination-port 4189\",\r
+                \"match\": {\r
+                  \"ipv4\": {\r
+                    \"protocol\": \"tcp\"\r
+                  },\r
+                  \"transport\": {\r
+                    \"destination-port\": {\r
+                      \"operator\": \"eq\",\r
+                      \"value\": 4189\r
+                    }\r
+                  }\r
+                },\r
+                \"action\": {\r
+                  \"accept\": {\r
+                  }\r
+                }\r
+              },\r
+              {\r
+                \"sequence-id\": 430,\r
+                \"description\": \"Accept incoming SBFD session messages\",\r
+                \"match\": {\r
+                  \"ipv4\": {\r
+                    \"protocol\": \"udp\"\r
+                  },\r
+                  \"transport\": {\r
+                    \"source-port\": {\r
+                      \"operator\": \"eq\",\r
+                      \"value\": 7784\r
+                    }\r
+                  }\r
+                },\r
+                \"action\": {\r
+                  \"accept\": {\r
+                  }\r
+                }\r
+              },\r
+              {\r
+                \"sequence-id\": 440,\r
+                \"description\": \"Accept incoming SBFD session messages\",\r
+                \"match\": {\r
+                  \"ipv4\": {\r
+                    \"protocol\": \"udp\"\r
+                  },\r
+                  \"transport\": {\r
+                    \"destination-port\": {\r
+                      \"operator\": \"eq\",\r
+                      \"value\": 7784\r
+                    }\r
+                  }\r
+                },\r
+                \"action\": {\r
+                  \"accept\": {\r
+                  }\r
+                }\r
+              },\r
+              {\r
+                \"sequence-id\": 450,\r
+                \"description\": \"Accept incoming LSP MPLS Echo requests and replies\",\r
+                \"match\": {\r
+                  \"ipv4\": {\r
+                    \"protocol\": \"udp\"\r
+                  },\r
+                  \"transport\": {\r
+                    \"source-port\": {\r
+                      \"operator\": \"eq\",\r
+                      \"value\": 3503\r
+                    }\r
+                  }\r
+                },\r
+                \"action\": {\r
+                  \"accept\": {\r
+                  }\r
+                }\r
+              },\r
+              {\r
+                \"sequence-id\": 460,\r
+                \"description\": \"Accept incoming LSP MPLS Echo requests and replies\",\r
+                \"match\": {\r
+                  \"ipv4\": {\r
+                    \"protocol\": \"udp\"\r
+                  },\r
+                  \"transport\": {\r
+                    \"destination-port\": {\r
+                      \"operator\": \"eq\",\r
+                      \"value\": 3503\r
+                    }\r
+                  }\r
+                },\r
+                \"action\": {\r
+                  \"accept\": {\r
+                  }\r
+                }\r
+              },\r
+              {\r
+                \"sequence-id\": 470,\r
+                \"description\": \"Accept incoming TWAMP Control connection\",\r
+                \"match\": {\r
+                  \"ipv4\": {\r
+                    \"protocol\": \"tcp\"\r
+                  },\r
+                  \"transport\": {\r
+                    \"destination-port\": {\r
+                      \"operator\": \"eq\",\r
+                      \"value\": 862\r
+                    }\r
+                  }\r
+                },\r
+                \"action\": {\r
+                  \"accept\": {\r
+                  }\r
+                }\r
+              },\r
+              {\r
+                \"sequence-id\": 550,\r
+                \"description\": \"Accept incoming VRRP Control packets\",\r
+                \"match\": {\r
+                  \"ipv4\": {\r
+                    \"protocol\": \"vrrp\"\r
+                  }\r
+                },\r
+                \"action\": {\r
+                  \"accept\": {\r
+                  }\r
+                }\r
+              },\r
+              {\r
+                \"sequence-id\": 560,\r
+                \"description\": \"Accept incoming MSDP messages\",\r
+                \"match\": {\r
+                  \"ipv4\": {\r
+                    \"protocol\": \"tcp\"\r
+                  },\r
+                  \"transport\": {\r
+                    \"destination-port\": {\r
+                      \"operator\": \"eq\",\r
+                      \"value\": 639\r
+                    }\r
+                  }\r
+                },\r
+                \"action\": {\r
+                  \"accept\": {\r
+                  }\r
+                }\r
+              },\r
+              {\r
+                \"sequence-id\": 570,\r
+                \"description\": \"Accept incoming MSDP messages\",\r
+                \"match\": {\r
+                  \"ipv4\": {\r
+                    \"protocol\": \"tcp\"\r
+                  },\r
+                  \"transport\": {\r
+                    \"source-port\": {\r
+                      \"operator\": \"eq\",\r
+                      \"value\": 639\r
+                    }\r
+                  }\r
+                },\r
+                \"action\": {\r
+                  \"accept\": {\r
+                  }\r
+                }\r
+              },\r
+              {\r
+                \"sequence-id\": 1000,\r
+                \"description\": \"Drop all else\",\r
+                \"action\": {\r
+                  \"log\": true,\r
+                  \"drop\": {\r
+                  }\r
+                }\r
+              }\r
+            ]\r
+          },\r
+          {\r
+            \"name\": \"cpm\",\r
+            \"type\": \"ipv6\",\r
+            \"statistics-per-entry\": true,\r
+            \"entry\": [\r
+              {\r
+                \"sequence-id\": 10,\r
+                \"description\": \"Accept incoming ICMPv6 unreachable messages\",\r
+                \"match\": {\r
+                  \"ipv6\": {\r
+                    \"next-header\": \"icmp6\",\r
+                    \"icmp6\": {\r
+                      \"type\": \"dest-unreachable\"\r
+                    }\r
+                  }\r
+                },\r
+                \"action\": {\r
+                  \"accept\": {\r
+                    \"rate-limit\": {\r
+                      \"system-cpu-policer\": \"icmp\"\r
+                    }\r
+                  }\r
+                }\r
+              },\r
+              {\r
+                \"sequence-id\": 20,\r
+                \"description\": \"Accept incoming ICMPv6 packet-too-big messages\",\r
+                \"match\": {\r
+                  \"ipv6\": {\r
+                    \"next-header\": \"icmp6\",\r
+                    \"icmp6\": {\r
+                      \"type\": \"packet-too-big\"\r
+                    }\r
+                  }\r
+                },\r
+                \"action\": {\r
+                  \"accept\": {\r
+                    \"rate-limit\": {\r
+                      \"system-cpu-policer\": \"icmp\"\r
+                    }\r
+                  }\r
+                }\r
+              },\r
+              {\r
+                \"sequence-id\": 30,\r
+                \"description\": \"Accept incoming ICMPv6 time-exceeded messages\",\r
+                \"match\": {\r
+                  \"ipv6\": {\r
+                    \"next-header\": \"icmp6\",\r
+                    \"icmp6\": {\r
+                      \"type\": \"time-exceeded\"\r
+                    }\r
+                  }\r
+                },\r
+                \"action\": {\r
+                  \"accept\": {\r
+                    \"rate-limit\": {\r
+                      \"system-cpu-policer\": \"icmp\"\r
+                    }\r
+                  }\r
+                }\r
+              },\r
+              {\r
+                \"sequence-id\": 50,\r
+                \"description\": \"Accept incoming ICMPv6 echo-request messages\",\r
+                \"match\": {\r
+                  \"ipv6\": {\r
+                    \"next-header\": \"icmp6\",\r
+                    \"icmp6\": {\r
+                      \"type\": \"echo-request\"\r
+                    }\r
+                  }\r
+                },\r
+                \"action\": {\r
+                  \"accept\": {\r
+                    \"rate-limit\": {\r
+                      \"system-cpu-policer\": \"icmp\"\r
+                    }\r
+                  }\r
+                }\r
+              },\r
+              {\r
+                \"sequence-id\": 60,\r
+                \"description\": \"Accept incoming ICMPv6 echo-reply messages\",\r
+                \"match\": {\r
+                  \"ipv6\": {\r
+                    \"next-header\": \"icmp6\",\r
+                    \"icmp6\": {\r
+                      \"type\": \"echo-reply\"\r
+                    }\r
+                  }\r
+                },\r
+                \"action\": {\r
+                  \"accept\": {\r
+                    \"rate-limit\": {\r
+                      \"system-cpu-policer\": \"icmp\"\r
+                    }\r
+                  }\r
+                }\r
+              },\r
+              {\r
+                \"sequence-id\": 70,\r
+                \"description\": \"Accept incoming ICMPv6 router-advertisement messages\",\r
+                \"match\": {\r
+                  \"ipv6\": {\r
+                    \"next-header\": \"icmp6\",\r
+                    \"icmp6\": {\r
+                      \"type\": \"router-advertise\"\r
+                    }\r
+                  }\r
+                },\r
+                \"action\": {\r
+                  \"accept\": {\r
+                    \"rate-limit\": {\r
+                      \"system-cpu-policer\": \"icmp\"\r
+                    }\r
+                  }\r
+                }\r
+              },\r
+              {\r
+                \"sequence-id\": 75,\r
+                \"description\": \"Accept incoming ICMPv6 router-solicit messages\",\r
+                \"match\": {\r
+                  \"ipv6\": {\r
+                    \"next-header\": \"icmp6\",\r
+                    \"icmp6\": {\r
+                      \"type\": \"router-solicit\"\r
+                    }\r
+                  }\r
+                },\r
+                \"action\": {\r
+                  \"accept\": {\r
+                    \"rate-limit\": {\r
+                      \"system-cpu-policer\": \"icmp\"\r
+                    }\r
+                  }\r
+                }\r
+              },\r
+              {\r
+                \"sequence-id\": 80,\r
+                \"description\": \"Accept incoming ICMPv6 neighbor-solicitation messages\",\r
+                \"match\": {\r
+                  \"ipv6\": {\r
+                    \"next-header\": \"icmp6\",\r
+                    \"icmp6\": {\r
+                      \"type\": \"neighbor-solicit\"\r
+                    }\r
+                  }\r
+                },\r
+                \"action\": {\r
+                  \"accept\": {\r
+                    \"rate-limit\": {\r
+                      \"system-cpu-policer\": \"icmp\"\r
+                    }\r
+                  }\r
+                }\r
+              },\r
+              {\r
+                \"sequence-id\": 90,\r
+                \"description\": \"Accept incoming ICMPv6 neighbor-advertisement messages\",\r
+                \"match\": {\r
+                  \"ipv6\": {\r
+                    \"next-header\": \"icmp6\",\r
+                    \"icmp6\": {\r
+                      \"type\": \"neighbor-advertise\"\r
+                    }\r
+                  }\r
+                },\r
+                \"action\": {\r
+                  \"accept\": {\r
+                    \"rate-limit\": {\r
+                      \"system-cpu-policer\": \"icmp\"\r
+                    }\r
+                  }\r
+                }\r
+              },\r
+              {\r
+                \"sequence-id\": 100,\r
+                \"description\": \"Accept incoming SSH when the other host initiates the TCP connection\",\r
+                \"match\": {\r
+                  \"ipv6\": {\r
+                    \"next-header\": \"tcp\"\r
+                  },\r
+                  \"transport\": {\r
+                    \"destination-port\": {\r
+                      \"operator\": \"eq\",\r
+                      \"value\": 22\r
+                    }\r
+                  }\r
+                },\r
+                \"action\": {\r
+                  \"accept\": {\r
+                  }\r
+                }\r
+              },\r
+              {\r
+                \"sequence-id\": 110,\r
+                \"description\": \"Accept incoming SSH when this router initiates the TCP connection\",\r
+                \"match\": {\r
+                  \"ipv6\": {\r
+                    \"next-header\": \"tcp\"\r
+                  },\r
+                  \"transport\": {\r
+                    \"source-port\": {\r
+                      \"operator\": \"eq\",\r
+                      \"value\": 22\r
+                    }\r
+                  }\r
+                },\r
+                \"action\": {\r
+                  \"accept\": {\r
+                  }\r
+                }\r
+              },\r
+              {\r
+                \"sequence-id\": 128,\r
+                \"description\": \"Containerlab-added rule: Accept incoming Telnet when the other host initiates the TCP connection\",\r
+                \"match\": {\r
+                  \"ipv6\": {\r
+                    \"next-header\": \"tcp\"\r
+                  },\r
+                  \"transport\": {\r
+                    \"source-port\": {\r
+                      \"operator\": \"eq\",\r
+                      \"value\": 23\r
+                    }\r
+                  }\r
+                },\r
+                \"action\": {\r
+                  \"accept\": {\r
+                  }\r
+                }\r
+              },\r
+              {\r
+                \"sequence-id\": 138,\r
+                \"description\": \"Containerlab-added rule: Accept incoming Telnet when this router initiates the TCP connection\",\r
+                \"match\": {\r
+                  \"ipv6\": {\r
+                    \"next-header\": \"tcp\"\r
+                  },\r
+                  \"transport\": {\r
+                    \"destination-port\": {\r
+                      \"operator\": \"eq\",\r
+                      \"value\": 23\r
+                    }\r
+                  }\r
+                },\r
+                \"action\": {\r
+                  \"accept\": {\r
+                  }\r
+                }\r
+              },\r
+              {\r
+                \"sequence-id\": 140,\r
+                \"description\": \"Accept incoming TACACS+ when the other host initiates the TCP connection\",\r
+                \"match\": {\r
+                  \"ipv6\": {\r
+                    \"next-header\": \"tcp\"\r
+                  },\r
+                  \"transport\": {\r
+                    \"destination-port\": {\r
+                      \"operator\": \"eq\",\r
+                      \"value\": 49\r
+                    }\r
+                  }\r
+                },\r
+                \"action\": {\r
+                  \"accept\": {\r
+                  }\r
+                }\r
+              },\r
+              {\r
+                \"sequence-id\": 150,\r
+                \"description\": \"Accept incoming TACACS+ when this router initiates the TCP connection\",\r
+                \"match\": {\r
+                  \"ipv6\": {\r
+                    \"next-header\": \"tcp\"\r
+                  },\r
+                  \"transport\": {\r
+                    \"source-port\": {\r
+                      \"operator\": \"eq\",\r
+                      \"value\": 49\r
+                    }\r
+                  }\r
+                },\r
+                \"action\": {\r
+                  \"accept\": {\r
+                  }\r
+                }\r
+              },\r
+              {\r
+                \"sequence-id\": 160,\r
+                \"description\": \"Accept incoming DNS response messages\",\r
+                \"match\": {\r
+                  \"ipv6\": {\r
+                    \"next-header\": \"udp\"\r
+                  },\r
+                  \"transport\": {\r
+                    \"source-port\": {\r
+                      \"operator\": \"eq\",\r
+                      \"value\": 53\r
+                    }\r
+                  }\r
+                },\r
+                \"action\": {\r
+                  \"accept\": {\r
+                  }\r
+                }\r
+              },\r
+              {\r
+                \"sequence-id\": 188,\r
+                \"description\": \"Containerlab-added rule: Accept incoming HTTP(JSON-RPC) when the other host initiates the TCP connection\",\r
+                \"match\": {\r
+                  \"ipv6\": {\r
+                    \"next-header\": \"tcp\"\r
+                  },\r
+                  \"transport\": {\r
+                    \"destination-port\": {\r
+                      \"operator\": \"eq\",\r
+                      \"value\": 80\r
+                    }\r
+                  }\r
+                },\r
+                \"action\": {\r
+                  \"accept\": {\r
+                  }\r
+                }\r
+              },\r
+              {\r
+                \"sequence-id\": 190,\r
+                \"description\": \"Accept incoming HTTP(JSON-RPC) when this router initiates the TCP connection\",\r
+                \"match\": {\r
+                  \"ipv6\": {\r
+                    \"next-header\": \"tcp\"\r
+                  },\r
+                  \"transport\": {\r
+                    \"source-port\": {\r
+                      \"operator\": \"eq\",\r
+                      \"value\": 80\r
+                    }\r
+                  }\r
+                },\r
+                \"action\": {\r
+                  \"accept\": {\r
+                  }\r
+                }\r
+              },\r
+              {\r
+                \"sequence-id\": 200,\r
+                \"description\": \"Accept incoming NTP messages from servers\",\r
+                \"match\": {\r
+                  \"ipv6\": {\r
+                    \"next-header\": \"udp\"\r
+                  },\r
+                  \"transport\": {\r
+                    \"source-port\": {\r
+                      \"operator\": \"eq\",\r
+                      \"value\": 123\r
+                    }\r
+                  }\r
+                },\r
+                \"action\": {\r
+                  \"accept\": {\r
+                  }\r
+                }\r
+              },\r
+              {\r
+                \"sequence-id\": 210,\r
+                \"description\": \"Accept incoming SNMP GET/GETNEXT messages from servers\",\r
+                \"match\": {\r
+                  \"ipv6\": {\r
+                    \"next-header\": \"udp\"\r
+                  },\r
+                  \"transport\": {\r
+                    \"destination-port\": {\r
+                      \"operator\": \"eq\",\r
+                      \"value\": 161\r
+                    }\r
+                  }\r
+                },\r
+                \"action\": {\r
+                  \"accept\": {\r
+                  }\r
+                }\r
+              },\r
+              {\r
+                \"sequence-id\": 220,\r
+                \"description\": \"Accept incoming BGP when the other router initiates the TCP connection\",\r
+                \"match\": {\r
+                  \"ipv6\": {\r
+                    \"next-header\": \"tcp\"\r
+                  },\r
+                  \"transport\": {\r
+                    \"destination-port\": {\r
+                      \"operator\": \"eq\",\r
+                      \"value\": 179\r
+                    }\r
+                  }\r
+                },\r
+                \"action\": {\r
+                  \"accept\": {\r
+                  }\r
+                }\r
+              },\r
+              {\r
+                \"sequence-id\": 230,\r
+                \"description\": \"Accept incoming BGP when this router initiates the TCP connection\",\r
+                \"match\": {\r
+                  \"ipv6\": {\r
+                    \"next-header\": \"tcp\"\r
+                  },\r
+                  \"transport\": {\r
+                    \"source-port\": {\r
+                      \"operator\": \"eq\",\r
+                      \"value\": 179\r
+                    }\r
+                  }\r
+                },\r
+                \"action\": {\r
+                  \"accept\": {\r
+                  }\r
+                }\r
+              },\r
+              {\r
+                \"sequence-id\": 240,\r
+                \"description\": \"Accept incoming HTTPS(JSON-RPC) when the other host initiates the TCP connection\",\r
+                \"match\": {\r
+                  \"ipv6\": {\r
+                    \"next-header\": \"tcp\"\r
+                  },\r
+                  \"transport\": {\r
+                    \"destination-port\": {\r
+                      \"operator\": \"eq\",\r
+                      \"value\": 443\r
+                    }\r
+                  }\r
+                },\r
+                \"action\": {\r
+                  \"accept\": {\r
+                  }\r
+                }\r
+              },\r
+              {\r
+                \"sequence-id\": 250,\r
+                \"description\": \"Accept incoming HTTPS(JSON-RPC) when this router initiates the TCP connection\",\r
+                \"match\": {\r
+                  \"ipv6\": {\r
+                    \"next-header\": \"tcp\"\r
+                  },\r
+                  \"transport\": {\r
+                    \"source-port\": {\r
+                      \"operator\": \"eq\",\r
+                      \"value\": 443\r
+                    }\r
+                  }\r
+                },\r
+                \"action\": {\r
+                  \"accept\": {\r
+                  }\r
+                }\r
+              },\r
+              {\r
+                \"sequence-id\": 260,\r
+                \"description\": \"Accept incoming DHCPv6 client messages\",\r
+                \"match\": {\r
+                  \"ipv6\": {\r
+                    \"next-header\": \"udp\"\r
+                  },\r
+                  \"transport\": {\r
+                    \"destination-port\": {\r
+                      \"operator\": \"eq\",\r
+                      \"value\": 546\r
+                    }\r
+                  }\r
+                },\r
+                \"action\": {\r
+                  \"accept\": {\r
+                  }\r
+                }\r
+              },\r
+              {\r
+                \"sequence-id\": 270,\r
+                \"description\": \"Accept incoming single-hop BFD session messages\",\r
+                \"match\": {\r
+                  \"ipv6\": {\r
+                    \"next-header\": \"udp\"\r
+                  },\r
+                  \"transport\": {\r
+                    \"destination-port\": {\r
+                      \"operator\": \"eq\",\r
+                      \"value\": 3784\r
+                    }\r
+                  }\r
+                },\r
+                \"action\": {\r
+                  \"accept\": {\r
+                  }\r
+                }\r
+              },\r
+              {\r
+                \"sequence-id\": 280,\r
+                \"description\": \"Accept incoming multi-hop BFD session messages\",\r
+                \"match\": {\r
+                  \"ipv6\": {\r
+                    \"next-header\": \"udp\"\r
+                  },\r
+                  \"transport\": {\r
+                    \"destination-port\": {\r
+                      \"operator\": \"eq\",\r
+                      \"value\": 4784\r
+                    }\r
+                  }\r
+                },\r
+                \"action\": {\r
+                  \"accept\": {\r
+                  }\r
+                }\r
+              },\r
+              {\r
+                \"sequence-id\": 290,\r
+                \"description\": \"Accept incoming uBFD session messages\",\r
+                \"match\": {\r
+                  \"ipv6\": {\r
+                    \"next-header\": \"udp\"\r
+                  },\r
+                  \"transport\": {\r
+                    \"destination-port\": {\r
+                      \"operator\": \"eq\",\r
+                      \"value\": 6784\r
+                    }\r
+                  }\r
+                },\r
+                \"action\": {\r
+                  \"accept\": {\r
+                  }\r
+                }\r
+              },\r
+              {\r
+                \"sequence-id\": 300,\r
+                \"description\": \"Accept incoming gRPC messages when the other host initiates the TCP connection\",\r
+                \"match\": {\r
+                  \"ipv6\": {\r
+                    \"next-header\": \"tcp\"\r
+                  },\r
+                  \"transport\": {\r
+                    \"destination-port\": {\r
+                      \"operator\": \"eq\",\r
+                      \"value\": 57400\r
+                    }\r
+                  }\r
+                },\r
+                \"action\": {\r
+                  \"accept\": {\r
+                  }\r
+                }\r
+              },\r
+              {\r
+                \"sequence-id\": 310,\r
+                \"description\": \"Accept incoming UDP traceroute messages\",\r
+                \"match\": {\r
+                  \"ipv6\": {\r
+                    \"next-header\": \"udp\"\r
+                  },\r
+                  \"transport\": {\r
+                    \"destination-port\": {\r
+                      \"range\": {\r
+                        \"start\": 33434,\r
+                        \"end\": 33464\r
+                      }\r
+                    }\r
+                  }\r
+                },\r
+                \"action\": {\r
+                  \"accept\": {\r
+                  }\r
+                }\r
+              },\r
+              {\r
+                \"sequence-id\": 320,\r
+                \"description\": \"Accept incoming IPV6 hop-in-hop messages\",\r
+                \"match\": {\r
+                  \"ipv6\": {\r
+                    \"next-header\": 0\r
+                  }\r
+                },\r
+                \"action\": {\r
+                  \"accept\": {\r
+                  }\r
+                }\r
+              },\r
+              {\r
+                \"sequence-id\": 340,\r
+                \"description\": \"Accept incoming OSPF messages\",\r
+                \"match\": {\r
+                  \"ipv6\": {\r
+                    \"next-header\": 89\r
+                  }\r
+                },\r
+                \"action\": {\r
+                  \"accept\": {\r
+                  }\r
+                }\r
+              },\r
+              {\r
+                \"sequence-id\": 350,\r
+                \"description\": \"Accept incoming DHCPv6 relay messages\",\r
+                \"match\": {\r
+                  \"ipv6\": {\r
+                    \"next-header\": \"udp\"\r
+                  },\r
+                  \"transport\": {\r
+                    \"destination-port\": {\r
+                      \"operator\": \"eq\",\r
+                      \"value\": 547\r
+                    }\r
+                  }\r
+                },\r
+                \"action\": {\r
+                  \"accept\": {\r
+                  }\r
+                }\r
+              },\r
+              {\r
+                \"sequence-id\": 365,\r
+                \"description\": \"Containerlab-added rule: Accept incoming gRPC over port 50052 for the eda-discovery gRPC server\",\r
+                \"match\": {\r
+                  \"ipv6\": {\r
+                    \"next-header\": \"tcp\"\r
+                  },\r
+                  \"transport\": {\r
+                    \"destination-port\": {\r
+                      \"operator\": \"eq\",\r
+                      \"value\": 50052\r
+                    }\r
+                  }\r
+                },\r
+                \"action\": {\r
+                  \"accept\": {\r
+                  }\r
+                }\r
+              },\r
+              {\r
+                \"sequence-id\": 366,\r
+                \"description\": \"Containerlab-added rule: Accept incoming gRPC over port 57410 for the eda-mgmt gRPC server\",\r
+                \"match\": {\r
+                  \"ipv6\": {\r
+                    \"next-header\": \"tcp\"\r
+                  },\r
+                  \"transport\": {\r
+                    \"destination-port\": {\r
+                      \"operator\": \"eq\",\r
+                      \"value\": 57410\r
+                    }\r
+                  }\r
+                },\r
+                \"action\": {\r
+                  \"accept\": {\r
+                  }\r
+                }\r
+              },\r
+              {\r
+                \"sequence-id\": 367,\r
+                \"description\": \"Containerlab-added rule: Accept incoming gRPC over port 57411 for the eda-mgmt gRPC server\",\r
+                \"match\": {\r
+                  \"ipv6\": {\r
+                    \"next-header\": \"tcp\"\r
+                  },\r
+                  \"transport\": {\r
+                    \"destination-port\": {\r
+                      \"operator\": \"eq\",\r
+                      \"value\": 57411\r
+                    }\r
+                  }\r
+                },\r
+                \"action\": {\r
+                  \"accept\": {\r
+                  }\r
+                }\r
+              },\r
+              {\r
+                \"sequence-id\": 368,\r
+                \"description\": \"Containerlab-added rule: Accept incoming gRPC over port 57401 for the insecure-mgmt gRPC server\",\r
+                \"match\": {\r
+                  \"ipv6\": {\r
+                    \"next-header\": \"tcp\"\r
+                  },\r
+                  \"transport\": {\r
+                    \"destination-port\": {\r
+                      \"operator\": \"eq\",\r
+                      \"value\": 57401\r
+                    }\r
+                  }\r
+                },\r
+                \"action\": {\r
+                  \"accept\": {\r
+                  }\r
+                }\r
+              },\r
+              {\r
+                \"sequence-id\": 380,\r
+                \"description\": \"Accept incoming MLDv1 report messages\",\r
+                \"match\": {\r
+                  \"ipv6\": {\r
+                    \"next-header\": \"icmp6\",\r
+                    \"icmp6\": {\r
+                      \"type\": \"mld-report\"\r
+                    }\r
+                  }\r
+                },\r
+                \"action\": {\r
+                  \"accept\": {\r
+                  }\r
+                }\r
+              },\r
+              {\r
+                \"sequence-id\": 390,\r
+                \"description\": \"Accept incoming MLDv2 report messages\",\r
+                \"match\": {\r
+                  \"ipv6\": {\r
+                    \"next-header\": \"icmp6\",\r
+                    \"icmp6\": {\r
+                      \"type\": \"mld-v2\"\r
+                    }\r
+                  }\r
+                },\r
+                \"action\": {\r
+                  \"accept\": {\r
+                  }\r
+                }\r
+              },\r
+              {\r
+                \"sequence-id\": 400,\r
+                \"description\": \"Accept incoming MLDv1 done messages\",\r
+                \"match\": {\r
+                  \"ipv6\": {\r
+                    \"next-header\": \"icmp6\",\r
+                    \"icmp6\": {\r
+                      \"type\": \"mld-done\"\r
+                    }\r
+                  }\r
+                },\r
+                \"action\": {\r
+                  \"accept\": {\r
+                  }\r
+                }\r
+              },\r
+              {\r
+                \"sequence-id\": 410,\r
+                \"description\": \"Accept incoming MLD query messages\",\r
+                \"match\": {\r
+                  \"ipv6\": {\r
+                    \"next-header\": \"icmp6\",\r
+                    \"icmp6\": {\r
+                      \"type\": \"mld-query\"\r
+                    }\r
+                  }\r
+                },\r
+                \"action\": {\r
+                  \"accept\": {\r
+                  }\r
+                }\r
+              },\r
+              {\r
+                \"sequence-id\": 420,\r
+                \"description\": \"Accept incoming PIM messages\",\r
+                \"match\": {\r
+                  \"ipv6\": {\r
+                    \"next-header\": \"pim\"\r
+                  }\r
+                },\r
+                \"action\": {\r
+                  \"accept\": {\r
+                  }\r
+                }\r
+              },\r
+              {\r
+                \"sequence-id\": 430,\r
+                \"description\": \"Accept incoming RADIUS AAA messages\",\r
+                \"match\": {\r
+                  \"ipv6\": {\r
+                    \"next-header\": \"udp\"\r
+                  },\r
+                  \"transport\": {\r
+                    \"source-port\": {\r
+                      \"range\": {\r
+                        \"start\": 1812,\r
+                        \"end\": 1813\r
+                      }\r
+                    }\r
+                  }\r
+                },\r
+                \"action\": {\r
+                  \"accept\": {\r
+                  }\r
+                }\r
+              },\r
+              {\r
+                \"sequence-id\": 440,\r
+                \"description\": \"Accept incoming SSH connections on the default NETCONF port 830\",\r
+                \"match\": {\r
+                  \"ipv6\": {\r
+                    \"next-header\": \"tcp\"\r
+                  },\r
+                  \"transport\": {\r
+                    \"destination-port\": {\r
+                      \"operator\": \"eq\",\r
+                      \"value\": 830\r
+                    }\r
+                  }\r
+                },\r
+                \"action\": {\r
+                  \"accept\": {\r
+                  }\r
+                }\r
+              },\r
+              {\r
+                \"sequence-id\": 450,\r
+                \"description\": \"Accept incoming PTP messages with destination-ports 319 and 320\",\r
+                \"match\": {\r
+                  \"ipv6\": {\r
+                    \"next-header\": \"udp\"\r
+                  },\r
+                  \"transport\": {\r
+                    \"destination-port\": {\r
+                      \"range\": {\r
+                        \"start\": 319,\r
+                        \"end\": 320\r
+                      }\r
+                    }\r
+                  }\r
+                },\r
+                \"action\": {\r
+                  \"accept\": {\r
+                  }\r
+                }\r
+              },\r
+              {\r
+                \"sequence-id\": 460,\r
+                \"description\": \"Accept incoming PCEP packets with destination-port 4189\",\r
+                \"match\": {\r
+                  \"ipv6\": {\r
+                    \"next-header\": \"tcp\"\r
+                  },\r
+                  \"transport\": {\r
+                    \"destination-port\": {\r
+                      \"operator\": \"eq\",\r
+                      \"value\": 4189\r
+                    }\r
+                  }\r
+                },\r
+                \"action\": {\r
+                  \"accept\": {\r
+                  }\r
+                }\r
+              },\r
+              {\r
+                \"sequence-id\": 470,\r
+                \"description\": \"Accept incoming SBFD session messages\",\r
+                \"match\": {\r
+                  \"ipv6\": {\r
+                    \"next-header\": \"udp\"\r
+                  },\r
+                  \"transport\": {\r
+                    \"source-port\": {\r
+                      \"operator\": \"eq\",\r
+                      \"value\": 7784\r
+                    }\r
+                  }\r
+                },\r
+                \"action\": {\r
+                  \"accept\": {\r
+                  }\r
+                }\r
+              },\r
+              {\r
+                \"sequence-id\": 480,\r
+                \"description\": \"Accept incoming SBFD session messages\",\r
+                \"match\": {\r
+                  \"ipv6\": {\r
+                    \"next-header\": \"udp\"\r
+                  },\r
+                  \"transport\": {\r
+                    \"destination-port\": {\r
+                      \"operator\": \"eq\",\r
+                      \"value\": 7784\r
+                    }\r
+                  }\r
+                },\r
+                \"action\": {\r
+                  \"accept\": {\r
+                  }\r
+                }\r
+              },\r
+              {\r
+                \"sequence-id\": 490,\r
+                \"description\": \"Accept incoming LDP packets\",\r
+                \"match\": {\r
+                  \"ipv6\": {\r
+                    \"next-header\": \"udp\"\r
+                  },\r
+                  \"transport\": {\r
+                    \"source-port\": {\r
+                      \"operator\": \"eq\",\r
+                      \"value\": 646\r
+                    }\r
+                  }\r
+                },\r
+                \"action\": {\r
+                  \"accept\": {\r
+                  }\r
+                }\r
+              },\r
+              {\r
+                \"sequence-id\": 500,\r
+                \"description\": \"Accept incoming LDP packets with source-port 646\",\r
+                \"match\": {\r
+                  \"ipv6\": {\r
+                    \"next-header\": \"tcp\"\r
+                  },\r
+                  \"transport\": {\r
+                    \"source-port\": {\r
+                      \"operator\": \"eq\",\r
+                      \"value\": 646\r
+                    }\r
+                  }\r
+                },\r
+                \"action\": {\r
+                  \"accept\": {\r
+                  }\r
+                }\r
+              },\r
+              {\r
+                \"sequence-id\": 510,\r
+                \"description\": \"Accept incoming LDP packets with destination-port 646\",\r
+                \"match\": {\r
+                  \"ipv6\": {\r
+                    \"next-header\": \"tcp\"\r
+                  },\r
+                  \"transport\": {\r
+                    \"destination-port\": {\r
+                      \"operator\": \"eq\",\r
+                      \"value\": 646\r
+                    }\r
+                  }\r
+                },\r
+                \"action\": {\r
+                  \"accept\": {\r
+                  }\r
+                }\r
+              },\r
+              {\r
+                \"sequence-id\": 520,\r
+                \"description\": \"Accept incoming TWAMP Control connection\",\r
+                \"match\": {\r
+                  \"ipv6\": {\r
+                    \"next-header\": \"tcp\"\r
+                  },\r
+                  \"transport\": {\r
+                    \"destination-port\": {\r
+                      \"operator\": \"eq\",\r
+                      \"value\": 862\r
+                    }\r
+                  }\r
+                },\r
+                \"action\": {\r
+                  \"accept\": {\r
+                  }\r
+                }\r
+              },\r
+              {\r
+                \"sequence-id\": 530,\r
+                \"description\": \"Accept incoming LSP MPLS Echo requests and replies\",\r
+                \"match\": {\r
+                  \"ipv6\": {\r
+                    \"next-header\": \"udp\"\r
+                  },\r
+                  \"transport\": {\r
+                    \"destination-port\": {\r
+                      \"operator\": \"eq\",\r
+                      \"value\": 3503\r
+                    }\r
+                  }\r
+                },\r
+                \"action\": {\r
+                  \"accept\": {\r
+                  }\r
+                }\r
+              },\r
+              {\r
+                \"sequence-id\": 540,\r
+                \"description\": \"Accept incoming LSP MPLS Echo requests and replies\",\r
+                \"match\": {\r
+                  \"ipv6\": {\r
+                    \"next-header\": \"udp\"\r
+                  },\r
+                  \"transport\": {\r
+                    \"source-port\": {\r
+                      \"operator\": \"eq\",\r
+                      \"value\": 3503\r
+                    }\r
+                  }\r
+                },\r
+                \"action\": {\r
+                  \"accept\": {\r
+                  }\r
+                }\r
+              },\r
+              {\r
+                \"sequence-id\": 550,\r
+                \"description\": \"Accept incoming VRRP Control packets\",\r
+                \"match\": {\r
+                  \"ipv6\": {\r
+                    \"next-header\": \"vrrp\"\r
+                  }\r
+                },\r
+                \"action\": {\r
+                  \"accept\": {\r
+                  }\r
+                }\r
+              },\r
+              {\r
+                \"sequence-id\": 1000,\r
+                \"description\": \"Drop all else\",\r
+                \"action\": {\r
+                  \"log\": true,\r
+                  \"drop\": {\r
+                  }\r
+                }\r
+              }\r
+            ]\r
+          }\r
+        ],\r
+        \"policers\": {\r
+          \"system-cpu-policer\": [\r
+            {\r
+              \"name\": \"icmp\",\r
+              \"entry-specific\": false,\r
+              \"peak-rate-pps\": 1000,\r
+              \"maximum-burst-packet\": 1000\r
+            }\r
+          ]\r
+        }\r
+      },\r
+      \"system\": {\r
+        \"management\": {\r
+          \"openconfig\": {\r
+            \"admin-state\": \"enable\"\r
+          }\r
+        },\r
+        \"control-plane-traffic\": {\r
+          \"input\": {\r
+            \"acl\": {\r
+              \"acl-filter\": [\r
+                {\r
+                  \"name\": \"cpm\",\r
+                  \"type\": \"ipv4\"\r
+                },\r
+                {\r
+                  \"name\": \"cpm\",\r
+                  \"type\": \"ipv6\"\r
+                }\r
+              ]\r
+            }\r
+          }\r
+        },\r
+        \"lldp\": {\r
+          \"admin-state\": \"enable\"\r
+        },\r
+        \"json-rpc-server\": {\r
+          \"admin-state\": \"enable\",\r
+          \"network-instance\": [\r
+            {\r
+              \"name\": \"mgmt\",\r
+              \"http\": {\r
+                \"admin-state\": \"enable\"\r
+              },\r
+              \"https\": {\r
+                \"admin-state\": \"enable\",\r
+                \"tls-profile\": \"clab-profile\"\r
+              }\r
+            }\r
+          ]\r
+        },\r
+        \"grpc-server\": [\r
+          {\r
+            \"name\": \"eda-discovery\",\r
+            \"admin-state\": \"enable\",\r
+            \"rate-limit\": 65535,\r
+            \"session-limit\": 1024,\r
+            \"metadata-authentication\": true,\r
+            \"default-tls-profile\": true,\r
+            \"network-instance\": \"mgmt\",\r
+            \"port\": 50052,\r
+            \"services\": [\r
+              \"gnmi\",\r
+              \"gnsi\"\r
+            ]\r
+          },\r
+          {\r
+            \"name\": \"eda-insecure-mgmt\",\r
+            \"admin-state\": \"enable\",\r
+            \"rate-limit\": 65535,\r
+            \"session-limit\": 1024,\r
+            \"metadata-authentication\": true,\r
+            \"port\": 57411,\r
+            \"services\": [\r
+              \"gnmi\",\r
+              \"gnoi\",\r
+              \"gnsi\"\r
+            ]\r
+          },\r
+          {\r
+            \"name\": \"eda-mgmt\",\r
+            \"admin-state\": \"enable\",\r
+            \"rate-limit\": 65535,\r
+            \"session-limit\": 1024,\r
+            \"metadata-authentication\": true,\r
+            \"tls-profile\": \"EDA\",\r
+            \"network-instance\": \"mgmt\",\r
+            \"port\": 57410,\r
+            \"services\": [\r
+              \"gnmi\",\r
+              \"gnoi\",\r
+              \"gnsi\"\r
+            ]\r
+          },\r
+          {\r
+            \"name\": \"insecure-mgmt\",\r
+            \"admin-state\": \"enable\",\r
+            \"rate-limit\": 65000,\r
+            \"network-instance\": \"mgmt\",\r
+            \"port\": 57401,\r
+            \"trace-options\": [\r
+              \"request\",\r
+              \"response\",\r
+              \"common\"\r
+            ],\r
+            \"services\": [\r
+              \"gnmi\",\r
+              \"gnoi\",\r
+              \"gnsi\",\r
+              \"gribi\",\r
+              \"p4rt\"\r
+            ],\r
+            \"unix-socket\": {\r
+              \"admin-state\": \"enable\"\r
+            }\r
+          },\r
+          {\r
+            \"name\": \"mgmt\",\r
+            \"admin-state\": \"enable\",\r
+            \"rate-limit\": 65000,\r
+            \"tls-profile\": \"clab-profile\",\r
+            \"network-instance\": \"mgmt\",\r
+            \"trace-options\": [\r
+              \"request\",\r
+              \"response\",\r
+              \"common\"\r
+            ],\r
+            \"services\": [\r
+              \"gnmi\",\r
+              \"gnoi\",\r
+              \"gnsi\",\r
+              \"gribi\",\r
+              \"p4rt\"\r
+            ],\r
+            \"unix-socket\": {\r
+              \"admin-state\": \"enable\"\r
+            }\r
+          }\r
+        ],\r
+        \"dns-instance\": [\r
+          {\r
+            \"name\": \"clab-default\",\r
+            \"network-instance\": \"mgmt\",\r
+            \"server-list\": [\r
+              \"172.16.100.240\"\r
+            ]\r
+          }\r
+        ],\r
+        \"snmp\": {\r
+          \"access-group\": [\r
+            {\r
+              \"name\": \"SNMPv2-RO-Community\",\r
+              \"security-level\": \"no-auth-no-priv\",\r
+              \"community-entry\": [\r
+                {\r
+                  \"name\": \"RO-Community\",\r
+                  \"community\": \"REDACTED-ENCRYPTED-VALUE\"\r
+                }\r
+              ]\r
+            }\r
+          ],\r
+          \"network-instance\": [\r
+            {\r
+              \"name\": \"mgmt\",\r
+              \"admin-state\": \"enable\"\r
+            }\r
+          ]\r
+        },\r
+        \"ssh-server\": [\r
+          {\r
+            \"name\": \"mgmt\",\r
+            \"admin-state\": \"enable\",\r
+            \"network-instance\": \"mgmt\",\r
+            \"use-credentialz\": true\r
+          },\r
+          {\r
+            \"name\": \"mgmt-netconf\",\r
+            \"admin-state\": \"enable\",\r
+            \"network-instance\": \"mgmt\",\r
+            \"port\": 830,\r
+            \"disable-shell\": true\r
+          }\r
+        ],\r
+        \"banner\": {\r
+          \"login-banner\": \"................................................................\\n:                  Welcome to Nokia SR Linux!                  :\\n:              Open Network OS for the NetOps era.             :\\n:                                                              :\\n:    This is a freely distributed official container image.    :\\n:                      Use it - Share it                       :\\n:                                                              :\\n: Get started: https://learn.srlinux.dev                       :\\n: Container:   https://go.srlinux.dev/container-image          :\\n: Docs:        https://doc.srlinux.dev/26-3                    :\\n: Rel. notes:  https://doc.srlinux.dev/rnn                     :\\n: YANG:        https://yang.srlinux.dev/26.3.1                 :\\n: Discord:     https://go.srlinux.dev/discord                  :\\n: Contact:     https://go.srlinux.dev/contact-sales            :\\n................................................................\\n\"\r
+        },\r
+        \"tls\": {\r
+          \"profile\": [\r
+            {\r
+              \"name\": \"clab-profile\",\r
+              \"key\": \"REDACTED-ENCRYPTED-VALUE\",\r
+              \"certificate\": \"-----BEGIN CERTIFICATE-----\\nMIID8jCCAtqgAwIBAgICBnowDQYJKoZIhvcNAQELBQAwXDELMAkGA1UEBhMCVVMx\\nCTAHBgNVBAcTADEVMBMGA1UEChMMY29udGFpbmVybGFiMQkwBwYDVQQLEwAxIDAe\\nBgNVBAMTF294aWRpemVkLXNybGludXggbGFiIENBMB4XDTI2MTEyMzA3NTYyMFoX\\nDTI3MTEyMzA3NTYyMFowYDELMAkGA1UEBhMCVVMxCTAHBgNVBAcTADEVMBMGA1UE\\nChMMY29udGFpbmVybGFiMQkwBwYDVQQLEwAxJDAiBgNVBAMTG3NybC1uZXcub3hp\\nZGl6ZWQtc3JsaW51eC5pbzCCASIwDQYJKoZIhvcNAQEBBQADggEPADCCAQoCggEB\\nAPa0ZfaTli3dda6xaZjYF3UUwcZ4RJvUMNN+LFSxjZgj4d4nmn5bc9fNH7JWPwDa\\npdNPHHOccy1ufQHL9irdeVe1FYO9ZkduU6AWwBzGPhtNUKvaBBLF3Pc69GPJExmJ\\nhfJhbVHEbGxmVCj+kdrx+j4nF1L+ouW1l+tOClfFKu7qBOc82vhgSP6kiuiBsP5O\\nqLfPLz+ZGkYaSp395JKhYBtFUE0Ggv/iEJx8hUtFVr63vqrEpY3bCppJLhjWyi5n\\n+opXF805wAeHuL3B0/KP8JbiScYraVB3q6Bj5Pgdc2a5TGJzESSgwfTf63p7csXd\\n6zwTUvCXRQLn4OtkSfxDd4kCAwEAAaOBuTCBtjAOBgNVHQ8BAf8EBAMCBaAwHQYD\\nVR0lBBYwFAYIKwYBBQUHAwIGCCsGAQUFBwMBMA4GA1UdDgQHBAUBAgMEBjAfBgNV\\nHSMEGDAWgBRM/ZRyMkMTpxduLbjlDl+B2uqYeTBUBgNVHREETTBLggdzcmwtbmV3\\ngh1jbGFiLW94aWRpemVkLXNybGludXgtc3JsLW5ld4Ibc3JsLW5ldy5veGlkaXpl\\nZC1zcmxpbnV4LmlvhwSsFC8DMA0GCSqGSIb3DQEBCwUAA4IBAQCnIfqtoAmW52q0\\ny9qarh+53aydB0bkLiRun96L7eBCe47iYcIAaegZZfGzufDFnDMFUWY/zqrVo4jq\\no8fRyd86wfkFujXHW31WMY/OWTlIEDkawcat3TK3iR0hJQEaZ8v2Y1tL8PBUNoKz\\noKRMLOQu0QozRLE+m6BCGtw46n72S/h53KcYa2ak1o5dZQN89q7WgLxkBln0e9YE\\nqsyS4N26onmGhbLmo1RtbrPoAZ4Pu+uHq05K3OT+6JB9SLGjMNoXw3D7R8jIQe4c\\nSIxWsomKtNH22rN0TWokSeXcU5A7RAme8BA9YzIZOIavNoC6N+/x7PPv85UJ4GoZ\\neuUic8AL\\n-----END CERTIFICATE-----\\n\",\r
+              \"authenticate-client\": false\r
+            }\r
+          ]\r
+        },\r
+        \"aaa\": {\r
+          \"authentication\": {\r
+            \"idle-timeout\": 7200,\r
+            \"authentication-method\": [\r
+              \"local\"\r
+            ],\r
+            \"admin-user\": {\r
+              \"ssh-key\": [\r
+                \"ssh-ed25519-cert-v01@openssh.com REDACTED-PUBLIC-KEY\",\r
+                \"ssh-ed25519 REDACTED-PUBLIC-KEY\",\r
+                \"ssh-ed25519 REDACTED-PUBLIC-KEY\",\r
+                \"ssh-ed25519 REDACTED-PUBLIC-KEY\",\r
+                \"ssh-ed25519 REDACTED-PUBLIC-KEY\",\r
+                \"ssh-rsa REDACTED-PUBLIC-KEY\"\r
+              ]\r
+            },\r
+            \"linuxadmin-user\": {\r
+              \"password\": \"REDACTED-PASSWORD\",\r
+              \"ssh-key\": [\r
+                \"ssh-ed25519-cert-v01@openssh.com REDACTED-PUBLIC-KEY\",\r
+                \"ssh-ed25519 REDACTED-PUBLIC-KEY\",\r
+                \"ssh-ed25519 REDACTED-PUBLIC-KEY\",\r
+                \"ssh-ed25519 REDACTED-PUBLIC-KEY\",\r
+                \"ssh-ed25519 REDACTED-PUBLIC-KEY\",\r
+                \"ssh-rsa REDACTED-PUBLIC-KEY\"\r
+              ]\r
+            }\r
+          },\r
+          \"server-group\": [\r
+            {\r
+              \"name\": \"local\",\r
+              \"type\": \"local\"\r
+            }\r
+          ]\r
+        },\r
+        \"ndk-server\": {\r
+          \"admin-state\": \"enable\"\r
+        },\r
+        \"logging\": {\r
+          \"buffer\": [\r
+            {\r
+              \"buffer-name\": \"messages\",\r
+              \"rotate\": 3,\r
+              \"size\": \"10000000\",\r
+              \"facility\": [\r
+                {\r
+                  \"facility-name\": \"local6\",\r
+                  \"priority\": {\r
+                    \"match-above\": \"informational\"\r
+                  }\r
+                }\r
+              ]\r
+            },\r
+            {\r
+              \"buffer-name\": \"system\",\r
+              \"facility\": [\r
+                {\r
+                  \"facility-name\": \"auth\",\r
+                  \"priority\": {\r
+                    \"match-above\": \"warning\"\r
+                  }\r
+                },\r
+                {\r
+                  \"facility-name\": \"cron\",\r
+                  \"priority\": {\r
+                    \"match-above\": \"warning\"\r
+                  }\r
+                },\r
+                {\r
+                  \"facility-name\": \"daemon\",\r
+                  \"priority\": {\r
+                    \"match-above\": \"warning\"\r
+                  }\r
+                },\r
+                {\r
+                  \"facility-name\": \"ftp\",\r
+                  \"priority\": {\r
+                    \"match-above\": \"warning\"\r
+                  }\r
+                },\r
+                {\r
+                  \"facility-name\": \"kern\",\r
+                  \"priority\": {\r
+                    \"match-above\": \"warning\"\r
+                  }\r
+                },\r
+                {\r
+                  \"facility-name\": \"lpr\",\r
+                  \"priority\": {\r
+                    \"match-above\": \"warning\"\r
+                  }\r
+                },\r
+                {\r
+                  \"facility-name\": \"mail\",\r
+                  \"priority\": {\r
+                    \"match-above\": \"warning\"\r
+                  }\r
+                },\r
+                {\r
+                  \"facility-name\": \"news\",\r
+                  \"priority\": {\r
+                    \"match-above\": \"warning\"\r
+                  }\r
+                },\r
+                {\r
+                  \"facility-name\": \"syslog\",\r
+                  \"priority\": {\r
+                    \"match-above\": \"warning\"\r
+                  }\r
+                },\r
+                {\r
+                  \"facility-name\": \"user\",\r
+                  \"priority\": {\r
+                    \"match-above\": \"warning\"\r
+                  }\r
+                },\r
+                {\r
+                  \"facility-name\": \"uucp\",\r
+                  \"priority\": {\r
+                    \"match-above\": \"warning\"\r
+                  }\r
+                },\r
+                {\r
+                  \"facility-name\": \"local0\",\r
+                  \"priority\": {\r
+                    \"match-above\": \"warning\"\r
+                  }\r
+                },\r
+                {\r
+                  \"facility-name\": \"local1\",\r
+                  \"priority\": {\r
+                    \"match-above\": \"warning\"\r
+                  }\r
+                },\r
+                {\r
+                  \"facility-name\": \"local2\",\r
+                  \"priority\": {\r
+                    \"match-above\": \"warning\"\r
+                  }\r
+                },\r
+                {\r
+                  \"facility-name\": \"local3\",\r
+                  \"priority\": {\r
+                    \"match-above\": \"warning\"\r
+                  }\r
+                },\r
+                {\r
+                  \"facility-name\": \"local4\",\r
+                  \"priority\": {\r
+                    \"match-above\": \"warning\"\r
+                  }\r
+                },\r
+                {\r
+                  \"facility-name\": \"local5\",\r
+                  \"priority\": {\r
+                    \"match-above\": \"warning\"\r
+                  }\r
+                },\r
+                {\r
+                  \"facility-name\": \"local7\",\r
+                  \"priority\": {\r
+                    \"match-above\": \"warning\"\r
+                  }\r
+                }\r
+              ]\r
+            }\r
+          ],\r
+          \"file\": [\r
+            {\r
+              \"file-name\": \"messages\",\r
+              \"rotate\": 3,\r
+              \"size\": \"10000000\",\r
+              \"facility\": [\r
+                {\r
+                  \"facility-name\": \"local6\",\r
+                  \"priority\": {\r
+                    \"match-above\": \"warning\"\r
+                  }\r
+                }\r
+              ]\r
+            }\r
+          ]\r
+        },\r
+        \"netconf-server\": [\r
+          {\r
+            \"name\": \"mgmt\",\r
+            \"admin-state\": \"enable\",\r
+            \"ssh-server\": \"mgmt-netconf\"\r
+          }\r
+        ]\r
+      },\r
+      \"network-instance\": [\r
+        {\r
+          \"name\": \"mgmt\",\r
+          \"type\": \"ip-vrf\",\r
+          \"admin-state\": \"enable\",\r
+          \"description\": \"Management network instance\",\r
+          \"interface\": [\r
+            {\r
+              \"name\": \"mgmt0.0\"\r
+            }\r
+          ],\r
+          \"protocols\": {\r
+            \"linux\": {\r
+              \"import-routes\": true,\r
+              \"export-routes\": true,\r
+              \"export-neighbors\": true\r
+            }\r
+          }\r
+        }\r
+      ],\r
+      \"interface\": [\r
+        {\r
+          \"name\": \"mgmt0\",\r
+          \"admin-state\": \"enable\",\r
+          \"subinterface\": [\r
+            {\r
+              \"index\": 0,\r
+              \"admin-state\": \"enable\",\r
+              \"ipv4\": {\r
+                \"admin-state\": \"enable\",\r
+                \"dhcp-client\": {\r
+                }\r
+              },\r
+              \"ipv6\": {\r
+                \"admin-state\": \"enable\",\r
+                \"dhcp-client\": {\r
+                }\r
+              }\r
+            }\r
+          ]\r
+        }\r
+      ]\r
+    }\r
+    \r
+    --{ running }--[  ]--\r
+    A:admin@srl-new#\x20
+  "show version\n": |-
+    show version\r
+    --------------------------------------------------------------------------------\r
+    Hostname             : srl-new\r
+    Chassis Type         : 7220 IXR-D2L\r
+    Part Number          : Sim Part No.\r
+    Serial Number        : Sim Serial No.\r
+    System HW MAC Address: 1A:05:00:FF:00:00\r
+    OS                   : SR Linux\r
+    Software Version     : v26.3.1\r
+    Build Number         : 410-g98ed16c774c\r
+    Architecture         : x86_64\r
+    Last Booted          : 2026-11-23T07:56:25.606Z\r
+    Total Memory         : 32319628 kB\r
+    Free Memory          : 18470184 kB\r
+    --------------------------------------------------------------------------------\r
+    \r
+    --{ running }--[  ]--\r
+    A:admin@srl-new#\x20
+  "show platform chassis\n": |-
+    show platform chassis\r
+    --------------------------------------------------------------------------------\r
+    Type             : 7220 IXR-D2L\r
+    Last Boot type   : normal\r
+    HW MAC address   : 1A:05:00:FF:00:00\r
+    Slots            : 1\r
+    Oper Status      : up\r
+    Last booted      : 2026-11-23T07:56:25.606Z\r
+    Last change      : 2026-11-23T07:56:25.606Z\r
+    Part number      : Sim Part No.\r
+    CLEI code        : Sim CLEI\r
+    Serial number    : Sim Serial No.\r
+    Manufactured date: -\r
+    --------------------------------------------------------------------------------\r
+    \r
+    --{ running }--[  ]--\r
+    A:admin@srl-new#\x20
+  "quit\n": |-
+    quit\r
+    
