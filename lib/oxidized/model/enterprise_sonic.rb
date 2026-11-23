@@ -49,7 +49,7 @@ class Enterprise_SONiC < Oxidized::Model # rubocop:disable Naming/ClassAndModule
     # if user logs in to linux == has admin rights
     if vars(:admin) == true
       post_login do
-        cmd "sonic-cli\n"
+        cmd "sonic-cli"
       end
     end
     post_login 'terminal length 0'
