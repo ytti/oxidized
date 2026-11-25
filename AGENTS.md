@@ -165,6 +165,19 @@ first and last line of the command output unchanged, use fabricated values,
 and add the lines to the matching `#output.txt` (and `#secret.yaml` if
 relevant). Prefer this over a separate Ruby spec.
 
+## Deprecations
+
+When deprecating a feature, configuration option, model or platform:
+
+- Keep it working and log a warning with `logger.warn` that names the
+  replacement.
+- Add it to [docs/Deprecated.md](docs/Deprecated.md) (table and a section),
+  with `unreleased` in the column "Since"; the release process replaces it with
+  the version.
+- Mention it in [CHANGELOG.md](CHANGELOG.md).
+
+When removing a deprecated feature, remove it from docs/Deprecated.md too.
+
 ## Contribution workflow
 
 - Branch names may be prefixed with the issue number (e.g.
