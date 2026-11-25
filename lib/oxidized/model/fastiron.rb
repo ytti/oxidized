@@ -1,7 +1,8 @@
 class FastIron < Oxidized::Model
   using Refinements
 
-  prompt /^([\w.@\/()-]+[#>]\s?)$/
+  # Factory-default ICX names contain a space; allow it between tokens (#3893).
+  prompt /^([\w.@\/()-]+(?: [\w.@\/()-]+)*[#>]\s?)$/
   comment '! '
 
   # The pager cannot always be disabled with 'skip-page-display', for example
