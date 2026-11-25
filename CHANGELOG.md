@@ -8,6 +8,7 @@ The format is based on [Keep a Changelog](https://keepachangelog.com/en/1.1.0/).
 
 ### Added
 - docs/Deprecated.md lists deprecated features and their planned removal (@robertcheramy)
+- device2yaml: install the script as the `oxidized-device2yaml` command with the oxidized gem (@robertcheramy)
 
 ### Changed
 - Ruby 3.0 and 3.1 are deprecated, support is planned to be removed in June 2028. See [docs/Deprecated.md](docs/Deprecated.md) (@robertcheramy)

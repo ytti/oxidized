@@ -124,8 +124,8 @@ options = {}
 optparse = OptionParser.new do |opts|
   opts.banner = <<~HEREDOC
     Usages:
-    - device2yaml.rb [user@]host -i file [options]
-    - device2yaml.rb [user@]host -c "command1
+    - #{File.basename($PROGRAM_NAME)} [user@]host -i file [options]
+    - #{File.basename($PROGRAM_NAME)} [user@]host -c "command1
       command2
       command3" [options]
 

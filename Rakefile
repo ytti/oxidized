@@ -34,7 +34,22 @@ task :test do
   end
 end
 
-task build: %i[chmod version_set]
+task build: %i[untracked chmod version_set]
+
+desc 'Abort if the gem would package files not tracked by git'
+task :untracked do
+  unless system('git rev-parse --is-inside-work-tree > /dev/null 2>&1')
+    warn 'Not a git repository, skipping the check for untracked files'
+    next
+  end
+
+  tracked = %x(git ls-files -z).split("\x0")
+  untracked = gemspec.files - tracked
+  next if untracked.empty?
+
+  abort "The following files would be packaged but are not tracked by git:\n  " \
+        "#{untracked.join("\n  ")}\nRemove them or add them to git."
+end
 
 desc 'Set Gem Version'
 task :version_set do
@@ -49,12 +64,19 @@ end
 
 desc 'Tag the release'
 task :tag do
-  system "git tag #{gemspec.version} -m 'Release #{gemspec.version}'"
+  sh "git tag -a #{gemspec.version} -m 'Release #{gemspec.version}'"
 end
 
-desc 'Push to rubygems'
-task push: :tag do
-  system "gem push pkg/#{gemfile}"
+desc 'Push the built gem to rubygems'
+task :push do
+  sh "gem push pkg/#{gemfile}"
+end
+
+# bundler/gem_tasks would tag "v<version>", Oxidized tags without the "v"
+Rake::Task['release'].clear
+desc 'Disabled, see docs/Release.md'
+task :release do
+  abort 'Use `rake tag` and `rake push` as described in docs/Release.md'
 end
 
 desc 'Normalise file permissions'
@@ -62,6 +84,7 @@ task :chmod do
   xbit = %w[
     bin/oxidized
     bin/console
+    bin/oxidized-device2yaml
     extra/auto-reload-config.runit
     extra/nagios_check_failing_nodes.rb
     extra/oxidized-report-git-commits
@@ -73,7 +96,7 @@ task :chmod do
     extra/device2yaml.rb
   ]
   dirs = []
-  %x(git ls-files -z).split("\x0").reject { |f| f.match(/^(test|spec|features)\//) }.each do |file|
+  (gemspec.files | xbit).each do |file|
     dirs.push(File.dirname(file))
     xbit.include?(file) ? File.chmod(0o0755, file) : File.chmod(0o0644, file)
   end
