@@ -7,38 +7,69 @@ Oxidized versions are numbered like major.minor.patch
 - minor is incremented when releasing new features.
 - patch is incremented when releasing fixes only.
 
-## Create a release branch
-Name the release branch `release/0.xx.yy`
+## Overview
+The release is done in two steps, each with its own branch:
+1. A review branch, where all the fixes are made. Once it is merged into
+   master, GitHub automatically builds a container image, which is used for
+   testing.
+2. A release branch, which only bumps the version and finalizes the
+   CHANGELOG.
 
-## Review changes
+## Step 1: Review branch
+### Create a review branch
+Name the review branch `review-for-0.xx.yy`
+
+### Review changes
 Run `git diff 0.30.0` (where `0.30.0` is to be changed to the last release) and review
 all the changes that have been done. Have a specific look at changes you don't understand.
 
 For a graphical compare, use `git difftool -d 0.30.0`.
 
-Commit fixes to the release branch
+Commit fixes to the review branch
 
-## Update the gem dependencies to the latest versions
+### Review deprecations
+Review [Deprecated.md](Deprecated.md):
+- Remove deprecated features whose planned removal date has passed, and
+  remove them from Deprecated.md. Document the removal in CHANGELOG.md.
+- Check that deprecations introduced since the last release are listed, and
+  replace `unreleased` in the column "Since" with the version to be released.
+  To find them, search the changes for "deprecat":
+  `git diff 0.30.0 | grep -i deprecat`.
+- Check that the planned removal dates are still accurate.
+
+### Update the gem dependencies to the latest versions
 ```
 bundle outdated
 bundle update
 bundle outdated
 ```
 
-## Update rubocup .rubocop_todo.yml
+### Update rubocup .rubocop_todo.yml
 Run `bundle exec rubocop --auto-gen-config`,
 and make sure `bundle exec rake` passes after it.
 
-If you change some code => Restart the release process at the beginning ;-)
 
-## Make sure the file permissions are correct
-Run `bundle exec rake chmod`
+### Make sure the file permissions are correct
+Run `bundle exec rake chmod`, then `git status`
 
-## Test !
-Test the git code and the container against as much device types and
-environments as you can.
+### Merge the review branch
+Upload the branch to github, make a Pull Request for it and make sure it passes
+all GitHub CI. Merge it into master.
 
-## Bump the version
+GitHub automatically builds the container image from master.
+
+## Step 2: Tests
+Test the git code (master) and the container image built from master against
+as much device types and environments as you can.
+
+If you need to fix something, do it in a new review branch (go back to
+Step 1).
+
+## Step 3: Release branch
+### Create a release branch
+Name the release branch `release/0.xx.yy`
+
+### Bump the version
 Update CHANGELOG.md:
 - review it
 - add release notes
@@ -48,10 +79,10 @@ Change the version in `lib/oxidized/version.rb`
 
 Upload the branch to github, make a Pull Request for it.
 
-## Make sure you pass all GitHub CI
+### Make sure you pass all GitHub CI
 They test different ruby versions an run security checks on the code (codeql).
 
-## Prepare the release in your working repository
+### Prepare the release in your working repository
 1. Merge the Pull Request into master with the commit message
    `chore(release): release version 0.3x.y`
 2. `git pull` on master
@@ -64,7 +95,8 @@ gem install --user-install pkg/oxidized-0.xx.yy.gem
 ~/.local/share/gem/ruby/3.3.0/bin/oxidized
 ```
 
-## Release in github
+## Step 4: Publish the release
+### Release in github
 Push the tag to github:
 ```
 git push origin 0.xx.yy
@@ -88,10 +120,10 @@ Push the gem built in the previous steps with `rake push`.
 Do not use `rake release` (from bundler): it would tag `v0.xx.yy` instead of
 `0.xx.yy`, so it is disabled in the Rakefile.
 
-## Release in docker.io
+### Release in docker.io
 The OCI-Containter is automatically build and pushed to docker.io by github
 
-## Update CHANGELOG.md for next release
+### Update CHANGELOG.md for next release
 Add
 ```
 ## [Unreleased]

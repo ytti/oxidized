@@ -106,8 +106,13 @@ class MockSsh
   def open_channel
     @channel = MockChannel.new @commands
     yield @channel
-    # Now simulate login with the initial @init_prompt
-    @channel.on_data_block.call(nil, @init_prompt)
+    # Queue the initial @init_prompt instead of delivering it synchronously.
+    # open_channel is called as `@ses = ssh.open_channel { ... }`, so delivering
+    # now - before that assignment returns - would leave @ses nil for any model
+    # that sends data in response to the init prompt. Procurve, for example,
+    # replies to "Press any key to continue" with a space. Queuing defers
+    # delivery to the first ssh.loop (in #login), by which time @ses is set.
+    @channel.queue_data @init_prompt
     # Return the simulated Net::SSH::Connection::Channel
     @channel
   end
@@ -147,6 +152,12 @@ class MockChannel
   # Saves the block for later use in #send_data
   def on_data(&block)
     @on_data_block = block
+  end
+
+  # Queue data for delivery to the on_data callback on the next #receive.
+  # Used to feed the init prompt once the ssh loop starts running.
+  def queue_data(data)
+    @queue << data
   end
 
   def request_pty(*)

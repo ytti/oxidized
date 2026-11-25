@@ -39,7 +39,7 @@ class FireLinuxOS < Oxidized::Model
   end
 
   cmd 'show running-config all' do |cfg|
-    cfg = cfg.each_line.to_a[3..-1].join
+    cfg = cfg.cut_head(3)
     cfg.gsub! /^: [^\n]*\n/, ''
     cfg
   end

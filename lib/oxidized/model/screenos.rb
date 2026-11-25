@@ -8,7 +8,7 @@ class ScreenOS < Oxidized::Model
   prompt /^[\w.:()-]+->\s?$/
 
   cmd :all do |cfg|
-    cfg.each_line.to_a[1..-2].join
+    cfg.cut_both
   end
 
   cmd :secret do |cfg|
@@ -26,7 +26,7 @@ class ScreenOS < Oxidized::Model
   end
 
   cmd 'get config' do |cfg|
-    cfg.each_line.to_a[1..-1].join
+    cfg.cut_head
   end
 
   cfg :telnet do

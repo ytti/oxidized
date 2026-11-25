@@ -35,7 +35,7 @@ class ACSW < Oxidized::Model
   end
 
   cmd 'show running-config' do |cfg|
-    cfg = cfg.each_line.to_a[3..-1]
+    cfg = cfg.each_line.to_a[3..]
     cfg = cfg.reject { |line| line.match /^ntp clock-period / }.join
     cfg.gsub! /^Current configuration : [^\n]*\n/, ''
     cfg.gsub! /^ tunnel mpls traffic-eng bandwidth[^\n]*\n*(

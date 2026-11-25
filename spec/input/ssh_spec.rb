@@ -42,8 +42,7 @@ describe Oxidized::SSH do
         number_of_password_prompts:      0,
         auth_methods:                    %w[none publickey password],
         proxy:                           proxy,
-        logger:                          anything,
-        max_win_size:                    2 * 1024 * 1024
+        logger:                          anything
       }
       Net::SSH.expects(:start).with('192.0.2.2', 'alma', ssh_options)
 
@@ -80,13 +79,96 @@ describe Oxidized::SSH do
         number_of_password_prompts:      0,
         auth_methods:                    %w[none publickey password],
         proxy:                           proxy,
-        logger:                          anything,
-        max_win_size:                    2 * 1024 * 1024
+        logger:                          anything
       }
       Net::SSH.expects(:start).with('example.com', 'alma', ssh_options)
 
       ssh.instance_variable_set("@exec", true)
       ssh.connect(@node)
+    end
+  end
+
+  describe "#make_ssh_opts" do
+    before(:each) do
+      @node = Oxidized::Node.new(name:  'example.com',
+                                 input: 'ssh',
+                                 model: 'junos')
+      @ssh = Oxidized::SSH.new
+      @ssh.instance_variable_set("@node", @node)
+    end
+
+    it "uses ssh_minimum_dh_bits for minimum_dh_bits" do
+      @node.vars["ssh_minimum_dh_bits"] = '1024'
+      _(@ssh.make_ssh_opts[:minimum_dh_bits]).must_equal 1024
+    end
+
+    it "does not set minimum_dh_bits without ssh_minimum_dh_bits" do
+      _(@ssh.make_ssh_opts).wont_include :minimum_dh_bits
+    end
+
+    it "rejects a ssh_minimum_dh_bits that is not an integer" do
+      @node.vars["ssh_minimum_dh_bits"] = '1024bits'
+      err = _ { @ssh.make_ssh_opts }.must_raise Oxidized::SSHBase::InvalidVariable
+      _(err.message).must_equal 'invalid ssh_minimum_dh_bits: "1024bits"'
+    end
+
+    it "does not set proxy with an empty ssh_proxy" do
+      @node.vars["ssh_proxy"] = ''
+      _(@ssh.make_ssh_opts).wont_include :proxy
+    end
+
+    it "does not set proxy without ssh_proxy" do
+      _(@ssh.make_ssh_opts).wont_include :proxy
+    end
+  end
+
+  describe "#make_ssh_proxy_command" do
+    it "keeps user@host and the port unchanged" do
+      ssh = Oxidized::SSH.new
+      Net::SSH::Proxy::Command.expects(:new).with("ssh -p 2222 user@test.com -W [%h]:%p")
+      ssh.make_ssh_proxy_command('user@test.com', 2222, true)
+    end
+
+    it "accepts the proxy port as a string" do
+      ssh = Oxidized::SSH.new
+      Net::SSH::Proxy::Command.expects(:new).with("ssh -p 2222 test.com -W [%h]:%p")
+      ssh.make_ssh_proxy_command('test.com', '2222', true)
+    end
+
+    it "accepts IPv4 and IPv6 addresses as proxy host" do
+      ssh = Oxidized::SSH.new
+      Net::SSH::Proxy::Command.expects(:new).with("ssh user@192.0.2.1 -W [%h]:%p")
+      Net::SSH::Proxy::Command.expects(:new).with("ssh 2001:db8::1 -W [%h]:%p")
+      ssh.make_ssh_proxy_command('user@192.0.2.1', nil, true)
+      ssh.make_ssh_proxy_command('2001:db8::1', nil, true)
+    end
+
+    it "escapes % in an IPv6 zone ID for net-ssh" do
+      ssh = Oxidized::SSH.new
+      Net::SSH::Proxy::Command.expects(:new).with("ssh fe80::1%%eth0 -W [%h]:%p")
+      ssh.make_ssh_proxy_command('fe80::1%eth0', nil, true)
+    end
+
+    it "rejects a proxy host that is not [user@]hostname or IP address" do
+      ssh = Oxidized::SSH.new
+      Net::SSH::Proxy::Command.expects(:new).never
+      ['test.com$(id)', 'test.com;id', 'test.com id', 'u$(id)@test.com', '@test.com',
+       'a@b@test.com', '-test.com', 'test-.com', 'test..com', "test.com\nid"].each do |host|
+        _ { ssh.make_ssh_proxy_command(host, nil, true) }.must_raise Oxidized::SSHBase::InvalidVariable
+      end
+    end
+
+    it "rejects a proxy port that is not an integer" do
+      ssh = Oxidized::SSH.new
+      Net::SSH::Proxy::Command.expects(:new).never
+      err = _ { ssh.make_ssh_proxy_command('test.com', '22;id', true) }.must_raise Oxidized::SSHBase::InvalidVariable
+      _(err.message).must_equal 'invalid ssh_proxy_port: "22;id"'
+    end
+
+    it "rejects a proxy host starting with '-'" do
+      ssh = Oxidized::SSH.new
+      Net::SSH::Proxy::Command.expects(:new).never
+      _ { ssh.make_ssh_proxy_command('-oProxyCommand=id', nil, true) }.must_raise Oxidized::SSHBase::InvalidVariable
     end
   end
 
@@ -106,6 +188,7 @@ describe Oxidized::SSH do
       _(result[Net::SSH::Disconnect]).must_equal :debug
       _(result[RuntimeError]).must_equal :warn
       _(result[Net::SSH::AuthenticationFailed]).must_equal :warn
+      _(result[Oxidized::SSHBase::InvalidVariable]).must_equal :warn
     end
   end
   describe '#config_name' do

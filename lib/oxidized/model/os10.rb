@@ -9,7 +9,7 @@ class OS10 < Oxidized::Model
 
   cmd :all do |cfg|
     cfg.gsub! /^% Invalid input detected at '\^' marker\.$|^\s+\^$/, ''
-    cfg.each_line.to_a[2..-2].join
+    cfg.cut_both(2)
   end
 
   cmd :secret do |cfg|
@@ -26,7 +26,7 @@ class OS10 < Oxidized::Model
   end
 
   cmd 'show running-configuration' do |cfg|
-    cfg.each_line.to_a[3..-1].join
+    cfg.cut_head(3)
   end
 
   cfg :telnet do

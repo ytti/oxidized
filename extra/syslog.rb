@@ -99,7 +99,7 @@ module Oxidized
     def junos(log, index, **opts)
       # TODO: we need to fetch 'ip/name' in mode == :file here
       opts[:user] = log[index + 2][1..-2]
-      opts[:msg] = log[(index + 6)..-1].join(' ')[10..-2]
+      opts[:msg] = log[(index + 6)..].join(' ')[10..-2]
       opts.delete(:msg) if opts[:msg] == 'none'
       opts
     end

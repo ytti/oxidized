@@ -27,7 +27,7 @@ class AricentISS < Oxidized::Model
     # * Drop first line that contains the command, and the last line that
     #   contains a prompt
     # * Strip carriage returns
-    cfg.delete("\r").each_line.to_a[1..-2].join
+    cfg.delete("\r").cut_both
   end
 
   cmd :secret do |cfg|

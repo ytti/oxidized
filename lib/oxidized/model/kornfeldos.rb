@@ -9,7 +9,7 @@ class KornfeldOS < Oxidized::Model
 
   cmd :all do |cfg|
     cfg.gsub! /^% Invalid input detected at '\^' marker\.$|^\s+\^$/, ''
-    cfg.each_line.to_a[2..-2].join
+    cfg.cut_both(2)
   end
 
   cmd 'show version | except REPOSITORY | except docker | except Uptime' do |cfg|
@@ -20,9 +20,7 @@ class KornfeldOS < Oxidized::Model
     comment cfg
   end
 
-  cmd 'show running-configuration' do |cfg|
-    cfg.each_line.to_a[0..-1].join
-  end
+  cmd 'show running-configuration'
 
   cfg :ssh do
     username /^Login:/

@@ -28,7 +28,7 @@ class BR6910 < Oxidized::Model
 
   cmd 'show running-config' do |cfg|
     arr = cfg.each_line.to_a
-    arr[2..-1].join unless arr.length < 2
+    arr[2..].join unless arr.length < 2
   end
 
   cfg :telnet do

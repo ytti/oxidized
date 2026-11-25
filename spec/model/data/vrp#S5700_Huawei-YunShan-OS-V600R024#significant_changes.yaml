@@ -1,0 +1,5 @@
+pass:
+ - "!Software Version V600R024C00SPC500"
+fail:
+ - "!Last configuration was updated at 2026-11-06 22:29:30+01:00 by contoso-adm"
+ - "!Last configuration was saved at 2026-11-06 22:29:45+01:00 by contoso-adm"

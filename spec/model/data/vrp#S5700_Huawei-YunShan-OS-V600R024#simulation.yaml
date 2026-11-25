@@ -238,7 +238,7 @@ commands:
       ssh user oxidized\r
       ssh user oxidized authentication-type ecc\r
       ssh user oxidized assign ecc-key oxidized\r
-	  ssh user oxidized service-type stelnet\r
+      ssh user oxidized service-type stelnet\r
       ssh user contoso-adm\r
       ssh user contoso-adm authentication-type password\r
       ssh user contoso-adm service-type stelnet\r

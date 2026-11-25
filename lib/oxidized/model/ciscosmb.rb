@@ -44,7 +44,6 @@ class CiscoSMB < Oxidized::Model
   end
 
   cmd 'show running-config' do |cfg|
-    cfg = cfg.each_line.to_a[0..-1].join
     cfg.gsub! /^Current configuration : [^\n]*\n/, ''
     cfg.sub! /^(ntp clock-period).*/, '! \1'
     cfg.gsub! /^ tunnel mpls traffic-eng bandwidth[^\n]*\n*(

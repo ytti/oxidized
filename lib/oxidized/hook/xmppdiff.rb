@@ -56,7 +56,7 @@ class XMPPDiff < Oxidized::Hook
         gitoutput = ctx.node.output.new
         diff = gitoutput.get_diff ctx.node, ctx.node.group, ctx.commitref, nil
 
-        interesting = diff[:patch].lines.to_a[4..-1].any? do |line|
+        interesting = diff[:patch].lines.to_a[4..].any? do |line|
           ["+", "-"].include?(line[0]) && (not ["#", "!"].include?(line[1]))
         end
 
@@ -68,7 +68,7 @@ class XMPPDiff < Oxidized::Hook
             title = "#{ctx.node.name} #{ctx.node.group} #{ctx.node.model.class.name.to_s.downcase}"
             logger.info "Posting diff as snippet to #{cfg.channel}"
 
-            @muc.say(title + "\n\n" + diff[:patch].lines.to_a[4..-1].join)
+            @muc.say(title + "\n\n" + diff[:patch].lines.to_a[4..].join)
           end
         end
       end

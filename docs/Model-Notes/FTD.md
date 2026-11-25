@@ -2,6 +2,8 @@
 
 Back up Cisco FTD firewalls via the [HTTP API](https://www.cisco.com/c/en/us/td/docs/security/firepower/ftd-api/guide/ftd-rest-api/ftd-rest-api-intro.html). This model uses the [configexport](https://www.cisco.com/c/en/us/td/docs/security/firepower/ftd-api/guide/ftd-rest-api/ftd-api-import-export.html#id_108006) method to export the configuration as a zip file, then extracts the JSON configuration from this file.
 
+Make sure the `rubyzip` gem is installed with your oxidized host (it is included in the Docker image).
+
 ## Configuration
 
 Ensure that the HTTP input is enabled in the Oxidized configuration, e.g.:

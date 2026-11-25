@@ -65,7 +65,7 @@ class SlackDiff < Oxidized::Hook
       diff = gitoutput.get_diff ctx.node, ctx.node.group, ctx.commitref, nil
       unless diff == "no diffs"
         title = "#{ctx.node.name} #{ctx.node.group} #{ctx.node.model.class.name.to_s.downcase}"
-        content = diff[:patch].lines.to_a[4..-1].join
+        content = diff[:patch].lines.to_a[4..].join
         slack_upload(client, title, content, cfg.channel, cfg.has_key?('proxy') ? cfg.proxy : nil)
       end
     end

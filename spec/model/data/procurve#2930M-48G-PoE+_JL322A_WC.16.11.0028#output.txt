@@ -1,0 +1,125 @@
+!
+! Image stamp:
+!  /ws/swbuildm/rel_beluru_qaoff/code/build/lvm(swbuildm_rel_beluru_qaoff_rel_belu
+! ru)
+!                 Nov 10 2025 02:09:28
+!                 WC.16.11.0028
+!                 530
+! Boot Image:     Secondary
+!
+! Boot ROM Version:    WC.17.02.0007
+! Active Boot ROM:     Primary
+!
+!
+!  Status and Counters - Module Information
+!
+!   Chassis: 2930M-48G-PoE+  JL322A         Serial Number:   XXXXXXXXXX
+!
+!
+!   Slot  Module Description                         Serial Number    Status
+!   ----- ------------------------------------------ ---------------- ----------
+!   A     Aruba JL083A 4p 10GbE SFP+ Module          XXXXXXXXXX       Up
+!
+!
+!
+! Transceiver Technical Information:
+!
+!                      Product      Serial             Part
+!  Port    Type        Number       Number             Number
+!  ------- ----------- ------------ ------------------ ----------
+!  A1      SFP+SR      J9150A       XXXXXXXXXXX        1990-4065
+!
+! * third-party transceiver
+! Image             Size (bytes) Date     Version
+! ----------------- ------------ -------- --------------
+! Primary Image    :    30266808 04/15/25 WC.16.11.0025
+! Secondary Image  :    30279595 11/10/25 WC.16.11.0028
+!
+! Boot ROM Version
+! ----------------
+! Primary Boot ROM Version   : WC.17.02.0007
+! Secondary Boot ROM Version : WC.17.02.0007
+!
+! Default Boot Image   : Secondary
+! Default Boot ROM     : Primary
+!
+
+!
+!  Status and Counters - General System Information
+!
+!   System Name        : XXXXXXXXX
+!   System Contact     : xxxxxxxx@xxxxxxxx.xxx
+!   System Location    : XXXXXXXXX
+!
+!   MAC Age Time (sec) : 300
+!
+!   Time Zone          : -480
+!   Daylight Time Rule : Continental-US-and-Canada
+!
+!   Software revision  : WC.16.11.0028        Base MAC Addr      : aaaaaa-aaaaaa
+!
+!   ROM Version        : WC.17.02.0007        Serial Number      : XXXXXXXXXX
+!
+!
+!
+
+Running configuration:
+
+; JL322A Configuration Editor; Created on release #WC.16.11.0028
+; Ver #14:67.6f.f8.1d.9b.3f.bf.bb.ef.7c.59.fc.6b.fb.9f.fc.ff.ff.37.ef:44
+
+hostname "XXXXXXXXX"
+module 1 type jl322a
+flexible-module A type JL083A
+console baud-rate 9600
+console idle-timeout 3600
+console idle-timeout serial-usb 3600
+no cdp run
+fault-finder duplex-mismatch-fdx sensitivity high
+logging command
+include-credentials
+password operator user-name "operator" sha1
+ "1111111111111111111111111111111111111111"
+password manager user-name "manager" sha1
+ "1111111111111111111111111111111111111111"
+time daylight-time-rule continental-us-and-canada
+time timezone -480
+ip default-gateway 10.12.123.1
+ip dns domain-name "example.org"
+ip ssh filetransfer
+interface A1
+   name "CORE-1/11"
+   exit
+snmp-server community "public" operator
+snmp-server host 10.12.123.83 community "public" trap-level critical
+snmpv3 engineid "00:00:00:0b:00:00:aa:aa:aa:aa:aa:aa"
+aaa authorization commands local
+aaa authentication ssh enable public-key
+aaa authentication local-user "oxidized-backup" group "backup" password sha1
+ "2222222222222222222222222222222222222222"
+oobm
+   interface disable
+   no ip address
+   exit
+lldp top-change-notify 1-48,A1-A4
+lldp enable-notification 1-48,A1-A4
+vlan 1
+   name "DEFAULT_VLAN"
+   no untagged A1
+   untagged 1-48,A2-A4
+   no ip address
+   exit
+vlan 254
+   untagged A1
+   ip address 10.12.123.122 255.255.255.0
+   exit
+allow-unsupported-transceiver
+no tftp client
+no tftp server
+no autorun
+no dhcp config-file-update
+no dhcp image-file-update
+no dhcp tr69-acs-url
+activate software-update disable
+activate provision disable
+

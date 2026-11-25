@@ -8,7 +8,7 @@ class PanOS < Oxidized::Model
   prompt /^[\w.@:()-]+>\s?$/
 
   cmd :all do |cfg|
-    cfg.each_line.to_a[2..-3].join
+    cfg.cut_both(2, 2)
   end
 
   cmd 'show system info' do |cfg|

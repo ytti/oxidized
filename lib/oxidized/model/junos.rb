@@ -12,7 +12,7 @@ class JunOS < Oxidized::Model
     cfg = cfg.cut_both if screenscrape
     cfg.gsub!(/  scale-subscriber (\s+)(\d+)/, '  scale-subscriber                <count>')
     cfg.gsub!(/VMX-BANDWIDTH\s+(\d+) (.*)/, 'VMX-BANDWIDTH                  <count> \2')
-    cfg.lines.map { |line| line.rstrip }.join("\n") + "\n"
+    cfg.rstrip_lines
   end
 
   cmd :secret do |cfg|
@@ -22,7 +22,7 @@ class JunOS < Oxidized::Model
     # archive-site URLs may carry a cleartext password (user:pass@host) that
     # Junos does not tag with "## SECRET-DATA", e.g. under
     # system archival configuration archive-sites
-    cfg.gsub!(/((?:ftp|pasvftp|sftp|scp|https?):\/\/[^\/@"]+):[^@"]+@/, '\1:<secret removed>@')
+    cfg.gsub!(/((?:ftp|pasvftp|sftp|scp|https?):\/\/[^\/@":]+):[^@"]+@/, '\1:<secret removed>@')
     cfg
   end
 

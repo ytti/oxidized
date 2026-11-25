@@ -14,7 +14,7 @@ module Refinements
     def cut_head(lines = 1)
       return "" if length.zero?
 
-      each_line.to_a[lines..-1].join
+      each_line.to_a[lines..].join
     end
 
     # @return [String] copy of self with first and last lines removed
@@ -38,6 +38,11 @@ module Refinements
           pattern.is_a?(Regexp) ? line =~ pattern : line.include?(pattern)
         end
       end.join
+    end
+
+    # right strip whitespaces from each line
+    def rstrip_lines
+      each_line.map(&:rstrip).join("\n") + "\n"
     end
 
     # remove lines matching any pattern (String or Regexp)

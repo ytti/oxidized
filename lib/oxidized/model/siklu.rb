@@ -10,7 +10,7 @@ class Siklu < Oxidized::Model
   end
 
   cmd 'copy running-configuration display' do |cfg|
-    cfg.each_line.to_a[3..-2].join
+    cfg.cut_both(3)
   end
 
   cfg :ssh do

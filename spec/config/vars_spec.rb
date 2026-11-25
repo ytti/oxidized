@@ -110,5 +110,18 @@ describe Oxidized::Config::Vars do
       Oxidized.config.vars.delete("enable")
       assert_nil vars("enable")
     end
+    it "does not log the value of a sensitive var" do
+      set_config
+      Oxidized.logger.expects(:debug).with(
+        'vars.rb: scope node has key enable with value [REDACTED], using scope'
+      )
+      _(vars("enable", enable: "enable_node")).must_equal "enable_node"
+    end
+    it "logs the value of a non-sensitive var" do
+      Oxidized.logger.expects(:debug).with(
+        'vars.rb: scope node has key ssh_port with value 2222, using scope'
+      )
+      _(vars("ssh_port", ssh_port: 2222)).must_equal 2222
+    end
   end
 end

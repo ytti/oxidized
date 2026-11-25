@@ -1,24 +1,8 @@
-   
-					 
-			   
-	  
-																																		  
-																
-		  
-		 
-									 
-								 
-																						 
-			
-						   
-					   
 # Huawei YunShan OS
 # Version 1.24.0.1 (S5700 V600R024C00SPC500)
 # Copyright (C) 2021-2024 Huawei Technologies Co., Ltd.
-																		  
 # Patch Version: V600R024HP0021
-#
-																			 
+# 
 #         StartupTime 2026/06/08   14:12:29
 # Memory      Size    : 2048 M bytes
 # Flash       Size    : 1024 M bytes
@@ -28,20 +12,14 @@
 # 3.Board     Type    : S5735-L48LP4XE-A-V2
 # 4.BIOS      Version : 1390
 # 5.CPLD      Version : 262
-			
-						  
-					  
 # CloudEngine S5735-L-V2's Device status:
 # --------------------------------------------------------------------------------
-# Slot  Card   Type                           Online   Power Register     Alarm     Primary
+# Slot  Card   Type                           Online   Power Register     Alarm     Primary        
 # --------------------------------------------------------------------------------
-# 1     -      S5735-L48LP4XE-A-V2            Present  On    Registered   Normal    Master
-#       FAN1   FAN                            Present  On    Registered   Normal    NA
-#       FAN2   FAN                            Present  On    Registered   Normal    NA
+# 1     -      S5735-L48LP4XE-A-V2            Present  On    Registered   Normal    Master         
+#       FAN1   FAN                            Present  On    Registered   Normal    NA             
+#       FAN2   FAN                            Present  On    Registered   Normal    NA             
 # --------------------------------------------------------------------------------
-			
-											 
-										 
 !Software Version V600R024C00SPC500
 !Last configuration was updated at 2026-11-06 22:29:30+01:00 by contoso-adm
 !Last configuration was saved at 2026-11-06 22:29:45+01:00 by contoso-adm
@@ -251,7 +229,7 @@ ssh server cipher aes256_gcm aes128_gcm aes256_ctr aes192_ctr aes128_ctr
 ssh server hmac sha2_512 sha2_256
 ssh server key-exchange dh_group_exchange_sha256 dh_group16_sha512 curve25519_sha256
 #
-ssh server publickey ecc rsa_sha2_256 rsa_sha2_512
+ssh server publickey rsa_sha2_256 rsa_sha2_512
 #
 ssh server dh-exchange min-len 3072
 #
@@ -273,5 +251,3 @@ user-interface vty 0 4
 ztp domain-type registration-center domain register.naas.huawei.com port 10020
 #
 return
-			
-				

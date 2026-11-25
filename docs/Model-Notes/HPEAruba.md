@@ -30,3 +30,8 @@ Older Devices like [ProCurve](/lib/oxidized/model/procurve.rb) or 3Com/Comware
 are listed under the Vendor "HP" in the
 [Supported OS Types](/docs/Supported-OS-Types.md) list.
 
+HPE Aruba switches running ArubaOS-Switch (the line that succeeded ProCurve -
+e.g. the 2530, 2540, 2920, 2930F/2930M, 3810 and 5400R series) also use the
+[procurve](/lib/oxidized/model/procurve.rb) model, even though they are branded
+"Aruba".
+

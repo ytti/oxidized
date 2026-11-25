@@ -6,7 +6,7 @@ class OneFinity < Oxidized::Model
   prompt /(\r?[\w.@_()-]+>\s?)$/
 
   cmd :all do |cfg|
-    cfg.each_line.to_a[1..-3].join
+    cfg.cut_both(1, 2)
   end
 
   cmd 'show configuration | display set | nomore'

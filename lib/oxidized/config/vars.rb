@@ -25,7 +25,8 @@ module Oxidized
           if val.nil?
             Oxidized.logger.debug "vars.rb: scope #{scope_name} has key #{name} with value nil, ignoring scope"
           else
-            Oxidized.logger.debug "vars.rb: scope #{scope_name} has key #{name} with value #{val}, using scope"
+            Oxidized.logger.debug "vars.rb: scope #{scope_name} has key #{name} " \
+                                  "with value #{Redact.value(name, val)}, using scope"
             return val
           end
         end

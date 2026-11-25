@@ -6,7 +6,7 @@ class Edgeos < Oxidized::Model
   prompt /@.*?:~\$\s/
 
   cmd :all do |cfg|
-    cfg.lines.to_a[1..-2].join
+    cfg.cut_both
   end
 
   cmd :secret do |cfg|

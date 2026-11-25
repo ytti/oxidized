@@ -41,7 +41,6 @@ class OneOS < Oxidized::Model
   end
 
   cmd 'show running-config' do |cfg|
-    cfg = cfg.each_line.to_a[0..-1].join
     cfg.gsub! /^Building configuration...\s*[^\n]*\n/, ''
     cfg.gsub! /^Current configuration :\s*[^\n]*\n/, ''
     cfg

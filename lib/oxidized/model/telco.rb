@@ -7,7 +7,7 @@ class TELCO < Oxidized::Model
   comment '! '
 
   cmd :all do |cfg|
-    cfg.each_line.to_a[2..-2].join.delete("\n")
+    cfg.cut_both(2).delete("\n")
   end
 
   cmd 'show running-config' do |cfg|

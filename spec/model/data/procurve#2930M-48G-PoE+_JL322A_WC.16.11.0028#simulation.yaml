@@ -1,0 +1,174 @@
+---
+init_prompt: |-
+    Aruba JL322A 2930M-48G-PoE+ Switch\r\r
+    Software revision WC.16.11.0028\r\r
+    \r\r
+     (C) Copyright 2025 Hewlett Packard Enterprise Development LP\r
+    \r
+                          RESTRICTED RIGHTS LEGEND\r
+     Confidential computer software. Valid license from Hewlett Packard Enterprise\r
+     Development LP required for possession, use or copying. Consistent with FAR\r
+     12.211 and 12.212, Commercial Computer Software, Computer Software\r
+     Documentation, and Technical Data for Commercial Items are licensed to the\r
+     U.S. Government under vendor's standard commercial license.\r
+    \r
+    \e[1;13r\e[1;1H\e[24;1HPress any key to continue\e[13;1H\e[?25h\e[24;27H
+commands:
+  - "\n": |-
+      \e[?6l\e[1;24r\e[?7h\e[2J\e[1;1H\e[1920;1920H\e[6n\e[1;1HYour previous successful login (as manager) was on 2026-06-09 12:53:55     \r
+       from 10.12.123.2\r
+      \e[1;24r\e[24;1H\e[24;1H\e[2K\e[24;1H\e[?25h\e[24;1H\e[24;1HXXXXXXXXX# \e[24;1H\e[24;12H\e[24;1H\e[?25h\e[24;12H
+  - "no page\n": |-
+      \e[24;12Hno page\e[24;12H\e[?25h\e[24;19H\e[1;0H\e[1M\e[24;1H\e[1L\e[24;19H\e[24;1H\e[2K\e[24;1H\e[?25h\e[24;1H\e[1;24r\e[24;1H\e[1;24r\e[24;1H\e[24;1H\e[2K\e[24;1H\e[?25h\e[24;1H\e[24;1HXXXXXXXXX# \e[24;1H\e[24;12H\e[24;1H\e[?25h\e[24;12H
+  - "show version\n": |-
+      \e[24;12Hshow versi\e[24;12H\e[?25h\e[24;22H\e[24;22Hon\e[24;22H\e[?25h\e[24;24H\e[1;0H\e[1M\e[24;1H\e[1L\e[24;24H\e[24;1H\e[2K\e[24;1H\e[?25h\e[24;1H\e[1;24r\e[24;1H\r
+      Image stamp:   \r
+       /ws/swbuildm/rel_beluru_qaoff/code/build/lvm(swbuildm_rel_beluru_qaoff_rel_belu\r
+      ru)\r
+                      Nov 10 2025 02:09:28\r
+                      WC.16.11.0028\r
+                      530\r
+      Boot Image:     Secondary\r
+      \r
+      Boot ROM Version:    WC.17.02.0007\r
+      Active Boot ROM:     Primary\r
+      \r
+      \e[1;24r\e[24;1H\e[24;1H\e[2K\e[24;1H\e[?25h\e[24;1H\e[24;1HXXXXXXXXX# \e[24;1H\e[24;12H\e[24;1H\e[?25h\e[24;12H
+  - "show modules\n": |-
+      \e[24;12Hshow modul\e[24;12H\e[?25h\e[24;22H\e[24;22Hes\e[24;22H\e[?25h\e[24;24H\e[1;0H\e[1M\e[24;1H\e[1L\e[24;24H\e[24;1H\e[2K\e[24;1H\e[?25h\e[24;1H\e[1;24r\e[24;1H\r
+       Status and Counters - Module Information\r
+      \r
+        Chassis: 2930M-48G-PoE+  JL322A         Serial Number:   XXXXXXXXXX\r
+      \r
+      \r
+        Slot  Module Description                         Serial Number    Status    \r
+        ----- ------------------------------------------ ---------------- ----------\r
+        A     Aruba JL083A 4p 10GbE SFP+ Module          XXXXXXXXXX       Up        \r
+      \r
+      \r
+      \e[1;24r\e[24;1H\e[24;1H\e[2K\e[24;1H\e[?25h\e[24;1H\e[24;1HXXXXXXXXX# \e[24;1H\e[24;12H\e[24;1H\e[?25h\e[24;12H
+  - "show interfaces transceiver\n": |-
+      \e[24;12Hshow inter\e[24;12H\e[?25h\e[24;22H\e[24;22Hfaces tran\e[24;22H\e[?25h\e[24;32H\e[24;32Hsceiver\e[24;32H\e[?25h\e[24;39H\e[1;0H\e[1M\e[24;1H\e[1L\e[24;39H\e[24;1H\e[2K\e[24;1H\e[?25h\e[24;1H\e[1;24r\e[24;1H\r
+      Transceiver Technical Information:\r
+      \r
+                           Product      Serial             Part\r
+       Port    Type        Number       Number             Number\r
+       ------- ----------- ------------ ------------------ ----------\r
+       A1      SFP+SR      J9150A       XXXXXXXXXXX        1990-4065 \r
+      \r
+      * third-party transceiver\r
+      \e[1;24r\e[24;1H\e[24;1H\e[2K\e[24;1H\e[?25h\e[24;1H\e[24;1HXXXXXXXXX# \e[24;1H\e[24;12H\e[24;1H\e[?25h\e[24;12H
+  - "show flash\n": |-
+      \e[24;12Hshow flash\e[24;12H\e[?25h\e[24;22H\e[1;0H\e[1M\e[24;1H\e[1L\e[24;22H\e[24;1H\e[2K\e[24;1H\e[?25h\e[24;1H\e[1;24r\e[24;1HImage             Size (bytes) Date     Version \r
+      ----------------- ------------ -------- --------------\r
+      Primary Image    :    30266808 04/15/25 WC.16.11.0025        \r
+      Secondary Image  :    30279595 11/10/25 WC.16.11.0028       \r
+      \r
+      Boot ROM Version \r
+      ----------------\r
+      Primary Boot ROM Version   : WC.17.02.0007\r
+      Secondary Boot ROM Version : WC.17.02.0007\r
+      \r
+      Default Boot Image   : Secondary\r
+      Default Boot ROM     : Primary\r
+      \r
+      \e[1;24r\e[24;1H\e[24;1H\e[2K\e[24;1H\e[?25h\e[24;1H\e[24;1HXXXXXXXXX# \e[24;1H\e[24;12H\e[24;1H\e[?25h\e[24;12H
+  - "show system-information\n": |-
+      \e[24;12Hshow syste\e[24;12H\e[?25h\e[24;22H\e[24;22Hm-informat\e[24;22H\e[?25h\e[24;32H\e[24;32Hion\e[24;32H\e[?25h\e[24;35H\e[1;0H\e[1M\e[24;1H\e[1L\e[24;35H\e[24;1H\e[2K\e[24;1H\e[?25h\e[24;1H\e[1;24r\e[24;1HInvalid input: system-information\r
+      \e[1;24r\e[24;1H\e[24;1H\e[2K\e[24;1H\e[?25h\e[24;1H\e[24;1HXXXXXXXXX# \e[24;1H\e[24;12H\e[24;1H\e[?25h\e[24;12H
+  - "show system information\n": |-
+      \e[24;12Hshow syste\e[24;12H\e[?25h\e[24;22H\e[24;22Hm informat\e[24;22H\e[?25h\e[24;32H\e[24;32Hion\e[24;32H\e[?25h\e[24;35H\e[1;0H\e[1M\e[24;1H\e[1L\e[24;35H\e[24;1H\e[2K\e[24;1H\e[?25h\e[24;1H\e[1;24r\e[24;1H\r
+       Status and Counters - General System Information\r
+      \r
+        System Name        : XXXXXXXXX                                       \r
+        System Contact     : xxxxxxxx@xxxxxxxx.xxx\r
+        System Location    : XXXXXXXXX\r
+      \r
+        MAC Age Time (sec) : 300    \r
+      \r
+        Time Zone          : -480 \r
+        Daylight Time Rule : Continental-US-and-Canada \r
+      \r
+        Software revision  : WC.16.11.0028        Base MAC Addr      : aaaaaa-aaaaaa \r
+         \r
+        ROM Version        : WC.17.02.0007        Serial Number      : XXXXXXXXXX  \r
+      \r
+        Up Time            : 89 days              Memory   - Total   : 333,443,584 \r
+        CPU Util (%)       : 0                               Free    : 170,530,252 \r
+      \r
+        IP Mgmt  - Pkts Rx : 28,098,956           Packet   - Total   : 6600        \r
+                   Pkts Tx : 26,876,607           Buffers    Free    : 4320        \r
+                                                             Lowest  : 4275        \r
+                                                             Missed  : 0           \r
+      \e[24;1H\e[2K\e[24;1H\e[1;24r\e[24;1H\r
+      \e[1;24r\e[24;1H\e[24;1H\e[2K\e[24;1H\e[?25h\e[24;1H\e[24;1HXXXXXXXXX# \e[24;1H\e[24;12H\e[24;1H\e[?25h\e[24;12H
+  - "show running-config\n": |-
+      \e[24;12Hshow runni\e[24;12H\e[?25h\e[24;22H\e[24;22Hng-config\e[24;22H\e[?25h\e[24;31H\e[1;0H\e[1M\e[24;1H\e[1L\e[24;31H\e[24;1H\e[2K\e[24;1H\e[?25h\e[24;1H\e[1;24r\e[24;1H\r
+      Running configuration:\r
+      \r
+      ; JL322A Configuration Editor; Created on release #WC.16.11.0028\r
+      ; Ver #14:67.6f.f8.1d.9b.3f.bf.bb.ef.7c.59.fc.6b.fb.9f.fc.ff.ff.37.ef:44\r
+      \r
+      hostname \"XXXXXXXXX\"\r
+      module 1 type jl322a\r
+      flexible-module A type JL083A\r
+      console baud-rate 9600\r
+      console idle-timeout 3600\r
+      console idle-timeout serial-usb 3600\r
+      no cdp run\r
+      \e[24;1H\e[2K\e[24;1H\e[1;24r\e[24;1Hfault-finder duplex-mismatch-fdx sensitivity high\r
+      logging command\r
+      include-credentials\r
+      password operator user-name \"operator\" sha1\r
+       \"1111111111111111111111111111111111111111\"\r
+      password manager user-name \"manager\" sha1\r
+      \e[24;1H\e[2K\e[24;1H\e[1;24r\e[24;1H \"1111111111111111111111111111111111111111\"\r
+      time daylight-time-rule continental-us-and-canada\r
+      time timezone -480\r
+      ip default-gateway 10.12.123.1\r
+      ip dns domain-name \"example.org\"\r
+      ip ssh filetransfer\r
+      interface A1\r
+         name \"CORE-1/11\"\r
+      \e[24;1H\e[2K\e[24;1H\e[1;24r\e[24;1H   exit\r
+      snmp-server community \"public\" operator\r
+      snmp-server host 10.12.123.83 community \"public\" trap-level critical\r
+      snmpv3 engineid \"00:00:00:0b:00:00:aa:aa:aa:aa:aa:aa\"\r
+      aaa authorization commands local\r
+      aaa authentication ssh enable public-key\r
+      aaa authentication local-user \"oxidized-backup\" group \"backup\" password sha1\r
+       \"2222222222222222222222222222222222222222\"\r
+      oobm\r
+         interface disable\r
+         no ip address\r
+         exit\r
+      \e[24;1H\e[2K\e[24;1H\e[1;24r\e[24;1Hlldp top-change-notify 1-48,A1-A4\r
+      lldp enable-notification 1-48,A1-A4\r
+      vlan 1\r
+         name \"DEFAULT_VLAN\"\r
+         no untagged A1\r
+         untagged 1-48,A2-A4\r
+         no ip address\r
+         exit\r
+      vlan 254\r
+         untagged A1\r
+         ip address 10.12.123.122 255.255.255.0\r
+         exit\r
+      allow-unsupported-transceiver\r
+      no tftp client\r
+      no tftp server\r
+      no autorun\r
+      no dhcp config-file-update\r
+      no dhcp image-file-update\r
+      no dhcp tr69-acs-url\r
+      \e[24;1H\e[2K\e[24;1H\e[1;24r\e[24;1Hactivate software-update disable\r
+      activate provision disable\r
+      \r
+      \e[1;24r\e[24;1H\e[24;1H\e[2K\e[24;1H\e[?25h\e[24;1H\e[24;1HXXXXXXXXX# \e[24;1H\e[24;12H\e[24;1H\e[?25h\e[24;12H
+  - "logout\n": |-
+      \e[24;12Hlogout\e[24;12H\e[?25h\e[24;18H\e[1;0H\e[1M\e[24;1H\e[1L\e[24;18H\e[24;1H\e[2K\e[24;1H\e[?25h\e[24;1H\e[1;24r\e[24;1H\e[1;24r\e[24;1H\e[24;1H\e[2K\e[24;1H\e[?25h\e[24;1H\e[24;1HDo you want to log out (y/n)? \e[24;1H\e[24;31H\e[24;1H\e[?25h\e[24;31H
+  - "y\n": |-
+  # The switch closes the session right after 'y' (logout confirmed, nothing to
+  # save), so device2yaml captured no response for the model's final pre_logout
+  # 'n'. This entry exists only to match the "n\n" the model still transmits.
+  - "n\n": |-

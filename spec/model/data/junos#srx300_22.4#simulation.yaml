@@ -89,6 +89,7 @@ commands:
                 transfer-on-commit;
                 archive-sites {
                     \"pasvftp://demouser:CorrectHorseBattery@203.0.113.10/backup/\";
+                    \"sftp://demouser3:Staple:Battery@203.0.113.12/backup/\";
                     \"ftp://demouser2@203.0.113.11/backup/\" password \"$9$FAKEHASHDATAXXXXXXXXXXXXXXXXXXXX\"; ## SECRET-DATA
                 }
             }

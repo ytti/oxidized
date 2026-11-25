@@ -160,6 +160,26 @@ the first and last line of each command output unchanged: they contain the
 command echo and the following prompt, which Oxidized relies on for prompt
 detection.
 
+To test how a model processes command output (e.g. secret removal), the agent
+may add a few configuration lines to an existing, captured simulation file,
+inside the output of the command concerned. The same rule applies: keep the
+first and last line of the command output unchanged, use fabricated values,
+and add the lines to the matching `#output.txt` (and `#secret.yaml` if
+relevant). Prefer this over a separate Ruby spec.
+
+## Deprecations
+
+When deprecating a feature, configuration option, model or platform:
+
+- Keep it working and log a warning with `logger.warn` that names the
+  replacement.
+- Add it to [docs/Deprecated.md](docs/Deprecated.md) (table and a section),
+  with `unreleased` in the column "Since"; the release process replaces it with
+  the version.
+- Mention it in [CHANGELOG.md](CHANGELOG.md).
+
+When removing a deprecated feature, remove it from docs/Deprecated.md too.
+
 ## Contribution workflow
 
 - Branch names may be prefixed with the issue number (e.g.

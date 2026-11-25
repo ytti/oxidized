@@ -28,7 +28,7 @@ class CiscoSparkDiff < Oxidized::Hook
       title = ctx.node.name.to_s
       logger.info "Posting diff as snippet to #{cfg.space}"
       room.send_message CiscoSpark::Message.new(text: "Device #{title} modified:\n" +
-                                                      diff[:patch].lines.to_a[4..-1].join)
+                                                      diff[:patch].lines.to_a[4..].join)
     end
 
     if cfg.message?

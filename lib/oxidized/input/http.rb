@@ -102,16 +102,21 @@ module Oxidized
                                                      "Only :get, :post and :delete are supported"
                     end
         req = req_class.new(uri)
-        @headers.merge(extra_headers).each { |header, value| req.add_field(header, value) }
+        headers = @headers.merge(extra_headers)
+        headers.each { |header, value| req.add_field(header, value) }
         req.body = body if body
 
-        logger.debug "Sending #{method.to_s.upcase} request with headers: #{@headers.merge(extra_headers)}"
+        logger.debug "Sending #{method.to_s.upcase} request with headers: #{headers_for_log(headers)}"
         http.request(req)
       end
     end
 
     def authorization_header_present?(headers)
       headers.keys.any? { |key| key.to_s.downcase == 'authorization' }
+    end
+
+    def headers_for_log(headers)
+      headers.map { |key, value| "#{key}: #{Redact.value(key, value)}" }.join(", ")
     end
 
     def basic_auth_header

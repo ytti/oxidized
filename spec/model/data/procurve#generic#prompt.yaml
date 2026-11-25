@@ -1,0 +1,20 @@
+# Prompt tests for the Procurve model
+# Regex: /(^\r|\e\[24;[0-9][hH])?([\w\s.-]+[#>] )($|(\e\[24;[0-9][0-9]?[hH]){3})/
+pass:
+  # plain SSH manager and operator prompts
+  - 'ProCurve Switch 2530-24G# '
+  - 'HP-5406zl# '
+  - 'Aruba-2930F> '
+  # SSH prompt may be preceded by a carriage return
+  - "\rHP-2920-24G# "
+pass_with_expect:
+  # SSH prompt preceded by \r, repeated command terminated by \eE
+  - "\rProCurve-Switch# "
+  # telnet prompt: leading vt100, prompt, then at least 3 trailing vt100 codes
+  - "\e[24;0hProCurve-Switch# \e[24;12h\e[24;1H\e[24;42h"
+fail:
+  # no #/> terminator
+  - 'ProCurve Switch 2530-24G'
+  - 'just some output line'
+  # terminator without a name in front and no trailing space
+  - '#'

@@ -47,7 +47,7 @@ class Aireos < Oxidized::Model
       next if line =~ /^\s*$/
       next if line =~ /rogue (adhoc|client) (alert|Unknown) [\da-f]{2}:/
 
-      line = line[1..-1] if line[0] == "\r"
+      line = line[1..] if line[0] == "\r"
       out << line.strip
     end
     out = out.join "\n"

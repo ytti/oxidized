@@ -7,14 +7,14 @@ describe 'ATOMS tests' do
     case test.type
     when 'output'
       it "#{test} has expected output" do
-        skip("check simulation+output data file for #{test}") if test.skip?
+        flunk(test.errors.join("\n")) if test.invalid?
         cfg = MockSsh.get_result(self, test).to_cfg
         _(cfg).must_equal test.output
       end
 
     when 'prompt'
       it "#{test} has working prompt detection" do
-        skip("check prompt data file for #{test}") if test.skip?
+        flunk(test.errors.join("\n")) if test.invalid?
         @node = MockSsh.get_node(test.model)
         class_sym = Object.constants.find { |const| const.to_s.casecmp(test.model).zero? }
         prompt_re = Object.const_get(class_sym).prompt
@@ -32,7 +32,7 @@ describe 'ATOMS tests' do
 
     when 'secret'
       it "#{test} correctly manages secrets" do
-        skip("check secret data file for #{test}") if test.skip?
+        flunk(test.errors.join("\n")) if test.invalid?
         Oxidized.config.vars.remove_secret = true
         cfg = MockSsh.get_result(self, test.output_test).to_cfg
         test.pass.each do |want_pass|
@@ -45,6 +45,7 @@ describe 'ATOMS tests' do
 
     when 'significant_changes'
       it "#{test} are detected" do
+        flunk(test.errors.join("\n")) if test.invalid?
         Oxidized.config.vars.output_store_mode = "on_significant"
         cfg = MockSsh.get_result(self, test.output_test).to_cfg
         class_sym = Object.constants.find do |const|

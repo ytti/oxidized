@@ -29,7 +29,7 @@ class MasterOS < Oxidized::Model
   end
 
   cmd 'show running-config' do |cfg|
-    cfg = cfg.each_line.to_a[3..-1].join
+    cfg = cfg.cut_head(3)
     cfg
   end
 

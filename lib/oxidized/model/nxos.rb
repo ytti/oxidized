@@ -18,6 +18,10 @@ class NXOS < Oxidized::Model
       /^(snmp-server user \S+ \S+ auth \S+) \S+ (priv) \S+(.*)$/,
       '\\1 <secret hidden> \\2 <secret hidden>\\3'
     )
+    cfg.gsub!(
+      /^(snmp-server user \S+ \S+ auth \S+) (?!<secret hidden>)\S+(.*)$/,
+      '\\1 <secret hidden>\\2'
+    )
     cfg.gsub! /^(snmp-server host.*? )\S+( udp-port \d+)?$/, '\\1<secret hidden>\\2'
     cfg.gsub! /^(snmp-server mib community-map) \S+ ?(.*)/, '\\1 <secret hidden> \\2'
     cfg.gsub! /(password \d+) (\S+)/, '\\1 <secret hidden>'

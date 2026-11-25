@@ -18,7 +18,7 @@ class VOLTAIRE < Oxidized::Model
     cfg.gsub! /^System memory:\s.+/, '' # Omit constantly changing memory info
     cfg.gsub! /^Uptime:\s.+/, '' # Omit constantly changing uptime info
     cfg.gsub! /.+Generated at\s\d+.+/, '' # Omit constantly changing generation time info
-    cfg.lines.to_a[2..-3].join
+    cfg.cut_both(2, 2)
   end
 
   cmd :secret do |cfg|

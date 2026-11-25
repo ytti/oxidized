@@ -11,7 +11,7 @@ class AudioCodesMP < Oxidized::Model
   end
 
   cmd 'cf get' do |cfg|
-    lines = cfg.each_line.to_a[0..-1]
+    lines = cfg.each_line.to_a
     # remove any garbage before ';**************' and after '; End of INI file.'
     lines[lines.index(";**************\r\n")..lines.index("; End of INI file.\n")].join
   end
