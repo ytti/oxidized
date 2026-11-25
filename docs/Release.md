@@ -27,6 +27,16 @@ For a graphical compare, use `git difftool -d 0.30.0`.
 
 Commit fixes to the review branch
 
+### Review deprecations
+Review [Deprecated.md](Deprecated.md):
+- Remove deprecated features whose planned removal date has passed, and
+  remove them from Deprecated.md. Document the removal in CHANGELOG.md.
+- Check that deprecations introduced since the last release are listed, and
+  replace `unreleased` in the column "Since" with the version to be released.
+  To find them, search the changes for "deprecat":
+  `git diff 0.30.0 | grep -i deprecat`.
+- Check that the planned removal dates are still accurate.
+
 ### Update the gem dependencies to the latest versions
 ```
 bundle outdated

@@ -69,6 +69,7 @@ Check out the [Oxidized TREX 2014 presentation](http://youtu.be/kBQ_CTUuqeU?t=3h
     * [Output](docs/Ruby-API.md#output)
     * [Source](docs/Ruby-API.md#source)
     * [Model](docs/Ruby-API.md#model)
+9. [Deprecations](docs/Deprecated.md)
 
 ## Installation
 
@@ -109,11 +110,11 @@ gem install oxidized-script # Script-based input/output extensions
 ### Rocky Linux, Red Hat Enterprise Linux
 These instructions has been verified on Rocky Linux 9, Rocky Linux 10 and Fedora.
 
-On Rocky Linux 9, you need to install/enable EPEL, CRB and Ruby 3.1:
+On Rocky Linux 9, you need to install/enable EPEL, CRB and Ruby 3.3:
 ```shell
 dnf install epel-release
 dnf config-manager --set-enabled crb
-dnf module enable ruby:3.1
+dnf module enable ruby:3.3
 ```
 
 Then you need the required packages for oxidized:
