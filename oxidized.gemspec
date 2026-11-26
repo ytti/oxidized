@@ -60,7 +60,9 @@ Gem::Specification.new do |s|
   s.add_development_dependency 'rubocop-minitest', '~> 0.41.0'
   s.add_development_dependency 'rubocop-rake',     '~> 0.7.0'
   s.add_development_dependency 'rubocop-sequel',   '~> 0.4.0'
-  s.add_development_dependency 'simplecov',        '~> 0.22'
+  # simplecov >= 1.0 needs Ruby >= 3.2 (>= 1.3 needs Ruby >= 3.3). Allow 0.22 so
+  # bundler can resolve a version for Ruby 3.0 and 3.1, see docs/Deprecated.md
+  s.add_development_dependency 'simplecov',        '>= 0.22'
 
   # Optional runtime libraries, needed here for the unit tests
   # Used by output/gitcrypt

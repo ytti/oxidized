@@ -58,6 +58,18 @@ Raising `required_ruby_version` in Oxidized must be coordinated with
   Ruby 3.0 and 3.1 from `.github/workflows/ruby.yml` in releases that are
   published together.
 
+### Development dependencies held back
+Some development dependencies have dropped Ruby 3.0 and 3.1, so their version
+constraints in `oxidized.gemspec` are kept loose enough for bundler to
+resolve an older version on these Rubies:
+
+| Gem       | Constraint | Ruby 3.0 and 3.1 | Newer versions need             |
+|-----------|------------|------------------|---------------------------------|
+| simplecov | `>= 0.22`  | 0.22             | Ruby >= 3.2 (1.0), >= 3.3 (1.3) |
+
+When Ruby 3.0 and 3.1 are removed, tighten these constraints again (e.g.
+simplecov `~> 1.0`; versions >= 1.3 also drop Ruby 3.2).
+
 ## Configuration `rest`
 The old syntax `rest: 127.0.0.1:8888/prefix` to configure oxidized-web has been
 replaced by `extensions.oxidized-web`, which needs oxidized-web 0.16.0 or later.
