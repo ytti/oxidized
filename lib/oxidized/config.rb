@@ -60,7 +60,8 @@ module Oxidized
 
       asetus.default.model_map = {
         'juniper' => 'junos',
-        'cisco'   => 'ios'
+        'cisco'   => 'ios',
+        'yunshan' => 'vrp'
       }
 
       begin

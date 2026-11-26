@@ -7,6 +7,7 @@ The format is based on [Keep a Changelog](https://keepachangelog.com/en/1.1.0/).
 ## [Unreleased]
 
 ### Added
+- Add yunshan as model_map in the default config (@systeembeheerder)
 - docs/Deprecated.md lists deprecated features and their planned removal (@robertcheramy)
 - device2yaml: install the script as the `oxidized-device2yaml` command with the oxidized gem (@robertcheramy)
 
