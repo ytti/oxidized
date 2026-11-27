@@ -1,7 +1,7 @@
 module Oxidized
   # Hides values of sensitive keys (passwords, tokens, ...) in logs and outputs
   module Redact
-    SENSITIVE_NAME_RE = /(password|passphrase|secret|token|enable|
+    SENSITIVE_NAME_RE = /(password|passphrase|\bpass\b|secret|token|enable|
                           (private|api|access)_?key|
                           community|credential|auth
                         )/ix
