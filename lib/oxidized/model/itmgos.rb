@@ -21,8 +21,10 @@ class ITMGOS < Oxidized::Model
 
   # Prompted secrets are exported as the command, then the value and its confirmation on
   # the next two lines: "set tacacs+ secret", "admin ftp password", "set site chapsecret
-  # <site>" and so on. Those two lines are hidden whatever they contain.
-  PROMPTED_SECRET = /^(?:set|admin) (?:.*(?:password|phrase|secret|key)|site (?:dialoutpassword|chapsecret) \S.*?)\s*$/
+  # <site>" and so on. Those two lines are hidden whatever they contain. Most such commands
+  # end in the secret's name; a site's secrets end in the site's name and an NTP
+  # authentication key in its format ("set ntp localserverkey 2 format ascii").
+  PROMPTED_SECRET = /^(?:(?:set|admin) (?:.*(?:password|phrase|secret|key)|site (?:dialoutpassword|chapsecret) \S.*?)|set ntp localserverkey \d+ format (?:hex|ascii))\s*$/
 
   # Lines the export prints before the first command.
   EXPORT_PREAMBLE = /^(?:\s*|The configuration will be output.*|yes|One moment while the file is generated.*)$/

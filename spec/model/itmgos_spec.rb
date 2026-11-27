@@ -53,6 +53,21 @@ describe 'Model ITMGOS' do
     _(@model.get.to_cfg).wont_include 'LdapExample-2'
   end
 
+  it 'hides an NTP authentication key, whose command ends in the key format' do
+    result = config(export('set ntp localserverid 5 keyindex 1 hash disable',
+                           'set ntp localserverkey 6 format ascii', 'NtpExample-4', 'NtpExample-4',
+                           'set ntp localserverid 6 keyindex 6 hash SHA1',
+                           'set ntp localserverkey 2 format hex', '0a1b2c3d4e5f', '0a1b2c3d4e5f',
+                           'set ntp srcipaddr none'), remove_secret: true)
+
+    _(result).wont_include 'NtpExample-4'
+    _(result).wont_include '0a1b2c3d4e5f'
+    hidden = "\n<secret hidden>\n<secret hidden>\n"
+    _(result).must_include "set ntp localserverkey 6 format ascii#{hidden}set ntp localserverid 6"
+    _(result).must_include "set ntp localserverkey 2 format hex#{hidden}set ntp srcipaddr none"
+    _(result).must_include 'set ntp localserverid 5 keyindex 1 hash disable'
+  end
+
   it 'keeps a secret whose value is "yes" in the unsanitized export' do
     result = config(export('set radius server 1 secret', 'yes', 'yes', 'set radius server 1 port 1812'),
                     remove_secret: false)

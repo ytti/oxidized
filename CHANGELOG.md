@@ -117,6 +117,7 @@ net-ssh >= 8.1 changed how RSA keys are offered, which may break public key auth
 - procurve: hide the SNMP community on `snmp-server host <ip> community "<name>"` lines (@thanegill)
 - procurve: hide local user password hashes (`password ... sha1 "<hash>"`) when remove_secret is true (@thanegill)
 - debug logs no longer contain the node password, sensitive vars (e.g. `enable`) and the HTTP Authorization header (basic auth credentials, API tokens). The new `Oxidized::Redact` module hides them, using the same patterns as `oxidized --support` (@robertcheramy)
+- itmgos: hide NTP authentication keys when `remove_secret` is set. Their command ends in the key format, not in the secret's name, so the key was left in the stored configuration (@ryanhoggpm)
 
 ## [0.37.0 - 2026-05-20]
 ### Added
