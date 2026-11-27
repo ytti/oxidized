@@ -1,0 +1,2129 @@
+{
+    "CLASSIFIER_TABLE": {
+        "class-oob-arp": {
+            "DESCRIPTION": "",
+            "ETHER_TYPE": "0x806",
+            "MATCH_TYPE": "FIELDS"
+        },
+        "class-oob-dhcp-client": {
+            "DESCRIPTION": "",
+            "ETHER_TYPE": "0x800",
+            "IP_PROTOCOL": "17",
+            "L4_DST_PORT": "68",
+            "MATCH_TYPE": "FIELDS"
+        },
+        "class-oob-dhcp-server": {
+            "DESCRIPTION": "",
+            "ETHER_TYPE": "0x800",
+            "IP_PROTOCOL": "17",
+            "L4_DST_PORT": "67",
+            "MATCH_TYPE": "FIELDS"
+        },
+        "class-oob-ip-multicast": {
+            "DESCRIPTION": "",
+            "DST_IP": "224.0.0.0/4",
+            "ETHER_TYPE": "0x800",
+            "MATCH_TYPE": "FIELDS"
+        },
+        "class-oob-ipv6-multicast": {
+            "DESCRIPTION": "",
+            "DST_IPV6": "ff00::/8",
+            "ETHER_TYPE": "0x86DD",
+            "MATCH_TYPE": "FIELDS"
+        }
+    },
+    "COREDUMP": {
+        "config": {
+            "enabled": "true"
+        }
+    },
+    "DEVICE_METADATA": {
+        "localhost": {
+            "default_config_profile": "l3",
+            "frr_mgmt_framework_config": "true",
+            "hostname": "sonic",
+            "hwsku": "DellEMC-S5248f-P-25G-DPB",
+            "mac": "0c:00:ec:21:3f:01",
+            "platform": "x86_64-kvm_x86_64-r0",
+            "type": "LeafRouter"
+        }
+    },
+    "ECMP_LOADSHARE_TABLE_IPV4": {
+        "ipv4": {
+            "ipv4_dst_ip": "true",
+            "ipv4_l4_dst_port": "true",
+            "ipv4_l4_src_port": "true",
+            "ipv4_protocol": "true",
+            "ipv4_src_ip": "true"
+        }
+    },
+    "ECMP_LOADSHARE_TABLE_IPV6": {
+        "ipv6": {
+            "ipv6_dst_ip": "true",
+            "ipv6_l4_dst_port": "true",
+            "ipv6_l4_src_port": "true",
+            "ipv6_next_hdr": "true",
+            "ipv6_src_ip": "true"
+        }
+    },
+    "FEATURE": {
+        "bgp": {
+            "auto_restart": "enabled",
+            "check_up_status": "True",
+            "has_global_scope": "False",
+            "has_per_asic_scope": "True",
+            "has_timer": "False",
+            "state": "always_enabled"
+        },
+        "database": {
+            "auto_restart": "enabled",
+            "check_up_status": "False",
+            "has_global_scope": "True",
+            "has_per_asic_scope": "True",
+            "has_timer": "False",
+            "state": "always_enabled"
+        },
+        "dhcp_relay": {
+            "auto_restart": "enabled",
+            "check_up_status": "True",
+            "has_global_scope": "True",
+            "has_per_asic_scope": "False",
+            "has_timer": "False",
+            "state": "enabled"
+        },
+        "dynamic-licensing": {
+            "auto_restart": "enabled",
+            "check_up_status": "False",
+            "has_global_scope": "True",
+            "has_per_asic_scope": "False",
+            "has_timer": "False",
+            "state": "disabled"
+        },
+        "eventd": {
+            "auto_restart": "enabled",
+            "check_up_status": "True",
+            "has_global_scope": "True",
+            "has_per_asic_scope": "False",
+            "has_timer": "False",
+            "state": "always_enabled"
+        },
+        "gbsyncd": {
+            "auto_restart": "enabled",
+            "check_up_status": "False",
+            "has_global_scope": "True",
+            "has_per_asic_scope": "False",
+            "has_timer": "False",
+            "state": "enabled"
+        },
+        "iccpd": {
+            "auto_restart": "enabled",
+            "check_up_status": "True",
+            "has_global_scope": "True",
+            "has_per_asic_scope": "False",
+            "has_timer": "False",
+            "state": "enabled"
+        },
+        "iscsi-monitor": {
+            "auto_restart": "enabled",
+            "check_up_status": "True",
+            "has_global_scope": "True",
+            "has_per_asic_scope": "False",
+            "has_timer": "False",
+            "state": "disabled"
+        },
+        "l2mcd": {
+            "auto_restart": "enabled",
+            "check_up_status": "True",
+            "has_global_scope": "True",
+            "has_per_asic_scope": "False",
+            "has_timer": "False",
+            "state": "enabled"
+        },
+        "lldp": {
+            "auto_restart": "enabled",
+            "check_up_status": "True",
+            "has_global_scope": "True",
+            "has_per_asic_scope": "True",
+            "has_timer": "False",
+            "state": "enabled"
+        },
+        "macsec": {
+            "auto_restart": "enabled",
+            "check_up_status": "True",
+            "has_global_scope": "True",
+            "has_per_asic_scope": "False",
+            "has_timer": "False",
+            "state": "enabled"
+        },
+        "mfa": {
+            "auto_restart": "enabled",
+            "check_up_status": "True",
+            "has_global_scope": "True",
+            "has_per_asic_scope": "False",
+            "has_timer": "False",
+            "state": "disabled"
+        },
+        "mgmt-framework": {
+            "auto_restart": "enabled",
+            "check_up_status": "True",
+            "has_global_scope": "True",
+            "has_per_asic_scope": "False",
+            "has_timer": "False",
+            "state": "always_enabled"
+        },
+        "nat": {
+            "auto_restart": "enabled",
+            "check_up_status": "True",
+            "has_global_scope": "True",
+            "has_per_asic_scope": "False",
+            "has_timer": "False",
+            "state": "enabled"
+        },
+        "pmon": {
+            "auto_restart": "enabled",
+            "check_up_status": "True",
+            "has_global_scope": "True",
+            "has_per_asic_scope": "False",
+            "has_timer": "False",
+            "state": "always_enabled"
+        },
+        "radv": {
+            "auto_restart": "enabled",
+            "check_up_status": "True",
+            "has_global_scope": "True",
+            "has_per_asic_scope": "False",
+            "has_timer": "False",
+            "state": "enabled"
+        },
+        "sflow": {
+            "auto_restart": "enabled",
+            "check_up_status": "True",
+            "has_global_scope": "True",
+            "has_per_asic_scope": "False",
+            "has_timer": "False",
+            "state": "enabled"
+        },
+        "snmp": {
+            "auto_restart": "enabled",
+            "check_up_status": "True",
+            "has_global_scope": "True",
+            "has_per_asic_scope": "False",
+            "has_timer": "False",
+            "state": "enabled"
+        },
+        "stp": {
+            "auto_restart": "enabled",
+            "check_up_status": "True",
+            "has_global_scope": "True",
+            "has_per_asic_scope": "False",
+            "has_timer": "False",
+            "state": "enabled"
+        },
+        "swss": {
+            "auto_restart": "enabled",
+            "check_up_status": "True",
+            "has_global_scope": "True",
+            "has_per_asic_scope": "True",
+            "has_timer": "False",
+            "state": "always_enabled"
+        },
+        "syncd": {
+            "auto_restart": "enabled",
+            "check_up_status": "True",
+            "has_global_scope": "False",
+            "has_per_asic_scope": "True",
+            "has_timer": "False",
+            "state": "always_enabled"
+        },
+        "tam": {
+            "auto_restart": "enabled",
+            "check_up_status": "True",
+            "has_global_scope": "True",
+            "has_per_asic_scope": "False",
+            "has_timer": "False",
+            "state": "enabled"
+        },
+        "teamd": {
+            "auto_restart": "enabled",
+            "check_up_status": "True",
+            "has_global_scope": "False",
+            "has_per_asic_scope": "True",
+            "has_timer": "False",
+            "state": "always_enabled"
+        },
+        "telemetry": {
+            "auto_restart": "enabled",
+            "check_up_status": "True",
+            "has_global_scope": "True",
+            "has_per_asic_scope": "False",
+            "has_timer": "False",
+            "state": "enabled"
+        },
+        "timesync": {
+            "auto_restart": "enabled",
+            "check_up_status": "False",
+            "has_global_scope": "True",
+            "has_per_asic_scope": "False",
+            "has_timer": "False",
+            "state": "enabled"
+        },
+        "udld": {
+            "auto_restart": "enabled",
+            "check_up_status": "True",
+            "has_global_scope": "True",
+            "has_per_asic_scope": "False",
+            "has_timer": "False",
+            "state": "enabled"
+        },
+        "vrrp": {
+            "auto_restart": "enabled",
+            "check_up_status": "True",
+            "has_global_scope": "True",
+            "has_per_asic_scope": "False",
+            "has_timer": "False",
+            "state": "enabled"
+        }
+    },
+    "FLEX_COUNTER_TABLE": {
+        "PFCWD": {
+            "FLEX_COUNTER_STATUS": "enable"
+        },
+        "PG_WATERMARK": {
+            "FLEX_COUNTER_STATUS": "enable"
+        },
+        "PHY": {
+            "FLEX_COUNTER_STATUS": "enable"
+        },
+        "PORT": {
+            "FLEX_COUNTER_STATUS": "enable"
+        },
+        "QUEUE": {
+            "FLEX_COUNTER_STATUS": "enable"
+        },
+        "QUEUE_WATERMARK": {
+            "FLEX_COUNTER_STATUS": "enable"
+        },
+        "RIF": {
+            "FLEX_COUNTER_STATUS": "enable"
+        },
+        "TUNNEL": {
+            "FLEX_COUNTER_STATUS": "enable"
+        }
+    },
+    "HARDWARE": {
+        "ACCESS_LIST": {
+            "COUNTER_MODE": "per-rule",
+            "LOOKUP_MODE": "optimized"
+        }
+    },
+    "HOST_FEATURE": {
+        "caclmgrd": {
+            "check_up_status": "False"
+        },
+        "cron": {
+            "check_up_status": "False"
+        },
+        "docker": {
+            "check_up_status": "False"
+        },
+        "hostcfgd": {
+            "check_up_status": "False"
+        },
+        "warmboot-finalizer": {
+            "check_up_status": "True"
+        },
+        "xphyd": {
+            "check_up_status": "True"
+        }
+    },
+    "KDUMP": {
+        "config": {
+            "enabled": "true",
+            "memory": "0M-2G:256M,2G-4G:256M,4G-8G:384M,8G-:448M",
+            "num_dumps": "3"
+        }
+    },
+    "LOGGER": {
+        "DropMonitor": {
+            "LOGLEVEL": "NOTICE",
+            "LOGOUTPUT": "SYSLOG"
+        },
+        "DropMonitor:Debugsh": {
+            "LOGLEVEL": "NOTICE",
+            "LOGOUTPUT": "SYSLOG"
+        },
+        "IFA": {
+            "LOGLEVEL": "NOTICE",
+            "LOGOUTPUT": "SYSLOG"
+        },
+        "IFA:Debugsh": {
+            "LOGLEVEL": "NOTICE",
+            "LOGOUTPUT": "SYSLOG"
+        },
+        "PTP": {
+            "LOGLEVEL": "NOTICE",
+            "LOGOUTPUT": "SYSLOG"
+        },
+        "RedirectMgr": {
+            "LOGLEVEL": "NOTICE",
+            "LOGOUTPUT": "SYSLOG"
+        },
+        "RedirectMgr:Debugsh": {
+            "LOGLEVEL": "NOTICE",
+            "LOGOUTPUT": "SYSLOG"
+        },
+        "RedirectOper": {
+            "LOGLEVEL": "NOTICE",
+            "LOGOUTPUT": "SYSLOG"
+        },
+        "RedirectOper:Debugsh": {
+            "LOGLEVEL": "NOTICE",
+            "LOGOUTPUT": "SYSLOG"
+        },
+        "SAI_API_ACL": {
+            "LOGLEVEL": "SAI_LOG_LEVEL_NOTICE",
+            "LOGOUTPUT": "SYSLOG"
+        },
+        "SAI_API_ACL_LOG": {
+            "LOGLEVEL": "SAI_LOG_LEVEL_NOTICE",
+            "LOGOUTPUT": "SYSLOG"
+        },
+        "SAI_API_ARS": {
+            "LOGLEVEL": "SAI_LOG_LEVEL_NOTICE",
+            "LOGOUTPUT": "SYSLOG"
+        },
+        "SAI_API_ARS_PROFILE": {
+            "LOGLEVEL": "SAI_LOG_LEVEL_NOTICE",
+            "LOGOUTPUT": "SYSLOG"
+        },
+        "SAI_API_BFD": {
+            "LOGLEVEL": "SAI_LOG_LEVEL_NOTICE",
+            "LOGOUTPUT": "SYSLOG"
+        },
+        "SAI_API_BMTOR": {
+            "LOGLEVEL": "SAI_LOG_LEVEL_NOTICE",
+            "LOGOUTPUT": "SYSLOG"
+        },
+        "SAI_API_BRIDGE": {
+            "LOGLEVEL": "SAI_LOG_LEVEL_NOTICE",
+            "LOGOUTPUT": "SYSLOG"
+        },
+        "SAI_API_BUFFER": {
+            "LOGLEVEL": "SAI_LOG_LEVEL_NOTICE",
+            "LOGOUTPUT": "SYSLOG"
+        },
+        "SAI_API_COUNTER": {
+            "LOGLEVEL": "SAI_LOG_LEVEL_NOTICE",
+            "LOGOUTPUT": "SYSLOG"
+        },
+        "SAI_API_DASH_ACL": {
+            "LOGLEVEL": "SAI_LOG_LEVEL_NOTICE",
+            "LOGOUTPUT": "SYSLOG"
+        },
+        "SAI_API_DASH_APPLIANCE": {
+            "LOGLEVEL": "SAI_LOG_LEVEL_NOTICE",
+            "LOGOUTPUT": "SYSLOG"
+        },
+        "SAI_API_DASH_DIRECTION_LOOKUP": {
+            "LOGLEVEL": "SAI_LOG_LEVEL_NOTICE",
+            "LOGOUTPUT": "SYSLOG"
+        },
+        "SAI_API_DASH_ENI": {
+            "LOGLEVEL": "SAI_LOG_LEVEL_NOTICE",
+            "LOGOUTPUT": "SYSLOG"
+        },
+        "SAI_API_DASH_FLOW": {
+            "LOGLEVEL": "SAI_LOG_LEVEL_NOTICE",
+            "LOGOUTPUT": "SYSLOG"
+        },
+        "SAI_API_DASH_HA": {
+            "LOGLEVEL": "SAI_LOG_LEVEL_NOTICE",
+            "LOGOUTPUT": "SYSLOG"
+        },
+        "SAI_API_DASH_INBOUND_ROUTING": {
+            "LOGLEVEL": "SAI_LOG_LEVEL_NOTICE",
+            "LOGOUTPUT": "SYSLOG"
+        },
+        "SAI_API_DASH_METER": {
+            "LOGLEVEL": "SAI_LOG_LEVEL_NOTICE",
+            "LOGOUTPUT": "SYSLOG"
+        },
+        "SAI_API_DASH_OUTBOUND_CA_TO_PA": {
+            "LOGLEVEL": "SAI_LOG_LEVEL_NOTICE",
+            "LOGOUTPUT": "SYSLOG"
+        },
+        "SAI_API_DASH_OUTBOUND_PORT_MAP": {
+            "LOGLEVEL": "SAI_LOG_LEVEL_NOTICE",
+            "LOGOUTPUT": "SYSLOG"
+        },
+        "SAI_API_DASH_OUTBOUND_ROUTING": {
+            "LOGLEVEL": "SAI_LOG_LEVEL_NOTICE",
+            "LOGOUTPUT": "SYSLOG"
+        },
+        "SAI_API_DASH_PA_VALIDATION": {
+            "LOGLEVEL": "SAI_LOG_LEVEL_NOTICE",
+            "LOGOUTPUT": "SYSLOG"
+        },
+        "SAI_API_DASH_TRUSTED_VNI": {
+            "LOGLEVEL": "SAI_LOG_LEVEL_NOTICE",
+            "LOGOUTPUT": "SYSLOG"
+        },
+        "SAI_API_DASH_TUNNEL": {
+            "LOGLEVEL": "SAI_LOG_LEVEL_NOTICE",
+            "LOGOUTPUT": "SYSLOG"
+        },
+        "SAI_API_DASH_VIP": {
+            "LOGLEVEL": "SAI_LOG_LEVEL_NOTICE",
+            "LOGOUTPUT": "SYSLOG"
+        },
+        "SAI_API_DASH_VNET": {
+            "LOGLEVEL": "SAI_LOG_LEVEL_NOTICE",
+            "LOGOUTPUT": "SYSLOG"
+        },
+        "SAI_API_DEBUG_COUNTER": {
+            "LOGLEVEL": "SAI_LOG_LEVEL_NOTICE",
+            "LOGOUTPUT": "SYSLOG"
+        },
+        "SAI_API_DTEL": {
+            "LOGLEVEL": "SAI_LOG_LEVEL_NOTICE",
+            "LOGOUTPUT": "SYSLOG"
+        },
+        "SAI_API_FDB": {
+            "LOGLEVEL": "SAI_LOG_LEVEL_NOTICE",
+            "LOGOUTPUT": "SYSLOG"
+        },
+        "SAI_API_FIRMWARE": {
+            "LOGLEVEL": "SAI_LOG_LEVEL_NOTICE",
+            "LOGOUTPUT": "SYSLOG"
+        },
+        "SAI_API_GENERIC_PROGRAMMABLE": {
+            "LOGLEVEL": "SAI_LOG_LEVEL_NOTICE",
+            "LOGOUTPUT": "SYSLOG"
+        },
+        "SAI_API_HASH": {
+            "LOGLEVEL": "SAI_LOG_LEVEL_NOTICE",
+            "LOGOUTPUT": "SYSLOG"
+        },
+        "SAI_API_HOSTIF": {
+            "LOGLEVEL": "SAI_LOG_LEVEL_NOTICE",
+            "LOGOUTPUT": "SYSLOG"
+        },
+        "SAI_API_ICMP_ECHO": {
+            "LOGLEVEL": "SAI_LOG_LEVEL_NOTICE",
+            "LOGOUTPUT": "SYSLOG"
+        },
+        "SAI_API_IPMC": {
+            "LOGLEVEL": "SAI_LOG_LEVEL_NOTICE",
+            "LOGOUTPUT": "SYSLOG"
+        },
+        "SAI_API_IPMC_GROUP": {
+            "LOGLEVEL": "SAI_LOG_LEVEL_NOTICE",
+            "LOGOUTPUT": "SYSLOG"
+        },
+        "SAI_API_IPSEC": {
+            "LOGLEVEL": "SAI_LOG_LEVEL_NOTICE",
+            "LOGOUTPUT": "SYSLOG"
+        },
+        "SAI_API_ISOLATION_GROUP": {
+            "LOGLEVEL": "SAI_LOG_LEVEL_NOTICE",
+            "LOGOUTPUT": "SYSLOG"
+        },
+        "SAI_API_L2MC": {
+            "LOGLEVEL": "SAI_LOG_LEVEL_NOTICE",
+            "LOGOUTPUT": "SYSLOG"
+        },
+        "SAI_API_L2MC_GROUP": {
+            "LOGLEVEL": "SAI_LOG_LEVEL_NOTICE",
+            "LOGOUTPUT": "SYSLOG"
+        },
+        "SAI_API_L2_ECMP_GROUP": {
+            "LOGLEVEL": "SAI_LOG_LEVEL_NOTICE",
+            "LOGOUTPUT": "SYSLOG"
+        },
+        "SAI_API_LAG": {
+            "LOGLEVEL": "SAI_LOG_LEVEL_NOTICE",
+            "LOGOUTPUT": "SYSLOG"
+        },
+        "SAI_API_MACSEC": {
+            "LOGLEVEL": "SAI_LOG_LEVEL_NOTICE",
+            "LOGOUTPUT": "SYSLOG"
+        },
+        "SAI_API_MCAST_FDB": {
+            "LOGLEVEL": "SAI_LOG_LEVEL_NOTICE",
+            "LOGOUTPUT": "SYSLOG"
+        },
+        "SAI_API_MIRROR": {
+            "LOGLEVEL": "SAI_LOG_LEVEL_NOTICE",
+            "LOGOUTPUT": "SYSLOG"
+        },
+        "SAI_API_MPLS": {
+            "LOGLEVEL": "SAI_LOG_LEVEL_NOTICE",
+            "LOGOUTPUT": "SYSLOG"
+        },
+        "SAI_API_MY_MAC": {
+            "LOGLEVEL": "SAI_LOG_LEVEL_NOTICE",
+            "LOGOUTPUT": "SYSLOG"
+        },
+        "SAI_API_NAT": {
+            "LOGLEVEL": "SAI_LOG_LEVEL_NOTICE",
+            "LOGOUTPUT": "SYSLOG"
+        },
+        "SAI_API_NEIGHBOR": {
+            "LOGLEVEL": "SAI_LOG_LEVEL_NOTICE",
+            "LOGOUTPUT": "SYSLOG"
+        },
+        "SAI_API_NEXT_HOP": {
+            "LOGLEVEL": "SAI_LOG_LEVEL_NOTICE",
+            "LOGOUTPUT": "SYSLOG"
+        },
+        "SAI_API_NEXT_HOP_GROUP": {
+            "LOGLEVEL": "SAI_LOG_LEVEL_NOTICE",
+            "LOGOUTPUT": "SYSLOG"
+        },
+        "SAI_API_PERFMON": {
+            "LOGLEVEL": "SAI_LOG_LEVEL_NOTICE",
+            "LOGOUTPUT": "SYSLOG"
+        },
+        "SAI_API_POE": {
+            "LOGLEVEL": "SAI_LOG_LEVEL_NOTICE",
+            "LOGOUTPUT": "SYSLOG"
+        },
+        "SAI_API_POLICER": {
+            "LOGLEVEL": "SAI_LOG_LEVEL_NOTICE",
+            "LOGOUTPUT": "SYSLOG"
+        },
+        "SAI_API_PORT": {
+            "LOGLEVEL": "SAI_LOG_LEVEL_NOTICE",
+            "LOGOUTPUT": "SYSLOG"
+        },
+        "SAI_API_PREFIX_COMPRESSION": {
+            "LOGLEVEL": "SAI_LOG_LEVEL_NOTICE",
+            "LOGOUTPUT": "SYSLOG"
+        },
+        "SAI_API_QOS_MAP": {
+            "LOGLEVEL": "SAI_LOG_LEVEL_NOTICE",
+            "LOGOUTPUT": "SYSLOG"
+        },
+        "SAI_API_QUEUE": {
+            "LOGLEVEL": "SAI_LOG_LEVEL_NOTICE",
+            "LOGOUTPUT": "SYSLOG"
+        },
+        "SAI_API_ROUTE": {
+            "LOGLEVEL": "SAI_LOG_LEVEL_NOTICE",
+            "LOGOUTPUT": "SYSLOG"
+        },
+        "SAI_API_ROUTER_INTERFACE": {
+            "LOGLEVEL": "SAI_LOG_LEVEL_NOTICE",
+            "LOGOUTPUT": "SYSLOG"
+        },
+        "SAI_API_RPF_GROUP": {
+            "LOGLEVEL": "SAI_LOG_LEVEL_NOTICE",
+            "LOGOUTPUT": "SYSLOG"
+        },
+        "SAI_API_SAMPLEPACKET": {
+            "LOGLEVEL": "SAI_LOG_LEVEL_NOTICE",
+            "LOGOUTPUT": "SYSLOG"
+        },
+        "SAI_API_SCHEDULER": {
+            "LOGLEVEL": "SAI_LOG_LEVEL_NOTICE",
+            "LOGOUTPUT": "SYSLOG"
+        },
+        "SAI_API_SCHEDULER_GROUP": {
+            "LOGLEVEL": "SAI_LOG_LEVEL_NOTICE",
+            "LOGOUTPUT": "SYSLOG"
+        },
+        "SAI_API_SRV6": {
+            "LOGLEVEL": "SAI_LOG_LEVEL_NOTICE",
+            "LOGOUTPUT": "SYSLOG"
+        },
+        "SAI_API_STP": {
+            "LOGLEVEL": "SAI_LOG_LEVEL_NOTICE",
+            "LOGOUTPUT": "SYSLOG"
+        },
+        "SAI_API_SWITCH": {
+            "LOGLEVEL": "SAI_LOG_LEVEL_NOTICE",
+            "LOGOUTPUT": "SYSLOG"
+        },
+        "SAI_API_SWITCH_PIPELINE": {
+            "LOGLEVEL": "SAI_LOG_LEVEL_NOTICE",
+            "LOGOUTPUT": "SYSLOG"
+        },
+        "SAI_API_SYNCE": {
+            "LOGLEVEL": "SAI_LOG_LEVEL_NOTICE",
+            "LOGOUTPUT": "SYSLOG"
+        },
+        "SAI_API_SYSTEM_PORT": {
+            "LOGLEVEL": "SAI_LOG_LEVEL_NOTICE",
+            "LOGOUTPUT": "SYSLOG"
+        },
+        "SAI_API_TAM": {
+            "LOGLEVEL": "SAI_LOG_LEVEL_NOTICE",
+            "LOGOUTPUT": "SYSLOG"
+        },
+        "SAI_API_TAM_EVENT_AGING_GROUP": {
+            "LOGLEVEL": "SAI_LOG_LEVEL_NOTICE",
+            "LOGOUTPUT": "SYSLOG"
+        },
+        "SAI_API_TUNNEL": {
+            "LOGLEVEL": "SAI_LOG_LEVEL_NOTICE",
+            "LOGOUTPUT": "SYSLOG"
+        },
+        "SAI_API_TWAMP": {
+            "LOGLEVEL": "SAI_LOG_LEVEL_NOTICE",
+            "LOGOUTPUT": "SYSLOG"
+        },
+        "SAI_API_UDF": {
+            "LOGLEVEL": "SAI_LOG_LEVEL_NOTICE",
+            "LOGOUTPUT": "SYSLOG"
+        },
+        "SAI_API_VENDOR_SWITCH": {
+            "LOGLEVEL": "SAI_LOG_LEVEL_NOTICE",
+            "LOGOUTPUT": "SYSLOG"
+        },
+        "SAI_API_VIRTUAL_ROUTER": {
+            "LOGLEVEL": "SAI_LOG_LEVEL_NOTICE",
+            "LOGOUTPUT": "SYSLOG"
+        },
+        "SAI_API_VLAN": {
+            "LOGLEVEL": "SAI_LOG_LEVEL_NOTICE",
+            "LOGOUTPUT": "SYSLOG"
+        },
+        "SAI_API_VLAN_STACK": {
+            "LOGLEVEL": "SAI_LOG_LEVEL_NOTICE",
+            "LOGOUTPUT": "SYSLOG"
+        },
+        "SAI_API_WRED": {
+            "LOGLEVEL": "SAI_LOG_LEVEL_NOTICE",
+            "LOGOUTPUT": "SYSLOG"
+        },
+        "TAM": {
+            "LOGLEVEL": "NOTICE",
+            "LOGOUTPUT": "SYSLOG"
+        },
+        "TAM:Debugsh": {
+            "LOGLEVEL": "NOTICE",
+            "LOGOUTPUT": "SYSLOG"
+        },
+        "TS": {
+            "LOGLEVEL": "NOTICE",
+            "LOGOUTPUT": "SYSLOG"
+        },
+        "TS:Debugsh": {
+            "LOGLEVEL": "NOTICE",
+            "LOGOUTPUT": "SYSLOG"
+        },
+        "acllogd": {
+            "LOGLEVEL": "NOTICE",
+            "LOGOUTPUT": "SYSLOG"
+        },
+        "acllogd:AclLog": {
+            "LOGLEVEL": "NOTICE",
+            "LOGOUTPUT": "SYSLOG"
+        },
+        "acllogd:Debugsh": {
+            "LOGLEVEL": "NOTICE",
+            "LOGOUTPUT": "SYSLOG"
+        },
+        "aclsvcd": {
+            "LOGLEVEL": "NOTICE",
+            "LOGOUTPUT": "SYSLOG"
+        },
+        "aclsvcd:AclFeatMgr": {
+            "LOGLEVEL": "NOTICE",
+            "LOGOUTPUT": "SYSLOG"
+        },
+        "aclsvcd:AclMgr": {
+            "LOGLEVEL": "NOTICE",
+            "LOGOUTPUT": "SYSLOG"
+        },
+        "aclsvcd:Debugsh": {
+            "LOGLEVEL": "NOTICE",
+            "LOGOUTPUT": "SYSLOG"
+        },
+        "aclsvcd:FbsMgr": {
+            "LOGLEVEL": "NOTICE",
+            "LOGOUTPUT": "SYSLOG"
+        },
+        "aclsvcd:IntfMgr": {
+            "LOGLEVEL": "NOTICE",
+            "LOGOUTPUT": "SYSLOG"
+        },
+        "arsmgrd": {
+            "LOGLEVEL": "NOTICE",
+            "LOGOUTPUT": "SYSLOG"
+        },
+        "arsmgrd:Debugsh": {
+            "LOGLEVEL": "NOTICE",
+            "LOGOUTPUT": "SYSLOG"
+        },
+        "buffermgrd": {
+            "LOGLEVEL": "NOTICE",
+            "LOGOUTPUT": "SYSLOG"
+        },
+        "buffermgrd:Debugsh": {
+            "LOGLEVEL": "NOTICE",
+            "LOGOUTPUT": "SYSLOG"
+        },
+        "coppmgrd": {
+            "LOGLEVEL": "NOTICE",
+            "LOGOUTPUT": "SYSLOG"
+        },
+        "coppmgrd:Debugsh": {
+            "LOGLEVEL": "NOTICE",
+            "LOGOUTPUT": "SYSLOG"
+        },
+        "dasmgr": {
+            "LOGLEVEL": "NOTICE",
+            "LOGOUTPUT": "SYSLOG"
+        },
+        "dasmgr:Debugsh": {
+            "LOGLEVEL": "NOTICE",
+            "LOGOUTPUT": "SYSLOG"
+        },
+        "dhcprelaymgrd": {
+            "LOGLEVEL": "NOTICE",
+            "LOGOUTPUT": "SYSLOG"
+        },
+        "dhcprelaymgrd:Debugsh": {
+            "LOGLEVEL": "NOTICE",
+            "LOGOUTPUT": "SYSLOG"
+        },
+        "evpnmhmgrd": {
+            "LOGLEVEL": "NOTICE",
+            "LOGOUTPUT": "SYSLOG"
+        },
+        "evpnmhmgrd:Debugsh": {
+            "LOGLEVEL": "NOTICE",
+            "LOGOUTPUT": "SYSLOG"
+        },
+        "fdbsyncd": {
+            "LOGLEVEL": "NOTICE",
+            "LOGOUTPUT": "SYSLOG"
+        },
+        "fdbsyncd:Debugsh": {
+            "LOGLEVEL": "NOTICE",
+            "LOGOUTPUT": "SYSLOG"
+        },
+        "fpmsyncd": {
+            "LOGLEVEL": "NOTICE",
+            "LOGOUTPUT": "SYSLOG"
+        },
+        "fpmsyncd:Debugsh": {
+            "LOGLEVEL": "NOTICE",
+            "LOGOUTPUT": "SYSLOG"
+        },
+        "gearsyncd": {
+            "LOGLEVEL": "NOTICE",
+            "LOGOUTPUT": "SYSLOG"
+        },
+        "gearsyncd:Debugsh": {
+            "LOGLEVEL": "NOTICE",
+            "LOGOUTPUT": "SYSLOG"
+        },
+        "hostapdmgr": {
+            "LOGLEVEL": "NOTICE",
+            "LOGOUTPUT": "SYSLOG"
+        },
+        "hostapdmgr:Debugsh": {
+            "LOGLEVEL": "NOTICE",
+            "LOGOUTPUT": "SYSLOG"
+        },
+        "intfmgrd": {
+            "LOGLEVEL": "NOTICE",
+            "LOGOUTPUT": "SYSLOG"
+        },
+        "intfmgrd:Debugsh": {
+            "LOGLEVEL": "NOTICE",
+            "LOGOUTPUT": "SYSLOG"
+        },
+        "iphelpermgrd": {
+            "LOGLEVEL": "NOTICE",
+            "LOGOUTPUT": "SYSLOG"
+        },
+        "iphelpermgrd:Debugsh": {
+            "LOGLEVEL": "NOTICE",
+            "LOGOUTPUT": "SYSLOG"
+        },
+        "ipmcfpmsyncd": {
+            "LOGLEVEL": "NOTICE",
+            "LOGOUTPUT": "SYSLOG"
+        },
+        "ipmcfpmsyncd:Debugsh": {
+            "LOGLEVEL": "NOTICE",
+            "LOGOUTPUT": "SYSLOG"
+        },
+        "l2mcdmgrd": {
+            "LOGLEVEL": "NOTICE",
+            "LOGOUTPUT": "SYSLOG"
+        },
+        "l2mcdmgrd:Debugsh": {
+            "LOGLEVEL": "NOTICE",
+            "LOGOUTPUT": "SYSLOG"
+        },
+        "loopbackmgrd": {
+            "LOGLEVEL": "NOTICE",
+            "LOGOUTPUT": "SYSLOG"
+        },
+        "loopbackmgrd:Debugsh": {
+            "LOGLEVEL": "NOTICE",
+            "LOGOUTPUT": "SYSLOG"
+        },
+        "mabmgr": {
+            "LOGLEVEL": "NOTICE",
+            "LOGOUTPUT": "SYSLOG"
+        },
+        "mabmgr:Debugsh": {
+            "LOGLEVEL": "NOTICE",
+            "LOGOUTPUT": "SYSLOG"
+        },
+        "mclagsyncd": {
+            "LOGLEVEL": "NOTICE",
+            "LOGOUTPUT": "SYSLOG"
+        },
+        "mclagsyncd:Debugsh": {
+            "LOGLEVEL": "NOTICE",
+            "LOGOUTPUT": "SYSLOG"
+        },
+        "natmgrd": {
+            "LOGLEVEL": "NOTICE",
+            "LOGOUTPUT": "SYSLOG"
+        },
+        "natmgrd:Debugsh": {
+            "LOGLEVEL": "NOTICE",
+            "LOGOUTPUT": "SYSLOG"
+        },
+        "natsyncd": {
+            "LOGLEVEL": "NOTICE",
+            "LOGOUTPUT": "SYSLOG"
+        },
+        "natsyncd:Debugsh": {
+            "LOGLEVEL": "NOTICE",
+            "LOGOUTPUT": "SYSLOG"
+        },
+        "nbrmgrd": {
+            "LOGLEVEL": "NOTICE",
+            "LOGOUTPUT": "SYSLOG"
+        },
+        "nbrmgrd:Debugsh": {
+            "LOGLEVEL": "NOTICE",
+            "LOGOUTPUT": "SYSLOG"
+        },
+        "neighsyncd": {
+            "LOGLEVEL": "NOTICE",
+            "LOGOUTPUT": "SYSLOG"
+        },
+        "neighsyncd:Debugsh": {
+            "LOGLEVEL": "NOTICE",
+            "LOGOUTPUT": "SYSLOG"
+        },
+        "orchagent": {
+            "LOGLEVEL": "NOTICE",
+            "LOGOUTPUT": "SYSLOG"
+        },
+        "orchagent:AclLogOrch": {
+            "LOGLEVEL": "NOTICE",
+            "LOGOUTPUT": "SYSLOG"
+        },
+        "orchagent:AclOrch": {
+            "LOGLEVEL": "NOTICE",
+            "LOGOUTPUT": "SYSLOG"
+        },
+        "orchagent:Debugsh": {
+            "LOGLEVEL": "NOTICE",
+            "LOGOUTPUT": "SYSLOG"
+        },
+        "orchagent:IntfTrackOrch": {
+            "LOGLEVEL": "NOTICE",
+            "LOGOUTPUT": "SYSLOG"
+        },
+        "orchagent:PbfOrch": {
+            "LOGLEVEL": "NOTICE",
+            "LOGOUTPUT": "SYSLOG"
+        },
+        "paccfg": {
+            "LOGLEVEL": "NOTICE",
+            "LOGOUTPUT": "SYSLOG"
+        },
+        "paccfg:Debugsh": {
+            "LOGLEVEL": "NOTICE",
+            "LOGOUTPUT": "SYSLOG"
+        },
+        "pacmgr": {
+            "LOGLEVEL": "NOTICE",
+            "LOGOUTPUT": "SYSLOG"
+        },
+        "pacmgr:AclLib": {
+            "LOGLEVEL": "NOTICE",
+            "LOGOUTPUT": "SYSLOG"
+        },
+        "pacmgr:Debugsh": {
+            "LOGLEVEL": "NOTICE",
+            "LOGOUTPUT": "SYSLOG"
+        },
+        "portmgrd": {
+            "LOGLEVEL": "NOTICE",
+            "LOGOUTPUT": "SYSLOG"
+        },
+        "portmgrd:Debugsh": {
+            "LOGLEVEL": "NOTICE",
+            "LOGOUTPUT": "SYSLOG"
+        },
+        "portsyncd": {
+            "LOGLEVEL": "NOTICE",
+            "LOGOUTPUT": "SYSLOG"
+        },
+        "portsyncd:Debugsh": {
+            "LOGLEVEL": "NOTICE",
+            "LOGOUTPUT": "SYSLOG"
+        },
+        "radsecmgr": {
+            "LOGLEVEL": "NOTICE",
+            "LOGOUTPUT": "SYSLOG"
+        },
+        "radsecmgr:Debugsh": {
+            "LOGLEVEL": "NOTICE",
+            "LOGOUTPUT": "SYSLOG"
+        },
+        "sflowmgrd": {
+            "LOGLEVEL": "NOTICE",
+            "LOGOUTPUT": "SYSLOG"
+        },
+        "sflowmgrd:Debugsh": {
+            "LOGLEVEL": "NOTICE",
+            "LOGOUTPUT": "SYSLOG"
+        },
+        "snapshotmgr": {
+            "LOGLEVEL": "NOTICE",
+            "LOGOUTPUT": "SYSLOG"
+        },
+        "snapshotmgr:Debugsh": {
+            "LOGLEVEL": "NOTICE",
+            "LOGOUTPUT": "SYSLOG"
+        },
+        "srv6mgrd": {
+            "LOGLEVEL": "NOTICE",
+            "LOGOUTPUT": "SYSLOG"
+        },
+        "srv6mgrd:Debugsh": {
+            "LOGLEVEL": "NOTICE",
+            "LOGOUTPUT": "SYSLOG"
+        },
+        "stpiccpsyncd": {
+            "LOGLEVEL": "NOTICE",
+            "LOGOUTPUT": "SYSLOG"
+        },
+        "stpiccpsyncd:Debugsh": {
+            "LOGLEVEL": "NOTICE",
+            "LOGOUTPUT": "SYSLOG"
+        },
+        "stpmgrd": {
+            "LOGLEVEL": "NOTICE",
+            "LOGOUTPUT": "SYSLOG"
+        },
+        "stpmgrd:Debugsh": {
+            "LOGLEVEL": "NOTICE",
+            "LOGOUTPUT": "SYSLOG"
+        },
+        "stpsync": {
+            "LOGLEVEL": "NOTICE",
+            "LOGOUTPUT": "SYSLOG"
+        },
+        "stpsync:Debugsh": {
+            "LOGLEVEL": "NOTICE",
+            "LOGOUTPUT": "SYSLOG"
+        },
+        "switchmgrd": {
+            "LOGLEVEL": "NOTICE",
+            "LOGOUTPUT": "SYSLOG"
+        },
+        "switchmgrd:Debugsh": {
+            "LOGLEVEL": "NOTICE",
+            "LOGOUTPUT": "SYSLOG"
+        },
+        "syncd": {
+            "LOGLEVEL": "NOTICE",
+            "LOGOUTPUT": "SYSLOG"
+        },
+        "syncd:Debugsh": {
+            "LOGLEVEL": "NOTICE",
+            "LOGOUTPUT": "SYSLOG"
+        },
+        "teammgrd": {
+            "LOGLEVEL": "NOTICE",
+            "LOGOUTPUT": "SYSLOG"
+        },
+        "teammgrd:Debugsh": {
+            "LOGLEVEL": "NOTICE",
+            "LOGOUTPUT": "SYSLOG"
+        },
+        "teamsyncd": {
+            "LOGLEVEL": "NOTICE",
+            "LOGOUTPUT": "SYSLOG"
+        },
+        "teamsyncd:Debugsh": {
+            "LOGLEVEL": "NOTICE",
+            "LOGOUTPUT": "SYSLOG"
+        },
+        "thresholdmgr": {
+            "LOGLEVEL": "NOTICE",
+            "LOGOUTPUT": "SYSLOG"
+        },
+        "thresholdmgr:Debugsh": {
+            "LOGLEVEL": "NOTICE",
+            "LOGOUTPUT": "SYSLOG"
+        },
+        "timesyncd": {
+            "LOGLEVEL": "NOTICE",
+            "LOGOUTPUT": "SYSLOG"
+        },
+        "timesyncd:Debugsh": {
+            "LOGLEVEL": "NOTICE",
+            "LOGOUTPUT": "SYSLOG"
+        },
+        "tlm_teamd": {
+            "LOGLEVEL": "NOTICE",
+            "LOGOUTPUT": "SYSLOG"
+        },
+        "tlm_teamd:Debugsh": {
+            "LOGLEVEL": "NOTICE",
+            "LOGOUTPUT": "SYSLOG"
+        },
+        "tunnelmgrd": {
+            "LOGLEVEL": "NOTICE",
+            "LOGOUTPUT": "SYSLOG"
+        },
+        "tunnelmgrd:Debugsh": {
+            "LOGLEVEL": "NOTICE",
+            "LOGOUTPUT": "SYSLOG"
+        },
+        "udldmgrd": {
+            "LOGLEVEL": "NOTICE",
+            "LOGOUTPUT": "SYSLOG"
+        },
+        "udldmgrd:Debugsh": {
+            "LOGLEVEL": "NOTICE",
+            "LOGOUTPUT": "SYSLOG"
+        },
+        "vlanmgrd": {
+            "LOGLEVEL": "NOTICE",
+            "LOGOUTPUT": "SYSLOG"
+        },
+        "vlanmgrd:Debugsh": {
+            "LOGLEVEL": "NOTICE",
+            "LOGOUTPUT": "SYSLOG"
+        },
+        "vrfmgrd": {
+            "LOGLEVEL": "NOTICE",
+            "LOGOUTPUT": "SYSLOG"
+        },
+        "vrfmgrd:Debugsh": {
+            "LOGLEVEL": "NOTICE",
+            "LOGOUTPUT": "SYSLOG"
+        },
+        "vrrpmgrd": {
+            "LOGLEVEL": "NOTICE",
+            "LOGOUTPUT": "SYSLOG"
+        },
+        "vrrpmgrd:Debugsh": {
+            "LOGLEVEL": "NOTICE",
+            "LOGOUTPUT": "SYSLOG"
+        },
+        "vrrpsyncd": {
+            "LOGLEVEL": "NOTICE",
+            "LOGOUTPUT": "SYSLOG"
+        },
+        "vrrpsyncd:Debugsh": {
+            "LOGLEVEL": "NOTICE",
+            "LOGOUTPUT": "SYSLOG"
+        },
+        "vxlanmgrd": {
+            "LOGLEVEL": "NOTICE",
+            "LOGOUTPUT": "SYSLOG"
+        },
+        "vxlanmgrd:Debugsh": {
+            "LOGLEVEL": "NOTICE",
+            "LOGOUTPUT": "SYSLOG"
+        }
+    },
+    "MAB_PORT_CONFIG_TABLE": {
+        "Ethernet0": {},
+        "Ethernet1": {},
+        "Ethernet2": {},
+        "Ethernet3": {},
+        "Ethernet4": {},
+        "Ethernet5": {},
+        "Ethernet6": {},
+        "Ethernet7": {},
+        "Ethernet8": {},
+        "Ethernet9": {},
+        "Ethernet10": {},
+        "Ethernet11": {},
+        "Ethernet12": {},
+        "Ethernet13": {},
+        "Ethernet14": {},
+        "Ethernet15": {},
+        "Ethernet16": {},
+        "Ethernet17": {},
+        "Ethernet18": {},
+        "Ethernet19": {},
+        "Ethernet20": {},
+        "Ethernet21": {},
+        "Ethernet22": {},
+        "Ethernet23": {},
+        "Ethernet24": {},
+        "Ethernet25": {},
+        "Ethernet26": {},
+        "Ethernet27": {},
+        "Ethernet28": {},
+        "Ethernet29": {},
+        "Ethernet30": {},
+        "Ethernet31": {},
+        "Ethernet32": {},
+        "Ethernet33": {},
+        "Ethernet34": {},
+        "Ethernet35": {},
+        "Ethernet36": {},
+        "Ethernet37": {},
+        "Ethernet38": {},
+        "Ethernet39": {},
+        "Ethernet40": {},
+        "Ethernet41": {},
+        "Ethernet42": {},
+        "Ethernet43": {},
+        "Ethernet44": {},
+        "Ethernet45": {},
+        "Ethernet46": {},
+        "Ethernet47": {},
+        "Ethernet48": {},
+        "Ethernet52": {},
+        "Ethernet56": {},
+        "Ethernet60": {},
+        "Ethernet64": {},
+        "Ethernet68": {},
+        "Ethernet72": {},
+        "Ethernet76": {}
+    },
+    "MGMT_PORT": {
+        "eth0": {
+            "admin_status": "up",
+            "autoneg": "true",
+            "description": "Management0",
+            "mtu": "1500",
+            "speed": "1000"
+        }
+    },
+    "NAT_GLOBAL": {
+        "Values": {
+            "admin_mode": "disabled",
+            "nat_tcp_timeout": "86400",
+            "nat_timeout": "600",
+            "nat_udp_timeout": "300"
+        }
+    },
+    "NEIGH_GLOBAL": {
+        "Values": {
+            "ipv4_arp_timeout": "1800",
+            "ipv6_nd_cache_expiry": "1800"
+        }
+    },
+    "PAC_PORT_CONFIG_TABLE": {
+        "Ethernet0": {},
+        "Ethernet1": {},
+        "Ethernet2": {},
+        "Ethernet3": {},
+        "Ethernet4": {},
+        "Ethernet5": {},
+        "Ethernet6": {},
+        "Ethernet7": {},
+        "Ethernet8": {},
+        "Ethernet9": {},
+        "Ethernet10": {},
+        "Ethernet11": {},
+        "Ethernet12": {},
+        "Ethernet13": {},
+        "Ethernet14": {},
+        "Ethernet15": {},
+        "Ethernet16": {},
+        "Ethernet17": {},
+        "Ethernet18": {},
+        "Ethernet19": {},
+        "Ethernet20": {},
+        "Ethernet21": {},
+        "Ethernet22": {},
+        "Ethernet23": {},
+        "Ethernet24": {},
+        "Ethernet25": {},
+        "Ethernet26": {},
+        "Ethernet27": {},
+        "Ethernet28": {},
+        "Ethernet29": {},
+        "Ethernet30": {},
+        "Ethernet31": {},
+        "Ethernet32": {},
+        "Ethernet33": {},
+        "Ethernet34": {},
+        "Ethernet35": {},
+        "Ethernet36": {},
+        "Ethernet37": {},
+        "Ethernet38": {},
+        "Ethernet39": {},
+        "Ethernet40": {},
+        "Ethernet41": {},
+        "Ethernet42": {},
+        "Ethernet43": {},
+        "Ethernet44": {},
+        "Ethernet45": {},
+        "Ethernet46": {},
+        "Ethernet47": {},
+        "Ethernet48": {},
+        "Ethernet52": {},
+        "Ethernet56": {},
+        "Ethernet60": {},
+        "Ethernet64": {},
+        "Ethernet68": {},
+        "Ethernet72": {},
+        "Ethernet76": {}
+    },
+    "POLICY_BINDING_TABLE": {
+        "CtrlPlane": {
+            "INGRESS_QOS_POLICY": "oob-qos-policy"
+        }
+    },
+    "POLICY_SECTIONS_TABLE": {
+        "oob-qos-policy|class-oob-arp": {
+            "DESCRIPTION": "",
+            "PRIORITY": "1010",
+            "SET_POLICER_CIR": "256000"
+        },
+        "oob-qos-policy|class-oob-dhcp-client": {
+            "DESCRIPTION": "",
+            "PRIORITY": "1020",
+            "SET_POLICER_CIR": "512000"
+        },
+        "oob-qos-policy|class-oob-dhcp-server": {
+            "DESCRIPTION": "",
+            "PRIORITY": "1015",
+            "SET_POLICER_CIR": "512000"
+        },
+        "oob-qos-policy|class-oob-ip-multicast": {
+            "DESCRIPTION": "",
+            "PRIORITY": "1000",
+            "SET_POLICER_CIR": "256000"
+        },
+        "oob-qos-policy|class-oob-ipv6-multicast": {
+            "DESCRIPTION": "",
+            "PRIORITY": "1005",
+            "SET_POLICER_CIR": "256000"
+        }
+    },
+    "POLICY_TABLE": {
+        "oob-qos-policy": {
+            "DESCRIPTION": "QoS Ratelimiting policy for OOB port",
+            "TYPE": "QOS"
+        }
+    },
+    "PORT": {
+        "Ethernet0": {
+            "admin_status": "down",
+            "adv_speeds": "all",
+            "alias": "Eth1/1",
+            "autoneg": "off",
+            "fec": "none",
+            "index": "1",
+            "lanes": "49",
+            "link_training": "off",
+            "mtu": "9100",
+            "speed": "25000",
+            "unreliable_los": "auto"
+        },
+        "Ethernet1": {
+            "admin_status": "down",
+            "adv_speeds": "all",
+            "alias": "Eth1/2",
+            "autoneg": "off",
+            "fec": "none",
+            "index": "2",
+            "lanes": "50",
+            "link_training": "off",
+            "mtu": "9100",
+            "speed": "25000",
+            "unreliable_los": "auto"
+        },
+        "Ethernet2": {
+            "admin_status": "down",
+            "adv_speeds": "all",
+            "alias": "Eth1/3",
+            "autoneg": "off",
+            "fec": "none",
+            "index": "3",
+            "lanes": "51",
+            "link_training": "off",
+            "mtu": "9100",
+            "speed": "25000",
+            "unreliable_los": "auto"
+        },
+        "Ethernet3": {
+            "admin_status": "down",
+            "adv_speeds": "all",
+            "alias": "Eth1/4",
+            "autoneg": "off",
+            "fec": "none",
+            "index": "4",
+            "lanes": "52",
+            "link_training": "off",
+            "mtu": "9100",
+            "speed": "25000",
+            "unreliable_los": "auto"
+        },
+        "Ethernet4": {
+            "admin_status": "down",
+            "adv_speeds": "all",
+            "alias": "Eth1/5",
+            "autoneg": "off",
+            "fec": "none",
+            "index": "5",
+            "lanes": "57",
+            "link_training": "off",
+            "mtu": "9100",
+            "speed": "25000",
+            "unreliable_los": "auto"
+        },
+        "Ethernet5": {
+            "admin_status": "down",
+            "adv_speeds": "all",
+            "alias": "Eth1/6",
+            "autoneg": "off",
+            "fec": "none",
+            "index": "6",
+            "lanes": "58",
+            "link_training": "off",
+            "mtu": "9100",
+            "speed": "25000",
+            "unreliable_los": "auto"
+        },
+        "Ethernet6": {
+            "admin_status": "down",
+            "adv_speeds": "all",
+            "alias": "Eth1/7",
+            "autoneg": "off",
+            "fec": "none",
+            "index": "7",
+            "lanes": "59",
+            "link_training": "off",
+            "mtu": "9100",
+            "speed": "25000",
+            "unreliable_los": "auto"
+        },
+        "Ethernet7": {
+            "admin_status": "down",
+            "adv_speeds": "all",
+            "alias": "Eth1/8",
+            "autoneg": "off",
+            "fec": "none",
+            "index": "8",
+            "lanes": "60",
+            "link_training": "off",
+            "mtu": "9100",
+            "speed": "25000",
+            "unreliable_los": "auto"
+        },
+        "Ethernet8": {
+            "admin_status": "down",
+            "adv_speeds": "all",
+            "alias": "Eth1/9",
+            "autoneg": "off",
+            "fec": "none",
+            "index": "9",
+            "lanes": "61",
+            "link_training": "off",
+            "mtu": "9100",
+            "speed": "25000",
+            "unreliable_los": "auto"
+        },
+        "Ethernet9": {
+            "admin_status": "down",
+            "adv_speeds": "all",
+            "alias": "Eth1/10",
+            "autoneg": "off",
+            "fec": "none",
+            "index": "10",
+            "lanes": "62",
+            "link_training": "off",
+            "mtu": "9100",
+            "speed": "25000",
+            "unreliable_los": "auto"
+        },
+        "Ethernet10": {
+            "admin_status": "down",
+            "adv_speeds": "all",
+            "alias": "Eth1/11",
+            "autoneg": "off",
+            "fec": "none",
+            "index": "11",
+            "lanes": "63",
+            "link_training": "off",
+            "mtu": "9100",
+            "speed": "25000",
+            "unreliable_los": "auto"
+        },
+        "Ethernet11": {
+            "admin_status": "down",
+            "adv_speeds": "all",
+            "alias": "Eth1/12",
+            "autoneg": "off",
+            "fec": "none",
+            "index": "12",
+            "lanes": "64",
+            "link_training": "off",
+            "mtu": "9100",
+            "speed": "25000",
+            "unreliable_los": "auto"
+        },
+        "Ethernet12": {
+            "admin_status": "down",
+            "adv_speeds": "all",
+            "alias": "Eth1/13",
+            "autoneg": "off",
+            "fec": "none",
+            "index": "13",
+            "lanes": "77",
+            "link_training": "off",
+            "mtu": "9100",
+            "speed": "25000",
+            "unreliable_los": "auto"
+        },
+        "Ethernet13": {
+            "admin_status": "down",
+            "adv_speeds": "all",
+            "alias": "Eth1/14",
+            "autoneg": "off",
+            "fec": "none",
+            "index": "14",
+            "lanes": "78",
+            "link_training": "off",
+            "mtu": "9100",
+            "speed": "25000",
+            "unreliable_los": "auto"
+        },
+        "Ethernet14": {
+            "admin_status": "down",
+            "adv_speeds": "all",
+            "alias": "Eth1/15",
+            "autoneg": "off",
+            "fec": "none",
+            "index": "15",
+            "lanes": "79",
+            "link_training": "off",
+            "mtu": "9100",
+            "speed": "25000",
+            "unreliable_los": "auto"
+        },
+        "Ethernet15": {
+            "admin_status": "down",
+            "adv_speeds": "all",
+            "alias": "Eth1/16",
+            "autoneg": "off",
+            "fec": "none",
+            "index": "16",
+            "lanes": "80",
+            "link_training": "off",
+            "mtu": "9100",
+            "speed": "25000",
+            "unreliable_los": "auto"
+        },
+        "Ethernet16": {
+            "admin_status": "down",
+            "adv_speeds": "all",
+            "alias": "Eth1/17",
+            "autoneg": "off",
+            "fec": "none",
+            "index": "17",
+            "lanes": "85",
+            "link_training": "off",
+            "mtu": "9100",
+            "speed": "25000",
+            "unreliable_los": "auto"
+        },
+        "Ethernet17": {
+            "admin_status": "down",
+            "adv_speeds": "all",
+            "alias": "Eth1/18",
+            "autoneg": "off",
+            "fec": "none",
+            "index": "18",
+            "lanes": "86",
+            "link_training": "off",
+            "mtu": "9100",
+            "speed": "25000",
+            "unreliable_los": "auto"
+        },
+        "Ethernet18": {
+            "admin_status": "down",
+            "adv_speeds": "all",
+            "alias": "Eth1/19",
+            "autoneg": "off",
+            "fec": "none",
+            "index": "19",
+            "lanes": "87",
+            "link_training": "off",
+            "mtu": "9100",
+            "speed": "25000",
+            "unreliable_los": "auto"
+        },
+        "Ethernet19": {
+            "admin_status": "down",
+            "adv_speeds": "all",
+            "alias": "Eth1/20",
+            "autoneg": "off",
+            "fec": "none",
+            "index": "20",
+            "lanes": "88",
+            "link_training": "off",
+            "mtu": "9100",
+            "speed": "25000",
+            "unreliable_los": "auto"
+        },
+        "Ethernet20": {
+            "admin_status": "down",
+            "adv_speeds": "all",
+            "alias": "Eth1/21",
+            "autoneg": "off",
+            "fec": "none",
+            "index": "21",
+            "lanes": "93",
+            "link_training": "off",
+            "mtu": "9100",
+            "speed": "25000",
+            "unreliable_los": "auto"
+        },
+        "Ethernet21": {
+            "admin_status": "down",
+            "adv_speeds": "all",
+            "alias": "Eth1/22",
+            "autoneg": "off",
+            "fec": "none",
+            "index": "22",
+            "lanes": "94",
+            "link_training": "off",
+            "mtu": "9100",
+            "speed": "25000",
+            "unreliable_los": "auto"
+        },
+        "Ethernet22": {
+            "admin_status": "down",
+            "adv_speeds": "all",
+            "alias": "Eth1/23",
+            "autoneg": "off",
+            "fec": "none",
+            "index": "23",
+            "lanes": "95",
+            "link_training": "off",
+            "mtu": "9100",
+            "speed": "25000",
+            "unreliable_los": "auto"
+        },
+        "Ethernet23": {
+            "admin_status": "down",
+            "adv_speeds": "all",
+            "alias": "Eth1/24",
+            "autoneg": "off",
+            "fec": "none",
+            "index": "24",
+            "lanes": "96",
+            "link_training": "off",
+            "mtu": "9100",
+            "speed": "25000",
+            "unreliable_los": "auto"
+        },
+        "Ethernet24": {
+            "admin_status": "down",
+            "adv_speeds": "all",
+            "alias": "Eth1/25",
+            "autoneg": "off",
+            "fec": "none",
+            "index": "25",
+            "lanes": "13",
+            "link_training": "off",
+            "mtu": "9100",
+            "speed": "25000",
+            "unreliable_los": "auto"
+        },
+        "Ethernet25": {
+            "admin_status": "down",
+            "adv_speeds": "all",
+            "alias": "Eth1/26",
+            "autoneg": "off",
+            "fec": "none",
+            "index": "26",
+            "lanes": "14",
+            "link_training": "off",
+            "mtu": "9100",
+            "speed": "25000",
+            "unreliable_los": "auto"
+        },
+        "Ethernet26": {
+            "admin_status": "down",
+            "adv_speeds": "all",
+            "alias": "Eth1/27",
+            "autoneg": "off",
+            "fec": "none",
+            "index": "27",
+            "lanes": "15",
+            "link_training": "off",
+            "mtu": "9100",
+            "speed": "25000",
+            "unreliable_los": "auto"
+        },
+        "Ethernet27": {
+            "admin_status": "down",
+            "adv_speeds": "all",
+            "alias": "Eth1/28",
+            "autoneg": "off",
+            "fec": "none",
+            "index": "28",
+            "lanes": "16",
+            "link_training": "off",
+            "mtu": "9100",
+            "speed": "25000",
+            "unreliable_los": "auto"
+        },
+        "Ethernet28": {
+            "admin_status": "down",
+            "adv_speeds": "all",
+            "alias": "Eth1/29",
+            "autoneg": "off",
+            "fec": "none",
+            "index": "29",
+            "lanes": "21",
+            "link_training": "off",
+            "mtu": "9100",
+            "speed": "25000",
+            "unreliable_los": "auto"
+        },
+        "Ethernet29": {
+            "admin_status": "down",
+            "adv_speeds": "all",
+            "alias": "Eth1/30",
+            "autoneg": "off",
+            "fec": "none",
+            "index": "30",
+            "lanes": "22",
+            "link_training": "off",
+            "mtu": "9100",
+            "speed": "25000",
+            "unreliable_los": "auto"
+        },
+        "Ethernet30": {
+            "admin_status": "down",
+            "adv_speeds": "all",
+            "alias": "Eth1/31",
+            "autoneg": "off",
+            "fec": "none",
+            "index": "31",
+            "lanes": "23",
+            "link_training": "off",
+            "mtu": "9100",
+            "speed": "25000",
+            "unreliable_los": "auto"
+        },
+        "Ethernet31": {
+            "admin_status": "down",
+            "adv_speeds": "all",
+            "alias": "Eth1/32",
+            "autoneg": "off",
+            "fec": "none",
+            "index": "32",
+            "lanes": "24",
+            "link_training": "off",
+            "mtu": "9100",
+            "speed": "25000",
+            "unreliable_los": "auto"
+        },
+        "Ethernet32": {
+            "admin_status": "down",
+            "adv_speeds": "all",
+            "alias": "Eth1/33",
+            "autoneg": "off",
+            "fec": "none",
+            "index": "33",
+            "lanes": "29",
+            "link_training": "off",
+            "mtu": "9100",
+            "speed": "25000",
+            "unreliable_los": "auto"
+        },
+        "Ethernet33": {
+            "admin_status": "down",
+            "adv_speeds": "all",
+            "alias": "Eth1/34",
+            "autoneg": "off",
+            "fec": "none",
+            "index": "34",
+            "lanes": "30",
+            "link_training": "off",
+            "mtu": "9100",
+            "speed": "25000",
+            "unreliable_los": "auto"
+        },
+        "Ethernet34": {
+            "admin_status": "down",
+            "adv_speeds": "all",
+            "alias": "Eth1/35",
+            "autoneg": "off",
+            "fec": "none",
+            "index": "35",
+            "lanes": "31",
+            "link_training": "off",
+            "mtu": "9100",
+            "speed": "25000",
+            "unreliable_los": "auto"
+        },
+        "Ethernet35": {
+            "admin_status": "down",
+            "adv_speeds": "all",
+            "alias": "Eth1/36",
+            "autoneg": "off",
+            "fec": "none",
+            "index": "36",
+            "lanes": "32",
+            "link_training": "off",
+            "mtu": "9100",
+            "speed": "25000",
+            "unreliable_los": "auto"
+        },
+        "Ethernet36": {
+            "admin_status": "down",
+            "adv_speeds": "all",
+            "alias": "Eth1/37",
+            "autoneg": "off",
+            "fec": "none",
+            "index": "37",
+            "lanes": "97",
+            "link_training": "off",
+            "mtu": "9100",
+            "speed": "25000",
+            "unreliable_los": "auto"
+        },
+        "Ethernet37": {
+            "admin_status": "down",
+            "adv_speeds": "all",
+            "alias": "Eth1/38",
+            "autoneg": "off",
+            "fec": "none",
+            "index": "38",
+            "lanes": "98",
+            "link_training": "off",
+            "mtu": "9100",
+            "speed": "25000",
+            "unreliable_los": "auto"
+        },
+        "Ethernet38": {
+            "admin_status": "down",
+            "adv_speeds": "all",
+            "alias": "Eth1/39",
+            "autoneg": "off",
+            "fec": "none",
+            "index": "39",
+            "lanes": "99",
+            "link_training": "off",
+            "mtu": "9100",
+            "speed": "25000",
+            "unreliable_los": "auto"
+        },
+        "Ethernet39": {
+            "admin_status": "down",
+            "adv_speeds": "all",
+            "alias": "Eth1/40",
+            "autoneg": "off",
+            "fec": "none",
+            "index": "40",
+            "lanes": "100",
+            "link_training": "off",
+            "mtu": "9100",
+            "speed": "25000",
+            "unreliable_los": "auto"
+        },
+        "Ethernet40": {
+            "admin_status": "down",
+            "adv_speeds": "all",
+            "alias": "Eth1/41",
+            "autoneg": "off",
+            "fec": "none",
+            "index": "41",
+            "lanes": "105",
+            "link_training": "off",
+            "mtu": "9100",
+            "speed": "25000",
+            "unreliable_los": "auto"
+        },
+        "Ethernet41": {
+            "admin_status": "down",
+            "adv_speeds": "all",
+            "alias": "Eth1/42",
+            "autoneg": "off",
+            "fec": "none",
+            "index": "42",
+            "lanes": "106",
+            "link_training": "off",
+            "mtu": "9100",
+            "speed": "25000",
+            "unreliable_los": "auto"
+        },
+        "Ethernet42": {
+            "admin_status": "down",
+            "adv_speeds": "all",
+            "alias": "Eth1/43",
+            "autoneg": "off",
+            "fec": "none",
+            "index": "43",
+            "lanes": "107",
+            "link_training": "off",
+            "mtu": "9100",
+            "speed": "25000",
+            "unreliable_los": "auto"
+        },
+        "Ethernet43": {
+            "admin_status": "down",
+            "adv_speeds": "all",
+            "alias": "Eth1/44",
+            "autoneg": "off",
+            "fec": "none",
+            "index": "44",
+            "lanes": "108",
+            "link_training": "off",
+            "mtu": "9100",
+            "speed": "25000",
+            "unreliable_los": "auto"
+        },
+        "Ethernet44": {
+            "admin_status": "down",
+            "adv_speeds": "all",
+            "alias": "Eth1/45",
+            "autoneg": "off",
+            "fec": "none",
+            "index": "45",
+            "lanes": "113",
+            "link_training": "off",
+            "mtu": "9100",
+            "speed": "25000",
+            "unreliable_los": "auto"
+        },
+        "Ethernet45": {
+            "admin_status": "down",
+            "adv_speeds": "all",
+            "alias": "Eth1/46",
+            "autoneg": "off",
+            "fec": "none",
+            "index": "46",
+            "lanes": "114",
+            "link_training": "off",
+            "mtu": "9100",
+            "speed": "25000",
+            "unreliable_los": "auto"
+        },
+        "Ethernet46": {
+            "admin_status": "down",
+            "adv_speeds": "all",
+            "alias": "Eth1/47",
+            "autoneg": "off",
+            "fec": "none",
+            "index": "47",
+            "lanes": "115",
+            "link_training": "off",
+            "mtu": "9100",
+            "speed": "25000",
+            "unreliable_los": "auto"
+        },
+        "Ethernet47": {
+            "admin_status": "down",
+            "adv_speeds": "all",
+            "alias": "Eth1/48",
+            "autoneg": "off",
+            "fec": "none",
+            "index": "48",
+            "lanes": "116",
+            "link_training": "off",
+            "mtu": "9100",
+            "speed": "25000",
+            "unreliable_los": "auto"
+        },
+        "Ethernet48": {
+            "admin_status": "down",
+            "adv_speeds": "all",
+            "alias": "Eth1/49",
+            "autoneg": "off",
+            "fec": "none",
+            "index": "49",
+            "lanes": "121,122,123,124",
+            "link_training": "off",
+            "mtu": "9100",
+            "speed": "100000",
+            "unreliable_los": "auto",
+            "valid_speeds": "100000, 40000"
+        },
+        "Ethernet52": {
+            "admin_status": "down",
+            "adv_speeds": "all",
+            "alias": "Eth1/50",
+            "autoneg": "off",
+            "fec": "none",
+            "index": "50",
+            "lanes": "125,126,127,128",
+            "link_training": "off",
+            "mtu": "9100",
+            "speed": "100000",
+            "unreliable_los": "auto",
+            "valid_speeds": "100000, 40000"
+        },
+        "Ethernet56": {
+            "admin_status": "down",
+            "adv_speeds": "all",
+            "alias": "Eth1/51",
+            "autoneg": "off",
+            "fec": "none",
+            "index": "51",
+            "lanes": "69,70,71,72",
+            "link_training": "off",
+            "mtu": "9100",
+            "speed": "100000",
+            "unreliable_los": "auto",
+            "valid_speeds": "100000, 40000"
+        },
+        "Ethernet60": {
+            "admin_status": "down",
+            "adv_speeds": "all",
+            "alias": "Eth1/52",
+            "autoneg": "off",
+            "fec": "none",
+            "index": "52",
+            "lanes": "65,66,67,68",
+            "link_training": "off",
+            "mtu": "9100",
+            "speed": "100000",
+            "unreliable_los": "auto",
+            "valid_speeds": "100000, 40000"
+        },
+        "Ethernet64": {
+            "admin_status": "down",
+            "adv_speeds": "all",
+            "alias": "Eth1/53",
+            "autoneg": "off",
+            "fec": "none",
+            "index": "53",
+            "lanes": "1,2,3,4",
+            "link_training": "off",
+            "mtu": "9100",
+            "speed": "100000",
+            "unreliable_los": "auto",
+            "valid_speeds": "100000, 40000"
+        },
+        "Ethernet68": {
+            "admin_status": "down",
+            "adv_speeds": "all",
+            "alias": "Eth1/54",
+            "autoneg": "off",
+            "fec": "none",
+            "index": "54",
+            "lanes": "33,34,35,36",
+            "link_training": "off",
+            "mtu": "9100",
+            "speed": "100000",
+            "unreliable_los": "auto",
+            "valid_speeds": "100000, 40000"
+        },
+        "Ethernet72": {
+            "admin_status": "down",
+            "adv_speeds": "all",
+            "alias": "Eth1/55",
+            "autoneg": "off",
+            "fec": "none",
+            "index": "55",
+            "lanes": "5,6,7,8",
+            "link_training": "off",
+            "mtu": "9100",
+            "speed": "100000",
+            "unreliable_los": "auto",
+            "valid_speeds": "100000, 40000"
+        },
+        "Ethernet76": {
+            "admin_status": "down",
+            "adv_speeds": "all",
+            "alias": "Eth1/56",
+            "autoneg": "off",
+            "fec": "none",
+            "index": "56",
+            "lanes": "41,42,43,44",
+            "link_training": "off",
+            "mtu": "9100",
+            "speed": "100000",
+            "unreliable_los": "auto",
+            "valid_speeds": "100000, 40000"
+        }
+    },
+    "PORT_GROUP": {
+        "1": {
+            "speed": "25000"
+        },
+        "2": {
+            "speed": "25000"
+        },
+        "3": {
+            "speed": "25000"
+        },
+        "4": {
+            "speed": "25000"
+        },
+        "5": {
+            "speed": "25000"
+        },
+        "6": {
+            "speed": "25000"
+        },
+        "7": {
+            "speed": "25000"
+        },
+        "8": {
+            "speed": "25000"
+        },
+        "9": {
+            "speed": "25000"
+        },
+        "10": {
+            "speed": "25000"
+        },
+        "11": {
+            "speed": "25000"
+        },
+        "12": {
+            "speed": "25000"
+        }
+    },
+    "SSHD_COMMON": {
+        "GLOBAL": {
+            "ciphers": "aes128-ctr,aes192-ctr,aes256-ctr,aes128-gcm@openssh.com,aes256-gcm@openssh.com",
+            "hostkeyalgorithms": "ecdsa-sha2-nistp256,ecdsa-sha2-nistp384,ecdsa-sha2-nistp521,rsa-sha2-256,rsa-sha2-512",
+            "kexalgorithms": "curve25519-sha256,curve25519-sha256@libssh.org,ecdh-sha2-nistp256,ecdh-sha2-nistp384,ecdh-sha2-nistp521,diffie-hellman-group-exchange-sha256,diffie-hellman-group16-sha512,diffie-hellman-group18-sha512,diffie-hellman-group14-sha256",
+            "macs": "umac-128-etm@openssh.com,hmac-sha2-256-etm@openssh.com,hmac-sha2-512-etm@openssh.com,umac-128@openssh.com,hmac-sha2-256,hmac-sha2-512"
+        }
+    },
+    "SWITCH": {
+        "switch": {
+            "fdb_aging_time": "600"
+        }
+    },
+    "VERSIONS": {
+        "DATABASE": {
+            "VERSION": "version_4_6_1"
+        }
+    },
+    "VRF": {
+        "default": {
+            "enabled": "true"
+        }
+    },
+    "ZTP": {
+        "config": {
+            "admin-mode": "false"
+        }
+    }
+}

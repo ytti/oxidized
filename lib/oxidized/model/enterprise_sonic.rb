@@ -20,6 +20,20 @@ class Enterprise_SONiC < Oxidized::Model # rubocop:disable Naming/ClassAndModule
     end
   end
 
+  post do
+    if vars(:admin) == true
+      # Return to the Linux shell before logging out.
+      cmd "exit"
+      if vars(:config_db_backup) == true
+        cmd 'show runningconfiguration all' do |cfg|
+          cfg.type = "json"
+          cfg.name = "json"
+          cfg
+        end
+      end
+    end
+  end
+
   cmd 'show version' do |cfg|
     cfg = cfg.each_line.reject { |line| line.match /Uptime/ }.join
     add_comment('VERSION') + cfg
@@ -37,7 +51,7 @@ class Enterprise_SONiC < Oxidized::Model # rubocop:disable Naming/ClassAndModule
     # if user logs in to linux == has admin rights
     if vars(:admin) == true
       post_login do
-        cmd "sonic-cli\n"
+        cmd "sonic-cli"
       end
     end
     post_login 'terminal length 0'

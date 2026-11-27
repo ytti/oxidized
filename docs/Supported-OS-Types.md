@@ -171,7 +171,7 @@
 |Seiko Solutions     |SmartCS, SmartCS mini         |[smartcs](/lib/oxidized/model/smartcs.rb)
 |SmartByte           |LT-S8228G series              |[smartbyte](/lib/oxidized/model/smartbyte.rb)    |@freddy36
 |SonicWALL           |SonicOS                       |[sonicos](/lib/oxidized/model/sonicos.rb)
-|[SONiC](https://sonicfoundation.dev/) |Enterprise SONiC |[enterprise_sonic](/lib/oxidized/model/enterprise_sonic.rb) | |
+|[SONiC](https://sonicfoundation.dev/) |Enterprise SONiC |[enterprise_sonic](/lib/oxidized/model/enterprise_sonic.rb) | [Notes](Model-Notes/Enterprise-SONiC.md) |
 |SNR                 |SNR-S300G, S2xxx, S3xxx, S4xxx|[dcnos](/lib/oxidized/model/dcnos.rb)
 |Speedtouch          |Thomson Speedtouch            |[speedtouch](/lib/oxidized/model/speedtouch.rb)
 |Supermicro          |SSE-G2252, G2252P             |[edgecos](/lib/oxidized/model/edgecos.rb)
