@@ -50,7 +50,6 @@ class IOS < Oxidized::Model
     cfg.gsub! /^( +client \S+ server-key \d) (.*)$/, '\\1 <secret hidden>'
     cfg.gsub! /^( +domain-password) \S+ ?(.*)/, '\\1 <secret hidden> \\2'
     cfg.gsub! /^( +pre-shared-key).*/, '\\1 <configuration removed>'
-    cfg.gsub! /^(.*server-key(?: \d)?) \S+/, '\\1 <secret hidden>'
     cfg
   end
 
