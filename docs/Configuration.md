@@ -141,6 +141,7 @@ source:
 model_map:
   cisco: ios
   juniper: junos
+  yunshan: vrp
   !ruby/regexp /procurve/: procurve
 logger:
   # The default level is :info
