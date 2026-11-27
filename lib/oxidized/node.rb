@@ -20,7 +20,10 @@ module Oxidized
       logger.debug 'IPADDR %s' % ip_addr.to_s
       @name = opt[:name]
       @ip = IPAddr.new(ip_addr).to_s rescue nil
-      @ip ||= Resolv.new.getaddress(@name) if Oxidized.config.resolve_dns?
+      if Oxidized.config.resolve_dns?
+        @ip ||= Resolv.new.getaddress(ip_addr) rescue nil unless ip_addr.nil? || ip_addr.empty?
+        @ip ||= Resolv.new.getaddress(@name) rescue nil
+      end
       @ip ||= @name
       @group = opt[:group]
       @model = resolve_model opt
