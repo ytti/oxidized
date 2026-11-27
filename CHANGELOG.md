@@ -15,6 +15,7 @@ The format is based on [Keep a Changelog](https://keepachangelog.com/en/1.1.0/).
 - Ruby 3.0 and 3.1 are deprecated, support is planned to be removed in June 2028. See [docs/Deprecated.md](docs/Deprecated.md) (@robertcheramy)
 
 ### Fixed
+- support: redact the `pass` key of the http source (@Mitchx-Dev)
 
 
 ## [0.38.0 - 2026-11-16]
